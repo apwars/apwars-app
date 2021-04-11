@@ -1,0 +1,134 @@
+<template>
+<v-container fluid>
+  <v-row align="center"
+      justify="center">
+    <v-col cols="6">
+      <v-layout align-center>
+        <v-flex shrink class="text-center">
+          <div class="btn">
+            <v-img width="180" @click="changeAvatar()" class="justify-center" :src="`/images/avatars/${avatar}-avatar.png`" />
+            <v-img width="180" @click="changeAvatar()" class="justify-center" :src="`/images/${avatar}.png`" />
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-col>
+     <v-col>
+      <v-layout justify-center align-center>
+        <v-flex shrink class="text-center" style="min-height: 150px">
+          <div class="title">
+            NFTs
+          </div>
+          <div class="value">
+            {{collectibles}}
+          </div>
+        </v-flex> 
+      </v-layout>
+    </v-col>
+    <v-col>
+      <v-layout justify-center align-center>
+        <v-flex shrink class="text-center" style="min-height: 150px">
+          <div class="title">
+            My Collection
+          </div>
+          <div class="value">
+            {{ collection }}
+          </div>
+        </v-flex> 
+      </v-layout>
+    </v-col>
+    <v-col>
+      <v-layout justify-center>
+        <v-flex shrink class="text-center">
+          <div class="title">
+            wGOLD
+          </div>
+          <div class="value" :title="balance">
+            {{formattedAmount}}
+          </div>
+          <v-img @click="goToSwap()" class="btn" width="157" src="/images/buttons/btn-buy-wgold.png" />
+        </v-flex>
+      </v-layout>
+    </v-col>
+  </v-row>
+</v-container>
+</template>
+
+<script>
+import GameText from '@/lib/components/ui/Utils/GameText';
+
+export default {
+  props:['balance', 'collectibles', 'collection'],
+
+  components: {
+    GameText,
+  },
+
+  data() {
+    return {
+    }
+  },
+
+  computed: {
+    avatar() {
+      return this.$store.getters["user/avatar"];
+    },
+
+    formattedAmount() {
+      const num = parseInt(this.balance);
+
+      if (this.balance < 1) {
+        return '~0';
+      } else if(num > 999 && num < 1000000){
+          return (num/1000).toFixed(2) + 'K'; 
+      } else if(num > 1000000){
+          return (num/1000000).toFixed(2) + 'M'
+      } else if(num < 900){
+          return num;
+      }
+    }
+  },
+
+  methods: {
+    goToSwap() {
+      window.location = 'https://exchange.apwars.farm/#/swap';
+    },
+
+    changeAvatar() {
+      const avatar = this.avatar === 'degen' ? 'corp' : 'degen';
+      this.$store.dispatch('user/changeAvatar', {avatar});
+    }
+  }
+};
+</script>
+
+<style scoped>
+.container {
+  border-color: #966A3C !important;
+  border: 2px solid;
+  border-radius: 0px;
+}
+
+.address {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.title {
+  color: #FFB800;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.value {
+  background: -webkit-linear-gradient(#F6FF00, #FFB800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.btn {
+  cursor: pointer;
+}
+</style>
