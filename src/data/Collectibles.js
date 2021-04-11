@@ -139,12 +139,11 @@ export function getCollectibles() {
       image: "/images/nfts/goldsaver10.png",
       parameters: {
         id: 7,
-        price: "1000000000000000000000",
-        mint: true,
-        signature: {
-          "56":
-            "0x8f88fc32433f91fb4d17e07801cad597ec8eac310c31b83ea08966e866e97a5f500debab0e7570d81c3b1dcaadf0d7a34406a8388ebb12fc40c4dd62a23bf8fd01"
-        }
+        price: "1000000000000000000000"
+      },
+      signatures: {
+        "56":
+          "0x8f88fc32433f91fb4d17e07801cad597ec8eac310c31b83ea08966e866e97a5f500debab0e7570d81c3b1dcaadf0d7a34406a8388ebb12fc40c4dd62a23bf8fd01"
       }
     },
     {
