@@ -18,10 +18,11 @@ export function getCollectibles() {
       image: "/images/nfts/pioneer.png",
       parameters: {
         id: 0,
-        price: "1000000000000000000000",
-        mint: false
+        price: "1000000000000000000000"
       },
       signatures: {
+        "56":
+          "0xf1c03475719a1a6a3875123e38c66c235ea08225b9fe8f49ee14e4d7a11f21757d0f7f4e70dd7270807c411427e3de31b63b2c2fc6d215ea9da22498b739afb400",
         "5777":
           "0xc619a4714ba7ad2b98bd56cd32175c0ed49a700ff0760d611846b11931448ba4521c8de86463f627f82e869d80493fdb3087a93aedf592635d04e346c36b4edd00"
       }
@@ -36,7 +37,7 @@ export function getCollectibles() {
       image: "/images/nfts/society.png",
       parameters: {
         id: 1,
-        price: "2300000000000000000000"
+        price: "1000000000000000000000"
       },
       signatures: {
         "5777":
@@ -53,7 +54,7 @@ export function getCollectibles() {
       image: "/images/nfts/elixir10.png",
       parameters: {
         id: 0,
-        price: "2300000000000000000000",
+        price: "1000000000000000000000",
         mint: true,
         signature: {
           "56": ""
@@ -137,11 +138,12 @@ export function getCollectibles() {
         '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper',
       image: "/images/nfts/goldsaver10.png",
       parameters: {
-        id: 0,
-        price: "2321000000000000000000",
+        id: 7,
+        price: "1000000000000000000000",
         mint: true,
         signature: {
-          "56": ""
+          "56":
+            "0x8f88fc32433f91fb4d17e07801cad597ec8eac310c31b83ea08966e866e97a5f500debab0e7570d81c3b1dcaadf0d7a34406a8388ebb12fc40c4dd62a23bf8fd01"
         }
       }
     },
