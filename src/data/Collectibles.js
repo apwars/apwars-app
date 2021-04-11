@@ -22,7 +22,7 @@ export function getCollectibles() {
       },
       signatures: {
         "56":
-          "0xf1c03475719a1a6a3875123e38c66c235ea08225b9fe8f49ee14e4d7a11f21757d0f7f4e70dd7270807c411427e3de31b63b2c2fc6d215ea9da22498b739afb400"
+          "0x5107ad902f8e4893b919d37d98d5e947ba29f97964311e002bd0e7b0296ad081330c2ea7b9185f6d8851ababe87514caf912372c6120ebcb06bd3dda9d20f0b301"
       }
     },
     {
@@ -39,7 +39,7 @@ export function getCollectibles() {
       },
       signatures: {
         "56":
-          "0x7c136224d5fbfa79e9b709415c63b6008eee5b89320c5bc15c2fc929fa401c366bc9a659a12ade499206f013d5634d8ec0c562bc0704edac7c7fd6b56680dc8200"
+          "0x8b50864b9387e83e634d433c9e71e43d26767f668c30e9f5d81633f7677619764067d6f259424357779728eee648074b781fe6c08ea506276e7fb9690a51244d00"
       }
     },
     {
@@ -56,7 +56,7 @@ export function getCollectibles() {
       },
       signatures: {
         "56":
-          "0x25354e229834d2796fd813e9376e1dcc2bcc8af6985671234cfe5d244fec73ca091c15acb8c41b89cbf4b60480567a06f6de65407207cf6b31c2c34d88bc019a01"
+          "0x1366bd6450f28b5c6005ecbf2e32e970438de817d380ddae6e730060309fe2005f660c755aa9a383504e6aad85afd5778260925dda3c9a7ec9ca84cac77c793c01"
       }
     },
     {
@@ -73,7 +73,7 @@ export function getCollectibles() {
       },
       signatures: {
         "56":
-          "0x48ab9d3bcc3289dc37e47e6d43c9eba721d35a000f8c646db852bb66460cef470b0843b72515ae21c16c3d9291660f77b66decc2c88da80a60c133d6540954f700"
+          "0x4cc257cb09cbffd97271ae0ea2a9f22c93c5d1b0f66b1d3f7b9de21a919a54584edab933b3b5006dbfecf604ca12d5216383acdb0ca880f322857f9f6393d44300"
       }
     },
     {
@@ -90,7 +90,7 @@ export function getCollectibles() {
       },
       signatures: {
         "56":
-          "0xa3a18e8b4b7ba7d5d2d62c92720eb02dc69478f173a0675da62714930e7a57dd5daf0203ad623876b6bf8994fb46c22cc8de41dc14fa0ed8e59b2f447aa0492e00"
+          "0x9e8cf796a6c72e56933aa344bd9c9223428fa2fd2c3d58972be2fe8d37b24c422530dcf7890370e1dc4e3eb87df14efc01726b0d3d432dfa44021b663504c94b01"
       }
     },
     {
@@ -107,7 +107,7 @@ export function getCollectibles() {
       },
       signatures: {
         "56":
-          "0x8464598da6406e707e525ee81f26a9d65132ea1806ed9d7e718b749b548d2aff1b2b25056f557710b01297ec849f9ee96bb07764411f384392bd262e70acc64a00"
+          "0x13a77abf8c26731ff352621f450db6901b218735322e2d99fd58b69103477e531aef21cd73ece1ecfe21e58fe560bdde666328c736be5a2aa69ad692a85b2e6201"
       }
     },
     {
@@ -124,7 +124,7 @@ export function getCollectibles() {
       },
       signatures: {
         "56":
-          "0x97caa8c5277663f900cb5b90901066cf407c8917ae3e1141eb243dae9c80a6113a251c3f93bca1d98ffb11cc88f5572b0b07242bd024e771db008bccb4bbbadd00"
+          "0x33a2126a423c01da4ff6c041962098e9563a00a55e746d737fc4a17bd514d3a35ce0b394c5147fb41034d77d061a75c58ca302cd3b9b0931dfa3ebf7b4327a9401"
       }
     },
     {
@@ -141,7 +141,7 @@ export function getCollectibles() {
       },
       signatures: {
         "56":
-          "0x8f88fc32433f91fb4d17e07801cad597ec8eac310c31b83ea08966e866e97a5f500debab0e7570d81c3b1dcaadf0d7a34406a8388ebb12fc40c4dd62a23bf8fd01"
+          "0x1e78117139f11b07bf0eb346d74a454710e3ee4b5a78ae7324e3c52bbb8ab840149474bbdce061b4c66808b4b6e18fd7a72b7be96ecc73222aa2fb6dd4f7d0cb01"
       }
     },
     {
@@ -158,7 +158,7 @@ export function getCollectibles() {
       },
       signatures: {
         "56":
-          "0x6ce8a8cdc251fc1bbab7a65c1dcc89cdce74e7d2742bac967306e0f06ed7503161743ac43a554f73d6b40a466003b5b4a12a4418f130946c819e2a6b5062af0800"
+          "0xe0f4b78d1f08de86571440033cecce3d8ce267a307ef376c586e27d8a874b58f6b15b8b9e1df557d69e1a77edaa332dcc04753ad9cd62be74e1734d331c4c53601"
       }
     },
     {
@@ -175,7 +175,7 @@ export function getCollectibles() {
       },
       signatures: {
         "56":
-          "0xfb2366781b0d909f9097421499c43e79c5c7722dcbeb612865732216cb83dd0d59adccdab7631be943020748647f4d807a5a5393481ac543f0c2fcc35130307000"
+          "0x3aeb5359467f4e0071150afcf742b911329c36d3f98375ba7ce2e9ee52f04b0316a8dace3e021a78b6d8f73738173f7aea1aa3851a6d37427c71f4977b94539300"
       }
     }
   ];
