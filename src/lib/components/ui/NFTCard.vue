@@ -5,11 +5,11 @@
         width="230" 
         @click="openInfo()"
         :src="collectible.image" 
-        :gradient="remaining === 0 && !collectible.userAmount ? `to top right, rgba(100,115,201,.10), rgba(25,32,72,.7)`:''"></v-img>
+        :gradient="remaining === 0 && !myCollection ? `to top right, rgba(100,115,201,.10), rgba(25,32,72,.7)`:''"></v-img>
       <game-text>{{ collectible.title }}</game-text>
       <item-price :price="collectible.parameters.price" />
-      <div v-if="collectible.userAmount > 0">
-        <small class="remaining">Your Amount: {{collectible.userAmount}}</small>
+      <div v-if="myCollection">
+        <small class="remaining">Your Amount: {{userAmount}}</small>
       </div>
       <div v-else>
         <small class="remaining">Remaining: {{remaining}}</small>
@@ -70,7 +70,7 @@ import Collectibles from '@/lib/eth/Collectibles';
 import wGOLD from '@/lib/eth/wGOLD';
 
 export default {
-  props: ['collectible'],
+  props: ['collectible', 'myCollection'],
 
   components: {
     GameText,
@@ -88,6 +88,7 @@ export default {
       isSending: false,
       transactionSent: false,
       showInfo: false,
+      userAmount: 0,
     }
   },
 
@@ -173,6 +174,9 @@ export default {
         this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
 
         this.remaining = await collectibles.getRemaining(this.collectible.id);
+        this.userAmount = await collectibles.balanceOf(this.account, this.collectible.id);
+
+        console.log(this.userAmount);
       } catch (e) {
         console.log(e);
       } finally {

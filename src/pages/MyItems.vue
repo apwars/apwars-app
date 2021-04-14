@@ -20,7 +20,7 @@
           cols="12"
           md="3"
         >
-          <nft-card :collectible="collectible" />
+          <nft-card :collectible="collectible" :myCollection="true" />
         </v-col>
       </v-row>
     </v-container>

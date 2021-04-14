@@ -27,7 +27,7 @@
               <v-list-item
                 link
                 :disabled="isConnected"
-                @click="connectToMetaMask"
+                @click="goToMyCollection"
               >
                 <v-list-item-icon>
                   <v-icon small>mdi-format-list-bulleted</v-icon>
@@ -72,6 +72,10 @@ export default {
   },
 
   methods: {
+    goToMyCollection() {
+      this.$router.push('/collection');
+    },
+
     toggleNetworkInfo(open) {
       this.networkInfoModalOpen = open;
     },
