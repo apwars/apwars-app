@@ -195,7 +195,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "The Society 48h-Gold Saver (20%)",
       description:
-        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 10% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
+        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 20% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
       image: "/images/nfts/goldsaver2048h-thesociety.png"
     }
   ];
