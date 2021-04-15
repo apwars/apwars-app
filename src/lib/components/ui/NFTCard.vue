@@ -7,11 +7,11 @@
         :src="collectible.image" 
         :gradient="remaining === 0 && !myCollection ? `to top right, rgba(100,115,201,.10), rgba(25,32,72,.7)`:''"></v-img>
       <game-text>{{ collectible.title }}</game-text>
-      <item-price :price="collectible.parameters.price" />
+      <item-price v-if="!collectible.isGift" :price="collectible.parameters.price" />
       <div v-if="myCollection">
         <small class="remaining">Your Amount: {{userAmount}}</small>
       </div>
-      <div v-else>
+      <div v-else-if="!collectible.isGift">
         <small class="remaining">Remaining: {{remaining}}</small>
         <div class="d-flex justify-center align-center mt-1" v-if="remaining > 0">
           <v-img
@@ -173,10 +173,11 @@ export default {
 
         this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
 
-        this.remaining = await collectibles.getRemaining(this.collectible.id);
-        this.userAmount = await collectibles.balanceOf(this.account, this.collectible.id);
+        if (!this.collectible.isGift) {
+          this.remaining = await collectibles.getRemaining(this.collectible.id);
+        }
 
-        console.log(this.userAmount);
+        this.userAmount = await collectibles.balanceOf(this.account, this.collectible.id);
       } catch (e) {
         console.log(e);
       } finally {

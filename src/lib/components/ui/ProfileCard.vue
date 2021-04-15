@@ -16,7 +16,7 @@
       <v-layout justify-center align-center>
         <v-flex shrink class="text-center" style="min-height: 150px">
           <div class="title">
-            NFTs
+            Game Items
           </div>
           <div class="value">
             {{collectibles}}

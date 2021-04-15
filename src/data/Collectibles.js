@@ -177,6 +177,26 @@ export function getCollectibles() {
         "56":
           "0x3aeb5359467f4e0071150afcf742b911329c36d3f98375ba7ce2e9ee52f04b0316a8dace3e021a78b6d8f73738173f7aea1aa3851a6d37427c71f4977b94539300"
       }
+    },
+    {
+      id: 10,
+      contractAddress: addresses.collectibles,
+      isGift: true,
+      tokenAddress: addresses.wGOLD,
+      title: "The Pionner 48h-Gold Saver (10%)",
+      description:
+        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 10% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
+      image: "/images/nfts/goldsaver1048h-pioneer.png"
+    },
+    {
+      id: 11,
+      isGift: true,
+      contractAddress: addresses.collectibles,
+      tokenAddress: addresses.wGOLD,
+      title: "The Society 48h-Gold Saver (20%)",
+      description:
+        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 10% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
+      image: "/images/nfts/goldsaver2048h-thesociety.png"
     }
   ];
 }
