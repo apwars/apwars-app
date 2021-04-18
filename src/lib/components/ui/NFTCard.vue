@@ -12,7 +12,7 @@
         <small class="remaining">Your Amount: {{userAmount}}</small>
       </div>
       <div v-else-if="!collectible.isGift">
-        <small class="remaining">Remaining: {{remaining}}</small>
+        <small class="remaining">Remaining: {{remaining}} of {{supply}}</small>
         <div class="d-flex justify-center align-center mt-1" v-if="remaining > 0">
           <v-img
             v-if="isApproved"
@@ -82,6 +82,7 @@ export default {
   data() {
     return {
       remaining: 0,
+      supply: 0,
       isLoading: false,
       isApproved: false,
       waitingMetamask: false,
@@ -174,6 +175,7 @@ export default {
         this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
 
         if (!this.collectible.isGift) {
+          this.supply = await collectibles.getMaxSupply(this.collectible.id);
           this.remaining = await collectibles.getRemaining(this.collectible.id);
         }
 
