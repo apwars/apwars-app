@@ -1,6 +1,7 @@
 import APWarsGoldToken from "./APWarsGoldToken.json";
 import { ethers } from "ethers";
 import BigNumber from "bignumber.js";
+import Addresss from "../../data/Addresses";
 
 export default class wGOLD {
   constructor(contract) {
@@ -29,5 +30,21 @@ export default class wGOLD {
     const allowance = await this.allowance(owner, spender);
     const bn = new BigNumber(allowance);
     return bn.gt(0);
+  }
+
+  async priceWGOLD() {
+    const busd = new window.web3.eth.Contract(
+      APWarsGoldToken,
+      Addresss.BUSD[56]
+    );
+    const balanceOfUSD = await busd.methods
+      .balanceOf(Addresss.wGOLD_BUSD_LP[56])
+      .call();
+    const balanceOfWgold = await this.balanceOf(Addresss.wGOLD_BUSD_LP[56]);
+
+    return window.web3.utils.toWei(
+      (balanceOfUSD / balanceOfWgold).toString(),
+      "ether"
+    );
   }
 }
