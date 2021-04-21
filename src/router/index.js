@@ -16,22 +16,34 @@ export const routes = [
         path: "/",
         name: "/",
         component: () =>
-          import(/* webpackChunkName: "Items" */ "@/pages/Items.vue")
+          import(/* webpackChunkName: "Items" */ "@/pages/Items.vue"),
       },
       {
         path: "/collection",
         name: "/collection",
         component: () =>
-          import(/* webpackChunkName: "/collection" */ "@/pages/MyItems.vue")
+          import(/* webpackChunkName: "/collection" */ "@/pages/MyItems.vue"),
       },
       {
         path: "/war-stats",
         name: "/war-stats",
         component: () =>
-          import(/* webpackChunkName: "/collection" */ "@/pages/WarStats.vue")
-      }
-    ]
-  }
+          import(/* webpackChunkName: "/collection" */ "@/pages/WarStats.vue"),
+      },
+      {
+        path: "/farms",
+        beforeEnter() {
+          location.href = "https://farms.apwars.farm";
+        },
+      },
+      {
+        path: "/exchange",
+        beforeEnter() {
+          location.href = "https://exchange.apwars.farm";
+        },
+      },
+    ],
+  },
 ];
 
 const router = new Router({
@@ -40,7 +52,7 @@ const router = new Router({
   scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 };
   },
-  routes
+  routes,
 });
 
 /**

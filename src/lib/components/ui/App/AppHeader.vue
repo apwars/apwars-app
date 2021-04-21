@@ -94,11 +94,11 @@ export default {
         },
         {
           title: "Buy wGOLD",
-          href: "https://exchange.apwars.farm/",
+          href: "/exchange",
         },
         {
           title: "Farms",
-          href: "https://farms.apwars.farm/",
+          href: "/farms",
         },
       ],
     };
