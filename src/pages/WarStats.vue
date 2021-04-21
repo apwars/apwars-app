@@ -63,7 +63,7 @@
                 Current Price:
               </span>
               <div class="price-WGOLD" v-if="isConnected">
-                <amount :amount="priceWGOLD" /> <span class="suffix">BUSD</span>
+                <amount :amount="priceWGOLD" decimals="3" /> <span class="suffix">BUSD</span>
               </div>
             </div>
           </div>
@@ -151,6 +151,7 @@
         </v-col>
       </v-row>
     </v-container>
+
   </div>
 </template>
 
@@ -302,6 +303,7 @@ export default {
                   qtyAccount: qtyAccount,
                   qtyGlobal: qtyGlobal,
                   priceWGOLD: priceWGOLD,
+                  disabled: false,
                 });
               } catch (error) {
                 console.log(error);
@@ -311,7 +313,6 @@ export default {
         );
 
         this.myTroops = this.gobalTroops
-          .filter((trooper) => trooper.qtyAccount !== "0")
           .map((trooper) => {
             return { ...trooper, ...{ qty: trooper.qtyAccount } };
           });
