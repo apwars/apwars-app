@@ -23,6 +23,12 @@ export const routes = [
         name: "/collection",
         component: () =>
           import(/* webpackChunkName: "/collection" */ "@/pages/MyItems.vue")
+      },
+      {
+        path: "/war-stats",
+        name: "/war-stats",
+        component: () =>
+          import(/* webpackChunkName: "/collection" */ "@/pages/WarStats.vue")
       }
     ]
   }
