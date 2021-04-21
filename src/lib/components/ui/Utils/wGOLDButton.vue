@@ -3,7 +3,7 @@
     <div class="btn">
       <v-img class="mx-auto" width="350" src="/images/buttons/btn-wgold.png" />
       <span class="amount-wGOLD">
-        <amount :amount="amount" compact />
+        <amount :amount="amount" decimals="3" compact />
         <span class="suffix">wGOLD</span>
       </span>
     </div>

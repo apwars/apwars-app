@@ -19,7 +19,7 @@
             height="38"
           />
           <div class="price-wgold align-self-center">
-            <amount :amount="info.priceWGOLD" compact /> wGOLD
+            <amount :amount="info.priceWGOLD" decimals="3" compact /> wGOLD
           </div>
         </div>
         <div class="d-flex justify-start">
@@ -69,7 +69,10 @@ export default {
   filter: grayscale(100%);
 }
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 1280px) {
+  .qty {
+    font-size: 14px;
+  }
   .current-price {
     font-size: 14px;
   }

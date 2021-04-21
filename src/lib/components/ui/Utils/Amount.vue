@@ -18,7 +18,7 @@ export default {
       return numberAmount;
     },
     getDecimals() {
-      return this.decimals ?? 3;
+      return this.decimals ?? 0;
     },
   },
 
