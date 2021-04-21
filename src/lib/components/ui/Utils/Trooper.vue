@@ -69,7 +69,10 @@ export default {
   filter: grayscale(100%);
 }
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 1280px) {
+  .qty {
+    font-size: 14px;
+  }
   .current-price {
     font-size: 14px;
   }
