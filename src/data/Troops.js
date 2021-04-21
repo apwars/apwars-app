@@ -19,8 +19,8 @@ export function getTroops() {
       lpAddresses: "0x764A521590ebd2686cC629E47f3464E8fD53b0F0",
       contractAddress: "0xAA2E03E7838148ce9FAd6Ce4C00275D89127A03e",
       image: "/images/troops/wARCHER.png",
-      strength: 2,
-      defense: 4,
+      strength: 5,
+      defense: 1,
     },
     {
       id: 2,
@@ -74,8 +74,8 @@ export function getTroops() {
       lpAddresses: "0x9e15154b80a68191E2D5C4B220a24bd99a422DeE",
       contractAddress: "0x934e11a44b2e817fe9bd6f337ef21bd35e46080e",
       image: "/images/troops/wORC-ARCHER.png",
-      strength: 2,
-      defense: 4,
+      strength: 5,
+      defense: 1,
     },
     {
       id: 7,
