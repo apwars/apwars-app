@@ -69,7 +69,7 @@ export default {
   filter: grayscale(100%);
 }
 
-@media only screen and (max-width: 1280px) {
+@media only screen and (max-width: 1920px) {
   .qty {
     font-size: 14px;
   }
