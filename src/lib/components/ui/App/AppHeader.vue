@@ -6,7 +6,7 @@
         <v-list-item v-for="(item, index) in menu" :key="index" link>
           <v-list-item-content>
             <a
-              :href="`${item.id}`"
+              :href="`${item.href}`"
               :key="index"
               class="mx-1 v-btn theme--dark v-size--default"
             >
