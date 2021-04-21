@@ -42,6 +42,9 @@ export default class wGOLD {
       .call();
     const balanceOfWgold = await this.balanceOf(Addresss.wGOLD_BUSD_LP[56]);
 
-    return balanceOfUSD / balanceOfWgold;
+    return window.web3.utils.toWei(
+      (balanceOfUSD / balanceOfWgold).toString(),
+      "ether"
+    );
   }
 }
