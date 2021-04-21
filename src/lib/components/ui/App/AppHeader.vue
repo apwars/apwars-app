@@ -105,6 +105,10 @@ export default {
   },
 
   methods: {
+    goToMyCollection() {
+      this.$router.push('/collection');
+    },
+
     toggleNetworkInfo(open) {
       this.networkInfoModalOpen = open;
     },

@@ -5,14 +5,14 @@
         width="230" 
         @click="openInfo()"
         :src="collectible.image" 
-        :gradient="remaining === 0 && !collectible.userAmount ? `to top right, rgba(100,115,201,.10), rgba(25,32,72,.7)`:''"></v-img>
+        :gradient="remaining === 0 && !myCollection ? `to top right, rgba(100,115,201,.10), rgba(25,32,72,.7)`:''"></v-img>
       <game-text>{{ collectible.title }}</game-text>
-      <item-price :price="collectible.parameters.price" />
-      <div v-if="collectible.userAmount > 0">
-        <small class="remaining">Your Amount: {{collectible.userAmount}}</small>
+      <item-price v-if="!collectible.isGift" :price="collectible.parameters.price" />
+      <div v-if="myCollection">
+        <small class="remaining">Your Amount: {{userAmount}}</small>
       </div>
-      <div v-else>
-        <small class="remaining">Remaining: {{remaining}}</small>
+      <div v-else-if="!collectible.isGift">
+        <small class="remaining">Remaining: {{remaining}} of {{supply}}</small>
         <div class="d-flex justify-center align-center mt-1" v-if="remaining > 0">
           <v-img
             v-if="isApproved"
@@ -70,7 +70,7 @@ import Collectibles from '@/lib/eth/Collectibles';
 import wGOLD from '@/lib/eth/wGOLD';
 
 export default {
-  props: ['collectible'],
+  props: ['collectible', 'myCollection'],
 
   components: {
     GameText,
@@ -82,12 +82,14 @@ export default {
   data() {
     return {
       remaining: 0,
+      supply: 0,
       isLoading: false,
       isApproved: false,
       waitingMetamask: false,
       isSending: false,
       transactionSent: false,
       showInfo: false,
+      userAmount: 0,
     }
   },
 
@@ -172,7 +174,12 @@ export default {
 
         this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
 
-        this.remaining = await collectibles.getRemaining(this.collectible.id);
+        if (!this.collectible.isGift) {
+          this.supply = await collectibles.getMaxSupply(this.collectible.id);
+          this.remaining = await collectibles.getRemaining(this.collectible.id);
+        }
+
+        this.userAmount = await collectibles.balanceOf(this.account, this.collectible.id);
       } catch (e) {
         console.log(e);
       } finally {
