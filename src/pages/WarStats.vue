@@ -290,9 +290,7 @@ export default {
                 }
                 const getTropper = new Troops(trooper.contractAddress);
                 const qtyAccount = await getTropper.balanceOf(this.account);
-                const qtyGlobal = await getTropper.balanceOf(
-                  trooper.lpAddresses
-                );
+                const qtyGlobal = await getTropper.totalSupply();
                 const priceWGOLD = await getTropper.priceWGOLD(
                   trooper.lpAddresses
                 );

@@ -5,13 +5,16 @@
         <v-subheader class="text-uppercase font-weight-bold">Menu</v-subheader>
         <v-list-item v-for="(item, index) in menu" :key="index" link>
           <v-list-item-content>
-            <a
+            <router-link :to="item.href" class="text-decoration-none">
+              {{ item.title }}
+            </router-link>
+            <!-- <a
               :href="`${item.href}`"
               :key="index"
               class="mx-1 v-btn theme--dark v-size--default"
             >
               {{ item.title }}
-            </a>
+            </a> -->
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -106,7 +109,7 @@ export default {
 
   methods: {
     goToMyCollection() {
-      this.$router.push('/collection');
+      this.$router.push("/collection");
     },
 
     toggleNetworkInfo(open) {

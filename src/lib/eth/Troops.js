@@ -11,6 +11,10 @@ export default class Troops {
     return await this.smc.methods.balanceOf(account).call();
   }
 
+  async totalSupply() {
+    return await this.smc.methods.totalSupply().call();
+  }
+
   async priceWGOLD(account) {
     const wGOLD = new window.web3.eth.Contract(
       APWarsTroops,
