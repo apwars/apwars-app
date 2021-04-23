@@ -241,7 +241,7 @@ export function getCollectibles() {
       title: "Corp Troop Saver (60%)",
       description:
         '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
-      image: "/images/nfts/corp-troopsaver-60.png",
+      image: "/images/nfts/corp-troopsaver-60v2.png",
       parameters: {
         id: 14,
         price: "3000000000000000000000"
