@@ -197,6 +197,110 @@ export function getCollectibles() {
       description:
         '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 20% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
       image: "/images/nfts/goldsaver2048h-thesociety.png"
+    },
+
+    //troop savers
+    {
+      id: 12,
+      contractAddress: addresses.collectibles,
+      tokenAddress: addresses.wGOLD,
+      title: "Corp Troop Saver (10%)",
+      description:
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+      image: "/images/nfts/corp-troopsaver-10.png",
+      parameters: {
+        id: 12,
+        price: "300000000000000000000"
+      },
+      signatures: {
+        "56":
+          "0x5d7e8cf0fb0aeb91e9c89d56a1dcbc6eac3d2091c8b38a81d0a1fc874f316b1513693f5366dc1482ee2634b914c790e90c4b64e7e618f487e6fb75f805584c1700"
+      }
+    },
+    {
+      id: 13,
+      contractAddress: addresses.collectibles,
+      tokenAddress: addresses.wGOLD,
+      title: "Corp Troop Saver (30%)",
+      description:
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+      image: "/images/nfts/corp-troopsaver-30.png",
+      parameters: {
+        id: 13,
+        price: "1500000000000000000000"
+      },
+      signatures: {
+        "56":
+          "0xc92273162869ee8d0c1ab074120c579336c6bba0a36ec577f35de01e5798b6b157e4282d830267a67239f40c1270fa6e31522e2397939dfcdb47619b4ba6974f01"
+      }
+    },
+    {
+      id: 14,
+      contractAddress: addresses.collectibles,
+      tokenAddress: addresses.wGOLD,
+      title: "Corp Troop Saver (60%)",
+      description:
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+      image: "/images/nfts/corp-troopsaver-60.png",
+      parameters: {
+        id: 14,
+        price: "3000000000000000000000"
+      },
+      signatures: {
+        "56":
+          "0x04919ca224434e4def8bfd366c1f0c10efc3275b33b702d7e6c342037d0564c612281269239fb5bf4e086663bf86049bb40a9e8b45a55b2d27c85d8a37e1bf8f01"
+      }
+    },
+    {
+      id: 15,
+      contractAddress: addresses.collectibles,
+      tokenAddress: addresses.wGOLD,
+      title: "Degen Troop Saver (10%)",
+      description:
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+      image: "/images/nfts/degen-troopsaver-10.png",
+      parameters: {
+        id: 15,
+        price: "300000000000000000000"
+      },
+      signatures: {
+        "56":
+          "0xf377b63d5b7be3e8a53ab6829003b66248f24c7d414eb4c5799a5a24a49bf1431f09553d8549f42e7a1f8ddd3a4caab3d7e7911fd5e2c9f407fbf78e0e854b0101"
+      }
+    },
+    {
+      id: 16,
+      contractAddress: addresses.collectibles,
+      tokenAddress: addresses.wGOLD,
+      title: "Degen Troop Saver (30%)",
+      description:
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+      image: "/images/nfts/degen-troopsaver-30.png",
+      parameters: {
+        id: 16,
+        price: "1500000000000000000000"
+      },
+      signatures: {
+        "56":
+          "0xd86cbd0b65f9a591ba5eea2d17b3a786927230d35434da29604b3f6589ebd0a84972d30d87d96263f5660880ec75829a6711318214f875bd61a2fb40661e583d01"
+      }
+    },
+    {
+      id: 17,
+      contractAddress: addresses.collectibles,
+      tokenAddress: addresses.wGOLD,
+      title: "Degen Troop Saver (60%)",
+      description:
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+      image: "/images/nfts/degen-troopsaver-60.png",
+      parameters: {
+        id: 17,
+        price: "3000000000000000000000"
+      },
+      signatures: {
+        "56":
+          "0xccccd8b9a1a40bc5cc150d61439fe4d12bde18d5f46bf8c379bef53a7458b2996b516231134dbeb3b7583ae99c4a7e1f3f68f365ad304509b4076c0cebde52dc00"
+      }
     }
   ];
 }
