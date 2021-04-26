@@ -92,6 +92,10 @@ export default {
           href: "/war-stats",
         },
         {
+          title: "Battle",
+          href: "battle",
+        },
+        {
           title: "My Collection",
           href: "/collection",
         },

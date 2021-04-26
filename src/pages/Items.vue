@@ -1,5 +1,5 @@
 <template>
-  <div>
+   <v-container class="pt-3">
     <v-card color="grey lighten-4" flat>
       <v-toolbar class="elevation-0">
         <v-toolbar-title>
@@ -23,7 +23,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+   </v-container>
 </template>
 
 <script>

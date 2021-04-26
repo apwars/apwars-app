@@ -28,7 +28,13 @@ export const routes = [
         path: "/war-stats",
         name: "/war-stats",
         component: () =>
-          import(/* webpackChunkName: "/collection" */ "@/pages/WarStats.vue"),
+          import(/* webpackChunkName: "/war-stats" */ "@/pages/WarStats.vue"),
+      },
+      {
+        path: "/battle",
+        name: "/battle",
+        component: () =>
+          import(/* webpackChunkName: "/battle" */ "@/pages/Battle.vue"),
       },
       {
         path: "/farms",

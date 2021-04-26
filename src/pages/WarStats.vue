@@ -115,10 +115,10 @@
               cols="12"
               lg="6"
               md="4"
-              v-for="topper in troopsHumans"
-              v-bind:key="topper.name"
+              v-for="trooper in troopsHumans"
+              v-bind:key="trooper.name"
             >
-              <trooper :info="topper" />
+              <trooper :info="trooper" />
             </v-col>
           </v-row>
         </v-col>
@@ -134,10 +134,10 @@
               cols="12"
               lg="6"
               md="4"
-              v-for="topper in troopsOrcs"
-              v-bind:key="topper.name"
+              v-for="trooper in troopsOrcs"
+              v-bind:key="trooper.name"
             >
-              <trooper :info="topper" />
+              <trooper :info="trooper" />
             </v-col>
           </v-row>
         </v-col>

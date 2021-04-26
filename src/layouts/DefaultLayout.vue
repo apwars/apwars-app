@@ -2,7 +2,7 @@
   <v-layout class="fill-height">
     <app-header />
     <v-main>
-      <v-container :fluid="false" class="pt-3">
+      <div class="mb-3">
         <router-view :key="$route.fullPath"></router-view>
 
         <v-dialog
@@ -37,7 +37,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-      </v-container>
+      </div>
     </v-main>
     <app-footer />
   </v-layout>
