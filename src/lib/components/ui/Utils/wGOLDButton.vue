@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div class="btn">
-      <v-img class="mx-auto" width="350" src="/images/buttons/btn-wgold.png" />
+    <div :class="getSize">
+      <v-img
+        class="mx-auto"
+        :width="getWidth"
+        src="/images/buttons/btn-wgold.png"
+      />
       <span class="amount-wGOLD">
         <amount :amount="amount" decimals="3" compact />
         <span class="suffix">wGOLD</span>
@@ -14,10 +18,29 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
-  props: ["amount"],
+  props: ["amount", "size"],
 
   components: {
     Amount,
+  },
+
+  computed: {
+    getSize() {
+      switch (this.size) {
+        case "small":
+          return "btn btn-small";
+        default:
+          return "btn btn-medium";
+      }
+    },
+    getWidth() {
+      switch (this.size) {
+        case "small":
+          return "280";
+        default:
+          return "350";
+      }
+    },
   },
 
   methods: {
@@ -33,13 +56,30 @@ export default {
   position: relative;
   margin: 0 auto;
 }
+
+.btn.btn-medium {
+  width: 350px;
+}
+
+.btn.btn-small {
+  width: 280px;
+}
+
+.btn.btn-medium .amount-wGOLD {
+  font-size: 24px;
+}
+
+.btn.btn-small .amount-wGOLD {
+  font-size: 20px;
+}
+
 .amount-wGOLD {
   position: absolute;
-  top: 34px;
-  left: 40px;
+  top: 50%;
+  left: 61%;
+  transform: translate(-50%, -50%);
   width: 100%;
   text-align: center;
-  font-size: 24px;
   font-family: PT Serif;
   font-weight: bold;
 }
@@ -50,20 +90,22 @@ export default {
 }
 
 @media only screen and (max-width: 320px) {
-  .amount-wGOLD {
-    position: absolute;
+  .btn.btn-small .amount-wGOLD {
     font-size: 14px;
-    top: 22px;
-    left: 26px;
+  }
+
+  .btn.btn-medium .amount-wGOLD {
+    font-size: 13px;
   }
 }
 
 @media only screen and (min-width: 320.999px) and (max-width: 375px) {
-  .amount-wGOLD {
-    position: absolute;
+  .btn.btn-medium .amount-wGOLD {
     font-size: 18px;
-    top: 28px;
-    left: 32px;
+  }
+
+  .btn.btn-medium .amount-wGOLD {
+    font-size: 16px;
   }
 }
 </style>

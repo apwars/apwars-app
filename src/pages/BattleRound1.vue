@@ -12,7 +12,7 @@
           </v-col>
         </v-row>
 
-        <v-row>
+        <v-row class="d-none d-sm-none d-md-flex">
           <v-col cols="12" md="4">
             <v-img
               class="mx-auto"
@@ -33,10 +33,21 @@
             <v-img
               class="mx-auto"
               max-width="400"
-              src="/images/battle/the-degenerate .png"
+              src="/images/battle/the-degenerate.png"
             />
           </v-col>
         </v-row>
+
+        <v-row class="d-flex d-sm-flex d-md-none">
+          <v-col cols="12" >
+            <v-img
+              class="mx-auto"
+              max-width="600"
+              src="/images/battle/battle-round-1.png"
+            />
+          </v-col>
+        </v-row>
+
       </v-container>
       <div class="degrade"></div>
     </div>
@@ -46,13 +57,13 @@
         <v-col cols="12">
           <v-img
             class="mx-auto"
-            max-width="250"
+            max-width="200"
             src="/images/battle/my-troops.png"
           />
         </v-col>
       </v-row>
 
-      <v-row>
+      <v-row v-if="isConnected">
         <v-col cols="12" lg="6" class="dividing-line">
           <v-row>
             <v-col
@@ -61,7 +72,7 @@
               v-for="trooper in troopsHumans"
               v-bind:key="trooper.name"
             >
-              <battle-trooper :info="trooper" />
+              <stake-trooper :trooper="trooper" />
             </v-col>
           </v-row>
         </v-col>
@@ -73,7 +84,7 @@
               v-for="trooper in troopsOrcs"
               v-bind:key="trooper.name"
             >
-              <battle-trooper :info="trooper" />
+              <stake-trooper :trooper="trooper" />
             </v-col>
           </v-row>
         </v-col>
@@ -84,6 +95,7 @@
       <v-row class="mt-3">
         <v-col cols="12" class="d-flex justify-center">
           <v-img
+            @click="goToSwap()"
             class="mx-auto cursor-pointer"
             max-width="300"
             src="/images/buttons/btn-buy-more-troops.png"
@@ -98,18 +110,17 @@
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Utils/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
-import BattleTrooper from "@/lib/components/ui/Utils/BattleTrooper";
+import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
-import wGOLD from "@/lib/eth/wGOLD";
 
 export default {
   components: {
     wGOLDButton,
     Amount,
     wButton,
-    BattleTrooper,
+    StakeTrooper,
   },
 
   data() {
@@ -149,20 +160,6 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    formattedAmount() {
-      const num = parseInt(this.balance);
-
-      if (this.balance < 1) {
-        return "~0";
-      } else if (num > 999 && num < 1000000) {
-        return (num / 1000).toFixed(2) + "K";
-      } else if (num > 1000000) {
-        return (num / 1000000).toFixed(2) + "M";
-      } else if (num < 900) {
-        return num;
-      }
-    },
-
     troopsHumans() {
       return this.gobalTroops.filter((trooper) => trooper.team === 1);
     },
@@ -200,78 +197,59 @@ export default {
         return;
       }
 
-      // try {
-      //   const wgold = new wGOLD(this.addresses.wGOLD);
-      //   this.balance = web3.utils.fromWei(await wgold.balanceOf(this.account));
-      //   this.balanceFED = await wgold.balanceOf(this.addresses.FED);
-      //   this.priceWGOLD = await wgold.priceWGOLD();
+      try {
+        //   const wgold = new wGOLD(this.addresses.wGOLD);
+        //   this.balance = web3.utils.fromWei(await wgold.balanceOf(this.account));
+        //   this.balanceFED = await wgold.balanceOf(this.addresses.FED);
+        //   this.priceWGOLD = await wgold.priceWGOLD();
 
-      this.gobalTroops = getTroops();
+        let troops = getTroops();
 
-      this.gobalTroops = this.gobalTroops.map((trooper) => {
-        return {
-          ...trooper,
-          ...{
-            staked: "1639000000000000000000",
-            myTroops: "1565000000000000000000",
-            globalTroops: "26784000000000000000000",
-          },
-        };
-      });
+        troops = troops.map((trooper) => {
+          return {
+            ...trooper,
+            ...{
+              staked: "1639000000000000000000",
+              myTroops: "0",
+              globalTroops: "26784000000000000000000",
+            },
+          };
+        });
 
-      console.log(this.gobalTroops);
+        this.gobalTroops = await Promise.all(
+          troops.map((trooper) => {
+            return new Promise(async (resolve) => {
+              try {
+                if (trooper.contractAddress === "") {
+                  resolve(trooper);
+                }
+                const getTropper = new Troops(trooper.contractAddress);
+                trooper.myTroops = await getTropper.balanceOf(this.account);
 
-      //   this.gobalTroops = await Promise.all(
-      //     troops.map((trooper) => {
-      //       return new Promise(async (resolve) => {
-      //         try {
-      //           if (trooper.contractAddress === "") {
-      //             resolve({
-      //               name: trooper.name,
-      //               team: trooper.team,
-      //               tier: trooper.tier,
-      //               qtyAccount: "0",
-      //               qtyGlobal: "0",
-      //               priceWGOLD: "0",
-      //               disabled: true,
-      //             });
-      //           }
-      //           const getTropper = new Troops(trooper.contractAddress);
-      //           const qtyAccount = await getTropper.balanceOf(this.account);
-      //           const qtyGlobal = await getTropper.totalSupply();
-      //           const priceWGOLD = await getTropper.priceWGOLD(
-      //             trooper.lpAddresses
-      //           );
-      //           resolve({
-      //             name: trooper.name,
-      //             team: trooper.team,
-      //             tier: trooper.tier,
-      //             qtyAccount: qtyAccount,
-      //             qtyGlobal: qtyGlobal,
-      //             priceWGOLD: priceWGOLD,
-      //             disabled: false,
-      //           });
-      //         } catch (error) {
-      //           console.log(error);
-      //         }
-      //       });
-      //     })
-      //   );
+                resolve(trooper);
+              } catch (error) {
+                console.log(error);
+              }
+            });
+          })
+        );
 
-      //   this.myTroops = this.gobalTroops
-      //     .map((trooper) => {
-      //       return { ...trooper, ...{ qty: trooper.qtyAccount } };
-      //     });
+        // this.myTroops = this.gobalTroops
+        //   .map((trooper) => {
+        //     return { ...trooper, ...{ qty: trooper.qtyAccount } };
+        //   });
 
-      //   this.gobalTroops = this.gobalTroops.map((trooper) => {
-      //     return { ...trooper, ...{ qty: trooper.qtyGlobal } };
-      //   });
-      // } catch (e) {
-      //   console.log(e);
-      // } finally {
-      //   this.isLoading = false;
-      // }
+        // this.gobalTroops = this.gobalTroops.map((trooper) => {
+        //   return { ...trooper, ...{ qty: trooper.qtyGlobal } };
+        // });
+      } catch (e) {
+        console.log(e);
+      } finally {
+        this.isLoading = false;
+      }
     },
+
+
   },
 };
 </script>

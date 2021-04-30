@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-bind:class="{ disabled: this.disabled }">
     <div
       :class="this.getSize"
       @mouseleave="hover = false"
@@ -29,7 +29,7 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
-  props: ["amount", "actived", "size"],
+  props: ["amount", "actived", "size", "disabled"],
 
   data() {
     return {
@@ -68,7 +68,7 @@ export default {
 
   methods: {
     emitClick() {
-      this.$emit("click");
+      !this.disabled && this.$emit("click");
     },
   },
 };
@@ -101,5 +101,8 @@ export default {
 }
 .btn-small .label {
   font-size: 16px;
+}
+.disabled {
+  opacity: 0.6;
 }
 </style>

@@ -11,9 +11,11 @@ export default {
   computed: {
     computedAmount() {
       let numberAmount = web3.utils.fromWei(this.amount.toString());
-      numberAmount = parseFloat(numberAmount).toFixed(this.getDecimals);
       if (this.compact !== undefined) {
         numberAmount = this.compactNumber(numberAmount, this.getDecimals);
+      }
+      else {
+        numberAmount = this.roundDown(parseFloat(numberAmount), this.getDecimals);
       }
       return numberAmount;
     },
@@ -24,14 +26,18 @@ export default {
 
   methods: {
     compactNumber(value, decimals) {
-      if (value < 1e3) return value;
+      if (value < 1e3) return this.roundDown(value, decimals);
       if (value >= 1e3 && value < 1e6)
-        return +(value / 1e3).toFixed(decimals) + "K";
+        return +this.roundDown(value / 1e3, decimals) + "K";
       if (value >= 1e6 && value < 1e9)
-        return +(value / 1e6).toFixed(decimals) + "M";
+        return +this.roundDown(value / 1e6, decimals) + "M";
       if (value >= 1e9 && value < 1e12)
-        return +(value / 1e9).toFixed(decimals) + "B";
-      if (value >= 1e12) return +(value / 1e12).toFixed(decimals) + "T";
+        return +this.roundDown(value / 1e9, decimals) + "B";
+      if (value >= 1e12) return +this.roundDown(value / 1e12, decimals) + "T";
+    },
+    roundDown(value, decimals) {
+      const setDecimals = Math.pow(10, decimals);
+      return parseFloat(Math.floor(value * setDecimals) / setDecimals).toFixed(decimals);
     },
   },
 };

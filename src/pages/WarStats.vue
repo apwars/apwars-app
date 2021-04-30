@@ -210,20 +210,6 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    formattedAmount() {
-      const num = parseInt(this.balance);
-
-      if (this.balance < 1) {
-        return "~0";
-      } else if (num > 999 && num < 1000000) {
-        return (num / 1000).toFixed(2) + "K";
-      } else if (num > 1000000) {
-        return (num / 1000000).toFixed(2) + "M";
-      } else if (num < 900) {
-        return num;
-      }
-    },
-
     troopsHumans() {
       return this.selectTroops === "myTroops"
         ? this.myTroops.filter((trooper) => trooper.team === 1)

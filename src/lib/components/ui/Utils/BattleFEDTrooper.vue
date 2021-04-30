@@ -8,11 +8,11 @@
         />
       </div>
       <span class="staked">
-        STAKED: <amount :amount="info.staked" decimals="3" compact />
+        Survivors: <amount :amount="info.staked" decimals="3" compact />
       </span>
       <span class="troop-symbol">{{ info.name }}</span>
       <span class="my-troops">
-        My troops:
+        My troops dead:
         <amount :amount="info.myTroops" decimals="3" compact />
       </span>
     </div>
@@ -24,44 +24,40 @@
         class="d-flex justify-center justify-md-start pa-0"
       >
         <div class="global-troops align-self-center">
-          Global troops in battle:
+          Global troops survivors:
           <div>
             QTY: <amount :amount="info.globalTroops" decimals="3" compact />
           </div>
         </div>
       </v-col>
-      <v-col cols="12" md="6" class="pa-0">
-        <div class="stake align-self-center">
-          <wButton :actived="false" @click="openModal = true">Stake</wButton>
+      <v-col
+        cols="12"
+        md="6"
+        class="d-flex justify-center justify-md-start pa-0"
+      >
+        <div class="global-troops align-self-center">
+          Global troops dead:
+          <div>
+            QTY: <amount :amount="info.globalTroops" decimals="3" compact />
+          </div>
         </div>
       </v-col>
     </v-row>
-
-    <stake-modal
-      :open="openModal"
-      title="CAUTION!"
-      @close="openModal = false"
-    >
-    </stake-modal>
   </div>
 </template>
 
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
-import wButton from "@/lib/components/ui/Utils/wButton";
-import StakeModal from "@/lib/components/ui/Modals/StakeModal";
 
 export default {
   props: ["info"],
   components: {
     Amount,
-    wButton,
-    StakeModal,
   },
   data() {
     return {
       openModal: false,
-    }
+    };
   },
   computed: {
     imgWidth() {
@@ -85,8 +81,9 @@ export default {
   font-size: 22px;
   font-weight: bold;
   top: 50%;
-  left: 47%;
+  left: 50%;
   transform: translate(-50%, -50%);
+  width: 210px;
 }
 .troop-symbol {
   position: absolute;
@@ -102,14 +99,16 @@ export default {
   font-size: 22px;
   font-weight: bold;
   bottom: -5px;
-  left: 49%;
+  left: 295px;
   transform: translate(-50%, -50%);
   color: #ffb800;
+  width: 300px;
 }
 .global-troops {
   font-size: 18px;
   font-weight: bold;
   margin-right: 32px;
+  width: 100%;
 }
 .global-troops > div {
   font-size: 22px;
@@ -128,13 +127,11 @@ export default {
   .staked {
     font-size: 14px;
     top: 50%;
-    left: 60%;
+    left: 65%;
   }
   .my-troops {
     font-size: 14px;
-    bottom: -5px;
-    left: 90%;
-    width: 100%;
+    left: 2400px;
   }
 }
 </style>

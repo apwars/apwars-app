@@ -4,17 +4,23 @@
       content-class="elevation-0"
       persistent
       :value="open"
-      width="600px"
+      width="630px"
       style="box-shadow: none"
     >
       <v-card>
-        <v-card-title class="red--text d-flex text-bold text-h4 justify-center">
-          {{ title }}
+        <v-card-title class="card-title-modal justify-center">
+          <v-img max-width="44" class="mr-2" src="/images/skull.png" />
+          <div class="align-self-center">{{ title }}</div>
+          <v-img
+            max-width="44"
+            class="ml-2 skull-flip"
+            src="/images/skull.png"
+          />
         </v-card-title>
-        <v-card-text style="height: 340px">
+        <v-card-text style="height: 300px">
           <div class="content">
             <p class="mb-1">
-              What will happen when I send my troops: <br />
+              What will happen when I send my troops:<br />
               You will not be able to withdraw your troops until the war is over
               <br />
               Part or all of your troops will die in the war, even if you win
@@ -38,21 +44,34 @@
               outlined
               label="Amount"
               :disabled="!checkbox"
-              :hint="'Available: 123.54547784'"
+              :hint="`Available: ${myAvailable}`"
               persistent-hint
               v-bind="currencyConfig"
+              v-model="amount"
             >
               <template v-slot:append>
                 <div class="d-flex">
                   <span class="mr-1 align-self-center">wWARRIOR - WAR</span>
-                  <v-btn class="align-self-center" rounded small>MAX</v-btn>
+                  <v-btn
+                    class="align-self-center"
+                    rounded
+                    small
+                    @click="amount = myAvailable"
+                    >MAX</v-btn
+                  >
                 </div>
               </template>
             </v-currency-field>
 
             <div class="d-flex justify-center mt-2">
               <wButton class="mx-2" size="small" @click="close">Cancel</wButton>
-              <wButton class="mx-2" size="small" :actived="true">
+              <wButton
+                class="mx-2"
+                size="small"
+                @click="confirm"
+                :actived="true"
+                :disabled="!checkbox || amount === 0"
+              >
                 Confirm
               </wButton>
             </div>
@@ -67,7 +86,7 @@
 import wButton from "@/lib/components/ui/Utils/wButton";
 
 export default {
-  props: ["open", "title", "hideOk"],
+  props: ["open", "title", "available"],
 
   components: {
     wButton,
@@ -77,11 +96,12 @@ export default {
     return {
       address: "",
       checkbox: false,
+      amount: 0,
       currencyConfig: {
-        locale: 'en-US',
+        locale: "en-US",
         prefix: "",
         suffix: "",
-        decimalLength: 8,
+        decimalLength: 14,
         autoDecimalMode: true,
         allowNegative: false,
       },
@@ -104,12 +124,27 @@ export default {
     addresses() {
       return this.$store.getters["user/addresses"];
     },
+
+    myAvailable() {
+      if (!this.available || typeof this.available !== "string") {
+        return 0;
+      }
+
+      return parseFloat(web3.utils.fromWei(this.available.toString())) ?? 0;
+    },
   },
 
   methods: {
     close() {
       this.checkbox = false;
+      this.amount = 0;
       this.$emit("close");
+    },
+    confirm() {
+      this.$emit(
+        "confirm",
+        window.web3.utils.toWei(this.amount.toString(), "ether")
+      );
     },
   },
 };
@@ -131,16 +166,21 @@ export default {
 }
 
 .content {
-  height: 185px;
   color: #201813;
-  display: table-cell;
-  vertical-align: middle;
 }
 
 .btn {
   cursor: pointer;
   width: 150px;
   float: right;
+}
+
+.card-title-modal {
+  font-weight: bold !important;
+  font-size: 38px !important;
+  background: -webkit-linear-gradient(#ff0000, #bd0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .stake-modal-input >>> .v-input__control > .v-input__slot fieldset {
@@ -178,5 +218,10 @@ export default {
   font-size: 14px;
   color: #32211c;
   font-weight: bold;
+}
+
+.skull-flip {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 </style>

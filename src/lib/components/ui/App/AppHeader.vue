@@ -42,9 +42,37 @@
               text
               class="mx-1 v-btn v-btn--text theme--dark v-size--default"
             >
-              <router-link :to="item.href" class="text-decoration-none">
+              <router-link
+                v-if="!item.submenu"
+                :to="item.href"
+                class="text-decoration-none"
+              >
                 {{ item.title }}
               </router-link>
+
+              <v-menu v-else open-on-hover offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <div class="primary--text" v-bind="attrs" v-on="on">
+                    {{ item.title }}
+                  </div>
+                </template>
+
+                <v-list class="submenu">
+                  <v-list-item
+                    v-for="(item_submenu, index) in item.submenu"
+                    :key="index"
+                  >
+                    <v-list-item-title>
+                      <router-link
+                        :to="item_submenu.href"
+                        class="text-decoration-none"
+                      >
+                        {{ item_submenu.title }}
+                      </router-link>
+                    </v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </div>
           </div>
 
@@ -93,7 +121,17 @@ export default {
         },
         {
           title: "Battle",
-          href: "battle",
+          href: "/",
+          submenu: [
+            {
+              title: "Round 1",
+              href: "/battle/round-1",
+            },
+            {
+              title: "Round 2",
+              href: "/battle/round-2",
+            },
+          ],
         },
         {
           title: "My Collection",
@@ -130,5 +168,20 @@ export default {
 <style scoped>
 .logo {
   text-decoration: none;
+}
+
+.submenu {
+  border: 2px solid #f6b101;
+  background: #32211c;
+  border-radius: 10px;
+}
+
+.submenu >>> .v-list-item__title {
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 0px -10px;
+}
+.submenu >>> .v-list-item__title:hover {
+  background: #42322d;
 }
 </style>

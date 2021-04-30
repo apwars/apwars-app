@@ -5,7 +5,7 @@ import VueCodeHighlight from "vue-code-highlight";
 
 import IPFSHelper from "@/lib/helpers/IPFSHelper";
 
-IPFSHelper.connect();
+// IPFSHelper.connect();
 
 Vue.use(VueApexCharts);
 Vue.use(VueCodeHighlight);
