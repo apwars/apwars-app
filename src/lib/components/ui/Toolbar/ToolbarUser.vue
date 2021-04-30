@@ -76,7 +76,7 @@ export default {
     },
 
     goToWebSite() {
-      window.location = 'https://farms.apwars.farm';
+      this.$router.push('/farms');
     },
 
     openNetworkInfoModal() {
