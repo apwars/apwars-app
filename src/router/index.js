@@ -43,18 +43,25 @@ export const routes = [
       {
         path: "/farms",
         beforeEnter() {
-          location.href = "https://farms.apwars.farm";
+          redirect_blank("https://farms.apwars.farm");
         },
       },
       {
         path: "/exchange",
         beforeEnter() {
-          location.href = "https://exchange.apwars.farm";
+          redirect_blank("https://exchange.apwars.farm");
         },
       },
     ],
   },
 ];
+
+const redirect_blank = (url) => {
+  var a = document.createElement("a");
+  a.target = "_blank";
+  a.href = url;
+  a.click();
+};
 
 const router = new Router({
   mode: "history",
