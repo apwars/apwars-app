@@ -257,7 +257,7 @@ export default {
 
   methods: {
     goToSwap() {
-      window.location = "https://exchange.apwars.farm/#/swap";
+      this.$router.push('/exchange');
     },
 
     async loadData() {
