@@ -47,12 +47,12 @@
                 @click="openModal = true"
                 :disabled="isSendingWar"
               >
-                {{ isSendingWar ? "Sending to war..." : "Send recruits" }}
+                {{ isSendingWar ? "Sending to war..." : "Enlist at war" }}
               </wButton>
             </div>
             <div v-else class="stake align-self-center">
               <wButton :actived="false" @click="approve">
-                {{ loadingApproved ? "Approving..." : "Approve recruits" }}
+                {{ loadingApproved ? "Approving..." : "Approve enlistment" }}
               </wButton>
             </div>
           </div>
