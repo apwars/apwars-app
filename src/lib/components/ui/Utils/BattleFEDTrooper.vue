@@ -8,12 +8,13 @@
         />
       </div>
       <span class="staked">
-        Survivors: <amount :amount="info.staked" decimals="3" compact />
+        Survivors:
+        <amount :amount="info.mySurvivor" decimals="2" compact approximate />
       </span>
       <span class="troop-symbol">{{ info.name }}</span>
       <span class="my-troops">
-        My troops dead:
-        <amount :amount="info.myTroops" decimals="3" compact />
+        My dead troops:
+        <amount :amount="info.myDead" decimals="2" compact approximate />
       </span>
     </div>
 
@@ -26,7 +27,13 @@
         <div class="global-troops align-self-center">
           Global troops survivors:
           <div>
-            QTY: <amount :amount="info.globalTroops" decimals="3" compact />
+            QTY:
+            <amount
+              :amount="info.troopsSurvivors"
+              decimals="2"
+              compact
+              approximate
+            />
           </div>
         </div>
       </v-col>
@@ -36,9 +43,15 @@
         class="d-flex justify-center justify-md-start pa-0"
       >
         <div class="global-troops align-self-center">
-          Global troops dead:
+          Global dead troops:
           <div>
-            QTY: <amount :amount="info.globalTroops" decimals="3" compact />
+            QTY:
+            <amount
+              :amount="info.troopsDead"
+              decimals="2"
+              compact
+              approximate
+            />
           </div>
         </div>
       </v-col>

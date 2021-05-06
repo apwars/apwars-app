@@ -4,8 +4,11 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import Items from "@/pages/Items.vue";
 import MyItems from "@/pages/MyItems.vue";
 import WarStats from "@/pages/WarStats.vue";
-import BattleRound1 from "@/pages/BattleRound1.vue";
-import BattleRound2 from "@/pages/BattleRound2.vue";
+import Wars from "@/pages/Wars.vue";
+import Enlistment from "@/pages/Wars/Enlistment.vue";
+import Round1 from "@/pages/Wars/Round1.vue";
+import Round2 from "@/pages/Wars/Round2.vue";
+import WarReport from "@/pages/Wars/WarReport.vue";
 
 Vue.use(Router);
 
@@ -31,14 +34,29 @@ export const routes = [
         component: WarStats,
       },
       {
-        path: "/battle/round-1",
-        name: "/battle-round-1",
-        component: BattleRound1,
+        path: "/wars",
+        name: "/wars",
+        component: Wars,
       },
       {
-        path: "/battle/round-2",
-        name: "/battle-round-2",
-        component: BattleRound2,
+        path: "/wars/:contractWar/enlistment",
+        name: "/wars-enlistment",
+        component: Enlistment,
+      },
+      {
+        path: "/wars/:contractWar/round-1",
+        name: "/wars-round-1",
+        component: Round1,
+      },
+      {
+        path: "/wars/:contractWar/round-2",
+        name: "/wars-round-2",
+        component: Round2,
+      },
+      {
+        path: "/wars/:contractWar/report",
+        name: "/wars-report",
+        component: WarReport,
       },
       {
         path: "/farms",
@@ -49,14 +67,14 @@ export const routes = [
       {
         path: "/exchange",
         beforeEnter() {
-          redirect_blank("https://exchange.apwars.farm");
+          redirectBlank("https://exchange.apwars.farm");
         },
       },
     ],
   },
 ];
 
-const redirect_blank = (url) => {
+const redirectBlank = (url) => {
   var a = document.createElement("a");
   a.target = "_blank";
   a.href = url;

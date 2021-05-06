@@ -43,7 +43,7 @@ export default {
 
   computed: {
     getHover() {
-      if (this.actived === undefined) {
+      if (this.actived === undefined || this.disabled) {
         return false;
       }
       return this.actived === "" || this.actived ? true : this.hover;
@@ -87,7 +87,7 @@ export default {
   transform: translate(-50%, -50%);
   width: 100%;
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   font-family: PT Serif;
   font-weight: bold;
   color: #fff;
@@ -104,5 +104,8 @@ export default {
 }
 .disabled {
   opacity: 0.6;
+}
+.disabled .btn {
+  cursor: not-allowed !important;
 }
 </style>

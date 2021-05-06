@@ -10,12 +10,13 @@
           />
         </div>
         <span class="staked">
-          STAKED: <amount :amount="trooper.staked" decimals="3" compact />
+          In War:
+          <amount :amount="trooper.staked" decimals="2" compact approximate />
         </span>
         <span class="troop-symbol">{{ trooper.name }}</span>
         <span class="my-troops">
           My troops:
-          <amount :amount="trooper.myTroops" decimals="3" compact />
+          <amount :amount="trooper.myTroops" decimals="2" compact approximate />
         </span>
       </div>
 
@@ -26,16 +27,46 @@
           class="d-flex justify-center justify-md-start pa-0"
         >
           <div class="global-troops align-self-center">
-            Global troops in battle:
+            Global troops in war:
             <div>
               QTY:
-              <amount :amount="trooper.globalTroops" decimals="3" compact />
+              <amount
+                :amount="trooper.globalTroops"
+                decimals="2"
+                compact
+                approximate
+              />
             </div>
           </div>
         </v-col>
         <v-col cols="12" md="6" class="pa-0">
-          <div class="stake align-self-center">
-            <wButton :actived="false" @click="openModal = true">Stake</wButton>
+          <div v-if="!trooper.backHome">
+            <div v-if="isApproved" class="stake align-self-center">
+              <wButton
+                :actived="false"
+                @click="openModal = true"
+                :disabled="isSendingWar"
+              >
+                {{ isSendingWar ? "Sending to war..." : "Send recruits" }}
+              </wButton>
+            </div>
+            <div v-else class="stake align-self-center">
+              <wButton :actived="false" @click="approve">
+                {{ loadingApproved ? "Approving..." : "Approve recruits" }}
+              </wButton>
+            </div>
+          </div>
+
+          <div v-else>
+            <div class="stake align-self-center">
+              <wButton
+                :actived="false"
+                @click="backHome"
+                :disabled="trooper.staked === '0' || btnHomeDisabled"
+              >
+                Bring home
+              </wButton>
+            </div>
           </div>
         </v-col>
       </v-row>
@@ -44,6 +75,7 @@
         :open="openModal"
         title="CAUTION"
         :available="trooper.myTroops"
+        :label="trooper.name"
         @confirm="confirmStake"
         @close="openModal = false"
       >
@@ -56,10 +88,13 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 import wButton from "@/lib/components/ui/Utils/wButton";
 import StakeModal from "@/lib/components/ui/Modals/StakeModal";
-import APWars from "@/lib/eth/APWars";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+
+import WarMachine from "@/lib/eth/WarMachine";
+import Troops from "@/lib/eth/Troops";
 
 export default {
-  props: ["trooper"],
+  props: ["trooper", "contractWar"],
   components: {
     Amount,
     wButton,
@@ -69,7 +104,10 @@ export default {
     return {
       openModal: false,
       isApproved: false,
-      APWars: {},
+      loadingApproved: false,
+      warMachine: {},
+      btnHomeDisabled: false,
+      isSendingWar: false,
     };
   },
   computed: {
@@ -90,10 +128,19 @@ export default {
     addresses() {
       return this.$store.getters["user/addresses"];
     },
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
+    },
   },
 
   watch: {
     isConnected() {
+      this.loadData();
+    },
+    account() {
+      this.loadingApproved = false;
+      this.btnHomeDisabled = false;
+      this.isSendingWar = false;
       this.loadData();
     },
   },
@@ -104,27 +151,86 @@ export default {
 
   methods: {
     async loadData() {
-      this.APWars = new APWars(this.addresses.wGOLD);
-      this.isApproved = await this.APWars.hasAllowance(
+      this.warMachine = new WarMachine(this.contractWar);
+      this.ContractTrooper = new Troops(
+        this.trooper.contractAddress[this.networkInfo.id]
+      );
+      this.isApproved = await this.ContractTrooper.hasAllowance(
         this.account,
-        this.trooper.contractAddress
+        this.contractWar
       );
     },
     async approve() {
       try {
-        await this.APWars.approve(this.account, this.trooper.contractAddress);
-        this.isApproved = await this.APWars.hasAllowance(
+        this.loadingApproved = true;
+        await this.ContractTrooper.approve(this.account, this.contractWar);
+        this.isApproved = await this.ContractTrooper.hasAllowance(
           this.account,
-          this.trooper.contractAddress
+          this.contractWar
         );
       } catch (error) {
-        console.log(error);
+        this.loadingApproved = false;
+
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(error);
       }
     },
     async confirmStake(amount) {
       try {
-        await this.APWars.deposit(this.trooper.contractAddress, amount, this.account);
-      } catch(error) {
+        const deposit = this.warMachine.deposit(
+          this.trooper.contractAddress[this.networkInfo.id],
+          amount,
+          this.account
+        );
+        this.openModal = false;
+        this.isSendingWar = true;
+
+        deposit.on("error", (error) => {
+          this.isSendingWar = false;
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error("Troop sending failed");
+        });
+        deposit.on("receipt", (receipt) => {
+          this.isSendingWar = false;
+          ToastSnackbar.successTransaction(
+            `Troop sent successfully`,
+            receipt.transactionHash
+          );
+        });
+      } catch (error) {
+        this.isSendingWar = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(error);
+      }
+    },
+    async backHome() {
+      try {
+        // back home
+        const withdraw = this.warMachine.withdraw(
+          this.trooper.contractAddress[this.networkInfo.id],
+          this.account
+        );
+        this.btnHomeDisabled = true;
+        withdraw.on("error", (error) => {
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          this.btnHomeDisabled = false;
+          return ToastSnackbar.error("Troop sending failed");
+        });
+        withdraw.on("receipt", (receipt) => {
+          ToastSnackbar.successTransaction(
+            `Transaction successfully`,
+            receipt.transactionHash
+          );
+        });
+      } catch (error) {
         console.log(error);
       }
     },

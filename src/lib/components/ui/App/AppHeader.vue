@@ -120,18 +120,8 @@ export default {
           href: "/war-stats",
         },
         {
-          title: "Battle",
-          href: "/",
-          submenu: [
-            {
-              title: "Round 1",
-              href: "/battle/round-1",
-            },
-            {
-              title: "Round 2",
-              href: "/battle/round-2",
-            },
-          ],
+          title: "Wars",
+          href: "/wars",
         },
         {
           title: "My Collection",

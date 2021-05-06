@@ -20,11 +20,10 @@
         <v-card-text style="height: 300px">
           <div class="content">
             <p class="mb-1">
-              What will happen when I send my troops:<br />
-              You will not be able to withdraw your troops until the war is over
+              What will happen when you send your troops to the War Contract::<br />
+              - You'll not be able to withdraw them from the contract until the war is over.
               <br />
-              Part or all of your troops will die in the war, even if you win
-              the battle! <br />
+              - The majority of them will die in the war, even if you win the battle! <br />
             </p>
             <v-checkbox
               v-model="checkbox"
@@ -33,7 +32,7 @@
             >
               <template v-slot:label>
                 <div>
-                  I read and agree with the rules of the battle
+                  I have read and agreed with the battle rules
                 </div>
               </template>
             </v-checkbox>
@@ -51,14 +50,15 @@
             >
               <template v-slot:append>
                 <div class="d-flex">
-                  <span class="mr-1 align-self-center">wWARRIOR - WAR</span>
+                  <span class="mr-1 align-self-center">{{ label }}</span>
                   <v-btn
                     class="align-self-center"
                     rounded
                     small
-                    @click="amount = myAvailable"
-                    >MAX</v-btn
+                    @click="maxAvailable"
                   >
+                    MAX
+                  </v-btn>
                 </div>
               </template>
             </v-currency-field>
@@ -84,9 +84,10 @@
 
 <script>
 import wButton from "@/lib/components/ui/Utils/wButton";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 export default {
-  props: ["open", "title", "available"],
+  props: ["open", "title", "available", "label"],
 
   components: {
     wButton,
@@ -129,9 +130,31 @@ export default {
       if (!this.available || typeof this.available !== "string") {
         return 0;
       }
+      const value =
+        parseFloat(web3.utils.fromWei(this.available.toString())) ?? 0;
+      return value.toFixed(this.currencyConfig.decimalLength);
+      // var parts = value.toString().split(".");
+      // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-      return parseFloat(web3.utils.fromWei(this.available.toString())) ?? 0;
+      // return `${parts[0]}.${parts[1].slice(
+      //   0,
+      //   this.currencyConfig.decimalLength
+      // )}`;
     },
+  },
+
+  watch: {
+    open() {
+      if (!this.open) {
+        this.amount = 0;
+        this.checkbox = false;
+      }
+    },
+  },
+
+  mounted() {
+    this.amount = 0;
+    this.checkbox = false;
   },
 
   methods: {
@@ -140,7 +163,18 @@ export default {
       this.amount = 0;
       this.$emit("close");
     },
+    maxAvailable() {
+      this.amount =
+        parseFloat(web3.utils.fromWei(this.available.toString())) ?? 0;
+    },
     confirm() {
+      const available =
+        parseFloat(web3.utils.fromWei(this.available.toString())) ?? 0;
+      if (this.amount > available) {
+        return ToastSnackbar.warning(
+          "Quantity cannot be greater than the available value"
+        );
+      }
       this.$emit(
         "confirm",
         window.web3.utils.toWei(this.amount.toString(), "ether")

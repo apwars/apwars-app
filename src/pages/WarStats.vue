@@ -40,14 +40,16 @@
               class="mr-3 align-self-center"
               @click="selectTroops = 'myTroops'"
               :actived="selectTroops === 'myTroops'"
-              >My Troops</wButton
             >
+              My Troops
+            </wButton>
             <wButton
               class="align-self-center"
               @click="selectTroops = 'globalTroops'"
               :actived="selectTroops === 'globalTroops'"
-              >Global Troops</wButton
             >
+              Global Troops
+            </wButton>
           </div>
         </v-col>
         <v-col cols="12" md="6" lg="4">
@@ -63,7 +65,8 @@
                 Current Price:
               </span>
               <div class="price-WGOLD" v-if="isConnected">
-                <amount :amount="priceWGOLD" decimals="3" /> <span class="suffix">BUSD</span>
+                <amount :amount="priceWGOLD" decimals="2" />
+                <span class="suffix">BUSD</span>
               </div>
             </div>
           </div>
@@ -88,16 +91,18 @@
           <wButton
             @click="selectTroops = 'myTroops'"
             :actived="selectTroops === 'myTroops'"
-            >My Troops</wButton
           >
+            My Troops
+          </wButton>
         </v-col>
 
         <v-col cols="12" md="6" class="d-flex justify-center mt-n3 mt-md-0">
           <wButton
             @click="selectTroops = 'globalTroops'"
             :actived="selectTroops === 'globalTroops'"
-            >Global Troops</wButton
           >
+            Global Troops
+          </wButton>
         </v-col>
       </v-row>
     </v-container>
@@ -151,7 +156,6 @@
         </v-col>
       </v-row>
     </v-container>
-
   </div>
 </template>
 
@@ -243,7 +247,7 @@ export default {
 
   methods: {
     goToSwap() {
-      this.$router.push('/exchange');
+      this.$router.push("/exchange");
     },
 
     async loadData() {
@@ -274,7 +278,7 @@ export default {
                     disabled: true,
                   });
                 }
-                const getTropper = new Troops(trooper.contractAddress);
+                const getTropper = new Troops(trooper.contractAddress[this.networkInfo.id]);
                 const qtyAccount = await getTropper.balanceOf(this.account);
                 const qtyGlobal = await getTropper.totalSupply();
                 const priceWGOLD = await getTropper.priceWGOLD(
@@ -296,10 +300,9 @@ export default {
           })
         );
 
-        this.myTroops = this.gobalTroops
-          .map((trooper) => {
-            return { ...trooper, ...{ qty: trooper.qtyAccount } };
-          });
+        this.myTroops = this.gobalTroops.map((trooper) => {
+          return { ...trooper, ...{ qty: trooper.qtyAccount } };
+        });
 
         this.gobalTroops = this.gobalTroops.map((trooper) => {
           return { ...trooper, ...{ qty: trooper.qtyGlobal } };

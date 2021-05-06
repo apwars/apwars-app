@@ -6,16 +6,22 @@
 
 <script>
 export default {
-  props: ["amount", "compact", "decimals"],
+  props: ["amount", "compact", "decimals", "approximate"],
 
   computed: {
     computedAmount() {
       let numberAmount = web3.utils.fromWei(this.amount.toString());
       if (this.compact !== undefined) {
         numberAmount = this.compactNumber(numberAmount, this.getDecimals);
+      } else {
+        numberAmount = this.roundDown(
+          parseFloat(numberAmount),
+          this.getDecimals
+        );
       }
-      else {
-        numberAmount = this.roundDown(parseFloat(numberAmount), this.getDecimals);
+
+      if (this.approximate !== undefined) {
+        return `~${numberAmount}`;
       }
       return numberAmount;
     },
@@ -37,7 +43,9 @@ export default {
     },
     roundDown(value, decimals) {
       const setDecimals = Math.pow(10, decimals);
-      return parseFloat(Math.floor(value * setDecimals) / setDecimals).toFixed(decimals);
+      return parseFloat(Math.floor(value * setDecimals) / setDecimals).toFixed(
+        decimals
+      );
     },
   },
 };

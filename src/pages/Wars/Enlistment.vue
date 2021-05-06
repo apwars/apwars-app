@@ -2,17 +2,7 @@
   <div>
     <div class="bg-fed">
       <v-container>
-        <v-row class="mt-1">
-          <v-col cols="12">
-            <v-img
-              class="mx-auto"
-              max-width="600"
-              src="/images/battle/the-battle-for-supremacy.png"
-            />
-          </v-col>
-        </v-row>
-
-        <v-row class="d-none d-sm-none d-md-flex">
+        <v-row class="d-none d-sm-none d-md-flex my-6">
           <v-col cols="12" md="4">
             <v-img
               class="mx-auto"
@@ -22,11 +12,20 @@
           </v-col>
           <v-col cols="12" md="4" class="d-flex justify-center">
             <div class="align-self-center">
-              <v-img
-                class="mx-auto"
-                max-width="240"
-                src="/images/battle/round-1.png"
-              />
+              <div class="d-flex justify-center">
+                <div class="align-self-center mx-3">
+                  <v-img
+                    max-width="40"
+                    width="40"
+                    src="/images/battle/battle-icon.png"
+                  />
+                </div>
+
+                <h3 class="text-h3 text-wGOLD align-self-center">Enlistment</h3>
+              </div>
+              <div>
+                Prepare for the battle! Choose a side and send your troops to the war!
+              </div>
             </div>
           </v-col>
           <v-col cols="12" md="4">
@@ -39,15 +38,17 @@
         </v-row>
 
         <v-row class="d-flex d-sm-flex d-md-none">
-          <v-col cols="12" >
+          <v-col cols="12">
             <v-img
               class="mx-auto"
               max-width="600"
-              src="/images/battle/battle-round-1.png"
+              src="/images/battle/battle-start-mobile.png"
             />
+            <div>
+              Prepare for the battle! Choose a side and send your troops to the war!
+            </div>
           </v-col>
         </v-row>
-
       </v-container>
       <div class="degrade"></div>
     </div>
@@ -55,24 +56,20 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <v-img
-            class="mx-auto"
-            max-width="200"
-            src="/images/battle/my-troops.png"
-          />
+          <h2 class="text-h2 text-wGOLD text-center">Troops</h2>
         </v-col>
       </v-row>
 
-      <v-row v-if="isConnected">
+      <v-row v-if="isConnected && !isLoading && isEnlistment">
         <v-col cols="12" lg="6" class="dividing-line">
           <v-row>
             <v-col
               cols="12"
               class="d-flex justify-center"
-              v-for="trooper in troopsHumans"
+              v-for="trooper in teamA"
               v-bind:key="trooper.name"
             >
-              <stake-trooper :trooper="trooper" />
+              <stake-trooper :trooper="trooper" :contract-war="contractWar" />
             </v-col>
           </v-row>
         </v-col>
@@ -81,17 +78,29 @@
             <v-col
               cols="12"
               class="d-flex justify-center"
-              v-for="trooper in troopsOrcs"
+              v-for="trooper in teamB"
               v-bind:key="trooper.name"
             >
-              <stake-trooper :trooper="trooper" />
+              <stake-trooper :trooper="trooper" :contract-war="contractWar" />
             </v-col>
           </v-row>
         </v-col>
       </v-row>
+
+      <v-row v-else-if="!isLoading && !isEnlistment">
+        <v-col cols="12" class="d-flex justify-center">
+          <h3 class="text-h3 ma-6">Enlistment period ended</h3>
+        </v-col>
+      </v-row>
+
+      <v-row v-else>
+        <v-col cols="12" class="d-flex justify-center">
+          <h3 class="text-h3">Loading...</h3>
+        </v-col>
+      </v-row>
     </v-container>
 
-    <v-container>
+    <v-container v-if="!isLoading && !isEnlistment">
       <v-row class="mt-3">
         <v-col cols="12" class="d-flex justify-center">
           <v-img
@@ -109,8 +118,8 @@
 <script>
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Utils/wButton";
-import Amount from "@/lib/components/ui/Utils/Amount";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
+import WarMachine from "@/lib/eth/WarMachine";
 
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
@@ -118,24 +127,17 @@ import Troops from "@/lib/eth/Troops";
 export default {
   components: {
     wGOLDButton,
-    Amount,
     wButton,
     StakeTrooper,
   },
 
   data() {
     return {
-      balance: 0,
-      balanceFED: 0,
-      priceWGOLD: 0,
-      collectibles: [],
-      balances: [],
-      itemsCount: 0,
-      totalItems: 0,
       isLoading: true,
-      selectTroops: "myTroops",
-      myTroops: [],
+      contractWar: this.$route.params.contractWar,
       gobalTroops: [],
+      isEnlistment: false,
+      warMachine: {},
     };
   },
 
@@ -160,11 +162,11 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    troopsHumans() {
+    teamA() {
       return this.gobalTroops.filter((trooper) => trooper.team === 1);
     },
 
-    troopsOrcs() {
+    teamB() {
       return this.gobalTroops.filter((trooper) => trooper.team === 2);
     },
   },
@@ -189,7 +191,7 @@ export default {
 
   methods: {
     goToSwap() {
-      window.location = "https://exchange.apwars.farm/#/swap";
+      this.$router.push("/exchange");
     },
 
     async loadData() {
@@ -198,23 +200,9 @@ export default {
       }
 
       try {
-        //   const wgold = new wGOLD(this.addresses.wGOLD);
-        //   this.balance = web3.utils.fromWei(await wgold.balanceOf(this.account));
-        //   this.balanceFED = await wgold.balanceOf(this.addresses.FED);
-        //   this.priceWGOLD = await wgold.priceWGOLD();
-
+        this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
+        this.isEnlistment = await this.warMachine.activeEnlistment();
         let troops = getTroops();
-
-        troops = troops.map((trooper) => {
-          return {
-            ...trooper,
-            ...{
-              staked: "1639000000000000000000",
-              myTroops: "0",
-              globalTroops: "26784000000000000000000",
-            },
-          };
-        });
 
         this.gobalTroops = await Promise.all(
           troops.map((trooper) => {
@@ -223,8 +211,18 @@ export default {
                 if (trooper.contractAddress === "") {
                   resolve(trooper);
                 }
-                const getTropper = new Troops(trooper.contractAddress);
+                const getTropper = new Troops(
+                  trooper.contractAddress[this.networkInfo.id]
+                );
                 trooper.myTroops = await getTropper.balanceOf(this.account);
+                trooper.globalTroops = await getTropper.balanceOf(
+                  this.contractWar
+                );
+
+                trooper.staked = await this.warMachine.getPlayerInfo(
+                  trooper.contractAddress[this.networkInfo.id],
+                  this.account
+                );
 
                 resolve(trooper);
               } catch (error) {
@@ -233,23 +231,12 @@ export default {
             });
           })
         );
-
-        // this.myTroops = this.gobalTroops
-        //   .map((trooper) => {
-        //     return { ...trooper, ...{ qty: trooper.qtyAccount } };
-        //   });
-
-        // this.gobalTroops = this.gobalTroops.map((trooper) => {
-        //   return { ...trooper, ...{ qty: trooper.qtyGlobal } };
-        // });
       } catch (e) {
         console.log(e);
       } finally {
         this.isLoading = false;
       }
     },
-
-
   },
 };
 </script>
@@ -268,6 +255,13 @@ export default {
 .dividing-line {
   background-image: url("/images/battle/line.png");
   background-position: right;
+}
+
+.isLoading {
+  opacity: 0;
+}
+.loading {
+  display: none;
 }
 
 @media only screen and (max-width: 600px) {

@@ -68,6 +68,22 @@
 }
 
 // Carousel
-.v-window__prev, .v-window__next {
+.v-window__prev,
+.v-window__next {
   background: none !important;
+}
+
+.btn-snack-transaction {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px;
+  margin: 0px 8px;
+  background: #fff;
+  border-radius: 8px;
+  color: #c08c58;
+}
+
+.v-snack__content .vts__message {
+  font-size: 16px !important;
+  font-weight: bold !important;
 }
