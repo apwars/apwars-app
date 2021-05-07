@@ -13,7 +13,9 @@
       </span>
       <span class="troop-symbol">{{ info.name }}</span>
       <span class="my-troops">
-        My dead troops:
+        My enlisted troops:
+        <amount :amount="info.myEnlisted" decimals="2" compact approximate />
+        / dead:
         <amount :amount="info.myDead" decimals="2" compact approximate />
       </span>
     </div>
@@ -109,13 +111,13 @@ export default {
 }
 .my-troops {
   position: absolute;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: bold;
-  bottom: -5px;
-  left: 295px;
+  bottom: 5px;
+  left: 322px;
   transform: translate(-50%, -50%);
   color: #ffb800;
-  width: 300px;
+  width: 350px;
 }
 .global-troops {
   font-size: 18px;
@@ -143,8 +145,8 @@ export default {
     left: 65%;
   }
   .my-troops {
-    font-size: 14px;
-    left: 2400px;
+    font-size: 13px;
+    left: 240px;
   }
 }
 </style>

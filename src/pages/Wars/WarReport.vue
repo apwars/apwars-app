@@ -1,6 +1,9 @@
 <template>
   <div>
     <div v-if="isConnected && !isLoading && warStage > 1">
+      <v-alert v-if="isWar.test" type="warning"
+        >Danger, it's a test war</v-alert
+      >
       <div class="bg-fed">
         <v-container>
           <v-row class="d-none d-sm-none d-md-flex my-3">
@@ -57,7 +60,7 @@
             </v-col>
           </v-row>
         </v-container>
-        <div class="degrade"></div>
+        <div class="gradient"></div>
       </div>
 
       <v-container fluid>
@@ -84,7 +87,7 @@
                 height="120"
               />
               <div class="price-wGOLD align-self-center">
-                <div class="subtitle-won">TOTAL WON:</div>
+                <div class="subtitle-won">ENTIRE PRIZE:</div>
                 <amount :amount="prize.won" decimals="2" compact approximate />
                 <span class="suffix">wGOLD</span>
               </div>
@@ -110,7 +113,7 @@
                 @click="redeemPrize"
                 :disabled="isReedemPrize"
               >
-                Redeem prize
+                {{ isReedemPrize ? "Already withdrawn" : "Redeem prize" }}
               </wButton>
             </div>
           </v-col>
@@ -134,7 +137,7 @@
               </div>
             </div>
           </v-col>
-          <div class="degrade"></div>
+          <div class="gradient"></div>
         </v-row>
       </v-container>
 
@@ -188,7 +191,7 @@
             </v-col>
           </v-row>
         </v-container>
-        <div class="degrade"></div>
+        <div class="gradient"></div>
       </div>
     </div>
     <div v-else>
@@ -200,7 +203,7 @@
             </v-col>
           </v-row>
         </v-container>
-        <div class="degrade"></div>
+        <div class="gradient"></div>
       </div>
     </div>
   </div>
@@ -213,6 +216,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
+import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
 import WarMachine from "@/lib/eth/WarMachine";
@@ -235,6 +239,7 @@ export default {
       isReedemPrize: true,
       warStage: 0,
       myEarnings: "0",
+      isWar: { test: false },
     };
   },
 
@@ -336,6 +341,12 @@ export default {
       if (!this.isConnected) {
         return;
       }
+      this.isWar = getWars().find(
+        (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
+      );
+      if (!this.isWar) {
+        this.router.push("/wars");
+      }
       this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
       this.warStage = parseInt(await this.warMachine.warStage());
       this.warStats = await this.warMachine.warStats();
@@ -362,12 +373,7 @@ export default {
                 );
                 trooper.myTroops = await getTropper.balanceOf(this.account);
                 trooper.backHome = true;
-
-                const reportTrooperGlobal = await this.warMachine.getWarReportTrooper(
-                  trooper.team.toString(),
-                  trooper.contractAddress[this.networkInfo.id]
-                );
-                trooper.globalTroops = reportTrooperGlobal.survivor;
+                trooper.globalTroops = await getTropper.balanceOf(this.contractWar);
 
                 const reportTrooperMy = await this.warMachine.getWarReportMyTrooper(
                   trooper.team.toString(),
@@ -404,7 +410,7 @@ export default {
   background-image: url("/images/battle/fed-background.png");
   background-size: cover;
 }
-.degrade {
+.gradient {
   width: 100%;
   height: 50px;
   background: linear-gradient(180deg, rgb(49 45 35 / 0%) 0, rgb(17 17 17) 100%);
@@ -466,7 +472,7 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-  .degrade {
+  .gradient {
     display: none;
   }
   .subtext-wGOLD {

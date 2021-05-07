@@ -56,7 +56,7 @@
           </v-col>
         </v-row>
       </v-container>
-      <div class="degrade"></div>
+      <div class="gradient"></div>
     </div>
 
     <v-container class="d-none d-sm-none d-md-flex war-battle">
@@ -188,7 +188,7 @@ export default {
   color: #bea38d;
 }
 
-.degrade {
+.gradient {
   width: 100%;
   height: 100px;
   background: linear-gradient(180deg, rgb(49 45 35 / 0%) 0, rgb(17 17 17) 100%);
@@ -207,7 +207,7 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-  .degrade {
+  .gradient {
     display: none;
   }
 }

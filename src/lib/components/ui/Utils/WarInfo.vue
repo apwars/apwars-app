@@ -264,6 +264,9 @@ export default {
     networkInfo() {
       return this.$store.getters["user/networkInfo"];
     },
+    currentBlockNumber() {
+      return this.$store.getters["user/currentBlockNumber"];
+    },
     winner() {
       if (!this.warStats.winner) return "";
       return this.warStats.winner;
@@ -293,6 +296,9 @@ export default {
 
   watch: {
     isConnected() {
+      this.loadData();
+    },
+    currentBlockNumber() {
       this.loadData();
     },
   },

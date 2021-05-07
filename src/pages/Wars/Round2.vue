@@ -1,6 +1,9 @@
 <template>
   <div>
     <div v-if="isConnected && !isLoading && warStage > 1">
+      <v-alert v-if="isWar.test" type="warning"
+        >Danger, it's a test war</v-alert
+      >
       <div class="bg-fed">
         <v-container>
           <v-row class="mt-1">
@@ -63,7 +66,7 @@
             </v-col>
           </v-row>
         </v-container>
-        <div class="degrade"></div>
+        <div class="gradient"></div>
       </div>
 
       <v-container fluid>
@@ -150,7 +153,7 @@
             </v-col>
           </v-row>
         </v-container>
-        <div class="degrade"></div>
+        <div class="gradient"></div>
       </div>
     </div>
     <div v-else>
@@ -162,7 +165,7 @@
             </v-col>
           </v-row>
         </v-container>
-        <div class="degrade"></div>
+        <div class="gradient"></div>
       </div>
     </div>
   </div>
@@ -175,6 +178,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import BattleFEDTrooper from "@/lib/components/ui/Utils/BattleFEDTrooper";
 import WarMachine from "@/lib/eth/WarMachine";
 
+import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
 
 export default {
@@ -197,6 +201,7 @@ export default {
       warStats: {},
       contractWar: this.$route.params.contractWar,
       warStage: 0,
+      isWar: { test: false },
     };
   },
 
@@ -265,6 +270,13 @@ export default {
         return;
       }
 
+      this.isWar = getWars().find(
+        (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
+      );
+      if (!this.isWar) {
+        this.router.push("/wars");
+      }
+
       this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
       this.warStage = await this.warMachine.warStage();
       this.warStage = parseInt(this.warStage);
@@ -319,7 +331,7 @@ export default {
   background-image: url("/images/battle/fed-background.png");
   background-size: cover;
 }
-.degrade {
+.gradient {
   width: 100%;
   height: 50px;
   background: linear-gradient(180deg, rgb(49 45 35 / 0%) 0, rgb(17 17 17) 100%);
@@ -368,7 +380,7 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-  .degrade {
+  .gradient {
     display: none;
   }
 }

@@ -15,7 +15,7 @@
         </span>
         <span class="troop-symbol">{{ trooper.name }}</span>
         <span class="my-troops">
-          My troops:
+          At home:
           <amount :amount="trooper.myTroops" decimals="2" compact approximate />
           <span v-if="trooper.backHome">
             / Dead:
@@ -58,7 +58,7 @@
               <wButton
                 :actived="false"
                 @click="approve"
-                :disabled="trooper.myTroops === '0'"
+                :disabled="trooper.myTroops === '0' || loadingApproved"
               >
                 {{ loadingApproved ? "Approving..." : "Approve enlistment" }}
               </wButton>
