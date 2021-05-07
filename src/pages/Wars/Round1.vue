@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-alert type="warning" >Danger, it's a test war</v-alert>
     <div v-if="isConnected && !isLoading && warStage > 0">
       <div class="bg-fed">
         <v-container>
@@ -142,6 +143,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Utils/wButton";
 import BattleFEDTrooper from "@/lib/components/ui/Utils/BattleFEDTrooper";
 import WarMachine from "@/lib/eth/WarMachine";
+import { getWars } from "@/data/Wars";
 
 import { getTroops } from "@/data/Troops";
 
@@ -241,6 +243,11 @@ export default {
     async loadData() {
       if (!this.isConnected) {
         return;
+      }
+
+      this.isWar = getWars().find(war => war.contractAddress[this.networkInfo.id] === this.contractWar);
+      if(!this.isWar) {
+        this.router.push('/wars');
       }
 
       this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);

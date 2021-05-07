@@ -176,8 +176,6 @@ import BattleFEDTrooper from "@/lib/components/ui/Utils/BattleFEDTrooper";
 import WarMachine from "@/lib/eth/WarMachine";
 
 import { getTroops } from "@/data/Troops";
-import Troops from "@/lib/eth/Troops";
-import wGOLD from "@/lib/eth/wGOLD";
 
 export default {
   components: {
