@@ -31,7 +31,7 @@ export function getWars() {
       description: `
       This is a pre-war to test the contract and frontend functionalities.`,
       dateStart: "2021-05-07",
-      dateEnd: "In progress",
+      dateEnd: "2021-05-07",
       contractAddress: {
         "5777": "0x81727708D3f1b7455661ABF8c8bB315d57A28044",
         "56": "0x7e1d590a1d8de2f1bc0e698fd9fd7b57ebe3f8d2",
