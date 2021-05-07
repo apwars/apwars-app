@@ -17,6 +17,10 @@
         <span class="my-troops">
           My troops:
           <amount :amount="trooper.myTroops" decimals="2" compact approximate />
+          <span v-if="trooper.backHome">
+            / Dead:
+            <amount :amount="trooper.myDead" decimals="2" compact approximate />
+          </span>
         </span>
       </div>
 
@@ -45,13 +49,17 @@
               <wButton
                 :actived="false"
                 @click="openModal = true"
-                :disabled="isSendingWar"
+                :disabled="isSendingWar || trooper.myTroops === '0'"
               >
                 {{ isSendingWar ? "Sending to war..." : "Enlist at war" }}
               </wButton>
             </div>
             <div v-else class="stake align-self-center">
-              <wButton :actived="false" @click="approve">
+              <wButton
+                :actived="false"
+                @click="approve"
+                :disabled="trooper.myTroops === '0'"
+              >
                 {{ loadingApproved ? "Approving..." : "Approve enlistment" }}
               </wButton>
             </div>
@@ -262,13 +270,13 @@ export default {
 }
 .my-troops {
   position: absolute;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
-  bottom: -5px;
-  left: 270px;
+  bottom: 0px;
+  left: 295px;
   transform: translate(-50%, -50%);
   color: #ffb800;
-  width: 250px;
+  width: 300px;
 }
 .global-troops {
   font-size: 18px;
@@ -295,7 +303,7 @@ export default {
     left: 65%;
   }
   .my-troops {
-    font-size: 14px;
+    font-size: 12px;
     left: 215px;
   }
 }

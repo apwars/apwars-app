@@ -18,12 +18,4 @@ export default {
   FED: {
     "56": process.env.VUE_APP_FED_ADDRESS_56,
   },
-  APWar: {
-    "56": process.env.VUE_APP_APWAR_SMART_CONTRACT_56,
-  },
-  WarMachine: {
-    "5777": process.env.VUE_APP_WARMACHINE_SMART_CONTRACT_5777,
-    "56": process.env.VUE_APP_WARMACHINE_SMART_CONTRACT_56,
-    "97": process.env.VUE_APP_WARMACHINE_SMART_CONTRACT_97,
-  }
 };

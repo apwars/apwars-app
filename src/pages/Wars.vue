@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="bg-war">
-      <v-container>
+      <v-container fluid>
         <v-row class="d-none d-sm-none d-md-flex my-n6">
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="3">
             <v-img
               class="mx-auto"
               height="250"
@@ -11,7 +11,7 @@
               src="/images/battle/flag-the-corporation.png"
             />
           </v-col>
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="6">
             <div class="mt-9">
               <h1 class="text-h1 text-wGOLD text-center">Welcome to War</h1>
               <h4 class="text-h4 text-center text-subtitle-welcome-war">
@@ -19,7 +19,7 @@
               </h4>
             </div>
           </v-col>
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="3">
             <v-img
               class="mx-auto"
               height="250"

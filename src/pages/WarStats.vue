@@ -65,7 +65,7 @@
                 Current Price:
               </span>
               <div class="price-WGOLD" v-if="isConnected">
-                <amount :amount="priceWGOLD" decimals="2" />
+                <amount :amount="priceWGOLD" decimals="3" />
                 <span class="suffix">BUSD</span>
               </div>
             </div>

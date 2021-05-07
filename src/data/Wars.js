@@ -11,6 +11,7 @@ export function getWars() {
         "56": "0xc1ff2c7284b4535d6f6396b9af3c699d512351de",
         "97": "0x7f1B535deb4e12dE9cF3EEd8ccb1B92833618E72",
       },
+      test: true,
     },
   ];
 }

@@ -5,7 +5,5 @@ export function getSmartContractAddresses(networkId) {
     collectibles: Addresses.collectibles[networkId],
     wGOLD: Addresses.wGOLD[networkId],
     FED: Addresses.FED[networkId],
-    APWar: Addresses.APWar[networkId],
-    WarMachine: Addresses.WarMachine[networkId]
   };
 }

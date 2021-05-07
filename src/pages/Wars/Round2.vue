@@ -67,7 +67,7 @@
       </div>
 
       <v-container fluid>
-        <v-row class="mt-n9">
+        <v-row class="mt-n15">
           <v-col cols="12">
             <h1 class="text-h1 text-center text-wGOLD">
               wGOLD won for {{ winner }}
@@ -128,7 +128,7 @@
       </v-container>
 
       <v-container>
-        <v-row v-if="isConnected && !isLoading" class="my-6">
+        <v-row v-if="isConnected && !isLoading">
           <v-col
             cols="12"
             lg="6"

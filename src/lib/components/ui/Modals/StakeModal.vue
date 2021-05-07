@@ -20,7 +20,7 @@
         <v-card-text style="height: 300px">
           <div class="content">
             <p class="mb-1">
-              What will happen when you send your troops to the War Contract::<br />
+              What will happen when you send your troops to the War Contract:<br />
               - You'll not be able to withdraw them from the contract until the war is over.
               <br />
               - The majority of them will die in the war, even if you win the battle! <br />

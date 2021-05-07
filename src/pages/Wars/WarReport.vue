@@ -3,7 +3,7 @@
     <div v-if="isConnected && !isLoading && warStage > 1">
       <div class="bg-fed">
         <v-container>
-          <v-row class="d-none d-sm-none d-md-flex my-6">
+          <v-row class="d-none d-sm-none d-md-flex my-3">
             <v-col cols="12" md="4">
               <v-img
                 class="mx-auto"
@@ -61,7 +61,7 @@
       </div>
 
       <v-container fluid>
-        <v-row class="mt-n9">
+        <v-row class="mt-n16">
           <v-col cols="12">
             <h1 class="text-h1 text-center text-wGOLD">
               wGOLD won for {{ winner }}
@@ -139,13 +139,13 @@
       </v-container>
 
       <v-container>
-        <v-row>
+        <v-row class="mt-n9">
           <v-col cols="12" class="d-flex justify-center">
             <h3 class="text-h3 ma-6 text-wGOLD">Troops</h3>
           </v-col>
         </v-row>
 
-        <v-row v-if="isConnected && !isLoading" class="my-6">
+        <v-row v-if="isConnected && !isLoading" class="mb-6">
           <v-col cols="12" lg="6" class="dividing-line">
             <v-row>
               <v-col
@@ -375,6 +375,7 @@ export default {
                   this.account
                 );
                 trooper.staked = "0";
+                trooper.myDead = reportTrooperMy.dead;
                 if (!reportTrooperMy.isWithdrawn) {
                   trooper.staked = reportTrooperMy.survivor;
                 }

@@ -71,7 +71,7 @@
       </div>
 
       <v-container>
-        <v-row class="mt-n9">
+        <v-row class="mt-n10">
           <v-col cols="12" class="d-flex justify-center">
             <v-img
               class="mx-auto cursor-pointer"

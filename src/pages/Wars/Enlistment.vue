@@ -2,7 +2,7 @@
   <div>
     <div class="bg-fed">
       <v-container>
-        <v-row class="d-none d-sm-none d-md-flex my-6">
+        <v-row class="d-none d-sm-none d-md-flex my-3">
           <v-col cols="12" md="4">
             <v-img
               class="mx-auto"
@@ -24,7 +24,8 @@
                 <h3 class="text-h3 text-wGOLD align-self-center">Enlistment</h3>
               </div>
               <div>
-                Prepare for the battle! Choose a side and send your troops to the war!
+                Prepare for the battle! Choose a side and send your troops to
+                the war!
               </div>
             </div>
           </v-col>
@@ -45,7 +46,8 @@
               src="/images/battle/battle-start-mobile.png"
             />
             <div>
-              Prepare for the battle! Choose a side and send your troops to the war!
+              Prepare for the battle! Choose a side and send your troops to the
+              war!
             </div>
           </v-col>
         </v-row>
@@ -54,7 +56,7 @@
     </div>
 
     <v-container>
-      <v-row>
+      <v-row class="mt-n16">
         <v-col cols="12">
           <h2 class="text-h2 text-wGOLD text-center">Troops</h2>
         </v-col>
@@ -202,6 +204,14 @@ export default {
       try {
         this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
         this.isEnlistment = await this.warMachine.activeEnlistment();
+
+        if (!this.isEnlistment) {
+          setTimeout(() => {
+            this.$router.push(`/wars/${this.contractWar}/round-1`);
+          }, 3000);
+          return "";
+        }
+
         let troops = getTroops();
 
         this.gobalTroops = await Promise.all(

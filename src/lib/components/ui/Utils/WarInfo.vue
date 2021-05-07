@@ -173,7 +173,7 @@
             Round 1 Result
           </wButton>
           <wButton
-            @click="openPage('round-1')"
+            @click="openPage('round-2')"
             class="my-1 my-md-0 mx-1"
             :disabled="warStage < 2"
             :actived="false"
@@ -342,7 +342,7 @@ export default {
 .war-info .date {
   font-style: normal;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 22px;
   line-height: 32px;
   color: #c4c4c4;
   text-align: center;
