@@ -243,12 +243,12 @@ export default {
         this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
         this.isEnlistment = await this.warMachine.activeEnlistment();
 
-        // if (!this.isEnlistment) {
-        //   setTimeout(() => {
-        //     this.$router.push(`/wars/${this.contractWar}/round-1`);
-        //   }, 3000);
-        //   return "";
-        // }
+        if (!this.isEnlistment) {
+          setTimeout(() => {
+            this.$router.push(`/wars/${this.contractWar}/round-1`);
+          }, 3000);
+          return "";
+        }
 
         let troops = getTroops();
 
