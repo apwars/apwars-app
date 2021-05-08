@@ -64,7 +64,12 @@
       <v-container>
         <v-row class="mt-n16">
           <v-col cols="12">
-            <h2 class="text-h2 text-wGOLD text-center">Troops</h2>
+            <countdown
+              :time="countdownTimeEnd"
+              title="The enlistment ends in"
+              @end="loadData"
+            ></countdown>
+            <h2 class="text-h2 text-wGOLD text-center mt-2">Troops</h2>
           </v-col>
         </v-row>
 
@@ -126,7 +131,11 @@
         <v-container>
           <v-row class="my-6">
             <v-col cols="12">
-              <countdown :time="countdownTime" @end="loadData"></countdown>
+              <countdown
+                :time="countdownTime"
+                title="Countdown"
+                @end="loadData"
+              ></countdown>
             </v-col>
           </v-row>
         </v-container>
@@ -165,6 +174,7 @@ export default {
       isWar: { test: false },
       isCountdown: false,
       countdownTime: 0,
+      countdownTimeEnd: 0,
     };
   },
 
@@ -234,6 +244,9 @@ export default {
       if (this.isCountdown) {
         this.countdownTime =
           this.isWar.countdown.enlistment - new Date().getTime();
+      } else {
+        this.countdownTimeEnd =
+          this.isWar.countdown.enlistmentEnd - new Date().getTime();
       }
       if (!this.isWar) {
         this.router.push("/wars");

@@ -13,6 +13,7 @@ export function getWars() {
       },
       countdown: {
           enlistment: 1620486000000,
+          enlistmentEnd: 1620745200000,
         },
       test: false,
     },
