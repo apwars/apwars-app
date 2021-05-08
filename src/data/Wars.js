@@ -11,6 +11,9 @@ export function getWars() {
         "56": "0x7e1d590a1d8de2f1bc0e698fd9fd7b57ebe3f8d2",
         "97": "0x7f1B535deb4e12dE9cF3EEd8ccb1B92833618E72",
       },
+      countdown: {
+        enlistment: 1620486000000,
+      },
       test: true,
     },
     {
