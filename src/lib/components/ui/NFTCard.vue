@@ -14,7 +14,7 @@
       </div>
       <div v-else-if="!collectible.isGift">
         <small class="remaining">Remaining: {{remaining}} of {{supply}}</small>
-        <div class="d-none justify-center align-center mt-1 =" v-if="remaining > 0">
+        <div class="d-none justify-center align-center mt-1" v-if="remaining > 0">
           <v-img
             v-if="isApproved"
             class="btn center"

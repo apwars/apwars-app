@@ -21,9 +21,11 @@
           <div class="content">
             <p class="mb-1">
               What will happen when you send your troops to the War Contract:<br />
-              - You'll not be able to withdraw them from the contract until the war is over.
+              - You'll not be able to withdraw them from the contract until the
+              war is over.
               <br />
-              - The majority of them will die in the war, even if you win the battle! <br />
+              - The majority of them will die in the war, even if you win the
+              battle! <br />
             </p>
             <v-checkbox
               v-model="checkbox"
@@ -85,6 +87,7 @@
 <script>
 import wButton from "@/lib/components/ui/Utils/wButton";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
+import BigNumber from "bignumber.js";
 
 export default {
   props: ["open", "title", "available", "label"],
@@ -102,7 +105,7 @@ export default {
         locale: "en-US",
         prefix: "",
         suffix: "",
-        decimalLength: 14,
+        decimalLength: 8,
         autoDecimalMode: true,
         allowNegative: false,
       },
@@ -130,16 +133,10 @@ export default {
       if (!this.available || typeof this.available !== "string") {
         return 0;
       }
-      const value =
-        parseFloat(web3.utils.fromWei(this.available.toString())) ?? 0;
-      return value.toFixed(this.currencyConfig.decimalLength);
-      // var parts = value.toString().split(".");
-      // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-      // return `${parts[0]}.${parts[1].slice(
-      //   0,
-      //   this.currencyConfig.decimalLength
-      // )}`;
+      let value = new BigNumber(this.available);
+      return value
+        .div("1000000000000000000")
+        .toFixed(this.currencyConfig.decimalLength);
     },
   },
 
@@ -164,21 +161,33 @@ export default {
       this.$emit("close");
     },
     maxAvailable() {
-      this.amount =
-        parseFloat(web3.utils.fromWei(this.available.toString())) ?? 0;
+      let value = new BigNumber(this.available);
+      this.amount = value
+        .div("1000000000000000000")
+        .toFixed(this.currencyConfig.decimalLength);
     },
     confirm() {
-      const available =
-        parseFloat(web3.utils.fromWei(this.available.toString())) ?? 0;
-      if (this.amount > available) {
+      let totalAvailable = new BigNumber(this.available);
+      totalAvailable = totalAvailable
+        .div("1000000000000000000")
+        .toFixed(this.currencyConfig.decimalLength);
+      totalAvailable = parseFloat(totalAvailable);
+      if (this.amount > totalAvailable) {
         return ToastSnackbar.warning(
           "Quantity cannot be greater than the available value"
         );
       }
-      this.$emit(
-        "confirm",
-        window.web3.utils.toWei(this.amount.toString(), "ether")
+
+      let sendAmountEmit = window.web3.utils.toWei(
+        this.amount.toString(),
+        "ether"
       );
+
+      if (this.amount === totalAvailable) {
+        sendAmountEmit = this.available;
+      }
+
+      this.$emit("confirm", sendAmountEmit);
     },
   },
 };

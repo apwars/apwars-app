@@ -11,15 +11,33 @@
         </div>
         <span class="staked">
           In War:
-          <amount :amount="trooper.staked" decimals="2" compact approximate tooltip />
+          <amount
+            :amount="trooper.staked"
+            decimals="2"
+            compact
+            approximate
+            tooltip
+          />
         </span>
         <span class="troop-symbol">{{ trooper.name }}</span>
         <span class="my-troops">
           At home:
-          <amount :amount="trooper.myTroops" decimals="2" compact approximate tooltip />
+          <amount
+            :amount="trooper.myTroops"
+            decimals="2"
+            compact
+            approximate
+            tooltip
+          />
           <span v-if="trooper.backHome">
             / Dead:
-            <amount :amount="trooper.myDead" decimals="2" compact approximate tooltip />
+            <amount
+              :amount="trooper.myDead"
+              decimals="2"
+              compact
+              approximate
+              tooltip
+            />
           </span>
         </span>
       </div>
