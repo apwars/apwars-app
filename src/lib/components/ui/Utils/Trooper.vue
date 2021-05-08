@@ -19,7 +19,7 @@
             height="38"
           />
           <div class="price-wgold align-self-center">
-            <amount :amount="info.priceWGOLD" decimals="3" compact /> wGOLD
+            <amount :amount="info.priceWGOLD" decimals="2" compact /> wGOLD
           </div>
         </div>
         <div class="d-flex justify-start">

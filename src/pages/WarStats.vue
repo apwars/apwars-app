@@ -40,14 +40,16 @@
               class="mr-3 align-self-center"
               @click="selectTroops = 'myTroops'"
               :actived="selectTroops === 'myTroops'"
-              >My Troops</wButton
             >
+              My Troops
+            </wButton>
             <wButton
               class="align-self-center"
               @click="selectTroops = 'globalTroops'"
               :actived="selectTroops === 'globalTroops'"
-              >Global Troops</wButton
             >
+              Global Troops
+            </wButton>
           </div>
         </v-col>
         <v-col cols="12" md="6" lg="4">
@@ -63,7 +65,8 @@
                 Current Price:
               </span>
               <div class="price-WGOLD" v-if="isConnected">
-                <amount :amount="priceWGOLD" decimals="3" /> <span class="suffix">BUSD</span>
+                <amount :amount="priceWGOLD" decimals="3" />
+                <span class="suffix">BUSD</span>
               </div>
             </div>
           </div>
@@ -88,16 +91,18 @@
           <wButton
             @click="selectTroops = 'myTroops'"
             :actived="selectTroops === 'myTroops'"
-            >My Troops</wButton
           >
+            My Troops
+          </wButton>
         </v-col>
 
         <v-col cols="12" md="6" class="d-flex justify-center mt-n3 mt-md-0">
           <wButton
             @click="selectTroops = 'globalTroops'"
             :actived="selectTroops === 'globalTroops'"
-            >Global Troops</wButton
           >
+            Global Troops
+          </wButton>
         </v-col>
       </v-row>
     </v-container>
@@ -115,10 +120,10 @@
               cols="12"
               lg="6"
               md="4"
-              v-for="topper in troopsHumans"
-              v-bind:key="topper.name"
+              v-for="trooper in troopsHumans"
+              v-bind:key="trooper.name"
             >
-              <trooper :info="topper" />
+              <trooper :info="trooper" />
             </v-col>
           </v-row>
         </v-col>
@@ -134,10 +139,10 @@
               cols="12"
               lg="6"
               md="4"
-              v-for="topper in troopsOrcs"
-              v-bind:key="topper.name"
+              v-for="trooper in troopsOrcs"
+              v-bind:key="trooper.name"
             >
-              <trooper :info="topper" />
+              <trooper :info="trooper" />
             </v-col>
           </v-row>
         </v-col>
@@ -151,7 +156,6 @@
         </v-col>
       </v-row>
     </v-container>
-
   </div>
 </template>
 
@@ -210,20 +214,6 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    formattedAmount() {
-      const num = parseInt(this.balance);
-
-      if (this.balance < 1) {
-        return "~0";
-      } else if (num > 999 && num < 1000000) {
-        return (num / 1000).toFixed(2) + "K";
-      } else if (num > 1000000) {
-        return (num / 1000000).toFixed(2) + "M";
-      } else if (num < 900) {
-        return num;
-      }
-    },
-
     troopsHumans() {
       return this.selectTroops === "myTroops"
         ? this.myTroops.filter((trooper) => trooper.team === 1)
@@ -257,7 +247,7 @@ export default {
 
   methods: {
     goToSwap() {
-      this.$router.push('/exchange');
+      this.$router.push("/exchange");
     },
 
     async loadData() {
@@ -288,7 +278,7 @@ export default {
                     disabled: true,
                   });
                 }
-                const getTropper = new Troops(trooper.contractAddress);
+                const getTropper = new Troops(trooper.contractAddress[this.networkInfo.id]);
                 const qtyAccount = await getTropper.balanceOf(this.account);
                 const qtyGlobal = await getTropper.totalSupply();
                 const priceWGOLD = await getTropper.priceWGOLD(
@@ -310,10 +300,9 @@ export default {
           })
         );
 
-        this.myTroops = this.gobalTroops
-          .map((trooper) => {
-            return { ...trooper, ...{ qty: trooper.qtyAccount } };
-          });
+        this.myTroops = this.gobalTroops.map((trooper) => {
+          return { ...trooper, ...{ qty: trooper.qtyAccount } };
+        });
 
         this.gobalTroops = this.gobalTroops.map((trooper) => {
           return { ...trooper, ...{ qty: trooper.qtyGlobal } };

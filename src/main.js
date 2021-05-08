@@ -2,9 +2,11 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueApexCharts from "vue-apexcharts";
 import VueCodeHighlight from "vue-code-highlight";
+import VueCountdown from '@chenfengyuan/vue-countdown';
+
+Vue.component(VueCountdown.name, VueCountdown);
 
 import IPFSHelper from "@/lib/helpers/IPFSHelper";
-
 IPFSHelper.connect();
 
 Vue.use(VueApexCharts);

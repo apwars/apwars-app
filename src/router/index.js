@@ -1,5 +1,14 @@
 import Vue from "vue";
 import Router from "vue-router";
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import Items from "@/pages/Items.vue";
+import MyItems from "@/pages/MyItems.vue";
+import WarStats from "@/pages/WarStats.vue";
+import Wars from "@/pages/Wars.vue";
+import Enlistment from "@/pages/Wars/Enlistment.vue";
+import Round1 from "@/pages/Wars/Round1.vue";
+import Round2 from "@/pages/Wars/Round2.vue";
+import WarReport from "@/pages/Wars/WarReport.vue";
 
 Vue.use(Router);
 
@@ -7,28 +16,47 @@ export const routes = [
   ,
   {
     path: "/",
-    component: () =>
-      import(
-        /* webpackChunkName: "layout-default" */ "@/layouts/DefaultLayout.vue"
-      ),
+    component: DefaultLayout,
     children: [
       {
         path: "/",
         name: "/",
-        component: () =>
-          import(/* webpackChunkName: "Items" */ "@/pages/Items.vue"),
+        component: Items,
       },
       {
         path: "/collection",
         name: "/collection",
-        component: () =>
-          import(/* webpackChunkName: "/collection" */ "@/pages/MyItems.vue"),
+        component: MyItems,
       },
       {
         path: "/war-stats",
         name: "/war-stats",
-        component: () =>
-          import(/* webpackChunkName: "/collection" */ "@/pages/WarStats.vue"),
+        component: WarStats,
+      },
+      {
+        path: "/wars",
+        name: "/wars",
+        component: Wars,
+      },
+      {
+        path: "/wars/:contractWar/enlistment",
+        name: "/wars-enlistment",
+        component: Enlistment,
+      },
+      {
+        path: "/wars/:contractWar/round-1",
+        name: "/wars-round-1",
+        component: Round1,
+      },
+      {
+        path: "/wars/:contractWar/round-2",
+        name: "/wars-round-2",
+        component: Round2,
+      },
+      {
+        path: "/wars/:contractWar/report",
+        name: "/wars-report",
+        component: WarReport,
       },
       {
         path: "/farms",
@@ -39,14 +67,14 @@ export const routes = [
       {
         path: "/exchange",
         beforeEnter() {
-          redirect_blank("https://exchange.apwars.farm");
+          redirectBlank("https://exchange.apwars.farm");
         },
       },
     ],
   },
 ];
 
-const redirect_blank = (url) => {
+const redirectBlank = (url) => {
   var a = document.createElement("a");
   a.target = "_blank";
   a.href = url;
@@ -56,22 +84,22 @@ const redirect_blank = (url) => {
 const router = new Router({
   mode: "history",
   base: process.env.BASE_URL || "/",
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior() {
     return { x: 0, y: 0 };
   },
   routes,
 });
 
-/**
- * Before each route update
- */
-router.beforeEach((to, from, next) => {
-  return next();
-});
+// /**
+//  * Before each route update
+//  */
+// router.beforeEach((to, from, next) => {
+//   return next();
+// });
 
-/**
- * After each route update
- */
-router.afterEach((to, from) => {});
+// /**
+//  * After each route update
+//  */
+// router.afterEach((to, from) => {});
 
 export default router;

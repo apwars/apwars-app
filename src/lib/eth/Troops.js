@@ -1,5 +1,7 @@
 import APWarsTroops from "./APWarsTroops.json";
 import Addresss from "../../data/Addresses";
+import { ethers } from "ethers";
+import BigNumber from "bignumber.js";
 
 export default class Troops {
   constructor(contract) {
@@ -13,6 +15,22 @@ export default class Troops {
 
   async totalSupply() {
     return await this.smc.methods.totalSupply().call();
+  }
+
+  allowance(owner, spender) {
+    return this.smc.methods.allowance(owner, spender).call();
+  }
+
+  approve(from, spender) {
+    return this.smc.methods
+      .approve(spender, ethers.constants.MaxUint256)
+      .send({ from });
+  }
+
+  async hasAllowance(owner, spender) {
+    const allowance = await this.allowance(owner, spender);
+    const bn = new BigNumber(allowance);
+    return bn.gt(0);
   }
 
   async priceWGOLD(account) {

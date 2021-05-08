@@ -1,21 +1,45 @@
 <template>
-  <span>
-    {{ computedAmount }}
+  <span v-if="isTooltip">
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <span v-bind="attrs" v-on="on">
+          {{ computedAmount }}
+        </span>
+      </template>
+      <span>{{ tooltipAmount }}</span>
+    </v-tooltip>
   </span>
+  <span v-else> {{ computedAmount }} </span>
 </template>
 
 <script>
 export default {
-  props: ["amount", "compact", "decimals"],
+  props: ["amount", "compact", "decimals", "approximate", "tooltip"],
 
   computed: {
     computedAmount() {
-      let numberAmount = web3.utils.fromWei(this.amount.toString());
-      numberAmount = parseFloat(numberAmount).toFixed(this.getDecimals);
+      let numberAmount = this.amount || "0";
+      numberAmount = web3.utils.fromWei(numberAmount.toString());
       if (this.compact !== undefined) {
         numberAmount = this.compactNumber(numberAmount, this.getDecimals);
+      } else {
+        numberAmount = this.roundDown(
+          parseFloat(numberAmount),
+          this.getDecimals
+        );
+      }
+
+      if (this.approximate !== undefined) {
+        return `~${numberAmount}`;
       }
       return numberAmount;
+    },
+    tooltipAmount() {
+      let numberAmount = this.amount || "0";
+      return web3.utils.fromWei(numberAmount.toString());
+    },
+    isTooltip() {
+      return this.tooltip !== undefined ? 1 : 0;
     },
     getDecimals() {
       return this.decimals ?? 0;
@@ -24,14 +48,20 @@ export default {
 
   methods: {
     compactNumber(value, decimals) {
-      if (value < 1e3) return value;
+      if (value < 1e3) return this.roundDown(value, decimals);
       if (value >= 1e3 && value < 1e6)
-        return +(value / 1e3).toFixed(decimals) + "K";
+        return +this.roundDown(value / 1e3, decimals) + "K";
       if (value >= 1e6 && value < 1e9)
-        return +(value / 1e6).toFixed(decimals) + "M";
+        return +this.roundDown(value / 1e6, decimals) + "M";
       if (value >= 1e9 && value < 1e12)
-        return +(value / 1e9).toFixed(decimals) + "B";
-      if (value >= 1e12) return +(value / 1e12).toFixed(decimals) + "T";
+        return +this.roundDown(value / 1e9, decimals) + "B";
+      if (value >= 1e12) return +this.roundDown(value / 1e12, decimals) + "T";
+    },
+    roundDown(value, decimals) {
+      const setDecimals = Math.pow(10, decimals);
+      return parseFloat(Math.floor(value * setDecimals) / setDecimals).toFixed(
+        decimals
+      );
     },
   },
 };
