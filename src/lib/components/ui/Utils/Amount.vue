@@ -1,16 +1,25 @@
 <template>
-  <span>
-    {{ computedAmount }}
+  <span v-if="isTooltip">
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <span v-bind="attrs" v-on="on">
+          {{ computedAmount }}
+        </span>
+      </template>
+      <span>{{ tooltipAmount }}</span>
+    </v-tooltip>
   </span>
+  <span v-else> {{ computedAmount }} </span>
 </template>
 
 <script>
 export default {
-  props: ["amount", "compact", "decimals", "approximate"],
+  props: ["amount", "compact", "decimals", "approximate", "tooltip"],
 
   computed: {
     computedAmount() {
-      let numberAmount = web3.utils.fromWei(this.amount.toString());
+      let numberAmount = this.amount || "0";
+      numberAmount = web3.utils.fromWei(numberAmount.toString());
       if (this.compact !== undefined) {
         numberAmount = this.compactNumber(numberAmount, this.getDecimals);
       } else {
@@ -24,6 +33,13 @@ export default {
         return `~${numberAmount}`;
       }
       return numberAmount;
+    },
+    tooltipAmount() {
+      let numberAmount = this.amount || "0";
+      return web3.utils.fromWei(numberAmount.toString());
+    },
+    isTooltip() {
+      return this.tooltip !== undefined ? 1 : 0;
     },
     getDecimals() {
       return this.decimals ?? 0;

@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-import Vuetify, { VTextField, VSnackbar } from "vuetify/lib";
+import Vuetify, { VTextField, VSnackbar, VTooltip } from "vuetify/lib";
 
 import * as directives from "vuetify/lib/directives";
 import config from "../configs";
@@ -10,6 +10,7 @@ Vue.use(Vuetify, {
   components: {
     VTextField,
     VSnackbar,
+    VTooltip,
   },
 });
 

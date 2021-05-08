@@ -1,9 +1,9 @@
 <template>
   <div>
     <div v-if="isConnected && !isLoading && warStage > 1">
-      <v-alert v-if="isWar.test" type="warning"
-        >Danger, it's a test war</v-alert
-      >
+      <v-alert v-if="isWar.test" type="warning">
+        Danger, it's a test war
+      </v-alert>
       <div class="bg-fed">
         <v-container>
           <v-row class="d-none d-sm-none d-md-flex my-3">
@@ -214,6 +214,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Utils/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
+import Countdown from "@/lib/components/ui/Utils/Countdown";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import { getWars } from "@/data/Wars";
@@ -227,6 +228,7 @@ export default {
     Amount,
     wButton,
     StakeTrooper,
+    Countdown,
   },
 
   data() {
@@ -373,7 +375,9 @@ export default {
                 );
                 trooper.myTroops = await getTropper.balanceOf(this.account);
                 trooper.backHome = true;
-                trooper.globalTroops = await getTropper.balanceOf(this.contractWar);
+                trooper.globalTroops = await getTropper.balanceOf(
+                  this.contractWar
+                );
 
                 const reportTrooperMy = await this.warMachine.getWarReportMyTrooper(
                   trooper.team.toString(),

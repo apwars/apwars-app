@@ -9,14 +9,20 @@
       </div>
       <span class="staked">
         Survivors:
-        <amount :amount="info.mySurvivor" decimals="2" compact approximate />
+        <amount
+          :amount="info.mySurvivor"
+          decimals="2"
+          compact
+          approximate
+          tooltip
+        ></amount>
       </span>
       <span class="troop-symbol">{{ info.name }}</span>
       <span class="my-troops">
         My enlisted troops:
-        <amount :amount="info.myEnlisted" decimals="2" compact approximate />
+        <amount :amount="info.myEnlisted" decimals="2" compact approximate tooltip />
         / dead:
-        <amount :amount="info.myDead" decimals="2" compact approximate />
+        <amount :amount="info.myDead" decimals="2" compact approximate tooltip />
       </span>
     </div>
 
@@ -35,6 +41,7 @@
               decimals="2"
               compact
               approximate
+              tooltip
             />
           </div>
         </div>
@@ -53,6 +60,7 @@
               decimals="2"
               compact
               approximate
+              tooltip
             />
           </div>
         </div>

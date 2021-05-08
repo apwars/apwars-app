@@ -93,7 +93,7 @@
                 height="120"
               />
               <div class="price-wGOLD align-self-center">
-                <div class="subtitle-won">TOTAL WON:</div>
+                <div class="subtitle-won">ENTIRE PRIZE:</div>
                 <amount :amount="prize.won" decimals="2" compact approximate />
                 <span class="suffix">wGOLD</span>
               </div>
