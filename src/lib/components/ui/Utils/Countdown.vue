@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="text-h3 ma-3 text-wGOLD text-center">Countdown</h3>
+    <h3 class="text-h3 ma-3 text-wGOLD text-center">{{title}}</h3>
     <div class="d-flex justify-center mt-6">
       <countdown
         :time="setTime"
@@ -58,7 +58,7 @@
 
 <script>
 export default {
-  props: ["time"],
+  props: ["time", "title"],
 
   computed: {
     setTime() {
