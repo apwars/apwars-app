@@ -2,9 +2,9 @@
   <div>
     <div v-if="!isCountdown">
       <div class="bg-fed">
-        <v-alert v-if="isWar.test" type="warning"
-          >Danger, it's a test war</v-alert
-        >
+        <v-alert v-if="isWar.test" type="warning">
+          Danger, it's a test war
+        </v-alert>
         <v-container>
           <v-row class="d-none d-sm-none d-md-flex my-3">
             <v-col cols="12" md="4">
@@ -149,11 +149,12 @@
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Utils/wButton";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
-import WarMachine from "@/lib/eth/WarMachine";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
+
+import WarMachine from "@/lib/eth/WarMachine";
 import Troops from "@/lib/eth/Troops";
 
 export default {
@@ -246,7 +247,7 @@ export default {
           this.isWar.countdown.enlistment - new Date().getTime();
       } else {
         this.countdownTimeEnd =
-          this.isWar.countdown.enlistmentEnd - new Date().getTime();
+          this.isWar.countdown.round1 - new Date().getTime();
       }
       if (!this.isWar) {
         this.router.push("/wars");

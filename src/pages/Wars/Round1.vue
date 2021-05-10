@@ -72,8 +72,15 @@
       </div>
 
       <v-container>
-        <v-row class="mt-n10">
-          <v-col cols="12" class="d-flex justify-center">
+        <v-row class="mt-n13">
+          <v-col v-if="isCountdown && warStage === 1" cols="12" class="d-flex justify-center">
+            <countdown
+              :time="countdownTime"
+              title="The Battle against the FED ends in"
+              @end="loadData"
+            ></countdown>
+          </v-col>
+          <v-col v-else cols="12" class="d-flex justify-center">
             <v-img
               class="mx-auto cursor-pointer"
               max-width="346"
@@ -143,6 +150,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Utils/wButton";
 import BattleFEDTrooper from "@/lib/components/ui/Utils/BattleFEDTrooper";
 import WarMachine from "@/lib/eth/WarMachine";
+import Countdown from "@/lib/components/ui/Utils/Countdown";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -152,6 +160,7 @@ export default {
     wGOLDButton,
     wButton,
     BattleFEDTrooper,
+    Countdown,
   },
 
   data() {
@@ -163,6 +172,8 @@ export default {
       warStage: "0",
       isWar: { test: false },
       contractWar: this.$route.params.contractWar,
+      countdownTime: 0,
+      isCountdown: false,
     };
   },
 
@@ -251,6 +262,11 @@ export default {
       );
       if (!this.isWar) {
         this.router.push("/wars");
+      }
+
+      this.isCountdown = this.isWar.countdown.round2 > new Date().getTime();
+      if (this.isCountdown) {
+        this.countdownTime = this.isWar.countdown.round2 - new Date().getTime();
       }
 
       this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
