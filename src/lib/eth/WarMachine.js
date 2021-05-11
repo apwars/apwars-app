@@ -1,6 +1,7 @@
 import WarMachineABI from "./WarMachine.json";
 import { ethers } from "ethers";
 import { getTroops } from "@/data/Troops";
+import { getWars } from "@/data/Wars";
 import BigNumber from "bignumber.js";
 
 export default class WarMachine {
@@ -149,10 +150,20 @@ export default class WarMachine {
 
   async getWarReportwGOLD() {
     const stage = parseInt(await this.warStage());
-    let getTotalPrize = await this.smc.methods.getTotalPrize().call();
-    getTotalPrize = new BigNumber(getTotalPrize);
+    const war = getWars().find(
+      (war) => war.contractAddress[this.networkInfo] === this.contractAddress
+    );
+    if (!war) {
+      return {
+        totalPrize: "0",
+        won: "0",
+        burned: "0",
+      };
+    }
 
-    if (stage < 2) {
+    let getTotalPrize = new BigNumber(war.totalPrize);
+
+    if (!war || stage < 2) {
       return {
         totalPrize: getTotalPrize.toFixed(0),
         won: "0",
