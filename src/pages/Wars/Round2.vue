@@ -60,7 +60,7 @@
               <wGOLD-button
                 v-if="isConnected && !isLoading"
                 class="mx-auto mt-n8"
-                :amount="prize.totalPrize"
+                :amount="isWar.totalPrize"
                 size="small"
               ></wGOLD-button>
             </v-col>
