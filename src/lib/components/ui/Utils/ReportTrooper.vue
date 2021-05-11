@@ -4,25 +4,37 @@
       <div class="d-flex">
         <v-img
           :max-width="imgWidth"
-          :src="`/images/battle/troops/${info.name}.png`"
+          :src="`/images/battle/troops/${getTrooper.name}.png`"
         />
       </div>
       <span class="staked">
         Survivors:
         <amount
-          :amount="info.mySurvivor"
+          :amount="getTrooper.mySurvivor"
           decimals="2"
           compact
           approximate
           tooltip
         ></amount>
       </span>
-      <span class="troop-symbol">{{ info.name }}</span>
+      <span class="troop-symbol">{{ getTrooper.name }}</span>
       <span class="my-troops">
         My enlisted troops:
-        <amount :amount="info.myEnlisted" decimals="2" compact approximate tooltip />
+        <amount
+          :amount="getTrooper.myEnlisted"
+          decimals="2"
+          compact
+          approximate
+          tooltip
+        />
         / dead:
-        <amount :amount="info.myDead" decimals="2" compact approximate tooltip />
+        <amount
+          :amount="getTrooper.myDead"
+          decimals="2"
+          compact
+          approximate
+          tooltip
+        />
       </span>
     </div>
 
@@ -37,7 +49,7 @@
           <div>
             QTY:
             <amount
-              :amount="info.troopsSurvivors"
+              :amount="getTrooper.troopsSurvivors"
               decimals="2"
               compact
               approximate
@@ -56,7 +68,7 @@
           <div>
             QTY:
             <amount
-              :amount="info.troopsDead"
+              :amount="getTrooper.troopsDead"
               decimals="2"
               compact
               approximate
@@ -72,15 +84,29 @@
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
 
+import WarMachine from "@/lib/eth/WarMachine";
+
 export default {
-  props: ["info"],
+  props: ["trooper", "contractWar"],
   components: {
     Amount,
   },
   data() {
     return {
       openModal: false,
+      warMachine: {},
+      trooperInfo: {
+        myEnlisted: "0",
+        myDead: "0",
+        mySurvivor: "0",
+        troopsDead: "0",
+        troopsSurvivors: "0",
+      },
     };
+  },
+  mounted() {
+    this.initData();
+    this.loadData();
   },
   computed: {
     imgWidth() {
@@ -89,6 +115,64 @@ export default {
           return "300px";
         default:
           return "500px";
+      }
+    },
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
+    currentBlockNumber() {
+      return this.$store.getters["user/currentBlockNumber"];
+    },
+    account() {
+      return this.$store.getters["user/account"];
+    },
+    addresses() {
+      return this.$store.getters["user/addresses"];
+    },
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
+    },
+    getTrooper() {
+      return { ...this.trooper, ...this.trooperInfo };
+    },
+  },
+  watch: {
+    isConnected() {
+      this.loadData();
+    },
+    currentBlockNumber() {
+      this.loadData();
+    },
+    account() {
+      this.loadingApproved = false;
+      this.btnBringHomeDisabled = false;
+      this.isSendingWar = false;
+      this.loadData();
+    },
+  },
+  methods: {
+    initData() {
+      this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
+    },
+    async loadData() {
+      try {
+        const reportTrooperGlobal = await this.warMachine.getWarReportTrooper(
+          this.trooper.team.toString(),
+          this.trooper.contractAddress[this.networkInfo.id]
+        );
+        this.trooperInfo.troopsDead = reportTrooperGlobal.dead;
+        this.trooperInfo.troopsSurvivors = reportTrooperGlobal.survivor;
+
+        const reportTrooperMy = await this.warMachine.getWarReportMyTrooper(
+          this.trooper.team.toString(),
+          this.trooper.contractAddress[this.networkInfo.id],
+          this.account
+        );
+        this.trooperInfo.myEnlisted = reportTrooperMy.enlisted;
+        this.trooperInfo.myDead = reportTrooperMy.dead;
+        this.trooperInfo.mySurvivor = reportTrooperMy.survivor;
+      } catch (error) {
+        console.log(error);
       }
     },
   },

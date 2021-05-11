@@ -113,7 +113,7 @@
               <div class="stats-info my-1">
                 Total Prize:
                 <amount
-                  :amount="prizewGOLD.totalPrize"
+                  :amount="war.totalPrize"
                   decimals="2"
                   compact
                   approximate

@@ -6,20 +6,38 @@
         <div class="d-flex">
           <v-img
             :max-width="imgWidth"
-            :src="`/images/battle/troops/${trooper.name}.png`"
+            :src="`/images/battle/troops/${getTrooper.name}.png`"
           />
         </div>
         <span class="staked">
           In War:
-          <amount :amount="trooper.staked" decimals="2" compact approximate tooltip />
+          <amount
+            :amount="getTrooper.staked"
+            decimals="2"
+            compact
+            approximate
+            tooltip
+          />
         </span>
-        <span class="troop-symbol">{{ trooper.name }}</span>
+        <span class="troop-symbol">{{ getTrooper.name }}</span>
         <span class="my-troops">
           At home:
-          <amount :amount="trooper.myTroops" decimals="2" compact approximate tooltip />
-          <span v-if="trooper.backHome">
+          <amount
+            :amount="getTrooper.myTroops"
+            decimals="2"
+            compact
+            approximate
+            tooltip
+          />
+          <span v-if="isbringHome">
             / Dead:
-            <amount :amount="trooper.myDead" decimals="2" compact approximate tooltip />
+            <amount
+              :amount="getTrooper.myDead"
+              decimals="2"
+              compact
+              approximate
+              tooltip
+            />
           </span>
         </span>
       </div>
@@ -35,7 +53,7 @@
             <div>
               QTY:
               <amount
-                :amount="trooper.globalTroops"
+                :amount="getTrooper.globalTroops"
                 decimals="2"
                 compact
                 approximate
@@ -45,12 +63,12 @@
           </div>
         </v-col>
         <v-col cols="12" md="6" class="pa-0">
-          <div v-if="!trooper.backHome">
+          <div v-if="!isbringHome">
             <div v-if="isApproved" class="stake align-self-center">
               <wButton
                 :actived="false"
                 @click="openModal = true"
-                :disabled="isSendingWar || trooper.myTroops === '0'"
+                :disabled="isSendingWar || getTrooper.myTroops === '0'"
               >
                 {{ isSendingWar ? "Sending to war..." : "Enlist at war" }}
               </wButton>
@@ -59,7 +77,7 @@
               <wButton
                 :actived="false"
                 @click="approve"
-                :disabled="trooper.myTroops === '0' || loadingApproved"
+                :disabled="getTrooper.myTroops === '0' || loadingApproved"
               >
                 {{ loadingApproved ? "Approving..." : "Approve enlistment" }}
               </wButton>
@@ -70,8 +88,8 @@
             <div class="stake align-self-center">
               <wButton
                 :actived="false"
-                @click="backHome"
-                :disabled="trooper.staked === '0' || btnHomeDisabled"
+                @click="bringHomeWithdraw"
+                :disabled="getTrooper.staked === '0' || btnBringHomeDisabled"
               >
                 Bring home
               </wButton>
@@ -83,8 +101,8 @@
       <stake-modal
         :open="openModal"
         title="CAUTION"
-        :available="trooper.myTroops"
-        :label="trooper.name"
+        :available="getTrooper.myTroops"
+        :label="getTrooper.name"
         @confirm="confirmStake"
         @close="openModal = false"
       >
@@ -103,7 +121,7 @@ import WarMachine from "@/lib/eth/WarMachine";
 import Troops from "@/lib/eth/Troops";
 
 export default {
-  props: ["trooper", "contractWar"],
+  props: ["trooper", "contractWar", "bringHome"],
   components: {
     Amount,
     wButton,
@@ -115,8 +133,14 @@ export default {
       isApproved: false,
       loadingApproved: false,
       warMachine: {},
-      btnHomeDisabled: false,
+      btnBringHomeDisabled: false,
       isSendingWar: false,
+      trooperInfo: {
+        myTroops: "0",
+        globalTroops: "0",
+        staked: "0",
+        myDead: "0",
+      },
     };
   },
   computed: {
@@ -131,6 +155,9 @@ export default {
     isConnected() {
       return this.$store.getters["user/isConnected"];
     },
+    currentBlockNumber() {
+      return this.$store.getters["user/currentBlockNumber"];
+    },
     account() {
       return this.$store.getters["user/account"];
     },
@@ -140,15 +167,30 @@ export default {
     networkInfo() {
       return this.$store.getters["user/networkInfo"];
     },
+    getTrooper() {
+      return { ...this.trooper, ...this.trooperInfo };
+    },
+    isbringHome() {
+      if (this.bringHome === undefined) {
+        return false;
+      }
+      return true;
+    },
   },
 
   watch: {
     isConnected() {
       this.loadData();
     },
+    currentBlockNumber() {
+      this.loadData();
+    },
+    account() {
+      this.loadData();
+    },
     account() {
       this.loadingApproved = false;
-      this.btnHomeDisabled = false;
+      this.btnBringHomeDisabled = false;
       this.isSendingWar = false;
       this.loadData();
     },
@@ -160,7 +202,7 @@ export default {
 
   methods: {
     async loadData() {
-      this.warMachine = new WarMachine(this.contractWar);
+      this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
       this.ContractTrooper = new Troops(
         this.trooper.contractAddress[this.networkInfo.id]
       );
@@ -168,6 +210,30 @@ export default {
         this.account,
         this.contractWar
       );
+      const getTropper = new Troops(
+        this.trooper.contractAddress[this.networkInfo.id]
+      );
+      this.trooperInfo.myTroops = await getTropper.balanceOf(this.account);
+      this.trooperInfo.globalTroops = await getTropper.balanceOf(
+        this.contractWar
+      );
+
+      if (this.isbringHome) {
+        const reportTrooperMy = await this.warMachine.getWarReportMyTrooper(
+          this.trooper.team.toString(),
+          this.trooper.contractAddress[this.networkInfo.id],
+          this.account
+        );
+        this.trooperInfo.myDead = reportTrooperMy.dead;
+        if (!reportTrooperMy.isWithdrawn) {
+          this.trooperInfo.staked = reportTrooperMy.survivor;
+        }
+      } else {
+        this.trooperInfo.staked = await this.warMachine.getPlayerInfo(
+          this.trooper.contractAddress[this.networkInfo.id],
+          this.account
+        );
+      }
     },
     async approve() {
       try {
@@ -218,19 +284,18 @@ export default {
         return ToastSnackbar.error(error);
       }
     },
-    async backHome() {
+    async bringHomeWithdraw() {
       try {
-        // back home
         const withdraw = this.warMachine.withdraw(
           this.trooper.contractAddress[this.networkInfo.id],
           this.account
         );
-        this.btnHomeDisabled = true;
+        this.btnBringHomeDisabled = true;
         withdraw.on("error", (error) => {
           if (error.message) {
             return ToastSnackbar.error(error.message);
           }
-          this.btnHomeDisabled = false;
+          this.btnBringHomeDisabled = false;
           return ToastSnackbar.error("Troop sending failed");
         });
         withdraw.on("receipt", (receipt) => {
