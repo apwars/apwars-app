@@ -150,10 +150,8 @@ export default class WarMachine {
 
   async getWarReportwGOLD() {
     const stage = parseInt(await this.warStage());
-    // let getTotalPrize = await this.smc.methods.getTotalPrize().call();
-    // getTotalPrize = new BigNumber(getTotalPrize);
-    const war = getWars.find(
-      (war) => war.contractAddress[[this.networkInfo] === this.contractAddress]
+    const war = getWars().find(
+      (war) => war.contractAddress[this.networkInfo] === this.contractAddress
     );
     if (!war) {
       return {

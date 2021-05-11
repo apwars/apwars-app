@@ -80,7 +80,7 @@
           >
             <countdown
               :time="countdownTime"
-              title="The Battle against the FED ends in"
+              title="This round ends in"
               @end="loadData"
             ></countdown>
           </v-col>
