@@ -73,7 +73,11 @@
 
       <v-container>
         <v-row class="mt-n13">
-          <v-col v-if="isCountdown && warStage === 1" cols="12" class="d-flex justify-center">
+          <v-col
+            v-if="isCountdown && warStage === 1"
+            cols="12"
+            class="d-flex justify-center"
+          >
             <countdown
               :time="countdownTime"
               title="The Battle against the FED ends in"
@@ -99,7 +103,10 @@
                 v-for="trooper in teamA"
                 v-bind:key="trooper.name"
               >
-                <battle-FED-trooper :info="trooper" />
+                <report-trooper
+                  :trooper="trooper"
+                  :contract-war="contractWar"
+                />
               </v-col>
             </v-row>
           </v-col>
@@ -111,7 +118,10 @@
                 v-for="trooper in teamB"
                 v-bind:key="trooper.name"
               >
-                <battle-FED-trooper :info="trooper" />
+                <report-trooper
+                  :trooper="trooper"
+                  :contract-war="contractWar"
+                />
               </v-col>
             </v-row>
           </v-col>
@@ -148,7 +158,7 @@
 <script>
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Utils/wButton";
-import BattleFEDTrooper from "@/lib/components/ui/Utils/BattleFEDTrooper";
+import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
 import WarMachine from "@/lib/eth/WarMachine";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 
@@ -159,7 +169,7 @@ export default {
   components: {
     wGOLDButton,
     wButton,
-    BattleFEDTrooper,
+    ReportTrooper,
     Countdown,
   },
 
@@ -231,6 +241,7 @@ export default {
 
   watch: {
     isConnected() {
+      this.initData();
       this.loadData();
     },
 
@@ -244,6 +255,10 @@ export default {
   },
 
   mounted() {
+    if (!this.isConnected) {
+      return;
+    }
+    this.initData();
     this.loadData();
   },
 
@@ -252,62 +267,30 @@ export default {
       this.$router.push("/exchange");
     },
 
-    async loadData() {
-      if (!this.isConnected) {
-        return;
-      }
-
-      this.isWar = getWars().find(
-        (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
-      );
-      if (!this.isWar) {
-        this.router.push("/wars");
-      }
-
-      this.isCountdown = this.isWar.countdown.round2 > new Date().getTime();
-      if (this.isCountdown) {
-        this.countdownTime = this.isWar.countdown.round2 - new Date().getTime();
-      }
-
-      this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
-      this.warStats = await this.warMachine.warStats();
-      this.warStage = parseInt(await this.warMachine.warStage());
-
+    initData() {
       try {
-        let troops = getTroops();
-
-        this.gobalTroops = await Promise.all(
-          troops.map((trooper) => {
-            return new Promise(async (resolve) => {
-              try {
-                if (trooper.contractAddress === "") {
-                  resolve(trooper);
-                }
-                const reportTrooperGlobal = await this.warMachine.getWarReportTrooper(
-                  trooper.team.toString(),
-                  trooper.contractAddress[this.networkInfo.id]
-                );
-                trooper.troopsDead = reportTrooperGlobal.dead;
-                trooper.troopsSurvivors = reportTrooperGlobal.survivor;
-
-                const reportTrooperMy = await this.warMachine.getWarReportMyTrooper(
-                  trooper.team.toString(),
-                  trooper.contractAddress[this.networkInfo.id],
-                  this.account
-                );
-                trooper.myEnlisted = reportTrooperMy.enlisted;
-                trooper.myDead = reportTrooperMy.dead;
-                trooper.mySurvivor = reportTrooperMy.survivor;
-
-                resolve(trooper);
-              } catch (error) {
-                console.log(error);
-              }
-            });
-          })
+        this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
+        this.isWar = getWars().find(
+          (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
         );
-      } catch (e) {
-        console.log(e);
+        if (!this.isWar) {
+          this.router.push("/wars");
+        }
+        this.isCountdown = this.isWar.countdown.round2 > new Date().getTime();
+        if (this.isCountdown) {
+          this.countdownTime =
+            this.isWar.countdown.round2 - new Date().getTime();
+        }
+        this.gobalTroops = getTroops();
+      } catch (error) {}
+    },
+
+    async loadData() {
+      try {
+        this.warStats = await this.warMachine.warStats();
+        this.warStage = parseInt(await this.warMachine.warStage());
+      } catch (error) {
+        console.log(error);
       } finally {
         this.isLoading = false;
       }

@@ -155,7 +155,6 @@ import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
 
 import WarMachine from "@/lib/eth/WarMachine";
-import Troops from "@/lib/eth/Troops";
 
 export default {
   components: {
@@ -169,9 +168,11 @@ export default {
     return {
       isLoading: true,
       contractWar: this.$route.params.contractWar,
-      gobalTroops: [],
+      globalTroops: [],
       isEnlistment: false,
-      warMachine: {},
+      warMachine: {
+        isLoading: true,
+      },
       isWar: { test: false },
       isCountdown: false,
       countdownTime: 0,
@@ -201,16 +202,17 @@ export default {
     },
 
     teamA() {
-      return this.gobalTroops.filter((trooper) => trooper.team === 1);
+      return this.globalTroops.filter((trooper) => trooper.team === 1);
     },
 
     teamB() {
-      return this.gobalTroops.filter((trooper) => trooper.team === 2);
+      return this.globalTroops.filter((trooper) => trooper.team === 2);
     },
   },
 
   watch: {
     isConnected() {
+      this.initData();
       this.loadData();
     },
 
@@ -224,6 +226,10 @@ export default {
   },
 
   mounted() {
+    if (!this.isConnected) {
+      return;
+    }
+    this.initData();
     this.loadData();
   },
 
@@ -232,69 +238,46 @@ export default {
       this.$router.push("/exchange");
     },
 
-    async loadData() {
-      if (!this.isConnected) {
-        return;
-      }
-
-      this.isWar = getWars().find(
-        (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
-      );
-
-      this.isCountdown = this.isWar.countdown.enlistment > new Date().getTime();
-      if (this.isCountdown) {
-        this.countdownTime =
-          this.isWar.countdown.enlistment - new Date().getTime();
-      } else {
-        this.countdownTimeEnd =
-          this.isWar.countdown.round1 - new Date().getTime();
-      }
-      if (!this.isWar) {
-        this.router.push("/wars");
-      }
-
+    initData() {
       try {
         this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
-        this.isEnlistment = await this.warMachine.activeEnlistment();
+        this.isWar = getWars().find(
+          (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
+        );
 
+        this.isCountdown =
+          this.isWar.countdown.enlistment > new Date().getTime();
+        if (this.isCountdown) {
+          this.countdownTime =
+            this.isWar.countdown.enlistment - new Date().getTime();
+        } else {
+          this.countdownTimeEnd =
+            this.isWar.countdown.round1 - new Date().getTime();
+        }
+        if (!this.isWar) {
+          this.router.push("/wars");
+        }
+
+        this.globalTroops = getTroops();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    async loadData() {
+      try {
+        if (this.warMachine.isLoading) {
+          return;
+        }
+        this.isEnlistment = await this.warMachine.activeEnlistment();
         if (!this.isEnlistment) {
           setTimeout(() => {
             this.$router.push(`/wars/${this.contractWar}/round-1`);
           }, 3000);
           return "";
         }
-
-        let troops = getTroops();
-
-        this.gobalTroops = await Promise.all(
-          troops.map((trooper) => {
-            return new Promise(async (resolve) => {
-              try {
-                if (trooper.contractAddress === "") {
-                  resolve(trooper);
-                }
-                const getTropper = new Troops(
-                  trooper.contractAddress[this.networkInfo.id]
-                );
-                trooper.myTroops = await getTropper.balanceOf(this.account);
-                trooper.globalTroops = await getTropper.balanceOf(
-                  this.contractWar
-                );
-
-                trooper.staked = await this.warMachine.getPlayerInfo(
-                  trooper.contractAddress[this.networkInfo.id],
-                  this.account
-                );
-
-                resolve(trooper);
-              } catch (error) {
-                console.log(error);
-              }
-            });
-          })
-        );
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
       } finally {
         this.isLoading = false;
       }
