@@ -13,8 +13,11 @@ export function getWars() {
       },
       countdown: {
         enlistment: 1620486000000,
+        round1: 1620745200000,
+        round2: 1621004400000,
       },
-      test: true,
+      totalPrize: "4874364487632384826939128",
+      test: false,
     },
     {
       name: "preWar#2 - Test",
@@ -27,7 +30,13 @@ export function getWars() {
         "56": "0x8448265038000925421f8de4c668cad764032596",
         "97": "0x7f1B535deb4e12dE9cF3EEd8ccb1B92833618E72",
       },
-      test: true,
+      countdown: {
+        enlistment: 1620486000000,
+        round1: 1620745200000,
+        round2: 1621004400000,
+      },
+      totalPrize: "4874364487632384826939128",
+      test: false,
     },
     {
       name: "preWar#1 - Test",
@@ -40,7 +49,13 @@ export function getWars() {
         "56": "0xc1ff2c7284b4535d6f6396b9af3c699d512351de",
         "97": "0x7f1B535deb4e12dE9cF3EEd8ccb1B92833618E72",
       },
-      test: true,
+      countdown: {
+        enlistment: 1620486000000,
+        round1: 1620745200000,
+        round2: 1621004400000,
+      },
+      totalPrize: "4874364487632384826939128",
+      test: false,
     },
   ];
 }
