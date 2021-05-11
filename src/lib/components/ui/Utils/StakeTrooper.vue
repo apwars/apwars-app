@@ -225,6 +225,7 @@ export default {
           this.account
         );
         this.trooperInfo.myDead = reportTrooperMy.dead;
+        this.trooperInfo.staked = "0";
         if (!reportTrooperMy.isWithdrawn) {
           this.trooperInfo.staked = reportTrooperMy.survivor;
         }

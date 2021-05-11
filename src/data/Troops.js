@@ -7,7 +7,7 @@ export function getTroops() {
       name: "wWARRIOR",
       lpAddresses: "0x6CABE6C94DC8BC63F8b71BBA7B2ed3381B1fe6e9",
       contractAddress: {
-        "5777": "0xdf9cCC8369A827ba93D7520248Bce4b3BD5542e1",
+        "5777": "0x0b0e318f0DD8a99e863d84841D0E7dcF07F8e5dE",
         "56": "0x54f653f539a78d3db0e0d3b166cf32c4f6cc5fb6",
         "97": "0x7f1B535deb4e12dE9cF3EEd8ccb1B92833618E72",
       },
@@ -22,7 +22,7 @@ export function getTroops() {
       name: "wARCHER",
       lpAddresses: "0x764A521590ebd2686cC629E47f3464E8fD53b0F0",
       contractAddress: {
-        "5777": "0x3B2FAc17d6212C494346bF534B1751c194B2c892",
+        "5777": "0x4fC1251bBE24caEbe4a33956A32a11333f77fEBd",
         "56": "0xAA2E03E7838148ce9FAd6Ce4C00275D89127A03e",
         "97": "0xAA2E03E7838148ce9FAd6Ce4C00275D89127A03e",
       },
@@ -37,7 +37,7 @@ export function getTroops() {
       name: "wARMORED-WARRIOR",
       lpAddresses: "0xcb7a7E4257ABC87745B40B5b51B82FFFBAa087A0",
       contractAddress: {
-        "5777": "0x74B6635D0445270419Ff8272d22a8C66f112E826",
+        "5777": "0xF234C4AF44D4345269d433ce74Bf0366eAD25067",
         "56": "0xd67761dF2b76eE251d48816691f5ff7728d94DAa",
         "97": "0xd67761dF2b76eE251d48816691f5ff7728d94DAa",
       },
@@ -52,7 +52,7 @@ export function getTroops() {
       name: "wCROSSBOWMAN",
       lpAddresses: "0xEd5D84185d0BB1d9fEAF7b59F38220Fc26F4FDD0",
       contractAddress: {
-        "5777": "0xbc912AaEa4fC21B12aF6aB41EcF1a4EA68A534e4",
+        "5777": "0x39597c82A835d0D4c1Fae84BCd2F142731088925",
         "56": "0xA0ecF9c7114eFFB43440B95D54e09A2a67331236",
         "97": "0xA0ecF9c7114eFFB43440B95D54e09A2a67331236",
       },
@@ -67,7 +67,7 @@ export function getTroops() {
       name: "wWIZARD",
       lpAddresses: "0x651E5fE33a17f39E65c94A4e4D6AA220C33C9b2B",
       contractAddress: {
-        "5777": "0xA990D1aA3f927aE1EC37542c29a4b120C5cdf359",
+        "5777": "0x14742bB55d8949Ee0DddF9136461514746b0b174",
         "56": "0x1225C7999483544c7859fE5A23c9Be70d14d5378",
         "97": "0x1225C7999483544c7859fE5A23c9Be70d14d5378",
       },
@@ -82,7 +82,7 @@ export function getTroops() {
       name: "wGRUNT",
       lpAddresses: "0x8C58f3aEe4924D0Ab0a8e0Ee680a6611296573FF",
       contractAddress: {
-        "5777": "0xd674f1761d577eb36662e6d25c1ccca948BB7D24",
+        "5777": "0xA161008870579B16A717360d8754f4C484e18183",
         "56": "0xd7544Fe7668f3dfb7AD21F9E02D7A51e116b6D75",
         "97": "0xd7544Fe7668f3dfb7AD21F9E02D7A51e116b6D75",
       },
@@ -97,7 +97,7 @@ export function getTroops() {
       name: "wORC-ARCHER",
       lpAddresses: "0x9e15154b80a68191E2D5C4B220a24bd99a422DeE",
       contractAddress: {
-        "5777": "0xa4BEDFe97D6d1F7489908b46ACcAB5E60dC094B4",
+        "5777": "0x9BD4BD678286E99696024cBDEd857B83aE20058A",
         "56": "0x934e11a44b2e817fe9bd6f337ef21bd35e46080e",
         "97": "0x934e11a44b2e817fe9bd6f337ef21bd35e46080e",
       },
@@ -112,7 +112,7 @@ export function getTroops() {
       name: "wARMORED-GRUNT",
       lpAddresses: "0xc0749fA16072c377B786213aCa2837D4Aa203c8A",
       contractAddress: {
-        "5777": "0xe3B3F26ee821E081F08FABa1DcfB0Dc37D589f33",
+        "5777": "0xbBe4AA52a30bC5d360d6497F5cf2Dcd17ee0a6F2",
         "56": "0x56c09E954690d80C5728194f7eAf473737Dc2180",
         "97": "0x56c09E954690d80C5728194f7eAf473737Dc2180",
       },
@@ -127,7 +127,7 @@ export function getTroops() {
       name: "wPIKE-ORC",
       lpAddresses: "0xC3Bc2A25C100fEf3A38f99543f89dCE330ceaBa0",
       contractAddress: {
-        "5777": "0x98B18E6072cdD9EE2dF960129240f8EfDc4C2138",
+        "5777": "0xF1b0d0a63D2D4497C598006c363904563485fa26",
         "56": "0x491c739efd076655f7D8D0DB545b7fb09DdF517f",
         "97": "0x491c739efd076655f7D8D0DB545b7fb09DdF517f",
       },
@@ -142,7 +142,7 @@ export function getTroops() {
       name: "wSHAMAN",
       lpAddresses: "0xA6Ab5C50F7db14b96d03e64AE3fe3B0041f6aE0C",
       contractAddress: {
-        "5777": "0x08754111602C3e31Ba220AB19d58FbC48409F2dd",
+        "5777": "0xA9747cd1701DD66dcBc6EA2671b0514cbb61E693",
         "56": "0x10eAAC888b70aBE542a50b787ABe7f94b8989CB7",
         "97": "0x10eAAC888b70aBE542a50b787ABe7f94b8989CB7",
       },
