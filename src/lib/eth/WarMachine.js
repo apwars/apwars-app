@@ -77,9 +77,9 @@ export default class WarMachine {
       .call();
 
     return {
-      enlisted: enlisted.toFixed(),
-      survivor: survivor.toFixed(),
-      dead: dead.toFixed(),
+      enlisted: enlisted.toFixed(0),
+      survivor: survivor.toFixed(0),
+      dead: dead.toFixed(0),
       isWithdrawn: isWithdrawn,
     };
   }
