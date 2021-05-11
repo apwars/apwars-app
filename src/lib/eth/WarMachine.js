@@ -1,6 +1,7 @@
 import WarMachineABI from "./WarMachine.json";
 import { ethers } from "ethers";
 import { getTroops } from "@/data/Troops";
+import { getWars } from "@/data/Wars";
 import BigNumber from "bignumber.js";
 
 export default class WarMachine {
@@ -149,10 +150,19 @@ export default class WarMachine {
 
   async getWarReportwGOLD() {
     const stage = parseInt(await this.warStage());
-    let getTotalPrize = await this.smc.methods.getTotalPrize().call();
-    getTotalPrize = new BigNumber(getTotalPrize);
+    const war = getWars().find(
+      (war) => war.contractAddress[this.networkInfo] === this.contractAddress
+    );
+    if (!war) {
+      return {
+        totalPrize: "0",
+        won: "0",
+        burned: "0",
+      };
+    }
+    let getTotalPrize = new BigNumber(war.totalPrize);
 
-    if (stage < 2) {
+    if (!war || stage < 2) {
       return {
         totalPrize: getTotalPrize.toFixed(0),
         won: "0",
@@ -194,42 +204,50 @@ export default class WarMachine {
   }
 
   async myAmountPrize(address) {
-    const warStats = await this.warStats();
-    let troops = getTroops();
-    const contractFake = troops[0].contractAddress[this.networkInfo];
+    try {
+      const warStats = await this.warStats();
+      let troops = getTroops();
+      const contractFake = troops[0].contractAddress[this.networkInfo];
 
-    let isAttacker = warStats.attackerTeam == warStats.winner;
+      let isAttacker = warStats.attackerTeam == warStats.winner;
 
-    const teamA = await this.smc.methods.getWarInfo(1, [contractFake]).call();
-    const teamB = await this.smc.methods.getWarInfo(2, [contractFake]).call();
+      const teamA = await this.smc.methods.getWarInfo(1, [contractFake]).call();
+      const teamB = await this.smc.methods.getWarInfo(2, [contractFake]).call();
 
-    const winner = warStats.winner === "1" ? teamA : teamB;
+      const winner = warStats.winner === "1" ? teamA : teamB;
 
-    const teamTotalPower = isAttacker
-      ? winner.totalAttackPower
-      : winner.totalDefensePower;
+      const teamTotalPower = isAttacker
+        ? winner.totalAttackPower
+        : winner.totalDefensePower;
 
-    const myInfo = await this.smc.methods
-      .getPlayerInfo([contractFake], address)
-      .call();
+      const myInfo = await this.smc.methods
+        .getPlayerInfo([contractFake], address)
+        .call();
 
-    const totalAttackPower =
-      warStats.winner === "1"
-        ? myInfo.totalAttackPowerTeamA
-        : myInfo.totalAttackPowerTeamB;
+      const totalAttackPower =
+        warStats.winner === "1"
+          ? myInfo.totalAttackPowerTeamA
+          : myInfo.totalAttackPowerTeamB;
 
-    const totalDefensePower =
-      warStats.winner === "1"
-        ? myInfo.totalDefensePowerTeamA
-        : myInfo.totalDefensePowerTeamB;
+      const totalDefensePower =
+        warStats.winner === "1"
+          ? myInfo.totalDefensePowerTeamA
+          : myInfo.totalDefensePowerTeamB;
 
-    const userTotalPower = isAttacker ? totalAttackPower : totalDefensePower;
+      const userTotalPower = isAttacker ? totalAttackPower : totalDefensePower;
+      const getTotalPrize = await this.getWarReportwGOLD();
+      let userShare = new BigNumber("0");
 
-    const getTotalPrize = await this.getWarReportwGOLD();
-    const userShare = new BigNumber(userTotalPower)
-      .div(teamTotalPower)
-      .times(getTotalPrize.won);
+      if (userTotalPower.toString() !== "0") {
+        userShare = new BigNumber(userTotalPower)
+          .div(teamTotalPower)
+          .times(getTotalPrize.won);
+      }
 
-    return userShare.toFixed(0);
+      return userShare.toFixed(0);
+    } catch (error) {
+      console.log(error);
+      return "0";
+    }
   }
 }

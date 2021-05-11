@@ -60,7 +60,7 @@
               <wGOLD-button
                 v-if="isConnected && !isLoading"
                 class="mx-auto mt-n8"
-                :amount="prize.totalPrize"
+                :amount="isWar.totalPrize"
                 size="small"
               ></wGOLD-button>
             </v-col>
@@ -139,7 +139,7 @@
             v-for="trooper in teamWinner"
             v-bind:key="trooper.name"
           >
-            <battle-FED-trooper :info="trooper" />
+            <report-trooper :trooper="trooper" :contract-war="contractWar" />
           </v-col>
         </v-row>
       </v-container>
@@ -175,7 +175,7 @@
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Utils/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
-import BattleFEDTrooper from "@/lib/components/ui/Utils/BattleFEDTrooper";
+import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
 import WarMachine from "@/lib/eth/WarMachine";
 
 import { getWars } from "@/data/Wars";
@@ -186,7 +186,7 @@ export default {
     wGOLDButton,
     Amount,
     wButton,
-    BattleFEDTrooper,
+    ReportTrooper,
   },
 
   data() {
@@ -196,7 +196,7 @@ export default {
       myTroops: [],
       priceWGOLD: 0,
       balance: 0,
-      gobalTroops: [],
+      globalTroops: [],
       warMachine: {},
       warStats: {},
       contractWar: this.$route.params.contractWar,
@@ -227,7 +227,7 @@ export default {
     },
 
     teamWinner() {
-      return this.gobalTroops.filter(
+      return this.globalTroops.filter(
         (trooper) => trooper.team === parseInt(this.warStats.winner)
       );
     },
@@ -244,6 +244,7 @@ export default {
 
   watch: {
     isConnected() {
+      this.initData();
       this.loadData();
     },
 
@@ -257,6 +258,10 @@ export default {
   },
 
   mounted() {
+    if (!this.isConnected) {
+      return;
+    }
+    this.initData();
     this.loadData();
   },
 
@@ -265,59 +270,25 @@ export default {
       window.location = "https://exchange.apwars.farm/#/swap";
     },
 
-    async loadData() {
-      if (!this.isConnected) {
-        return;
-      }
-
+    initData() {
+      this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
       this.isWar = getWars().find(
         (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
       );
       if (!this.isWar) {
         this.router.push("/wars");
       }
+      this.globalTroops = getTroops();
+    },
 
-      this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
-      this.warStage = await this.warMachine.warStage();
-      this.warStage = parseInt(this.warStage);
-
-      this.warStats = await this.warMachine.warStats();
-      this.prize = await this.warMachine.getWarReportwGOLD();
-
+    async loadData() {
       try {
-        let troops = getTroops();
-
-        this.gobalTroops = await Promise.all(
-          troops.map((trooper) => {
-            return new Promise(async (resolve) => {
-              try {
-                if (trooper.contractAddress === "") {
-                  resolve(trooper);
-                }
-                const reportTrooperGlobal = await this.warMachine.getWarReportTrooper(
-                  trooper.team.toString(),
-                  trooper.contractAddress[this.networkInfo.id]
-                );
-                trooper.troopsDead = reportTrooperGlobal.dead;
-                trooper.troopsSurvivors = reportTrooperGlobal.survivor;
-
-                const reportTrooperMy = await this.warMachine.getWarReportMyTrooper(
-                  trooper.team.toString(),
-                  trooper.contractAddress[this.networkInfo.id],
-                  this.account
-                );
-                trooper.myDead = reportTrooperMy.dead;
-                trooper.mySurvivor = reportTrooperMy.survivor;
-
-                resolve(trooper);
-              } catch (error) {
-                console.log(error);
-              }
-            });
-          })
-        );
-      } catch (e) {
-        console.log(e);
+        this.warStage = await this.warMachine.warStage();
+        this.warStage = parseInt(this.warStage);
+        this.warStats = await this.warMachine.warStats();
+        this.prize = await this.warMachine.getWarReportwGOLD();
+      } catch (error) {
+        console.log(error);
       } finally {
         this.isLoading = false;
       }

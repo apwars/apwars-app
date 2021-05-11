@@ -7,14 +7,16 @@ export function getWars() {
       dateStart: "2021-05-08",
       dateEnd: "In progress",
       contractAddress: {
-        "5777": "0x81727708D3f1b7455661ABF8c8bB315d57A28044",
+        "5777": "0x2098DdCd27Dd9386Ad7e488B233D9714bB7dBeFD",
         "56": "0x0866bfde63fd01687ad6b36c3063828af50b62ea",
         "97": "0x7f1B535deb4e12dE9cF3EEd8ccb1B92833618E72",
       },
       countdown: {
-          enlistment: 1620486000000,
-          enlistmentEnd: 1620745200000,
-        },
+        enlistment: 1620486000000,
+        round1: 1620745200000,
+        round2: 1621004400000,
+      },
+      totalPrize: "4874364487632384826939128",
       test: false,
     },
   ];

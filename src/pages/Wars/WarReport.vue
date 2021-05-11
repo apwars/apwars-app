@@ -107,14 +107,14 @@
                 <amount :amount="myEarnings" decimals="2" compact approximate />
                 <span class="suffix">wGOLD</span>
               </div>
-              <wButton
+              <!-- <wButton
                 class="ml-1 align-self-center"
                 :actived="false"
                 @click="redeemPrize"
                 :disabled="isReedemPrize"
               >
                 {{ isReedemPrize ? "Already withdrawn" : "Redeem prize" }}
-              </wButton>
+              </wButton> -->
             </div>
           </v-col>
           <v-col cols="12" class="mb-9">
@@ -157,7 +157,11 @@
                 v-for="trooper in teamA"
                 v-bind:key="trooper.name"
               >
-                <stake-trooper :trooper="trooper" :contract-war="contractWar" />
+                <stake-trooper
+                  :trooper="trooper"
+                  :contract-war="contractWar"
+                  bring-home
+                />
               </v-col>
             </v-row>
           </v-col>
@@ -169,7 +173,11 @@
                 v-for="trooper in teamB"
                 v-bind:key="trooper.name"
               >
-                <stake-trooper :trooper="trooper" :contract-war="contractWar" />
+                <stake-trooper
+                  :trooper="trooper"
+                  :contract-war="contractWar"
+                  bring-home
+                />
               </v-col>
             </v-row>
           </v-col>
@@ -215,11 +223,12 @@ import wButton from "@/lib/components/ui/Utils/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
+
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
-import Troops from "@/lib/eth/Troops";
+
 import WarMachine from "@/lib/eth/WarMachine";
 
 export default {
@@ -234,7 +243,7 @@ export default {
   data() {
     return {
       isLoading: true,
-      gobalTroops: [],
+      globalTroops: [],
       contractWar: this.$route.params.contractWar,
       warStats: {},
       prize: {},
@@ -292,16 +301,17 @@ export default {
     },
 
     teamA() {
-      return this.gobalTroops.filter((trooper) => trooper.team === 1);
+      return this.globalTroops.filter((trooper) => trooper.team === 1);
     },
 
     teamB() {
-      return this.gobalTroops.filter((trooper) => trooper.team === 2);
+      return this.globalTroops.filter((trooper) => trooper.team === 2);
     },
   },
 
   watch: {
     isConnected() {
+      this.initData();
       this.loadData();
     },
 
@@ -315,9 +325,12 @@ export default {
   },
 
   mounted() {
+    if (!this.isConnected) {
+      return;
+    }
+    this.initData();
     this.loadData();
   },
-
   methods: {
     goToSwap() {
       this.$router.push("/exchange");
@@ -339,64 +352,32 @@ export default {
       });
     },
 
-    async loadData() {
-      if (!this.isConnected) {
-        return;
-      }
-      this.isWar = getWars().find(
-        (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
-      );
-      if (!this.isWar) {
-        this.router.push("/wars");
-      }
-      this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
-      this.warStage = parseInt(await this.warMachine.warStage());
-      this.warStats = await this.warMachine.warStats();
-      this.prize = await this.warMachine.getWarReportwGOLD();
-      this.isReedemPrize = await this.warMachine.withdrawn(
-        this.account,
-        this.addresses.wGOLD
-      );
-
-      this.myEarnings = await this.warMachine.myAmountPrize(this.account);
-
+    initData() {
       try {
-        let troops = getTroops();
-
-        this.gobalTroops = await Promise.all(
-          troops.map((trooper) => {
-            return new Promise(async (resolve) => {
-              try {
-                if (trooper.contractAddress === "") {
-                  resolve(trooper);
-                }
-                const getTropper = new Troops(
-                  trooper.contractAddress[this.networkInfo.id]
-                );
-                trooper.myTroops = await getTropper.balanceOf(this.account);
-                trooper.backHome = true;
-                trooper.globalTroops = await getTropper.balanceOf(
-                  this.contractWar
-                );
-
-                const reportTrooperMy = await this.warMachine.getWarReportMyTrooper(
-                  trooper.team.toString(),
-                  trooper.contractAddress[this.networkInfo.id],
-                  this.account
-                );
-                trooper.staked = "0";
-                trooper.myDead = reportTrooperMy.dead;
-                if (!reportTrooperMy.isWithdrawn) {
-                  trooper.staked = reportTrooperMy.survivor;
-                }
-
-                resolve(trooper);
-              } catch (error) {
-                console.log(error);
-              }
-            });
-          })
+        this.isWar = getWars().find(
+          (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
         );
+        if (!this.isWar) {
+          this.router.push("/wars");
+        }
+        this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
+
+        this.globalTroops = getTroops();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async loadData() {
+      try {
+        this.warStage = parseInt(await this.warMachine.warStage());
+        this.warStats = await this.warMachine.warStats();
+        this.prize = await this.warMachine.getWarReportwGOLD();
+        this.isReedemPrize = await this.warMachine.withdrawn(
+          this.account,
+          this.addresses.wGOLD
+        );
+        this.myEarnings = await this.warMachine.myAmountPrize(this.account);
       } catch (e) {
         console.log(e);
       } finally {
