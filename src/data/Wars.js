@@ -7,7 +7,7 @@ export function getWars() {
       dateStart: "2021-05-08",
       dateEnd: "In progress",
       contractAddress: {
-        "5777": "0x2098DdCd27Dd9386Ad7e488B233D9714bB7dBeFD",
+        "5777": "0x027C51b5235CF7103a04D429cDa314B1ef1F5319",
         "56": "0x0866bfde63fd01687ad6b36c3063828af50b62ea",
         "97": "0x7f1B535deb4e12dE9cF3EEd8ccb1B92833618E72",
       },
