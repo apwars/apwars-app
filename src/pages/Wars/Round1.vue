@@ -99,7 +99,7 @@
             <v-row>
               <v-col
                 cols="12"
-                class="d-flex justify-center"
+                class="d-flex justify-center pa-0 ma-0"
                 v-for="trooper in teamA"
                 v-bind:key="trooper.name"
               >

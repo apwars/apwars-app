@@ -61,7 +61,7 @@ export const routes = [
       {
         path: "/farms",
         beforeEnter() {
-          redirect_blank("https://farms.apwars.farm");
+          redirectBlank("https://farms.apwars.farm");
         },
       },
       {
