@@ -91,7 +91,7 @@ export default {
       this.loading = true;
 
       try {
-        this.collectibles = getCollectibles();
+        this.collectibles = getCollectibles().filter(collectible => !collectible.isGift);
       } catch(e) {
         console.log(e);
       } finally {

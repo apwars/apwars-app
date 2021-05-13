@@ -146,12 +146,6 @@ export default {
           })
         );
 
-        console.log(
-          this.account,
-          this.collectibles.length,
-          this.balances.length
-        );
-
         this.itemsCount = this.balances.filter((balance) => balance > 0).length;
         this.totalItems = this.balances.reduce((acc, item) => acc + item, 0);
       } catch (e) {

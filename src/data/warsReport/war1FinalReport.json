@@ -5,8 +5,13 @@
     "externalRandomSource1": "0x3181348e7b173dbce6898383652b9d6fdd04f502f528515e6efd3e511ee79a93",
     "externalRandomSource2": "0x34f969805a96c2ed50e34b152891700a03cffd74f2e0d1bce62aaaf7a1676b89",
     "winner": "TeamA",
+    "attack": "TeamA",
+    "defense": "TeamB",
     "nfts": {
         "humanLegend": {
+            "image": "war1-the-legend-corp.png",
+            "name": "The legend Corp",
+            "description": "For one person that lost the war but had an unit that survive",
             "totalAttackPowerTeamA": 34.8838,
             "totalAttackPowerTeamB": 16,
             "totalDefensePowerTeamA": 25.4284,
@@ -18,6 +23,9 @@
             "totalPower": 108.3122
         },
         "orcLegend": {
+            "image": "war1-the-legend-degen.png",
+            "name": "The legend Degen",
+            "description": "For one person that lost the war but had an unit that survive",
             "totalAttackPowerTeamA": 0,
             "totalAttackPowerTeamB": 300,
             "totalDefensePowerTeamA": 0,
@@ -29,6 +37,9 @@
             "totalPower": 720
         },
         "warHero": {
+            "image": "war1-war-hero.png",
+            "name": "War Hero",
+            "description": "A person on the team who lost a battle for supremacy",
             "totalAttackPowerTeamA": 611.8061,
             "totalAttackPowerTeamB": 601.4315,
             "totalDefensePowerTeamA": 1223.6122,
@@ -40,6 +51,9 @@
             "totalPower": 3639.7128
         },
         "greatReinforcement": {
+            "image": "war1-great-reinforcement.png",
+            "name": "Great Reinforcement",
+            "description": "The Person who sends the most troops to the battle for supremacy",
             "totalAttackPowerTeamA": 277118.1133,
             "totalAttackPowerTeamB": 12923225.5671,
             "totalDefensePowerTeamA": 79176.6038,
@@ -51,6 +65,9 @@
             "totalPower": 19093273.6766
         },
         "conquer": {
+            "image": "war1-the-conqueror.png",
+            "name": "The Conqueror",
+            "description": "One person from the team that won the battle for supremacy",
             "totalAttackPowerTeamA": 4.98,
             "totalAttackPowerTeamB": 0,
             "totalDefensePowerTeamA": 9.9601,

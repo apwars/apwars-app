@@ -75,6 +75,7 @@
             </div>
             <div v-else class="stake align-self-center">
               <wButton
+                class="my-2 my-md-0"
                 :actived="false"
                 @click="approve"
                 :disabled="getTrooper.myTroops === '0' || loadingApproved"
@@ -87,6 +88,7 @@
           <div v-else>
             <div class="stake align-self-center">
               <wButton
+                class="my-2 my-md-0"
                 :actived="false"
                 @click="bringHomeWithdraw"
                 :disabled="getTrooper.staked === '0' || btnBringHomeDisabled"
@@ -371,7 +373,7 @@ export default {
   }
   .my-troops {
     font-size: 12px;
-    left: 215px;
+    left: 240px;
   }
 }
 </style>
