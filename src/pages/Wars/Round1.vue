@@ -6,7 +6,7 @@
         <v-container>
           <v-row class="mt-1">
             <v-col cols="12">
-              <h2 class="text-h2 text-wGOLD text-center">
+              <h2 class="text-h2 text-wGOLD text-center ma-n2 ma-sm-0">
                 The Battle for Supremacy
               </h2>
             </v-col>
@@ -72,7 +72,7 @@
       </div>
 
       <v-container>
-        <v-row class="mt-n13">
+        <v-row class="mt-n7 mt-sm-n13">
           <v-col
             v-if="isCountdown && warStage === 1"
             cols="12"

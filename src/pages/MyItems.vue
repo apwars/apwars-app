@@ -6,20 +6,16 @@
         :collectibles="collectibles.length"
         :collection="totalItems"
       />
-      <v-card color="grey lighten-4" flat>
-        <v-toolbar class="elevation-0">
-          <v-toolbar-title>
-            <game-title>My Collection</game-title>
-          </v-toolbar-title>
-          <div style="width: 20px"></div>
-          <v-spacer></v-spacer>
+      <v-row class="my-1">
+        <v-col cols="12" class="d-flex justify-space-between">
+          <game-title class="align-self-center">My Collection</game-title>
           <square-button
             label="See all items"
             icon="mdi-format-list-bulleted"
             @click="goToStore()"
           />
-        </v-toolbar>
-      </v-card>
+        </v-col>
+      </v-row>
 
       <v-container fluid v-if="collection.length > 0">
         <v-row dense>

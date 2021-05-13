@@ -142,13 +142,13 @@
       </v-container>
 
       <v-container>
-        <v-row class="mt-n9">
+        <v-row class="mt-n3 mt-sm-n9">
           <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3 ma-6 text-wGOLD">Troops</h3>
+            <h3 class="text-h3 ma-0 ma-sm-6 text-wGOLD">Troops</h3>
           </v-col>
         </v-row>
 
-        <v-row v-if="!isLoading" class="mb-6">
+        <v-row v-if="!isLoading">
           <v-col cols="12" lg="6" class="dividing-line">
             <v-row>
               <v-col
