@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="text-h3 ma-3 text-wGOLD text-center">{{title}}</h3>
+    <h3 class="text-h3 ma-3 text-wGOLD text-center">{{ title }}</h3>
     <div class="d-flex justify-center mt-6">
       <countdown
         :time="setTime"
@@ -62,7 +62,7 @@ export default {
 
   computed: {
     setTime() {
-      return this.time ?? 60*1000;
+      return this.time ?? 60 * 1000;
     },
   },
 };
@@ -81,7 +81,6 @@ export default {
   top: -40px;
   left: 50%;
   transform: translate(-50%, 0%);
-  font-size: 22px;
 }
 
 .countdown >>> .block-time .img {
@@ -101,6 +100,17 @@ export default {
 @media only screen and (max-width: 760px) {
   .countdown >>> .block-time .img {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .countdown >>> .block-time {
+    width: 70px;
+    height: 70px;
+    margin: 0px 2px;
+  }
+  .countdown >>> .block-time .title {
+    font-size: 0.9rem !important;
   }
 }
 </style>

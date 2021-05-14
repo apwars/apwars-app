@@ -8,7 +8,7 @@
         <v-container>
           <v-row class="mt-1">
             <v-col cols="12">
-              <h2 class="text-h2 text-wGOLD text-center">
+              <h2 class="text-h2 text-wGOLD text-center ma-n2 ma-sm-0">
                 The Battle against the FED
               </h2>
             </v-col>
@@ -70,15 +70,15 @@
       </div>
 
       <v-container fluid>
-        <v-row class="mt-n15">
+        <v-row class="mt-n7 mt-sm-n15">
           <v-col cols="12">
-            <h1 class="text-h1 text-center text-wGOLD">
+            <h1 class="text-h3 text-md-h1 text-center text-wGOLD">
               wGOLD won for {{ winner }}
             </h1>
-            <p class="subtext-wGOLD my-3">
+            <div class="subtext-wGOLD my-3">
               The war is over! The forces won the FED, all the wGOLD won is
               being distributed!
-            </p>
+            </div>
           </v-col>
         </v-row>
 
@@ -353,6 +353,11 @@ export default {
 @media only screen and (max-width: 600px) {
   .gradient {
     display: none;
+  }
+  .subtext-wGOLD {
+    font-size: 20px;
+    line-height: 29px;
+    width: 100%;
   }
 }
 </style>

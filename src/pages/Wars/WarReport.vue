@@ -64,9 +64,9 @@
       </div>
 
       <v-container fluid>
-        <v-row class="mt-n16">
+        <v-row class="mt-n9 mt-md-n16">
           <v-col cols="12">
-            <h1 class="text-h1 text-center text-wGOLD">
+            <h1 class="text-h3 text-md-h1 text-center text-wGOLD">
               wGOLD won for {{ winner }}
             </h1>
             <p class="subtext-wGOLD my-3">
@@ -76,7 +76,7 @@
           </v-col>
         </v-row>
 
-        <v-row v-if="isConnected && !isLoading" class="bg-burned">
+        <v-row v-if="!isLoading" class="bg-burned">
           <v-col cols="12" md="6">
             <div class="d-flex justify-end mx-0 mx-md-6">
               <v-img
@@ -104,7 +104,7 @@
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">MY EARNINGS:</div>
-                <amount :amount="myEarnings" decimals="2" compact approximate />
+                <amount :amount="myEarnings" decimals="2" compact approximate formatted />
                 <span class="suffix">wGOLD</span>
               </div>
               <!-- <wButton
@@ -142,13 +142,13 @@
       </v-container>
 
       <v-container>
-        <v-row class="mt-n9">
+        <v-row class="mt-n3 mt-sm-n9">
           <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3 ma-6 text-wGOLD">Troops</h3>
+            <h3 class="text-h3 ma-0 ma-sm-6 text-wGOLD">Troops</h3>
           </v-col>
         </v-row>
 
-        <v-row v-if="isConnected && !isLoading" class="mb-6">
+        <v-row v-if="!isLoading">
           <v-col cols="12" lg="6" class="dividing-line">
             <v-row>
               <v-col
@@ -188,6 +188,41 @@
             <h3 class="text-h3">Loading...</h3>
           </v-col>
         </v-row>
+
+        <v-row>
+          <v-col cols="12" class="d-flex justify-center">
+            <h3 class="text-h3 text-wGOLD">Players</h3>
+          </v-col>
+          <v-col cols="12" class="d-flex justify-center pa-0">
+            <table-war-report :war="isWar"></table-war-report>
+          </v-col>
+
+          <v-col cols="12" class="d-flex justify-center">
+            <h3 class="text-h3 text-wGOLD">Legendary Relics (NFTs)</h3>
+          </v-col>
+          <v-col
+            cols="12"
+            md="3"
+            v-for="nft in isWar.report.nfts"
+            :key="nft.address"
+          >
+            <v-img
+              class="mx-auto"
+              max-width="200"
+              width="200"
+              :src="`/images/nfts/${nft.image}`"
+            ></v-img>
+            <h5 class="text-h5 text-wGOLD text-center">
+              {{ nft.name }}
+            </h5>
+            <h5 class="text-h5 text-wGOLD text-center">
+              Winner
+            </h5>
+            <div class="text-center">
+              <v-address :address="nft.address" link tooltip></v-address>
+            </div>
+          </v-col>
+        </v-row>
       </v-container>
     </div>
     <div v-else-if="isConnected && !isLoading">
@@ -223,6 +258,8 @@ import wButton from "@/lib/components/ui/Utils/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
+import TableWarReport from "@/lib/components/ui/Utils/TableWarReport";
+import VAddress from "@/lib/components/ui/Utils/VAddress";
 
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
@@ -238,6 +275,8 @@ export default {
     wButton,
     StakeTrooper,
     Countdown,
+    TableWarReport,
+    VAddress,
   },
 
   data() {
@@ -371,13 +410,29 @@ export default {
     async loadData() {
       try {
         this.warStage = parseInt(await this.warMachine.warStage());
+        if (this.$route.query.showReport) {
+          this.warStage = 2;
+        }
         this.warStats = await this.warMachine.warStats();
         this.prize = await this.warMachine.getWarReportwGOLD();
         this.isReedemPrize = await this.warMachine.withdrawn(
           this.account,
           this.addresses.wGOLD
         );
-        this.myEarnings = await this.warMachine.myAmountPrize(this.account);
+
+        let prizeWon = web3.utils.fromWei(this.prize.won.toString());
+        prizeWon = parseFloat(this.prizeWon);
+        const reportUser = this.isWar.report.players.find(
+          (player) =>
+            player.address.toLowerCase() === this.account.toLowerCase()
+        );
+        if (reportUser) {
+          const wGOLDShare =
+            this.isWar.report.winner === "TeamA"
+              ? reportUser.teamAShare
+              : reportUser.teamBShare;
+          this.myEarnings = prizeWon * wGOLDShare;
+        }
       } catch (e) {
         console.log(e);
       } finally {

@@ -14,12 +14,21 @@
 
 <script>
 export default {
-  props: ["amount", "compact", "decimals", "approximate", "tooltip"],
+  props: [
+    "amount",
+    "compact",
+    "formatted",
+    "decimals",
+    "approximate",
+    "tooltip",
+  ],
 
   computed: {
     computedAmount() {
       let numberAmount = this.amount || "0";
-      numberAmount = web3.utils.fromWei(numberAmount.toString());
+      numberAmount = this.isFormatted
+        ? numberAmount
+        : web3.utils.fromWei(numberAmount.toString());
       if (this.compact !== undefined) {
         numberAmount = this.compactNumber(numberAmount, this.getDecimals);
       } else {
@@ -36,13 +45,18 @@ export default {
     },
     tooltipAmount() {
       let numberAmount = this.amount || "0";
-      return web3.utils.fromWei(numberAmount.toString());
+      return this.isFormatted
+        ? numberAmount
+        : web3.utils.fromWei(numberAmount.toString());
     },
     isTooltip() {
-      return this.tooltip !== undefined ? 1 : 0;
+      return this.tooltip !== undefined;
     },
     getDecimals() {
       return this.decimals ?? 0;
+    },
+    isFormatted() {
+      return this.formatted !== undefined;
     },
   },
 

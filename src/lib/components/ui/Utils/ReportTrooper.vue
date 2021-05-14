@@ -20,6 +20,7 @@
       <span class="troop-symbol">{{ getTrooper.name }}</span>
       <span class="my-troops">
         My enlisted troops:
+        <br class="d-flex d-sm-none" />
         <amount
           :amount="getTrooper.myEnlisted"
           decimals="2"
@@ -38,7 +39,7 @@
       </span>
     </div>
 
-    <v-row class="ma-0">
+    <v-row class="ma-3 md-sm-0">
       <v-col
         cols="12"
         md="6"
@@ -238,7 +239,9 @@ export default {
   }
   .my-troops {
     font-size: 13px;
-    left: 240px;
+    left: 175px;
+    bottom: -30px;
+    width: 170px;
   }
 }
 </style>

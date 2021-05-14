@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-row>
-        <v-col cols="12" class="my-n3 my-md-0">
+        <v-col cols="12" class="my-0">
           <v-img
             class="mx-auto"
             width="550"
@@ -27,6 +27,7 @@
             v-if="isConnected"
             class="mx-auto"
             :amount="balanceFED"
+            :size="$vuetify.breakpoint.name === 'xs' ? 'small' : 'medium'"
           ></wGOLD-button>
         </v-col>
       </v-row>
@@ -60,7 +61,7 @@
               max-width="80"
               max-height="80"
             />
-            <div class="align-self-center text-center">
+            <div class="align-self-center">
               <span class="label-current">
                 Current Price:
               </span>
