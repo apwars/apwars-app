@@ -421,16 +421,19 @@ export default {
         );
 
         let prizeWon = web3.utils.fromWei(this.prize.won.toString());
-        prizeWon = parseFloat(this.prizeWon);
+        prizeWon = parseFloat(prizeWon);
         const reportUser = this.isWar.report.players.find(
           (player) =>
             player.address.toLowerCase() === this.account.toLowerCase()
         );
+        console.log(reportUser);
         if (reportUser) {
           const wGOLDShare =
             this.isWar.report.winner === "TeamA"
               ? reportUser.teamAShare
               : reportUser.teamBShare;
+           console.log(prizeWon);
+           console.log(wGOLDShare);
           this.myEarnings = prizeWon * wGOLDShare;
         }
       } catch (e) {
