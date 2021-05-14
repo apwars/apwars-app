@@ -1,15 +1,17 @@
 <template>
-   <v-container class="pt-3">
-    <v-card color="grey lighten-4" flat>
-      <v-toolbar class="elevation-0">
-        <v-toolbar-title>
-          <game-title>Game Items</game-title>
-        </v-toolbar-title>
-        <div style="width: 20px"></div>
-        <v-spacer></v-spacer>
-        <square-button label="My Collection" icon="mdi-format-list-bulleted" @click="goToMyCollection()" />
-      </v-toolbar>
-    </v-card>
+  <div>
+    <v-container>
+      <v-row>
+        <v-col cols="12" class="d-flex justify-space-between">
+          <game-title class="align-self-center">Game Items</game-title>
+          <square-button
+            label="See all items"
+            icon="mdi-format-list-bulleted"
+            @click="goToMyCollection()"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
 
     <v-container fluid>
       <v-row dense>
@@ -23,17 +25,17 @@
         </v-col>
       </v-row>
     </v-container>
-   </v-container>
+  </div>
 </template>
 
 <script>
-import SquareButton from '@/lib/components/ui/Utils/SquareButton';
-import GameModal from '@/lib/components/ui/Modals/GameModal';
+import SquareButton from "@/lib/components/ui/Utils/SquareButton";
+import GameModal from "@/lib/components/ui/Modals/GameModal";
 
-import NftCard from '@/lib/components/ui/NFTCard';
-import GameTitle from '@/lib/components/ui/Utils/GameTitle';
+import NftCard from "@/lib/components/ui/NFTCard";
+import GameTitle from "@/lib/components/ui/Utils/GameTitle";
 
-import { getCollectibles } from '@/data/Collectibles';
+import { getCollectibles } from "@/data/Collectibles";
 
 export default {
   components: {
@@ -80,7 +82,7 @@ export default {
 
   methods: {
     goToMyCollection() {
-      this.$router.push('/collection');
+      this.$router.push("/collection");
     },
 
     async loadData() {
@@ -91,8 +93,10 @@ export default {
       this.loading = true;
 
       try {
-        this.collectibles = getCollectibles().filter(collectible => !collectible.isGift);
-      } catch(e) {
+        this.collectibles = getCollectibles().filter(
+          (collectible) => !collectible.isGift
+        );
+      } catch (e) {
         console.log(e);
       } finally {
         this.loading = false;

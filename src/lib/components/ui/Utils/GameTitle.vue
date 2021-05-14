@@ -5,15 +5,19 @@
 </template>
 
 <script>
-export default {
-
-};
+export default {};
 </script>
 
 <style scoped>
 span {
   color: white;
   font-weight: bold;
-  size: 38;
+  font-size: 28px;
+}
+
+@media only screen and (max-width: 600px) {
+  span {
+    font-size: 18px;
+  }
 }
 </style>
