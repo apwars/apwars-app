@@ -68,6 +68,16 @@
       "image": "war1-the-conqueror.png",
       "name": "The Conqueror",
       "address": "0xea4585a07Dac4cA7fc43cdFDAc7Ed3D945aE28E6"
+    },
+    "memorableVictory": {
+      "image": "war1-memorable-victory.png",
+      "name": "Memorable Victory",
+      "winner": "The Corporation"
+    },
+    "memorableDeath": {
+      "image": "war1-memorable-death.png",
+      "name": "Memorable Death",
+      "winner": "The Degenerate"
     }
   },
   "players": [

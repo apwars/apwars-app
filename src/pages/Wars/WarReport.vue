@@ -104,7 +104,13 @@
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">MY EARNINGS:</div>
-                <amount :amount="myEarnings" decimals="2" compact approximate formatted />
+                <amount
+                  :amount="myEarnings"
+                  decimals="2"
+                  compact
+                  approximate
+                  formatted
+                />
                 <span class="suffix">wGOLD</span>
               </div>
               <!-- <wButton
@@ -219,7 +225,11 @@
               Winner
             </h5>
             <div class="text-center">
-              <v-address :address="nft.address" link tooltip></v-address>
+              <span v-if="nft.winner">
+                {{ nft.winner }}
+              </span>
+
+              <v-address v-else :address="nft.address" link tooltip></v-address>
             </div>
           </v-col>
         </v-row>

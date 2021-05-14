@@ -349,6 +349,24 @@ export function getCollectibles() {
       title: "The Conqueror",
       description: "The vivid tongues call me a conqueror, but the actual message I spreaded was silence. - Guartuffo the Quiet",
       image: "/images/nfts/war1-the-conqueror.png",
+    }, 
+    {
+      id: 25,
+      contractAddress: addresses.collectibles,
+      isGift: true,
+      tokenAddress: addresses.wGOLD,
+      title: "Memorable Victory",
+      description: "I can forget a lot of things but not the great war. It is like if I lived to expect it and then to remember it - War veteran",
+      image: "/images/nfts/war1-memorable-victory.png",
+    },
+    {
+      id: 26,
+      contractAddress: addresses.collectibles,
+      isGift: true,
+      tokenAddress: addresses.wGOLD,
+      title: "Memorable Death",
+      description: "I can forget a lot of things but not the great war. It is like if I lived to expect it and then to remember it - War veteran",
+      image: "/images/nfts/war1-memorable-death.png",
     }
   ];
 }
