@@ -67,16 +67,7 @@
     "conquer": {
       "image": "war1-the-conqueror.png",
       "name": "The Conqueror",
-      "description": "The vivid tongues call me a conqueror, but the actual message I spreaded was silence. - Guartuffo the Quiet",
-      "totalAttackPowerTeamA": 4.98,
-      "totalAttackPowerTeamB": 0,
-      "totalDefensePowerTeamA": 9.9601,
-      "totalDefensePowerTeamB": 0,
-      "address": "0xea4585a07Dac4cA7fc43cdFDAc7Ed3D945aE28E6",
-      "wCOURAGEAmount": 3.1335,
-      "teamAShare": 2.487e-7,
-      "teamBShare": 0,
-      "totalPower": 14.9401
+      "address": "0xea4585a07Dac4cA7fc43cdFDAc7Ed3D945aE28E6"
     }
   },
   "players": [

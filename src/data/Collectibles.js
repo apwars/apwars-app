@@ -309,7 +309,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "The legend Corp",
       description:
-        "For one person that lost the war but had an unit that survive",
+        "Sire, they spared my life to deliver this message to you. We are coming. - Weary soldier message",
       image: "/images/nfts/war1-the-legend-corp.png",
     },
     {
@@ -319,7 +319,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "The legend Degen",
       description:
-        "For one person that lost the war but had an unit that survive",
+        "Sire, they spared my life to deliver this message to you. We are coming. - Weary soldier message",
       image: "/images/nfts/war1-the-legend-degen.png",
     },
     {
@@ -328,8 +328,7 @@ export function getCollectibles() {
       isGift: true,
       tokenAddress: addresses.wGOLD,
       title: "War Hero",
-      description:
-        "A person on the team who lost a battle for supremacy",
+      description: "All hail the a survivor from a great battle - War veterany",
       image: "/images/nfts/war1-war-hero.png",
     },
     {
@@ -339,7 +338,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Great Reinforcement",
       description:
-        "The Person who sends the most troops to the battle for supremacy",
+        "When the battlefiled saw us coming the war stoped and they become spectators of our charge - Horsemen of the second brigade",
       image: "/images/nfts/war1-great-reinforcement.png",
     },
     {
@@ -348,9 +347,8 @@ export function getCollectibles() {
       isGift: true,
       tokenAddress: addresses.wGOLD,
       title: "The Conqueror",
-      description:
-        "One person from the team that won the battle for supremacy",
+      description: "The vivid tongues call me a conqueror, but the actual message I spreaded was silence. - Guartuffo the Quiet",
       image: "/images/nfts/war1-the-conqueror.png",
-    },
+    }
   ];
 }
