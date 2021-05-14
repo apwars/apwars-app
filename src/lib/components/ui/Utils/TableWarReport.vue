@@ -136,7 +136,7 @@ export default {
         !this.war ||
         !this.war.report ||
         !this.war.report.players ||
-        !this.prizeWon
+        this.prizeWon === false
       ) {
         return [];
       }

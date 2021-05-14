@@ -104,7 +104,7 @@
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">MY EARNINGS:</div>
-                <amount :amount="myEarnings" decimals="2" compact approximate />
+                <amount :amount="myEarnings" decimals="2" compact approximate formatted />
                 <span class="suffix">wGOLD</span>
               </div>
               <!-- <wButton
@@ -410,13 +410,29 @@ export default {
     async loadData() {
       try {
         this.warStage = parseInt(await this.warMachine.warStage());
+        if (this.$route.query.showReport) {
+          this.warStage = 2;
+        }
         this.warStats = await this.warMachine.warStats();
         this.prize = await this.warMachine.getWarReportwGOLD();
         this.isReedemPrize = await this.warMachine.withdrawn(
           this.account,
           this.addresses.wGOLD
         );
-        this.myEarnings = await this.warMachine.myAmountPrize(this.account);
+
+        let prizeWon = web3.utils.fromWei(this.prize.won.toString());
+        prizeWon = parseFloat(this.prizeWon);
+        const reportUser = this.isWar.report.players.find(
+          (player) =>
+            player.address.toLowerCase() === this.account.toLowerCase()
+        );
+        if (reportUser) {
+          const wGOLDShare =
+            this.isWar.report.winner === "TeamA"
+              ? reportUser.teamAShare
+              : reportUser.teamBShare;
+          this.myEarnings = prizeWon * wGOLDShare;
+        }
       } catch (e) {
         console.log(e);
       } finally {
