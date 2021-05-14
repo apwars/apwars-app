@@ -426,14 +426,11 @@ export default {
           (player) =>
             player.address.toLowerCase() === this.account.toLowerCase()
         );
-        console.log(reportUser);
         if (reportUser) {
           const wGOLDShare =
             this.isWar.report.winner === "TeamA"
               ? reportUser.teamAShare
               : reportUser.teamBShare;
-           console.log(prizeWon);
-           console.log(wGOLDShare);
           this.myEarnings = prizeWon * wGOLDShare;
         }
       } catch (e) {
