@@ -11,58 +11,22 @@
     "humanLegend": {
       "image": "war1-the-legend-corp.png",
       "name": "The legend Corp",
-      "description": "Sire, they spared my life to deliver this message to you. We are coming. - Weary soldier message",
-      "totalAttackPowerTeamA": 34.8838,
-      "totalAttackPowerTeamB": 16,
-      "totalDefensePowerTeamA": 25.4284,
-      "totalDefensePowerTeamB": 32,
-      "address": "0xC9665a082d162A10Baa7E53c0E23F0CD6d666530",
-      "wCOURAGEAmount": 72.8109,
-      "teamAShare": 0.0000017418,
-      "teamBShare": 0.0000025398,
-      "totalPower": 108.3122
+      "address": "0xC9665a082d162A10Baa7E53c0E23F0CD6d666530"
     },
     "orcLegend": {
       "image": "war1-the-legend-degen.png",
       "name": "The legend Degen",
-      "description": "Sire, they spared my life to deliver this message to you. We are coming. - Weary soldier message",
-      "totalAttackPowerTeamA": 0,
-      "totalAttackPowerTeamB": 300,
-      "totalDefensePowerTeamA": 0,
-      "totalDefensePowerTeamB": 420,
-      "address": "0x7e3881d8B071d03B646d3AB4c818BdBede1E3b3c",
-      "wCOURAGEAmount": 667.6008,
-      "teamAShare": 0,
-      "teamBShare": 0.0000333347,
-      "totalPower": 720
+      "address": "0x7e3881d8B071d03B646d3AB4c818BdBede1E3b3c"
     },
     "greatReinforcement": {
       "image": "war1-great-reinforcement.png",
       "name": "Great Reinforcement",
-      "description": "When the battlefiled saw us coming the war stoped and they become spectators of our charge - Horsemen of the second brigade",
-      "totalAttackPowerTeamA": 277118.1133,
-      "totalAttackPowerTeamB": 12923225.5671,
-      "totalDefensePowerTeamA": 79176.6038,
-      "totalDefensePowerTeamB": 5813753.3924,
-      "address": "0x5429155107B1B300393bD872f079132B3C6046b4",
-      "wCOURAGEAmount": 9415438.9766,
-      "teamAShare": 0.0138370852,
-      "teamBShare": 0.4614273212,
-      "totalPower": 19093273.6766
+      "address": "0x5429155107B1B300393bD872f079132B3C6046b4"
     },
     "warHero": {
       "image": "war1-war-hero.png",
       "name": "War Hero",
-      "description": "All hail the a survivor from a great battle - War veterany",
-      "totalAttackPowerTeamA": 611.8061,
-      "totalAttackPowerTeamB": 601.4315,
-      "totalDefensePowerTeamA": 1223.6122,
-      "totalDefensePowerTeamB": 1202.863,
-      "address": "0x39F75857c75bad5D01F95157446b495d9CcBd079",
-      "wCOURAGEAmount": 2296.8786,
-      "teamAShare": 0.0000305488,
-      "teamBShare": 0.0000954691,
-      "totalPower": 3639.7128
+      "address": "0x39F75857c75bad5D01F95157446b495d9CcBd079"
     },
     "conquer": {
       "image": "war1-the-conqueror.png",
