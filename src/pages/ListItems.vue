@@ -15,12 +15,12 @@
           :key="collectible.id"
           cols="12"
           md="4"
-          class="d-flex"
+          :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
         >
           <nft-item :collectible="collectible" />
           <div>
             <game-text>{{ collectible.title }}</game-text>
-            <p v-html="collectible.description" />
+            <p style="font-size: 14px" v-html="collectible.description" />
           </div>
         </v-col>
       </v-row>

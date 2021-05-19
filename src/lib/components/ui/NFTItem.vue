@@ -2,6 +2,14 @@
   <v-card class="mx-auto" width="250" elevation="0">
     <v-card-text class="text-center">
       <v-img width="200" :src="collectible.image"></v-img>
+      <div class="d-flex justify-center align-center mt-2">
+        <v-img
+          class="btn center"
+          @click="openNewTab('/')"
+          max-width="160"
+          src="/images/buttons/btn-buy.png"
+        ></v-img>
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -66,6 +74,10 @@ export default {
       this.receipt = null;
       this.transactionHash = null;
       this.transactionSent = false;
+    },
+
+    openNewTab(obj) {
+      window.open(obj);
     },
 
     async loadData() {

@@ -14,7 +14,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "The Pioneer",
       description:
-        '<small>"1 In the beginning Satoshi created the heaven in earth. 2 Darkness was over the surface of the financial world, and the Spirit of Satoshi was hovering over the crisis of 2008. 3 And Satoshi said, “Let there be censorship resistant money,” and there was fairness. 4 Satoshi saw that the Bitcoin was good, and he separated the money from the state. 5 In the beginning of Descentraland the first races came to be. The pioneers of Corporations and Degenerates lived in peace until the first war was inevitable."<br />-Sacred Lore v1</small> <br /><small><b>No practical effects are known until this moment but tales about this souvenir states that it is a sleeping ring of power</b></small>',
+        '"1 In the beginning Satoshi created the heaven in earth. 2 Darkness was over the surface of the financial world, and the Spirit of Satoshi was hovering over the crisis of 2008. 3 And Satoshi said, “Let there be censorship resistant money,” and there was fairness. 4 Satoshi saw that the Bitcoin was good, and he separated the money from the state. 5 In the beginning of Descentraland the first races came to be. The pioneers of Corporations and Degenerates lived in peace until the first war was inevitable."<br />-Sacred Lore v1; <br /><br /><small><b>No practical effects are known until this moment but tales about this souvenir states that it is a sleeping ring of power</b></small>',
       image: "/images/nfts/pioneer.png",
       parameters: {
         id: 0,
@@ -30,7 +30,7 @@ export function getCollectibles() {
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       description:
-        '"The Fellowship between races was cherished in older ages before the first war. Until today there are bard songs that sing about a mythical secret society of powerful sages that gather from time to time to define the destinity of Decentraland."<br />- Bard Rumor<br /><small><b>Ticket for participating in a possible DAO.</b></small>',
+        '"The Fellowship between races was cherished in older ages before the first war. Until today there are bard songs that sing about a mythical secret society of powerful sages that gather from time to time to define the destinity of Decentraland."<br />- Bard Rumor<br /><br /><small><b>Ticket for participating in a possible DAO.</b></small>',
       title: "The Society",
       image: "/images/nfts/society.png",
       parameters: {
@@ -48,7 +48,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "The Elixir (10%)",
       description:
-        '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
+        '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
       image: "/images/nfts/elixir10.png",
       parameters: {
         id: 2,
@@ -65,7 +65,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "The Elixir (15%)",
       description:
-        '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
+        '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
       image: "/images/nfts/elixir15.png",
       parameters: {
         id: 3,
@@ -82,7 +82,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "The Elixir (20%)",
       description:
-        '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
+        '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
       image: "/images/nfts/elixir20.png",
       parameters: {
         id: 4,
@@ -99,7 +99,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "The Arcane's Book",
       description:
-        '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both planes and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b></small>',
+        '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both planes and be protected from mundane interferences." <br/><br /><small><b>It can save 25% of all your magical units from perishing in a battle.</b></small>',
       image: "/images/nfts/arcane.png",
       parameters: {
         id: 5,
@@ -116,7 +116,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Our first beloved hater",
       description:
-        '"In the most challenging moment of the battle, in the obscurity of the warrior\'s heart and the blindness of his mind, the most profound hate awakens the strength necessary to triumph." - The Warrior Guide<br /><small><b>This furious item has a positive effect on attack power of your troops in 1%.</b></small>',
+        '"In the most challenging moment of the battle, in the obscurity of the warrior\'s heart and the blindness of his mind, the most profound hate awakens the strength necessary to triumph." - The Warrior Guide<br /><br /><small><b>This furious item has a positive effect on attack power of your troops in 1%.</b></small>',
       image: "/images/nfts/obh1.png",
       parameters: {
         id: 6,
@@ -133,7 +133,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (10%)",
       description:
-        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
+        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
       image: "/images/nfts/goldsaver10.png",
       parameters: {
         id: 7,
@@ -150,7 +150,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (15%)",
       description:
-        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
+        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
       image: "/images/nfts/goldsaver15.png",
       parameters: {
         id: 8,
@@ -167,7 +167,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (20%)",
       description:
-        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
+        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
       image: "/images/nfts/goldsaver20.png",
       parameters: {
         id: 9,
@@ -185,7 +185,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "The Pionner 48h-Gold Saver (10%)",
       description:
-        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 10% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
+        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><br /><small><b>The 48h-Gold Saver is an item that makes you save a 10% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
       image: "/images/nfts/goldsaver1048h-pioneer.png",
     },
     {
@@ -206,7 +206,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (10%)",
       description:
-        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
       image: "/images/nfts/corp-troopsaver-10.png",
       parameters: {
         id: 12,
@@ -223,7 +223,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (30%)",
       description:
-        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
       image: "/images/nfts/corp-troopsaver-30.png",
       parameters: {
         id: 13,
@@ -240,7 +240,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (60%)",
       description:
-        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
       image: "/images/nfts/corp-troopsaver-60v2.png",
       parameters: {
         id: 14,
@@ -257,7 +257,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (10%)",
       description:
-        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
       image: "/images/nfts/degen-troopsaver-10.png",
       parameters: {
         id: 15,
@@ -274,7 +274,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (30%)",
       description:
-        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
       image: "/images/nfts/degen-troopsaver-30.png",
       parameters: {
         id: 16,
@@ -291,7 +291,7 @@ export function getCollectibles() {
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (60%)",
       description:
-        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
+        '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
       image: "/images/nfts/degen-troopsaver-60.png",
       parameters: {
         id: 17,
