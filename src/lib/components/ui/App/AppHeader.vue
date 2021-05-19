@@ -116,6 +116,10 @@ export default {
           href: "/",
         },
         {
+          title: "Black Market",
+          href: "/black-market",
+        },
+        {
           title: "War Stats",
           href: "/war-stats",
         },
