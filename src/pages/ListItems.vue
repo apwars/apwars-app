@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import SquareButton from '@/lib/components/ui/Utils/SquareButton';
-import GameModal from '@/lib/components/ui/Modals/GameModal';
 
 import NftItem from '@/lib/components/ui/NFTItem';
 import GameTitle from '@/lib/components/ui/Utils/GameTitle';
@@ -41,9 +39,7 @@ import GameText from '@/lib/components/ui/Utils/GameText';
 export default {
   components: {
     NftItem,
-    SquareButton,
     GameTitle,
-    GameModal,
     GameText,
   },
 
