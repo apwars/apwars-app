@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols="12" class="d-flex justify-space-between">
-          <game-title class="align-self-center">Game Items</game-title>
+          <game-title class="align-self-center">Market</game-title>
           <square-button
             label="See all items"
             icon="mdi-format-list-bulleted"
