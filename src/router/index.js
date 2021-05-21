@@ -26,8 +26,8 @@ export const routes = [
         component: Items,
       },
       {
-        path: "/sell-nft",
-        name: "/",
+        path: "/sell-nft/:nftId",
+        name: "/sell-nft",
         component: SellNFT,
       },
       {

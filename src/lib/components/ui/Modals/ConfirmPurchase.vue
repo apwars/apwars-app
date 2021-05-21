@@ -1,36 +1,35 @@
 <template>
-  <v-container>
-    <v-col
-      :style="
-        $vuetify.breakpoint.mdAndUp
-          ? 'border-color: #966A3C; border-style: solid; border-width: 2px'
-          : ''
-      "
+  <v-col class="d-flex justify-center align-center">
+    <v-img
+      contain
+      src="/images/battle/modal.png"
+      max-width="600"
+      class="align-center justify-center"
     >
-      <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
-        <v-col cols="12" lg="3" md="3" sm="12">
+      <v-col :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
+        <v-col cols="12" lg="4" md="4" sm="12">
           <div class="text-center">
-            <v-img class="ml-2 mr-2" max-width="250" :src="collectibles[0].image"></v-img>
+            <v-img class="" max-width="250" :src="nftCollectible.image"></v-img>
           </div>
         </v-col>
         <v-col cols="12" lg="9" md="9" sm="12">
-          <h1>Confirm your purchase</h1>
-          <v-row class="d-block">
-            <game-text-h-1>{{ collectibles[0].title }}</game-text-h-1>
-          </v-row>
+          <h2>Confirm your purchase</h2>
+          <game-text-h-1>{{ nftCollectible.title }}</game-text-h-1>
+          <h4>
+            You will pay {{ amount }}
+            wGold for this nft.
+          </h4>
+          <h5>This transaction has a fee of {{ fee }} ({{ percent }})</h5>
+
+          <div class="d-flex ml-n6 mt-6">
+            <approve-cancel class="mx-2" size="small">Cancel</approve-cancel>
+
+            <approve-cancel class="mx-2" size="small">Approve</approve-cancel>
+          </div>
         </v-col>
-      </div>
-      <div
-        v-if="this.radios"
-        :class="
-          $vuetify.breakpoint.mdAndUp ? 'd-flex justify-end mt-2' : 'd-flex justify-center mt-2'
-        "
-      >
-        <approve-cancel class="mx-2" size="small" @click="confirm()">Approve</approve-cancel>
-        <approve-cancel class="mx-2" size="small" @click="close">Cancel</approve-cancel>
-      </div>
-    </v-col>
-  </v-container>
+      </v-col>
+    </v-img>
+  </v-col>
 </template>
 
 <script>
@@ -44,15 +43,24 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      fee: 0,
+      percent: 0,
+      amount: 0,
+    };
   },
 
   computed: {
     isConnected() {
       return this.$store.getters['user/isConnected'];
     },
+    nftCollectible() {
+      const nft = getCollectibles().find(
+        collectible => collectible.id.toString() === this.nftId.toString()
+      );
+      return nft !== undefined ? nft : { status: 'Notfound' };
+    },
   },
-
 
   mounted() {},
 
@@ -60,7 +68,7 @@ export default {
     close() {
       this.$emit('close');
     },
-    confirm(){},
+    confirm() {},
   },
 };
 </script>
