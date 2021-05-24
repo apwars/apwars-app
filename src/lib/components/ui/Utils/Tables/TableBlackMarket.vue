@@ -18,9 +18,12 @@
       :headers="headers"
       :items="listMarket"
       :search="search"
+      :items-per-page="itemsPerPage"
+      :server-items-length="totalItems"
+      @update:page="loadData"
     >
-      <template v-slot:[`item.address`]="{ item }">
-        <v-address :address="item.address" link tooltip></v-address>
+      <template v-slot:[`item.sender`]="{ item }">
+        <v-address :address="item.sender" link tooltip></v-address>
       </template>
       <template v-slot:[`item.nft`]="{ item }">
         <div class="d-flex">
@@ -35,7 +38,7 @@
           </span>
         </div>
       </template>
-      <template v-slot:[`item.price`]="{ item }">
+      <template v-slot:[`item.amount`]="{ item }">
         <div class="d-flex">
           <img
             src="/images/wgold.png"
@@ -45,9 +48,8 @@
           />
           <amount
             class="align-self-center"
-            :amount="item.price"
+            :amount="item.amount"
             decimals="2"
-            compact
             approximate
             tooltip
           />
@@ -58,12 +60,12 @@
           <div class="d-flex justify-center">
             <img
               :src="
-                `/images/buttons/btn-icon-${item.orderType.toLowerCase()}.svg`
+                `/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`
               "
               class="mx-1 align-self-center"
-              :width="getSizeIcon(item.orderType)"
+              :height="getSizeIcon(item.orderTypeDesc)"
             />
-            <div class="align-self-center">{{ item.orderType }}</div>
+            <div class="align-self-center">{{ item.orderTypeDesc }}</div>
           </div>
         </wButton>
       </template>
@@ -78,6 +80,8 @@ import wButton from "@/lib/components/ui/Utils/wButton";
 
 import { getCollectibles } from "@/data/Collectibles";
 
+import MarketNFTS from "@/lib/eth/MarketNFTS.js";
+
 export default {
   props: ["type"],
   components: {
@@ -88,10 +92,14 @@ export default {
 
   data() {
     return {
+      marketNFTS: {},
+      itemsPerPage: 10,
+      totalItems: 0,
       isLoading: true,
       loadingText: "Loading... Please wait",
       search: "",
-      dataMarket: [
+      dataMarket: [],
+      dataMarketTest: [
         {
           address: "0x157F9d18d48052eD1877eC700fC304b7B6cDd766",
           nft: 26,
@@ -108,6 +116,13 @@ export default {
         },
         {
           address: "0x157F9d18d48052eD1877eC700fC304b7B6cDd766",
+          nft: 25,
+          price: "1500000000000000000000",
+          orderType: "Swap",
+          typeMarket: "sell",
+        },
+        {
+          address: "0x157F9d18d48052eD1877eC700fC304b7B6cDd766",
           nft: 13,
           price: "1200000000000000000000",
           orderType: "Sell",
@@ -117,25 +132,69 @@ export default {
       headers: [
         {
           text: "Player",
-          value: "address",
+          value: "sender",
         },
         { text: "NFT", value: "nft" },
-        { text: "Type", value: "type" },
-        { text: "Price/Unit", value: "price" },
+        { text: "Type", value: "nft.typeDesc" },
+        { text: "Price/Unit", value: "amount" },
         { text: "", value: "action" },
       ],
     };
   },
 
+  computed: {
+    addresses() {
+      return this.$store.getters["user/addresses"];
+    },
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
+    },
+    listMarket() {
+      if (this.dataMarket === undefined || this.dataMarket.length === 0) {
+        return [];
+      }
+
+      return this.dataMarket.filter((item) => {
+        if (item.orderType === this.typeEnum) {
+          item.orderTypeDesc = this.typeEnum === "0" ? "buy" : "sell";
+          item.nft = getCollectibles().find(
+            (collectible) =>
+              collectible.id.toString() === item.tokenId.toString()
+          );
+          return item;
+        }
+      });
+    },
+    typeEnum() {
+      return this.type === "buy" ? "0" : "1";
+    },
+    titleTable() {
+      return this.type === "buy" ? "Items for sale" : "Wanted Items";
+    },
+  },
   async mounted() {
     this.loadData();
   },
 
   methods: {
-    loadData() {
+    async loadData(page) {
       try {
-        // rules
+        this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
+        const totalNFTS = await this.marketNFTS.getOrdersLength();
+        console.log(totalNFTS);
+        page = page || 1;
+        this.totalItems = parseInt(totalNFTS);
+
+        this.dataMarket = await this.marketNFTS.getMarket(
+          this.typeEnum,
+          this.itemsPerPage,
+          page
+        );
+
+        console.log(this.dataMarket);
+        var g= 'teste';
       } catch (error) {
+        console.log(error);
         this.loadingText = "Sorry, an error occurred";
       } finally {
         this.isLoading = false;
@@ -143,28 +202,6 @@ export default {
     },
     getSizeIcon(icon) {
       return icon === "Swap" ? 16 : 12;
-    },
-  },
-
-  computed: {
-    listMarket() {
-      if (this.dataMarket === undefined || this.dataMarket.length === 0) {
-        return [];
-      }
-      return this.dataMarket.filter((item) => {
-        if (item.typeMarket === this.type) {
-          item.nft = getCollectibles().find(
-            (collectible) => collectible.id === item.nft
-          );
-          return item;
-        }
-      });
-    },
-    titleTable() {
-      return this.type === "buy" ? "Items for sale" : "Wanted Items";
-    },
-    networkInfo() {
-      return this.$store.getters["user/networkInfo"];
     },
   },
 };

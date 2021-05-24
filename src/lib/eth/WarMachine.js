@@ -12,7 +12,6 @@ export default class WarMachine {
       WarMachineABI,
       this.contractAddress
     );
-    window.WarMachine = this.smc;
   }
 
   allowance(owner, spender) {

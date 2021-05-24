@@ -18,4 +18,8 @@ export default {
   FED: {
     "56": process.env.VUE_APP_FED_ADDRESS_56,
   },
+  marketNFTS: {
+    "5777": process.env.VUE_APP_MARKETNFTS_CONTRACT_5777,
+    "56": process.env.VUE_APP_MARKETNFTS_CONTRACT_56,
+  },
 };

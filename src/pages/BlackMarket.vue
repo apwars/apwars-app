@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div  v-if="isConnected">
+    <div v-if="isConnected">
       <v-container>
         <v-row class="d-flex">
-          <v-col cols="6" class="align-self-center">
+          <v-col cols="12" md="6" class="align-self-center">
             <h1 class="h1-black-market">Black Market</h1>
 
             <p class="description-black-market">
@@ -12,7 +12,7 @@
               only be found here.
             </p>
           </v-col>
-          <v-col cols="6" class="d-flex justify-end">
+          <v-col cols="12" md="6" class="d-flex justify-end">
             <img
               src="/images/black-market/black-market.png"
               alt="black-market"
@@ -46,6 +46,8 @@ import wButton from "@/lib/components/ui/Utils/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import TableBlackMarket from "@/lib/components/ui/Utils/Tables/TableBlackMarket";
 
+import MarketNFTS from "@/lib/eth/MarketNFTS.js";
+
 export default {
   components: {
     wGOLDButton,
@@ -57,6 +59,7 @@ export default {
   data() {
     return {
       isLoading: true,
+      marketNFTS: {},
     };
   },
 
@@ -84,6 +87,7 @@ export default {
 
   watch: {
     isConnected() {
+      this.initData();
       this.loadData();
     },
 
@@ -97,12 +101,20 @@ export default {
   },
 
   mounted() {
+    this.initData();
     this.loadData();
   },
 
   methods: {
     goToSwap() {
       this.$router.push("/exchange");
+    },
+
+    initData() {
+      if (!this.isConnected) {
+        return;
+      }
+      this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
 
     async loadData() {
