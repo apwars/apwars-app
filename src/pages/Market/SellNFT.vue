@@ -61,14 +61,6 @@
               <template v-slot:activator="{ on, attrs }">
                 <div class="d-flex">
                   <v-img
-                    class="mx-auto align-center"
-                    max-width="160"
-                    src="/images/buttons/btn-default.png"
-                    @click="goToMyCollection()"
-                  >
-                    Cancel
-                  </v-img>
-                  <v-img
                     class="mx-auto align-center ml-2"
                     max-width="160"
                     src="/images/buttons/btn-default.png"
@@ -76,6 +68,14 @@
                     v-on="on"
                   >
                     Approve
+                  </v-img>
+                  <v-img
+                    class="mx-auto align-center"
+                    max-width="160"
+                    src="/images/buttons/btn-default.png"
+                    @click="goToMyCollection()"
+                  >
+                    Cancel
                   </v-img>
                 </div>
               </template>
@@ -107,20 +107,20 @@
                         </div>
                         <div class="d-flex mt-5 ml-n4">
                           <v-img
-                            class="mx-auto align-center text-center"
-                            max-width="160"
-                            src="/images/buttons/btn-default.png"
-                            @click="dialog = false"
-                          >
-                            Cancel
-                          </v-img>
-                          <v-img
                             class="mx-auto align-center text-center ml-2"
                             max-width="160"
                             src="/images/buttons/btn-default.png"
                             @click="dialog = false"
                           >
                             Approve
+                          </v-img>
+                          <v-img
+                            class="mx-auto align-center text-center"
+                            max-width="160"
+                            src="/images/buttons/btn-default.png"
+                            @click="dialog = false"
+                          >
+                            Cancel
                           </v-img>
                         </div>
                       </v-col>
@@ -150,15 +150,6 @@
                       </div>
                       <div class="d-flex mt-2">
                         <v-img
-                          class="mx-auto align-center text-center"
-                          max-width="100"
-                          src="/images/buttons/btn-default.png"
-                          @click="dialog = false"
-                          style="font-size: 12px"
-                        >
-                          Cancel
-                        </v-img>
-                        <v-img
                           class="mx-auto align-center text-center ml-2"
                           max-width="100"
                           src="/images/buttons/btn-default.png"
@@ -166,6 +157,16 @@
                           style="font-size: 12px"
                         >
                           Approve
+                        </v-img>
+
+                        <v-img
+                          class="mx-auto align-center text-center"
+                          max-width="100"
+                          src="/images/buttons/btn-default.png"
+                          @click="dialog = false"
+                          style="font-size: 12px"
+                        >
+                          Cancel
                         </v-img>
                       </div>
                     </v-col>
