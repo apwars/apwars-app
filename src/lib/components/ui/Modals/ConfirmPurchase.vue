@@ -1,35 +1,59 @@
 <template>
-  <v-col class="d-flex justify-center align-center">
-    <v-img
-      contain
-      src="/images/battle/modal.png"
-      max-width="600"
-      class="align-center justify-center"
-    >
-      <v-col :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
-        <v-col cols="12" lg="4" md="4" sm="12">
-          <div class="text-center">
-            <v-img class="" max-width="250" :src="nftCollectible.image"></v-img>
-          </div>
-        </v-col>
-        <v-col cols="12" lg="9" md="9" sm="12">
-          <h2>Confirm your purchase</h2>
-          <game-text-h-1>{{ nftCollectible.title }}</game-text-h-1>
-          <h4>
-            You will pay {{ amount }}
-            wGold for this nft.
-          </h4>
-          <h5>This transaction has a fee of {{ fee }} ({{ percent }})</h5>
+  <div class="text-center">
+    <v-dialog v-model="dialog" width="500">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
+          Click Me
+        </v-btn>
+      </template>
 
-          <div class="d-flex ml-n6 mt-6">
-            <approve-cancel class="mx-2" size="small">Cancel</approve-cancel>
+      <v-card>
+        <v-card-title class="headline grey lighten-2">
+          Privacy Policy
+        </v-card-title>
+        <v-col class="d-flex justify-center align-center">
+          <v-img
+            contain
+            src="/images/battle/modal.png"
+            max-width="600"
+            class="align-center justify-center"
+          >
+            <v-col :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
+              <v-col cols="12" lg="4" md="4" sm="12">
+                <div class="text-center">
+                  <v-img class="" max-width="250" :src="nftCollectible.image"></v-img>
+                </div>
+              </v-col>
+              <v-col cols="12" lg="9" md="9" sm="12">
+                <h2>Confirm your purchase</h2>
+                <game-text-h-1>{{ nftCollectible.title }}</game-text-h-1>
+                <h4>
+                  You will pay {{ amount }}
+                  wGold for this nft.
+                </h4>
+                <h5>This transaction has a fee of {{ fee }} ({{ percent }})</h5>
 
-            <approve-cancel class="mx-2" size="small">Approve</approve-cancel>
-          </div>
+                <div class="d-flex ml-n6 mt-6">
+                  <approve-cancel class="mx-2" size="small">Cancel</approve-cancel>
+
+                  <approve-cancel class="mx-2" size="small">Approve</approve-cancel>
+                </div>
+              </v-col>
+            </v-col>
+          </v-img>
         </v-col>
-      </v-col>
-    </v-img>
-  </v-col>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="dialog = false">
+            I accept
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -44,6 +68,7 @@ export default {
 
   data() {
     return {
+      dialog: false,
       fee: 0,
       percent: 0,
       amount: 0,

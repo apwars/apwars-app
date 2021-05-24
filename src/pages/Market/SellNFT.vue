@@ -20,7 +20,7 @@
           <v-col cols="12" lg="3" md="3" sm="12">
             <div class="text-center">
               <v-img class="ml-2 mr-2" max-width="200" :src="nftCollectible.image" />
-              <!-- <small class="remaining">Your Amount: {{ userAmount }}</small> -->
+              <small class="remaining">Your have: 0 units</small>
             </div>
           </v-col>
           <v-col cols="12" lg="9" md="9" sm="12">
@@ -37,7 +37,7 @@
                   color="secondary"
                   class="stake-modal-input my-n1"
                   outlined
-                  label="QTY"
+                  label="Quantity"
                   v-bind="currencyConfig"
                   v-model="amount"
                 >
@@ -56,8 +56,124 @@
             $vuetify.breakpoint.mdAndUp ? 'd-flex justify-end mt-2' : 'd-flex justify-center mt-2'
           "
         >
-          <approve-cancel class="mx-2" size="small">Approve</approve-cancel>
-          <approve-cancel class="mx-2" size="small">Cancel</approve-cancel>
+          <div class="text-center">
+            <v-dialog v-model="dialog" width="620">
+              <template v-slot:activator="{ on, attrs }">
+                <div class="d-flex">
+                  <v-img
+                    class="mx-auto align-center"
+                    max-width="160"
+                    src="/images/buttons/btn-default.png"
+                    @click="goToMyCollection()"
+                  >
+                    Cancel
+                  </v-img>
+                  <v-img
+                    class="mx-auto align-center ml-2"
+                    max-width="160"
+                    src="/images/buttons/btn-default.png"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    Approve
+                  </v-img>
+                </div>
+              </template>
+
+              <v-card>
+                <v-col class="d-flex justify-center align-center">
+                  <v-img
+                    v-if="$vuetify.breakpoint.mdAndUp"
+                    contain
+                    src="/images/battle/modal.png"
+                    :max-width="600"
+                    class="align-center justify-center"
+                  >
+                    <v-col :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
+                      <v-col cols="12" lg="4" md="4" sm="12">
+                        <div class="text-center">
+                          <v-img class="" max-width="250" :src="nftCollectible.image"></v-img>
+                        </div>
+                      </v-col>
+                      <v-col cols="12" lg="8" md="8" sm="12">
+                        <div class="ml-n4">
+                          <h3>Confirm your purchase</h3>
+                          <game-text-h-2>{{ nftCollectible.title }}</game-text-h-2>
+                          <h4>
+                            You will pay {{ amount }}
+                            wGold for this nft.
+                          </h4>
+                          <h5>This transaction has a fee of {{ fee }} ({{ percent }})</h5>
+                        </div>
+                        <div class="d-flex mt-5 ml-n4">
+                          <v-img
+                            class="mx-auto align-center text-center"
+                            max-width="160"
+                            src="/images/buttons/btn-default.png"
+                            @click="dialog = false"
+                          >
+                            Cancel
+                          </v-img>
+                          <v-img
+                            class="mx-auto align-center text-center ml-2"
+                            max-width="160"
+                            src="/images/buttons/btn-default.png"
+                            @click="dialog = false"
+                          >
+                            Approve
+                          </v-img>
+                        </div>
+                      </v-col>
+                    </v-col>
+                  </v-img>
+                  <v-col
+                    v-else
+                    :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
+                    style="background-color: black"
+                  >
+                    <v-col cols="12" lg="4" md="4" sm="12">
+                      <div class="text-center">
+                        <v-img class="" max-width="250" :src="nftCollectible.image"></v-img>
+                        <game-text-h-4>{{ nftCollectible.title }}</game-text-h-4>
+                      </div>
+                    </v-col>
+                    <v-col cols="12" lg="8" md="8" sm="12">
+                      <div class="ml-n4">
+                        <h4>Confirm your purchase</h4>
+                        <h5 class="mt-1">
+                          You will pay {{ amount }}
+                          wGold for this nft.
+                        </h5>
+                        <h6 class="mt-1">
+                          This transaction has a fee of {{ fee }} ({{ percent }})
+                        </h6>
+                      </div>
+                      <div class="d-flex mt-2">
+                        <v-img
+                          class="mx-auto align-center text-center"
+                          max-width="100"
+                          src="/images/buttons/btn-default.png"
+                          @click="dialog = false"
+                          style="font-size: 12px"
+                        >
+                          Cancel
+                        </v-img>
+                        <v-img
+                          class="mx-auto align-center text-center ml-2"
+                          max-width="100"
+                          src="/images/buttons/btn-default.png"
+                          @click="dialog = false"
+                          style="font-size: 12px"
+                        >
+                          Approve
+                        </v-img>
+                      </div>
+                    </v-col>
+                  </v-col>
+                </v-col>
+              </v-card>
+            </v-dialog>
+          </div>
         </div>
       </v-col>
     </v-container>
@@ -68,9 +184,9 @@
 import GameTitle from '@/lib/components/ui/Utils/GameTitle';
 import GameTextH1 from '@/lib/components/ui/Utils/GameTextH1';
 import GameTextH2 from '@/lib/components/ui/Utils/GameTextH2';
+import GameTextH4 from '@/lib/components/ui/Utils/GameTextH4';
 import ItemPrice from '@/lib/components/ui/Utils/ItemPrice';
 import ApproveCancel from '@/lib/components/ui/Utils/ApproveCancel';
-
 import { getCollectibles } from '@/data/Collectibles';
 
 export default {
@@ -78,23 +194,21 @@ export default {
     GameTitle,
     GameTextH1,
     GameTextH2,
+    GameTextH4,
     ItemPrice,
     radioGroup: 1,
     ApproveCancel,
   },
-
   data() {
     return {
+      dialog: false,
+      fee: 0,
+      percent: 0,
+      amount: 0,
       nftId: this.$route.params.nftId,
       loading: true,
-      userAmount: 0,
-      remaining: 0,
-      supply: 0,
       scrollInvoked: 0,
-      qty: 0,
       isApproved: false,
-      radios: '',
-      priceWgold: null,
       showInfo: false,
       currencyConfig: {
         locale: 'en-US',
@@ -105,7 +219,6 @@ export default {
         allowNegative: false,
       },
       amount: 0,
-      collectibles: [],
     };
   },
 
@@ -145,17 +258,24 @@ export default {
   },
 
   methods: {
+    closeInfo() {
+      this.showInfo = false;
+    },
+
+    openInfo() {
+      this.showInfo = true;
+    },
+
     onScroll() {
       this.scrollInvoked++;
     },
+
     goToMyCollection() {
       this.$router.push('/collection');
     },
-    increment() {
-      this.foo = parseInt(this.foo, 10) + 1;
-    },
-    decrement() {
-      this.foo = parseInt(this.foo, 10) - 1;
+
+    goToSellNFT() {
+      this.$router.push('/sell-nft/' + this.nftId);
     },
 
     async loadData() {
@@ -164,18 +284,6 @@ export default {
       }
 
       this.loading = true;
-
-      try {
-        this.collectibles = getCollectibles().filter(collectible => !collectible.isGift);
-        this.userAmount = await collectibles.balanceOf(this.account, this.collectible.id);
-        this.supply = await collectibles.getMaxSupply(this.collectible.id);
-        this.remaining = await collectibles.getRemaining(this.collectible.id);
-        this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
-      } catch (e) {
-        console.log(e);
-      } finally {
-        this.loading = false;
-      }
     },
 
     async approve() {
