@@ -120,6 +120,10 @@ export default {
           href: "/game-items",
         },
         {
+          title: "Black Market",
+          href: "/black-market",
+        },
+        {
           title: "War Stats",
           href: "/war-stats",
         },

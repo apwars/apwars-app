@@ -11,6 +11,7 @@ import Enlistment from "@/pages/Wars/Enlistment.vue";
 import Round1 from "@/pages/Wars/Round1.vue";
 import Round2 from "@/pages/Wars/Round2.vue";
 import WarReport from "@/pages/Wars/WarReport.vue";
+import BlackMarket from "@/pages/BlackMarket.vue";
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export const routes = [
         path: "/game-items",
         name: "/game-items",
         component: ListItems,
+      },
+      {
+        path: "/black-market",
+        name: "/black-market",
+        component: BlackMarket,
       },
       {
         path: "/collection",

@@ -268,7 +268,7 @@ import wButton from "@/lib/components/ui/Utils/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
-import TableWarReport from "@/lib/components/ui/Utils/TableWarReport";
+import TableWarReport from "@/lib/components/ui/Utils/Tables/TableWarReport";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 
 import ToastSnackbar from "@/plugins/ToastSnackbar";

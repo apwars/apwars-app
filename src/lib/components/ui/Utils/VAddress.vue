@@ -1,21 +1,27 @@
 <template>
-  <span v-if="isTooltip">
+  <span>
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
         <span
           v-bind="attrs"
-          v-on="on"
+          v-on="isTooltip ? on : false"
+          class="d-flex"
           v-bind:class="{ 'cursor-pointer': isLink }"
           @click="openAddress"
         >
-          {{ addressFormat }}
+          <span class="align-self-center">{{ addressFormat }}</span>
+          <span class="align-self-center" v-if="isLink">
+            <img
+              width="16"
+              class="ml-1"
+              src="/images/icons/external-link.svg"
+              alt="external-link"
+            />
+          </span>
         </span>
       </template>
       <span>{{ address }}</span>
     </v-tooltip>
-  </span>
-  <span v-else v-bind:class="{ 'cursor-pointer': isLink }" @click="openAddress">
-    {{ addressFormat }}
   </span>
 </template>
 
