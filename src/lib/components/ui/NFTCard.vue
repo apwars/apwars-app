@@ -1,19 +1,36 @@
 <template>
   <v-card class="mx-auto" width="250" elevation="0">
     <v-card-text class="text-center">
-      <v-img 
-        width="230" 
+      <v-img
+        width="230"
         class="cursor-pointer"
         @click="openInfo()"
-        :src="collectible.image" 
-        :gradient="remaining === 0 && !myCollection ? `to top right, rgba(100,115,201,.10), rgba(25,32,72,.7)`:''"></v-img>
+        :src="collectible.image"
+        :gradient="
+          remaining === 0 && !myCollection
+            ? `to top right, rgba(100,115,201,.10), rgba(25,32,72,.7)`
+            : ''
+        "
+      ></v-img>
       <game-text>{{ collectible.title }}</game-text>
       <item-price v-if="!collectible.isGift" :price="collectible.parameters.price" />
-      <div v-if="myCollection">
-        <small class="remaining">Your Amount: {{userAmount}}</small>
+      <div v-if="myCollection" class="d-block">
+        <small class="remaining">Your Amount: {{ userAmount }}</small>
+        <div>
+          <button>
+            <v-img
+              class="mx-auto align-center text-center ml-2"
+              max-width="160"
+              src="/images/buttons/btn-default.png"
+              @click="goToSell(collectible.id)"
+            >
+              Sell
+            </v-img>
+          </button>
+        </div>
       </div>
       <div v-else-if="!collectible.isGift">
-        <small class="remaining">Remaining: {{remaining}} of {{supply}}</small>
+        <small class="remaining">Remaining: {{ remaining }} of {{ supply }}</small>
         <div class="d-flex justify-center align-center mt-1" v-if="remaining > 0">
           <v-img
             v-if="isApproved"
@@ -33,16 +50,22 @@
       </div>
     </v-card-text>
 
-    <game-modal :open="waitingMetamask" title="Approve the transaction" :hideOk="true" @close="closeWaitingMetamask()"> 
-      <v-progress-circular
-        :size="24"
-        color="#765E55"
-        indeterminate
-      ></v-progress-circular>
+    <game-modal
+      :open="waitingMetamask"
+      title="Approve the transaction"
+      :hideOk="true"
+      @close="closeWaitingMetamask()"
+    >
+      <v-progress-circular :size="24" color="#765E55" indeterminate></v-progress-circular>
       You need to approve the transaction in you wallet.
     </game-modal>
 
-    <game-modal :open="isSending" title="Transaction has been sent" :hideOk="true" @close="closeSending()">
+    <game-modal
+      :open="isSending"
+      title="Transaction has been sent"
+      :hideOk="true"
+      @close="closeSending()"
+    >
       <v-progress-circular
         v-if="isSending"
         :size="24"
@@ -52,7 +75,11 @@
       The transaction has been sent to the blockchain. Waiting for the first confirmation!
     </game-modal>
 
-    <game-modal :open="transactionSent" title="Transaction confirmed!" @close="closeTransactionSent()">
+    <game-modal
+      :open="transactionSent"
+      title="Transaction confirmed!"
+      @close="closeTransactionSent()"
+    >
       The transaction has been confirmed!
     </game-modal>
 
@@ -77,7 +104,7 @@ export default {
     GameText,
     ItemPrice,
     GameModal,
-    Amount
+    Amount,
   },
 
   data() {
@@ -91,7 +118,7 @@ export default {
       transactionSent: false,
       showInfo: false,
       userAmount: 0,
-    }
+    };
   },
 
   computed: {
@@ -115,7 +142,7 @@ export default {
   watch: {
     currentBlockNumber() {
       this.loadData();
-    }
+    },
   },
 
   mounted() {
@@ -127,9 +154,11 @@ export default {
       this.waitingMetamask = false;
       this.receipt = null;
       this.transactionHash = null;
-      this.transactionSent = false;   
+      this.transactionSent = false;
     },
-
+    goToSell(id) {
+      return this.$router.push(`/create-order/${id}/sell`);
+    },
     async buy() {
       try {
         const collectibles = new Collectibles(this.collectible.contractAddress);
@@ -138,28 +167,28 @@ export default {
 
         this.waitingMetamask = true;
         const res = collectibles.claim(
-          this.account, 
-          this.collectible.tokenAddress, 
-          this.collectible.parameters.id, 
-          this.collectible.parameters.price, 
+          this.account,
+          this.collectible.tokenAddress,
+          this.collectible.parameters.id,
+          this.collectible.parameters.price,
           this.collectible.signatures[this.networkInfo.id]
-        )
+        );
 
         res.on('error', () => {
           this.clearState();
-        })
-        res.on('transactionHash', (hash) => {
+        });
+        res.on('transactionHash', hash => {
           this.waitingMetamask = false;
           this.isSending = true;
           this.transactionHash = hash;
-        })
-        res.on('receipt', (receipt) => {
+        });
+        res.on('receipt', receipt => {
           this.waitingMetamask = false;
           this.isSending = false;
           this.transactionSent = true;
           this.receipt = receipt;
         });
-        
+
         this.messageModalOpened = true;
       } catch (e) {
         this.clearState();
@@ -192,7 +221,7 @@ export default {
       try {
         const wgold = new wGOLD(this.addresses.wGOLD);
         const res = await wgold.approve(this.account, this.collectible.contractAddress);
-        console.log({res});
+        console.log({ res });
         this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
       } catch (e) {
         console.log(e);
@@ -217,19 +246,18 @@ export default {
 
     openInfo() {
       this.showInfo = true;
-    }
-  }
-
+    },
+  },
 };
 </script>
 
 <style scoped>
 .theme--dark.v-card {
-    background-color:transparent !important;
+  background-color: transparent !important;
 }
 
 .remaining {
-  color: #F6FF00;
+  color: #f6ff00;
 }
 
 .btn {

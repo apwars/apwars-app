@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import Items from "@/pages/Items.vue";
-import SellNFT from "@/pages/Market/SellNFT.vue";
+import CreateOrders from "@/pages/Market/CreateOrders.vue";
 import ListItems from "@/pages/ListItems.vue";
 import MyItems from "@/pages/MyItems.vue";
 import WarStats from "@/pages/WarStats.vue";
@@ -27,9 +27,9 @@ export const routes = [
         component: Items,
       },
       {
-        path: "/sell-nft/:nftId",
-        name: "/sell-nft",
-        component: SellNFT,
+        path: "/create-order/:nftId/:type",
+        name: "/create-order",
+        component: CreateOrders,
       },
       {
         path: "/game-items",

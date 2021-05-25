@@ -5,7 +5,7 @@
       <div class="d-flex justify-center align-center mt-2">
         <v-img
           class="btn center"
-          @click="openNewTab('/')"
+          @click="goToBuy(collectible.id)"
           max-width="160"
           src="/images/buttons/btn-buy.png"
         ></v-img>
@@ -75,7 +75,9 @@ export default {
       this.transactionHash = null;
       this.transactionSent = false;
     },
-
+    goToBuy(id) {
+      return this.$router.push(`/create-order/${id}/buy`);
+    },
     openNewTab(obj) {
       window.open(obj);
     },

@@ -1,7 +1,7 @@
 import APWarsMarketNFTS from "./APWarsMarketNFTS.json";
 
-const buyType = 0; 
-const sellType = 1; 
+const buyType = 0;
+const sellType = 1;
 
 export default class MarketNFTS {
   constructor(contract) {
@@ -33,7 +33,7 @@ export default class MarketNFTS {
     const promises = [];
 
     for (let i = start; i > start - pageLimit && i > 0; i--) {
-      promises.push(this.getOrderInfo(i -1));
+      promises.push(this.getOrderInfo(i - 1));
     }
 
     const market = await Promise.all(promises);
@@ -62,14 +62,28 @@ export default class MarketNFTS {
     return parseInt(intialSupply, 10);
   }
 
-  createOrderBuy(address, amoutWgold, from) {
+  async getSwapFeeRate() {
+    const swapFee = await this.smc.methods.getSwapFeeRate().call();
+    
+    return swapFee / 100;
+  }
+
+  createOrderBuy(address, id, contractwGOLD, amount, from) {
+    console.log("CREATEORDER");
+    console.log(`address ; ${address}`);
+    console.log(`id ; ${id}`)
+    console.log(`contractwGOLD ; ${contractwGOLD}`);
+    console.log(`amount ; ${amount}`);
+    console.log(`from ; ${from}`);
     return this.smc.methods.createOrder(
       buyType,
       address,
-      amoutWgold,
-      web3.utils.toWei("1000", "ether").send({ from })
-    );
+      id,
+      contractwGOLD,
+      amount
+    ).send({ from })
   }
+
   createOrderSell(address, id, contractwGOLD, amount, from) {
     return this.smc.methods.createOrder(
       sellType,
