@@ -1,5 +1,8 @@
 import APWarsMarketNFTS from "./APWarsMarketNFTS.json";
 
+const buyType = 0; 
+const sellType = 1; 
+
 export default class MarketNFTS {
   constructor(contract) {
     this.contractAddress = contract;
@@ -57,5 +60,23 @@ export default class MarketNFTS {
   async getTotalSupply(id) {
     const intialSupply = await this.smc.methods.getTotalSupply(id).call();
     return parseInt(intialSupply, 10);
+  }
+
+  createOrderBuy(address, amoutWgold, from) {
+    return this.smc.methods.createOrder(
+      buyType,
+      address,
+      amoutWgold,
+      web3.utils.toWei("1000", "ether").send({ from })
+    );
+  }
+  createOrderSell(address, id, contractwGOLD, amount, from) {
+    return this.smc.methods.createOrder(
+      sellType,
+      address,
+      id,
+      contractwGOLD,
+      amount
+    ).send({ from });
   }
 }
