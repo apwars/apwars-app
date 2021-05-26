@@ -5,14 +5,23 @@
     </div>
     <v-container v-else>
       <v-row>
-        <v-col cols="12" :class="$vuetify.breakpoint.mdAndUp ? '' : 'd-flex justify-center'">
+        <v-col
+          cols="12"
+          :class="$vuetify.breakpoint.mdAndUp ? '' : 'd-flex justify-center text-center'"
+        >
           <game-title v-if="buyOrSell === 'buy'">
-            Buy your NFT
-            <p style="font-size: 14px">Create your purchase order</p>
+            <h1 v-if="!$vuetify.breakpoint.mdAndUp">Buy your NFT</h1>
+            <h3 v-else>Buy your NFT</h3>
+            <p :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'">
+              Create your purchase order
+            </p>
           </game-title>
           <game-title v-else class="d-block">
-            Sell your NFT
-            <p style="font-size: 14px">Create your sales order</p>
+            <h1 v-if="!$vuetify.breakpoint.mdAndUp">Sell your NFT</h1>
+            <h3 v-else>Sell your NFT</h3>
+            <p :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'">
+              Create your sales order
+            </p>
           </game-title>
         </v-col>
       </v-row>
@@ -20,14 +29,19 @@
         :style="
           $vuetify.breakpoint.mdAndUp
             ? 'border-color: #966A3C; border-style: solid; border-width: 2px'
-            : ''
+            : 'border-color: #966A3C; border-style: solid; border-width: 2px'
         "
       >
         <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
           <v-col cols="12" lg="3" md="3" sm="12">
             <div class="text-center">
               <v-img class="ml-2 mr-2" max-width="200" :src="nftCollectible.image" />
-              <small class="remaining">Your have: {{ userAmount }} units</small>
+              <p
+                :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'"
+                class="remaining"
+              >
+                Your have: {{ userAmount }} units
+              </p>
             </div>
           </v-col>
           <v-col cols="12" lg="9" md="9" sm="12">
@@ -35,7 +49,7 @@
               <game-text-h-1>{{ nftCollectible.title }}</game-text-h-1>
             </v-row>
             <v-row class="d-block">
-              <small class="remaining">Supply: {{ supply }}</small>
+              <p class="remaining">Remaining: {{ remaining }} of {{ supply }}</p>
             </v-row>
             <v-row class="d-block mt-4">
               <div cols="12" sm="12" md="12">
@@ -43,7 +57,7 @@
                 <p v-else>How many wGOLD do you want for this item:</p>
                 <v-currency-field
                   color="secondary"
-                  class="stake-modal-input my-n1"
+                  class="stake-modal-input"
                   outlined
                   label="Quantity"
                   v-bind="currencyConfig"
@@ -55,11 +69,45 @@
                     </div>
                   </template>
                 </v-currency-field>
+                <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'text-center'">
+                  <p class="mt-n2">
+                    This transaction has a fee of
+                  </p>
+                  <item-price
+                    :class="$vuetify.breakpoint.mdAndUp ? 'mt-n4 ml-1' : 'mt-n2 ml-1'"
+                    :price="calcFee"
+                  />
+                  <p :class="$vuetify.breakpoint.mdAndUp ? 'mt-n2 ml-1' : 'mt-1 ml-1'">
+                    ({{ fee }}%) {{ feeAmount }}
+                  </p>
+                </div>
               </div>
             </v-row>
           </v-col>
         </div>
-        <market-modal :amount="amount" :fee="fee" :buyOrSell="buyOrSell"> </market-modal>
+        <market-modal
+          :class="$vuetify.breakpoint.mdAndUp ? '' : 'ml-n2'"
+          :amount="amount"
+          :fee="fee"
+          :buyOrSell="buyOrSell"
+        >
+        </market-modal>
+        <game-modal
+          :open="modal"
+          :title="
+            buyOrSell === 'buy'
+              ? 'Leave your wGOLD with the Negotiator'
+              : 'Leave your NFT with the Negotiator'
+          "
+          @close="closeInfo()"
+        >
+          <span v-if="buyOrSell === 'buy'">
+            To create the purchase order, approval is required for the Negotiator to find your item!
+          </span>
+          <span v-else>
+            To create the sales order, approval is required for the Negotiator to sale your item!
+          </span>
+        </game-modal>
       </v-col>
     </v-container>
   </div>
@@ -73,7 +121,8 @@ import MarketNFTS from '@/lib/eth/MarketNFTS';
 import wGOLD from '@/lib/eth/wGOLD';
 
 import MarketModal from '@/lib/components/ui/Modals/MarketModal';
-
+import GameModal from '@/lib/components/ui/Modals/GameModal';
+import ItemPrice from '@/lib/components/ui/Utils/ItemPrice';
 import { getCollectibles } from '@/data/Collectibles';
 
 export default {
@@ -81,9 +130,12 @@ export default {
     GameTitle,
     GameTextH1,
     MarketModal,
+    GameModal,
+    ItemPrice,
   },
   data() {
     return {
+      modal: false,
       buyOrSell: this.$route.params.type,
       fee: 0,
       amount: 0,
@@ -102,6 +154,8 @@ export default {
       userAmount: 0,
       collectible: {},
       isApprovedToken: false,
+      supply: 0,
+      remaining: 0,
     };
   },
 
@@ -123,6 +177,10 @@ export default {
         collectible => collectible.id.toString() === this.nftId.toString()
       );
       return nft !== undefined ? nft : { status: 'Notfound' };
+    },
+    calcFee() {
+      let feeAmount = (this.amount * this.fee) / 100;
+      return (this.feeAmount = feeAmount);
     },
   },
 
@@ -156,6 +214,17 @@ export default {
       });
       this.collectibleContract = new Collectibles(this.collectible.contractAddress);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
+      // if (!this.isApprovedToken) {
+      //   this.modal = true;
+      //   try {
+      //     const token = new wGOLD(this.addresses.wGOLD);
+      //     const res = token.approve(this.account, this.addresses.marketNFTS);
+      //     console.log({ res });
+      //     this.isApprovedToken = token.hasAllowance(this.account, this.addresses.marketNFTS);
+      //   } catch (e) {
+      //     console.log(e);
+      //   }
+      // }
     },
 
     async loadData() {
@@ -166,6 +235,11 @@ export default {
       this.loading = true;
 
       this.userAmount = await this.collectibleContract.balanceOf(this.account, this.nftId);
+
+      this.supply = await this.collectibleContract.getMaxSupply(this.nftId);
+      this.remaining = await this.collectibleContract.getRemaining(this.nftId);
+
+      this.fee = await this.marketNFTS.getSwapFeeRate();
 
       this.isApproved = await this.collectibleContract.isApprovedForAll(
         this.account,
@@ -181,6 +255,21 @@ export default {
 
     async getSwapFeeRate() {
       this.fee = await this.marketNFTS.getSwapFeeRate();
+    },
+
+    closeInfo() {
+      this.modal = false;
+    },
+
+    async approvewGOLD() {
+      try {
+        const token = new wGOLD(this.addresses.wGOLD);
+        const res = await token.approve(this.account, this.addresses.marketNFTS);
+        console.log({ res });
+        this.isApprovedToken = await token.hasAllowance(this.account, this.addresses.marketNFTS);
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

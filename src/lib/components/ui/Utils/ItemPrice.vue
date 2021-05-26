@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex justify-center align-center mt-1">
-    <v-img width="35" max-width="35" src="/images/wgolds.png"></v-img>
+    <v-img width="35" max-width="30" src="/images/wgolds.png"></v-img>
     <span>
       <amount :amount="price" />
       wGOLD

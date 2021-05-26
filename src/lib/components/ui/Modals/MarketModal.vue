@@ -59,12 +59,22 @@
                   <div class="ml-n4">
                     <h3>Confirm your purchase</h3>
                     <game-text-h-2>{{ nftCollectible.title }}</game-text-h-2>
-                    <h4 class="mt-1" v-if="buyOrSell === 'buy'">
-                      You will pay {{ amount }}
-                      wGold for this nft.
+                    <h4 class="mt-1 d-flex" v-if="buyOrSell === 'buy'">
+                      You will pay
+                      <game-text-h-4 class="ml-1 mr-1">{{ amount }} wGOLD</game-text-h-4>
+                      for this nft.
                     </h4>
-                    <h4 class="mt-1" v-else>You will sell this NFT for {{ amount }} wGOLD</h4>
-                    <h5>This transaction has a fee of {{ fee }}%</h5>
+                    <h4 class="mt-1 d-flex" v-else>
+                      You will sell this NFT for
+                      <game-text-h-2 class="ml-1 mr-1">{{ amount }} wGOLD</game-text-h-2>
+                    </h4>
+                    <h5 class="d-flex">
+                      This transaction has a fee of
+                      <game-text-h-4 class="ml-1 mr-1"
+                        >{{ (amount * fee) / 100 }} wGOLD</game-text-h-4
+                      >
+                      ({{ fee }}%)
+                    </h5>
                   </div>
                   <div class="d-flex mt-5 ml-n4">
                     <button>
@@ -120,7 +130,9 @@
                     wGold for this nft.
                   </h5>
                   <h5 class="mt-1" v-else>You will sell this NFT for {{ amount }} wGOLD</h5>
-                  <h6 class="mt-1">This transaction has a fee of {{ fee }}%</h6>
+                  <h6 class="mt-1">
+                    This transaction has a fee of {{ (amount * fee) / 100 }} wGOLD {{ fee }}%
+                  </h6>
                 </div>
                 <div class="d-flex mt-2">
                   <button>
@@ -186,8 +198,6 @@ export default {
   data() {
     return {
       dialog: false,
-      fee: 0,
-      amount: 0,
       nftId: this.$route.params.nftId,
       loading: true,
       currencyConfig: {
@@ -225,6 +235,7 @@ export default {
       );
       return nft !== undefined ? nft : { status: 'Notfound' };
     },
+
   },
 
   watch: {

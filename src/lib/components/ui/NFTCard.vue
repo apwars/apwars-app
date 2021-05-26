@@ -23,8 +23,9 @@
               max-width="160"
               src="/images/buttons/btn-default.png"
               @click="goToSell(collectible.id)"
+              style="font-size: 12px"
             >
-              Sell
+              Create Sell Order
             </v-img>
           </button>
         </div>
