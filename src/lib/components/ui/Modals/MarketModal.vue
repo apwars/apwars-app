@@ -5,7 +5,7 @@
     <div class="text-center">
       <v-dialog v-model="dialog" width="620">
         <template v-slot:activator="{ on, attrs }">
-          <div class="d-flex">
+          <div class="d-flex" v-if="userAmount > 0 || buyOrSell === 'buy'">
             <button>
               <v-img
                 v-if="isApprovedToken"
@@ -39,6 +39,11 @@
               </v-img>
             </button>
           </div>
+          <div class="d-flex" v-else>
+            <wButton class="mx-2" size="medium" :disabled="true">
+              Insufficient balance
+            </wButton>
+          </div>
         </template>
         <v-card>
           <v-col class="d-flex justify-center align-center">
@@ -61,19 +66,23 @@
                     <game-text-h-2>{{ nftCollectible.title }}</game-text-h-2>
                     <h4 class="mt-1 d-flex" v-if="buyOrSell === 'buy'">
                       You will pay
-                      <game-text-h-4 class="ml-1 mr-1">{{ amount }} wGOLD</game-text-h-4>
+                      <game-text-h-4 class="ml-1 mr-1"
+                        >{{ amount + (amount * fee) / 100 }} wGOLD</game-text-h-4
+                      >
                       for this nft.
                     </h4>
                     <h4 class="mt-1 d-flex" v-else>
-                      You will sell this NFT for
-                      <game-text-h-2 class="ml-1 mr-1">{{ amount }} wGOLD</game-text-h-2>
+                      You will receive
+                      <game-text-h-4 class="ml-1 mr-1">
+                        {{ amount - (amount * fee) / 100 }} wGOLD
+                      </game-text-h-4>
+                      for this NFT
                     </h4>
                     <h5 class="d-flex">
                       This transaction has a fee of
                       <game-text-h-4 class="ml-1 mr-1"
-                        >{{ (amount * fee) / 100 }} wGOLD</game-text-h-4
+                        >{{ (amount * fee) / 100 }} wGOLD ({{ fee }}%)</game-text-h-4
                       >
-                      ({{ fee }}%)
                     </h5>
                   </div>
                   <div class="d-flex mt-5 ml-n4">
@@ -126,7 +135,7 @@
                 <div class="ml-n4">
                   <h4>Confirm your purchase</h4>
                   <h5 class="mt-1" v-if="buyOrSell === 'buy'">
-                    You will pay {{ amount }}
+                    You will pay {{ amount + fee }}
                     wGold for this nft.
                   </h5>
                   <h5 class="mt-1" v-else>You will sell this NFT for {{ amount }} wGOLD</h5>
@@ -184,6 +193,7 @@ import GameTextH4 from '@/lib/components/ui/Utils/GameTextH4';
 import Collectibles from '@/lib/eth/Collectibles';
 import MarketNFTS from '@/lib/eth/MarketNFTS';
 import wGOLD from '@/lib/eth/wGOLD';
+import wButton from '@/lib/components/ui/Utils/wButton';
 
 import { getCollectibles } from '@/data/Collectibles';
 
@@ -193,6 +203,7 @@ export default {
   components: {
     GameTextH2,
     GameTextH4,
+    wButton,
   },
 
   data() {
@@ -235,7 +246,6 @@ export default {
       );
       return nft !== undefined ? nft : { status: 'Notfound' };
     },
-
   },
 
   watch: {
@@ -322,6 +332,7 @@ export default {
         sendAmount,
         this.account
       );
+      this.dialog = false;
     },
 
     async sell() {
@@ -333,6 +344,7 @@ export default {
         sendAmount,
         this.account
       );
+      this.dialog = false;
     },
 
     confirmOrder() {

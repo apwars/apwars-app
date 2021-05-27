@@ -69,16 +69,18 @@
                     </div>
                   </template>
                 </v-currency-field>
-                <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'text-center'">
+                <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex align-center' : 'text-center'">
                   <p class="mt-n2">
                     This transaction has a fee of
                   </p>
-                  <item-price
-                    :class="$vuetify.breakpoint.mdAndUp ? 'mt-n4 ml-1' : 'mt-n2 ml-1'"
-                    :price="calcFee"
-                  />
-                  <p :class="$vuetify.breakpoint.mdAndUp ? 'mt-n2 ml-1' : 'mt-1 ml-1'">
-                    ({{ fee }}%) {{ feeAmount }}
+                  <p class="d-flex">
+                    <v-img
+                      width="35"
+                      max-width="30"
+                      src="/images/wgolds.png"
+                      class="mb-1 ml-1"
+                    ></v-img>
+                    {{ (amount * fee) / 100 }} wGOLD ({{ fee }}%)
                   </p>
                 </div>
               </div>
@@ -177,10 +179,6 @@ export default {
         collectible => collectible.id.toString() === this.nftId.toString()
       );
       return nft !== undefined ? nft : { status: 'Notfound' };
-    },
-    calcFee() {
-      let feeAmount = (this.amount * this.fee) / 100;
-      return (this.feeAmount = feeAmount);
     },
   },
 
