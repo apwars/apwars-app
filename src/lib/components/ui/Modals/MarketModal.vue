@@ -28,8 +28,8 @@
                       max-width="30"
                       src="/images/wgolds.png"
                       class="mt-n1 ml-1"
-                    ></img>
-                    <amount class="mr-1" :amount="amountInfo.totalAmount" :decimals="2"/>wGOLD for this Game Item
+                    >
+                    <amount class="mr-1" :amount="amountInfo.totalAmount" :decimals="2"/> wGOLD for this Game Item
                   </div>
                   <div class="mt-1" v-else>
                     You will receive
@@ -38,7 +38,7 @@
                       max-width="30"
                       src="/images/wgolds.png"
                       class="mt-n1 ml-1"
-                    ></img>
+                    >
                     <amount class="mr-1" :amount="amountInfo.totalAmount" :decimals="2"/> wGOLD for this Game Item
                   </div>
                   <h5 class="mt-1">
@@ -48,8 +48,8 @@
                       max-width="30"
                       src="/images/wgolds.png"
                       class="mt-n1 ml-1"
-                    ></img>
-                    <amount class="mr-1" :amount="amountInfo.feeAmount" :decimals="2"/>
+                    />
+                    <amount class="mr-1" :amount="amountInfo.feeAmount" :decimals="2"/> wGOLD
                   </h5>
                 </div>
               </v-col>
@@ -127,7 +127,7 @@ export default {
   methods: {
     initData() {
       if (this.open) {
-        this.collectibleContract = new Collectibles(this.nftCollectible.nft.contractAddress);
+        this.collectibleContract = new Collectibles(this.nftCollectible.contractAddress);
         this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       }
     },

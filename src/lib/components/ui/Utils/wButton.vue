@@ -52,8 +52,8 @@ export default {
       switch (this.size) {
         case "small":
           return "btn btn-small";
-        case "lazy":
-          return "btn btn-lazy";
+        case "x-small":
+          return "btn btn-x-small";
         default:
           return "btn btn-medium";
       }
@@ -101,10 +101,10 @@ export default {
 .btn-small {
   width: 160px;
 }
-.btn-lazy {
+.btn-x-small {
   width: 160px;
 }
-.btn-lazy .label{
+.btn-x-small .label{
   font-size: 12px;
 }
 .btn-small .label {

@@ -3,7 +3,7 @@
     <v-card-text class="text-center">
       <v-img width="200" :src="collectible.image"></v-img>
       <div class="d-flex justify-center align-center mt-2">
-        <wButton class="mx-2" size="lazy" @click="goToBuy(collectible.id)" >Create Purchase Order</wButton>
+        <wButton class="mx-2" size="x-small" @click="goToBuy(collectible.id)" >Create Purchase Order</wButton>
       </div>
     </v-card-text>
   </v-card>
