@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isConnected">
     <div v-if="nftCollectible.status">
       Page not found
     </div>
@@ -9,18 +9,18 @@
           cols="12"
           :class="$vuetify.breakpoint.mdAndUp ? '' : 'd-flex justify-center text-center'"
         >
-          <game-title v-if="buyOrSell === 'buy'">
-            <h1 v-if="!$vuetify.breakpoint.mdAndUp">Buy your NFT</h1>
-            <h3 v-else>Buy your NFT</h3>
+          <game-title v-if="isBuy">
+            <h1 v-if="!$vuetify.breakpoint.mdAndUp">Buy a Game Item</h1>
+            <h3 v-else>Buy a Game Item</h3>
             <p :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'">
-              Create your purchase order
+              Create a purchase order
             </p>
           </game-title>
           <game-title v-else class="d-block">
-            <h1 v-if="!$vuetify.breakpoint.mdAndUp">Sell your NFT</h1>
-            <h3 v-else>Sell your NFT</h3>
+            <h1 v-if="!$vuetify.breakpoint.mdAndUp">Sell your Game Item</h1>
+            <h3 v-else>Sell your Game Item</h3>
             <p :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'">
-              Create your sales order
+              Create a sales order
             </p>
           </game-title>
         </v-col>
@@ -48,12 +48,9 @@
             <v-row class="d-block">
               <game-text-h-1>{{ nftCollectible.title }}</game-text-h-1>
             </v-row>
-            <v-row class="d-block">
-              <p class="remaining">Remaining: {{ remaining }} of {{ supply }}</p>
-            </v-row>
             <v-row class="d-block mt-4">
               <div cols="12" sm="12" md="12">
-                <p v-if="buyOrSell === 'buy'">How many wGOLD do you want to pay for this item:</p>
+                <p v-if="isBuy">How many wGOLD do you want to pay for this item:</p>
                 <p v-else>How many wGOLD do you want for this item:</p>
                 <v-currency-field
                   color="secondary"
@@ -62,6 +59,7 @@
                   label="Quantity"
                   v-bind="currencyConfig"
                   v-model="amount"
+                  @input="calcFee()"
                 >
                   <template v-slot:append>
                     <div class="d-flex">
@@ -69,7 +67,9 @@
                     </div>
                   </template>
                 </v-currency-field>
-                <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex align-center' : 'text-center'">
+                <div
+                  :class="$vuetify.breakpoint.mdAndUp ? 'd-flex align-center mt-n1' : 'text-center'"
+                >
                   <p class="mt-n2">
                     This transaction has a fee of
                   </p>
@@ -80,36 +80,55 @@
                       src="/images/wgolds.png"
                       class="mb-1 ml-1"
                     ></v-img>
-                    {{ (amount * fee) / 100 }} wGOLD ({{ fee }}%)
+                    <amount class="mr-1" :amount="amountInfo.feeAmount" :decimals="2"/>wGOLD
+                  </p>
+                </div>
+                 <div
+                  :class="$vuetify.breakpoint.mdAndUp ? 'd-flex align-center mt-n1' : 'text-center'"
+                >
+                  <p class="mt-n2">
+                    Total price for transaction
+                  </p>
+                  <p class="d-flex">
+                    <v-img
+                      width="35"
+                      max-width="30"
+                      src="/images/wgolds.png"
+                      class="mb-1 ml-1"
+                    ></v-img>
+                    <amount class="mr-1" :amount="amountInfo.totalAmount" :decimals="2" />wGOLD
                   </p>
                 </div>
               </div>
             </v-row>
+            <v-row class="d-flex justify-end align-end">
+              <wButton class="mr-2" size="small" @click="goToMyrowlection()">
+                Cancel
+              </wButton>
+              <wButton v-if="isBuy" size="small" @click="openModal()" :disabled="amountwGOLD==='0'">
+                Buy
+              </wButton>
+              <wButton v-else size="small" @click="openModal()">
+                Sell
+              </wButton>
+            </v-row>
           </v-col>
         </div>
         <market-modal
-          :class="$vuetify.breakpoint.mdAndUp ? '' : 'ml-n2'"
-          :amount="amount"
-          :fee="fee"
-          :buyOrSell="buyOrSell"
+          :open="openConfirmOrderGameItem"
+          :nftCollectible="nftCollectible"
+          :amountInfo="amountInfo"
+          :type="buyOrSell"
+          @confirm="createOrder"
+          @close="openConfirmOrderGameItem = false"
         >
         </market-modal>
-        <game-modal
-          :open="modal"
-          :title="
-            buyOrSell === 'buy'
-              ? 'Leave your wGOLD with the Negotiator'
-              : 'Leave your NFT with the Negotiator'
-          "
-          @close="closeInfo()"
-        >
-          <span v-if="buyOrSell === 'buy'">
-            To create the purchase order, approval is required for the Negotiator to find your item!
-          </span>
-          <span v-else>
-            To create the sales order, approval is required for the Negotiator to sale your item!
-          </span>
-        </game-modal>
+        <raskel-modal
+          :open="raskel"
+          @confirm="approve(buyOrSell)"
+          @close="$router.back()"
+          :isLoading="isLoadingRaskel"
+        ></raskel-modal>
       </v-col>
     </v-container>
   </div>
@@ -118,12 +137,15 @@
 <script>
 import GameTitle from '@/lib/components/ui/Utils/GameTitle';
 import GameTextH1 from '@/lib/components/ui/Utils/GameTextH1';
+import wButton from '@/lib/components/ui/Utils/wButton';
+import Amount from '@/lib/components/ui/Utils/Amount';
 import Collectibles from '@/lib/eth/Collectibles';
 import MarketNFTS from '@/lib/eth/MarketNFTS';
 import wGOLD from '@/lib/eth/wGOLD';
+import ToastSnackbar from '@/plugins/ToastSnackbar';
 
 import MarketModal from '@/lib/components/ui/Modals/MarketModal';
-import GameModal from '@/lib/components/ui/Modals/GameModal';
+import RaskelModal from '@/lib/components/ui/Modals/RaskelModal';
 import ItemPrice from '@/lib/components/ui/Utils/ItemPrice';
 import { getCollectibles } from '@/data/Collectibles';
 
@@ -132,12 +154,15 @@ export default {
     GameTitle,
     GameTextH1,
     MarketModal,
-    GameModal,
     ItemPrice,
+    RaskelModal,
+    Amount,
+    wButton
   },
   data() {
     return {
-      modal: false,
+      raskel: false,
+      openConfirmOrderGameItem: false,
       buyOrSell: this.$route.params.type,
       fee: 0,
       amount: 0,
@@ -158,6 +183,8 @@ export default {
       isApprovedToken: false,
       supply: 0,
       remaining: 0,
+      isLoadingRaskel: false,
+      amountInfo: { feeAmount: 0, totalAmount: 0},
     };
   },
 
@@ -180,6 +207,14 @@ export default {
       );
       return nft !== undefined ? nft : { status: 'Notfound' };
     },
+
+    isBuy() {
+      return this.buyOrSell === 'buy';
+    },
+
+    currentBlockNumber() {
+      return this.$store.getters["user/currentBlockNumber"];
+    },
   },
 
   watch: {
@@ -195,6 +230,10 @@ export default {
     page() {
       this.loadData();
     },
+
+    currentBlockNumber(){
+      this.loadData();
+    }
   },
 
   mounted() {
@@ -212,17 +251,7 @@ export default {
       });
       this.collectibleContract = new Collectibles(this.collectible.contractAddress);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
-      // if (!this.isApprovedToken) {
-      //   this.modal = true;
-      //   try {
-      //     const token = new wGOLD(this.addresses.wGOLD);
-      //     const res = token.approve(this.account, this.addresses.marketNFTS);
-      //     console.log({ res });
-      //     this.isApprovedToken = token.hasAllowance(this.account, this.addresses.marketNFTS);
-      //   } catch (e) {
-      //     console.log(e);
-      //   }
-      // }
+      this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
     },
 
     async loadData() {
@@ -230,45 +259,88 @@ export default {
         return;
       }
 
-      this.loading = true;
+      this.raskel = !(await this.isApprovedContract(this.buyOrSell))
 
       this.userAmount = await this.collectibleContract.balanceOf(this.account, this.nftId);
 
-      this.supply = await this.collectibleContract.getMaxSupply(this.nftId);
-      this.remaining = await this.collectibleContract.getRemaining(this.nftId);
-
       this.fee = await this.marketNFTS.getSwapFeeRate();
 
-      this.isApproved = await this.collectibleContract.isApprovedForAll(
-        this.account,
-        this.addresses.marketNFTS
-      );
-
-      const wgold = new wGOLD(this.addresses.wGOLD);
-      this.isApprovedToken = await wgold.hasAllowance(
-        this.account,
-        this.collectible.contractAddress
-      );
+      this.amountwGOLD = await this.wGOLDContract.balanceOf(this.account);
     },
 
     async getSwapFeeRate() {
       this.fee = await this.marketNFTS.getSwapFeeRate();
     },
 
-    closeInfo() {
-      this.modal = false;
+    openModal() {
+      this.openConfirmOrderGameItem = true;
     },
 
-    async approvewGOLD() {
-      try {
-        const token = new wGOLD(this.addresses.wGOLD);
-        const res = await token.approve(this.account, this.addresses.marketNFTS);
-        console.log({ res });
-        this.isApprovedToken = await token.hasAllowance(this.account, this.addresses.marketNFTS);
-      } catch (e) {
-        console.log(e);
-      }
+
+    async isApprovedContract(type) {
+      const listApproved = {
+        sell: async () => {
+          return await this.collectibleContract.isApprovedForAll(
+            this.account,
+            this.addresses.marketNFTS
+          );
+        },
+        buy: async () => {
+          return await this.wGOLDContract.hasAllowance(this.account, this.addresses.marketNFTS);
+        },
+      };
+      return listApproved[type]();
     },
+
+    approve(type) {
+      const listApproved = {
+        sell: () => {
+          return this.collectibleContract.setApprovalForAll(
+            this.addresses.marketNFTS,
+            this.account
+          );
+        },
+        buy: () => {
+          return this.wGOLDContract.approve(this.account, this.addresses.marketNFTS);
+        },
+      };
+      const confirmTransaction = listApproved[type]();
+      this.isLoadingRaskel = true;
+
+      confirmTransaction.on('error', error => {
+        this.isLoadingRaskel = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error('Raskel - The traveler, there was a problem with your access');
+      });
+      
+      confirmTransaction.on('transactionHash', async () => {
+        ToastSnackbar.info(`Raskel - The traveler, checking your request`);
+      });
+
+      confirmTransaction.on('receipt', async () => {
+        this.isLoadingRaskel = false;
+        this.raskel = false;
+        ToastSnackbar.success('Raskel - The traveler, approved your access');
+      });
+
+      return;
+    },
+    
+    async calcFee(){
+      this.amountInfo = await this.marketNFTS.getOrderAmountInfo(this.amount)
+    },
+    async createOrder(){
+      await this.marketNFTS.createOrder(
+        this.buyOrSell === 'buy' ? '0': '1',
+        this.collectible.contractAddress,
+        this.collectible.id,
+        this.addresses.wGOLD,
+        this.amount,
+        this.account
+      );
+    }
   },
 };
 </script>

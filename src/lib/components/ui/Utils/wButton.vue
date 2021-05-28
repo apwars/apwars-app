@@ -102,7 +102,10 @@ export default {
   width: 160px;
 }
 .btn-lazy {
-  width: 80px;
+  width: 160px;
+}
+.btn-lazy .label{
+  font-size: 12px;
 }
 .btn-small .label {
   font-size: 16px;

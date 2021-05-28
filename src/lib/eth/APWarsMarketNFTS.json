@@ -86,6 +86,18 @@
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "totalAmount",
+        "type": "uint256"
       }
     ],
     "name": "NewOrder",
@@ -158,13 +170,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "netAmount",
+        "name": "feeAmount",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "feeAmount",
+        "name": "totalAmount",
         "type": "uint256"
       }
     ],
@@ -688,6 +700,34 @@
     "constant": true
   },
   {
+    "inputs": [],
+    "name": "getBuyOrdersLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getSellOrdersLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -705,7 +745,7 @@
         "type": "uint256"
       }
     ],
-    "name": "getOrderId",
+    "name": "getOrderIds",
     "outputs": [
       {
         "internalType": "uint256[]",
@@ -727,6 +767,11 @@
     ],
     "name": "getOrderInfo",
     "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "orderId",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "sender",
@@ -770,6 +815,56 @@
       {
         "internalType": "uint256",
         "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_orderIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "getOrderIdBuy",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "orderId",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_orderIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "getOrderIdSell",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "orderId",
         "type": "uint256"
       }
     ],
@@ -816,11 +911,11 @@
         "type": "uint256"
       }
     ],
-    "name": "getFeeAndNetAmount",
+    "name": "getFeeAndTotalAmount",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "netAmount",
+        "name": "totalAmount",
         "type": "uint256"
       },
       {
@@ -845,7 +940,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "netAmount",
+        "name": "totalAmount",
         "type": "uint256"
       },
       {

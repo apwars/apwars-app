@@ -68,13 +68,8 @@ export default class MarketNFTS {
     return swapFee / 100;
   }
 
-  createOrderBuy(address, id, contractwGOLD, amount, from) {
-    console.log("CREATEORDER");
-    console.log(`address ; ${address}`);
-    console.log(`id ; ${id}`)
-    console.log(`contractwGOLD ; ${contractwGOLD}`);
-    console.log(`amount ; ${amount}`);
-    console.log(`from ; ${from}`);
+  createOrder(buyType, address, id, contractwGOLD, amount, from) {
+    amount = window.web3.utils.toWei(amount.toString(), 'ether');
     return this.smc.methods.createOrder(
       buyType,
       address,
@@ -82,15 +77,11 @@ export default class MarketNFTS {
       contractwGOLD,
       amount
     ).send({ from })
+    
   }
 
-  createOrderSell(address, id, contractwGOLD, amount, from) {
-    return this.smc.methods.createOrder(
-      sellType,
-      address,
-      id,
-      contractwGOLD,
-      amount
-    ).send({ from });
+  getOrderAmountInfo(amount){
+    amount = web3.utils.toWei(amount.toString(), 'ether');
+    return this.smc.methods.getOrderAmountInfo(amount).call();
   }
 }
