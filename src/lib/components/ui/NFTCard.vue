@@ -13,26 +13,30 @@
         "
       ></v-img>
       <game-text>{{ collectible.title }}</game-text>
-      <item-price v-if="!collectible.isGift" :price="collectible.parameters.price" />
+      <item-price
+        v-if="!collectible.isGift"
+        :price="collectible.parameters.price"
+      />
       <div v-if="myCollection" class="d-block">
         <small class="remaining">Your Amount: {{ userAmount }}</small>
         <div>
-          <button>
-            <v-img
-              class="mx-auto align-center text-center ml-2"
-              max-width="160"
-              src="/images/buttons/btn-default.png"
-              @click="goToSell(collectible.id)"
-              style="font-size: 12px"
-            >
-              Create Sell Order
-            </v-img>
-          </button>
+          <wButton
+            class="mx-2"
+            size="x-small"
+            @click="goToSell(collectible.id)"
+          >
+            Create Sell Order
+          </wButton>
         </div>
       </div>
       <div v-else-if="!collectible.isGift">
-        <small class="remaining">Remaining: {{ remaining }} of {{ supply }}</small>
-        <div class="d-flex justify-center align-center mt-1" v-if="remaining > 0">
+        <small class="remaining"
+          >Remaining: {{ remaining }} of {{ supply }}</small
+        >
+        <div
+          class="d-flex justify-center align-center mt-1"
+          v-if="remaining > 0"
+        >
           <v-img
             v-if="isApproved"
             class="btn center"
@@ -57,7 +61,11 @@
       :hideOk="true"
       @close="closeWaitingMetamask()"
     >
-      <v-progress-circular :size="24" color="#765E55" indeterminate></v-progress-circular>
+      <v-progress-circular
+        :size="24"
+        color="#765E55"
+        indeterminate
+      ></v-progress-circular>
       You need to approve the transaction in you wallet.
     </game-modal>
 
@@ -73,7 +81,8 @@
         color="#765E55"
         indeterminate
       ></v-progress-circular>
-      The transaction has been sent to the blockchain. Waiting for the first confirmation!
+      The transaction has been sent to the blockchain. Waiting for the first
+      confirmation!
     </game-modal>
 
     <game-modal
@@ -84,28 +93,34 @@
       The transaction has been confirmed!
     </game-modal>
 
-    <game-modal :open="showInfo" :title="collectible.title" @close="closeInfo()">
+    <game-modal
+      :open="showInfo"
+      :title="collectible.title"
+      @close="closeInfo()"
+    >
       <span v-html="collectible.description" />
     </game-modal>
   </v-card>
 </template>
 
 <script>
-import GameText from '@/lib/components/ui/Utils/GameText';
-import Amount from '@/lib/components/ui/Utils/Amount';
-import GameModal from '@/lib/components/ui/Modals/GameModal';
-import ItemPrice from '@/lib/components/ui/Utils/ItemPrice';
-import Collectibles from '@/lib/eth/Collectibles';
-import wGOLD from '@/lib/eth/wGOLD';
+import GameText from "@/lib/components/ui/Utils/GameText";
+import Amount from "@/lib/components/ui/Utils/Amount";
+import GameModal from "@/lib/components/ui/Modals/GameModal";
+import ItemPrice from "@/lib/components/ui/Utils/ItemPrice";
+import Collectibles from "@/lib/eth/Collectibles";
+import wGOLD from "@/lib/eth/wGOLD";
+import wButton from "@/lib/components/ui/Utils/wButton";
 
 export default {
-  props: ['collectible', 'myCollection'],
+  props: ["collectible", "myCollection"],
 
   components: {
     GameText,
     ItemPrice,
     GameModal,
     Amount,
+    wButton,
   },
 
   data() {
@@ -124,19 +139,19 @@ export default {
 
   computed: {
     account() {
-      return this.$store.getters['user/account'];
+      return this.$store.getters["user/account"];
     },
 
     addresses() {
-      return this.$store.getters['user/addresses'];
+      return this.$store.getters["user/addresses"];
     },
 
     networkInfo() {
-      return this.$store.getters['user/networkInfo'];
+      return this.$store.getters["user/networkInfo"];
     },
 
     currentBlockNumber() {
-      return this.$store.getters['user/currentBlockNumber'];
+      return this.$store.getters["user/currentBlockNumber"];
     },
   },
 
@@ -158,7 +173,7 @@ export default {
       this.transactionSent = false;
     },
     goToSell(id) {
-      return this.$router.push(`/create-order/${id}/sell`);
+      return this.$router.push(`/game-items/${id}/sell-orders/new`);
     },
     async buy() {
       try {
@@ -175,15 +190,15 @@ export default {
           this.collectible.signatures[this.networkInfo.id]
         );
 
-        res.on('error', () => {
+        res.on("error", () => {
           this.clearState();
         });
-        res.on('transactionHash', hash => {
+        res.on("transactionHash", (hash) => {
           this.waitingMetamask = false;
           this.isSending = true;
           this.transactionHash = hash;
         });
-        res.on('receipt', receipt => {
+        res.on("receipt", (receipt) => {
           this.waitingMetamask = false;
           this.isSending = false;
           this.transactionSent = true;
@@ -203,14 +218,20 @@ export default {
         const collectibles = new Collectibles(this.collectible.contractAddress);
         const wgold = new wGOLD(this.addresses.wGOLD);
 
-        this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
+        this.isApproved = await wgold.hasAllowance(
+          this.account,
+          this.collectible.contractAddress
+        );
 
         if (!this.collectible.isGift) {
           this.supply = await collectibles.getMaxSupply(this.collectible.id);
           this.remaining = await collectibles.getRemaining(this.collectible.id);
         }
 
-        this.userAmount = await collectibles.balanceOf(this.account, this.collectible.id);
+        this.userAmount = await collectibles.balanceOf(
+          this.account,
+          this.collectible.id
+        );
       } catch (e) {
         console.log(e);
       } finally {
@@ -221,9 +242,15 @@ export default {
     async approve() {
       try {
         const wgold = new wGOLD(this.addresses.wGOLD);
-        const res = await wgold.approve(this.account, this.collectible.contractAddress);
+        const res = await wgold.approve(
+          this.account,
+          this.collectible.contractAddress
+        );
         console.log({ res });
-        this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
+        this.isApproved = await wgold.hasAllowance(
+          this.account,
+          this.collectible.contractAddress
+        );
       } catch (e) {
         console.log(e);
       }

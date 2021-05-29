@@ -126,7 +126,7 @@
                   "
                 >
                   <p class="mt-n2">
-                    Total price for transaction
+                    {{ totalAmountDescription }}
                   </p>
                   <p class="d-flex">
                     <v-img
@@ -144,7 +144,7 @@
                 </div>
               </div>
             </v-row>
-            <v-row class="d-flex justify-end align-end">
+            <v-row class="d-flex justify-end">
               <wButton class="mr-2" size="small" @click="$router.back()">
                 Cancel
               </wButton>
@@ -156,13 +156,27 @@
               >
                 Buy
               </wButton>
-              <wButton v-else size="small" @click="openModal()">
+              <wButton
+                v-else
+                size="small"
+                @click="openModal()"
+                :disabled="disabledSell"
+              >
                 Sell
               </wButton>
             </v-row>
-            <div>
-              Quantity is greater than the available value
-            </div>
+            <v-row class="d-flex justify-end">
+              <v-alert
+                v-if="amount > amountwGOLD && buyOrSell === 'buy'"
+                class="my-3"
+                outlined
+                type="warning"
+                border="left"
+                dense
+              >
+                Quantity is greater than the available value
+              </v-alert>
+            </v-row>
           </v-col>
         </div>
         <market-modal
@@ -170,6 +184,7 @@
           :nftCollectible="nftCollectible"
           :amountInfo="amountInfo"
           :type="buyOrSell"
+          :isLoading="isLoadingMarket"
           @confirm="createOrder"
           @close="openConfirmOrderGameItem = false"
         >
@@ -214,6 +229,7 @@ export default {
   data() {
     return {
       amountwGOLD: false,
+      isLoadingMarket: false,
       raskel: false,
       openConfirmOrderGameItem: false,
       buyOrSell: this.$route.params.type,
@@ -237,7 +253,7 @@ export default {
       supply: 0,
       remaining: 0,
       isLoadingRaskel: false,
-      amountInfo: { feeAmount: 0, totalAmount: 0 },
+      amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0 },
     };
   },
 
@@ -269,16 +285,36 @@ export default {
       return this.buyOrSell === "buy";
     },
 
+    totalAmountDescription() {
+      if (this.isBuy) {
+        return "Total price for transaction";
+      }
+
+      return "Total to be received from the buyer";
+    },
+
     hintLabel() {
       if (!this.amountwGOLD) {
         return `Available: Loading...`;
       }
-      return `Available: ${Convert.formatString(this.amountwGOLD)} wGOLD`;
+      const label = this.isBuy ? "wGOLD" : this.nftCollectible.title;
+      const available = this.isBuy
+        ? Convert.formatString(this.amountwGOLD)
+        : `${this.userAmount} units`;
+      return `Available: ${available} ${label}`;
     },
 
     disabledBuy() {
-      return this.amount === 0 || (this.amountwGOLD > 0 && this.amountwGOLD < this.amount);
-    }
+      return (
+        this.amount === 0 ||
+        this.amountwGOLD === 0 ||
+        this.amountwGOLD < this.amount
+      );
+    },
+
+    disabledSell() {
+      return this.amount === 0 || this.userAmount === 0;
+    },
   },
 
   watch: {
@@ -380,6 +416,12 @@ export default {
       const confirmTransaction = listApproved[type]();
       this.isLoadingRaskel = true;
 
+      confirmTransaction.then(() => {
+        ToastSnackbar.info(
+          "Is waiting for your approval Raskel - The Traveler"
+        );
+      });
+
       confirmTransaction.on("error", (error) => {
         this.isLoadingRaskel = false;
         if (error.message) {
@@ -390,24 +432,29 @@ export default {
         );
       });
 
-      confirmTransaction.on("transactionHash", async () => {
-        ToastSnackbar.info(`Raskel - The Traveler is waiting for your approval`);
-      });
-
       confirmTransaction.on("receipt", async () => {
         this.isLoadingRaskel = false;
         this.raskel = false;
-        ToastSnackbar.success("You have granted access to Raskel - The Traveler");
+        ToastSnackbar.success(
+          "You have granted access to Raskel - The Traveler"
+        );
       });
 
       return;
     },
 
     async calcFee() {
+      if (this.amount === null) {
+        this.amountInfo = await this.marketNFTS.getOrderAmountInfo(0);
+        this.amountInfo.amount = "0";
+        return;
+      }
       this.amountInfo = await this.marketNFTS.getOrderAmountInfo(this.amount);
+      this.amountInfo.amount = Convert.toWei(this.amount);
     },
     async createOrder() {
-      await this.marketNFTS.createOrder(
+      this.isLoadingMarket = true;
+      const confirmTransaction = this.marketNFTS.createOrder(
         this.buyOrSell === "buy" ? "0" : "1",
         this.collectible.contractAddress,
         this.collectible.id,
@@ -415,6 +462,31 @@ export default {
         this.amount,
         this.account
       );
+
+      confirmTransaction.then(() => {
+        this.amount = 0;
+        this.calcFee();
+        ToastSnackbar.info(`Waiting confirmation Raskel - The Traveler`);
+      });
+
+      confirmTransaction.on("error", (error) => {
+        this.isLoadingMarket = false;
+
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(
+          "An error has occurred while error creating an order Raskel - The Traveller"
+        );
+      });
+
+      confirmTransaction.on("receipt", async () => {
+        this.openConfirmOrderGameItem = false;
+        this.isLoadingMarket = false;
+        ToastSnackbar.success(
+          "Order successfully created Raskel - The Traveler"
+        );
+      });
     },
   },
 };

@@ -73,7 +73,7 @@ export default {
       this.transactionSent = false;
     },
     goToBuy(id) {
-      return this.$router.push(`/create-order/${id}/buy`);
+      return this.$router.push(`/game-items/${id}/buy-orders/new`);
     },
     openNewTab(obj) {
       window.open(obj);

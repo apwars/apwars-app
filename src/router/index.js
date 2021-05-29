@@ -27,8 +27,8 @@ export const routes = [
         component: Items,
       },
       {
-        path: "/create-order/:nftId/:type",
-        name: "/create-order",
+        path: "/game-items/:nftId/:type-orders/new",
+        name: "/game-items",
         component: CreateOrders,
       },
       {
