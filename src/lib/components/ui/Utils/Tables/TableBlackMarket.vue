@@ -50,7 +50,6 @@
             class="align-self-center"
             :amount="item.amountOrder"
             decimals="2"
-            approximate
             tooltip
           />
         </div>
@@ -79,6 +78,13 @@
       @close="openConfirmOrderGameItem = false"
     >
     </confirm-order-game-item>
+
+    <raskel-modal
+      :open="approveRaskel"
+      @confirm="approve(nftCollectible.orderTypeDesc)"
+      @close="approveRaskel = false"
+      :isLoading="isLoadingApproveRaskel"
+    ></raskel-modal>
   </v-card>
 </template>
 
@@ -87,11 +93,14 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import wButton from "@/lib/components/ui/Utils/wButton";
 import ConfirmOrderGameItem from "@/lib/components/ui/Modals/ConfirmOrderGameItem";
+import RaskelModal from "@/lib/components/ui/Modals/RaskelModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import { getCollectibles } from "@/data/Collectibles";
 
 import MarketNFTS from "@/lib/eth/MarketNFTS.js";
+import Collectibles from "@/lib/eth/Collectibles";
+import wGOLD from "@/lib/eth/wGOLD";
 
 export default {
   props: ["type"],
@@ -100,10 +109,13 @@ export default {
     Amount,
     wButton,
     ConfirmOrderGameItem,
+    RaskelModal,
   },
 
   data() {
     return {
+      approveRaskel: false,
+      isLoadingApproveRaskel: false,
       nftCollectible: {},
       openConfirmOrderGameItem: false,
       isLoadingConfirm: false,
@@ -149,7 +161,8 @@ export default {
         item.openModal = false;
         if (item.orderType === this.typeEnum) {
           item.orderTypeDesc = this.typeEnum === "1" ? "buy" : "sell";
-          item.amountOrder = this.typeEnum === "0" ? item.amount : item.totalAmount;
+          item.amountOrder =
+            this.typeEnum === "0" ? item.amount : item.totalAmount;
           item.nft = getCollectibles().find(
             (collectible) =>
               collectible.id.toString() === item.tokenId.toString()
@@ -173,14 +186,23 @@ export default {
   },
 
   mounted() {
+    this.initData();
     this.loadData();
   },
 
   methods: {
+    initData() {
+      this.collectibleContract = new Collectibles(
+        this.addresses.collectibles
+      );
+      this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
+      this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
+    },
+
     async loadData(page) {
       try {
         page = page || 1;
-        this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
+
         const market = await this.marketNFTS.getMarket(
           this.typeEnum,
           this.itemsPerPage,
@@ -198,11 +220,19 @@ export default {
     getSizeIcon(icon) {
       return icon === "swap" ? 16 : 12;
     },
-    openModal(item) {
-      this.isLoadingConfirm = false;
-      this.openConfirmOrderGameItem = true;
+    async openModal(item) {
       this.nftCollectible = item;
-      console.log(this.nftCollectible);
+      const isApproved = await this.isApprovedContract(
+        this.nftCollectible.orderTypeDesc
+      );
+
+      if (!isApproved) {
+        this.approveRaskel = true;
+        this.isLoadingApproveRaskel = false;
+      } else {
+        this.isLoadingConfirm = false;
+        this.openConfirmOrderGameItem = true;
+      }
     },
     executeOrder() {
       this.isLoadingConfirm = true;
@@ -231,6 +261,58 @@ export default {
             `Raskel - The traveler, successful ${textType}`
           );
         });
+    },
+    async isApprovedContract(type) {
+      const listApproved = {
+        sell: async () => {
+          return await this.collectibleContract.isApprovedForAll(
+            this.account,
+            this.addresses.marketNFTS
+          );
+        },
+        buy: async () => {
+          return await this.wGOLDContract.hasAllowance(
+            this.account,
+            this.addresses.marketNFTS
+          );
+        },
+      };
+      return listApproved[type]();
+    },
+    approve(type) {
+      const listApproved = {
+        sell: () => {
+          return this.collectibleContract.setApprovalForAll(
+            this.addresses.marketNFTS,
+            this.account
+          );
+        },
+        buy: () => {
+          return this.wGOLDContract.approve(
+            this.account,
+            this.addresses.marketNFTS
+          );
+        },
+      };
+      const confirmTransaction = listApproved[type]();
+      this.isLoadingApproveRaskel = true;
+
+      confirmTransaction.on("error", (error) => {
+        this.isLoadingApproveRaskel = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(
+          "Raskel - The traveler, there was a problem with your access"
+        );
+      });
+      confirmTransaction.on("receipt", async () => {
+        this.isLoadingApproveRaskel = false;
+        this.openModal(this.nftCollectible);
+        ToastSnackbar.success("Raskel - The traveler, approved your access");
+      });
+
+      return;
     },
   },
 };

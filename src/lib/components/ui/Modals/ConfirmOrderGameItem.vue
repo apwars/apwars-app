@@ -2,7 +2,7 @@
   <v-dialog content-class="confirmOrder" persistent :value="open" width="650px">
     <v-card v-if="open">
       <v-card-title class="justify-center my-3">
-        <h3>Confirm your purchase</h3>
+        <h3>{{ titleOrder }}</h3>
       </v-card-title>
 
       <v-card-text>
@@ -20,20 +20,26 @@
           <v-col dense cols="9">
             <div>
               <game-text-h2>{{ nftCollectible.nft.title }}</game-text-h2>
-              <h4>
-                You will pay
+              <h4 class="mt-3">
+                {{ descriptionOrder }}
                 <amount
                   class="align-self-center"
-                  :amount="nftCollectible.totalAmount"
+                  :amount="nftCollectible.amountOrder"
                   decimals="2"
-                  approximate
                   tooltip
                 />
                 wGold for this Game Item.
               </h4>
             </div>
-            <v-alert class="my-2" outlined type="warning" border="left" dense>
-              You do not have wGOLD to execute this order
+            <v-alert
+              v-if="isBalanceItem"
+              class="my-2"
+              outlined
+              type="warning"
+              border="left"
+              dense
+            >
+              You do not have balance to execute this order
             </v-alert>
           </v-col>
         </v-row>
@@ -44,14 +50,19 @@
         <w-button class="mr-2" size="small" @click="$emit('close')">
           Close
         </w-button>
-        <w-button v-if="!isApproved" size="small" @click="approve(type)">
+        <w-button
+          v-if="!isApproved"
+          size="small"
+          @click="approve(type)"
+          :disabled="isBalanceItem"
+        >
           {{ isApprovedLoading ? "Approving..." : "Approve" }}
         </w-button>
         <w-button
           v-else
           size="small"
           @click="$emit('confirm')"
-          :disabled="isLoading"
+          :disabled="isLoading || isBalanceItem"
         >
           {{ isLoading ? "Awaiting..." : "Confirm" }}
         </w-button>
@@ -65,6 +76,8 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import wButton from "@/lib/components/ui/Utils/wButton";
 import GameTextH2 from "@/lib/components/ui/Utils/GameTextH2";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
+
+import Convert from "@/lib/helpers/Convert";
 
 import Collectibles from "@/lib/eth/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
@@ -84,6 +97,7 @@ export default {
       isApproved: false,
       isApprovedLoading: false,
       collectibleContract: {},
+      balanceItem: 0,
     };
   },
 
@@ -97,10 +111,34 @@ export default {
     addresses() {
       return this.$store.getters["user/addresses"];
     },
+    isBalanceItem() {
+      return this.balanceItem === "0"
+        ? true
+        : Convert.fromWei(this.nftCollectible.amountOrder) >
+          Convert.fromWei(this.balanceItem)
+        ? true
+        : false;
+    },
+    titleOrder() {
+      return this.type === "buy"
+        ? "Confirm your purchase"
+        : "Confirm your sale";
+    },
+    descriptionOrder() {
+      return this.type === "buy"
+        ? "You will pay"
+        : "You will receive";
+    },
   },
 
   watch: {
     open() {
+      if (this.open) {
+        this.initData();
+        this.loadData();
+      }
+    },
+    account() {
       if (this.open) {
         this.initData();
         this.loadData();
@@ -126,6 +164,7 @@ export default {
     },
     async loadData() {
       this.isApproved = await this.isApprovedContract(this.type);
+      this.balanceItem = await this.balaceItem(this.type);
     },
     close() {
       this.$emit("close");
@@ -181,6 +220,21 @@ export default {
       });
 
       return;
+    },
+    async balaceItem(type) {
+      const listBalance = {
+        sell: async () => {
+          const balance = await this.collectibleContract.balanceOf(
+            this.account,
+            this.nftCollectible.tokenId
+          );
+          return Convert.toWei(balance);
+        },
+        buy: async () => {
+          return await this.wGOLDContract.balanceOf(this.account);
+        },
+      };
+      return listBalance[type]();
     },
   },
 };
