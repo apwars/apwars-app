@@ -101,4 +101,8 @@ export default class MarketNFTS {
     amount = web3.utils.toWei(amount.toString(), "ether");
     return this.smc.methods.getOrderAmountInfo(amount).call();
   }
+
+  executeOrder(orderId, from) {
+    return this.smc.methods.executeOrder(orderId).send({ from });
+  }
 }
