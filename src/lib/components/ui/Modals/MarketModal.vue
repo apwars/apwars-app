@@ -1,327 +1,184 @@
 <template>
-  <div
-    :class="$vuetify.breakpoint.mdAndUp ? 'd-flex justify-end mt-2' : 'd-flex justify-center mt-2'"
-  >
-    <div class="text-center">
-      <v-dialog v-model="dialog" width="620">
-        <template v-slot:activator="{ on, attrs }">
-          <div class="d-flex">
-            <v-img
-              v-if="isApprovedToken"
-              class="mx-auto align-center ml-2"
-              max-width="160"
-              src="/images/buttons/btn-default.png"
-              v-bind="attrs"
-              v-on="on"
-            >
-              <span v-if="buyOrSell=== 'buy'">Buy</span>
-              <span v-else>Sell</span>
-            </v-img>
-            <v-img
-              v-else
-              class="mx-auto align-center ml-2"
-              max-width="160"
-              src="/images/buttons/btn-default.png"
-              @click="approvewGOLD()"
-            >
-              Approve
-            </v-img>
-
-            <v-img
-              class="mx-auto align-center"
-              max-width="160"
-              src="/images/buttons/btn-default.png"
-              @click="goToMyCollection()"
-            >
-              Cancel
-            </v-img>
-          </div>
-        </template>
-        <v-card>
-          <v-col class="d-flex justify-center align-center">
-            <v-img
-              v-if="$vuetify.breakpoint.mdAndUp"
-              contain
-              src="/images/battle/modal.png"
-              :max-width="600"
-              class="align-center justify-center"
-            >
-              <v-col :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
-                <v-col cols="12" lg="4" md="4" sm="12">
-                  <div class="text-center">
-                    <v-img class="" max-width="250" :src="nftCollectible.image"></v-img>
-                  </div>
-                </v-col>
-                <v-col cols="12" lg="8" md="8" sm="12">
-                  <div class="ml-n4">
-                    <h3>Confirm your purchase</h3>
-                    <game-text-h-2>{{ nftCollectible.title }}</game-text-h-2>
-                    <h4 class="mt-1" v-if="buyOrSell === 'buy'">
-                      You will pay {{ amount }}
-                      wGold for this nft.
-                    </h4>
-                    <h4 class="mt-1" v-else>You will sell this NFT for {{ amount }} wGOLD</h4>
-                    <h5>This transaction has a fee of {{ fee }}%</h5>
-                  </div>
-                  <div class="d-flex mt-5 ml-n4">
-                    <v-img
-                      v-if="buyOrSell === 'buy'"
-                      class="mx-auto align-center text-center ml-2"
-                      max-width="160"
-                      src="/images/buttons/btn-default.png"
-                      @click="buy()"
-                    >
-                      Confirm
-                    </v-img>
-                    <v-img
-                      v-else
-                      class="mx-auto align-center text-center ml-2"
-                      max-width="160"
-                      src="/images/buttons/btn-default.png"
-                      @click="sell()"
-                    >
-                      Confirm
-                    </v-img>
-                    <v-img
-                      class="mx-auto align-center text-center"
-                      max-width="160"
-                      src="/images/buttons/btn-default.png"
-                      @click="dialog = false"
-                    >
-                      Cancel
-                    </v-img>
-                  </div>
-                </v-col>
-              </v-col>
-            </v-img>
-            <v-col
-              v-else
-              :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
-              style="background-color: black"
-            >
+  <div class="text-center">
+    <v-dialog persistent :value="open" width="650px">
+      <v-card v-if="open">
+        <v-col class="d-flex justify-center align-center">
+          <v-img
+            v-if="$vuetify.breakpoint.mdAndUp"
+            contain
+            src="/images/battle/modal.png"
+            :max-width="650"
+            class="align-center justify-center"
+          >
+            <v-col :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
               <v-col cols="12" lg="4" md="4" sm="12">
                 <div class="text-center">
-                  <v-img class="" max-width="250" :src="nftCollectible.image"></v-img>
-                  <game-text-h-4>{{ nftCollectible.title }}</game-text-h-4>
+                  <v-img
+                    class=""
+                    max-width="250"
+                    :src="nftCollectible.image"
+                  ></v-img>
                 </div>
               </v-col>
               <v-col cols="12" lg="8" md="8" sm="12">
                 <div class="ml-n4">
-                  <h4>Confirm your purchase</h4>
-                  <h5 class="mt-1" v-if="buyOrSell === 'buy'">
-                    You will pay {{ amount }}
-                    wGold for this nft.
+                  <h3 v-if="isBuy">Confirm your purchase</h3>
+                  <h3 v-else>Confirm your sale</h3>
+                  <game-text-h2>{{ nftCollectible.title }}</game-text-h2>
+                  <div v-if="isBuy" class="mt-1">
+                    <span>You will pay</span>
+                    <amount :amount="amountInfo.totalAmount" :decimals="2" />
+                    wGOLD for this Game Item
+                  </div>
+                  <div class="mt-1" v-else>
+                    You will receive
+                    <amount :amount="amountInfo.amount" :decimals="2" />
+                    wGOLD for this Game Item
+                  </div>
+                  <h5 class="mt-1">
+                    This transaction has a fee of
+                    <amount :amount="amountInfo.feeAmount" :decimals="2" />
+                    wGOLD
                   </h5>
-                  <h5 class="mt-1" v-else>You will sell this NFT for {{ amount }} wGOLD</h5>
-                  <h6 class="mt-1">This transaction has a fee of {{ fee }}%</h6>
-                </div>
-                <div class="d-flex mt-2">
-                  <v-img
-                    v-if="buyOrSell === 'buy'"
-                    class="mx-auto align-center text-center ml-2"
-                    max-width="100"
-                    src="/images/buttons/btn-default.png"
-                    @click="buy()"
-                    style="font-size: 12px"
-                  >
-                    Confirm
-                  </v-img>
-                  <v-img
-                    v-else
-                    class="mx-auto align-center text-center ml-2"
-                    max-width="100"
-                    src="/images/buttons/btn-default.png"
-                    @click="sell()"
-                    style="font-size: 12px"
-                  >
-                    Confirm
-                  </v-img>
-
-                  <v-img
-                    class="mx-auto align-center text-center"
-                    max-width="100"
-                    src="/images/buttons/btn-default.png"
-                    @click="dialog = false"
-                    style="font-size: 12px"
-                  >
-                    Cancel
-                  </v-img>
                 </div>
               </v-col>
             </v-col>
-          </v-col>
-        </v-card>
-      </v-dialog>
-    </div>
+            <div class="d-flex mt-n5 mr-5 justify-end">
+              <wButton class="mr-2" size="small" @click="$emit('close')">
+                Close
+              </wButton>
+              <wButton size="small" @click="$emit('confirm')" :disabled="isLoading">
+                {{ isLoading ? "Waiting..." : "Confirm" }}
+              </wButton>
+            </div>
+          </v-img>
+        </v-col>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
-import GameTextH2 from '@/lib/components/ui/Utils/GameTextH2';
-import GameTextH4 from '@/lib/components/ui/Utils/GameTextH4';
-import Collectibles from '@/lib/eth/Collectibles';
-import MarketNFTS from '@/lib/eth/MarketNFTS';
-import wGOLD from '@/lib/eth/wGOLD';
+import Amount from "@/lib/components/ui/Utils/Amount";
+import wButton from "@/lib/components/ui/Utils/wButton";
+import GameTextH2 from "@/lib/components/ui/Utils/GameTextH2";
+import GameTextH4 from "@/lib/components/ui/Utils/GameTextH4";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
 
-import { getCollectibles } from '@/data/Collectibles';
+import Collectibles from "@/lib/eth/Collectibles";
+import wGOLD from "@/lib/eth/wGOLD";
 
 export default {
-  props: ['amount', 'fee', 'buyOrSell'],
+  props: ["open", "nftCollectible", "amountInfo", "type", "isLoading"],
 
   components: {
+    wButton,
     GameTextH2,
     GameTextH4,
+    Amount,
   },
 
   data() {
     return {
       dialog: false,
-      fee: 0,
-      amount: 0,
-      nftId: this.$route.params.nftId,
-      loading: true,
-      currencyConfig: {
-        locale: 'en-US',
-        prefix: '',
-        suffix: '',
-        decimalLength: 8,
-        autoDecimalMode: true,
-        allowNegative: false,
-      },
-      collectibleContract: {},
       isApproved: false,
-      userAmount: 0,
-      collectible: {},
-      isApprovedToken: false,
+      isApprovedLoading: false,
+      collectibleContract: {},
     };
   },
 
   computed: {
     isConnected() {
-      return this.$store.getters['user/isConnected'];
+      return this.$store.getters["user/isConnected"];
     },
-
     account() {
-      return this.$store.getters['user/account'];
+      return this.$store.getters["user/account"];
     },
-
     addresses() {
-      return this.$store.getters['user/addresses'];
+      return this.$store.getters["user/addresses"];
     },
-
-    nftCollectible() {
-      const nft = getCollectibles().find(
-        collectible => collectible.id.toString() === this.nftId.toString()
-      );
-      return nft !== undefined ? nft : { status: 'Notfound' };
+    isBuy() {
+      return this.type === "buy";
     },
   },
 
   watch: {
-    isConnected() {
-      this.initData();
-      this.loadData();
-    },
-
-    account() {
-      this.loadData();
-    },
-
-    page() {
-      this.loadData();
+    open() {
+      if (this.open) {
+        this.initData();
+        this.loadData();
+      }
     },
   },
 
-  mounted() {
-    this.initData();
-    this.loadData();
-  },
+  mounted() {},
 
   methods: {
-    goToMyCollection() {
-      this.$router.push('/collection');
-    },
-
-    goToSellNFT() {
-      this.$router.push('/sell-nft/' + this.nftId);
-    },
-
     initData() {
-      if (!this.isConnected) {
-        return;
+      if (this.open) {
+        this.collectibleContract = new Collectibles(
+          this.nftCollectible.contractAddress
+        );
+        this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       }
-      this.collectible = getCollectibles().find(item => {
-        return item.id.toString() === this.nftId.toString();
-      });
-      this.collectibleContract = new Collectibles(this.collectible.contractAddress);
-      this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
-
     async loadData() {
-      if (!this.isConnected) {
-        return;
-      }
-
-      this.loading = true;
-
-      this.userAmount = await this.collectibleContract.balanceOf(this.account, this.nftId);
-
-      this.isApproved = await this.collectibleContract.isApprovedForAll(
-        this.account,
-        this.addresses.marketNFTS
-      );
-
-      const token = new wGOLD(this.addresses.wGOLD);
-      this.isApprovedToken = await token.hasAllowance(this.account, this.addresses.marketNFTS);
-
-      this.fee = await this.marketNFTS.getSwapFeeRate();
+      this.isApproved = await this.isApprovedContract(this.type);
     },
-
-    async approve() {
-      await this.collectibleContract.setApprovalForAll(this.addresses.marketNFTS, this.account);
+    close() {
+      this.$emit("close");
     },
-
-    async approvewGOLD() {
-      try {
-        const token = new wGOLD(this.addresses.wGOLD);
-        const res = await token.approve(this.account, this.addresses.marketNFTS);
-        console.log({ res });
-        this.isApprovedToken = await token.hasAllowance(this.account, this.addresses.marketNFTS);
-      } catch (e) {
-        console.log(e);
-      }
+    async isApprovedContract(type) {
+      const listApproved = {
+        sell: async () => {
+          return await this.collectibleContract.isApprovedForAll(
+            this.account,
+            this.addresses.marketNFTS
+          );
+        },
+        buy: async () => {
+          return await this.wGOLDContract.hasAllowance(
+            this.account,
+            this.addresses.marketNFTS
+          );
+        },
+      };
+      return listApproved[type]();
     },
+    approve(type) {
+      const listApproved = {
+        sell: () => {
+          return this.collectibleContract.setApprovalForAll(
+            this.addresses.marketNFTS,
+            this.account
+          );
+        },
+        buy: () => {
+          return this.wGOLDContract.approve(
+            this.account,
+            this.addresses.marketNFTS
+          );
+        },
+      };
+      const confirmTransaction = listApproved[type]();
+      this.isApprovedLoading = true;
 
-    async buy() {
-      const sendAmount = window.web3.utils.toWei(this.amount.toString(), 'ether');
-      console.log('buy');
-      console.log(sendAmount);
-      console.log(this.collectible);
-      await this.marketNFTS.createOrderBuy(
-        this.collectible.contractAddress,
-        this.collectible.id,
-        this.addresses.wGOLD,
-        sendAmount,
-        this.account
-      );
-    },
+      confirmTransaction.on("error", (error) => {
+        this.isApprovedLoading = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(
+          "Raskel - The traveler, there was a problem with your access"
+        );
+      });
+      confirmTransaction.on("receipt", async () => {
+        this.isApprovedLoading = false;
+        this.isApproved = await this.isApprovedContract(type);
+        ToastSnackbar.success("Raskel - The traveler, approved your access");
+      });
 
-    async sell() {
-      const sendAmount = window.web3.utils.toWei(this.amount.toString(), 'ether');
-      console.log('sell');
-      await this.marketNFTS.createOrderSell(
-        this.collectible.contractAddress,
-        this.collectible.id,
-        this.addresses.wGOLD,
-        sendAmount,
-        this.account
-      );
-    },
-
-    confirmOrder() {
-      if (buyOrSell === 'Buy') {
-        return buy();
-      } else return sell();
+      return;
     },
   },
 };
@@ -330,13 +187,74 @@ export default {
 <style scoped>
 .theme--dark.v-card {
   background-color: transparent !important;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  padding: 15px;
 }
 
-.remaining {
-  color: #f6ff00;
+.v-card__title {
+  color: #765e55;
+  font-size: 15x !important;
+  font-weight: bold !important;
+}
+
+.content {
+  color: #201813;
 }
 
 .btn {
   cursor: pointer;
+  width: 150px;
+  float: right;
+}
+
+.card-title-modal {
+  font-weight: bold !important;
+  font-size: 38px !important;
+  background: -webkit-linear-gradient(#ff0000, #bd0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stake-modal-input >>> .v-input__control > .v-input__slot fieldset {
+  color: #a47a6a !important;
+  border-width: 3px !important;
+  border-radius: 18px !important;
+}
+
+.stake-modal-input >>> .v-label {
+  transform-origin: top left !important;
+  font-weight: bold !important;
+  color: #32211b !important;
+}
+
+.stake-modal-input >>> .v-input__append-inner {
+  color: #32211b !important;
+  font-weight: bold !important;
+  font-size: 13px;
+}
+
+.stake-modal-input >>> .v-icon {
+  color: #32211c !important;
+}
+
+.stake-modal-input.v-input--is-disabled {
+  opacity: 0.2;
+}
+
+.stake-modal-input >>> input {
+  color: #32211c;
+  font-weight: bold;
+}
+
+.stake-modal-input >>> .v-messages__message {
+  font-size: 14px;
+  color: #32211c;
+  font-weight: bold;
+}
+
+.skull-flip {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 </style>

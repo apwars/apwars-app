@@ -3,12 +3,7 @@
     <v-card-text class="text-center">
       <v-img width="200" :src="collectible.image"></v-img>
       <div class="d-flex justify-center align-center mt-2">
-        <v-img
-          class="btn center"
-          @click="goToBuy(collectible.id)"
-          max-width="160"
-          src="/images/buttons/btn-buy.png"
-        ></v-img>
+        <wButton class="mx-2" size="x-small" @click="goToBuy(collectible.id)" >Create Purchase Order</wButton>
       </div>
     </v-card-text>
   </v-card>
@@ -18,12 +13,14 @@
 import GameText from '@/lib/components/ui/Utils/GameText';
 import Collectibles from '@/lib/eth/Collectibles';
 import wGOLD from '@/lib/eth/wGOLD';
+import wButton from '@/lib/components/ui/Utils/wButton';
 
 export default {
   props: ['collectible', 'myCollection'],
 
   components: {
     GameText,
+    wButton
   },
 
   data() {
@@ -76,7 +73,7 @@ export default {
       this.transactionSent = false;
     },
     goToBuy(id) {
-      return this.$router.push(`/create-order/${id}/buy`);
+      return this.$router.push(`/game-items/${id}/buy-orders/new`);
     },
     openNewTab(obj) {
       window.open(obj);
