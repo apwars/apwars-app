@@ -35,7 +35,7 @@ export default {
         numberAmount = this.roundDown(
           parseFloat(numberAmount),
           this.getDecimals
-        );
+        ).toLocaleString();
       }
 
       if (this.approximate !== undefined) {

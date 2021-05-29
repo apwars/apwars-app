@@ -2,6 +2,8 @@ import Vue from "vue";
 import Router from "vue-router";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import Items from "@/pages/Items.vue";
+import CreateOrders from "@/pages/Market/CreateOrders.vue";
+import ListItems from "@/pages/ListItems.vue";
 import MyItems from "@/pages/MyItems.vue";
 import WarStats from "@/pages/WarStats.vue";
 import Wars from "@/pages/Wars.vue";
@@ -9,6 +11,7 @@ import Enlistment from "@/pages/Wars/Enlistment.vue";
 import Round1 from "@/pages/Wars/Round1.vue";
 import Round2 from "@/pages/Wars/Round2.vue";
 import WarReport from "@/pages/Wars/WarReport.vue";
+import BlackMarket from "@/pages/BlackMarket.vue";
 
 Vue.use(Router);
 
@@ -22,6 +25,21 @@ export const routes = [
         path: "/",
         name: "/",
         component: Items,
+      },
+      {
+        path: "/create-order/:nftId/:type",
+        name: "/create-order",
+        component: CreateOrders,
+      },
+      {
+        path: "/game-items",
+        name: "/game-items",
+        component: ListItems,
+      },
+      {
+        path: "/black-market",
+        name: "/black-market",
+        component: BlackMarket,
       },
       {
         path: "/collection",

@@ -112,8 +112,16 @@ export default {
       drawer: null,
       menu: [
         {
-          title: "Game Items",
+          title: "Market",
           href: "/",
+        },
+        {
+          title: "Game Items",
+          href: "/game-items",
+        },
+        {
+          title: "Black Market",
+          href: "/black-market",
         },
         {
           title: "War Stats",
