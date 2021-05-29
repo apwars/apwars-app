@@ -106,7 +106,7 @@ export default {
   width: 160px;
 }
 .btn-x-small .label{
-  font-size: 12px;
+  font-size: 10px;
 }
 .btn-small .label {
   font-size: 16px;
