@@ -8,7 +8,7 @@
       />
       <v-row class="my-1">
         <v-col cols="12" class="d-flex justify-space-between">
-          <game-title class="align-self-center">My Collection</game-title>
+          <game-title class="align-self-center">Inventory</game-title>
           <square-button
             label="See all items"
             icon="mdi-format-list-bulleted"

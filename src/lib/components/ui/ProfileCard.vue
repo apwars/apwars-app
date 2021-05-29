@@ -33,7 +33,7 @@
         <v-layout justify-center align-center>
           <v-flex shrink class="text-center">
             <div class="title">
-              My Collection
+              Inventory
             </div>
             <div class="value">
               {{ collection }}
