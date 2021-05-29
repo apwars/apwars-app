@@ -1,116 +1,63 @@
 <template>
-  <div class="text-center">
-    <v-dialog persistent :value="open" width="650px">
-      <v-card v-if="open">
-        <v-col class="d-flex justify-center align-center">
-          <v-img
-            v-if="$vuetify.breakpoint.mdAndUp"
-            contain
-            src="/images/battle/modal.png"
-            :max-width="650"
-            class="align-center justify-center"
-          >
-            <v-col :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
-              <v-col cols="12" lg="4" md="4" sm="12">
-                <div class="text-center">
-                  <v-img
-                    class=""
-                    max-width="250"
-                    :src="nftCollectible.nft.image"
-                  ></v-img>
-                </div>
-              </v-col>
-              <v-col cols="12" lg="8" md="8" sm="12">
-                <div class="ml-n4">
-                  <h3>Confirm your purchase</h3>
-                  <game-text-h2>{{ nftCollectible.nft.title }}</game-text-h2>
-                  <h4>
-                    You will pay
-                    <amount
-                      class="align-self-center"
-                      :amount="nftCollectible.totalAmount"
-                      decimals="2"
-                      approximate
-                      tooltip
-                    />
-                    wGold for this Game Item.
-                  </h4>
-                </div>
-                <div class="d-flex mt-5 ml-n4">
-                  <w-button class="mr-2" size="small" @click="$emit('close')">
-                    Close
-                  </w-button>
-                  <w-button
-                    v-if="!isApproved"
-                    size="small"
-                    @click="approve(type)"
-                  >
-                    {{ isApprovedLoading ? "Approving..." : "Approve" }}
-                  </w-button>
-                  <w-button v-else size="small" @click="$emit('confirm')" :disabled="isLoading">
-                    {{ isLoading ? "Awaiting..." : "Confirm" }}
-                  </w-button>
-                </div>
-              </v-col>
-            </v-col>
-          </v-img>
-          <v-col
-            v-else
-            :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
-            style="background-color: black"
-          >
-            <v-col cols="12" lg="4" md="4" sm="12">
-              <div class="text-center">
-                <v-img
-                  class=""
-                  max-width="250"
-                  :src="nftCollectible.nft.image"
-                ></v-img>
-                <game-text-h-4>{{ nftCollectible.nft.title }}</game-text-h-4>
-              </div>
-            </v-col>
-            <v-col cols="12" lg="8" md="8" sm="12">
-              <div class="ml-n4">
-                <h4>Confirm your purchase</h4>
-                <h5 class="mt-1">
-                  You will pay
-                  <amount
-                    class="align-self-center"
-                    :amount="nftCollectible.totalAmount"
-                    decimals="2"
-                    approximate
-                    tooltip
-                  />
-                  wGold for this nft.
-                </h5>
-              </div>
-              <div class="d-flex mt-2">
-                <v-img
-                  class="mx-auto align-center text-center ml-2"
-                  max-width="100"
-                  src="/images/buttons/btn-default.png"
-                  @click="dialog = false"
-                  style="font-size: 12px"
-                >
-                  Approve
-                </v-img>
+  <v-dialog content-class="confirmOrder" persistent :value="open" width="650px">
+    <v-card v-if="open">
+      <v-card-title class="justify-center my-3">
+        <h3>Confirm your purchase</h3>
+      </v-card-title>
 
-                <v-img
-                  class="mx-auto align-center text-center"
-                  max-width="100"
-                  src="/images/buttons/btn-default.png"
-                  @click="dialog = false"
-                  style="font-size: 12px"
-                >
-                  Cancel
-                </v-img>
-              </div>
-            </v-col>
+      <v-card-text>
+        <v-row dense>
+          <v-col dense cols="3">
+            <div class="text-center">
+              <v-img
+                class="d-flex"
+                width="100%"
+                :src="nftCollectible.nft.image"
+              ></v-img>
+            </div>
           </v-col>
-        </v-col>
-      </v-card>
-    </v-dialog>
-  </div>
+
+          <v-col dense cols="9">
+            <div>
+              <game-text-h2>{{ nftCollectible.nft.title }}</game-text-h2>
+              <h4>
+                You will pay
+                <amount
+                  class="align-self-center"
+                  :amount="nftCollectible.totalAmount"
+                  decimals="2"
+                  approximate
+                  tooltip
+                />
+                wGold for this Game Item.
+              </h4>
+            </div>
+            <v-alert class="my-2" outlined type="warning" border="left" dense>
+              You do not have wGOLD to execute this order
+            </v-alert>
+          </v-col>
+        </v-row>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <w-button class="mr-2" size="small" @click="$emit('close')">
+          Close
+        </w-button>
+        <w-button v-if="!isApproved" size="small" @click="approve(type)">
+          {{ isApprovedLoading ? "Approving..." : "Approve" }}
+        </w-button>
+        <w-button
+          v-else
+          size="small"
+          @click="$emit('confirm')"
+          :disabled="isLoading"
+        >
+          {{ isLoading ? "Awaiting..." : "Confirm" }}
+        </w-button>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -242,74 +189,36 @@ export default {
 <style scoped>
 .theme--dark.v-card {
   background-color: transparent !important;
+  background: url("/images/battle/modal.png");
   background-size: 100%;
   background-repeat: no-repeat;
   padding: 15px;
+  height: 450px;
 }
 
-.v-card__title {
-  color: #765e55;
-  font-size: 15x !important;
-  font-weight: bold !important;
+.v-card__text {
+  height: 240px;
 }
 
-.content {
-  color: #201813;
-}
+@media only screen and (max-width: 650px) {
+  .theme--dark.v-card {
+    background-color: #000 !important;
+    background-image: url("/images/battle/bg-wars.png");
+    background-repeat: repeat;
+    padding: 15px 0px;
+    height: auto !important;
+  }
 
-.btn {
-  cursor: pointer;
-  width: 150px;
-  float: right;
+  .v-card__text {
+    height: auto !important;
+  }
 }
+</style>
 
-.card-title-modal {
-  font-weight: bold !important;
-  font-size: 38px !important;
-  background: -webkit-linear-gradient(#ff0000, #bd0000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.stake-modal-input >>> .v-input__control > .v-input__slot fieldset {
-  color: #a47a6a !important;
-  border-width: 3px !important;
-  border-radius: 18px !important;
-}
-
-.stake-modal-input >>> .v-label {
-  transform-origin: top left !important;
-  font-weight: bold !important;
-  color: #32211b !important;
-}
-
-.stake-modal-input >>> .v-input__append-inner {
-  color: #32211b !important;
-  font-weight: bold !important;
-  font-size: 13px;
-}
-
-.stake-modal-input >>> .v-icon {
-  color: #32211c !important;
-}
-
-.stake-modal-input.v-input--is-disabled {
-  opacity: 0.2;
-}
-
-.stake-modal-input >>> input {
-  color: #32211c;
-  font-weight: bold;
-}
-
-.stake-modal-input >>> .v-messages__message {
-  font-size: 14px;
-  color: #32211c;
-  font-weight: bold;
-}
-
-.skull-flip {
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
+<style>
+@media only screen and (max-width: 650px) {
+  .confirmOrder {
+    margin: 10px !important;
+  }
 }
 </style>
