@@ -55,7 +55,12 @@
         </div>
       </template>
       <template v-slot:[`item.action`]="{ item }">
-        <wButton class="mx-auto" size="small" @click="openModal(item)">
+        <wButton
+          :style="`width: ${btnActionWidth}`"
+          class="mx-auto my-2"
+          size="small"
+          @click="openModal(item)"
+        >
           <div class="d-flex justify-center">
             <img
               :src="
@@ -137,6 +142,7 @@ export default {
         { text: "Price/Unit", value: "amount" },
         { text: "", value: "action" },
       ],
+      btnActionWidth: "100%",
     };
   },
 
@@ -193,9 +199,7 @@ export default {
 
   methods: {
     initData() {
-      this.collectibleContract = new Collectibles(
-        this.addresses.collectibles
-      );
+      this.collectibleContract = new Collectibles(this.addresses.collectibles);
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
@@ -216,6 +220,11 @@ export default {
         this.loadingText = "Sorry, an error occurred";
       } finally {
         this.isLoading = false;
+        this.$nextTick(() => {
+          this.btnActionWidth = `${document.querySelector(
+            ".v-data-table__mobile-row"
+          ).offsetWidth - 50}px`;
+        });
       }
     },
     getSizeIcon(icon) {
