@@ -151,11 +151,12 @@ export default {
         {
           text: "Player",
           value: "sender",
+          width: "20%"
         },
-        { text: "Game Item", value: "nft.title" },
-        { text: "Type", value: "nft.typeDesc" },
-        { text: "Price/Unit", value: "amountFormatted" },
-        { text: "", value: "action", sortable: false },
+        { text: "Game Item", value: "nft.title", width: "30%" },
+        { text: "Type", value: "nft.typeDesc", width: "15%" },
+        { text: "Price/Unit", value: "amountFormatted",  width: "15%" },
+        { text: "", value: "action", sortable: false,  width: "20%" },
       ],
       btnActionWidth: "100%",
     };
@@ -239,7 +240,7 @@ export default {
       } finally {
         this.isLoading = false;
         this.$nextTick(() => {
-          if (document.querySelector(".v-data-table__mobile-row")) {
+          if (document.querySelector(".v-data-table__mobile-row") !== null) {
             this.btnActionWidth = `${document.querySelector(
               ".v-data-table__mobile-row"
             ).offsetWidth - 50}px`;
