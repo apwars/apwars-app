@@ -70,6 +70,7 @@ export default {
 @media only screen and (max-width: 650px) {
   .wood {
     margin: 5px !important;
+    border: 2px solid #ffb800;
   }
 }
 </style>
