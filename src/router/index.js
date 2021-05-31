@@ -37,8 +37,8 @@ export const routes = [
         component: ListItems,
       },
       {
-        path: "/collection",
-        name: "/collection",
+        path: "/inventory",
+        name: "/inventory",
         component: MyItems,
       },
       {

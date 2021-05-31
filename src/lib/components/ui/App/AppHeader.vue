@@ -128,8 +128,8 @@ export default {
           href: "/wars",
         },
         {
-          title: "My Collection",
-          href: "/collection",
+          title: "Inventory",
+          href: "/inventory",
         },
         {
           title: "Buy wGOLD",
