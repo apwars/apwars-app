@@ -126,7 +126,7 @@
                   "
                 >
                   <p class="mt-n2">
-                    {{ totalAmountDescription }}
+                    {{ totalAmountDescription }} for this item
                   </p>
                   <p class="d-flex">
                     <v-img
@@ -290,7 +290,7 @@ export default {
         return "Total price for transaction";
       }
 
-      return "Total to be received from the buyer";
+      return "The buyer will pay";
     },
 
     hintLabel() {
