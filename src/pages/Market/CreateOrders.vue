@@ -75,9 +75,9 @@
             <v-row class="d-block mt-4">
               <div cols="12" sm="12" md="12">
                 <p v-if="isBuy">
-                  How many wGOLD do you want to pay for this item:
+                  How many wGOLD do you want to pay for this item?
                 </p>
-                <p v-else>How many wGOLD do you want for this item:</p>
+                <p v-else>How many wGOLD do you want for this item?</p>
                 <v-currency-field
                   class="mb-2"
                   outlined
