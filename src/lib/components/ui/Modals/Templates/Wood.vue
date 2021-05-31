@@ -1,5 +1,5 @@
 <template>
-  <v-dialog content-class="Wood" persistent :value="open" width="650px">
+  <v-dialog content-class="wood" persistent :value="open" width="650px">
     <v-card v-if="open">
       <v-card-title class="my-2">
         <h3>{{ title }}</h3>
@@ -11,7 +11,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <w-button class="mr-2" size="small" @click="$emit('close')">
+        <w-button class="mr-1" size="small" @click="$emit('close')">
           Close
         </w-button>
         <w-button
@@ -68,8 +68,8 @@ export default {
 
 <style>
 @media only screen and (max-width: 650px) {
-  .Wood {
-    margin: 10px !important;
+  .wood {
+    margin: 5px !important;
   }
 }
 </style>

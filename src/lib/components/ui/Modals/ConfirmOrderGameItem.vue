@@ -1,5 +1,6 @@
 <template>
   <modal-wood
+    v-if="open"
     :open="open"
     :isLoading="isLoading"
     :disabledConfirm="isLoading || !isBalanceItem"
@@ -163,39 +164,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.theme--dark.v-card {
-  background-color: transparent !important;
-  background: url("/images/battle/modal.png");
-  background-size: 100%;
-  background-repeat: no-repeat;
-  padding: 15px;
-  height: 450px;
-}
-
-.v-card__text {
-  height: 245px;
-}
-
-@media only screen and (max-width: 650px) {
-  .theme--dark.v-card {
-    background-color: #000 !important;
-    background-image: url("/images/battle/bg-wars.png");
-    background-repeat: repeat;
-    padding: 15px 0px;
-    height: auto !important;
-  }
-
-  .v-card__text {
-    height: auto !important;
-  }
-}
-</style>
-
-<style>
-@media only screen and (max-width: 650px) {
-  .confirmOrder {
-    margin: 10px !important;
-  }
-}
-</style>
