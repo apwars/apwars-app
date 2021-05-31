@@ -79,8 +79,8 @@
       :nftCollectible="nftCollectible"
       :type="nftCollectible.orderTypeDesc"
       :isLoading="isLoadingConfirm"
-      @confirm="executeOrder"
-      @close="openConfirmOrderGameItem = false"
+      @close="executeOrder"
+      @cancel="openConfirmOrderGameItem = false"
     >
     </confirm-order-game-item>
 

@@ -240,7 +240,7 @@
         <v-container>
           <v-row class="my-9">
             <v-col cols="12" class="d-flex justify-center my-9">
-              <h3 class="text-h3 text-wGOLD text-center">Awaiting result...</h3>
+              <h3 class="text-h3 text-wGOLD text-center">Waiting result...</h3>
             </v-col>
           </v-row>
         </v-container>
