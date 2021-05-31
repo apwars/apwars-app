@@ -42,11 +42,7 @@
         </v-col>
       </v-row>
       <v-col
-        :style="
-          $vuetify.breakpoint.mdAndUp
-            ? 'border-color: #966A3C; border-style: solid; border-width: 2px'
-            : 'border-color: #966A3C; border-style: solid; border-width: 2px'
-        "
+        style="border-color: #966A3C; border-style: solid; border-width: 2px;"
       >
         <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
           <v-col cols="12" lg="3" md="3" sm="12">
@@ -64,7 +60,7 @@
                 "
                 class="remaining"
               >
-                Your have: {{ userAmount }} units
+                You have: {{ userAmount }} units
               </p>
             </div>
           </v-col>
@@ -75,9 +71,9 @@
             <v-row class="d-block mt-4">
               <div cols="12" sm="12" md="12">
                 <p v-if="isBuy">
-                  How many wGOLD do you want to pay for this item:
+                  How many wGOLD do you want to pay for this item?
                 </p>
-                <p v-else>How many wGOLD do you want for this item:</p>
+                <p v-else>How many wGOLD do you want for this item?</p>
                 <v-currency-field
                   class="mb-2"
                   outlined
@@ -126,7 +122,7 @@
                   "
                 >
                   <p class="mt-n2">
-                    {{ totalAmountDescription }}
+                    {{ totalAmountDescription }} for this item
                   </p>
                   <p class="d-flex">
                     <v-img
@@ -146,7 +142,7 @@
             </v-row>
             <v-row class="d-flex justify-end">
               <wButton class="mr-2" size="small" @click="$router.back()">
-                Cancel
+                Go Back
               </wButton>
               <wButton
                 v-if="isBuy"
@@ -291,14 +287,14 @@ export default {
         return "Total price for transaction";
       }
 
-      return "Total to be received from the buyer";
+      return "The buyer will pay";
     },
 
     hintLabel() {
       if (!this.amountwGOLD) {
         return `Available: Loading...`;
       }
-      const label = this.isBuy ? "wGOLD" : this.nftCollectible.title;
+      const label = this.isBuy ? "wGOLD" : "";
       const available = this.isBuy
         ? Convert.formatString(this.amountwGOLD)
         : `${this.userAmount} units`;

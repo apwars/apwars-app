@@ -24,7 +24,7 @@ export const routes = [
       {
         path: "/",
         name: "/",
-        component: Items,
+        component: BlackMarket,
       },
       {
         path: "/game-items/:nftId/:type-orders/new",
@@ -37,13 +37,8 @@ export const routes = [
         component: ListItems,
       },
       {
-        path: "/black-market",
-        name: "/black-market",
-        component: BlackMarket,
-      },
-      {
-        path: "/collection",
-        name: "/collection",
+        path: "/inventory",
+        name: "/inventory",
         component: MyItems,
       },
       {
