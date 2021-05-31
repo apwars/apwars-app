@@ -140,7 +140,7 @@
                 </div>
               </div>
             </v-row>
-            <v-row class="d-flex justify-end">
+            <div class="d-flex justify-end">
               <wButton class="mr-2" size="small" @click="$router.back()">
                 Go Back
               </wButton>
@@ -160,7 +160,7 @@
               >
                 Sell
               </wButton>
-            </v-row>
+            </div>
             <v-row class="d-flex justify-end">
               <v-alert
                 v-if="amount > amountwGOLD && buyOrSell === 'buy'"
