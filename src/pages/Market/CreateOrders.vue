@@ -96,7 +96,7 @@
             <v-row
               :class="$vuetify.breakpoint.mdAndUp ? 'd-flex justify-end' : 'd-flex justify-center'"
             >
-              <wButton size="small" @click="$router.back()">
+              <wButton class="mb-2 mb-md-0 mr-2" size="small" @click="$router.back()">
                 Go Back
               </wButton>
               <wButton v-if="isBuy" size="small" @click="openModal()" :disabled="disabledBuy">
