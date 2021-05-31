@@ -146,7 +146,7 @@
             </v-row>
             <v-row class="d-flex justify-end">
               <wButton class="mr-2" size="small" @click="$router.back()">
-                Cancel
+                Go Back
               </wButton>
               <wButton
                 v-if="isBuy"
