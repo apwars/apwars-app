@@ -42,11 +42,7 @@
         </v-col>
       </v-row>
       <v-col
-        :style="
-          $vuetify.breakpoint.mdAndUp
-            ? 'border-color: #966A3C; border-style: solid; border-width: 2px'
-            : 'border-color: #966A3C; border-style: solid; border-width: 2px'
-        "
+        style="border-color: #966A3C; border-style: solid; border-width: 2px;"
       >
         <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
           <v-col cols="12" lg="3" md="3" sm="12">
