@@ -9,8 +9,6 @@
         label="Search"
         single-line
         hide-details
-        :loading="isLoading"
-        :loading-text="loadingText"
       ></v-text-field>
     </v-card-title>
     <v-data-table
@@ -20,6 +18,8 @@
       :search="search"
       :items-per-page="itemsPerPage"
       :server-items-length="totalItems"
+      :loading="isLoading"
+      :loading-text="loadingText"
       @update:page="loadData"
     >
       <template v-slot:[`item.sender`]="{ item }">
