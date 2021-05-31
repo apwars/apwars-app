@@ -21,6 +21,19 @@
       :loading-text="loadingText"
       @update:page="loadData"
     >
+      <template v-slot:no-results>
+        <div>
+          <div class="my-3">No matching records found</div>
+          <wButton class="my-3" size="x-small" @click="createOrder()">
+            <img
+              :src="`/images/buttons/btn-icon-${typeOrder}.svg`"
+              class="mx-1 align-self-center"
+              :height="getSizeIcon(type)"
+            />
+            Create {{ typeOrder === "buy" ? "Buy" : "Sell" }} Order
+          </wButton>
+        </div>
+      </template>
       <template v-slot:[`item.sender`]="{ item }">
         <v-address :address="item.sender" link tooltip></v-address>
       </template>
@@ -181,6 +194,9 @@ export default {
         }
       });
     },
+    typeOrder() {
+      return this.type === "buy" ? "sell" : "buy";
+    },
     typeEnum() {
       return this.type === "buy" ? "0" : "1";
     },
@@ -206,7 +222,6 @@ export default {
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
-
     async loadData(page) {
       try {
         page = page || 1;
@@ -328,6 +343,12 @@ export default {
       });
 
       return;
+    },
+    createOrder() {
+      if (this.type === "sell") {
+        return this.$router.push("/game-items");
+      }
+      return this.$router.push("/inventory");
     },
   },
 };
