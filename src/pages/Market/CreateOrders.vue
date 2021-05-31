@@ -7,57 +7,31 @@
       <v-row>
         <v-col
           cols="12"
-          :class="
-            $vuetify.breakpoint.mdAndUp
-              ? ''
-              : 'd-flex justify-center text-center'
-          "
+          :class="$vuetify.breakpoint.mdAndUp ? '' : 'd-flex justify-center text-center'"
         >
           <game-title v-if="isBuy">
             <h1 v-if="!$vuetify.breakpoint.mdAndUp">Buy a Game Item</h1>
             <h3 v-else>Buy a Game Item</h3>
-            <p
-              :style="
-                $vuetify.breakpoint.mdAndUp
-                  ? 'font-size: 14px'
-                  : 'font-size: 18px'
-              "
-            >
+            <p :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'">
               Create a purchase order
             </p>
           </game-title>
           <game-title v-else class="d-block">
             <h1 v-if="!$vuetify.breakpoint.mdAndUp">Sell your Game Item</h1>
             <h3 v-else>Sell your Game Item</h3>
-            <p
-              :style="
-                $vuetify.breakpoint.mdAndUp
-                  ? 'font-size: 14px'
-                  : 'font-size: 18px'
-              "
-            >
+            <p :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'">
               Create a sales order
             </p>
           </game-title>
         </v-col>
       </v-row>
-      <v-col
-        style="border-color: #966A3C; border-style: solid; border-width: 2px;"
-      >
+      <v-col style="border-color: #966A3C; border-style: solid; border-width: 2px;">
         <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
           <v-col cols="12" lg="3" md="3" sm="12">
-            <v-img
-              class="mx-auto"
-              max-width="200"
-              :src="nftCollectible.image"
-            />
+            <v-img class="mx-auto" max-width="200" :src="nftCollectible.image" />
             <div class="text-center">
               <p
-                :style="
-                  $vuetify.breakpoint.mdAndUp
-                    ? 'font-size: 14px'
-                    : 'font-size: 18px'
-                "
+                :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'"
                 class="remaining"
               >
                 You have: {{ userAmount }} units
@@ -92,75 +66,46 @@
                 </v-currency-field>
                 <div
                   :class="
-                    $vuetify.breakpoint.mdAndUp
-                      ? 'd-flex align-center'
-                      : 'text-center'
+                    $vuetify.breakpoint.mdAndUp ? 'd-flex' : 'd-block justify-center text-center'
                   "
                 >
-                  <p class="mt-n2">
-                    This transaction has a fee of
-                  </p>
-                  <p class="d-flex">
-                    <v-img
-                      width="35"
-                      max-width="30"
-                      src="/images/wgolds.png"
-                      class="mb-1 ml-1"
-                    ></v-img>
-                    <amount
-                      class="mr-1"
-                      :amount="amountInfo.feeAmount"
-                      :decimals="2"
-                    />wGOLD
-                  </p>
-                </div>
-                <div
-                  :class="
-                    $vuetify.breakpoint.mdAndUp
-                      ? 'd-flex align-center mt-n1'
-                      : 'text-center'
-                  "
-                >
-                  <p class="mt-n2">
-                    {{ totalAmountDescription }} for this item
-                  </p>
-                  <p class="d-flex">
-                    <v-img
-                      width="35"
-                      max-width="30"
-                      src="/images/wgolds.png"
-                      class="mb-1 ml-1"
-                    ></v-img>
-                    <amount
-                      class="mr-1"
-                      :amount="amountInfo.totalAmount"
-                      :decimals="2"
-                    />wGOLD
-                  </p>
+                  <p>{{ totalAmountDescription }} for this item: </p>
+                  <div
+                    :class="
+                      $vuetify.breakpoint.mdAndUp ? 'd-flex' : 'd-flex justify-center text-center'
+                    "
+                  >
+                    <img
+                      src="/images/wgold.png"
+                      :class="$vuetify.breakpoint.mdAndUp ? 'ml-1' : ''"
+                      height="25px"
+                      alt="wGOLD"
+                    />
+                    <p>
+                      <amount
+                        class="align-self-center"
+                        :amount="amountInfo.totalAmount"
+                        decimals="2"
+                        tooltip
+                      />wGOLD
+                    </p>
+                  </div>
                 </div>
               </div>
             </v-row>
-            <div class="d-flex justify-end">
-              <wButton class="mr-2" size="small" @click="$router.back()">
+            <v-row
+              :class="$vuetify.breakpoint.mdAndUp ? 'd-flex justify-end' : 'd-flex justify-center'"
+            >
+              <wButton class="mb-2 mb-md-0 mr-2" size="small" @click="$router.back()">
                 Go Back
               </wButton>
-              <wButton
-                v-if="isBuy"
-                size="small"
-                @click="openModal()"
-                :disabled="disabledBuy"
-              >
+              <wButton v-if="isBuy" size="small" @click="openModal()" :disabled="disabledBuy">
                 Buy
               </wButton>
-              <wButton
-                v-else
-                size="small"
-                @click="openModal()"
-                :disabled="disabledSell"
-              >
+              <wButton v-else size="small" @click="openModal()" :disabled="disabledSell">
                 Sell
               </wButton>
-            </div>
+            </v-row>
             <v-row class="d-flex justify-end">
               <v-alert
                 v-if="amount > amountwGOLD && buyOrSell === 'buy'"
@@ -197,20 +142,20 @@
 </template>
 
 <script>
-import GameTitle from "@/lib/components/ui/Utils/GameTitle";
-import GameTextH1 from "@/lib/components/ui/Utils/GameTextH1";
-import wButton from "@/lib/components/ui/Utils/wButton";
-import Amount from "@/lib/components/ui/Utils/Amount";
-import Collectibles from "@/lib/eth/Collectibles";
-import MarketNFTS from "@/lib/eth/MarketNFTS";
-import wGOLD from "@/lib/eth/wGOLD";
-import ToastSnackbar from "@/plugins/ToastSnackbar";
-import Convert from "@/lib/helpers/Convert";
+import GameTitle from '@/lib/components/ui/Utils/GameTitle';
+import GameTextH1 from '@/lib/components/ui/Utils/GameTextH1';
+import wButton from '@/lib/components/ui/Utils/wButton';
+import Collectibles from '@/lib/eth/Collectibles';
+import MarketNFTS from '@/lib/eth/MarketNFTS';
+import wGOLD from '@/lib/eth/wGOLD';
+import ToastSnackbar from '@/plugins/ToastSnackbar';
+import Convert from '@/lib/helpers/Convert';
+import Amount from '@/lib/components/ui/Utils/Amount';
 
-import MarketModal from "@/lib/components/ui/Modals/MarketModal";
-import RaskelModal from "@/lib/components/ui/Modals/RaskelModal";
-import ItemPrice from "@/lib/components/ui/Utils/ItemPrice";
-import { getCollectibles } from "@/data/Collectibles";
+import MarketModal from '@/lib/components/ui/Modals/MarketModal';
+import RaskelModal from '@/lib/components/ui/Modals/RaskelModal';
+import ItemPrice from '@/lib/components/ui/Utils/ItemPrice';
+import { getCollectibles } from '@/data/Collectibles';
 
 export default {
   components: {
@@ -219,8 +164,8 @@ export default {
     MarketModal,
     ItemPrice,
     RaskelModal,
-    Amount,
     wButton,
+    Amount,
   },
   data() {
     return {
@@ -235,9 +180,9 @@ export default {
       nftId: this.$route.params.nftId,
       loading: true,
       currencyConfig: {
-        locale: "en-US",
-        prefix: "",
-        suffix: "",
+        locale: 'en-US',
+        prefix: '',
+        suffix: '',
         decimalLength: 2,
         autoDecimalMode: true,
         allowNegative: false,
@@ -256,45 +201,45 @@ export default {
 
   computed: {
     isConnected() {
-      return this.$store.getters["user/isConnected"];
+      return this.$store.getters['user/isConnected'];
     },
 
     account() {
-      return this.$store.getters["user/account"];
+      return this.$store.getters['user/account'];
     },
 
     addresses() {
-      return this.$store.getters["user/addresses"];
+      return this.$store.getters['user/addresses'];
     },
 
     currentBlockNumber() {
-      return this.$store.getters["user/currentBlockNumber"];
+      return this.$store.getters['user/currentBlockNumber'];
     },
 
     nftCollectible() {
       const nft = getCollectibles().find(
-        (collectible) => collectible.id.toString() === this.nftId.toString()
+        collectible => collectible.id.toString() === this.nftId.toString()
       );
-      return nft !== undefined ? nft : { status: "Notfound" };
+      return nft !== undefined ? nft : { status: 'Notfound' };
     },
 
     isBuy() {
-      return this.buyOrSell === "buy";
+      return this.buyOrSell === 'buy';
     },
 
     totalAmountDescription() {
       if (this.isBuy) {
-        return "Total price for transaction";
+        return 'Total price for transaction';
       }
 
-      return "The buyer will pay";
+      return 'The buyer will pay';
     },
 
     hintLabel() {
       if (!this.amountwGOLD) {
         return `Available: Loading...`;
       }
-      const label = this.isBuy ? "wGOLD" : "";
+      const label = this.isBuy ? 'wGOLD' : '';
       const available = this.isBuy
         ? Convert.formatString(this.amountwGOLD)
         : `${this.userAmount} units`;
@@ -302,11 +247,7 @@ export default {
     },
 
     disabledBuy() {
-      return (
-        this.amount === 0 ||
-        this.amountwGOLD === 0 ||
-        this.amountwGOLD < this.amount
-      );
+      return this.amount === 0 || this.amountwGOLD === 0 || this.amountwGOLD < this.amount;
     },
 
     disabledSell() {
@@ -343,12 +284,10 @@ export default {
       if (!this.isConnected) {
         return;
       }
-      this.collectible = getCollectibles().find((item) => {
+      this.collectible = getCollectibles().find(item => {
         return item.id.toString() === this.nftId.toString();
       });
-      this.collectibleContract = new Collectibles(
-        this.collectible.contractAddress
-      );
+      this.collectibleContract = new Collectibles(this.collectible.contractAddress);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
     },
@@ -359,14 +298,9 @@ export default {
       }
 
       this.raskel = !(await this.isApprovedContract(this.buyOrSell));
-      this.userAmount = await this.collectibleContract.balanceOf(
-        this.account,
-        this.nftId
-      );
+      this.userAmount = await this.collectibleContract.balanceOf(this.account, this.nftId);
       this.fee = await this.marketNFTS.getSwapFeeRate();
-      this.amountwGOLD = Convert.fromWei(
-        await this.wGOLDContract.balanceOf(this.account)
-      );
+      this.amountwGOLD = Convert.fromWei(await this.wGOLDContract.balanceOf(this.account));
     },
 
     async getSwapFeeRate() {
@@ -386,10 +320,7 @@ export default {
           );
         },
         buy: async () => {
-          return await this.wGOLDContract.hasAllowance(
-            this.account,
-            this.addresses.marketNFTS
-          );
+          return await this.wGOLDContract.hasAllowance(this.account, this.addresses.marketNFTS);
         },
       };
       return listApproved[type]();
@@ -404,37 +335,30 @@ export default {
           );
         },
         buy: () => {
-          return this.wGOLDContract.approve(
-            this.account,
-            this.addresses.marketNFTS
-          );
+          return this.wGOLDContract.approve(this.account, this.addresses.marketNFTS);
         },
       };
       const confirmTransaction = listApproved[type]();
       this.isLoadingRaskel = true;
 
       confirmTransaction.then(() => {
-        ToastSnackbar.info(
-          "Is waiting for your approval Raskel - The Traveler"
-        );
+        ToastSnackbar.info('Is waiting for your approval Raskel - The Traveler');
       });
 
-      confirmTransaction.on("error", (error) => {
+      confirmTransaction.on('error', error => {
         this.isLoadingRaskel = false;
         if (error.message) {
           return ToastSnackbar.error(error.message);
         }
         return ToastSnackbar.error(
-          "An error has occurred while granting access to Raskel - The Traveller"
+          'An error has occurred while granting access to Raskel - The Traveller'
         );
       });
 
-      confirmTransaction.on("receipt", async () => {
+      confirmTransaction.on('receipt', async () => {
         this.isLoadingRaskel = false;
         this.raskel = false;
-        ToastSnackbar.success(
-          "You have granted access to Raskel - The Traveler"
-        );
+        ToastSnackbar.success('You have granted access to Raskel - The Traveler');
       });
 
       return;
@@ -443,7 +367,7 @@ export default {
     async calcFee() {
       if (this.amount === null) {
         this.amountInfo = await this.marketNFTS.getOrderAmountInfo(0);
-        this.amountInfo.amount = "0";
+        this.amountInfo.amount = '0';
         return;
       }
       this.amountInfo = await this.marketNFTS.getOrderAmountInfo(this.amount);
@@ -452,7 +376,7 @@ export default {
     async createOrder() {
       this.isLoadingMarket = true;
       const confirmTransaction = this.marketNFTS.createOrder(
-        this.buyOrSell === "buy" ? "0" : "1",
+        this.buyOrSell === 'buy' ? '0' : '1',
         this.collectible.contractAddress,
         this.collectible.id,
         this.addresses.wGOLD,
@@ -467,23 +391,21 @@ export default {
         ToastSnackbar.info(`Waiting confirmation Raskel - The Traveler`);
       });
 
-      confirmTransaction.on("error", (error) => {
+      confirmTransaction.on('error', error => {
         this.isLoadingMarket = false;
 
         if (error.message) {
           return ToastSnackbar.error(error.message);
         }
         return ToastSnackbar.error(
-          "An error has occurred while error creating an order Raskel - The Traveller"
+          'An error has occurred while error creating an order Raskel - The Traveller'
         );
       });
 
-      confirmTransaction.on("receipt", async () => {
+      confirmTransaction.on('receipt', async () => {
         this.openConfirmOrderGameItem = false;
         this.isLoadingMarket = false;
-        ToastSnackbar.success(
-          "Order successfully created Raskel - The Traveler"
-        );
+        ToastSnackbar.success('Order successfully created Raskel - The Traveler');
       });
     },
   },

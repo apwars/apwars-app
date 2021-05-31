@@ -47,11 +47,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import wButton from "@/lib/components/ui/Utils/wButton";
 import GameTextH2 from "@/lib/components/ui/Utils/GameTextH2";
 import GameTextH4 from "@/lib/components/ui/Utils/GameTextH4";
-import ToastSnackbar from "@/plugins/ToastSnackbar";
 import ModalWood from "@/lib/components/ui/Modals/Templates/Wood";
-
-import Collectibles from "@/lib/eth/Collectibles";
-import wGOLD from "@/lib/eth/wGOLD";
 
 export default {
   props: ["open", "nftCollectible", "amountInfo", "type", "isLoading"],

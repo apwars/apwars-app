@@ -16,10 +16,10 @@
             </v-col>
             <v-col cols="9">
               <h2 class="ml-2">Raskel - The traveler</h2>
-              <h3 class="ml-2 mt-1">
+              <p class="ml-2 mt-1" style="font-size: 18px">
                 To create the purchase order, approval is required for the negotiator to find your
                 item!
-              </h3>
+              </p>
             </v-col>
           </v-row>
           <div class="d-flex justify-end" v-if="!hideOk">

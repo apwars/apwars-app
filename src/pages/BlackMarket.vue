@@ -5,7 +5,7 @@
         <div v-if="$vuetify.breakpoint.mdAndUp">
           <v-row class="d-flex">
             <v-col cols="12" md="6" class="align-self-center">
-              <h1 class="h1-black-market">Black Market</h1>
+              <h1 class="text-h1 text-wGOLD ">Black Market</h1>
 
               <p class="description-black-market">
                 The black market is something profitable and interesting for
