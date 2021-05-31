@@ -122,6 +122,7 @@ export default {
       marketNFTS: {},
       itemsPerPage: 10,
       totalItems: 0,
+      quantity: 1,
       isLoading: true,
       loadingText: "Loading... Please wait",
       search: "",
@@ -239,7 +240,7 @@ export default {
       const textType =
         this.nftCollectible.orderType === "1" ? "purchase" : "sale";
       this.marketNFTS
-        .executeOrder(this.nftCollectible.orderId, this.account)
+        .executeOrder(this.nftCollectible.orderId, this.quantity, this.account)
         .on("error", (error) => {
           this.isLoadingConfirm = false;
           if (error.message) {

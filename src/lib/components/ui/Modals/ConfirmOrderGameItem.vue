@@ -32,7 +32,7 @@
               </h4>
             </div>
             <v-alert
-              v-if="isBalanceItem"
+              v-if="!isBalanceItem"
               class="my-2"
               outlined
               type="warning"
@@ -54,7 +54,7 @@
           v-if="!isApproved"
           size="small"
           @click="approve(type)"
-          :disabled="isBalanceItem"
+          :disabled="!isBalanceItem"
         >
           {{ isApprovedLoading ? "Approving..." : "Approve" }}
         </w-button>
@@ -62,7 +62,7 @@
           v-else
           size="small"
           @click="$emit('confirm')"
-          :disabled="isLoading || isBalanceItem"
+          :disabled="isLoading || !isBalanceItem"
         >
           {{ isLoading ? "Awaiting..." : "Confirm" }}
         </w-button>
@@ -112,12 +112,15 @@ export default {
       return this.$store.getters["user/addresses"];
     },
     isBalanceItem() {
-      return this.balanceItem === "0"
-        ? true
-        : Convert.fromWei(this.nftCollectible.amountOrder) >
-          Convert.fromWei(this.balanceItem)
-        ? true
-        : false;
+      if (this.type === "buy") {
+        return this.balanceItem === "0" ||
+          Convert.fromWei(this.nftCollectible.amountOrder) >
+            Convert.fromWei(this.balanceItem)
+          ? false
+          : true;
+      }
+
+      return Convert.fromWei(this.balanceItem) >= 1;
     },
     titleOrder() {
       return this.type === "buy"
@@ -125,9 +128,7 @@ export default {
         : "Confirm your sale";
     },
     descriptionOrder() {
-      return this.type === "buy"
-        ? "You will pay"
-        : "You will receive";
+      return this.type === "buy" ? "You will pay" : "You will receive";
     },
   },
 

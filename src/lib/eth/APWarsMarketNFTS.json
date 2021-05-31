@@ -672,6 +672,11 @@
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_quantity",
+        "type": "uint256"
       }
     ],
     "name": "createOrder",
@@ -877,6 +882,11 @@
       {
         "internalType": "uint256",
         "name": "_orderId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_quantity",
         "type": "uint256"
       }
     ],
