@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-dialog persistent :value="open" width="650px">
+    <v-dialog persistent :value="open" width="650px" transparent>
       <v-card v-if="open">
         <v-col class="d-flex justify-center align-center">
           <v-img

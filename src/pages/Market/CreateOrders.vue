@@ -93,30 +93,6 @@
                 <div
                   :class="
                     $vuetify.breakpoint.mdAndUp
-                      ? 'd-flex align-center'
-                      : 'text-center'
-                  "
-                >
-                  <p class="mt-n2">
-                    This transaction has a fee of
-                  </p>
-                  <p class="d-flex">
-                    <v-img
-                      width="35"
-                      max-width="30"
-                      src="/images/wgolds.png"
-                      class="mb-1 ml-1"
-                    ></v-img>
-                    <amount
-                      class="mr-1"
-                      :amount="amountInfo.feeAmount"
-                      :decimals="2"
-                    />wGOLD
-                  </p>
-                </div>
-                <div
-                  :class="
-                    $vuetify.breakpoint.mdAndUp
                       ? 'd-flex align-center mt-n1'
                       : 'text-center'
                   "
