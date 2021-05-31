@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import Convert from "@/lib/helpers/Convert";
+
 export default {
   props: [
     "amount",
@@ -28,14 +30,15 @@ export default {
       let numberAmount = this.amount || "0";
       numberAmount = this.isFormatted
         ? numberAmount
-        : web3.utils.fromWei(numberAmount.toString());
+        : Convert.fromWei(numberAmount.toString());
       if (this.compact !== undefined) {
-        numberAmount = this.compactNumber(numberAmount, this.getDecimals);
+        numberAmount = Convert.compactNumber(numberAmount, this.getDecimals);
       } else {
-        numberAmount = this.roundDown(
-          parseFloat(numberAmount),
+        numberAmount = Convert.roundDown(
+          numberAmount,
           this.getDecimals
-        ).toLocaleString();
+        );
+        numberAmount = Convert.formatString(numberAmount, this.getDecimals);
       }
 
       if (this.approximate !== undefined) {
@@ -47,7 +50,7 @@ export default {
       let numberAmount = this.amount || "0";
       return this.isFormatted
         ? numberAmount
-        : web3.utils.fromWei(numberAmount.toString());
+        : Convert.fromWei(numberAmount.toString());
     },
     isTooltip() {
       return this.tooltip !== undefined;
@@ -57,25 +60,6 @@ export default {
     },
     isFormatted() {
       return this.formatted !== undefined;
-    },
-  },
-
-  methods: {
-    compactNumber(value, decimals) {
-      if (value < 1e3) return this.roundDown(value, decimals);
-      if (value >= 1e3 && value < 1e6)
-        return +this.roundDown(value / 1e3, decimals) + "K";
-      if (value >= 1e6 && value < 1e9)
-        return +this.roundDown(value / 1e6, decimals) + "M";
-      if (value >= 1e9 && value < 1e12)
-        return +this.roundDown(value / 1e9, decimals) + "B";
-      if (value >= 1e12) return +this.roundDown(value / 1e12, decimals) + "T";
-    },
-    roundDown(value, decimals) {
-      const setDecimals = Math.pow(10, decimals);
-      return parseFloat(Math.floor(value * setDecimals) / setDecimals).toFixed(
-        decimals
-      );
     },
   },
 };
