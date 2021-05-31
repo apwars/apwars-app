@@ -297,7 +297,7 @@ export default {
       if (!this.amountwGOLD) {
         return `Available: Loading...`;
       }
-      const label = this.isBuy ? "wGOLD" : this.nftCollectible.title;
+      const label = this.isBuy ? "wGOLD" : "";
       const available = this.isBuy
         ? Convert.formatString(this.amountwGOLD)
         : `${this.userAmount} units`;
