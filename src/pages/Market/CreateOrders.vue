@@ -64,7 +64,7 @@
                 "
                 class="remaining"
               >
-                Your have: {{ userAmount }} units
+                You have: {{ userAmount }} units
               </p>
             </div>
           </v-col>
