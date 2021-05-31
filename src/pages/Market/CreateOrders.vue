@@ -20,7 +20,7 @@
             <h1 v-if="!$vuetify.breakpoint.mdAndUp">Sell your Game Item</h1>
             <h3 v-else>Sell your Game Item</h3>
             <p :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'">
-              Create a sales order
+              Create a sale order
             </p>
           </game-title>
         </v-col>
