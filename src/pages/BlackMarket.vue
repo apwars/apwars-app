@@ -1,27 +1,54 @@
 <template>
   <div>
     <div v-if="isConnected">
-      <v-container>
-        <v-row class="d-flex">
-          <v-col cols="12" md="6" class="align-self-center">
-            <h1 class="h1-black-market">Black Market</h1>
+      <v-container class="pb-0">
+        <div v-if="$vuetify.breakpoint.mdAndUp">
+          <v-row class="d-flex">
+            <v-col cols="12" md="6" class="align-self-center">
+              <h1 class="h1-black-market">Black Market</h1>
 
-            <p class="description-black-market">
-              The black market is something profitable and interesting for those
-              who want to strengthen their army or collect rare items that can
-              only be found here.
-            </p>
-          </v-col>
-          <v-col cols="12" md="6" class="d-flex justify-end">
-            <img
-              src="/images/black-market/black-market.png"
-              alt="black-market"
-            />
-          </v-col>
-        </v-row>
+              <p class="description-black-market">
+                The black market is something profitable and interesting for
+                those who want to strengthen their army or collect rare items
+                that can only be found here.
+              </p>
+            </v-col>
+            <v-col cols="12" md="6" class="d-flex justify-end">
+              <img
+                src="/images/black-market/black-market.png"
+                alt="black-market"
+              />
+            </v-col>
+          </v-row>
+        </div>
+
+        <div v-else>
+          <v-row dense class="d-flex">
+            <v-col cols="5" class="align-self-center">
+              <h1 class="h1-black-market">Black Market</h1>
+            </v-col>
+            <v-col cols="7">
+              <img
+                class="img-black-market"
+                src="/images/black-market/black-market.png"
+                alt="black-market"
+              />
+            </v-col>
+          </v-row>
+
+          <v-row dense>
+            <v-col cols="12">
+              <p class="description-black-market">
+                The black market is something profitable and interesting for
+                those who want to strengthen their army or collect rare items
+                that can only be found here.
+              </p>
+            </v-col>
+          </v-row>
+        </div>
       </v-container>
 
-      <v-container>
+      <v-container class="py-0">
         <v-row>
           <v-col cols="12">
             <table-black-market type="sell"></table-black-market>
@@ -134,6 +161,10 @@ export default {
 </script>
 
 <style scoped>
+.img-black-market {
+  width: 100%;
+}
+
 .h1-black-market {
   background: linear-gradient(180deg, #f6ff00 0%, #ffb800 100%);
   -webkit-background-clip: text;
@@ -154,8 +185,13 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-  .gradient {
-    display: none;
+  .description-black-market {
+    font-size: 13px;
+    line-height: 16px;
+  }
+  .h1-black-market {
+    font-size: 32px;
+    line-height: 36px;
   }
 }
 @media only screen and (max-width: 1280px) {
