@@ -49,27 +49,6 @@
       </v-container>
 
       <v-container class="py-0">
-        <div class="d-flex">
-          <wButton size="x-large" class="mx-2">
-            x-large
-          </wButton>
-          <wButton size="x-large" class="mx-2">
-            x-large
-          </wButton>
-          <wButton size="large" class="mx-2">
-            large
-          </wButton>
-          <wButton size="default" class="mx-2">
-            default
-          </wButton>
-          <wButton size="small" class="mx-2">
-            small
-          </wButton>
-          <wButton size="x-small" class="mx-2">
-            x-small
-          </wButton>
-        </div>
-
         <v-row>
           <v-col cols="12">
             <table-black-market type="sell"></table-black-market>
@@ -89,18 +68,12 @@
 </template>
 
 <script>
-import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
-import wButton from "@/lib/components/ui/Buttons/wButton";
-import Amount from "@/lib/components/ui/Utils/Amount";
 import TableBlackMarket from "@/lib/components/ui/Utils/Tables/TableBlackMarket";
 
 import MarketNFTS from "@/lib/eth/MarketNFTS.js";
 
 export default {
   components: {
-    wGOLDButton,
-    Amount,
-    wButton,
     TableBlackMarket,
   },
 
