@@ -11,7 +11,12 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <w-button class="mr-1" size="small" @click="$emit('close')">
+        <w-button
+          class="mr-1"
+          size="small"
+          @click="$emit('close')"
+          :disabled="disabledClose"
+        >
           Close
         </w-button>
         <w-button
@@ -30,7 +35,7 @@
 import wButton from "@/lib/components/ui/Utils/wButton";
 
 export default {
-  props: ["open", "title", "isLoading", "disabledConfirm"],
+  props: ["open", "title", "isLoading", "disabledConfirm", "disabledClose"],
   components: {
     wButton,
   },

@@ -3,7 +3,7 @@
     <div v-if="nftCollectible.status">
       Page not found
     </div>
-    <v-container v-else>
+    <v-container class="box-create-order-title" v-else>
       <v-row>
         <v-col
           cols="12"
@@ -14,7 +14,7 @@
           "
         >
           <game-title v-if="isBuy">
-            <h3>Buy a Game Item</h3>
+            <h3>Buy a {{ nftCollectible.typeDesc }}</h3>
             <p
               :style="
                 $vuetify.breakpoint.mdAndUp
@@ -26,7 +26,7 @@
             </p>
           </game-title>
           <game-title v-else class="d-block">
-            <h3>Sell your Game Item</h3>
+            <h3>Sell your {{ nftCollectible.typeDesc }}</h3>
             <p
               :style="
                 $vuetify.breakpoint.mdAndUp
@@ -78,6 +78,39 @@
                 </div>
               </template>
             </v-currency-field>
+            <div
+              :class="
+                $vuetify.breakpoint.mdAndUp
+                  ? 'd-flex'
+                  : 'd-block justify-center text-center'
+              "
+            >
+              <p>This transaction has a fee of:</p>
+              <div
+                :class="
+                  $vuetify.breakpoint.mdAndUp
+                    ? 'd-flex'
+                    : 'd-flex justify-center text-center'
+                "
+              >
+                <img
+                  src="/images/wgold.png"
+                  :class="$vuetify.breakpoint.mdAndUp ? 'ml-1' : ''"
+                  height="25px"
+                  alt="wGOLD"
+                />
+                <p>
+                  <amount
+                    class="align-self-center"
+                    :amount="amountInfo.feeAmount"
+                    decimals="2"
+                    tooltip
+                  />wGOLD
+                </p>
+              </div>
+            </div>
+
+
             <div
               :class="
                 $vuetify.breakpoint.mdAndUp
@@ -141,17 +174,19 @@
               Sell
             </wButton>
           </div>
-          <v-row class="d-flex justify-end">
-            <v-alert
-              v-if="amount > amountwGOLD && buyOrSell === 'buy'"
-              class="my-3"
-              outlined
-              type="warning"
-              border="left"
-              dense
-            >
-              Quantity is greater than the available value
-            </v-alert>
+          <v-row>
+            <v-col cols="12">
+              <v-alert
+                class="mt-3"
+                v-if="amount > amountwGOLD && buyOrSell === 'buy'"
+                outlined
+                type="warning"
+                border="left"
+                dense
+              >
+                Quantity is greater than the available value
+              </v-alert>
+            </v-col>
           </v-row>
         </v-col>
       </v-row>
@@ -409,7 +444,7 @@ export default {
         );
       });
 
-      confirmTransaction.on("receipt", async () => {
+      confirmTransaction.on("receipt", () => {
         this.isLoadingRaskel = false;
         this.raskel = false;
         ToastSnackbar.success(
@@ -458,12 +493,12 @@ export default {
         );
       });
 
-      confirmTransaction.on("receipt", async () => {
-        this.openConfirmOrderGameItem = false;
-        this.isLoadingMarket = false;
+      confirmTransaction.on("receipt", () => {
         ToastSnackbar.success(
           "Order successfully created Raskel - The Traveler"
         );
+        this.openConfirmOrderGameItem = false;
+        this.isLoadingMarket = false;
       });
     },
   },
@@ -482,6 +517,10 @@ export default {
   cursor: pointer;
 }
 
+.box-create-order-title {
+  width: 1280px;
+}
+
 .box-create-order {
   margin: 20px auto !important;
   width: 1280px;
@@ -492,6 +531,9 @@ export default {
 
 @media only screen and (max-width: 1280px) {
   .box-create-order {
+    width: 100%;
+  }
+  .box-create-order-title {
     width: 100%;
   }
 }

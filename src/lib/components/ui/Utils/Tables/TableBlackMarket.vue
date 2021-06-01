@@ -151,12 +151,12 @@ export default {
         {
           text: "Player",
           value: "sender",
-          width: "20%"
+          width: "20%",
         },
         { text: "Game Item", value: "nft.title", width: "30%" },
         { text: "Type", value: "nft.typeDesc", width: "15%" },
-        { text: "Price/Unit", value: "amountFormatted",  width: "15%" },
-        { text: "", value: "action", sortable: false,  width: "20%" },
+        { text: "Price/Unit", value: "amountFormatted", width: "15%" },
+        { text: "", value: "action", sortable: false, width: "20%" },
       ],
       btnActionWidth: "100%",
     };
@@ -269,29 +269,29 @@ export default {
       this.isLoadingConfirm = true;
       const textType =
         this.nftCollectible.orderType === "1" ? "purchase" : "sale";
-      this.marketNFTS
-        .executeOrder(this.nftCollectible.orderId, this.quantity, this.account)
-        .on("error", (error) => {
-          this.isLoadingConfirm = false;
-          if (error.message) {
-            return ToastSnackbar.error(error.message);
-          }
-          return ToastSnackbar.error(
-            "Raskel - The traveler, an error has occurred, please try again!"
-          );
-        })
-        .on("transactionHash", async () => {
-          this.openConfirmOrderGameItem = false;
-          this.isLoadingConfirm = false;
-          ToastSnackbar.info(
-            `Raskel - The traveler, checking your ${textType}`
-          );
-        })
-        .on("receipt", async () => {
-          ToastSnackbar.success(
-            `Raskel - The traveler, successful ${textType}`
-          );
-        });
+      const confirmTransaction = this.marketNFTS.executeOrder(
+        this.nftCollectible.orderId,
+        this.quantity,
+        this.account
+      );
+
+      confirmTransaction.on("error", (error) => {
+        this.isLoadingConfirm = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(
+          "Raskel - The traveler, an error has occurred, please try again!"
+        );
+      });
+      confirmTransaction.on("transactionHash", () => {
+        this.openConfirmOrderGameItem = false;
+        this.isLoadingConfirm = false;
+        ToastSnackbar.info(`Raskel - The traveler, checking your ${textType}`);
+      });
+      confirmTransaction.on("receipt", () => {
+        ToastSnackbar.success(`Raskel - The traveler, successful ${textType}`);
+      });
     },
     async isApprovedContract(type) {
       const listApproved = {
