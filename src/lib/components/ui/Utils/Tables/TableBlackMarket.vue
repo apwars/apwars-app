@@ -3,19 +3,17 @@
     <v-card-title>
       <h4 class="text-h4">{{ titleTable }}</h4>
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
+      <wButton class="mx-1 mr-3" size="x-small" @click="!createOrder()">
+        <div class="d-flex justify-center">
+          <img :src="imageTable" class="mx-1  align-self-center" height="12" />
+          <div class="align-self-center">{{ buttonTable }}</div>
+        </div>
+      </wButton>
     </v-card-title>
     <v-data-table
       class="table-black-market"
       :headers="headers"
       :items="listMarket"
-      :search="search"
       :items-per-page="itemsPerPage"
       :loading="isLoading"
       :loading-text="loadingText"
@@ -137,16 +135,16 @@ export default {
       quantity: 1,
       isLoading: true,
       loadingText: 'Loading... Please wait',
-      search: '',
       dataMarket: [],
       headers: [
         {
           text: 'Player',
           value: 'sender',
-          width: '20%',
+          width: '15%',
         },
-        { text: 'Game Item', value: 'nft.title', width: '30%' },
+        { text: 'Game Item', value: 'nft.title', width: '25%' },
         { text: 'Type', value: 'nft.typeDesc', width: '15%' },
+        { text: 'Unit', value: 'nft.quantity', width: '10%' },
         { text: 'Price/Unit', value: 'amountFormatted', width: '15%' },
         { text: '', value: 'action', sortable: false, width: '20%' },
       ],
@@ -193,6 +191,17 @@ export default {
     },
     titleTable() {
       return this.type === 'sell' ? 'Items for sale' : 'Wanted Items';
+    },
+    buttonTable() {
+      return this.type === 'sell' ? 'Create sell order' : 'Create buy order';
+    },
+    imageTable() {
+      return this.type === 'sell'
+        ? '/images/buttons/btn-icon-sell.svg'
+        : '/images/buttons/btn-icon-buy.svg';
+    },
+    route() {
+      return this.type === 'sell' ? '/inventory' : '/game-items';
     },
     buyerOrSeller() {
       return this.type === 'sell' ? 'Seller' : 'Buyer';
@@ -325,9 +334,9 @@ export default {
     },
     createOrder() {
       if (this.type === 'sell') {
-        return this.$router.push('/game-items');
+        return this.$router.push('/inventory');
       }
-      return this.$router.push('/inventory');
+      return this.$router.push('/game-items');
     },
   },
 };
