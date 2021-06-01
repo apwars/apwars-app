@@ -17,28 +17,26 @@
       <v-col dense cols="9">
         <div>
           <game-text-h2>{{ nftCollectible.title }}</game-text-h2>
-          <div v-if="isBuy">
-            <h5>
+          <div v-if="isBuy" >
+            <h5 class="d-flex">
               Net amount:
-              <amount :amount="amountInfo.amount" :decimals="2" />
-              wGOLD
+              <amount :amount="amountInfo.amount" :decimals="2" token="wGOLD"/>
             </h5>
-            <h5>
+            <h5 class="d-flex">
               Transaction fee:
-              <amount :amount="amountInfo.feeAmount" :decimals="2" />
-              wGOLD
+              <amount :amount="amountInfo.feeAmount" :decimals="2" token="wGOLD"/>
             </h5>
           </div>
-          <div v-if="isBuy" class="mt-1">
+          <div v-if="isBuy" class="mt-1 d-flex">
             <span>You will pay</span>
-            <amount :amount="amountInfo.totalAmount" :decimals="2" />
-            wGOLD for this Item
+            <amount :amount="amountInfo.totalAmount" :decimals="2" token="wGOLD" class="mr-1"/>
+            for this Item
           </div>
-          <div v-else>
+          <span v-else class="mt-1 d-flex">
             You will receive
-            <amount :amount="amountInfo.amount" :decimals="2" />
-            wGOLD for this Item
-          </div>
+            <amount :amount="amountInfo.amount" :decimals="2" token="wGOLD" class="mr-1"/>
+            for this Item
+          </span>
         </div>
       </v-col>
     </v-row>

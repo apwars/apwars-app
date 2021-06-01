@@ -1,7 +1,7 @@
 <template>
   <div v-if="isConnected">
     <div v-if="nftCollectible.status">
-      Page not found
+      Item not found
     </div>
     <v-container class="box-create-order-title" v-else>
       <v-row>

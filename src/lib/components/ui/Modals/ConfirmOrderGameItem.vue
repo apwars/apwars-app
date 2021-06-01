@@ -26,8 +26,12 @@
               :amount="nftCollectible.amountOrder"
               decimals="2"
               tooltip
+              title="wGOLD"
             />
-            wGOLD for this Item.
+            for this Item.
+          </h4>
+          <h4 class="mt-1 d-flex">
+            {{ confirmOrder }}
           </h4>
         </div>
         <v-alert v-if="!isBalanceItem" class="my-2" outlined type="warning" border="left" dense>
@@ -91,6 +95,11 @@ export default {
     },
     descriptionOrder() {
       return this.type === 'buy' ? 'You will pay' : 'You will receive';
+    },
+    confirmOrder() {
+      return this.type === 'buy'
+        ? 'Are you sure do you want to buy this item?'
+        : 'Are you sure do you want to sell this item?';
     },
   },
 

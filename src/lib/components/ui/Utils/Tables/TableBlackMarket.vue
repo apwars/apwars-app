@@ -30,7 +30,7 @@
               class="mx-1 align-self-center"
               :height="getSizeIcon(type)"
             />
-            Create {{ typeOrder === "buy" ? "Buy" : "Sell" }} Order
+            Create {{ typeOrder === 'buy' ? 'Buy' : 'Sell' }} Order
           </wButton>
         </div>
       </template>
@@ -70,9 +70,7 @@
         >
           <div class="d-flex justify-center">
             <img
-              :src="
-                `/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`
-              "
+              :src="`/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`"
               class="mx-1 align-self-center"
               :height="getSizeIcon(item.orderTypeDesc)"
             />
@@ -101,23 +99,23 @@
 </template>
 
 <script>
-import Amount from "@/lib/components/ui/Utils/Amount";
-import VAddress from "@/lib/components/ui/Utils/VAddress";
-import wButton from "@/lib/components/ui/Utils/wButton";
-import ConfirmOrderGameItem from "@/lib/components/ui/Modals/ConfirmOrderGameItem";
-import RaskelModal from "@/lib/components/ui/Modals/RaskelModal";
-import ToastSnackbar from "@/plugins/ToastSnackbar";
+import Amount from '@/lib/components/ui/Utils/Amount';
+import VAddress from '@/lib/components/ui/Utils/VAddress';
+import wButton from '@/lib/components/ui/Utils/wButton';
+import ConfirmOrderGameItem from '@/lib/components/ui/Modals/ConfirmOrderGameItem';
+import RaskelModal from '@/lib/components/ui/Modals/RaskelModal';
+import ToastSnackbar from '@/plugins/ToastSnackbar';
 
-import Convert from "@/lib/helpers/Convert";
+import Convert from '@/lib/helpers/Convert';
 
-import { getCollectibles } from "@/data/Collectibles";
+import { getCollectibles } from '@/data/Collectibles';
 
-import MarketNFTS from "@/lib/eth/MarketNFTS.js";
-import Collectibles from "@/lib/eth/Collectibles";
-import wGOLD from "@/lib/eth/wGOLD";
+import MarketNFTS from '@/lib/eth/MarketNFTS.js';
+import Collectibles from '@/lib/eth/Collectibles';
+import wGOLD from '@/lib/eth/wGOLD';
 
 export default {
-  props: ["type"],
+  props: ['type'],
   components: {
     VAddress,
     Amount,
@@ -138,65 +136,66 @@ export default {
       totalItems: 0,
       quantity: 1,
       isLoading: true,
-      loadingText: "Loading... Please wait",
-      search: "",
+      loadingText: 'Loading... Please wait',
+      search: '',
       dataMarket: [],
       headers: [
         {
-          text: "Player",
-          value: "sender",
-          width: "20%",
+          text: 'Player',
+          value: 'sender',
+          width: '20%',
         },
-        { text: "Game Item", value: "nft.title", width: "30%" },
-        { text: "Type", value: "nft.typeDesc", width: "15%" },
-        { text: "Price/Unit", value: "amountFormatted", width: "15%" },
-        { text: "", value: "action", sortable: false, width: "20%" },
+        { text: 'Game Item', value: 'nft.title', width: '30%' },
+        { text: 'Type', value: 'nft.typeDesc', width: '15%' },
+        { text: 'Price/Unit', value: 'amountFormatted', width: '15%' },
+        { text: '', value: 'action', sortable: false, width: '20%' },
       ],
-      btnActionWidth: "100%",
+      btnActionWidth: '100%',
     };
   },
 
   computed: {
     account() {
-      return this.$store.getters["user/account"];
+      return this.$store.getters['user/account'];
     },
     addresses() {
-      return this.$store.getters["user/addresses"];
+      return this.$store.getters['user/addresses'];
     },
     networkInfo() {
-      return this.$store.getters["user/networkInfo"];
+      return this.$store.getters['user/networkInfo'];
     },
     currentBlockNumber() {
-      return this.$store.getters["user/currentBlockNumber"];
+      return this.$store.getters['user/currentBlockNumber'];
     },
     listMarket() {
       if (this.dataMarket === undefined || this.dataMarket.length === 0) {
         return [];
       }
 
-      return this.dataMarket.filter((item) => {
+      return this.dataMarket.filter(item => {
         item.openModal = false;
         if (item.orderType === this.typeEnum) {
-          item.orderTypeDesc = this.typeEnum === "1" ? "buy" : "sell";
-          item.amountOrder =
-            this.typeEnum === "0" ? item.amount : item.totalAmount;
+          item.orderTypeDesc = this.typeEnum === '1' ? 'buy' : 'sell';
+          item.amountOrder = this.typeEnum === '0' ? item.amount : item.totalAmount;
           item.amountFormatted = Convert.fromWei(item.amountOrder);
           item.nft = getCollectibles().find(
-            (collectible) =>
-              collectible.id.toString() === item.tokenId.toString()
+            collectible => collectible.id.toString() === item.tokenId.toString()
           );
           return item;
         }
       });
     },
     typeOrder() {
-      return this.type === "buy" ? "sell" : "buy";
+      return this.type === 'buy' ? 'sell' : 'buy';
     },
     typeEnum() {
-      return this.type === "buy" ? "0" : "1";
+      return this.type === 'buy' ? '0' : '1';
     },
     titleTable() {
-      return this.type === "sell" ? "Items for sale" : "Wanted Items";
+      return this.type === 'sell' ? 'Items for sale' : 'Wanted Items';
+    },
+    buyerOrSeller() {
+      return this.type === 'sell' ? 'Seller' : 'Buyer';
     },
   },
 
@@ -213,6 +212,7 @@ export default {
 
   methods: {
     initData() {
+      this.headers[0].text = this.buyerOrSeller;
       this.collectibleContract = new Collectibles(this.addresses.collectibles);
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
@@ -221,35 +221,28 @@ export default {
       try {
         page = page || 1;
 
-        const market = await this.marketNFTS.getMarket(
-          this.typeEnum,
-          this.itemsPerPage,
-          page
-        );
+        const market = await this.marketNFTS.getMarket(this.typeEnum, this.itemsPerPage, page);
         this.dataMarket = market.data;
         this.totalItems = parseInt(market.total);
       } catch (error) {
         console.log(error);
-        this.loadingText = "Sorry, an error occurred";
+        this.loadingText = 'Sorry, an error occurred';
       } finally {
         this.isLoading = false;
         this.$nextTick(() => {
-          if (document.querySelector(".v-data-table__mobile-row") !== null) {
-            this.btnActionWidth = `${document.querySelector(
-              ".v-data-table__mobile-row"
-            ).offsetWidth - 50}px`;
+          if (document.querySelector('.v-data-table__mobile-row') !== null) {
+            this.btnActionWidth = `${document.querySelector('.v-data-table__mobile-row')
+              .offsetWidth - 50}px`;
           }
         });
       }
     },
     getSizeIcon(icon) {
-      return icon === "swap" ? 16 : 12;
+      return icon === 'swap' ? 16 : 12;
     },
     async openModal(item) {
       this.nftCollectible = item;
-      const isApproved = await this.isApprovedContract(
-        this.nftCollectible.orderTypeDesc
-      );
+      const isApproved = await this.isApprovedContract(this.nftCollectible.orderTypeDesc);
 
       if (!isApproved) {
         this.approveRaskel = true;
@@ -261,29 +254,28 @@ export default {
     },
     executeOrder() {
       this.isLoadingConfirm = true;
-      const textType =
-        this.nftCollectible.orderType === "1" ? "purchase" : "sale";
+      const textType = this.nftCollectible.orderType === '1' ? 'purchase' : 'sale';
       const confirmTransaction = this.marketNFTS.executeOrder(
         this.nftCollectible.orderId,
         this.quantity,
         this.account
       );
 
-      confirmTransaction.on("error", (error) => {
+      confirmTransaction.on('error', error => {
         this.isLoadingConfirm = false;
         if (error.message) {
           return ToastSnackbar.error(error.message);
         }
         return ToastSnackbar.error(
-          "Raskel - The traveler, an error has occurred, please try again!"
+          'Raskel - The traveler, an error has occurred, please try again!'
         );
       });
-      confirmTransaction.on("transactionHash", () => {
+      confirmTransaction.on('transactionHash', () => {
         this.openConfirmOrderGameItem = false;
         this.isLoadingConfirm = false;
         ToastSnackbar.info(`Raskel - The traveler, checking your ${textType}`);
       });
-      confirmTransaction.on("receipt", () => {
+      confirmTransaction.on('receipt', () => {
         ToastSnackbar.success(`Raskel - The traveler, successful ${textType}`);
       });
     },
@@ -296,10 +288,7 @@ export default {
           );
         },
         buy: async () => {
-          return await this.wGOLDContract.hasAllowance(
-            this.account,
-            this.addresses.marketNFTS
-          );
+          return await this.wGOLDContract.hasAllowance(this.account, this.addresses.marketNFTS);
         },
       };
       return listApproved[type]();
@@ -313,37 +302,32 @@ export default {
           );
         },
         buy: () => {
-          return this.wGOLDContract.approve(
-            this.account,
-            this.addresses.marketNFTS
-          );
+          return this.wGOLDContract.approve(this.account, this.addresses.marketNFTS);
         },
       };
       const confirmTransaction = listApproved[type]();
       this.isLoadingApproveRaskel = true;
 
-      confirmTransaction.on("error", (error) => {
+      confirmTransaction.on('error', error => {
         this.isLoadingApproveRaskel = false;
         if (error.message) {
           return ToastSnackbar.error(error.message);
         }
-        return ToastSnackbar.error(
-          "Raskel - The traveler, there was a problem with your access"
-        );
+        return ToastSnackbar.error('Raskel - The traveler, there was a problem with your access');
       });
-      confirmTransaction.on("receipt", async () => {
+      confirmTransaction.on('receipt', async () => {
         this.isLoadingApproveRaskel = false;
         this.openModal(this.nftCollectible);
-        ToastSnackbar.success("Raskel - The traveler, approved your access");
+        ToastSnackbar.success('Raskel - The traveler, approved your access');
       });
 
       return;
     },
     createOrder() {
-      if (this.type === "sell") {
-        return this.$router.push("/game-items");
+      if (this.type === 'sell') {
+        return this.$router.push('/game-items');
       }
-      return this.$router.push("/inventory");
+      return this.$router.push('/inventory');
     },
   },
 };
@@ -363,12 +347,7 @@ export default {
   color: #ffb800;
 }
 
-.table-black-market
-  >>> .v-data-table__wrapper
-  > table
-  > thead
-  > tr:last-child
-  > th {
+.table-black-market >>> .v-data-table__wrapper > table > thead > tr:last-child > th {
   border-bottom: thin solid #ffffff;
 }
 
