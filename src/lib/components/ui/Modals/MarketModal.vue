@@ -3,6 +3,7 @@
     :open="open"
     :isLoading="isLoading"
     :disabledConfirm="isLoading"
+    :disabledClose="isLoading"
     :title="titleModal"
     @close="$emit('close')"
     @confirm="$emit('confirm')"

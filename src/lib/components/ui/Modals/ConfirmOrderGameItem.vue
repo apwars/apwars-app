@@ -4,6 +4,7 @@
     :open="open"
     :isLoading="isLoading"
     :disabledConfirm="isLoading || !isBalanceItem"
+    :disabledClose="isLoading"
     :title="titleOrder"
     @close="$emit('close')"
     @confirm="$emit('confirm')"
@@ -89,9 +90,11 @@ export default {
     },
     isBalanceItem() {
       if (this.type === "buy") {
-        return this.balanceItem === "0" ||
-          Convert.fromWei(this.nftCollectible.amountOrder) >
-            Convert.fromWei(this.balanceItem)
+        const amountOrder = parseFloat(
+          Convert.fromWei(this.nftCollectible.amountOrder)
+        );
+        const balanceItem = parseFloat(Convert.fromWei(this.balanceItem));
+        return this.balanceItem === "0" || amountOrder > balanceItem
           ? false
           : true;
       }
@@ -163,4 +166,3 @@ export default {
   },
 };
 </script>
-
