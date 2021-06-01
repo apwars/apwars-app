@@ -11,7 +11,6 @@
         <div class="label">
           <slot></slot>
         </div>
-        <!-- <div class="hover"></div> -->
       </div>
       <div class="btn-bg revert-img"></div>
     </div>
@@ -99,7 +98,6 @@ export default {
   background: url("/images/buttons/btn-default-hover-bg.png");
   background-size: cover;
   background-position: bottom;
-  box-shadow: inset 0 -3px 3px 2px #6f1706;
 }
 
 .revert-img {
@@ -130,10 +128,10 @@ export default {
 }
 .btn.btn-x-large .btn-bg-c > .label {
   font-size: 28px;
-  margin-top: 12px;
-  margin-left: -15px;
-  width: calc(100% + 30px);
-  height: 72px;
+  margin-top: 9.5px;
+  margin-left: -17.5px;
+  width: calc(100% + 35px);
+  height: 75px;
   border-radius: 10px;
   padding: 10px;
 }
@@ -147,10 +145,10 @@ export default {
 }
 .btn.btn-large .btn-bg-c > .label {
   font-size: 22px;
-  margin-top: 8px;
-  margin-left: -10px;
-  width: calc(100% + 20px);
-  height: 55px;
+  margin-top: 6.5px;
+  margin-left: -12.5px;
+  width: calc(100% + 25px);
+  height: 57px;
   border-radius: 8px;
   padding: 8px;
 }
@@ -164,15 +162,12 @@ export default {
 }
 .btn.btn-default .btn-bg-c > .label {
   font-size: 16px;
-  margin-top: 6px;
+  margin-top: 5px;
   margin-left: -6px;
   width: calc(100% + 12px);
-  height: 30px;
+  height: 33px;
   border-radius: 5px;
   padding: 6px;
-}
-.btn.btn-default .btn-bg-c > .label:hover {
-  box-shadow: inset 0 -2px 2px 1px #6f1706;
 }
 
 /* size [small] */
@@ -191,9 +186,6 @@ export default {
   border-radius: 4px;
   padding: 4px;
 }
-.btn.btn-small .btn-bg-c > .label:hover {
-  box-shadow: inset 0 -2px 2px 1px #6f1706;
-}
 
 /* size [x-small] */
 .btn.btn-x-small {
@@ -210,10 +202,6 @@ export default {
   height: 15px;
   border-radius: 2px;
   padding: 3px;
-}
-
-.btn.btn-x-small .btn-bg-c > .label:hover {
-  box-shadow: inset 0 -1px 1px 0px #6f1706;
 }
 
 .disabled {

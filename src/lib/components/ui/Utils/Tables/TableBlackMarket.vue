@@ -68,23 +68,31 @@
         </div>
       </template>
       <template v-slot:[`item.action`]="{ item }">
-        <wButton
-          :style="`width: ${btnActionWidth}`"
-          class="mx-auto my-2"
-          size="small"
-          @click="openModal(item)"
-        >
-          <div class="d-flex justify-center">
-            <img
-              :src="
-                `/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`
-              "
-              class="mx-1 align-self-center"
-              :height="getSizeIcon(item.orderTypeDesc)"
-            />
-            <div class="align-self-center">{{ item.orderTypeDesc }}</div>
-          </div>
-        </wButton>
+        <div class="d-flex justify-end my-2">
+          <wButton
+            v-if="item.sender.toLowerCase() == account.toLowerCase()"
+            @click="openModalCancelOrder(item)"
+          >
+            <div class="d-flex justify-center">
+              <v-icon color="red darken-2">
+                mdi-close-circle-outline
+              </v-icon>
+              <div class="ml-1 align-self-center">cancel</div>
+            </div>
+          </wButton>
+          <wButton class="ml-2" @click="openModal(item)">
+            <div class="d-flex justify-center px-2">
+              <img
+                :src="
+                  `/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`
+                "
+                class="mx-1 align-self-center"
+                :height="getSizeIcon(item.orderTypeDesc)"
+              />
+              <div class="align-self-center">{{ item.orderTypeDesc }}</div>
+            </div>
+          </wButton>
+        </div>
       </template>
     </v-data-table>
     <confirm-order-game-item
@@ -97,11 +105,19 @@
     >
     </confirm-order-game-item>
 
+    <cancel-order-game-item
+      :open="openCancelOrderGameItem"
+      :isLoading="isLoadingCancel"
+      @confirm="cancelOrder"
+      @close="openCancelOrderGameItem = false"
+    >
+    </cancel-order-game-item>
+
     <raskel-modal
       :open="approveRaskel"
+      :isLoading="isLoadingApproveRaskel"
       @confirm="approve(nftCollectible.orderTypeDesc)"
       @close="approveRaskel = false"
-      :isLoading="isLoadingApproveRaskel"
     ></raskel-modal>
   </v-card>
 </template>
@@ -109,8 +125,9 @@
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
-import wButton from "@/lib/components/ui/Utils/wButton";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 import ConfirmOrderGameItem from "@/lib/components/ui/Modals/ConfirmOrderGameItem";
+import CancelOrderGameItem from "@/lib/components/ui/Modals/CancelOrderGameItem";
 import RaskelModal from "@/lib/components/ui/Modals/RaskelModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
@@ -129,6 +146,7 @@ export default {
     Amount,
     wButton,
     ConfirmOrderGameItem,
+    CancelOrderGameItem,
     RaskelModal,
   },
 
@@ -138,7 +156,9 @@ export default {
       isLoadingApproveRaskel: false,
       nftCollectible: {},
       openConfirmOrderGameItem: false,
+      openCancelOrderGameItem: false,
       isLoadingConfirm: false,
+      isLoadingCancel: false,
       marketNFTS: {},
       itemsPerPage: 10,
       totalItems: 0,
@@ -350,6 +370,36 @@ export default {
         return this.$router.push("/game-items");
       }
       return this.$router.push("/inventory");
+    },
+    openModalCancelOrder(item) {
+      this.nftCollectible = item;
+      this.isLoadingConfirm = false;
+      this.openCancelOrderGameItem = true;
+    },
+    cancelOrder() {
+      this.isLoadingCancel = true;
+      const confirmTransaction = this.marketNFTS.cancelOrder(
+        this.nftCollectible.orderId,
+        this.account
+      );
+
+      confirmTransaction.on("error", (error) => {
+        this.isLoadingCancel = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(
+          "Raskel - The traveler, an error has occurred, please try again!"
+        );
+      });
+      confirmTransaction.on("transactionHash", () => {
+        ToastSnackbar.info(`Raskel - The traveler, waiting confirmation`);
+      });
+      confirmTransaction.on("receipt", () => {
+        this.isLoadingCancel = false;
+        this.openCancelOrderGameItem = false;
+        ToastSnackbar.success(`Raskel - The traveler, order canceled`);
+      });
     },
   },
 };

@@ -105,4 +105,8 @@ export default class MarketNFTS {
   executeOrder(orderId, quantity, from) {
     return this.smc.methods.executeOrder(orderId, quantity).send({ from });
   }
+
+  cancelOrder(orderId, from) {
+    return this.smc.methods.cancel(orderId).send({ from });
+  }
 }
