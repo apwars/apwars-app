@@ -14,27 +14,31 @@
           <v-img class="d-flex" width="100%" :src="nftCollectible.image"></v-img>
         </div>
       </v-col>
-      You will receive 100000.00 wGOLD for this Game Item This transaction has a fee of 2500.00
-      wGOLD Total amount: 102500.00 wGOLD Transaction fee: 2500.00 wGOLD Net amount: 100000.00 wGOLD
-
       <v-col dense cols="9">
         <div>
           <game-text-h2>{{ nftCollectible.title }}</game-text-h2>
-          <div v-if="isBuy" class="mt-3">
+          <div v-if="isBuy">
+            <h5>
+              Net amount:
+              <amount :amount="amountInfo.amount" :decimals="2" />
+              wGOLD
+            </h5>
+            <h5>
+              Transaction fee:
+              <amount :amount="amountInfo.feeAmount" :decimals="2" />
+              wGOLD
+            </h5>
+          </div>
+          <div v-if="isBuy" class="mt-1">
             <span>You will pay</span>
             <amount :amount="amountInfo.totalAmount" :decimals="2" />
             wGOLD for this Item
           </div>
-          <div v-else class="mt-3">
+          <div v-else>
             You will receive
             <amount :amount="amountInfo.amount" :decimals="2" />
             wGOLD for this Item
           </div>
-          <h5 class="mt-1">
-            This transaction has a fee of
-            <amount :amount="amountInfo.feeAmount" :decimals="2" />
-            wGOLD
-          </h5>
         </div>
       </v-col>
     </v-row>
@@ -64,8 +68,21 @@ export default {
       return this.type === 'buy';
     },
     titleModal() {
-      return this.type === 'buy' ? 'Confirm your purchase' : 'Confirm your sale';
+      return this.type === 'buy' ? 'Confirm your purchase order' : 'Confirm your sale order';
     },
   },
 };
 </script>
+<style>
+.dividing-line {
+  background-image: url('/images/battle/line.png');
+  transform: rotate(90deg);
+  transform-origin: left top 0;
+}
+.divider-line {
+  background-image: url('/images/battle/line.png');
+  transform: rotate(90deg);
+  transform-origin: left top 0;
+  width: 100px;
+}
+</style>
