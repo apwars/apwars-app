@@ -22,8 +22,13 @@
               </p>
             </v-col>
           </v-row>
-          <div class="d-flex justify-end" :disabled="isLoading">
-            <wButton  class="mr-1" size="small" @click="$emit('close')">
+          <div class="d-flex justify-end">
+            <wButton
+              class="mr-1"
+              size="small"
+              @click="$emit('close')"
+              :disabled="isLoading"
+            >
               Close
             </wButton>
             <wButton

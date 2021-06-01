@@ -70,6 +70,15 @@ export default {
   display: inline-flex;
   position: relative;
 }
+
+.btn:hover .btn-bg {
+  background-image: url("/images/buttons/btn-default-hover-border.png");
+}
+
+.btn:hover .btn-bg-c {
+  background-image: url("/images/buttons/btn-default-c-hover-border.png");
+}
+
 .btn-bg {
   background-image: url("/images/buttons/btn-default-lr.png");
   background-size: contain;
@@ -94,11 +103,11 @@ export default {
   justify-content: space-around;
 }
 
-.btn-bg-c > .label:hover {
+/* .btn-bg-c > .label:hover {
   background: url("/images/buttons/btn-default-hover-bg.png");
   background-size: cover;
   background-position: bottom;
-}
+} */
 
 .revert-img {
   transform: scaleX(-1);
