@@ -11,13 +11,11 @@
     <v-row dense>
       <v-col dense cols="3">
         <div class="text-center">
-          <v-img
-            class="d-flex"
-            width="100%"
-            :src="nftCollectible.image"
-          ></v-img>
+          <v-img class="d-flex" width="100%" :src="nftCollectible.image"></v-img>
         </div>
       </v-col>
+      You will receive 100000.00 wGOLD for this Game Item This transaction has a fee of 2500.00
+      wGOLD Total amount: 102500.00 wGOLD Transaction fee: 2500.00 wGOLD Net amount: 100000.00 wGOLD
 
       <v-col dense cols="9">
         <div>
@@ -25,12 +23,12 @@
           <div v-if="isBuy" class="mt-3">
             <span>You will pay</span>
             <amount :amount="amountInfo.totalAmount" :decimals="2" />
-            wGOLD for this Game Item
+            wGOLD for this Item
           </div>
           <div v-else class="mt-3">
             You will receive
             <amount :amount="amountInfo.amount" :decimals="2" />
-            wGOLD for this Game Item
+            wGOLD for this Item
           </div>
           <h5 class="mt-1">
             This transaction has a fee of
@@ -44,14 +42,14 @@
 </template>
 
 <script>
-import Amount from "@/lib/components/ui/Utils/Amount";
-import wButton from "@/lib/components/ui/Utils/wButton";
-import GameTextH2 from "@/lib/components/ui/Utils/GameTextH2";
-import GameTextH4 from "@/lib/components/ui/Utils/GameTextH4";
-import ModalWood from "@/lib/components/ui/Modals/Templates/Wood";
+import Amount from '@/lib/components/ui/Utils/Amount';
+import wButton from '@/lib/components/ui/Utils/wButton';
+import GameTextH2 from '@/lib/components/ui/Utils/GameTextH2';
+import GameTextH4 from '@/lib/components/ui/Utils/GameTextH4';
+import ModalWood from '@/lib/components/ui/Modals/Templates/Wood';
 
 export default {
-  props: ["open", "nftCollectible", "amountInfo", "type", "isLoading"],
+  props: ['open', 'nftCollectible', 'amountInfo', 'type', 'isLoading'],
 
   components: {
     wButton,
@@ -63,12 +61,10 @@ export default {
 
   computed: {
     isBuy() {
-      return this.type === "buy";
+      return this.type === 'buy';
     },
     titleModal() {
-      return this.type === "buy"
-        ? "Confirm your purchase"
-        : "Confirm your sale";
+      return this.type === 'buy' ? 'Confirm your purchase' : 'Confirm your sale';
     },
   },
 };
