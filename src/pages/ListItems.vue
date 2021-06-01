@@ -20,7 +20,7 @@
           <nft-item :collectible="collectible" />
           <div>
             <game-text>{{ collectible.title }}</game-text>
-            <p style="font-size: 14px" v-html="collectible.description" />
+            <p v-html="collectible.description" />
           </div>
         </v-col>
       </v-row>

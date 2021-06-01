@@ -16,7 +16,7 @@ export function getGameItems() {
       tokenAddress: addresses.wGOLD,
       title: "The Pioneer",
       description:
-        '<small>"1 In the beginning Satoshi created the heaven in earth. 2 Darkness was over the surface of the financial world, and the Spirit of Satoshi was hovering over the crisis of 2008. 3 And Satoshi said, “Let there be censorship resistant money,” and there was fairness. 4 Satoshi saw that the Bitcoin was good, and he separated the money from the state. 5 In the beginning of Descentraland the first races came to be. The pioneers of Corporations and Degenerates lived in peace until the first war was inevitable."<br />-Sacred Lore v1</small> <br /><small><b>No practical effects are known until this moment but tales about this souvenir states that it is a sleeping ring of power</b></small>',
+        '"1 In the beginning Satoshi created the heaven in earth. 2 Darkness was over the surface of the financial world, and the Spirit of Satoshi was hovering over the crisis of 2008. 3 And Satoshi said, “Let there be censorship resistant money,” and there was fairness. 4 Satoshi saw that the Bitcoin was good, and he separated the money from the state. 5 In the beginning of Descentraland the first races came to be. The pioneers of Corporations and Degenerates lived in peace until the first war was inevitable."<br />-Sacred Lore v1 <br /><small><b>No practical effects are known until this moment but tales about this souvenir states that it is a sleeping ring of power</b></small>',
       image: "/images/nfts/pioneer.png",
       parameters: {
         id: 0,
