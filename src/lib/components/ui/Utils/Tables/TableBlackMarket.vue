@@ -52,12 +52,6 @@
       </template>
       <template v-slot:[`item.amountFormatted`]="{ item }">
         <div class="d-flex">
-          <img
-            src="/images/wgold.png"
-            class="align-self-center"
-            width="30px"
-            alt="wGOLD"
-          />
           <amount
             class="align-self-center"
             :amount="item.amountFormatted"
