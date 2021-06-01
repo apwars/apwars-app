@@ -2,25 +2,32 @@
   <v-card class="mx-auto" width="250" elevation="0">
     <v-card-text class="text-center">
       <v-img width="200" :src="collectible.image"></v-img>
-      <div class="d-flex justify-center align-center mt-2">
-        <wButton class="mx-2" size="x-small" @click="goToBuy(collectible.id)" >Create Purchase Order</wButton>
-      </div>
+      <wButton class="my-3" size="x-small" @click="goToBuy(collectible.id)">
+        <div class="d-flex justify-center">
+          <img
+            src="/images/buttons/btn-icon-buy.svg"
+            class="mx-1  align-self-center"
+            height="12"
+          />
+          <div class="align-self-center">Create Buy Order</div>
+        </div>
+      </wButton>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-import GameText from '@/lib/components/ui/Utils/GameText';
-import Collectibles from '@/lib/eth/Collectibles';
-import wGOLD from '@/lib/eth/wGOLD';
-import wButton from '@/lib/components/ui/Utils/wButton';
+import GameText from "@/lib/components/ui/Utils/GameText";
+import Collectibles from "@/lib/eth/Collectibles";
+import wGOLD from "@/lib/eth/wGOLD";
+import wButton from "@/lib/components/ui/Utils/wButton";
 
 export default {
-  props: ['collectible', 'myCollection'],
+  props: ["collectible", "myCollection"],
 
   components: {
     GameText,
-    wButton
+    wButton,
   },
 
   data() {
@@ -39,19 +46,19 @@ export default {
 
   computed: {
     account() {
-      return this.$store.getters['user/account'];
+      return this.$store.getters["user/account"];
     },
 
     addresses() {
-      return this.$store.getters['user/addresses'];
+      return this.$store.getters["user/addresses"];
     },
 
     networkInfo() {
-      return this.$store.getters['user/networkInfo'];
+      return this.$store.getters["user/networkInfo"];
     },
 
     currentBlockNumber() {
-      return this.$store.getters['user/currentBlockNumber'];
+      return this.$store.getters["user/currentBlockNumber"];
     },
   },
 
@@ -85,14 +92,20 @@ export default {
         const collectibles = new Collectibles(this.collectible.contractAddress);
         const wgold = new wGOLD(this.addresses.wGOLD);
 
-        this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
+        this.isApproved = await wgold.hasAllowance(
+          this.account,
+          this.collectible.contractAddress
+        );
 
         if (!this.collectible.isGift) {
           this.supply = await collectibles.getMaxSupply(this.collectible.id);
           this.remaining = await collectibles.getRemaining(this.collectible.id);
         }
 
-        this.userAmount = await collectibles.balanceOf(this.account, this.collectible.id);
+        this.userAmount = await collectibles.balanceOf(
+          this.account,
+          this.collectible.id
+        );
       } catch (e) {
         console.log(e);
       } finally {

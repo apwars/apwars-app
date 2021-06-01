@@ -21,11 +21,18 @@
         <small class="remaining">Your Amount: {{ userAmount }}</small>
         <div>
           <wButton
-            class="mx-2"
+            class="mx-1"
             size="x-small"
             @click="goToSell(collectible.id)"
           >
-            Create Sell Order
+            <div class="d-flex justify-center">
+              <img
+                src="/images/buttons/btn-icon-sell.svg"
+                class="mx-1  align-self-center"
+                height="12"
+              />
+              <div class="align-self-center">Create Sell Order</div>
+            </div>
           </wButton>
         </div>
       </div>

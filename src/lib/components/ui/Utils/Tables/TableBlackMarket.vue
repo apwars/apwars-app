@@ -17,15 +17,27 @@
       :items="listMarket"
       :search="search"
       :items-per-page="itemsPerPage"
-      :server-items-length="totalItems"
       :loading="isLoading"
       :loading-text="loadingText"
       @update:page="loadData"
     >
+      <template v-slot:no-results>
+        <div>
+          <div class="my-3">No matching records found</div>
+          <wButton class="my-3" size="x-small" @click="createOrder()">
+            <img
+              :src="`/images/buttons/btn-icon-${typeOrder}.svg`"
+              class="mx-1 align-self-center"
+              :height="getSizeIcon(type)"
+            />
+            Create {{ typeOrder === "buy" ? "Buy" : "Sell" }} Order
+          </wButton>
+        </div>
+      </template>
       <template v-slot:[`item.sender`]="{ item }">
         <v-address :address="item.sender" link tooltip></v-address>
       </template>
-      <template v-slot:[`item.nft`]="{ item }">
+      <template v-slot:[`item.nft.title`]="{ item }">
         <div class="d-flex">
           <img
             :src="item.nft.image"
@@ -38,7 +50,7 @@
           </span>
         </div>
       </template>
-      <template v-slot:[`item.amount`]="{ item }">
+      <template v-slot:[`item.amountFormatted`]="{ item }">
         <div class="d-flex">
           <img
             src="/images/wgold.png"
@@ -48,8 +60,9 @@
           />
           <amount
             class="align-self-center"
-            :amount="item.amountOrder"
+            :amount="item.amountFormatted"
             decimals="2"
+            formatted
             tooltip
           />
         </div>
@@ -101,6 +114,8 @@ import ConfirmOrderGameItem from "@/lib/components/ui/Modals/ConfirmOrderGameIte
 import RaskelModal from "@/lib/components/ui/Modals/RaskelModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
+import Convert from "@/lib/helpers/Convert";
+
 import { getCollectibles } from "@/data/Collectibles";
 
 import MarketNFTS from "@/lib/eth/MarketNFTS.js";
@@ -137,10 +152,10 @@ export default {
           text: "Player",
           value: "sender",
         },
-        { text: "Game Item", value: "nft" },
+        { text: "Game Item", value: "nft.title" },
         { text: "Type", value: "nft.typeDesc" },
-        { text: "Price/Unit", value: "amount" },
-        { text: "", value: "action" },
+        { text: "Price/Unit", value: "amountFormatted" },
+        { text: "", value: "action", sortable: false },
       ],
       btnActionWidth: "100%",
     };
@@ -170,6 +185,7 @@ export default {
           item.orderTypeDesc = this.typeEnum === "1" ? "buy" : "sell";
           item.amountOrder =
             this.typeEnum === "0" ? item.amount : item.totalAmount;
+          item.amountFormatted = Convert.fromWei(item.amountOrder);
           item.nft = getCollectibles().find(
             (collectible) =>
               collectible.id.toString() === item.tokenId.toString()
@@ -177,6 +193,9 @@ export default {
           return item;
         }
       });
+    },
+    typeOrder() {
+      return this.type === "buy" ? "sell" : "buy";
     },
     typeEnum() {
       return this.type === "buy" ? "0" : "1";
@@ -203,7 +222,6 @@ export default {
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
-
     async loadData(page) {
       try {
         page = page || 1;
@@ -221,9 +239,11 @@ export default {
       } finally {
         this.isLoading = false;
         this.$nextTick(() => {
-          this.btnActionWidth = `${document.querySelector(
-            ".v-data-table__mobile-row"
-          ).offsetWidth - 50}px`;
+          if (document.querySelector(".v-data-table__mobile-row")) {
+            this.btnActionWidth = `${document.querySelector(
+              ".v-data-table__mobile-row"
+            ).offsetWidth - 50}px`;
+          }
         });
       }
     },
@@ -323,6 +343,12 @@ export default {
       });
 
       return;
+    },
+    createOrder() {
+      if (this.type === "sell") {
+        return this.$router.push("/game-items");
+      }
+      return this.$router.push("/inventory");
     },
   },
 };
