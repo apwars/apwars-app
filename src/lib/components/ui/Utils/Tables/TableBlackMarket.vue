@@ -48,6 +48,13 @@
           </span>
         </div>
       </template>
+      <template v-slot:[`item.nft.quantity`]="{ item }">
+        <div class="d-flex">
+          <span class="ml-1 align-self-center">
+            <!-- {{ item.nft.quantity }} -->
+          </span>
+        </div>
+      </template>
       <template v-slot:[`item.amountFormatted`]="{ item }">
         <div class="d-flex">
           <amount
@@ -199,9 +206,6 @@ export default {
       return this.type === 'sell'
         ? '/images/buttons/btn-icon-sell.svg'
         : '/images/buttons/btn-icon-buy.svg';
-    },
-    route() {
-      return this.type === 'sell' ? '/inventory' : '/game-items';
     },
     buyerOrSeller() {
       return this.type === 'sell' ? 'Seller' : 'Buyer';
