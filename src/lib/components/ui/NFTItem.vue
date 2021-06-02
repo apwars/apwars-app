@@ -1,17 +1,21 @@
 <template>
-  <v-card class="mx-auto" width="200" elevation="0">
-    <v-card-text class="text-center">
-      <v-img width="200" :src="collectible.image"></v-img>
-      <wButton class="my-3" size="x-small" @click="goToBuy(collectible.id)">
-        <div class="d-flex justify-center">
-          <img
-            src="/images/buttons/btn-icon-buy.svg"
-            class="mx-1  align-self-center"
-            height="12"
-          />
-          <div class="align-self-center">Create Buy Order</div>
-        </div>
-      </wButton>
+  <v-card class="mx-auto" width="300" elevation="0">
+    <v-card-text>
+      <v-layout justify-center align-center>
+        <v-flex shrink class="text-center">
+          <v-img width="200" :src="collectible.image"></v-img>
+          <wButton class="my-3" @click="goToBuy(collectible.id)">
+            <div class="d-flex justify-center  px-2">
+              <img
+                src="/images/buttons/btn-icon-buy.svg"
+                class="mx-1  align-self-center"
+                height="12"
+              />
+              <div class="align-self-center">Buy Order</div>
+            </div>
+          </wButton>
+        </v-flex>
+      </v-layout>
     </v-card-text>
   </v-card>
 </template>

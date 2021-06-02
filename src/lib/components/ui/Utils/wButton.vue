@@ -29,7 +29,7 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
-  props: ["amount", "actived", "size", "disabled"],
+  props: ["amount", "actived", "size", "disabled", "width"],
 
   data() {
     return {

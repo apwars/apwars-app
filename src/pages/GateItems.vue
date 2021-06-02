@@ -44,12 +44,12 @@
       <v-tabs-items v-model="tab">
         <v-tab-item>
           <v-card flat>
-            <v-row dense>
+            <v-row>
               <v-col
                 v-for="collectible in collectibles"
                 :key="collectible.id"
-                cols="12"
-                md="4"
+                sm="12"
+                md="6"
                 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
               >
                 <nft-item :collectible="collectible" />
@@ -64,7 +64,7 @@
 
         <v-tab-item>
           <v-card flat>
-            <v-row dense>
+            <v-row>
               <v-col
                 v-for="gameItem in gameItems"
                 :key="gameItem.id"
