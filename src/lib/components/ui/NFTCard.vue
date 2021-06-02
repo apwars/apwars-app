@@ -13,10 +13,6 @@
         "
       ></v-img>
       <game-text>{{ collectible.title }}</game-text>
-      <item-price
-        v-if="!collectible.isGift"
-        :price="collectible.parameters.price"
-      />
       <div v-if="myCollection" class="d-block">
         <small class="remaining">Your Amount: {{ userAmount }}</small>
         <div>

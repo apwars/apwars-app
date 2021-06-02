@@ -12,36 +12,29 @@
     <v-row dense>
       <v-col dense cols="3">
         <div class="text-center">
-          <v-img
-            class="d-flex"
-            width="100%"
-            :src="nftCollectible.nft.image"
-          ></v-img>
+          <v-img class="d-flex" width="100%" :src="nftCollectible.nft.image"></v-img>
         </div>
       </v-col>
 
       <v-col dense cols="9">
         <div>
           <game-text-h2>{{ nftCollectible.nft.title }}</game-text-h2>
-          <h4 class="mt-3">
+          <h4 class="mt-3 d-flex">
             {{ descriptionOrder }}
             <amount
-              class="align-self-center"
+              class="align-self-center mr-1"
               :amount="nftCollectible.amountOrder"
               decimals="2"
               tooltip
+              title="wGOLD"
             />
-            wGold for this Game Item.
+            for this Item.
+          </h4>
+          <h4 class="mt-1 d-flex">
+            {{ confirmOrder }}
           </h4>
         </div>
-        <v-alert
-          v-if="!isBalanceItem"
-          class="my-2"
-          outlined
-          type="warning"
-          border="left"
-          dense
-        >
+        <v-alert v-if="!isBalanceItem" class="my-2" outlined type="warning" border="left" dense>
           You do not have balance to execute this order
         </v-alert>
       </v-col>
@@ -50,18 +43,18 @@
 </template>
 
 <script>
-import Amount from "@/lib/components/ui/Utils/Amount";
-import wButton from "@/lib/components/ui/Utils/wButton";
-import GameTextH2 from "@/lib/components/ui/Utils/GameTextH2";
-import ModalWood from "@/lib/components/ui/Modals/Templates/Wood";
+import Amount from '@/lib/components/ui/Utils/Amount';
+import wButton from '@/lib/components/ui/Utils/wButton';
+import GameTextH2 from '@/lib/components/ui/Utils/GameTextH2';
+import ModalWood from '@/lib/components/ui/Modals/Templates/Wood';
 
-import Convert from "@/lib/helpers/Convert";
+import Convert from '@/lib/helpers/Convert';
 
-import Collectibles from "@/lib/eth/Collectibles";
-import wGOLD from "@/lib/eth/wGOLD";
+import Collectibles from '@/lib/eth/Collectibles';
+import wGOLD from '@/lib/eth/wGOLD';
 
 export default {
-  props: ["open", "nftCollectible", "type", "isLoading"],
+  props: ['open', 'nftCollectible', 'type', 'isLoading'],
 
   components: {
     wButton,
@@ -80,34 +73,33 @@ export default {
 
   computed: {
     isConnected() {
-      return this.$store.getters["user/isConnected"];
+      return this.$store.getters['user/isConnected'];
     },
     account() {
-      return this.$store.getters["user/account"];
+      return this.$store.getters['user/account'];
     },
     addresses() {
-      return this.$store.getters["user/addresses"];
+      return this.$store.getters['user/addresses'];
     },
     isBalanceItem() {
-      if (this.type === "buy") {
-        const amountOrder = parseFloat(
-          Convert.fromWei(this.nftCollectible.amountOrder)
-        );
+      if (this.type === 'buy') {
+        const amountOrder = parseFloat(Convert.fromWei(this.nftCollectible.amountOrder));
         const balanceItem = parseFloat(Convert.fromWei(this.balanceItem));
-        return this.balanceItem === "0" || amountOrder > balanceItem
-          ? false
-          : true;
+        return this.balanceItem === '0' || amountOrder > balanceItem ? false : true;
       }
 
       return Convert.fromWei(this.balanceItem) >= 1;
     },
     titleOrder() {
-      return this.type === "buy"
-        ? "Confirm your purchase"
-        : "Confirm your sale";
+      return this.type === 'buy' ? 'Confirm your purchase' : 'Confirm your sale';
     },
     descriptionOrder() {
-      return this.type === "buy" ? "You will pay" : "You will receive";
+      return this.type === 'buy' ? 'You will pay' : 'You will receive';
+    },
+    confirmOrder() {
+      return this.type === 'buy'
+        ? 'Are you sure do you want to buy this item?'
+        : 'Are you sure do you want to sell this item?';
     },
   },
 
@@ -136,9 +128,7 @@ export default {
   methods: {
     initData() {
       if (this.open) {
-        this.collectibleContract = new Collectibles(
-          this.nftCollectible.nft.contractAddress
-        );
+        this.collectibleContract = new Collectibles(this.nftCollectible.nft.contractAddress);
         this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       }
     },
@@ -146,7 +136,7 @@ export default {
       this.balanceItem = await this.balaceItem(this.type);
     },
     close() {
-      this.$emit("close");
+      this.$emit('close');
     },
     async balaceItem(type) {
       const listBalance = {

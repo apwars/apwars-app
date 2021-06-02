@@ -17,8 +17,8 @@
             <v-col cols="9">
               <h2 class="ml-2">Raskel - The traveler</h2>
               <p class="ml-2 mt-1" style="font-size: 18px">
-                To create the purchase order, approval is required for the negotiator to find your
-                item!
+                To work for you and create this order, I need to receive approval to trade your
+                items. You can trust me, my fellow!
               </p>
             </v-col>
           </v-row>
