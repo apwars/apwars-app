@@ -177,7 +177,7 @@ export default {
 </script>
 <style>
 .bg-library {
-  background-image: url('/images/black-market/Library.png');
+  background-image: url('/images/black-market/Library.jpg');
   background-size: cover;
 }
 

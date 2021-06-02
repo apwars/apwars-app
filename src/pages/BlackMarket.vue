@@ -157,7 +157,7 @@ export default {
 
 <style scoped>
 .bg-market {
-  background-image: url('/images/black-market/Market.png');
+  background-image: url('/images/black-market/Market.jpg');
   background-size: cover;
 }
 .img-black-market {
