@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isConnected">
+    <div>
       <div class="bg-market">
         <v-container class="pb-0">
            <page-title 
@@ -8,6 +8,20 @@
               description="The black market is something profitable and interesting for those who want to strengthen their army or collect rare items that can only be found here." 
               image="/images/black-market/black-market.png"
             />
+        </v-container>
+        <v-container class="d-flex justify-space-around" :class="{'flex-column': $vuetify.breakpoint.smAndDown}">
+           <wButton width="180px" class="d-flex align-self-center" @click="goToCreateBuyOrder()">
+            <div class="d-flex justify-center">
+              <img src="/images/buttons/btn-icon-buy.svg" class="mx-1 align-self-center" height="12" />
+              <small class="align-self-center">Create buy order</small>
+            </div>
+          </wButton>
+          <wButton width="180px" class="d-flex align-self-center" :class="{'mt-1': $vuetify.breakpoint.smAndDown}" @click="goToCreateSellOrder()">
+            <div class="d-flex justify-center">
+              <img src="/images/buttons/btn-icon-sell.svg" class="mx-1 align-self-center" height="12" />
+              <small class="align-self-center">Create sell order</small>
+            </div>
+          </wButton>
         </v-container>
         <v-container class="py-0">
           <v-row>
@@ -31,6 +45,7 @@
 <script>
 import BlackMarketTable from "@/lib/components/ui/BlackMarket/BlackMarketTable";
 import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
+import wButton from "@/lib/components/ui/Buttons/wButton";
 
 import MarketNFTS from '@/lib/eth/MarketNFTS.js';
 
@@ -38,6 +53,7 @@ export default {
   components: {
     BlackMarketTable,
     PageTitle,
+    wButton,
   },
 
   data() {
@@ -90,6 +106,14 @@ export default {
   },
 
   methods: {
+    goToCreateBuyOrder() {
+      this.$router.push("/game-items");
+    },
+
+    goToCreateSellOrder() {
+      this.$router.push("/inventory");
+    },
+
     goToSwap() {
       this.$router.push('/exchange');
     },

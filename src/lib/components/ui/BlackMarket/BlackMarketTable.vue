@@ -1,122 +1,112 @@
 <template>
-  <v-card width="100%" class="card-table-black-market elevation-0">
-    <v-card-title>
-      <h4 class="text-h4" v-if="!isBuy">Items for sale</h4>
-      <h4 class="text-h4" v-else>Wanted items</h4>
-      <v-spacer></v-spacer>
-      
-    </v-card-title>
-    <v-card-text>
-      <wButton width="220px" v-if="!isBuy" class="d-flex align-self-center" @click="goToCreateBuyOrder()">
-        <div class="d-flex justify-center">
-          <img src="/images/buttons/btn-icon-buy.svg" class="mx-1 align-self-center" height="12" />
-          <div class="align-self-center">Create buy order</div>
-        </div>
-      </wButton>
-      <wButton width="220px" v-else class="d-flex align-self-center" @click="goToCreateSellOrder()">
-        <div class="d-flex justify-center">
-          <img src="/images/buttons/btn-icon-sell.svg" class="mx-1 align-self-center" height="12" />
-          <div class="align-self-center">Create sell order</div>
-        </div>
-      </wButton>
-      <v-data-table
-        class="table-black-market elevation-0"
-        :headers="headers"
-        :items="listMarket"
-        :items-per-page="itemsPerPage"
-        :loading="isLoading"
-        :loading-text="loadingText"
-        @update:page="loadData"
-      >
-        <template v-slot:[`item.sender`]="{ item }">
-          <v-address :address="item.sender" link tooltip></v-address>
-        </template>
-        <template v-slot:[`item.nft.title`]="{ item }">
-          <div class="d-flex">
-            <img
-              :src="item.nft.image"
-              class="align-self-center my-1"
-              width="30px"
-              :alt="item.nft.title"
-            />
-            <span class="ml-1 align-self-center">
-              {{ item.nft.title }}
-            </span>
-          </div>
-        </template>
-        <template v-slot:[`item.nft.quantity`]="{ item }">
-          <div class="d-flex">
-            <span class="ml-1 align-self-center">
-              <!-- {{ item.nft.quantity }} -->
-            </span>
-          </div>
-        </template>
-        <template v-slot:[`item.amountFormatted`]="{ item }">
-          <div class="d-flex">
-            <amount
-              class="align-self-center"
-              :amount="item.amountFormatted"
-              decimals="2"
-              formatted
-              tooltip
-            />
-          </div>
-        </template>
-        <template v-slot:[`item.action`]="{ item }">
-          <div class="d-flex justify-end my-2">
-            <wButton
-              v-if="item.sender.toLowerCase() == account.toLowerCase()"
-              @click="openModalCancelOrder(item)"
-            >
-              <div class="d-flex justify-center">
-                <v-icon color="red darken-2">
-                  mdi-close-circle-outline
-                </v-icon>
-                <div class="ml-1 align-self-center">cancel</div>
-              </div>
-            </wButton>
-            <wButton class="ml-2" @click="openModal(item)">
-              <div class="d-flex justify-center px-2">
-                <img
-                  :src="
-                    `/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`
-                  "
-                  class="mx-1 align-self-center"
-                  :height="getSizeIcon(item.orderTypeDesc)"
-                />
-                <div class="align-self-center">{{ item.orderTypeDesc }}</div>
-              </div>
-            </wButton>
-          </div>
-        </template>
-      </v-data-table>
-      <confirm-order-game-item
-        :open="openConfirmOrderGameItem"
-        :nftCollectible="nftCollectible"
-        :type="nftCollectible.orderTypeDesc"
-        :isLoading="isLoadingConfirm"
-        @confirm="executeOrder"
-        @close="openConfirmOrderGameItem = false"
-      >
-      </confirm-order-game-item>
+  <div>
+    <v-card width="100%" class="card-table-black-market elevation-0">
+      <v-card-title>
+        <h4 class="text-h4" v-if="!isBuy">Items for sale</h4>
+        <h4 class="text-h4" v-else>Wanted items</h4>
+        <v-spacer></v-spacer>
+        
+      </v-card-title>
+      <v-card-text>
+        <v-data-table
+          class="table-black-market elevation-0"
+          :headers="headers"
+          :items="listMarket"
+          :items-per-page="itemsPerPage"
+          :loading="isLoading"
+          :loading-text="loadingText"
+          @update:page="loadData"
+        >
+          <template v-slot:[`item.sender`]="{ item }">
+            <v-address :address="item.sender" link tooltip></v-address>
+          </template>
+          <template v-slot:[`item.nft.title`]="{ item }">
+            <div class="d-flex">
+              <img
+                :src="item.nft.image"
+                class="align-self-center my-1"
+                width="30px"
+                :alt="item.nft.title"
+              />
+              <span class="ml-1 align-self-center">
+                {{ item.nft.title }}
+              </span>
+            </div>
+          </template>
+          <template v-slot:[`item.nft.quantity`]="{ item }">
+            <div class="d-flex">
+              <span class="ml-1 align-self-center">
+                <!-- {{ item.nft.quantity }} -->
+              </span>
+            </div>
+          </template>
+          <template v-slot:[`item.amountFormatted`]="{ item }">
+            <div class="d-flex">
+              <amount
+                class="align-self-center"
+                :amount="item.amountFormatted"
+                decimals="2"
+                formatted
+                tooltip
+              />
+            </div>
+          </template>
+          <template v-slot:[`item.action`]="{ item }">
+            <div class="d-flex justify-end my-2">
+              <wButton
+                v-if="item.sender.toLowerCase() == account.toLowerCase()"
+                @click="openModalCancelOrder(item)"
+              >
+                <div class="d-flex justify-center">
+                  <v-icon color="red darken-2">
+                    mdi-close-circle-outline
+                  </v-icon>
+                  <div class="ml-1 align-self-center">cancel</div>
+                </div>
+              </wButton>
+              <wButton class="ml-2" @click="openModal(item)">
+                <div class="d-flex justify-center px-2">
+                  <img
+                    :src="
+                      `/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`
+                    "
+                    class="mx-1 align-self-center"
+                    :height="getSizeIcon(item.orderTypeDesc)"
+                  />
+                  <div class="align-self-center">{{ item.orderTypeDesc }}</div>
+                </div>
+              </wButton>
+            </div>
+          </template>
+        </v-data-table>
+        <confirm-order-game-item
+          :open="openConfirmOrderGameItem"
+          :nftCollectible="nftCollectible"
+          :type="nftCollectible.orderTypeDesc"
+          :isLoading="isLoadingConfirm"
+          @confirm="executeOrder"
+          @close="openConfirmOrderGameItem = false"
+        >
+        </confirm-order-game-item>
 
-      <raskel-modal
-        :open="openCancelOrderGameItem"
-        :isLoading="isLoadingCancel"
-        text="If you cancel this offer I will not receive any fee! Are you sure about that? I am working for nothing!"
-        @confirm="cancelOrder"
-        @close="openCancelOrderGameItem = false"
-      ></raskel-modal>
+        <raskel-modal
+          :open="openCancelOrderGameItem"
+          :isLoading="isLoadingCancel"
+          text="If you cancel this offer I will not receive any fee! Are you sure about that? I am working for nothing!"
+          @confirm="cancelOrder"
+          @close="openCancelOrderGameItem = false"
+        ></raskel-modal>
 
-      <raskel-modal
-        :open="approveRaskel"
-        :isLoading="isLoadingApproveRaskel"
-        text="To work for you and create this order, I need to receive approval to trade your items. You can trust me, my fellow!"
-        @confirm="approve(nftCollectible.orderTypeDesc)"
-        @close="approveRaskel = false"
-      ></raskel-modal>
-    </v-card-text>
-  </v-card>
+        <raskel-modal
+          :open="approveRaskel"
+          :isLoading="isLoadingApproveRaskel"
+          text="To work for you and create this order, I need to receive approval to trade your items. You can trust me, my fellow!"
+          @confirm="approve(nftCollectible.orderTypeDesc)"
+          @close="approveRaskel = false"
+        ></raskel-modal>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -368,13 +358,6 @@ export default {
 
       return;
     },
-    goToCreateBuyOrder() {
-      this.$router.push("/game-items");
-    },
-
-    goToCreateSellOrder() {
-      this.$router.push("/inventory");
-    },
 
     openModalCancelOrder(item) {
       this.nftCollectible = item;
@@ -404,6 +387,8 @@ export default {
         this.isLoadingCancel = false;
         this.openCancelOrderGameItem = false;
         ToastSnackbar.success(`Order canceled!`);
+
+        this.loadData();
       });
     },
   },
