@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isConnected">
+    <div v-if="isConnected" class="bg-market">
       <v-container class="pb-0">
         <div v-if="$vuetify.breakpoint.mdAndUp">
           <v-row class="d-flex">
@@ -8,16 +8,12 @@
               <h1 class="text-h1 text-wGOLD ">Black Market</h1>
 
               <p class="description-black-market">
-                The black market is something profitable and interesting for
-                those who want to strengthen their army or collect rare items
-                that can only be found here.
+                The black market is something profitable and interesting for those who want to
+                strengthen their army or collect rare items that can only be found here.
               </p>
             </v-col>
             <v-col cols="12" md="6" class="d-flex justify-end">
-              <img
-                src="/images/black-market/black-market.png"
-                alt="black-market"
-              />
+              <img src="/images/black-market/black-market.png" alt="black-market" />
             </v-col>
           </v-row>
         </div>
@@ -39,15 +35,13 @@
           <v-row dense>
             <v-col cols="12">
               <p class="description-black-market">
-                The black market is something profitable and interesting for
-                those who want to strengthen their army or collect rare items
-                that can only be found here.
+                The black market is something profitable and interesting for those who want to
+                strengthen their army or collect rare items that can only be found here.
               </p>
             </v-col>
           </v-row>
         </div>
       </v-container>
-
       <v-container class="py-0">
         <v-row>
           <v-col cols="12">
@@ -68,12 +62,12 @@
 </template>
 
 <script>
-import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
-import wButton from "@/lib/components/ui/Utils/wButton";
-import Amount from "@/lib/components/ui/Utils/Amount";
-import TableBlackMarket from "@/lib/components/ui/Utils/Tables/TableBlackMarket";
+import wGOLDButton from '@/lib/components/ui/Utils/wGOLDButton';
+import wButton from '@/lib/components/ui/Utils/wButton';
+import Amount from '@/lib/components/ui/Utils/Amount';
+import TableBlackMarket from '@/lib/components/ui/Utils/Tables/TableBlackMarket';
 
-import MarketNFTS from "@/lib/eth/MarketNFTS.js";
+import MarketNFTS from '@/lib/eth/MarketNFTS.js';
 
 export default {
   components: {
@@ -92,23 +86,23 @@ export default {
 
   computed: {
     isConnected() {
-      return this.$store.getters["user/isConnected"];
+      return this.$store.getters['user/isConnected'];
     },
 
     account() {
-      return this.$store.getters["user/account"];
+      return this.$store.getters['user/account'];
     },
 
     addresses() {
-      return this.$store.getters["user/addresses"];
+      return this.$store.getters['user/addresses'];
     },
 
     networkInfo() {
-      return this.$store.getters["user/networkInfo"];
+      return this.$store.getters['user/networkInfo'];
     },
 
     currentBlockNumber() {
-      return this.$store.getters["user/currentBlockNumber"];
+      return this.$store.getters['user/currentBlockNumber'];
     },
   },
 
@@ -134,7 +128,7 @@ export default {
 
   methods: {
     goToSwap() {
-      this.$router.push("/exchange");
+      this.$router.push('/exchange');
     },
 
     initData() {
@@ -161,6 +155,10 @@ export default {
 </script>
 
 <style scoped>
+.bg-market {
+  background-image: url('/images/black-market/Market.png');
+  background-size: cover;
+}
 .img-black-market {
   width: 100%;
 }
