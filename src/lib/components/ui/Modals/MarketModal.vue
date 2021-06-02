@@ -4,7 +4,7 @@
     :isLoading="isLoading"
     :disabledConfirm="isLoading"
     :disabledClose="isLoading"
-    title="Are you sure you want to delete this item?"
+    title="Are you sure you want to create this order?"
     @close="$emit('close')"
     @confirm="$emit('confirm')"
   >
@@ -36,6 +36,16 @@
             <h5 class="d-flex">
               Net amount:
               <amount :amount="amountInfo.amount" :decimals="2" token="wGOLD"/>
+            </h5>
+          </div>
+          <div v-else class="mt-2">
+            <h5 class="d-flex">
+              Transaction fee:
+              <amount :amount="amountInfo.feeAmount" :decimals="2" token="wGOLD"/>
+            </h5>
+            <h5 class="d-flex">
+              Total amount:
+              <amount :amount="amountInfo.totalAmount" :decimals="2" token="wGOLD"/>
             </h5>
           </div>
         </div>

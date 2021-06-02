@@ -4,7 +4,7 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import Items from "@/pages/Items.vue";
 import CreateOrders from "@/pages/Market/CreateOrders.vue";
 import ListItems from "@/pages/GateItems.vue";
-import MyItems from "@/pages/MyItems.vue";
+import Inventory from "@/pages/Inventory.vue";
 import WarStats from "@/pages/WarStats.vue";
 import Wars from "@/pages/Wars.vue";
 import Enlistment from "@/pages/Wars/Enlistment.vue";
@@ -39,7 +39,7 @@ export const routes = [
       {
         path: "/inventory",
         name: "/inventory",
-        component: MyItems
+        component: Inventory
       },
       {
         path: "/war-stats",

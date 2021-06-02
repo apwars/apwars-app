@@ -1,8 +1,9 @@
 <template>
   <v-card class="mx-auto" width="250" elevation="0">
-    <v-card-text class="text-center">
+    <v-card-text class="text-center d-flex flex-column justify-center">
       <v-img
         width="230"
+        height="356"
         class="cursor-pointer"
         @click="openInfo()"
         :src="collectible.image"
@@ -12,13 +13,13 @@
             : ''
         "
       ></v-img>
-      <game-text>{{ collectible.title }}</game-text>
+      <div style="height: 37px"><game-text>{{ collectible.title }}</game-text></div>
       <div v-if="myCollection" class="d-block">
         <small class="remaining">Your Amount: {{ userAmount }}</small>
-        <div>
+        <div class="mt-1">
           <wButton
+            width="170px"
             class="mx-1"
-            size="x-small"
             @click="goToSell(collectible.id)"
           >
             <div class="d-flex justify-center">
@@ -27,7 +28,7 @@
                 class="mx-1  align-self-center"
                 height="12"
               />
-              <div class="align-self-center">Create Sell Order</div>
+              <small class="align-self-center">Create Sell Order</small>
             </div>
           </wButton>
         </div>
