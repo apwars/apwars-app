@@ -12,31 +12,28 @@
           <game-title v-if="isBuy">
             <h3>Buy a {{ nftCollectible.typeDesc }}</h3>
             <p :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'">
-              Create a purchase order
+              Create a buy order
             </p>
           </game-title>
           <game-title v-else class="d-block">
             <h3>Sell your {{ nftCollectible.typeDesc }}</h3>
             <p :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'">
-              Create a sale order
+              Create a sell order
             </p>
           </game-title>
         </v-col>
       </v-row>
-      <v-row class="box-create-order ma-1 ma-sm-6 pb-6 pb-md-0">
+      <v-row class="box-create-order ma-1 ma-sm-6">
         <v-col cols="12" lg="3" md="3">
           <v-img class="mx-auto" max-width="150" :src="nftCollectible.image" />
           <div class="text-center">
-            <p
-              :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 14px' : 'font-size: 18px'"
-              class="remaining"
-            >
+            <p class="remaining">
               You have: {{ userAmount }} units
             </p>
           </div>
         </v-col>
         <v-col class="mt-n6 mt-md-0" cols="12" lg="9" md="9">
-          <game-text-h-1>{{ nftCollectible.title }}</game-text-h-1>
+          <game-text header="h4">{{ nftCollectible.title }}</game-text>
           <div>
             <p v-if="isBuy">
               How many wGOLD do you want to pay for this item?
@@ -58,6 +55,16 @@
                 </div>
               </template>
             </v-currency-field>
+            <v-alert
+              class="mt-3"
+              v-if="amount > amountwGOLD && buyOrSell === 'buy'"
+              outlined
+              type="warning"
+              border="left"
+              dense
+            >
+              Your balance is less than your offer.
+            </v-alert>
             <div
               :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'd-block justify-center text-center'"
             >
@@ -95,37 +102,17 @@
               </div>
             </div>
           </div>
-          <div
-            :class="
-              $vuetify.breakpoint.mdAndUp
-                ? 'd-flex justify-end'
-                : 'd-flex flex-column justify-center'
-            "
-          >
-            <wButton class="mb-2 mb-md-0 mr-0 mr-md-2" size="small" @click="$router.back()">
-              Go Back
-            </wButton>
-            <wButton v-if="isBuy" size="small" @click="openModal()" :disabled="disabledBuy">
+          <div class="d-flex flex-row-reverse mt-3 mb-n1">
+            <wButton v-if="isBuy" @click="openModal()" :disabled="disabledBuy">
               Buy
             </wButton>
-            <wButton v-else size="small" @click="openModal()" :disabled="disabledSell">
+            <wButton v-else @click="openModal()" :disabled="disabledSell">
               Sell
             </wButton>
+             <wButton class="mr-1" @click="$router.back()">
+              Go Back
+            </wButton>
           </div>
-          <v-row>
-            <v-col cols="12">
-              <v-alert
-                class="mt-3"
-                v-if="amount > amountwGOLD && buyOrSell === 'buy'"
-                outlined
-                type="warning"
-                border="left"
-                dense
-              >
-                Quantity is greater than the available value
-              </v-alert>
-            </v-col>
-          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -145,13 +132,14 @@
       @confirm="approve(buyOrSell)"
       @close="$router.back()"
       :isLoading="isLoadingRaskel"
+      text="To work for you and create this order, I need to receive approval to trade your items. You can trust me, my fellow!"
     ></raskel-modal>
   </div>
 </template>
 
 <script>
 import GameTitle from '@/lib/components/ui/Utils/GameTitle';
-import GameTextH1 from '@/lib/components/ui/Utils/GameTextH1';
+import GameText from '@/lib/components/ui/Utils/GameText';
 import wButton from '@/lib/components/ui/Buttons/wButton';
 import Collectibles from '@/lib/eth/Collectibles';
 import MarketNFTS from '@/lib/eth/MarketNFTS';
@@ -168,7 +156,7 @@ import { getCollectibles } from '@/data/Collectibles';
 export default {
   components: {
     GameTitle,
-    GameTextH1,
+    GameText,
     MarketModal,
     ItemPrice,
     RaskelModal,
@@ -396,7 +384,8 @@ export default {
       confirmTransaction.then(() => {
         this.amount = 0;
         this.calcFee();
-        ToastSnackbar.info(`Waiting confirmation Raskel - The Traveler`);
+        ToastSnackbar.info(`Waiting confirmation!`);
+        this.$router.push('/');
       });
 
       confirmTransaction.on('error', error => {
@@ -406,12 +395,12 @@ export default {
           return ToastSnackbar.error(error.message);
         }
         return ToastSnackbar.error(
-          'An error has occurred while error creating an order Raskel - The Traveller'
+          'An error has occurred while creating the order!'
         );
       });
 
       confirmTransaction.on('receipt', () => {
-        ToastSnackbar.success('Order successfully created Raskel - The Traveler');
+        ToastSnackbar.success('The order has been created successfully!');
         this.openConfirmOrderGameItem = false;
         this.isLoadingMarket = false;
       });

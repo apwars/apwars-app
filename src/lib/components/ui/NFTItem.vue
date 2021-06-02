@@ -4,7 +4,7 @@
       <v-layout justify-center align-center>
         <v-flex shrink class="text-center">
           <v-img width="200" :src="collectible.image"></v-img>
-          <wButton class="my-3" @click="goToBuy(collectible.id)">
+          <wButton width="165px" class="my-3" @click="goToBuy(collectible.id)">
             <div class="d-flex justify-center  px-2">
               <img
                 src="/images/buttons/btn-icon-buy.svg"

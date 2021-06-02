@@ -13,14 +13,12 @@
         <v-spacer></v-spacer>
         <w-button
           class="mr-1"
-          size="small"
           @click="$emit('close')"
           :disabled="disabledClose"
         >
           Close
         </w-button>
         <w-button
-          size="small"
           @click="$emit('confirm')"
           :disabled="disabledConfirm"
         >

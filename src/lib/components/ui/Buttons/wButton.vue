@@ -7,7 +7,7 @@
       @click="emitClick"
     >
       <div class="btn-bg"></div>
-      <div class="btn-bg-c">
+      <div class="btn-bg-c" :style="{width: this.width || '100px'}">
         <div class="label">
           <slot></slot>
         </div>
@@ -21,7 +21,7 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
-  props: ["amount", "actived", "size", "disabled"],
+  props: ["amount", "actived", "size", "disabled", "width"],
 
   data() {
     return {

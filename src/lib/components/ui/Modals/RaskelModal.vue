@@ -7,30 +7,35 @@
       width="556"
       style="box-shadow: none"
     >
-      <v-card>
-        <v-card-title> </v-card-title>
-        <v-card-text style="height: 340px">
-          <v-row class="d-flex content mt-2 align-center">
-            <v-col cols="3">
-              <img max-width="60" src="/images/black-market/Raskel.png" />
-            </v-col>
-            <v-col cols="9">
-              <h2 class="ml-2">Raskel - The traveler</h2>
-              <p class="ml-2 mt-1" style="font-size: 18px">
-                To work for you and create this order, I need to receive approval to trade your
-                items. You can trust me, my fellow!
-              </p>
-            </v-col>
-          </v-row>
+      <v-card style="height: 340px">
+        <v-card-title>Raskel - The traveler</v-card-title>
+        <v-card-text class="d-flex mt-2" v-if="$vuetify.breakpoint.mdAndUp">
+          <div class="d-flex align-self-center">
+            <img style="width: 150px; height: 150px" src="/images/black-market/Raskel.png" />
+            <p class="ml-2 mt-1 align-self-center content">
+              {{text}}
+            </p>
+          </div>
+        </v-card-text>
+        <v-card-text class="d-flex mt-2" v-else>
+          <div class="d-flex align-self-center">
+            <img style="width: 50px; height: 50px" src="/images/black-market/Raskel.png" />
+            <p class="ml-2 align-self-center content">
+              {{text}}
+            </p>
+          </div>
+        </v-card-text>
+        <v-card-actions class="mt-n1">
+          <v-spacer></v-spacer>
           <div class="d-flex justify-end" v-if="!hideOk">
-            <wButton size="small" @click="$emit('close')">
+            <wButton @click="$emit('close')">
               Back
             </wButton>
-            <wButton :disabled="isLoading" class="mr-2" size="small" @click="$emit('confirm')">
+            <wButton :disabled="isLoading" class="mr-2" @click="$emit('confirm')">
               {{ isLoading ? 'Waiting...' : 'Ok' }}
             </wButton>
           </div>
-        </v-card-text>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
@@ -39,32 +44,10 @@
 <script>
 import wButton from '@/lib/components/ui/Buttons/wButton';
 export default {
-  props: ['open', 'hideOk', 'isLoading'],
+  props: ['open', 'hideOk', 'isLoading', 'text'],
 
-  data() {
-    return {
-      address: '',
-    };
-  },
   components: {
     wButton,
-  },
-  computed: {
-    isConnected() {
-      return this.$store.getters['user/isConnected'];
-    },
-
-    account() {
-      return this.$store.getters['user/account'];
-    },
-
-    networkInfo() {
-      return this.$store.getters['user/networkInfo'];
-    },
-
-    addresses() {
-      return this.$store.getters['user/addresses'];
-    },
   },
 
   methods: {
@@ -91,16 +74,7 @@ export default {
 }
 
 .content {
-  height: 185px;
   color: #201813;
   font-size: 90%;
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.btn {
-  cursor: pointer;
-  width: 150px;
-  float: right;
 }
 </style>

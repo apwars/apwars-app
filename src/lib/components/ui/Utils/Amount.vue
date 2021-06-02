@@ -9,7 +9,7 @@
             height="25px"
             alt="wGOLD"
           />
-          <span>{{ computedAmount }}</span>
+          <span class="ml-1">{{ computedAmount }}</span>
           <span class="ml-1">{{ token }}</span>
         </span>
       </template>
