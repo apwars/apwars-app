@@ -3,7 +3,7 @@ import Router from "vue-router";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import Items from "@/pages/Items.vue";
 import CreateOrders from "@/pages/Market/CreateOrders.vue";
-import ListItems from "@/pages/ListItems.vue";
+import ListItems from "@/pages/GateItems.vue";
 import MyItems from "@/pages/MyItems.vue";
 import WarStats from "@/pages/WarStats.vue";
 import Wars from "@/pages/Wars.vue";
@@ -24,70 +24,70 @@ export const routes = [
       {
         path: "/",
         name: "/",
-        component: BlackMarket,
+        component: BlackMarket
       },
       {
         path: "/game-items/:nftId/:type-orders/new",
         name: "/game-items",
-        component: CreateOrders,
+        component: CreateOrders
       },
       {
         path: "/game-items",
         name: "/game-items",
-        component: ListItems,
+        component: ListItems
       },
       {
         path: "/inventory",
         name: "/inventory",
-        component: MyItems,
+        component: MyItems
       },
       {
         path: "/war-stats",
         name: "/war-stats",
-        component: WarStats,
+        component: WarStats
       },
       {
         path: "/wars",
         name: "/wars",
-        component: Wars,
+        component: Wars
       },
       {
         path: "/wars/:contractWar/enlistment",
         name: "/wars-enlistment",
-        component: Enlistment,
+        component: Enlistment
       },
       {
         path: "/wars/:contractWar/round-1",
         name: "/wars-round-1",
-        component: Round1,
+        component: Round1
       },
       {
         path: "/wars/:contractWar/round-2",
         name: "/wars-round-2",
-        component: Round2,
+        component: Round2
       },
       {
         path: "/wars/:contractWar/report",
         name: "/wars-report",
-        component: WarReport,
+        component: WarReport
       },
       {
         path: "/farms",
         beforeEnter() {
           redirectBlank("https://farms.apwars.farm");
-        },
+        }
       },
       {
         path: "/exchange",
         beforeEnter() {
           redirectBlank("https://exchange.apwars.farm");
-        },
-      },
-    ],
-  },
+        }
+      }
+    ]
+  }
 ];
 
-const redirectBlank = (url) => {
+const redirectBlank = url => {
   var a = document.createElement("a");
   a.target = "_blank";
   a.href = url;
@@ -100,7 +100,7 @@ const router = new Router({
   scrollBehavior() {
     return { x: 0, y: 0 };
   },
-  routes,
+  routes
 });
 
 // /**

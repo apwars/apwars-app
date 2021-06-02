@@ -2,23 +2,24 @@
   <div>
     <div class="bg-library">
       <v-container>
-        <div v-if="$vuetify.breakpoint.mdAndUp">
+        <div>
           <v-row class="d-flex">
-            <v-col cols="12" md="6" class="align-self-center">
-              <h1 class="text-h1 text-wGOLD ">Game Items</h1>
+            <v-col cols="6" class="align-self-center">
+              <game-text v-if="$vuetify.breakpoint.mdAndUp" header="h1">Game Items</game-text>
+              <game-text v-else header="h4">Game Items</game-text>
 
-              <p class="description-library">
+              <p>
                 Here you will find all the items in the game, it is essential to know them all to
                 assemble the best strategy!
               </p>
             </v-col>
-            <v-col cols="12" md="6" class="d-flex justify-end">
-              <img src="/images/black-market/book.png" alt="book" />
+            <v-col cols="6" class="d-flex justify-end">
+              <img :class="!$vuetify.breakpoint.mdAndUp ? 'img-library-mobile' : 'img-library-full'" src="/images/black-market/book.png" alt="book" />
             </v-col>
           </v-row>
         </div>
 
-        <div v-else>
+        <div v-if="false">
           <v-row dense class="d-flex">
             <v-col cols="6" class="align-self-center">
               <h1 class="h1-library">Game Items</h1>
@@ -43,52 +44,56 @@
         </div>
         <v-row class="d-flex">
           <v-col cols="12" md="12" lg="6" class="d-flex">
-            <wButton size="small" @click="select = 'game-items'" :actived="select === 'game-items'">
-              Game Items
-            </wButton>
-            <wButton
-              class="ml-3"
-              size="small"
-              @click="select = 'legendary'"
-              :actived="select === 'legendary'"
-            >
-              Collectibles
-            </wButton>
+            <v-tabs v-model="tab">
+              <v-tab>Game Items</v-tab>
+              <v-tab>Legendary Relics</v-tab>
+            </v-tabs>
           </v-col>
         </v-row>
       </v-container>
     </div>
     <v-container>
-      <v-row dense v-if="isLegendary">
-        <v-col
-          v-for="collectible in collectibles"
-          :key="collectible.id"
-          cols="12"
-          md="4"
-          :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
-        >
-          <nft-item :collectible="collectible" />
-          <div>
-            <game-text>{{ collectible.title }}</game-text>
-            <p style="font-size: 12px" v-html="collectible.description" />
-          </div>
-        </v-col>
-      </v-row>
-      <v-row dense v-else>
-        <v-col
-          v-for="gameItem in gameItems"
-          :key="gameItem.id"
-          cols="12"
-          md="4"
-          :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
-        >
-          <nft-item :collectible="gameItem" />
-          <div>
-            <game-text>{{ gameItem.title }}</game-text>
-            <p style="font-size: 12px" v-html="gameItem.description" />
-          </div>
-        </v-col>
-      </v-row>
+      <v-tabs-items v-model="tab">
+        <v-tab-item>
+          <v-card flat>
+            <v-row dense>
+              <v-col
+                v-for="collectible in collectibles"
+                :key="collectible.id"
+                cols="12"
+                md="4"
+                :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
+              >
+                <nft-item :collectible="collectible" />
+                <div>
+                  <game-text>{{ collectible.title }}</game-text>
+                  <p style="font-size: 12px" v-html="collectible.description" />
+                </div>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-tab-item>
+
+        <v-tab-item>
+          <v-card flat>
+            <v-row dense>
+              <v-col
+                v-for="gameItem in gameItems"
+                :key="gameItem.id"
+                cols="12"
+                md="4"
+                :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
+              >
+                <nft-item :collectible="gameItem" />
+                <div>
+                  <game-text>{{ gameItem.title }}</game-text>
+                  <p style="font-size: 12px" v-html="gameItem.description" />
+                </div>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
     </v-container>
   </div>
 </template>
@@ -115,7 +120,7 @@ export default {
       loading: true,
       gameItems: [],
       collectibles: [],
-      select: 'game-items',
+      tab: 0,
     };
   },
 
@@ -126,10 +131,6 @@ export default {
 
     account() {
       return this.$store.getters['user/account'];
-    },
-
-    isLegendary() {
-      return this.select === 'game-items' ? true : false;
     },
   },
 
@@ -175,48 +176,19 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .bg-library {
   background-image: url('/images/black-market/Library.png');
   background-size: cover;
 }
 
-.img-library {
-  width: 70%;
+.img-library-full {
+  width: 251px !important;
+  height: 251px !important;
 }
 
-.h1-library {
-  background: linear-gradient(180deg, #f6ff00 0%, #ffb800 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  font-family: PT Serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 78px;
-  line-height: 101px;
-}
-.description-library {
-  font-family: PT Serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 23px;
-}
-
-@media only screen and (max-width: 600px) {
-  .description-library {
-    font-size: 13px;
-    line-height: 16px;
-  }
-  .h1-library {
-    font-size: 32px;
-    line-height: 36px;
-  }
-}
-@media only screen and (max-width: 1280px) {
-  .dividing-line {
-    background: none;
-  }
+.img-library-mobile {
+  width: 160px !important;
+  height: 160px !important;
 }
 </style>
