@@ -2,23 +2,11 @@
   <div>
     <div class="bg-library">
       <v-container>
-        <div>
-          <v-row class="d-flex">
-            <v-col cols="6" class="align-self-center">
-              <game-text v-if="$vuetify.breakpoint.mdAndUp" header="h1">Game Items</game-text>
-              <game-text v-else header="h4">Game Items</game-text>
-
-              <p>
-                Here you will find all the items in the game, it is essential to know them all to
-                assemble the best strategy!
-              </p>
-            </v-col>
-            <v-col cols="6" class="d-flex justify-end">
-              <img :class="!$vuetify.breakpoint.mdAndUp ? 'img-library-mobile' : 'img-library-full'" src="/images/black-market/book.png" alt="book" />
-            </v-col>
-          </v-row>
-        </div>
-
+        <page-title 
+          title="Game Items" 
+          description="Here you will find all the items in the game, it is essential to know them all to assemble the best strategy!" 
+          image="/images/black-market/book.png"
+        />
         <div v-if="false">
           <v-row dense class="d-flex">
             <v-col cols="6" class="align-self-center">
@@ -52,7 +40,7 @@
         </v-row>
       </v-container>
     </div>
-    <v-container>
+    <v-container class="mt-n6"> 
       <v-tabs-items v-model="tab">
         <v-tab-item>
           <v-card flat>
@@ -106,6 +94,7 @@ import wButton from '@/lib/components/ui/Buttons/wButton';
 import { getLegendaryRelics } from '@/data/Collectibles/LegendaryRelics';
 import { getCollectibles } from '@/data/Collectibles';
 import GameText from '@/lib/components/ui/Utils/GameText';
+import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
 
 export default {
   components: {
@@ -113,6 +102,7 @@ export default {
     GameTitle,
     GameText,
     wButton,
+    PageTitle,
   },
 
   data() {
@@ -180,15 +170,5 @@ export default {
 .bg-library {
   background-image: url('/images/black-market/Library.png');
   background-size: cover;
-}
-
-.img-library-full {
-  width: 251px !important;
-  height: 251px !important;
-}
-
-.img-library-mobile {
-  width: 160px !important;
-  height: 160px !important;
 }
 </style>

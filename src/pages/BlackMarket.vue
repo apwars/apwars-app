@@ -3,45 +3,11 @@
     <div v-if="isConnected">
       <div class="bg-market">
         <v-container class="pb-0">
-          <div v-if="$vuetify.breakpoint.mdAndUp">
-            <v-row class="d-flex">
-              <v-col cols="12" md="6" class="align-self-center">
-                <h1 class="text-h1 text-wGOLD ">Black Market</h1>
-
-                <p class="description-black-market">
-                  The black market is something profitable and interesting for those who want to
-                  strengthen their army or collect rare items that can only be found here.
-                </p>
-              </v-col>
-              <v-col cols="12" md="6" class="d-flex justify-end">
-                <img src="/images/black-market/black-market.png" alt="black-market" />
-              </v-col>
-            </v-row>
-          </div>
-
-          <div v-else>
-            <v-row dense class="d-flex">
-              <v-col cols="5" class="align-self-center">
-                <h1 class="h1-black-market">Black Market</h1>
-              </v-col>
-              <v-col cols="7">
-                <img
-                  class="img-black-market"
-                  src="/images/black-market/black-market.png"
-                  alt="black-market"
-                />
-              </v-col>
-            </v-row>
-
-            <v-row dense>
-              <v-col cols="12">
-                <p class="description-black-market">
-                  The black market is something profitable and interesting for those who want to
-                  strengthen their army or collect rare items that can only be found here.
-                </p>
-              </v-col>
-            </v-row>
-          </div>
+           <page-title 
+              title="Black Market" 
+              description="The black market is something profitable and interesting for those who want to strengthen their army or collect rare items that can only be found here." 
+              image="/images/black-market/black-market.png"
+            />
         </v-container>
         <v-container class="py-0">
           <v-row>
@@ -64,12 +30,14 @@
 
 <script>
 import BlackMarketTable from "@/lib/components/ui/BlackMarket/BlackMarketTable";
+import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
 
 import MarketNFTS from '@/lib/eth/MarketNFTS.js';
 
 export default {
   components: {
     BlackMarketTable,
+    PageTitle,
   },
 
   data() {
