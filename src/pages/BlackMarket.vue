@@ -1,61 +1,56 @@
 <template>
   <div>
     <div v-if="isConnected">
-      <v-container class="pb-0">
-        <div v-if="$vuetify.breakpoint.mdAndUp">
-          <v-row class="d-flex">
-            <v-col cols="12" md="6" class="align-self-center">
-              <h1 class="text-h1 text-wGOLD ">Black Market</h1>
+      <div class="bg-market">
+        <v-container class="pb-0">
+          <div v-if="$vuetify.breakpoint.mdAndUp">
+            <v-row class="d-flex">
+              <v-col cols="12" md="6" class="align-self-center">
+                <h1 class="text-h1 text-wGOLD ">Black Market</h1>
 
-              <p class="description-black-market">
-                The black market is something profitable and interesting for
-                those who want to strengthen their army or collect rare items
-                that can only be found here.
-              </p>
-            </v-col>
-            <v-col cols="12" md="6" class="d-flex justify-end">
-              <img
-                src="/images/black-market/black-market.png"
-                alt="black-market"
-              />
-            </v-col>
-          </v-row>
-        </div>
+                <p class="description-black-market">
+                  The black market is something profitable and interesting for those who want to
+                  strengthen their army or collect rare items that can only be found here.
+                </p>
+              </v-col>
+              <v-col cols="12" md="6" class="d-flex justify-end">
+                <img src="/images/black-market/black-market.png" alt="black-market" />
+              </v-col>
+            </v-row>
+          </div>
 
-        <div v-else>
-          <v-row dense class="d-flex">
-            <v-col cols="5" class="align-self-center">
-              <h1 class="h1-black-market">Black Market</h1>
-            </v-col>
-            <v-col cols="7">
-              <img
-                class="img-black-market"
-                src="/images/black-market/black-market.png"
-                alt="black-market"
-              />
-            </v-col>
-          </v-row>
+          <div v-else>
+            <v-row dense class="d-flex">
+              <v-col cols="5" class="align-self-center">
+                <h1 class="h1-black-market">Black Market</h1>
+              </v-col>
+              <v-col cols="7">
+                <img
+                  class="img-black-market"
+                  src="/images/black-market/black-market.png"
+                  alt="black-market"
+                />
+              </v-col>
+            </v-row>
 
-          <v-row dense>
+            <v-row dense>
+              <v-col cols="12">
+                <p class="description-black-market">
+                  The black market is something profitable and interesting for those who want to
+                  strengthen their army or collect rare items that can only be found here.
+                </p>
+              </v-col>
+            </v-row>
+          </div>
+        </v-container>
+        <v-container class="py-0">
+          <v-row>
             <v-col cols="12">
-              <p class="description-black-market">
-                The black market is something profitable and interesting for
-                those who want to strengthen their army or collect rare items
-                that can only be found here.
-              </p>
+              <table-black-market type="sell"></table-black-market>
             </v-col>
           </v-row>
-        </div>
-      </v-container>
-
-      <v-container class="py-0">
-        <v-row>
-          <v-col cols="12">
-            <table-black-market type="sell"></table-black-market>
-          </v-col>
-        </v-row>
-      </v-container>
-
+        </v-container>
+      </div>
       <v-container>
         <v-row>
           <v-col cols="12">
@@ -70,7 +65,7 @@
 <script>
 import TableBlackMarket from "@/lib/components/ui/Utils/Tables/TableBlackMarket";
 
-import MarketNFTS from "@/lib/eth/MarketNFTS.js";
+import MarketNFTS from '@/lib/eth/MarketNFTS.js';
 
 export default {
   components: {
@@ -86,23 +81,23 @@ export default {
 
   computed: {
     isConnected() {
-      return this.$store.getters["user/isConnected"];
+      return this.$store.getters['user/isConnected'];
     },
 
     account() {
-      return this.$store.getters["user/account"];
+      return this.$store.getters['user/account'];
     },
 
     addresses() {
-      return this.$store.getters["user/addresses"];
+      return this.$store.getters['user/addresses'];
     },
 
     networkInfo() {
-      return this.$store.getters["user/networkInfo"];
+      return this.$store.getters['user/networkInfo'];
     },
 
     currentBlockNumber() {
-      return this.$store.getters["user/currentBlockNumber"];
+      return this.$store.getters['user/currentBlockNumber'];
     },
   },
 
@@ -128,7 +123,7 @@ export default {
 
   methods: {
     goToSwap() {
-      this.$router.push("/exchange");
+      this.$router.push('/exchange');
     },
 
     initData() {
@@ -155,6 +150,12 @@ export default {
 </script>
 
 <style scoped>
+.bg-market {
+  background-image: url('/images/black-market/Market.jpg');
+  background-size: cover;
+  background-position: top;
+
+}
 .img-black-market {
   width: 100%;
 }

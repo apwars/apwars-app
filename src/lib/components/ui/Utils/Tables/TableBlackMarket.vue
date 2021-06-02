@@ -1,21 +1,19 @@
 <template>
-  <v-card width="100%">
+  <v-card width="100%" class="card-table-black-market elevation-0">
     <v-card-title>
       <h4 class="text-h4">{{ titleTable }}</h4>
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
+      <wButton class="d-flex align-self-center" @click="!createOrder()">
+        <div class="d-flex justify-center">
+          <img :src="imageTable" class="mx-1 align-self-center" height="12" />
+          <div class="align-self-center">{{ buttonTable }}</div>
+        </div>
+      </wButton>
     </v-card-title>
     <v-data-table
-      class="table-black-market"
+      class="table-black-market elevation-0"
       :headers="headers"
       :items="listMarket"
-      :search="search"
       :items-per-page="itemsPerPage"
       :loading="isLoading"
       :loading-text="loadingText"
@@ -24,7 +22,7 @@
       <template v-slot:no-results>
         <div>
           <div class="my-3">No matching records found</div>
-          <wButton class="my-3" size="x-small" @click="createOrder()">
+          <wButton class="my-3" @click="createOrder()">
             <img
               :src="`/images/buttons/btn-icon-${typeOrder}.svg`"
               class="mx-1 align-self-center"
@@ -50,14 +48,15 @@
           </span>
         </div>
       </template>
+      <template v-slot:[`item.nft.quantity`]="{ item }">
+        <div class="d-flex">
+          <span class="ml-1 align-self-center">
+            <!-- {{ item.nft.quantity }} -->
+          </span>
+        </div>
+      </template>
       <template v-slot:[`item.amountFormatted`]="{ item }">
         <div class="d-flex">
-          <img
-            src="/images/wgold.png"
-            class="align-self-center"
-            width="30px"
-            alt="wGOLD"
-          />
           <amount
             class="align-self-center"
             :amount="item.amountFormatted"
@@ -165,16 +164,16 @@ export default {
       quantity: 1,
       isLoading: true,
       loadingText: "Loading... Please wait",
-      search: "",
       dataMarket: [],
       headers: [
         {
           text: "Player",
           value: "sender",
-          width: "20%",
+          width: "15%",
         },
-        { text: "Game Item", value: "nft.title", width: "30%" },
+        { text: "Game Item", value: "nft.title", width: "25%" },
         { text: "Type", value: "nft.typeDesc", width: "15%" },
+        { text: "Unit", value: "nft.quantity", width: "10%" },
         { text: "Price/Unit", value: "amountFormatted", width: "15%" },
         { text: "", value: "action", sortable: false, width: "20%" },
       ],
@@ -224,6 +223,17 @@ export default {
     titleTable() {
       return this.type === "sell" ? "Items for sale" : "Wanted Items";
     },
+    buttonTable() {
+      return this.type === "sell" ? "Create sell order" : "Create buy order";
+    },
+    imageTable() {
+      return this.type === "sell"
+        ? "/images/buttons/btn-icon-sell.svg"
+        : "/images/buttons/btn-icon-buy.svg";
+    },
+    buyerOrSeller() {
+      return this.type === "sell" ? "Seller" : "Buyer";
+    },
   },
 
   watch: {
@@ -239,6 +249,7 @@ export default {
 
   methods: {
     initData() {
+      this.headers[0].text = this.buyerOrSeller;
       this.collectibleContract = new Collectibles(this.addresses.collectibles);
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
@@ -367,9 +378,9 @@ export default {
     },
     createOrder() {
       if (this.type === "sell") {
-        return this.$router.push("/game-items");
+        return this.$router.push("/inventory");
       }
-      return this.$router.push("/inventory");
+      return this.$router.push("/game-items");
     },
     openModalCancelOrder(item) {
       this.nftCollectible = item;
@@ -406,6 +417,11 @@ export default {
 </script>
 
 <style scoped>
+.card-table-black-market,
+.table-black-market {
+  background: transparent;
+}
+
 .table-black-market >>> .v-data-table__wrapper > table > tbody > tr > td,
 .table-black-market >>> .v-data-table__wrapper > table > thead > tr > td,
 .table-black-market >>> .v-data-table__wrapper > table > tfoot > tr > td {
