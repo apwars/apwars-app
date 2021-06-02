@@ -113,7 +113,7 @@ import GameModal from "@/lib/components/ui/Modals/GameModal";
 import ItemPrice from "@/lib/components/ui/Utils/ItemPrice";
 import Collectibles from "@/lib/eth/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
-import wButton from "@/lib/components/ui/Utils/wButton";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 
 export default {
   props: ["collectible", "myCollection"],

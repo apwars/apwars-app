@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import wButton from "@/lib/components/ui/Utils/wButton";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 import BigNumber from "bignumber.js";
 

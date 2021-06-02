@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import wButton from "@/lib/components/ui/Utils/wButton";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 export default {
   props: ["open", "isLoading"],
 

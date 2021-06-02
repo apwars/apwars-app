@@ -20,7 +20,7 @@
 import GameText from "@/lib/components/ui/Utils/GameText";
 import Collectibles from "@/lib/eth/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
-import wButton from "@/lib/components/ui/Utils/wButton";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 
 export default {
   props: ["collectible", "myCollection"],

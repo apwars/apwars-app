@@ -44,7 +44,7 @@
 
 <script>
 import Amount from '@/lib/components/ui/Utils/Amount';
-import wButton from '@/lib/components/ui/Utils/wButton';
+import wButton from '@/lib/components/ui/Buttons/wButton';
 import GameTextH2 from '@/lib/components/ui/Utils/GameTextH2';
 import ModalWood from '@/lib/components/ui/Modals/Templates/Wood';
 
