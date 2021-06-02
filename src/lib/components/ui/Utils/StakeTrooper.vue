@@ -115,7 +115,7 @@
 
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
-import wButton from "@/lib/components/ui/Utils/wButton";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 import StakeModal from "@/lib/components/ui/Modals/StakeModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 

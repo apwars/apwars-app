@@ -147,7 +147,7 @@
 
 <script>
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
-import wButton from "@/lib/components/ui/Utils/wButton";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 

@@ -152,7 +152,7 @@
 <script>
 import GameTitle from '@/lib/components/ui/Utils/GameTitle';
 import GameTextH1 from '@/lib/components/ui/Utils/GameTextH1';
-import wButton from '@/lib/components/ui/Utils/wButton';
+import wButton from '@/lib/components/ui/Buttons/wButton';
 import Collectibles from '@/lib/eth/Collectibles';
 import MarketNFTS from '@/lib/eth/MarketNFTS';
 import wGOLD from '@/lib/eth/wGOLD';

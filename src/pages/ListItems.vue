@@ -96,7 +96,7 @@
 <script>
 import NftItem from '@/lib/components/ui/NFTItem';
 import GameTitle from '@/lib/components/ui/Utils/GameTitle';
-import wButton from '@/lib/components/ui/Utils/wButton';
+import wButton from '@/lib/components/ui/Buttons/wButton';
 
 import { getLegendaryRelics } from '@/data/Collectibles/LegendaryRelics';
 import { getCollectibles } from '@/data/Collectibles';
