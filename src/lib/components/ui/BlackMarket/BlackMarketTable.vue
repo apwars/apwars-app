@@ -1,7 +1,7 @@
 <template>
   <v-card width="100%" class="card-table-black-market elevation-0">
     <v-card-title>
-      <h4 class="text-h4" v-if="isBuy">Items for sale</h4>
+      <h4 class="text-h4" v-if="!isBuy">Items for sale</h4>
       <h4 class="text-h4" v-else>Wanted items</h4>
       <v-spacer></v-spacer>
       
@@ -100,17 +100,18 @@
       >
       </confirm-order-game-item>
 
-      <cancel-order-game-item
+      <raskel-modal
         :open="openCancelOrderGameItem"
         :isLoading="isLoadingCancel"
+        text="If you cancel this offer I will not receive any fee! Are you sure about that? I am working for nothing!"
         @confirm="cancelOrder"
         @close="openCancelOrderGameItem = false"
-      >
-      </cancel-order-game-item>
+      ></raskel-modal>
 
       <raskel-modal
         :open="approveRaskel"
         :isLoading="isLoadingApproveRaskel"
+        text="To work for you and create this order, I need to receive approval to trade your items. You can trust me, my fellow!"
         @confirm="approve(nftCollectible.orderTypeDesc)"
         @close="approveRaskel = false"
       ></raskel-modal>
@@ -123,7 +124,6 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ConfirmOrderGameItem from "@/lib/components/ui/Modals/ConfirmOrderGameItem";
-import CancelOrderGameItem from "@/lib/components/ui/Modals/CancelOrderGameItem";
 import RaskelModal from "@/lib/components/ui/Modals/RaskelModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
@@ -142,7 +142,6 @@ export default {
     Amount,
     wButton,
     ConfirmOrderGameItem,
-    CancelOrderGameItem,
     RaskelModal,
   },
 
@@ -399,12 +398,12 @@ export default {
         );
       });
       confirmTransaction.on("transactionHash", () => {
-        ToastSnackbar.info(`Raskel - The traveler, waiting confirmation`);
+        ToastSnackbar.info(`Waiting confirmation!`);
       });
       confirmTransaction.on("receipt", () => {
         this.isLoadingCancel = false;
         this.openCancelOrderGameItem = false;
-        ToastSnackbar.success(`Raskel - The traveler, order canceled`);
+        ToastSnackbar.success(`Order canceled!`);
       });
     },
   },

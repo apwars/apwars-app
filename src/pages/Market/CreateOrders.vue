@@ -381,11 +381,10 @@ export default {
         this.account
       );
 
-      confirmTransaction.then(() => {
-        this.amount = 0;
-        this.calcFee();
-        ToastSnackbar.info(`Waiting confirmation!`);
-        this.$router.push('/');
+      confirmTransaction.on("transactionHash", () => {
+        ToastSnackbar.success('Waiting confirmation!');
+        this.openConfirmOrderGameItem = false;
+        this.isLoadingMarket = false;
       });
 
       confirmTransaction.on('error', error => {
@@ -403,6 +402,9 @@ export default {
         ToastSnackbar.success('The order has been created successfully!');
         this.openConfirmOrderGameItem = false;
         this.isLoadingMarket = false;
+
+        ToastSnackbar.info(`The order has been created successfully!`);
+        this.$router.push('/');
       });
     },
   },
@@ -427,7 +429,6 @@ export default {
 
 .box-create-order {
   margin: 20px auto !important;
-  width: 1280px;
   border-color: #966a3c;
   border-style: solid;
   border-width: 2px;
