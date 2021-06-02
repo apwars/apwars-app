@@ -1,12 +1,19 @@
 <template>
   <v-card width="100%" class="card-table-black-market elevation-0">
     <v-card-title>
-      <h4 class="text-h4">{{ titleTable }}</h4>
+      <h4 class="text-h4" v-if="isBuy">Items for sale</h4>
+      <h4 class="text-h4" v-else>Wanted items</h4>
       <v-spacer></v-spacer>
-      <wButton class="d-flex align-self-center" @click="!createOrder()">
+      <wButton v-if="!isBuy" class="d-flex align-self-center" @click="goToCreateBuyOrder()">
         <div class="d-flex justify-center">
-          <img :src="imageTable" class="mx-1 align-self-center" height="12" />
-          <div class="align-self-center">{{ buttonTable }}</div>
+          <img src="/images/buttons/btn-icon-buy.svg" class="mx-1 align-self-center" height="12" />
+          <div class="align-self-center">Create buy order</div>
+        </div>
+      </wButton>
+      <wButton v-else class="d-flex align-self-center" @click="goToCreateSellOrder()">
+        <div class="d-flex justify-center">
+          <img src="/images/buttons/btn-icon-sell.svg" class="mx-1 align-self-center" height="12" />
+          <div class="align-self-center">Create sell order</div>
         </div>
       </wButton>
     </v-card-title>
@@ -19,19 +26,6 @@
       :loading-text="loadingText"
       @update:page="loadData"
     >
-      <template v-slot:no-results>
-        <div>
-          <div class="my-3">No matching records found</div>
-          <wButton class="my-3" @click="createOrder()">
-            <img
-              :src="`/images/buttons/btn-icon-${typeOrder}.svg`"
-              class="mx-1 align-self-center"
-              :height="getSizeIcon(type)"
-            />
-            Create {{ typeOrder === "buy" ? "Buy" : "Sell" }} Order
-          </wButton>
-        </div>
-      </template>
       <template v-slot:[`item.sender`]="{ item }">
         <v-address :address="item.sender" link tooltip></v-address>
       </template>
@@ -214,24 +208,16 @@ export default {
         }
       });
     },
-    typeOrder() {
-      return this.type === "buy" ? "sell" : "buy";
+
+    isBuy() {
+      return this.type === "buy";
     },
+
     typeEnum() {
       return this.type === "buy" ? "0" : "1";
     },
-    titleTable() {
-      return this.type === "sell" ? "Items for sale" : "Wanted Items";
-    },
-    buttonTable() {
-      return this.type === "sell" ? "Create sell order" : "Create buy order";
-    },
-    imageTable() {
-      return this.type === "sell"
-        ? "/images/buttons/btn-icon-sell.svg"
-        : "/images/buttons/btn-icon-buy.svg";
-    },
-    buyerOrSeller() {
+    
+    playerColumnTitle() {
       return this.type === "sell" ? "Seller" : "Buyer";
     },
   },
@@ -249,11 +235,12 @@ export default {
 
   methods: {
     initData() {
-      this.headers[0].text = this.buyerOrSeller;
+      this.headers[0].text = this.playerColumnTitle;
       this.collectibleContract = new Collectibles(this.addresses.collectibles);
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
+    
     async loadData(page) {
       try {
         page = page || 1;
@@ -279,9 +266,11 @@ export default {
         });
       }
     },
+    
     getSizeIcon(icon) {
       return icon === "swap" ? 16 : 12;
     },
+
     async openModal(item) {
       this.nftCollectible = item;
       const isApproved = await this.isApprovedContract(
@@ -296,6 +285,7 @@ export default {
         this.openConfirmOrderGameItem = true;
       }
     },
+    
     executeOrder() {
       this.isLoadingConfirm = true;
       const textType =
@@ -376,12 +366,14 @@ export default {
 
       return;
     },
-    createOrder() {
-      if (this.type === "sell") {
-        return this.$router.push("/inventory");
-      }
-      return this.$router.push("/game-items");
+    goToCreateBuyOrder() {
+      this.$router.push("/game-items");
     },
+
+    goToCreateSellOrder() {
+      this.$router.push("/inventory");
+    },
+
     openModalCancelOrder(item) {
       this.nftCollectible = item;
       this.isLoadingConfirm = false;

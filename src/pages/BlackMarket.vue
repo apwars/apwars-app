@@ -46,7 +46,7 @@
         <v-container class="py-0">
           <v-row>
             <v-col cols="12">
-              <table-black-market type="sell"></table-black-market>
+              <black-market-table type="sell"></black-market-table>
             </v-col>
           </v-row>
         </v-container>
@@ -54,7 +54,7 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <table-black-market type="buy"></table-black-market>
+            <black-market-table type="buy"></black-market-table>
           </v-col>
         </v-row>
       </v-container>
@@ -63,13 +63,13 @@
 </template>
 
 <script>
-import TableBlackMarket from "@/lib/components/ui/Utils/Tables/TableBlackMarket";
+import BlackMarketTable from "@/lib/components/ui/BlackMarket/BlackMarketTable";
 
 import MarketNFTS from '@/lib/eth/MarketNFTS.js';
 
 export default {
   components: {
-    TableBlackMarket,
+    BlackMarketTable,
   },
 
   data() {
