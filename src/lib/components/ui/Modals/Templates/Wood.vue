@@ -1,5 +1,5 @@
 <template>
-  <v-dialog content-class="wood" persistent :value="open" width="650px">
+  <v-dialog content-class="wood elevation-0" persistent :value="open" width="650px">
     <v-card v-if="open">
       <v-card-title class="my-2">
         <h3>{{ title }}</h3>

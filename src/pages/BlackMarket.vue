@@ -63,18 +63,12 @@
 </template>
 
 <script>
-import wGOLDButton from '@/lib/components/ui/Utils/wGOLDButton';
-import wButton from '@/lib/components/ui/Utils/wButton';
-import Amount from '@/lib/components/ui/Utils/Amount';
-import TableBlackMarket from '@/lib/components/ui/Utils/Tables/TableBlackMarket';
+import TableBlackMarket from "@/lib/components/ui/Utils/Tables/TableBlackMarket";
 
 import MarketNFTS from '@/lib/eth/MarketNFTS.js';
 
 export default {
   components: {
-    wGOLDButton,
-    Amount,
-    wButton,
     TableBlackMarket,
   },
 
@@ -159,6 +153,8 @@ export default {
 .bg-market {
   background-image: url('/images/black-market/Market.jpg');
   background-size: cover;
+  background-position: top;
+
 }
 .img-black-market {
   width: 100%;
