@@ -402,8 +402,6 @@ export default {
         ToastSnackbar.success('The order has been created successfully!');
         this.openConfirmOrderGameItem = false;
         this.isLoadingMarket = false;
-
-        ToastSnackbar.info(`The order has been created successfully!`);
         this.$router.push('/');
       });
     },

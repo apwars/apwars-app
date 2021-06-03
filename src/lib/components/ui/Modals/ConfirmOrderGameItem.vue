@@ -28,14 +28,11 @@
               tooltip
               title="wGOLD"
             />
-            for this Item.
-          </h4>
-          <h4 class="mt-1 d-flex">
-            {{ confirmOrder }}
+            for this item.
           </h4>
         </div>
         <v-alert v-if="!isBalanceItem" class="my-2" outlined type="warning" border="left" dense>
-          You do not have balance to execute this order
+          You do not have balance to execute this order.
         </v-alert>
       </v-col>
     </v-row>
@@ -91,15 +88,10 @@ export default {
       return Convert.fromWei(this.balanceItem) >= 1;
     },
     titleOrder() {
-      return this.type === 'buy' ? 'Confirm your purchase' : 'Confirm your sale';
+      return this.type === 'buy' ? 'Are you sure you want to buy this item?' : 'Are you sure you want to sell this item';
     },
     descriptionOrder() {
       return this.type === 'buy' ? 'You will pay' : 'You will receive';
-    },
-    confirmOrder() {
-      return this.type === 'buy'
-        ? 'Are you sure do you want to buy this item?'
-        : 'Are you sure do you want to sell this item?';
     },
   },
 

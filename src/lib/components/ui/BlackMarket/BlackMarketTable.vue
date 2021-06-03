@@ -36,7 +36,7 @@
           <template v-slot:[`item.nft.quantity`]="{ item }">
             <div class="d-flex">
               <span class="ml-1 align-self-center">
-                <!-- {{ item.nft.quantity }} -->
+                {{ item.nft.quantity }}
               </span>
             </div>
           </template>
@@ -159,7 +159,7 @@ export default {
         },
         { text: "Game Item", value: "nft.title", width: "25%" },
         { text: "Type", value: "nft.typeDesc", width: "15%" },
-        { text: "Unit", value: "nft.quantity", width: "10%" },
+        // { text: "Unit", value: "nft.quantity", width: "10%" },
         { text: "Price/Unit", value: "amountFormatted", width: "15%" },
         { text: "", value: "action", sortable: false, width: "20%" },
       ],
@@ -294,16 +294,18 @@ export default {
           return ToastSnackbar.error(error.message);
         }
         return ToastSnackbar.error(
-          "Raskel - The traveler, an error has occurred, please try again!"
+          "An error has occurred, please try again!"
         );
       });
+      
       confirmTransaction.on("transactionHash", () => {
         this.openConfirmOrderGameItem = false;
         this.isLoadingConfirm = false;
-        ToastSnackbar.info(`Raskel - The traveler, checking your ${textType}`);
+        ToastSnackbar.info(`Executing your order!`);
       });
+      
       confirmTransaction.on("receipt", () => {
-        ToastSnackbar.success(`Raskel - The traveler, successful ${textType}`);
+        ToastSnackbar.success(`The order has been executed successful!`);
       });
     },
     async isApprovedContract(type) {
