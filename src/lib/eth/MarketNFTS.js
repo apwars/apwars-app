@@ -30,11 +30,11 @@ export default class MarketNFTS {
   }
 
   getOrderIdBuy(orderIndex) {
-    return this.smc.methods.getOrderIdBuy(orderIndex).call();
+    return this.smc.methods.getBuyOrderId(orderIndex).call();
   }
 
   getOrderIdSell(orderIndex) {
-    return this.smc.methods.getOrderIdSell(orderIndex).call();
+    return this.smc.methods.getSellOrderId(orderIndex).call();
   }
 
   async getMarket(type, pageLimit, page) {
@@ -58,8 +58,8 @@ export default class MarketNFTS {
     const market = await Promise.all(promises);
 
     return {
-      data: market.filter((m) => m.orderStatus === "0"),
-      total: total,
+      data: market.filter(m => m.orderStatus === "0"),
+      total: total
     };
   }
 
@@ -107,6 +107,6 @@ export default class MarketNFTS {
   }
 
   cancelOrder(orderId, from) {
-    return this.smc.methods.cancel(orderId).send({ from });
+    return this.smc.methods.cancelOrder(orderId).send({ from });
   }
 }

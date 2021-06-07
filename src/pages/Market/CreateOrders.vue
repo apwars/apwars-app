@@ -36,9 +36,9 @@
           <game-text header="h4">{{ nftCollectible.title }}</game-text>
           <div>
             <p v-if="isBuy">
-              How many wGOLD do you want to pay for this item?
+              How much wGOLD do you want to pay for this item?
             </p>
-            <p v-else>How many wGOLD do you want for this item?</p>
+            <p v-else>How much wGOLD do you want for this item</p>
             <v-currency-field
               class="mb-2"
               outlined
@@ -86,7 +86,8 @@
             <div
               :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'd-block justify-center text-center'"
             >
-              <p>{{ totalAmountDescription }} for this item:</p>
+              <p v-if="isBuy">Total price for transaction:</p>
+              <p v-else>The buyer will pay for this item:</p>
               <div
                 :class="
                   $vuetify.breakpoint.mdAndUp ? 'd-flex' : 'd-flex justify-center text-center'
@@ -124,6 +125,8 @@
       :type="buyOrSell"
       :isLoading="isLoadingMarket"
       @confirm="createOrder"
+      :isWaiting="isWaiting"
+      :waitingMessage="waitingMessage"
       @close="openConfirmOrderGameItem = false"
     >
     </market-modal>
@@ -192,6 +195,9 @@ export default {
       remaining: 0,
       isLoadingRaskel: false,
       amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0 },
+
+      isWaiting: false,
+      waitingMessage: '',
     };
   },
 
@@ -221,14 +227,6 @@ export default {
 
     isBuy() {
       return this.buyOrSell === 'buy';
-    },
-
-    totalAmountDescription() {
-      if (this.isBuy) {
-        return 'Total price for transaction';
-      }
-
-      return 'The buyer will pay';
     },
 
     hintLabel() {
@@ -283,6 +281,7 @@ export default {
       this.collectible = getCollectibles().find(item => {
         return item.id.toString() === this.nftId.toString();
       });
+
       this.collectibleContract = new Collectibles(this.collectible.contractAddress);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
@@ -369,41 +368,55 @@ export default {
       this.amountInfo = await this.marketNFTS.getOrderAmountInfo(this.amount);
       this.amountInfo.amount = Convert.toWei(this.amount);
     },
+    
     async createOrder() {
-      this.isLoadingMarket = true;
-      const confirmTransaction = this.marketNFTS.createOrder(
-        this.buyOrSell === 'buy' ? '0' : '1',
-        this.collectible.contractAddress,
-        this.collectible.id,
-        this.addresses.wGOLD,
-        this.amount,
-        this.quantity,
-        this.account
-      );
+      try {
+        this.isLoadingMarket = true;
 
-      confirmTransaction.on("transactionHash", () => {
-        ToastSnackbar.success('Waiting confirmation!');
-        this.openConfirmOrderGameItem = false;
-        this.isLoadingMarket = false;
-      });
-
-      confirmTransaction.on('error', error => {
-        this.isLoadingMarket = false;
-
-        if (error.message) {
-          return ToastSnackbar.error(error.message);
-        }
-        return ToastSnackbar.error(
-          'An error has occurred while creating the order!'
+        const confirmTransaction = this.marketNFTS.createOrder(
+          this.buyOrSell === 'buy' ? '0' : '1',
+          this.collectible.contractAddress,
+          this.collectible.id,
+          this.addresses.wGOLD,
+          this.amount,
+          this.quantity,
+          this.account
         );
-      });
 
-      confirmTransaction.on('receipt', () => {
-        ToastSnackbar.success('The order has been created successfully!');
-        this.openConfirmOrderGameItem = false;
-        this.isLoadingMarket = false;
-        this.$router.push('/');
-      });
+        this.isWaiting = true;
+        this.waitingMessage = "Waiting for wallet approval...";
+
+        confirmTransaction.on("transactionHash", () => {
+          this.waitingMessage = "Waiting for the first blockchain confirmation...";
+        });
+
+        confirmTransaction.on('error', error => {
+          this.waitingMessage = "";
+          this.isWaiting = false;
+          this.isLoadingMarket = false;
+          this.openConfirmOrderGameItem = false;
+
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          
+          return ToastSnackbar.error(
+            'An error has occurred while creating the order!'
+          );
+        });
+
+        confirmTransaction.on('receipt', () => {
+          ToastSnackbar.success('The order has been created successfully!');
+          this.openConfirmOrderGameItem = false;
+          this.isLoadingMarket = false;
+          this.isWaiting = false;
+          
+          this.$router.push('/');
+        });
+      } catch (e) {
+        this.isWaiting = false;
+        this.waitingMessage = "";
+      }
     },
   },
 };

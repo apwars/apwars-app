@@ -48,6 +48,16 @@
               <amount :amount="amountInfo.totalAmount" :decimals="2" token="wGOLD"/>
             </h5>
           </div>
+
+          <div class="mt-2" v-if="isWaiting">
+            <v-progress-circular
+              :size="24"
+              :width="2"
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+            {{waitingMessage}}
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -58,12 +68,11 @@
 import Amount from '@/lib/components/ui/Utils/Amount';
 import wButton from '@/lib/components/ui/Buttons/wButton';
 import GameText from '@/lib/components/ui/Utils/GameText';
-import GameTextH2 from '@/lib/components/ui/Utils/GameTextH2';
 import GameTextH4 from '@/lib/components/ui/Utils/GameTextH4';
 import ModalWood from '@/lib/components/ui/Modals/Templates/Wood';
 
 export default {
-  props: ['open', 'nftCollectible', 'amountInfo', 'type', 'isLoading'],
+  props: ['open', 'nftCollectible', 'amountInfo', 'type', 'isLoading', 'isWaiting', 'waitingMessage'],
 
   components: {
     wButton,

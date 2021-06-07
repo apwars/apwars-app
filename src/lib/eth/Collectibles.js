@@ -44,5 +44,4 @@ export default class Collectibles {
   isApprovedForAll(from, address) {
     return this.smc.methods.isApprovedForAll(from, address).call();
   }
-
 }

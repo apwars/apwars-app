@@ -13,6 +13,13 @@
           <div class="d-flex align-self-center">
             <img style="width: 150px; height: 150px" src="/images/black-market/Raskel.png" />
             <p class="ml-2 mt-1 align-self-center content">
+              <v-progress-circular
+                  v-if="isWaiting"
+                  :size="24"
+                  :width="2"
+                  indeterminate
+                  color="secondary"
+                ></v-progress-circular>
               {{text}}
             </p>
           </div>
@@ -21,6 +28,13 @@
           <div class="d-flex align-self-center">
             <img style="width: 50px; height: 50px" src="/images/black-market/Raskel.png" />
             <p class="ml-2 align-self-center content">
+              <v-progress-circular
+                v-if="isWaiting"
+                :size="24"
+                :width="2"
+                indeterminate
+                color="secondary"
+              ></v-progress-circular>
               {{text}}
             </p>
           </div>
@@ -44,7 +58,7 @@
 <script>
 import wButton from '@/lib/components/ui/Buttons/wButton';
 export default {
-  props: ['open', 'hideOk', 'isLoading', 'text'],
+  props: ['open', 'hideOk', 'isLoading', 'text', 'isWaiting'],
 
   components: {
     wButton,

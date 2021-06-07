@@ -5,7 +5,7 @@
         <v-container class="pb-0">
            <page-title 
               title="Black Market" 
-              description="The black market is something profitable and interesting for those who want to strengthen their army or collect rare items that can only be found here." 
+              description="The Black Market is an interesting place for those who want to strengthen their army or collect rare items that can only be found here." 
               image="/images/black-market/black-market.png"
             />
         </v-container>
@@ -47,8 +47,6 @@ import BlackMarketTable from "@/lib/components/ui/BlackMarket/BlackMarketTable";
 import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
 import wButton from "@/lib/components/ui/Buttons/wButton";
 
-import MarketNFTS from '@/lib/eth/MarketNFTS.js';
-
 export default {
   components: {
     BlackMarketTable,
@@ -85,24 +83,7 @@ export default {
     },
   },
 
-  watch: {
-    isConnected() {
-      this.initData();
-      this.loadData();
-    },
-
-    account() {
-      this.loadData();
-    },
-
-    currentBlockNumber() {
-      this.loadData();
-    },
-  },
-
   mounted() {
-    this.initData();
-    this.loadData();
   },
 
   methods: {
@@ -116,26 +97,6 @@ export default {
 
     goToSwap() {
       this.$router.push('/exchange');
-    },
-
-    initData() {
-      if (!this.isConnected) {
-        return;
-      }
-      this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
-    },
-
-    async loadData() {
-      if (!this.isConnected) {
-        return;
-      }
-
-      try {
-      } catch (e) {
-        console.log(e);
-      } finally {
-        this.isLoading = false;
-      }
     },
   },
 };

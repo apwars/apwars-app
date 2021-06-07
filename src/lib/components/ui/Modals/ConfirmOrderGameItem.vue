@@ -34,6 +34,15 @@
         <v-alert v-if="!isBalanceItem" class="my-2" outlined type="warning" border="left" dense>
           You do not have balance to execute this order.
         </v-alert>
+        <div class="mt-2" v-if="isWaiting">
+          <v-progress-circular
+            :size="24"
+            :width="2"
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
+          {{waitingMessage}}
+        </div>
       </v-col>
     </v-row>
   </modal-wood>
@@ -51,7 +60,7 @@ import Collectibles from '@/lib/eth/Collectibles';
 import wGOLD from '@/lib/eth/wGOLD';
 
 export default {
-  props: ['open', 'nftCollectible', 'type', 'isLoading'],
+  props: ['open', 'nftCollectible', 'type', 'isLoading', 'isWaiting', 'waitingMessage'],
 
   components: {
     wButton,
@@ -88,7 +97,7 @@ export default {
       return Convert.fromWei(this.balanceItem) >= 1;
     },
     titleOrder() {
-      return this.type === 'buy' ? 'Are you sure you want to buy this item?' : 'Are you sure you want to sell this item';
+      return this.type === 'buy' ? 'Are you sure you want to buy this item?' : 'Are you sure you want to sell this item?';
     },
     descriptionOrder() {
       return this.type === 'buy' ? 'You will pay' : 'You will receive';
