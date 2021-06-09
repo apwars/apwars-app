@@ -3,11 +3,11 @@
     <div>
       <div class="bg-market">
         <v-container class="pb-0">
-           <page-title 
-              title="Black Market" 
-              description="The Black Market is an interesting place for those who want to strengthen their army or collect rare items that can only be found here." 
-              image="/images/black-market/black-market.png"
-            />
+          <page-title 
+            title="Black Market" 
+            description="The Black Market is an interesting place for those who want to strengthen their army or collect rare items that can only be found here." 
+            image="/images/black-market/black-market.png"
+          />
         </v-container>
         <v-container class="d-flex justify-space-around" :class="{'flex-column': $vuetify.breakpoint.smAndDown}">
            <wButton width="180px" class="d-flex align-self-center" @click="goToCreateBuyOrder()">
