@@ -1,45 +1,14 @@
 <template>
   <div>
-    <v-dialog
-      content-class="elevation-0"
-      persistent
-      :value="open"
-      width="556"
-      style="box-shadow: none"
-    >
-      <v-card>
-        <v-card-title>
-          {{ title }}
-        </v-card-title>
-        <v-card-text style="height: 340px">
-          <div class="content">
-            <slot></slot>
-          </div>
-          <div class="d-flex justify-end">
-            <wButton @click="close">
-              <div class="d-flex justify-center">
-                <img
-                  src="/images/buttons/btn-icon-send.svg"
-                  class="mx-1  align-self-center"
-                  height="12"
-                />
-                <small class="align-self-center">Send Item</small>
-              </div>
-            </wButton>
-            <wButton @click="close" class="ml-1">
-              <div class="d-flex justify-center">
-                <small class="align-self-center">Ok</small>
-              </div>
-            </wButton>
-          </div>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <template-modal-papyrus :open="open" :title="title" :width="700" :height="'220px'" @close="close" textConfirm="Send Item">
+      <slot> </slot>
+    </template-modal-papyrus>
   </div>
 </template>
 
 <script>
 import wButton from '@/lib/components/ui/Buttons/wButton';
+import TemplateModalPapyrus from '@/lib/components/ui/Modals/Templates/TemplateModalPapyrus';
 export default {
   props: ['open', 'title', 'hideOk'],
 
@@ -51,6 +20,7 @@ export default {
 
   components: {
     wButton,
+    TemplateModalPapyrus,
   },
 
   computed: {
@@ -69,6 +39,7 @@ export default {
     addresses() {
       return this.$store.getters['user/addresses'];
     },
+
   },
 
   methods: {
