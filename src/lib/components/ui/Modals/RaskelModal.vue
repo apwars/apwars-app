@@ -14,7 +14,7 @@
             <img style="width: 150px; height: 150px" src="/images/black-market/Raskel.png" />
             <p class="ml-2 mt-1 align-self-center content">
               <v-progress-circular
-                  v-if="isWaiting"
+                  v-if="isLoading"
                   :size="24"
                   :width="2"
                   indeterminate
@@ -29,7 +29,7 @@
             <img style="width: 50px; height: 50px" src="/images/black-market/Raskel.png" />
             <p class="ml-2 align-self-center content">
               <v-progress-circular
-                v-if="isWaiting"
+                v-if="isLoading"
                 :size="24"
                 :width="2"
                 indeterminate
@@ -58,7 +58,7 @@
 <script>
 import wButton from '@/lib/components/ui/Buttons/wButton';
 export default {
-  props: ['open', 'hideOk', 'isLoading', 'text', 'isWaiting'],
+  props: ['open', 'hideOk', 'isLoading', 'text'],
 
   components: {
     wButton,

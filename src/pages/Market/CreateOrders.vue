@@ -118,18 +118,49 @@
       </v-row>
     </v-container>
 
-    <market-modal
+    <game-item-wood-modal
       :open="openConfirmOrderGameItem"
-      :nftCollectible="nftCollectible"
-      :amountInfo="amountInfo"
-      :type="buyOrSell"
       :isLoading="isLoadingMarket"
-      @confirm="createOrder"
-      :isWaiting="isWaiting"
-      :waitingMessage="waitingMessage"
+      :waitingStage="waitingStage"
       @close="openConfirmOrderGameItem = false"
+      @confirm="createOrder"
+      :imageUrl="nftCollectible.image"
+      :gameItemTitle="nftCollectible.title"
+      title="Are you sure you want to create this order?"
     >
-    </market-modal>
+      <div v-if="isBuy" class="mt-1 d-flex">
+        <span>You will pay</span>
+        <amount :amount="amountInfo.totalAmount" :decimals="2" token="wGOLD" class="mr-1" />
+        for this item.
+      </div>
+      <span v-else class="mt-1 d-flex">
+        You will receive
+        <amount :amount="amountInfo.amount" :decimals="2" token="wGOLD" class="mr-1" />
+        for this item.
+      </span>
+
+      <div v-if="isBuy" class="mt-2">
+        <h5 class="d-flex">
+          Transaction fee:
+          <amount :amount="amountInfo.feeAmount" :decimals="2" token="wGOLD"/>
+        </h5>
+        <h5 class="d-flex">
+          Net amount:
+          <amount :amount="amountInfo.amount" :decimals="2" token="wGOLD"/>
+        </h5>
+      </div>
+      <div v-else class="mt-2">
+        <h5 class="d-flex">
+          Transaction fee:
+          <amount :amount="amountInfo.feeAmount" :decimals="2" token="wGOLD"/>
+        </h5>
+        <h5 class="d-flex">
+          Total amount:
+          <amount :amount="amountInfo.totalAmount" :decimals="2" token="wGOLD"/>
+        </h5>
+      </div>
+    </game-item-wood-modal>
+
     <raskel-modal
       :open="raskel"
       @confirm="approve(buyOrSell)"
@@ -151,7 +182,7 @@ import ToastSnackbar from '@/plugins/ToastSnackbar';
 import Convert from '@/lib/helpers/Convert';
 import Amount from '@/lib/components/ui/Utils/Amount';
 
-import MarketModal from '@/lib/components/ui/Modals/MarketModal';
+import GameItemWoodModal from '@/lib/components/ui/Modals/GameItemWoodModal';
 import RaskelModal from '@/lib/components/ui/Modals/RaskelModal';
 import ItemPrice from '@/lib/components/ui/Utils/ItemPrice';
 import { getCollectibles } from '@/data/Collectibles';
@@ -160,7 +191,7 @@ export default {
   components: {
     GameTitle,
     GameText,
-    MarketModal,
+    GameItemWoodModal,
     ItemPrice,
     RaskelModal,
     wButton,
@@ -196,8 +227,7 @@ export default {
       isLoadingRaskel: false,
       amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0 },
 
-      isWaiting: false,
-      waitingMessage: '',
+      waitingStage: 0,
     };
   },
 
@@ -383,16 +413,14 @@ export default {
           this.account
         );
 
-        this.isWaiting = true;
-        this.waitingMessage = "Waiting for wallet approval...";
+        this.waitingStage = 1;
 
         confirmTransaction.on("transactionHash", () => {
-          this.waitingMessage = "Waiting for the first blockchain confirmation...";
+          this.waitingStage = 2;
         });
 
         confirmTransaction.on('error', error => {
-          this.waitingMessage = "";
-          this.isWaiting = false;
+          this.waitingStage = 0;
           this.isLoadingMarket = false;
           this.openConfirmOrderGameItem = false;
 
@@ -409,13 +437,11 @@ export default {
           ToastSnackbar.success('The order has been created successfully!');
           this.openConfirmOrderGameItem = false;
           this.isLoadingMarket = false;
-          this.isWaiting = false;
           
           this.$router.push('/');
         });
       } catch (e) {
-        this.isWaiting = false;
-        this.waitingMessage = "";
+        this.waitingStage = 0;
       }
     },
   },

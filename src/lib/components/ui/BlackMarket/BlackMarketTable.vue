@@ -79,24 +79,35 @@
             </div>
           </template>
         </v-data-table>
-        <confirm-order-game-item
+        <game-item-wood-modal
           :open="isConfirmOrderModalOpen"
-          :nftCollectible="nftCollectible"
-          :type="nftCollectible.orderTypeDesc"
+          :imageUrl="nftCollectible.nft.image"
+          :gameItemTitle="nftCollectible.nft.title"
           :isLoading="isLoadingConfirm"
           @confirm="executeOrder"
           @close="isConfirmOrderModalOpen = false"
-          :isWaiting="isConfirmOrderWaiting"
-          :waitingMessage="confirmOrderWaitingMessage"
+          :waitingStage="confirmOrderWaitingStage"
+          :title="confirmOrderModalTitle"
         >
-        </confirm-order-game-item>
+          <h4 class="mt-3 d-flex">
+            <span v-if="isBuy">You will pay</span>
+            <span v-else>You will receive</span>
+            <amount
+              class="align-self-center mr-1"
+              :amount="nftCollectible.amountOrder"
+              decimals="2"
+              tooltip
+              title="wGOLD"
+            />
+            for this item.
+          </h4>
+        </game-item-wood-modal>
 
         <raskel-modal
           :open="openCancelOrderGameItem"
           :isLoading="isLoadingCancel"
           :text="raskelCancelText"
           @confirm="cancelOrder"
-          :isWaiting="isCancelWaiting"
           @close="openCancelOrderGameItem = false"
         ></raskel-modal>
 
@@ -106,7 +117,6 @@
           :text="raskelApproveText"
           @confirm="approve(nftCollectible.orderTypeDesc)"
           @close="isRaskelApprovalModalOpen = false"
-          :isWaiting="isApproveWaiting"
         ></raskel-modal>
       </v-card-text>
     </v-card>
@@ -117,7 +127,7 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import wButton from "@/lib/components/ui/Buttons/wButton";
-import ConfirmOrderGameItem from "@/lib/components/ui/Modals/ConfirmOrderGameItem";
+import GameItemWoodModal from "@/lib/components/ui/Modals/GameItemWoodModal";
 import RaskelModal from "@/lib/components/ui/Modals/RaskelModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
@@ -135,16 +145,13 @@ const RASKEL_WAITING_WALLET_APPROVAL = "I am waiting for the approval in your pr
 const RASKEL_CANCEL_WAITING_FIRST_CONFIRMATION = "Next time, think more about using my service and not waste my time with unnecessary orders! I am waiting for the first blockchain confirmation...";
 const RASKEL_WAITING_FIRST_CONFIRMATION = "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation...";
 
-const CONFIRM_MESSAGE_WAITING_FIRST_CONFIRMATION = "Waiting for the first blockchain confirmation...";
-const CONFIRM_MESSAGE_WAITING_WALLET_APPROVAL = "Waiting for the wallet approval...";
-
 export default {
   props: ["type"],
   components: {
     VAddress,
     Amount,
     wButton,
-    ConfirmOrderGameItem,
+    GameItemWoodModal,
     RaskelModal,
   },
 
@@ -152,7 +159,9 @@ export default {
     return {
       isRaskelApprovalModalOpen: false,
       isLoadingApproveRaskel: false,
-      nftCollectible: {},
+      nftCollectible: {
+        nft: {},
+      },
       isConfirmOrderModalOpen: false,
       openCancelOrderGameItem: false,
       isLoadingConfirm: false,
@@ -180,11 +189,8 @@ export default {
 
       raskelCancelText: RASKEL_DEFAULT_CANCEL_TEXT,
       raskelApproveText: RASKEL_DEFAULT_APPROVE_TEXT,
-      isApproveWaiting: false,
-      isCancelWaiting: false,
 
-      confirmOrderWaitingMessage: '',
-      isConfirmOrderWaiting: false,
+      confirmOrderWaitingStage: 0,
     };
   },
 
@@ -192,18 +198,37 @@ export default {
     isConnected() {
       return this.$store.getters['user/isConnected'];
     },
+    
     account() {
       return this.$store.getters["user/account"];
     },
+    
     addresses() {
       return this.$store.getters["user/addresses"];
     },
+    
     networkInfo() {
       return this.$store.getters["user/networkInfo"];
     },
+    
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
+
+    confirmOrderModalTitle() {
+      return !this.isBuy ? 'Are you sure you want to buy this item?' : 'Are you sure you want to sell this item?';
+    },
+
+    isBalanceItem() {
+      if (this.isBuy) {
+        const amountOrder = parseFloat(Convert.fromWei(this.nftCollectible.amountOrder));
+        const balanceItem = parseFloat(Convert.fromWei(this.balanceItem));
+        return this.balanceItem === '0' || amountOrder > balanceItem ? false : true;
+      }
+
+      return Convert.fromWei(this.balanceItem) >= 1;
+    },
+    
     listMarket() {
       if (this.dataMarket === undefined || this.dataMarket.length === 0) {
         return [];
@@ -310,12 +335,17 @@ export default {
         this.isConfirmOrderModalOpen = true;
       }
     },
+
+    setInitialStateConfirmOrder() {
+      this.isConfirmOrderModalOpen = false;
+      this.isLoadingConfirm = false;
+      this.confirmOrderWaitingStage = 0;
+    },
     
     executeOrder() {
       try {
         this.isLoadingConfirm = true;
-        this.isConfirmOrderWaiting = true;
-        this.confirmOrderWaitingMessage = CONFIRM_MESSAGE_WAITING_WALLET_APPROVAL;
+        this.confirmOrderWaitingStage = 1;
 
         const confirmTransaction = this.marketNFTS.executeOrder(
           this.nftCollectible.orderId,
@@ -324,9 +354,7 @@ export default {
         );
 
         confirmTransaction.on("error", (error) => {
-          this.isLoadingConfirm = false;
-          this.isConfirmOrderWaiting = false;
-          this.confirmOrderWaitingMessage = '';
+          this.setInitialStateConfirmOrder();
 
           if (error.message) {
             return ToastSnackbar.error(error.message);
@@ -337,19 +365,16 @@ export default {
         });
         
         confirmTransaction.on("transactionHash", () => {
-          this.confirmOrderWaitingMessage = CONFIRM_MESSAGE_WAITING_FIRST_CONFIRMATION;
+          this.confirmOrderWaitingStage = 2;
         });
         
         confirmTransaction.on("receipt", () => {
-          this.isConfirmOrderModalOpen = false;
-          this.isLoadingConfirm = false;
-          this.isConfirmOrderWaiting = false;
-          this.confirmOrderWaitingMessage = '';
+          this.setInitialStateConfirmOrder();
           
           ToastSnackbar.success(`The order has been executed successful!`);
         });
       } catch (e) {
-        this.isLoadingConfirm = false;
+        this.setInitialStateConfirmOrder();
       }
     },
     
@@ -389,13 +414,11 @@ export default {
       
       const confirmTransaction = listApproved[type]();
       this.isLoadingApproveRaskel = true;
-      this.isApproveWaiting = true;
       this.raskelApproveText = RASKEL_WAITING_WALLET_APPROVAL;
 
       confirmTransaction.on("error", (error) => {
         this.isLoadingApproveRaskel = false;
 
-        this.isApproveWaiting = false;
         this.raskelApproveText = RASKEL_DEFAULT_CANCEL_TEXT;
 
         if (error.message) {
@@ -413,7 +436,6 @@ export default {
       
       confirmTransaction.on("receipt", async () => {
         this.isLoadingApproveRaskel = false;
-        this.isApproveWaiting = false;
         this.raskelApproveText = RASKEL_DEFAULT_APPROVE_TEXT;
 
         this.openModal(this.nftCollectible);
@@ -428,10 +450,15 @@ export default {
       this.openCancelOrderGameItem = true;
     },
 
+    setInitialStateCancelOrder() {
+      this.isLoadingCancel = false;
+      this.raskelCancelText = RASKEL_DEFAULT_CANCEL_TEXT;
+      this.openCancelOrderGameItem = false;
+    },
+
     cancelOrder() {
       try {
         this.isLoadingCancel = true;
-        this.isCancelWaiting = true;
         this.raskelCancelText = RASKEL_WAITING_WALLET_APPROVAL;
 
         const confirmTransaction = this.marketNFTS.cancelOrder(
@@ -440,9 +467,7 @@ export default {
         );
 
         confirmTransaction.on("error", (error) => {
-          this.isLoadingCancel = false;
-          this.isCancelWaiting = false;
-          this.raskelCancelText = RASKEL_DEFAULT_CANCEL_TEXT;
+          this.setInitialStateCancelOrder();
           
           if (error.message) {
             return ToastSnackbar.error(error.message);
@@ -457,17 +482,14 @@ export default {
         });
 
         confirmTransaction.on("receipt", () => {
-          this.isLoadingCancel = false;
-          this.openCancelOrderGameItem = false;
-          this.isCancelWaiting = false;
-          this.raskelCancelText = RASKEL_DEFAULT_CANCEL_TEXT;
+          this.setInitialStateCancelOrder();
+          
           ToastSnackbar.success(`Order canceled!`);
 
           this.loadData();
         });
       } catch (e) {
-        this.isCancelWaiting = false;
-        this.raskelCancelText = RASKEL_DEFAULT_CANCEL_TEXT;
+          this.setInitialStateCancelOrder();
       }
     },
   },
