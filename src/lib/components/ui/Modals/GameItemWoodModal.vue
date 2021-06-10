@@ -12,6 +12,7 @@
       <v-col dense cols="3">
         <div class="text-center">
           <v-img class="d-flex" width="100%" :src="imageUrl"></v-img>
+          <small class="remaining">Your Amount: {{ amount }}</small>
         </div>
       </v-col>
       <v-col dense cols="9">
@@ -27,7 +28,9 @@
               color="primary"
             ></v-progress-circular>
             <span class="ml-1" v-if="waitingStage === 1">Waiting for the wallet approval...</span>
-            <span class="ml-1" v-if="waitingStage === 2">Waiting for the first blockchain confirmation...</span>
+            <span class="ml-1" v-if="waitingStage === 2"
+              >Waiting for the first blockchain confirmation...</span
+            >
           </div>
         </div>
       </v-col>
@@ -41,14 +44,15 @@ import ModalWood from '@/lib/components/ui/Modals/Templates/Wood';
 
 export default {
   props: [
-    'open', 
+    'open',
     'waitingStage',
     'title',
     'imageUrl',
     'gameItemTitle',
     'isLoading',
     'disabledConfirm',
-    ],
+    'amount',
+  ],
 
   components: {
     GameText,
@@ -56,3 +60,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.remaining {
+  color: #f6ff00;
+}
+</style>

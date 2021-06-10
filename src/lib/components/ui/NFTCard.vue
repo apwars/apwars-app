@@ -114,12 +114,13 @@
         showInfo = true;
       "
       @confirm="sendItem()"
-      :disabledConfirm="!qty"
+      :disabledConfirm="!qty && qty"
       :imageUrl="collectible.image"
       :gameItemTitle="collectible.title"
       :isLoading="isLoadingShowSendItem"
       :waitingStage="waitingStageShowSendItem"
       title="Are you sure you want to send this item?"
+      :amount="userAmount"
     >
       <div class="mt-2">
         <v-text-field
