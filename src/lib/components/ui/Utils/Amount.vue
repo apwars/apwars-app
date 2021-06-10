@@ -1,43 +1,45 @@
 <template>
-  <span v-if="isTooltip">
-    <v-tooltip top>
-      <template v-slot:activator="{ on, attrs }">
-        <span v-bind="attrs" v-on="on" class="d-flex">
+  <v-tooltip top>
+    <template v-slot:activator="{ on, attrs }">
+      <span v-bind="attrs" v-on="isTooltip ? on : false">
+        <span>
           <img
-            src="/images/wgold.png"
-            :class="$vuetify.breakpoint.mdAndUp ? 'ml-1' : ''"
-            height="25px"
+            v-if="isIcon"
+            :src="`/images/${symbol.toLowerCase()}.png`"
+            height="22px"
             alt="wGOLD"
+            class="image-symbol"
           />
-          <span class="ml-1">{{ computedAmount }}</span>
-          <span class="ml-1">{{ token }}</span>
+          <span> {{ computedAmount }} </span>
+          <span v-if="symbol"> {{ symbol }} </span>
         </span>
-      </template>
-      <span>{{ tooltipAmount }}</span>
-    </v-tooltip>
-  </span>
-  <div v-else class="d-flex">
-    <img
-      src="/images/wgold.png"
-      :class="$vuetify.breakpoint.mdAndUp ? 'ml-1' : ''"
-      height="25px"
-      alt="wGOLD"
-    />
-    <span> {{ computedAmount }} </span>
-    <span class="ml-1">{{ token }}</span>
-  </div>
+      </span>
+    </template>
+    <span>{{ tooltipAmount }}</span>
+  </v-tooltip>
 </template>
 
 <script>
-import Convert from '@/lib/helpers/Convert';
+import Convert from "@/lib/helpers/Convert";
 
 export default {
-  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'token'],
+  props: [
+    "amount",
+    "compact",
+    "formatted",
+    "decimals",
+    "approximate",
+    "tooltip",
+    "symbol",
+    "icon",
+  ],
 
   computed: {
     computedAmount() {
-      let numberAmount = this.amount || '0';
-      numberAmount = this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
+      let numberAmount = this.amount || "0";
+      numberAmount = this.isFormatted
+        ? numberAmount
+        : Convert.fromWei(numberAmount.toString());
       if (this.compact !== undefined) {
         numberAmount = Convert.compactNumber(numberAmount, this.getDecimals);
       } else {
@@ -51,8 +53,10 @@ export default {
       return numberAmount;
     },
     tooltipAmount() {
-      let numberAmount = this.amount || '0';
-      return this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
+      let numberAmount = this.amount || "0";
+      return this.isFormatted
+        ? numberAmount
+        : Convert.fromWei(numberAmount.toString());
     },
     isTooltip() {
       return this.tooltip !== undefined;
@@ -63,6 +67,21 @@ export default {
     isFormatted() {
       return this.formatted !== undefined;
     },
+    isIcon() {
+      return (
+        this.icon !== undefined &&
+        this.symbol !== undefined &&
+        this.symbol.length > 0
+      );
+    },
   },
 };
 </script>
+
+<style scoped>
+.image-symbol {
+  vertical-align: bottom;
+
+  margin-left: 4px !important;
+}
+</style>

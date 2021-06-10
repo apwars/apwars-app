@@ -43,11 +43,12 @@
           <template v-slot:[`item.amountFormatted`]="{ item }">
             <div class="d-flex">
               <amount
-                class="align-self-center"
                 :amount="item.amountFormatted"
                 decimals="2"
                 formatted
                 tooltip
+                symbol="wGOLD"
+                icon
               />
             </div>
           </template>
@@ -89,16 +90,17 @@
           :waitingStage="confirmOrderWaitingStage"
           :title="confirmOrderModalTitle"
         >
-          <h4 class="mt-3 d-flex">
+          <h4 class="mt-3">
             <span v-if="isBuy">You will pay</span>
             <span v-else>You will receive</span>
             <amount
-              class="align-self-center mr-1"
               :amount="nftCollectible.amountOrder"
               decimals="2"
               tooltip
               title="wGOLD"
-            />
+              symbol="wGOLD"
+              icon
+            /> 
             for this item.
           </h4>
         </game-item-wood-modal>
