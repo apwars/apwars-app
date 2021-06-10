@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template-modal-papyrus :open="open" :title="title" :width="700" :height="'220px'" @close="close" textConfirm="Send Item">
+    <template-modal-papyrus :open="open" :title="title" :width="700" :height="'220px'" @close="close" @confirm="confirm" textConfirm="Send Item">
       <slot> </slot>
     </template-modal-papyrus>
   </div>
@@ -9,6 +9,7 @@
 <script>
 import wButton from '@/lib/components/ui/Buttons/wButton';
 import TemplateModalPapyrus from '@/lib/components/ui/Modals/Templates/TemplateModalPapyrus';
+
 export default {
   props: ['open', 'title', 'hideOk'],
 
@@ -39,12 +40,14 @@ export default {
     addresses() {
       return this.$store.getters['user/addresses'];
     },
-
   },
 
   methods: {
     close() {
       this.$emit('close');
+    },
+    confirm() {
+      this.$emit('confirm');
     },
   },
 };

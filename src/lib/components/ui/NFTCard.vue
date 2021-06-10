@@ -13,15 +13,13 @@
             : ''
         "
       ></v-img>
-      <div style="height: 37px"><game-text>{{ collectible.title }}</game-text></div>
+      <div style="height: 37px">
+        <game-text>{{ collectible.title }}</game-text>
+      </div>
       <div v-if="myCollection" class="d-block">
         <small class="remaining">Your Amount: {{ userAmount }}</small>
         <div class="mt-1">
-          <wButton
-            width="170px"
-            class="mx-1"
-            @click="goToSell(collectible.id)"
-          >
+          <wButton width="170px" class="mx-1" @click="goToSell(collectible.id)">
             <div class="d-flex justify-center">
               <img
                 src="/images/buttons/btn-icon-sell.svg"
@@ -34,13 +32,8 @@
         </div>
       </div>
       <div v-else-if="!collectible.isGift">
-        <small class="remaining"
-          >Remaining: {{ remaining }} of {{ supply }}</small
-        >
-        <div
-          class="d-flex justify-center align-center mt-1"
-          v-if="remaining > 0"
-        >
+        <small class="remaining">Remaining: {{ remaining }} of {{ supply }}</small>
+        <div class="d-flex justify-center align-center mt-1" v-if="remaining > 0">
           <v-img
             v-if="isApproved"
             class="btn center"
@@ -65,11 +58,7 @@
       :hideOk="true"
       @close="closeWaitingMetamask()"
     >
-      <v-progress-circular
-        :size="24"
-        color="#765E55"
-        indeterminate
-      ></v-progress-circular>
+      <v-progress-circular :size="24" color="#765E55" indeterminate></v-progress-circular>
       You need to approve the transaction in you wallet.
     </game-modal>
 
@@ -85,8 +74,7 @@
         color="#765E55"
         indeterminate
       ></v-progress-circular>
-      The transaction has been sent to the blockchain. Waiting for the first
-      confirmation!
+      The transaction has been sent to the blockchain. Waiting for the first confirmation!
     </game-modal>
 
     <game-modal
@@ -101,28 +89,48 @@
       :open="showInfo"
       :title="collectible.title"
       @close="closeInfo()"
+      @confirm="openSendItem()"
+      :imageUrl="collectible.image"
+      :gameItemTitle="collectible.title"
     >
       <span v-html="collectible.description" />
     </game-modal>
+
+    <game-item-wood-modal
+      :open="showSendItem"
+      @close="closeSendItem"
+      @confirm="sendItem()"
+      :imageUrl="collectible.image"
+      :gameItemTitle="collectible.title"
+      title="Are you sure you want to send this item?"
+    >
+      <div class="mt-1">
+        <v-text-field outlined class="input" label="Address" v-model="address"></v-text-field>
+        <v-currency-field outlined label="Quantity" v-model="qty"> </v-currency-field>
+      </div>
+    </game-item-wood-modal>
+
   </v-card>
 </template>
 
 <script>
-import GameText from "@/lib/components/ui/Utils/GameText";
-import Amount from "@/lib/components/ui/Utils/Amount";
-import GameModal from "@/lib/components/ui/Modals/GameModal";
-import ItemPrice from "@/lib/components/ui/Utils/ItemPrice";
-import Collectibles from "@/lib/eth/Collectibles";
-import wGOLD from "@/lib/eth/wGOLD";
-import wButton from "@/lib/components/ui/Buttons/wButton";
+import GameText from '@/lib/components/ui/Utils/GameText';
+import Amount from '@/lib/components/ui/Utils/Amount';
+import GameModal from '@/lib/components/ui/Modals/GameModal';
+import GameItemWoodModal from '@/lib/components/ui/Modals/GameItemWoodModal';
+import ItemPrice from '@/lib/components/ui/Utils/ItemPrice';
+import Collectibles from '@/lib/eth/Collectibles';
+import wGOLD from '@/lib/eth/wGOLD';
+import wButton from '@/lib/components/ui/Buttons/wButton';
 
 export default {
-  props: ["collectible", "myCollection"],
+  props: ['collectible', 'myCollection'],
 
   components: {
     GameText,
     ItemPrice,
     GameModal,
+    GameItemWoodModal,
     Amount,
     wButton,
   },
@@ -137,25 +145,28 @@ export default {
       isSending: false,
       transactionSent: false,
       showInfo: false,
+      showSendItem: true,
       userAmount: 0,
+      address: '',
+      qty: 0,
     };
   },
 
   computed: {
     account() {
-      return this.$store.getters["user/account"];
+      return this.$store.getters['user/account'];
     },
 
     addresses() {
-      return this.$store.getters["user/addresses"];
+      return this.$store.getters['user/addresses'];
     },
 
     networkInfo() {
-      return this.$store.getters["user/networkInfo"];
+      return this.$store.getters['user/networkInfo'];
     },
 
     currentBlockNumber() {
-      return this.$store.getters["user/currentBlockNumber"];
+      return this.$store.getters['user/currentBlockNumber'];
     },
   },
 
@@ -194,15 +205,15 @@ export default {
           this.collectible.signatures[this.networkInfo.id]
         );
 
-        res.on("error", () => {
+        res.on('error', () => {
           this.clearState();
         });
-        res.on("transactionHash", (hash) => {
+        res.on('transactionHash', hash => {
           this.waitingMetamask = false;
           this.isSending = true;
           this.transactionHash = hash;
         });
-        res.on("receipt", (receipt) => {
+        res.on('receipt', receipt => {
           this.waitingMetamask = false;
           this.isSending = false;
           this.transactionSent = true;
@@ -222,20 +233,14 @@ export default {
         const collectibles = new Collectibles(this.collectible.contractAddress);
         const wgold = new wGOLD(this.addresses.wGOLD);
 
-        this.isApproved = await wgold.hasAllowance(
-          this.account,
-          this.collectible.contractAddress
-        );
+        this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
 
         if (!this.collectible.isGift) {
           this.supply = await collectibles.getMaxSupply(this.collectible.id);
           this.remaining = await collectibles.getRemaining(this.collectible.id);
         }
 
-        this.userAmount = await collectibles.balanceOf(
-          this.account,
-          this.collectible.id
-        );
+        this.userAmount = await collectibles.balanceOf(this.account, this.collectible.id);
       } catch (e) {
         console.log(e);
       } finally {
@@ -246,15 +251,9 @@ export default {
     async approve() {
       try {
         const wgold = new wGOLD(this.addresses.wGOLD);
-        const res = await wgold.approve(
-          this.account,
-          this.collectible.contractAddress
-        );
+        const res = await wgold.approve(this.account, this.collectible.contractAddress);
         console.log({ res });
-        this.isApproved = await wgold.hasAllowance(
-          this.account,
-          this.collectible.contractAddress
-        );
+        this.isApproved = await wgold.hasAllowance(this.account, this.collectible.contractAddress);
       } catch (e) {
         console.log(e);
       }
@@ -278,6 +277,19 @@ export default {
 
     openInfo() {
       this.showInfo = true;
+    },
+
+    openSendItem() {
+      this.showInfo = false;
+      this.showSendItem = true;
+    },
+
+    closeSendItem() {
+      this.showSendItem = false;
+    },
+
+    sendItem() {
+      console.log('SEND ITEM');
     },
   },
 };

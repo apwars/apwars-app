@@ -73,6 +73,9 @@ export default {
     close() {
       this.$emit('close');
     },
+    confirm() {
+      this.$emit('confirm');
+    },
   },
 };
 </script>
