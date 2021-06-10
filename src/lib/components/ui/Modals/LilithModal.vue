@@ -41,11 +41,11 @@
         </v-card-text>
         <v-card-actions class="mt-n1">
           <v-spacer></v-spacer>
-          <div class="d-flex justify-end" v-if="!hideOk">
-            <wButton @click="$emit('close')">
+          <div class="d-flex justify-end"  v-if="!hideOk">
+            <wButton @click="$emit('close')" :disabled="isLoading">
               Close
             </wButton>
-            <wButton :disabled="isLoading" class="mr-2" @click="$emit('confirm')">
+            <wButton class="ml-1" :disabled="isLoading" @click="$emit('confirm')">
               {{ isLoading ? 'Waiting...' : 'Ok' }}
             </wButton>
           </div>

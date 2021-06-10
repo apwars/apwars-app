@@ -45,7 +45,7 @@
             <wButton @click="$emit('close')">
               Back
             </wButton>
-            <wButton :disabled="isLoading" class="mr-2" @click="$emit('confirm')">
+            <wButton :disabled="isLoading" class="ml-1" @click="$emit('confirm')">
               {{ isLoading ? 'Waiting...' : 'Ok' }}
             </wButton>
           </div>
