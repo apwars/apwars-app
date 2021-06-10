@@ -1,21 +1,32 @@
 <template>
   <div>
-    <template-modal-papyrus :open="open" :title="title" :width="700" :height="'220px'" @close="close" @confirm="confirm" textConfirm="Send Item">
+    <template-modal-papyrus
+      :open="open"
+      :title="title"
+      :width="700"
+      :height="'220px'"
+      @close="close"
+      @confirm="confirm"
+      textConfirm="Send Item"
+      :isLoading="isLoading"
+      :disabledConfirm="isLoading"
+      :disabledClose="isLoading"
+    >
       <slot> </slot>
     </template-modal-papyrus>
   </div>
 </template>
 
 <script>
-import wButton from '@/lib/components/ui/Buttons/wButton';
-import TemplateModalPapyrus from '@/lib/components/ui/Modals/Templates/TemplateModalPapyrus';
+import wButton from "@/lib/components/ui/Buttons/wButton";
+import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
 
 export default {
-  props: ['open', 'title', 'hideOk'],
+  props: ["open", "title", "hideOk", "isLoading"],
 
   data() {
     return {
-      address: '',
+      address: "",
     };
   },
 
@@ -26,28 +37,28 @@ export default {
 
   computed: {
     isConnected() {
-      return this.$store.getters['user/isConnected'];
+      return this.$store.getters["user/isConnected"];
     },
 
     account() {
-      return this.$store.getters['user/account'];
+      return this.$store.getters["user/account"];
     },
 
     networkInfo() {
-      return this.$store.getters['user/networkInfo'];
+      return this.$store.getters["user/networkInfo"];
     },
 
     addresses() {
-      return this.$store.getters['user/addresses'];
+      return this.$store.getters["user/addresses"];
     },
   },
 
   methods: {
     close() {
-      this.$emit('close');
+      this.$emit("close");
     },
     confirm() {
-      this.$emit('confirm');
+      this.$emit("confirm");
     },
   },
 };
@@ -56,7 +67,7 @@ export default {
 <style scoped>
 .theme--dark.v-card {
   background-color: transparent !important;
-  background: url('/images/modal-background.png');
+  background: url("/images/modal-background.png");
   background-size: 100%;
   background-repeat: no-repeat;
   padding: 15px;

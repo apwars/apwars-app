@@ -40,7 +40,7 @@
           v-if="remaining > 0"
         >
           <v-img
-            v-if="isApprovedWGOLD"
+            v-if="isApprovedwGOLD"
             class="btn center"
             @click="buy"
             max-width="160"
@@ -102,26 +102,40 @@
       @confirm="openSendItem()"
       :imageUrl="collectible.image"
       :gameItemTitle="collectible.title"
+      :isLoading="isLoadingShowInfo"
     >
       <span v-html="collectible.description" />
     </game-modal>
 
     <game-item-wood-modal
       :open="showSendItem"
-      @close="closeSendItem"
+      @close="
+        showSendItem = false;
+        showInfo = true;
+      "
       @confirm="sendItem()"
+      :disabledConfirm="!qty"
       :imageUrl="collectible.image"
       :gameItemTitle="collectible.title"
+      :isLoading="isLoadingShowSendItem"
+      :waitingStage="waitingStageShowSendItem"
       title="Are you sure you want to send this item?"
     >
-      <div class="mt-1">
+      <div class="mt-2">
         <v-text-field
           outlined
           class="input"
           label="Address"
+          dense
           v-model="address"
         ></v-text-field>
-        <v-currency-field outlined label="Quantity" v-model="qty">
+        <v-currency-field
+          dense
+          outlined
+          v-bind="currencyConfig"
+          label="Quantity"
+          v-model="qty"
+        >
         </v-currency-field>
       </div>
     </game-item-wood-modal>
@@ -129,7 +143,10 @@
     <lilith-modal
       :open="lilith"
       @confirm="approveContract()"
-      @close="lilith = false"
+      @close="
+        lilith = false;
+        showInfo = true;
+      "
       :isLoading="isLoadingLilith"
       :text="textLilithModal"
     ></lilith-modal>
@@ -143,15 +160,17 @@ import GameModal from "@/lib/components/ui/Modals/GameModal";
 import GameItemWoodModal from "@/lib/components/ui/Modals/GameItemWoodModal";
 import LilithModal from "@/lib/components/ui/Modals/LilithModal";
 import ItemPrice from "@/lib/components/ui/Utils/ItemPrice";
-import Collectibles from "@/lib/eth/Collectibles";
-import wGOLD from "@/lib/eth/wGOLD";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
+
+import Collectibles from "@/lib/eth/Collectibles";
+import wGOLD from "@/lib/eth/wGOLD";
+import Transporter from "@/lib/eth/Transporter";
 
 const LILITH_APPROVE_ITEM =
   "To ship your item, I need the authorization to transport it!";
 const LILITH_APPROVE_WGOLD =
-  "To work for you, I need you to sign the service contract, you will be charged a transportation fee!";
+  "To transport your items I need to receive your approval. Using my services, you don't have to worry about the bureaucratic processes, but I charge a small fee.";
 const LILITH_WAITING_WALLET_APPROVAL =
   "I am waiting for the approval in your precious wallet...";
 const LILITH_WAITING_FIRST_CONFIRMATION =
@@ -176,10 +195,14 @@ export default {
       supply: 0,
       isLoading: false,
       isApprovedWGOLD: false,
+      isApprovedCollectibles: false,
       waitingMetamask: false,
       isSending: false,
+      isLoadingShowSendItem: false,
+      waitingStageShowSendItem: 0,
       transactionSent: false,
       showInfo: false,
+      isLoadingShowInfo: false,
       showSendItem: false,
       userAmount: 0,
       address: "",
@@ -189,6 +212,15 @@ export default {
       textLilithModal: "",
       stepLilith: "wGOLD",
       wGOLDContract: {},
+      collectiblesContract: {},
+      currencyConfig: {
+        locale: "en-US",
+        prefix: "",
+        suffix: "",
+        decimalLength: 0,
+        autoDecimalMode: true,
+        allowNegative: false,
+      },
     };
   },
 
@@ -222,6 +254,9 @@ export default {
       this.initData();
       this.loadData();
     },
+    account() {
+      this.loadData();
+    },
   },
 
   mounted() {
@@ -235,7 +270,36 @@ export default {
         return;
       }
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
-      console.log();
+      this.collectiblesContract = new Collectibles(
+        this.collectible.contractAddress
+      );
+    },
+
+    async loadData() {
+      try {
+        if (!this.isConnected) {
+          return;
+        }
+        this.isLoading = true;
+
+        if (!this.collectible.isGift) {
+          this.supply = await this.collectiblesContract.getMaxSupply(
+            this.collectible.id
+          );
+          this.remaining = await this.collectiblesContract.getRemaining(
+            this.collectible.id
+          );
+        }
+
+        this.userAmount = await this.collectiblesContract.balanceOf(
+          this.account,
+          this.collectible.id
+        );
+      } catch (e) {
+        console.log(e);
+      } finally {
+        this.isLoading = false;
+      }
     },
 
     clearState() {
@@ -251,12 +315,10 @@ export default {
 
     async buy() {
       try {
-        const collectibles = new Collectibles(this.collectible.contractAddress);
-
         this.clearState();
 
         this.waitingMetamask = true;
-        const res = collectibles.claim(
+        const res = thi.collectiblesContract.claim(
           this.account,
           this.collectible.tokenAddress,
           this.collectible.parameters.id,
@@ -286,50 +348,14 @@ export default {
       }
     },
 
-    async loadData() {
-      try {
-        if (!this.isConnected) {
-          return;
-        }
-        this.isLoading = true;
-        const collectibles = new Collectibles(this.collectible.contractAddress);
-        const wgold = new wGOLD(this.addresses.wGOLD);
-
-        this.isApprovedWGOLD = await wgold.hasAllowance(
-          this.account,
-          this.collectible.contractAddress
-        );
-
-        this.isApprovedCollectibles = await collectibles.isApprovedForAll(
-          this.account,
-          this.addresses.collectibles
-        );
-
-        if (!this.collectible.isGift) {
-          this.supply = await collectibles.getMaxSupply(this.collectible.id);
-          this.remaining = await collectibles.getRemaining(this.collectible.id);
-        }
-
-        this.userAmount = await collectibles.balanceOf(
-          this.account,
-          this.collectible.id
-        );
-      } catch (e) {
-        console.log(e);
-      } finally {
-        this.isLoading = false;
-      }
-    },
-
     async approve() {
       try {
-        const wgold = new wGOLD(this.addresses.wGOLD);
         const res = await wgold.approve(
           this.account,
           this.collectible.contractAddress
         );
         console.log({ res });
-        this.isApprovedWGOLD = await wgold.hasAllowance(
+        this.isApprovedwGOLD = await this.wGOLDContract.hasAllowance(
           this.account,
           this.collectible.contractAddress
         );
@@ -355,80 +381,134 @@ export default {
     },
 
     openInfo() {
+      this.isLoadingShowInfo = false;
       this.showInfo = true;
     },
 
-    openSendItem() {
-      this.showInfo = false;
+    initStateSendItemwGOLD() {
       this.lilith = true;
       this.textLilithModal = LILITH_APPROVE_WGOLD;
-      // this.showSendItem = true;
+      this.stepLilith = "wGOLD";
+    },
+
+    initStateSendItemCollectibles() {
+      this.lilith = true;
+      this.textLilithModal = LILITH_APPROVE_ITEM;
+      this.stepLilith = "Collectibles";
+    },
+
+    initStateShowSendItem() {
+      this.showSendItem = true;
+      this.qty = 0;
+      this.address = '';
+    },
+
+    async openSendItem() {
+      try {
+        this.isLoadingShowInfo = true;
+
+        this.isApprovedwGOLD = await this.wGOLDContract.hasAllowance(
+          this.account,
+          this.addresses.transporter
+        );
+
+        this.isApprovedCollectibles = await this.collectiblesContract.isApprovedForAll(
+          this.account,
+          this.addresses.transporter
+        );
+
+        this.showInfo = false;
+        this.isLoadingShowInfo = false;
+
+        if (!this.isApprovedwGOLD) {
+          this.initStateSendItemwGOLD();
+        } else if (!this.isApprovedCollectibles) {
+          this.initStateSendItemCollectibles();
+        } else {
+          this.initStateShowSendItem();
+        }
+      } catch (error) {
+        return ToastSnackbar.error(error.toString());
+      }
     },
 
     closeSendItem() {
       this.showSendItem = false;
     },
 
+    setInitialStateSendItem() {
+      this.isLoadingShowSendItem = false;
+      this.waitingStageShowSendItem = 0;
+    },
+
     sendItem() {
-      console.log("send item");
+      try {
+        if (!web3.utils.isAddress(this.address)) {
+          return ToastSnackbar.warning("Address is invalid");
+        }
+
+        this.isLoadingShowSendItem = true;
+        this.waitingStageShowSendItem = 1;
+        const tranporterContract = new Transporter(this.addresses.transporter);
+        const confirmTransaction = tranporterContract.sendNFT(
+          this.addresses.collectibles,
+          this.address,
+          this.collectible.id,
+          this.qty,
+          this.account
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.setInitialStateSendItem();
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error(
+            "An error has occurred while sending the item Lilith - The Transporter"
+          );
+        });
+
+        confirmTransaction.on("transactionHash", () => {
+          this.waitingStageShowSendItem = 2;
+        });
+
+        confirmTransaction.on("receipt", () => {
+          this.setInitialStateSendItem();
+          this.showSendItem = false;
+          ToastSnackbar.success(
+            "I transported your item successfully! Feel free to contact me again when you need my service. Lilith - The Transporter"
+          );
+        });
+      } catch (error) {
+        this.setInitialStateSendItem();
+        return ToastSnackbar.error(error.toString());
+      }
     },
 
     approveContract() {
       if (this.stepLilith === "wGOLD") {
-        this.approveWGOLD();
+        this.approvewGOLD();
+      } else if (this.stepLilith === "Collectibles") {
+        this.approveCollectibles();
       }
     },
 
-    approveCollectible() {
-      const confirmTransaction = this.collectibles.setApprovalForAll(
-        this.addresses.collectibles,
-        this.account
-      );
-      this.isLoadingLilith = true;
-
-      confirmTransaction.then(() => {
-        ToastSnackbar.info(
-          "Is waiting for your approval Lilith - The Transporter"
-        );
-      });
-
-      confirmTransaction.on("error", (error) => {
-        this.isLoadingLilith = false;
-        if (error.message) {
-          return ToastSnackbar.error(error.message);
-        }
-        return ToastSnackbar.error(
-          "An error has occurred while granting access to Lilith - The Transporter"
-        );
-      });
-
-      confirmTransaction.on("receipt", () => {
-        this.isLoadingLilith = false;
-        this.lilith = false;
-        ToastSnackbar.success(
-          "You have granted access to Lilith - The Transporter"
-        );
-      });
-
-      return;
-    },
-
-    setInitialStateApproveWGOLD() {
+    setInitialStateApproveCollectibles() {
       this.isLoadingLilith = false;
-      this.textLilithModal = LILITH_APPROVE_WGOLD;
+      this.textLilithModal = LILITH_APPROVE_ITEM;
     },
 
-    approveWGOLD() {
+    approveCollectibles() {
       try {
         this.isLoadingLilith = true;
         this.textLilithModal = LILITH_WAITING_WALLET_APPROVAL;
-        const confirmTransaction = this.wGOLDContract.approve(
-          this.account,
-          this.addresses.transporter
+        const confirmTransaction = this.collectiblesContract.setApprovalForAll(
+          this.addresses.transporter,
+          this.account
         );
 
         confirmTransaction.on("error", (error) => {
-          this.setInitialStateApproveWGOLD();
+          this.setInitialStateApproveCollectibles();
           if (error.message) {
             return ToastSnackbar.error(error.message);
           }
@@ -442,14 +522,61 @@ export default {
         });
 
         confirmTransaction.on("receipt", () => {
-          this.setInitialStateApproveWGOLD();
+          this.setInitialStateApproveCollectibles();
           this.lilith = false;
+          this.showSendItem = true;
           ToastSnackbar.success(
             "You have granted access to Lilith - The Transporter"
           );
         });
       } catch (error) {
-        this.setInitialStateApproveWGOLD();
+        this.setInitialStateApproveCollectibles();
+        return ToastSnackbar.error(error.toString());
+      }
+    },
+
+    setInitialStateApprovewGOLD() {
+      this.isLoadingLilith = false;
+      this.textLilithModal = LILITH_APPROVE_WGOLD;
+    },
+
+    approvewGOLD() {
+      try {
+        this.isLoadingLilith = true;
+        this.textLilithModal = LILITH_WAITING_WALLET_APPROVAL;
+        const confirmTransaction = this.wGOLDContract.approve(
+          this.account,
+          this.addresses.transporter
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.setInitialStateApprovewGOLD();
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error(
+            "An error has occurred while granting access to Lilith - The Transporter"
+          );
+        });
+
+        confirmTransaction.on("transactionHash", () => {
+          this.textLilithModal = LILITH_WAITING_FIRST_CONFIRMATION;
+        });
+
+        confirmTransaction.on("receipt", () => {
+          this.setInitialStateApprovewGOLD();
+          ToastSnackbar.success(
+            "You have granted access to Lilith - The Transporter"
+          );
+          if (this.isApprovedCollectibles) {
+            this.lilith = false;
+          } else {
+            this.initStateSendItemCollectibles();
+          }
+        });
+      } catch (error) {
+        this.setInitialStateApprovewGOLD();
+        return ToastSnackbar.error(error.toString());
       }
     },
   },

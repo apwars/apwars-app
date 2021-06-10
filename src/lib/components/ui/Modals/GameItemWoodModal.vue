@@ -2,7 +2,7 @@
   <modal-wood
     :open="open"
     :isLoading="isLoading"
-    :disabledConfirm="isLoading"
+    :disabledConfirm="isLoading || disabledConfirm"
     :disabledClose="isLoading"
     :title="title"
     @close="$emit('close')"
@@ -46,7 +46,8 @@ export default {
     'title',
     'imageUrl',
     'gameItemTitle',
-    'isLoading', 
+    'isLoading',
+    'disabledConfirm',
     ],
 
   components: {
