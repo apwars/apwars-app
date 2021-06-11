@@ -116,7 +116,7 @@ export default {
   }
 
   .v-card__text {
-    height: auto;
+    height: auto !important;
   }
 }
 </style>
