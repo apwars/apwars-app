@@ -2,7 +2,7 @@
   <modal-wood
     :open="open"
     :isLoading="isLoading"
-    :disabledConfirm="isLoading || disabledConfirm"
+    :disabledConfirm="isLoading || disabledConfirm || !disabledBuy"
     :disabledClose="isLoading"
     :title="title"
     @close="$emit('close')"
@@ -52,6 +52,7 @@ export default {
     'isLoading',
     'disabledConfirm',
     'amount',
+    'disabledBuy'
   ],
 
   components: {

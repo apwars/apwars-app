@@ -42,7 +42,7 @@
         <v-card-actions class="mt-n1">
           <v-spacer></v-spacer>
           <div class="d-flex justify-end" v-if="!hideOk">
-            <wButton @click="$emit('close')">
+            <wButton :disabled="isLoading" @click="$emit('close')">
               Back
             </wButton>
             <wButton :disabled="isLoading" class="ml-1" @click="$emit('confirm')">
