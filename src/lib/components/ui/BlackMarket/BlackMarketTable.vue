@@ -144,7 +144,7 @@ import Collectibles from '@/lib/eth/Collectibles';
 import wGOLD from '@/lib/eth/wGOLD';
 
 const RASKEL_DEFAULT_APPROVE_TEXT =
-  'To work for you and create this order, I need to receive approval to trade your items. You can trust me, my fellow!';
+  'To work for you and execute this order, I need to receive approval to trade your items. You can trust me, my fellow!';
 const RASKEL_DEFAULT_CANCEL_TEXT =
   'If you cancel this offer I will not receive any fee! Are you sure about that? I am working for nothing!';
 const RASKEL_WAITING_WALLET_APPROVAL = 'I am waiting for the approval in your precious wallet...';
