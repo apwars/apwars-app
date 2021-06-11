@@ -24,7 +24,7 @@
               indeterminate
               color="secondary"
             ></v-progress-circular>
-            {{ text }}
+            <span v-html="text"></span>
           </p>
         </v-col>
       </v-row>

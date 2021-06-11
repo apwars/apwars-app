@@ -50,7 +50,6 @@ export default {
   },
   computed: {
     getWidth() {
-      console.log(this.width);
       if (
         this.width !== null &&
         this.width !== undefined &&

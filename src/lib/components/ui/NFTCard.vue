@@ -32,9 +32,9 @@
         </div>
       </div>
       <div v-else-if="!collectible.isGift">
-        <small class="remaining"
-          >Remaining: {{ remaining }} of {{ supply }}</small
-        >
+        <small class="remaining">
+          Remaining: {{ remaining }} of {{ supply }}
+        </small>
         <div
           class="d-flex justify-center align-center mt-1"
           v-if="remaining > 0"
@@ -213,14 +213,16 @@ import Collectibles from "@/lib/eth/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
 import Transporter from "@/lib/eth/Transporter";
 
-const LILITH_APPROVE_ITEM =
-  "To ship your item, I need the authorization to transport it!";
-const LILITH_APPROVE_WGOLD =
-  "To transport your items I need to receive your approval. Using my services, you don't have to worry about the bureaucratic processes, but I charge a small fee.";
+const LILITH_APPROVE_SECOUND_PAGE_CONTRACT =
+  "The first page has been successfully signed. <br /> I am waiting for the approval in your precious wallet, for signing the second page of the contract...";
+const LILITH_APPROVE_FIRST_PAGE_CONTRACT =
+  "To transport your items, you have to sign the transportation contract, it's only 2 pages for you to sign. Using my services, you don't have to worry about bureaucratic processes, but I charge a small fee.";
 const LILITH_WAITING_WALLET_APPROVAL =
-  "I am waiting for the approval in your precious wallet...";
+  "I am waiting for the approval in your precious wallet, for signing the first page of the contract...";
 const LILITH_WAITING_FIRST_CONFIRMATION =
-  "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation...";
+  "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation, so you can sign the second page of the contract...";
+const LILITH_WAITING_SECOUND_CONFIRMATION =
+  "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation, so you can start transporting your items safely...";
 
 export default {
   props: ["collectible", "myCollection"],
@@ -456,16 +458,16 @@ export default {
       this.showInfo = true;
     },
 
-    initStateSendItemwGOLD() {
+    initStateFirstPageContract() {
       this.lilith = true;
-      this.textLilithModal = LILITH_APPROVE_WGOLD;
-      this.stepLilith = "wGOLD";
+      this.textLilithModal = LILITH_APPROVE_FIRST_PAGE_CONTRACT;
+      this.stepLilith = "fistPage";
     },
 
-    initStateSendItemCollectibles() {
+    initStateSecoundPageContract() {
       this.lilith = true;
-      this.textLilithModal = LILITH_APPROVE_ITEM;
-      this.stepLilith = "Collectibles";
+      this.textLilithModal = LILITH_APPROVE_SECOUND_PAGE_CONTRACT;
+      this.stepLilith = "secoundPage";
     },
 
     initStateShowSendItem() {
@@ -497,9 +499,9 @@ export default {
         this.isLoadingShowInfo = false;
 
         if (!this.isApprovedwGOLD) {
-          this.initStateSendItemwGOLD();
+          this.initStateFirstPageContract();
         } else if (!this.isApprovedCollectibles) {
-          this.initStateSendItemCollectibles();
+          this.initStateSecoundPageContract();
         } else {
           this.initStateShowSendItem();
         }
@@ -562,61 +564,61 @@ export default {
     },
 
     approveContract() {
-      if (this.stepLilith === "wGOLD") {
-        this.approvewGOLD();
-      } else if (this.stepLilith === "Collectibles") {
-        this.approveCollectibles();
+      if (this.stepLilith === "fistPage") {
+        this.approveFirstPageContract();
+      } else if (this.stepLilith === "secoundPage") {
+        this.approveSecoundPageContract();
       }
     },
 
-    setInitialStateApproveCollectibles() {
+    setInitialStateApproveSecoundPageContract() {
       this.isLoadingLilith = false;
-      this.textLilithModal = LILITH_APPROVE_ITEM;
+      this.textLilithModal = LILITH_APPROVE_SECOUND_PAGE_CONTRACT;
     },
 
-    approveCollectibles() {
+    approveSecoundPageContract() {
       try {
         this.isLoadingLilith = true;
-        this.textLilithModal = LILITH_WAITING_WALLET_APPROVAL;
+        this.textLilithModal = LILITH_APPROVE_SECOUND_PAGE_CONTRACT;
         const confirmTransaction = this.collectiblesContract.setApprovalForAll(
           this.addresses.transporter,
           this.account
         );
 
         confirmTransaction.on("error", (error) => {
-          this.setInitialStateApproveCollectibles();
+          this.setInitialStateApproveSecoundPageContract();
           if (error.message) {
             return ToastSnackbar.error(error.message);
           }
           return ToastSnackbar.error(
-            "An error has occurred while granting access to Lilith - The Transporter"
+            "An error has occurred while to signing contract to Lilith - The Transporter"
           );
         });
 
         confirmTransaction.on("transactionHash", () => {
-          this.textLilithModal = LILITH_WAITING_FIRST_CONFIRMATION;
+          this.textLilithModal = LILITH_WAITING_SECOUND_CONFIRMATION;
         });
 
         confirmTransaction.on("receipt", () => {
-          this.setInitialStateApproveCollectibles();
+          this.setInitialStateApproveSecoundPageContract();
           this.lilith = false;
           this.showSendItem = true;
           ToastSnackbar.success(
-            "You have granted access to Lilith - The Transporter"
+            "Contract successfully signed to Lilith - The Transporter"
           );
         });
       } catch (error) {
-        this.setInitialStateApproveCollectibles();
+        this.setInitialStateApproveSecoundPageContract();
         return ToastSnackbar.error(error.toString());
       }
     },
 
-    setInitialStateApprovewGOLD() {
+    setInitialStateApproveFirstPageContract() {
       this.isLoadingLilith = false;
-      this.textLilithModal = LILITH_APPROVE_WGOLD;
+      this.textLilithModal = LILITH_APPROVE_FIRST_PAGE_CONTRACT;
     },
 
-    approvewGOLD() {
+    approveFirstPageContract() {
       try {
         this.isLoadingLilith = true;
         this.textLilithModal = LILITH_WAITING_WALLET_APPROVAL;
@@ -631,7 +633,7 @@ export default {
             return ToastSnackbar.error(error.message);
           }
           return ToastSnackbar.error(
-            "An error has occurred while granting access to Lilith - The Transporter"
+            "An error has occurred while to signing contract to Lilith - The Transporter"
           );
         });
 
@@ -640,14 +642,11 @@ export default {
         });
 
         confirmTransaction.on("receipt", () => {
-          this.setInitialStateApprovewGOLD();
-          ToastSnackbar.success(
-            "You have granted access to Lilith - The Transporter"
-          );
           if (this.isApprovedCollectibles) {
+            this.setInitialStateApprovewGOLD();
             this.lilith = false;
           } else {
-            this.initStateSendItemCollectibles();
+            this.approveSecoundPageContract();
           }
         });
       } catch (error) {
