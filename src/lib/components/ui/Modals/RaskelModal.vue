@@ -1,6 +1,37 @@
 <template>
   <div>
-    <v-dialog
+    <template-modal-papyrus
+      :open="open"
+      :title="'Raskel - The traveler'"
+      @close="$emit('close')"
+      @confirm="$emit('confirm')"
+      textConfirm="Ok"
+      :textClose="textClose"
+      :isLoading="isLoading"
+      :disabledConfirm="isLoading"
+      :disabledClose="isLoading"
+    >
+      <v-row dense class="d-flex">
+        <v-col cols="12" md="3" class="align-self-center">
+          <img class="lilith-img" src="/images/black-market/Raskel.png" />
+        </v-col>
+        <v-col cols="12" md="9" class="align-self-center">
+          <p class="ml-2 mt-1 align-self-center content">
+            <v-progress-circular
+              class="mr-1"
+              v-if="isLoading"
+              :size="24"
+              :width="2"
+              indeterminate
+              color="secondary"
+            ></v-progress-circular>
+            <span v-html="text"></span>
+          </p>
+        </v-col>
+      </v-row>
+    </template-modal-papyrus>
+
+    <!-- <v-dialog
       content-class="elevation-0"
       persistent
       :value="open"
@@ -41,7 +72,7 @@
         </v-card-text>
         <v-card-actions class="mt-n1">
           <v-spacer></v-spacer>
-          <div class="d-flex justify-end" v-if="!hideOk">
+          <div class="d-flex justify-end">
             <wButton :disabled="isLoading" @click="$emit('close')">
               Back
             </wButton>
@@ -51,17 +82,20 @@
           </div>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </div>
 </template>
 
 <script>
 import wButton from '@/lib/components/ui/Buttons/wButton';
+import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
+
 export default {
-  props: ['open', 'hideOk', 'isLoading', 'text'],
+  props: ['open', 'isLoading', 'text'],
 
   components: {
     wButton,
+    TemplateModalPapyrus,
   },
 
   methods: {
@@ -73,22 +107,15 @@ export default {
 </script>
 
 <style scoped>
-.theme--dark.v-card {
-  background-color: transparent !important;
-  background: url('/images/modal-background.png');
-  background-size: 100%;
-  background-repeat: no-repeat;
-  padding: 15px;
+.lilith-img {
+  width: 100%;
 }
 
-.v-card__title {
-  color: #765e55;
-  font-size: 15x !important;
-  font-weight: bold !important;
-}
-
-.content {
-  color: #201813;
-  font-size: 90%;
+@media only screen and (max-width: 600px) {
+  .lilith-img {
+    width: 80px;
+    margin: 0 auto;
+    display: block;
+  }
 }
 </style>
