@@ -192,6 +192,7 @@
       "
       :isLoading="isLoadingLilith"
       :text="textLilithModal"
+      textClose="Back"
     ></lilith-modal>
   </v-card>
 </template>
