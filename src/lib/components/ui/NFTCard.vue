@@ -114,7 +114,7 @@
         showInfo = true;
       "
       @confirm="sendItem()"
-      :disabledConfirm="!qty && qty"
+      :disabledConfirm="disabledConfirmSendItem"
       :imageUrl="collectible.image"
       :gameItemTitle="collectible.title"
       :isLoading="isLoadingShowSendItem"
@@ -245,6 +245,10 @@ export default {
     isConnected() {
       return this.$store.getters["user/isConnected"];
     },
+
+    disabledConfirmSendItem() {
+      return !this.qty || (this.qty && this.qty > this.userAmount);
+    }
   },
 
   watch: {
