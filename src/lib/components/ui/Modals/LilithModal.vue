@@ -6,6 +6,7 @@
       @close="$emit('close')"
       @confirm="$emit('confirm')"
       textConfirm="Ok"
+      :textClose="textClose"
       :isLoading="isLoading"
       :disabledConfirm="isLoading"
       :disabledClose="isLoading"
@@ -36,7 +37,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
 
 export default {
-  props: ["open", "isLoading", "text"],
+  props: ["open", "isLoading", "text", "textClose"],
 
   components: {
     wButton,

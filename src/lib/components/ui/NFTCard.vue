@@ -150,6 +150,7 @@
       "
       :isLoading="isLoadingLilith"
       :text="textLilithModal"
+      textClose="Back"
     ></lilith-modal>
   </v-card>
 </template>
@@ -208,7 +209,7 @@ export default {
       userAmount: 0,
       address: "",
       qty: 0,
-      lilith: false,
+      lilith: true,
       isLoadingLilith: false,
       textLilithModal: "",
       stepLilith: "wGOLD",
