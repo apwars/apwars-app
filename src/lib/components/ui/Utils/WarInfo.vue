@@ -159,7 +159,6 @@
             @click="openPage('enlistment')"
             class="mr-0 mr-md-1"
             :actived="false"
-            size="small"
           >
             Enlistment
           </wButton>
@@ -168,7 +167,6 @@
             class="my-1 my-md-0 mx-1"
             :disabled="warStage === 0"
             :actived="false"
-            size="small"
           >
             Round 1 Result
           </wButton>
@@ -177,7 +175,6 @@
             class="my-1 my-md-0 mx-1"
             :disabled="warStage < 2"
             :actived="false"
-            size="small"
           >
             Round 2 Result
           </wButton>
@@ -186,7 +183,6 @@
             class="my-1 my-md-0 mx-1"
             :disabled="warStage < 2"
             :actived="false"
-            size="small"
           >
             War Report
           </wButton>

@@ -1,18 +1,16 @@
 <template>
   <div v-bind:class="{ disabled: this.disabled }">
-    <div
-      :class="`${this.getSize}`"
-      @mouseleave="hover = false"
-      @mouseover="hover = true"
-      @click="emitClick"
-    >
-      <div class="btn-bg"></div>
-      <div class="btn-bg-c" :style="{width: this.width || '100px'}">
+    <div :class="`${this.getSize}`" @click="emitClick">
+      <div class="btn-bg" v-bind:class="{ 'actived': isActived }"></div>
+      <div class="btn-bg-c" v-bind:class="{ 'actived': isActived }">
         <div class="label">
           <slot></slot>
         </div>
       </div>
-      <div class="btn-bg revert-img"></div>
+      <div
+        class="btn-bg revert-img"
+        v-bind:class="{ 'actived': isActived }"
+      ></div>
     </div>
   </div>
 </template>
@@ -21,24 +19,18 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
-  props: ["amount", "actived", "size", "disabled", "width"],
-
-  data() {
-    return {
-      hover: false,
-    };
-  },
+  props: ["amount", "actived", "size", "disabled"],
 
   components: {
     Amount,
   },
 
   computed: {
-    getHover() {
-      if (this.actived === undefined || this.disabled) {
+    isActived() {
+      if (this.actived === undefined) {
         return false;
       }
-      return this.actived === "" || this.actived ? true : this.hover;
+       return (this.actived === "" || this.actived) ? true : false;
     },
     getSize() {
       switch (this.size) {
@@ -79,6 +71,14 @@ export default {
   background-image: url("/images/buttons/btn-default-c-hover-border.png");
 }
 
+.btn-bg.actived {
+  background-image: url("/images/buttons/btn-default-hover-border.png");
+}
+
+.btn-bg-c.actived {
+  background-image: url("/images/buttons/btn-default-c-hover-border.png");
+}
+
 .btn-bg {
   background-image: url("/images/buttons/btn-default-lr.png");
   background-size: contain;
@@ -102,12 +102,6 @@ export default {
   z-index: 3;
   justify-content: space-around;
 }
-
-/* .btn-bg-c > .label:hover {
-  background: url("/images/buttons/btn-default-hover-bg.png");
-  background-size: cover;
-  background-position: bottom;
-} */
 
 .revert-img {
   transform: scaleX(-1);

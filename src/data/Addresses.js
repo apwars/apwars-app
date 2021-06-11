@@ -22,4 +22,8 @@ export default {
     "5777": process.env.VUE_APP_MARKETNFTS_CONTRACT_5777,
     "56": process.env.VUE_APP_MARKETNFTS_CONTRACT_56,
   },
+  transporter: {
+    "5777": process.env.VUE_APP_TRANSPORTER_CONTRACT_5777,
+    "56": process.env.VUE_APP_TRANSPORTER_CONTRACT_56,
+  },
 };
