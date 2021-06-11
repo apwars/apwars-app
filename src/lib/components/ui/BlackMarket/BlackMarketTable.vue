@@ -446,11 +446,7 @@ export default {
         this.raskelApproveText = RASKEL_WAITING_FIRST_CONFIRMATION;
       });
 
-<<<<<<< HEAD
-      confirmTransaction.on("receipt", async () => {
-=======
       confirmTransaction.on('receipt', async () => {
->>>>>>> f39c5e1ea5af6b9def371bf0699ff9473964e9cb
         this.isLoadingApproveRaskel = false;
         this.raskelApproveText = RASKEL_DEFAULT_APPROVE_TEXT;
 
@@ -493,11 +489,7 @@ export default {
           );
         });
 
-<<<<<<< HEAD
-        confirmTransaction.on("transactionHash", () => {
-=======
         confirmTransaction.on('transactionHash', () => {
->>>>>>> f39c5e1ea5af6b9def371bf0699ff9473964e9cb
           this.raskelCancelText = RASKEL_CANCEL_WAITING_FIRST_CONFIRMATION;
         });
 
