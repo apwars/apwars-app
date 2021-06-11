@@ -5,7 +5,6 @@
         <h4 class="text-h4" v-if="!isBuy">Items for sale</h4>
         <h4 class="text-h4" v-else>Wanted items</h4>
         <v-spacer></v-spacer>
-        
       </v-card-title>
       <v-card-text>
         <v-data-table
@@ -37,7 +36,7 @@
           <template v-slot:[`item.nft.quantity`]="{ item }">
             <div class="d-flex">
               <span class="ml-1 align-self-center">
-                {{ item.nft.quantity }}
+                <!-- {{ item.nft.quantity }} -->
               </span>
             </div>
           </template>
@@ -101,7 +100,7 @@
               title="wGOLD"
               symbol="wGOLD"
               icon
-            /> 
+            />
             for this item.
           </h4>
         </game-item-wood-modal>
@@ -142,11 +141,16 @@ import MarketNFTS from "@/lib/eth/MarketNFTS.js";
 import Collectibles from "@/lib/eth/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
 
-const RASKEL_DEFAULT_APPROVE_TEXT = "To work for you and create this order, I need to receive approval to trade your items. You can trust me, my fellow!";
-const RASKEL_DEFAULT_CANCEL_TEXT = "If you cancel this offer I will not receive any fee! Are you sure about that? I am working for nothing!";
-const RASKEL_WAITING_WALLET_APPROVAL = "I am waiting for the approval in your precious wallet...";
-const RASKEL_CANCEL_WAITING_FIRST_CONFIRMATION = "Next time, think more about using my service and not waste my time with unnecessary orders! I am waiting for the first blockchain confirmation...";
-const RASKEL_WAITING_FIRST_CONFIRMATION = "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation...";
+const RASKEL_DEFAULT_APPROVE_TEXT =
+  "To work for you and create this order, I need to receive approval to trade your items. You can trust me, my fellow!";
+const RASKEL_DEFAULT_CANCEL_TEXT =
+  "If you cancel this offer I will not receive any fee! Are you sure about that? I am working for nothing!";
+const RASKEL_WAITING_WALLET_APPROVAL =
+  "I am waiting for the approval in your precious wallet...";
+const RASKEL_CANCEL_WAITING_FIRST_CONFIRMATION =
+  "Next time, think more about using my service and not waste my time with unnecessary orders! I am waiting for the first blockchain confirmation...";
+const RASKEL_WAITING_FIRST_CONFIRMATION =
+  "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation...";
 
 export default {
   props: ["type"],
@@ -181,14 +185,29 @@ export default {
           text: "Player",
           value: "sender",
           width: "15%",
+          sortable: false,
         },
-        { text: "Game Item", value: "nft.title", width: "25%" },
-        { text: "Type", value: "nft.typeDesc", width: "15%" },
-        // { text: "Unit", value: "nft.quantity", width: "10%" },
-        { text: "Price/Unit", value: "amountFormatted", width: "15%" },
-        { text: "", value: "action", sortable: false, width: "20%" },
+        {
+          text: "Game Item",
+          value: "nft.title",
+          width: "25%",
+          sortable: false,
+        },
+        { text: "Type", value: "nft.typeDesc", width: "15%", sortable: false },
+        // {
+        //   text: "Quantity",
+        //   value: "nft.quantity",
+        //   width: "10%",
+        //   sortable: false,
+        // },
+        {
+          text: "Price/Unit",
+          value: "amountFormatted",
+          width: "15%",
+          sortable: false,
+        },
+        { text: "", value: "action", width: "20%", sortable: false },
       ],
-      btnActionWidth: "100%",
 
       raskelCancelText: RASKEL_DEFAULT_CANCEL_TEXT,
       raskelApproveText: RASKEL_DEFAULT_APPROVE_TEXT,
@@ -199,39 +218,45 @@ export default {
 
   computed: {
     isConnected() {
-      return this.$store.getters['user/isConnected'];
+      return this.$store.getters["user/isConnected"];
     },
-    
+
     account() {
       return this.$store.getters["user/account"];
     },
-    
+
     addresses() {
       return this.$store.getters["user/addresses"];
     },
-    
+
     networkInfo() {
       return this.$store.getters["user/networkInfo"];
     },
-    
+
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
     confirmOrderModalTitle() {
-      return !this.isBuy ? 'Are you sure you want to buy this item?' : 'Are you sure you want to sell this item?';
+      return !this.isBuy
+        ? "Are you sure you want to buy this item?"
+        : "Are you sure you want to sell this item?";
     },
 
     isBalanceItem() {
       if (this.isBuy) {
-        const amountOrder = parseFloat(Convert.fromWei(this.nftCollectible.amountOrder));
+        const amountOrder = parseFloat(
+          Convert.fromWei(this.nftCollectible.amountOrder)
+        );
         const balanceItem = parseFloat(Convert.fromWei(this.balanceItem));
-        return this.balanceItem === '0' || amountOrder > balanceItem ? false : true;
+        return this.balanceItem === "0" || amountOrder > balanceItem
+          ? false
+          : true;
       }
 
       return Convert.fromWei(this.balanceItem) >= 1;
     },
-    
+
     listMarket() {
       if (this.dataMarket === undefined || this.dataMarket.length === 0) {
         return [];
@@ -260,7 +285,7 @@ export default {
     typeEnum() {
       return this.type === "buy" ? "0" : "1";
     },
-    
+
     playerColumnTitle() {
       return this.type === "sell" ? "Seller" : "Buyer";
     },
@@ -278,7 +303,7 @@ export default {
 
   methods: {
     initData() {
-      if(!this.isConnected) {
+      if (!this.isConnected) {
         return;
       }
 
@@ -287,14 +312,14 @@ export default {
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
-    
+
     async loadData(page) {
-      if(!this.isConnected) {
+      if (!this.isConnected) {
         return;
       }
 
       this.initData();
-      
+
       try {
         page = page || 1;
 
@@ -310,16 +335,9 @@ export default {
         this.loadingText = "Sorry, an error occurred";
       } finally {
         this.isLoading = false;
-        this.$nextTick(() => {
-          if (document.querySelector(".v-data-table__mobile-row") !== null) {
-            this.btnActionWidth = `${document.querySelector(
-              ".v-data-table__mobile-row"
-            ).offsetWidth - 50}px`;
-          }
-        });
       }
     },
-    
+
     getSizeIcon(icon) {
       return icon === "swap" ? 16 : 12;
     },
@@ -344,7 +362,7 @@ export default {
       this.isLoadingConfirm = false;
       this.confirmOrderWaitingStage = 0;
     },
-    
+
     executeOrder() {
       try {
         this.isLoadingConfirm = true;
@@ -366,21 +384,21 @@ export default {
             "An error has occurred, please try again!"
           );
         });
-        
+
         confirmTransaction.on("transactionHash", () => {
           this.confirmOrderWaitingStage = 2;
         });
-        
+
         confirmTransaction.on("receipt", () => {
           this.setInitialStateConfirmOrder();
-          
+
           ToastSnackbar.success(`The order has been executed successful!`);
         });
       } catch (e) {
         this.setInitialStateConfirmOrder();
       }
     },
-    
+
     async isApprovedContract(type) {
       const listApproved = {
         sell: async () => {
@@ -398,7 +416,7 @@ export default {
       };
       return listApproved[type]();
     },
-    
+
     approve(type) {
       const listApproved = {
         sell: () => {
@@ -414,7 +432,7 @@ export default {
           );
         },
       };
-      
+
       const confirmTransaction = listApproved[type]();
       this.isLoadingApproveRaskel = true;
       this.raskelApproveText = RASKEL_WAITING_WALLET_APPROVAL;
@@ -427,16 +445,14 @@ export default {
         if (error.message) {
           return ToastSnackbar.error(error.message);
         }
-        
-        return ToastSnackbar.error(
-          "An error has occurred"
-        );
+
+        return ToastSnackbar.error("An error has occurred");
       });
 
       confirmTransaction.on("transactionHash", async () => {
         this.raskelApproveText = RASKEL_WAITING_FIRST_CONFIRMATION;
       });
-      
+
       confirmTransaction.on("receipt", async () => {
         this.isLoadingApproveRaskel = false;
         this.raskelApproveText = RASKEL_DEFAULT_APPROVE_TEXT;
@@ -471,7 +487,7 @@ export default {
 
         confirmTransaction.on("error", (error) => {
           this.setInitialStateCancelOrder();
-          
+
           if (error.message) {
             return ToastSnackbar.error(error.message);
           }
@@ -479,20 +495,20 @@ export default {
             "Raskel - The traveler, an error has occurred, please try again!"
           );
         });
-        
+
         confirmTransaction.on("transactionHash", () => {
           this.raskelCancelText = RASKEL_CANCEL_WAITING_FIRST_CONFIRMATION;
         });
 
         confirmTransaction.on("receipt", () => {
           this.setInitialStateCancelOrder();
-          
+
           ToastSnackbar.success(`Order canceled!`);
 
           this.loadData();
         });
       } catch (e) {
-          this.setInitialStateCancelOrder();
+        this.setInitialStateCancelOrder();
       }
     },
   },

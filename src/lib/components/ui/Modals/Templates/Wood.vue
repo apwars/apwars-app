@@ -103,6 +103,7 @@ export default {
   .v-card__title {
     padding: 0px 25px !important;
     justify-content: center;
+    word-break: initial !important;
   }
 
   .v-card__text {
