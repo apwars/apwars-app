@@ -209,7 +209,7 @@ export default {
       userAmount: 0,
       address: "",
       qty: 0,
-      lilith: true,
+      lilith: false,
       isLoadingLilith: false,
       textLilithModal: "",
       stepLilith: "wGOLD",
