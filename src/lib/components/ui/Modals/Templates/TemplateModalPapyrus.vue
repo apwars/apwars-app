@@ -1,6 +1,11 @@
 <template>
   <div>
-    <v-dialog content-class="elevation-0" persistent :value="open" :width="getWidth">
+    <v-dialog
+      content-class="elevation-0"
+      persistent
+      :value="open"
+      :width="getWidth"
+    >
       <v-card>
         <v-card-title class="my-2">
           <h3>{{ title }}</h3>
@@ -11,12 +16,16 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <wButton class="mr-1" @click="$emit('close')" :disabled="disabledClose">
+          <wButton
+            class="mr-1"
+            @click="$emit('close')"
+            :disabled="disabledClose"
+          >
             {{ getTextClose }}
           </wButton>
 
           <wButton @click="$emit('confirm')" :disabled="disabledConfirm">
-            {{ isLoading ? 'Waiting...' : getTextConfirm }}
+            {{ isLoading ? "Waiting..." : getTextConfirm }}
           </wButton>
         </v-card-actions>
       </v-card>
@@ -25,18 +34,18 @@
 </template>
 
 <script>
-import wButton from '@/lib/components/ui/Buttons/wButton';
+import wButton from "@/lib/components/ui/Buttons/wButton";
 export default {
   props: [
-    'open',
-    'title',
-    'isLoading',
-    'disabledConfirm',
-    'disabledClose',
-    'textClose',
-    'width',
-    'height',
-    'textConfirm',
+    "open",
+    "title",
+    "isLoading",
+    "disabledConfirm",
+    "disabledClose",
+    "textClose",
+    "width",
+    "height",
+    "textConfirm",
   ],
 
   components: {
@@ -44,26 +53,34 @@ export default {
   },
   computed: {
     getWidth() {
-      if (this.width !== null && this.width !== undefined && this.width !== '') {
+      if (
+        this.width !== null &&
+        this.width !== undefined &&
+        this.width !== ""
+      ) {
         return this.width;
       }
-      return '600px';
+      return "600px";
     },
     getHeight() {
-      if (this.height !== null && this.height !== undefined && this.height !== '') {
+      if (
+        this.height !== null &&
+        this.height !== undefined &&
+        this.height !== ""
+      ) {
         return this.height;
       }
-      return '175px';
+      return "175px";
     },
     getTextClose() {
       if (this.textClose === undefined) {
-        return 'Close';
+        return "Close";
       }
       return this.textClose;
     },
     getTextConfirm() {
       if (this.textConfirm === undefined) {
-        return 'Confirm';
+        return "Confirm";
       }
       return this.textConfirm;
     },
@@ -71,10 +88,10 @@ export default {
 
   methods: {
     close() {
-      this.$emit('close');
+      this.$emit("close");
     },
     confirm() {
-      this.$emit('confirm');
+      this.$emit("confirm");
     },
   },
 };
@@ -83,7 +100,7 @@ export default {
 <style scoped>
 .theme--dark.v-card {
   background-color: transparent !important;
-  background: url('/images/modal-background.png');
+  background: url("/images/modal-background.png");
   background-size: 100%;
   background-repeat: no-repeat;
   padding: 10px 25px;

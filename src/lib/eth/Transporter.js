@@ -19,4 +19,8 @@ export default class Transporter {
         from,
       });
   }
+
+  getFeeAmount() {
+    return this.smc.methods.getFeeAmount().call();
+  }
 }

@@ -7,12 +7,16 @@
     :title="title"
     @close="$emit('close')"
     @confirm="$emit('confirm')"
+    :width="width"
+    :height="height"
   >
     <v-row dense>
       <v-col v-if="$vuetify.breakpoint.mdAndUp" dense cols="12" md="3">
         <div class="text-center">
           <v-img class="d-flex" width="100%" :src="imageUrl"></v-img>
-          <small v-if="amount > 0" class="remaining">Your Amount: {{ amount }}</small>
+          <small v-if="amount > 0" class="remaining"
+            >Your Amount: {{ amount }}</small
+          >
         </div>
       </v-col>
 
@@ -62,6 +66,8 @@ export default {
     "isLoading",
     "disabledConfirm",
     "amount",
+    "width",
+    "height",
   ],
 
   components: {

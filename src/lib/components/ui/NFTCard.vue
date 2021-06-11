@@ -121,6 +121,8 @@
       :waitingStage="waitingStageShowSendItem"
       title="Are you sure you want to send this item?"
       :amount="userAmount"
+      width="710px"
+      height="300px"
     >
       <div class="mt-2">
         <v-text-field
@@ -128,7 +130,7 @@
           class="input"
           label="Address"
           dense
-          v-model="address"
+          v-model="addressSendNFT"
         ></v-text-field>
         <v-currency-field
           dense
@@ -138,6 +140,46 @@
           v-model="qty"
         >
         </v-currency-field>
+        <p class="ma-0 pa-0 mt-n1">
+          Transportation fee of:
+          <amount
+            class="align-self-center mt-n2 mr-1"
+            :amount="transportationFee"
+            decimals="2"
+            symbol="wGOLD"
+            icon
+          />
+        </p>
+        <p class="mt-1">
+          Your balance:
+          <amount
+            class="align-self-center mt-n2 mr-1"
+            :amount="userBalance"
+            decimals="2"
+            symbol="wGOLD"
+            icon
+          />
+          <v-alert
+            v-if="!isBalanceFee"
+            class="mt-1"
+            outlined
+            type="warning"
+            border="left"
+            dense
+          >
+            Your balance is less than the fee.
+          </v-alert>
+          <v-alert
+            v-else-if="!isBalanceItem"
+            class="mt-1"
+            outlined
+            type="warning"
+            border="left"
+            dense
+          >
+            Your balance is less than the amount for transport.
+          </v-alert>
+        </p>
       </div>
     </game-item-wood-modal>
 
@@ -163,6 +205,7 @@ import LilithModal from "@/lib/components/ui/Modals/LilithModal";
 import ItemPrice from "@/lib/components/ui/Utils/ItemPrice";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
+import Convert from "@/lib/helpers/Convert";
 
 import Collectibles from "@/lib/eth/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
@@ -206,8 +249,10 @@ export default {
       isLoadingShowInfo: false,
       showSendItem: false,
       userAmount: 0,
-      address: "",
+      addressSendNFT: "",
       qty: 0,
+      userBalance: 0,
+      transportationFee: 0,
       lilith: false,
       isLoadingLilith: false,
       textLilithModal: "",
@@ -247,8 +292,25 @@ export default {
     },
 
     disabledConfirmSendItem() {
-      return !this.qty || (this.qty && this.qty > this.userAmount);
-    }
+      return (
+        this.addressSendNFT === "" ||
+        !this.qty ||
+        (this.qty && this.qty > this.userAmount) ||
+        Convert.fromWei(this.transportationFee) >
+          Convert.fromWei(this.userBalance)
+      );
+    },
+
+    isBalanceFee() {
+      return (
+        Convert.fromWei(this.userBalance) >=
+        Convert.fromWei(this.transportationFee)
+      );
+    },
+
+    isBalanceItem() {
+      return this.userAmount >= this.qty;
+    },
   },
 
   watch: {
@@ -300,8 +362,10 @@ export default {
           this.account,
           this.collectible.id
         );
-      } catch (e) {
-        console.log(e);
+
+        this.userBalance = await this.wGOLDContract.balanceOf(this.account);
+      } catch (error) {
+        return ToastSnackbar.error(error.toString());
       } finally {
         this.isLoading = false;
       }
@@ -405,7 +469,7 @@ export default {
     initStateShowSendItem() {
       this.showSendItem = true;
       this.qty = 0;
-      this.address = '';
+      this.addressSendNFT = "";
     },
 
     async openSendItem() {
@@ -421,6 +485,11 @@ export default {
           this.account,
           this.addresses.transporter
         );
+
+        const tranporterContract = await new Transporter(
+          this.addresses.transporter
+        );
+        this.transportationFee = await tranporterContract.getFeeAmount();
 
         this.showInfo = false;
         this.isLoadingShowInfo = false;
@@ -448,7 +517,7 @@ export default {
 
     sendItem() {
       try {
-        if (!web3.utils.isAddress(this.address)) {
+        if (!web3.utils.isAddress(this.addressSendNFT)) {
           return ToastSnackbar.warning("Address is invalid");
         }
 
@@ -457,7 +526,7 @@ export default {
         const tranporterContract = new Transporter(this.addresses.transporter);
         const confirmTransaction = tranporterContract.sendNFT(
           this.addresses.collectibles,
-          this.address,
+          this.addressSendNFT,
           this.collectible.id,
           this.qty,
           this.account
