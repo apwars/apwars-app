@@ -12,7 +12,7 @@
       <v-col dense cols="3">
         <div class="text-center">
           <v-img class="d-flex" width="100%" :src="imageUrl"></v-img>
-          <small class="remaining">Your Amount: {{ amount }}</small>
+          <small v-if="amount > 0" class="remaining">Your Amount: {{ amount }}</small>
         </div>
       </v-col>
       <v-col dense cols="9">
