@@ -156,29 +156,33 @@
       :gameItemTitle="nftCollectible.title"
       title="Are you sure you want to create this order?"
     >
-      <div v-if="isBuy" class="mt-1">
-        <span>You will pay</span>
-        <amount
-          :amount="amountInfo.totalAmount"
-          :decimals="2"
-          symbol="wGOLD"
-          icon
-        /> 
-        for this item.
-      </div>
-      <span v-else class="mt-1">
-        You will receive
-        <amount
-          :amount="amountInfo.amount"
-          :decimals="2"
-          symbol="wGOLD"
-          icon
-        /> 
-        for this item.
-      </span>
-
       <div v-if="isBuy" class="mt-2">
-        <h5 class="d-flex">
+        <p>
+          You will pay
+          <amount
+            :amount="amountInfo.totalAmount"
+            :decimals="2"
+            symbol="wGOLD"
+            icon
+          />
+          for this item.
+        </p>
+      </div>
+      <div v-else>
+        <p>
+          You will receive
+          <amount
+            :amount="amountInfo.amount"
+            :decimals="2"
+            symbol="wGOLD"
+            icon
+          />
+          for this item.
+        </p>
+      </div>
+
+      <div v-if="isBuy">
+        <p>
           Transaction fee:
           <amount
             :amount="amountInfo.feeAmount"
@@ -186,8 +190,8 @@
             symbol="wGOLD"
             icon
           />
-        </h5>
-        <h5 class="d-flex">
+        </p>
+        <p>
           Net amount:
           <amount
             :amount="amountInfo.amount"
@@ -195,10 +199,10 @@
             symbol="wGOLD"
             icon
           />
-        </h5>
+        </p>
       </div>
-      <div v-else class="mt-2">
-        <h5 class="d-flex">
+      <div v-else>
+        <p>
           Transaction fee:
           <amount
             :amount="amountInfo.feeAmount"
@@ -206,8 +210,8 @@
             symbol="wGOLD"
             icon
           />
-        </h5>
-        <h5 class="d-flex">
+        </p>
+        <p>
           Total amount:
           <amount
             :amount="amountInfo.totalAmount"
@@ -215,7 +219,7 @@
             symbol="wGOLD"
             icon
           />
-        </h5>
+        </p>
       </div>
     </game-item-wood-modal>
 

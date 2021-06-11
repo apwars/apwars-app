@@ -18,6 +18,7 @@
         <v-col cols="12" md="9" class="align-self-center">
           <p class="ml-2 mt-1 align-self-center content">
             <v-progress-circular
+              class="mr-1"
               v-if="isLoading"
               :size="24"
               :width="2"
