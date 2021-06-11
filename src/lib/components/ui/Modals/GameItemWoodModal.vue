@@ -2,7 +2,7 @@
   <modal-wood
     :open="open"
     :isLoading="isLoading"
-    :disabledConfirm="isLoading || disabledConfirm || !disabledBuy"
+    :disabledConfirm="isLoading || disabledConfirm || disabledBuy"
     :disabledClose="isLoading"
     :title="title"
     @close="$emit('close')"
@@ -15,9 +15,9 @@
       <v-col v-if="$vuetify.breakpoint.mdAndUp" dense cols="12" md="3">
         <div class="text-center">
           <v-img class="d-flex" width="100%" :src="imageUrl"></v-img>
-          <small v-if="amount" class="remaining"
-            >Your Amount: {{ amount }}</small
-          >
+          <small v-if="amount" class="remaining">
+            Your Amount: {{ amount }}
+          </small>
         </div>
       </v-col>
 
@@ -41,12 +41,12 @@
             indeterminate
             color="primary"
           ></v-progress-circular>
-          <span class="ml-1" v-if="waitingStage === 1"
-            >Waiting for the wallet approval...</span
-          >
-          <span class="ml-1" v-if="waitingStage === 2"
-            >Waiting for the first blockchain confirmation...</span
-          >
+          <span class="ml-1" v-if="waitingStage === 1">
+            Waiting for the wallet approval...
+          </span>
+          <span class="ml-1" v-if="waitingStage === 2">
+            Waiting for the first blockchain confirmation...
+          </span>
         </div>
       </v-col>
     </v-row>
@@ -70,7 +70,7 @@ export default {
     "width",
     "height",
     "textClose",
-    "disabledBuy"
+    "disabledBuy",
   ],
 
   components: {

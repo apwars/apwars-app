@@ -89,7 +89,7 @@
           @close="isConfirmOrderModalOpen = false"
           :waitingStage="confirmOrderWaitingStage"
           :title="confirmOrderModalTitle"
-          :disabledBuy="hasQuantity"
+          :disabledBuy="!hasQuantity"
         >
           <h4 class="mt-3">
             <span v-if="isBuy">You will pay</span>

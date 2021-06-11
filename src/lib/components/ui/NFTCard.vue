@@ -517,6 +517,8 @@ export default {
     setInitialStateSendItem() {
       this.isLoadingShowSendItem = false;
       this.waitingStageShowSendItem = 0;
+      this.addressSendNFT = "";
+      this.qty = 0;
     },
 
     sendItem() {
@@ -628,7 +630,7 @@ export default {
         );
 
         confirmTransaction.on("error", (error) => {
-          this.setInitialStateApprovewGOLD();
+          this.setInitialStateApproveFirstPageContract();
           if (error.message) {
             return ToastSnackbar.error(error.message);
           }
@@ -643,14 +645,14 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           if (this.isApprovedCollectibles) {
-            this.setInitialStateApprovewGOLD();
+            this.setInitialStateApproveFirstPageContract();
             this.lilith = false;
           } else {
             this.approveSecoundPageContract();
           }
         });
       } catch (error) {
-        this.setInitialStateApprovewGOLD();
+        this.setInitialStateApproveFirstPageContract();
         return ToastSnackbar.error(error.toString());
       }
     },
