@@ -73,13 +73,13 @@ export default {
       return "175px";
     },
     getTextClose() {
-      if (this.textClose === undefined) {
+      if (this.textClose === undefined || this.textClose === null) {
         return "Close";
       }
       return this.textClose;
     },
     getTextConfirm() {
-      if (this.textConfirm === undefined) {
+      if (this.textConfirm === undefined || this.textClose === null) {
         return "Confirm";
       }
       return this.textConfirm;

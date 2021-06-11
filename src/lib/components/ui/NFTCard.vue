@@ -123,6 +123,7 @@
       :amount="userAmount"
       width="710px"
       height="300px"
+      textClose="Back"
     >
       <div class="mt-2">
         <v-text-field

@@ -21,7 +21,7 @@
           @click="$emit('close')"
           :disabled="disabledClose"
         >
-          Close
+          {{ getTextClose }}
         </w-button>
         <w-button @click="$emit('confirm')" :disabled="disabledConfirm">
           {{ isLoading ? "Waiting..." : "Confirm" }}
@@ -43,6 +43,7 @@ export default {
     "disabledClose",
     "width",
     "height",
+    "textClose",
   ],
   components: {
     wButton,
@@ -68,6 +69,12 @@ export default {
         return this.height;
       }
       return "250px";
+    },
+    getTextClose() {
+      if (this.textClose === undefined || this.textClose === null) {
+        return "Close";
+      }
+      return this.textClose;
     },
   },
 };
@@ -104,8 +111,8 @@ export default {
   }
 
   .v-card__actions {
-  padding-bottom: 5px !important;
-}
+    padding-bottom: 5px !important;
+  }
 }
 </style>
 
