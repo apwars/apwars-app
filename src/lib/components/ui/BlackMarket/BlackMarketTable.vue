@@ -187,7 +187,7 @@ export default {
       isLoadingConfirm: false,
       isLoadingCancel: false,
       marketNFTS: {},
-      itemsPerPage: 2,
+      itemsPerPage: 10,
       totalItems: 0,
       quantity: 1,
       isLoading: true,
