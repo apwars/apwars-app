@@ -155,6 +155,7 @@
       :imageUrl="nftCollectible.image"
       :gameItemTitle="nftCollectible.title"
       title="Are you sure you want to create this order?"
+      :amount="userAmount"
     >
       <div v-if="isBuy" class="mt-1">
         <span>You will pay</span>
