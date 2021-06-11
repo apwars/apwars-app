@@ -14,6 +14,7 @@
           :items-per-page="itemsPerPage"
           :loading="isLoading"
           :loading-text="loadingText"
+          :server-items-length="totalItems"
           @update:page="loadData"
         >
           <template v-slot:[`item.sender`]="{ item }">
@@ -176,7 +177,7 @@ export default {
       isLoadingConfirm: false,
       isLoadingCancel: false,
       marketNFTS: {},
-      itemsPerPage: 10,
+      itemsPerPage: 2,
       totalItems: 0,
       quantity: 1,
       isLoading: true,

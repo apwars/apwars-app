@@ -82,6 +82,6 @@ export default {
 .image-symbol {
   vertical-align: bottom;
 
-  margin-left: 4px !important;
+  margin-left: 2px !important;
 }
 </style>

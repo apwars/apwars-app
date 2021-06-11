@@ -1,11 +1,16 @@
 <template>
-  <v-dialog content-class="wood elevation-0" persistent :value="open" width="650px">
+  <v-dialog
+    content-class="wood elevation-0"
+    persistent
+    :value="open"
+    :width="getWidth"
+  >
     <v-card v-if="open">
       <v-card-title class="my-2">
         <h3>{{ title }}</h3>
       </v-card-title>
 
-      <v-card-text>
+      <v-card-text :style="`height: ${getHeight}`">
         <slot></slot>
       </v-card-text>
 
@@ -16,12 +21,9 @@
           @click="$emit('close')"
           :disabled="disabledClose"
         >
-          Close
+          {{ getTextClose }}
         </w-button>
-        <w-button
-          @click="$emit('confirm')"
-          :disabled="disabledConfirm"
-        >
+        <w-button @click="$emit('confirm')" :disabled="disabledConfirm">
           {{ isLoading ? "Waiting..." : "Confirm" }}
         </w-button>
       </v-card-actions>
@@ -33,9 +35,47 @@
 import wButton from "@/lib/components/ui/Buttons/wButton";
 
 export default {
-  props: ["open", "title", "isLoading", "disabledConfirm", "disabledClose"],
+  props: [
+    "open",
+    "title",
+    "isLoading",
+    "disabledConfirm",
+    "disabledClose",
+    "width",
+    "height",
+    "textClose",
+  ],
   components: {
     wButton,
+  },
+  computed: {
+    getWidth() {
+      console.log(this.width);
+      if (
+        this.width !== null &&
+        this.width !== undefined &&
+        this.width !== ""
+      ) {
+        return this.width;
+      }
+      return "650px";
+    },
+    getHeight() {
+      if (
+        this.height !== null &&
+        this.height !== undefined &&
+        this.height !== ""
+      ) {
+        return this.height;
+      }
+      return "250px";
+    },
+    getTextClose() {
+      if (this.textClose === undefined || this.textClose === null) {
+        return "Close";
+      }
+      return this.textClose;
+    },
   },
 };
 </script>
@@ -46,12 +86,11 @@ export default {
   background: url("/images/battle/modal.png");
   background-size: 100%;
   background-repeat: no-repeat;
-  padding: 15px;
-  height: 450px;
+  padding: 10px 25px;
 }
 
-.v-card__text {
-  height: 250px;
+.v-card__actions {
+  padding-bottom: 35px !important;
 }
 
 @media only screen and (max-width: 650px) {
@@ -59,12 +98,20 @@ export default {
     background-color: #000 !important;
     background-image: url("/images/battle/bg-wars.png");
     background-repeat: repeat;
-    padding: 15px 0px;
-    height: auto !important;
+    padding: 30px 0px;
+  }
+
+  .v-card__title {
+    padding: 0px 25px !important;
+    justify-content: center;
   }
 
   .v-card__text {
     height: auto !important;
+  }
+
+  .v-card__actions {
+    padding-bottom: 5px !important;
   }
 }
 </style>
