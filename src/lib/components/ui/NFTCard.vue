@@ -116,7 +116,7 @@
       @confirm="sendItem()"
       :disabledConfirm="disabledConfirmSendItem"
       :imageUrl="collectible.image"
-      :gameItemTitle="collectible.title"
+      :gameItemTitle="`${collectible.title}`"
       :isLoading="isLoadingShowSendItem"
       :waitingStage="waitingStageShowSendItem"
       title="Are you sure you want to send this item?"

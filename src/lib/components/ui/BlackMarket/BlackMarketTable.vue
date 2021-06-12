@@ -14,8 +14,10 @@
           :items-per-page="itemsPerPage"
           :loading="isLoading"
           :loading-text="loadingText"
-          :server-items-length="totalItems"
-          @update:page="loadData"
+          :show-expand="false"
+          :footer-props="{
+            'items-per-page-options': [itemsPerPage],
+          }"
         >
           <template v-slot:[`item.sender`]="{ item }">
             <v-address :address="item.sender" link tooltip></v-address>
@@ -187,8 +189,9 @@ export default {
       isLoadingConfirm: false,
       isLoadingCancel: false,
       marketNFTS: {},
-      itemsPerPage: 10,
+      itemsPerPage: 200,
       totalItems: 0,
+      page: 1,
       quantity: 1,
       isLoading: true,
       loadingText: "Loading... Please wait",
@@ -306,12 +309,17 @@ export default {
   },
 
   watch: {
-    currentBlockNumber() {
+    isConnected() {
+      this.initData();
       this.loadData();
+    },
+    currentBlockNumber() {
+      this.loadData(this.page, false);
     },
   },
 
   mounted() {
+    this.initData();
     this.loadData();
   },
 
@@ -327,19 +335,19 @@ export default {
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
 
-    async loadData(page) {
+    async loadData(page, noLoading) {
       if (!this.isConnected) {
         return;
       }
 
-      this.initData();
-
-      this.amountwGOLD = Convert.fromWei(
-        await this.wGOLDContract.balanceOf(this.account)
-      );
-
       try {
-        page = page || 1;
+        // this.isLoading = noLoading !== undefined ? false : true;
+        // this.dataMarket = noLoading !== undefined ? this.dataMarket : [];
+        this.page = page || 1;
+
+        this.amountwGOLD = Convert.fromWei(
+          await this.wGOLDContract.balanceOf(this.account)
+        );
 
         const market = await this.marketNFTS.getMarket(
           this.typeEnum,
