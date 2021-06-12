@@ -310,11 +310,13 @@ export default {
 
   watch: {
     isConnected() {
-      this.initData();
-      this.loadData();
+      if (this.isConnected) {
+        this.initData();
+        this.loadData();
+      }
     },
     currentBlockNumber() {
-      this.loadData(this.page, false);
+      !this.isLoading && this.loadData(this.page, true);
     },
   },
 
@@ -335,14 +337,14 @@ export default {
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
 
-    async loadData(page, noLoading) {
+    async loadData(page, noLoadingPage) {
       if (!this.isConnected) {
         return;
       }
 
       try {
-        // this.isLoading = noLoading !== undefined ? false : true;
-        // this.dataMarket = noLoading !== undefined ? this.dataMarket : [];
+        this.isLoading = noLoadingPage === undefined ? true : false;
+        // this.dataMarket = noLoadingPage !== undefined ? this.dataMarket : [];
         this.page = page || 1;
 
         this.amountwGOLD = Convert.fromWei(
@@ -352,7 +354,7 @@ export default {
         const market = await this.marketNFTS.getMarket(
           this.typeEnum,
           this.itemsPerPage,
-          page
+          this.page
         );
         this.dataMarket = market.data;
         this.totalItems = parseInt(market.total);
