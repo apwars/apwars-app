@@ -79,7 +79,30 @@
             >
               Your balance is less than your offer.
             </v-alert>
-            <div
+            <div class="mr-1 mb-2">
+              This transaction has a fee of:
+              <amount
+                class="d-block d-md-inline-block"
+                :amount="amountInfo.feeAmount"
+                decimals="2"
+                tooltip
+                symbol="wGOLD"
+                icon
+              />
+            </div>
+
+            <div class="mr-1 mb-2">
+              {{ totalAmountDescription }} for this item:
+              <amount
+                class="d-block d-md-inline-block"
+                :amount="amountInfo.totalAmount"
+                decimals="2"
+                tooltip
+                symbol="wGOLD"
+                icon
+              />
+            </div>
+            <!-- <div
               :class="
                 $vuetify.breakpoint.mdAndUp
                   ? 'd-flex'
@@ -129,7 +152,7 @@
                   icon
                 />
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="d-flex flex-row-reverse mt-3 mb-n1">
             <wButton v-if="isBuy" @click="openModal()" :disabled="disabledBuy">
@@ -319,6 +342,14 @@ export default {
 
     isBuy() {
       return this.buyOrSell === "buy";
+    },
+
+    totalAmountDescription() {
+      if (this.isBuy) {
+        return "Total price for transaction";
+      }
+
+      return "The buyer will pay";
     },
 
     hintLabel() {
