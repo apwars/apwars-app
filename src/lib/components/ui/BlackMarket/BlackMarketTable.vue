@@ -11,14 +11,28 @@
           class="table-black-market elevation-0"
           :headers="headers"
           :items="listMarket"
-          :items-per-page="itemsPerPage"
+          :items-per-page="listMarket.length"
           :loading="isLoading"
           :loading-text="loadingText"
           :show-expand="false"
-          :footer-props="{
-            'items-per-page-options': [itemsPerPage],
-          }"
+          hide-default-footer
         >
+          <template v-slot:footer>
+            <wButton
+              class="d-flex justify-center my-3"
+              v-if="listMarket.length > 0"
+              @click="loadData(0)"
+              :disabled="isEndLoading || isLoading"
+            >
+              <div v-if="isLoading" class="mx-6">
+                Loading...
+              </div>
+              <div v-else class="mx-6">
+                {{ isEndLoading ? "No more items to load" : "Load more" }}
+              </div>
+            </wButton>
+          </template>
+
           <template v-slot:[`item.sender`]="{ item }">
             <v-address :address="item.sender" link tooltip></v-address>
           </template>
@@ -184,13 +198,14 @@ export default {
       nftCollectible: {
         nft: {},
       },
+      isEndLoading: false,
       isConfirmOrderModalOpen: false,
       openCancelOrderGameItem: false,
       isLoadingConfirm: false,
       isLoadingCancel: false,
       marketNFTS: {},
-      itemsPerPage: 200,
-      totalItems: 0,
+      itemsPerPage: 5,
+      lastIndex: undefined,
       page: 1,
       quantity: 1,
       isLoading: true,
@@ -312,17 +327,17 @@ export default {
     isConnected() {
       if (this.isConnected) {
         this.initData();
-        this.loadData();
+        this.loadData(this.page);
       }
     },
-    currentBlockNumber() {
-      !this.isLoading && this.loadData(this.page, true);
-    },
+    // currentBlockNumber() {
+    //   !this.isLoading && this.loadData(this.page);
+    // },
   },
 
   mounted() {
     this.initData();
-    this.loadData();
+    this.loadData(this.page);
   },
 
   methods: {
@@ -337,27 +352,27 @@ export default {
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
 
-    async loadData(page, noLoadingPage) {
+    async loadData(page) {
       if (!this.isConnected) {
         return;
       }
 
       try {
-        this.isLoading = noLoadingPage === undefined ? true : false;
-        // this.dataMarket = noLoadingPage !== undefined ? this.dataMarket : [];
+        this.isLoading = true;
         this.page = page || 1;
 
         this.amountwGOLD = Convert.fromWei(
           await this.wGOLDContract.balanceOf(this.account)
         );
 
-        const market = await this.marketNFTS.getMarket(
+        const market = await this.marketNFTS.getMarketLoadMore(
           this.typeEnum,
           this.itemsPerPage,
-          this.page
+          this.lastIndex
         );
-        this.dataMarket = market.data;
-        this.totalItems = parseInt(market.total);
+        this.dataMarket = [].concat(this.dataMarket, market.data);
+        this.lastIndex = market.lastIndex;
+        this.isEndLoading = market.isEnd;
       } catch (error) {
         console.log(error);
         this.loadingText = "Sorry, an error occurred";
