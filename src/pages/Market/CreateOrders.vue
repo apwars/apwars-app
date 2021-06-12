@@ -1,124 +1,101 @@
 <template>
   <div v-if="isConnected">
-    <div v-if="nftCollectible.status">
-      Item not found
-    </div>
-    <v-container class="box-create-order-title" v-else>
+    <div v-if="isLoading">
       <v-row>
-        <v-col
-          cols="12"
-          :class="
-            $vuetify.breakpoint.mdAndUp
-              ? ''
-              : 'd-flex justify-center text-center'
-          "
-        >
-          <game-title v-if="isBuy">
-            <h3>Buy a {{ nftCollectible.typeDesc }}</h3>
-            <p
-              :style="
-                $vuetify.breakpoint.mdAndUp
-                  ? 'font-size: 14px'
-                  : 'font-size: 18px'
-              "
-            >
-              Create a buy order
-            </p>
-          </game-title>
-          <game-title v-else class="d-block">
-            <h3>Sell your {{ nftCollectible.typeDesc }}</h3>
-            <p
-              :style="
-                $vuetify.breakpoint.mdAndUp
-                  ? 'font-size: 14px'
-                  : 'font-size: 18px'
-              "
-            >
-              Create a sell order
-            </p>
-          </game-title>
+        <v-col cols="12">
+          <h3 class="text-h3 my-6 text-center">Loading...</h3>
         </v-col>
       </v-row>
-      <v-row class="box-create-order ma-1 ma-sm-6">
-        <v-col cols="12" lg="3" md="3">
-          <v-img class="mx-auto" max-width="150" :src="nftCollectible.image" />
-          <div class="text-center">
-            <p class="remaining">You have: {{ userAmount }} units</p>
-          </div>
-        </v-col>
-        <v-col class="mt-n6 mt-md-0" cols="12" lg="9" md="9">
-          <game-text header="h4">{{ nftCollectible.title }}</game-text>
-          <div>
-            <p v-if="isBuy">
-              How much wGOLD do you want to pay for this item?
-            </p>
-            <p v-else>How much wGOLD do you want for this item</p>
-            <v-currency-field
-              class="mb-2"
-              outlined
-              label="Quantity"
-              :hint="hintLabel"
-              persistent-hint
-              v-bind="currencyConfig"
-              v-model="amount"
-              @input="calcFee()"
-            >
-              <template v-slot:append>
-                <div class="d-flex">
-                  <span class="mr-1 align-self-center">wGOLD</span>
-                </div>
-              </template>
-            </v-currency-field>
-            <v-alert
-              class="mt-3"
-              v-if="amount > amountwGOLD && buyOrSell === 'buy'"
-              outlined
-              type="warning"
-              border="left"
-              dense
-            >
-              Your balance is less than your offer.
-            </v-alert>
-            <div class="mr-1 mb-2">
-              This transaction has a fee of:
-              <amount
-                class="d-block d-md-inline-block"
-                :amount="amountInfo.feeAmount"
-                decimals="2"
-                tooltip
-                symbol="wGOLD"
-                icon
-              />
-            </div>
+    </div>
 
-            <div class="mr-1 mb-2">
-              {{ totalAmountDescription }} for this item:
-              <amount
-                class="d-block d-md-inline-block"
-                :amount="amountInfo.totalAmount"
-                decimals="2"
-                tooltip
-                symbol="wGOLD"
-                icon
-              />
-            </div>
-            <!-- <div
-              :class="
-                $vuetify.breakpoint.mdAndUp
-                  ? 'd-flex'
-                  : 'd-block justify-center text-center'
-              "
-            >
-              <p>This transaction has a fee of:</p>
-              <div
-                :class="
+    <div v-else>
+      <div v-if="nftCollectible.status">
+        Item not found
+      </div>
+      <v-container class="box-create-order-title" v-else>
+        <v-row>
+          <v-col
+            cols="12"
+            :class="
+              $vuetify.breakpoint.mdAndUp
+                ? ''
+                : 'd-flex justify-center text-center'
+            "
+          >
+            <game-title v-if="isBuy">
+              <h3>Buy a {{ nftCollectible.typeDesc }}</h3>
+              <p
+                :style="
                   $vuetify.breakpoint.mdAndUp
-                    ? 'd-flex'
-                    : 'd-flex justify-center text-center'
+                    ? 'font-size: 14px'
+                    : 'font-size: 18px'
                 "
               >
+                Create a buy order
+              </p>
+            </game-title>
+            <game-title v-else class="d-block">
+              <h3>Sell your {{ nftCollectible.typeDesc }}</h3>
+              <p
+                :style="
+                  $vuetify.breakpoint.mdAndUp
+                    ? 'font-size: 14px'
+                    : 'font-size: 18px'
+                "
+              >
+                Create a sell order
+              </p>
+            </game-title>
+          </v-col>
+        </v-row>
+        <v-row class="box-create-order ma-1 ma-sm-6">
+          <v-col cols="12" lg="3" md="3">
+            <v-img
+              class="mx-auto"
+              max-width="150"
+              :src="nftCollectible.image"
+            />
+            <div class="text-center">
+              <p class="remaining">You have: {{ userAmount }} units</p>
+            </div>
+          </v-col>
+          <v-col class="mt-n6 mt-md-0" cols="12" lg="9" md="9">
+            <game-text header="h4">{{ nftCollectible.title }}</game-text>
+            <div>
+              <p v-if="isBuy">
+                How much wGOLD do you want to pay for this item?
+              </p>
+              <p v-else>How much wGOLD do you want for this item</p>
+              <v-currency-field
+                class="mb-2"
+                outlined
+                label="Quantity"
+                :hint="hintLabel"
+                persistent-hint
+                v-bind="currencyConfig"
+                v-model="amount"
+                @input="calcFee()"
+              >
+                <template v-slot:append>
+                  <div class="d-flex">
+                    <span class="mr-1 align-self-center">wGOLD</span>
+                  </div>
+                </template>
+              </v-currency-field>
+              <v-alert
+                class="mt-3"
+                v-if="amount > amountwGOLD && buyOrSell === 'buy'"
+                outlined
+                type="warning"
+                border="left"
+                dense
+              >
+                Your balance is less than your offer.
+              </v-alert>
+              <div class="mr-1 mb-2">
+                This transaction has a fee of:
                 <amount
-                  class="align-self-center mt-n2 mr-1"
+                  class="d-block d-md-inline-block"
                   :amount="amountInfo.feeAmount"
                   decimals="2"
                   tooltip
@@ -126,25 +103,11 @@
                   icon
                 />
               </div>
-            </div>
-            <div
-              :class="
-                $vuetify.breakpoint.mdAndUp
-                  ? 'd-flex'
-                  : 'd-block justify-center text-center'
-              "
-            >
-              <p v-if="isBuy">Total price for transaction:</p>
-              <p v-else>The buyer will pay for this item:</p>
-              <div
-                :class="
-                  $vuetify.breakpoint.mdAndUp
-                    ? 'd-flex'
-                    : 'd-flex justify-center text-center'
-                "
-              >
+
+              <div class="mr-1 mb-2">
+                {{ totalAmountDescription }} for this item:
                 <amount
-                  class="align-self-center mt-n2 mr-1"
+                  class="d-block d-md-inline-block"
                   :amount="amountInfo.totalAmount"
                   decimals="2"
                   tooltip
@@ -152,107 +115,111 @@
                   icon
                 />
               </div>
-            </div> -->
-          </div>
-          <div class="d-flex flex-row-reverse mt-3 mb-n1">
-            <wButton v-if="isBuy" @click="openModal()" :disabled="disabledBuy">
-              Buy
-            </wButton>
-            <wButton v-else @click="openModal()" :disabled="disabledSell">
-              Sell
-            </wButton>
-            <wButton class="mr-1" @click="$router.back()">
-              Go Back
-            </wButton>
-          </div>
-        </v-col>
-      </v-row>
-    </v-container>
+            </div>
+            <div class="d-flex flex-row-reverse mt-3 mb-n1">
+              <wButton
+                v-if="isBuy"
+                @click="openModal()"
+                :disabled="disabledBuy"
+              >
+                Buy
+              </wButton>
+              <wButton v-else @click="openModal()" :disabled="disabledSell">
+                Sell
+              </wButton>
+              <wButton class="mr-1" @click="$router.back()">
+                Go Back
+              </wButton>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
 
-    <game-item-wood-modal
-      :open="openConfirmOrderGameItem"
-      :isLoading="isLoadingMarket"
-      :waitingStage="waitingStage"
-      @close="openConfirmOrderGameItem = false"
-      @confirm="createOrder"
-      :imageUrl="nftCollectible.image"
-      :gameItemTitle="nftCollectible.title"
-      title="Are you sure you want to create this order?"
-    >
-      <div v-if="isBuy" class="mt-2">
-        <p>
-          You will pay
-          <amount
-            :amount="amountInfo.totalAmount"
-            :decimals="2"
-            symbol="wGOLD"
-            icon
-          />
-          for this item.
-        </p>
-      </div>
-      <div v-else>
-        <p>
-          You will receive
-          <amount
-            :amount="amountInfo.amount"
-            :decimals="2"
-            symbol="wGOLD"
-            icon
-          />
-          for this item.
-        </p>
-      </div>
+      <game-item-wood-modal
+        :open="openConfirmOrderGameItem"
+        :isLoading="isLoadingMarket"
+        :waitingStage="waitingStage"
+        @close="openConfirmOrderGameItem = false"
+        @confirm="createOrder"
+        :imageUrl="nftCollectible.image"
+        :gameItemTitle="nftCollectible.title"
+        title="Are you sure you want to create this order?"
+      >
+        <div v-if="isBuy" class="mt-2">
+          <p>
+            You will pay
+            <amount
+              :amount="amountInfo.totalAmount"
+              :decimals="2"
+              symbol="wGOLD"
+              icon
+            />
+            for this item.
+          </p>
+        </div>
+        <div v-else>
+          <p>
+            You will receive
+            <amount
+              :amount="amountInfo.amount"
+              :decimals="2"
+              symbol="wGOLD"
+              icon
+            />
+            for this item.
+          </p>
+        </div>
 
-      <div v-if="isBuy">
-        <p>
-          Transaction fee:
-          <amount
-            :amount="amountInfo.feeAmount"
-            :decimals="2"
-            symbol="wGOLD"
-            icon
-          />
-        </p>
-        <p>
-          Net amount:
-          <amount
-            :amount="amountInfo.amount"
-            :decimals="2"
-            symbol="wGOLD"
-            icon
-          />
-        </p>
-      </div>
-      <div v-else>
-        <p>
-          Transaction fee:
-          <amount
-            :amount="amountInfo.feeAmount"
-            :decimals="2"
-            symbol="wGOLD"
-            icon
-          />
-        </p>
-        <p>
-          Total amount:
-          <amount
-            :amount="amountInfo.totalAmount"
-            :decimals="2"
-            symbol="wGOLD"
-            icon
-          />
-        </p>
-      </div>
-    </game-item-wood-modal>
+        <div v-if="isBuy">
+          <p>
+            Transaction fee:
+            <amount
+              :amount="amountInfo.feeAmount"
+              :decimals="2"
+              symbol="wGOLD"
+              icon
+            />
+          </p>
+          <p>
+            Net amount:
+            <amount
+              :amount="amountInfo.amount"
+              :decimals="2"
+              symbol="wGOLD"
+              icon
+            />
+          </p>
+        </div>
+        <div v-else>
+          <p>
+            Transaction fee:
+            <amount
+              :amount="amountInfo.feeAmount"
+              :decimals="2"
+              symbol="wGOLD"
+              icon
+            />
+          </p>
+          <p>
+            Total amount:
+            <amount
+              :amount="amountInfo.totalAmount"
+              :decimals="2"
+              symbol="wGOLD"
+              icon
+            />
+          </p>
+        </div>
+      </game-item-wood-modal>
 
-    <raskel-modal
-      :open="raskel"
-      @confirm="approve(buyOrSell)"
-      @close="$router.back()"
-      :isLoading="isLoadingRaskel"
-      text="To work for you and create this order, I need to receive approval to trade your items. You can trust me, my fellow!"
-    ></raskel-modal>
+      <raskel-modal
+        :open="raskel"
+        @confirm="approve(buyOrSell)"
+        @close="$router.back()"
+        :isLoading="isLoadingRaskel"
+        text="To work for you and create this order, I need to receive approval to trade your items. You can trust me, my fellow!"
+      ></raskel-modal>
+    </div>
   </div>
 </template>
 
@@ -284,6 +251,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       amountwGOLD: false,
       isLoadingMarket: false,
       raskel: false,
@@ -430,6 +398,7 @@ export default {
       this.amountwGOLD = Convert.fromWei(
         await this.wGOLDContract.balanceOf(this.account)
       );
+      this.isLoading = false;
     },
 
     async getSwapFeeRate() {
