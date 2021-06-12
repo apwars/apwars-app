@@ -92,7 +92,7 @@
           :disabledBuy="!hasQuantity"
         >
           <h4 class="mt-3">
-            <span v-if="isBuy">You will pay</span>
+            <span v-if="!isBuy">You will pay</span>
             <span v-else>You will receive</span>
             <amount
               :amount="nftCollectible.amountOrder"
