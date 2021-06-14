@@ -35,10 +35,10 @@
               </span>
             </div>
           </template>
-          <template v-slot:[`item.nft.quantity`]="{ item }">
-            <div class="d-flex">
-              <span class="ml-1 align-self-center">
-                <!-- {{ item.nft.quantity }} -->
+          <template v-slot:[`item.quantity`]="{ item }">
+            <div class="text-center">
+              <span>
+                {{ item.quantity }}
               </span>
             </div>
           </template>
@@ -70,9 +70,7 @@
               <wButton class="ml-2" @click="openModal(item)">
                 <div class="d-flex justify-center px-2">
                   <img
-                    :src="
-                      `/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`
-                    "
+                    :src="`/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`"
                     class="mx-1 align-self-center"
                     :height="getSizeIcon(item.orderTypeDesc)"
                   />
@@ -93,7 +91,17 @@
           :title="confirmOrderModalTitle"
           :disabledBuy="!hasQuantity"
         >
-          <h4 class="mt-3">
+          <v-currency-field outlined label="Units" v-model="quantity">
+            <template v-slot:append>
+              <v-icon @click="decrement">
+                mdi-minus
+              </v-icon>
+              <v-icon @click="increment(nftCollectible.quantity)">
+                mdi-plus
+              </v-icon>
+            </template>
+          </v-currency-field>
+          <h4>
             <span v-if="!isBuy">You will pay</span>
             <span v-else>You will receive</span>
             <amount
@@ -106,14 +114,7 @@
             />
             for this item.
           </h4>
-          <v-alert
-            class="mt-3"
-            outlined
-            v-if="!hasQuantity"
-            type="warning"
-            border="left"
-            dense
-          >
+          <v-alert class="mt-3" outlined v-if="!hasQuantity" type="warning" border="left" dense>
             Your balance is less than your offer.
           </v-alert>
         </game-item-wood-modal>
@@ -139,34 +140,33 @@
 </template>
 
 <script>
-import Amount from "@/lib/components/ui/Utils/Amount";
-import VAddress from "@/lib/components/ui/Utils/VAddress";
-import wButton from "@/lib/components/ui/Buttons/wButton";
-import GameItemWoodModal from "@/lib/components/ui/Modals/GameItemWoodModal";
-import RaskelModal from "@/lib/components/ui/Modals/RaskelModal";
-import ToastSnackbar from "@/plugins/ToastSnackbar";
+import Amount from '@/lib/components/ui/Utils/Amount';
+import VAddress from '@/lib/components/ui/Utils/VAddress';
+import wButton from '@/lib/components/ui/Buttons/wButton';
+import GameItemWoodModal from '@/lib/components/ui/Modals/GameItemWoodModal';
+import RaskelModal from '@/lib/components/ui/Modals/RaskelModal';
+import ToastSnackbar from '@/plugins/ToastSnackbar';
 
-import Convert from "@/lib/helpers/Convert";
+import Convert from '@/lib/helpers/Convert';
 
-import { getCollectibles } from "@/data/Collectibles";
+import { getCollectibles } from '@/data/Collectibles';
 
-import MarketNFTS from "@/lib/eth/MarketNFTS.js";
-import Collectibles from "@/lib/eth/Collectibles";
-import wGOLD from "@/lib/eth/wGOLD";
+import MarketNFTS from '@/lib/eth/MarketNFTS.js';
+import Collectibles from '@/lib/eth/Collectibles';
+import wGOLD from '@/lib/eth/wGOLD';
 
 const RASKEL_DEFAULT_APPROVE_TEXT =
-  "To work for you and execute this order, I need to receive approval to trade your items. You can trust me, my fellow!";
+  'To work for you and execute this order, I need to receive approval to trade your items. You can trust me, my fellow!';
 const RASKEL_DEFAULT_CANCEL_TEXT =
-  "If you cancel this offer I will not receive any fee! Are you sure about that? I am working for nothing!";
-const RASKEL_WAITING_WALLET_APPROVAL =
-  "I am waiting for the approval in your precious wallet...";
+  'If you cancel this offer I will not receive any fee! Are you sure about that? I am working for nothing!';
+const RASKEL_WAITING_WALLET_APPROVAL = 'I am waiting for the approval in your precious wallet...';
 const RASKEL_CANCEL_WAITING_FIRST_CONFIRMATION =
-  "Next time, think more about using my service and not waste my time with unnecessary orders! I am waiting for the first blockchain confirmation...";
+  'Next time, think more about using my service and not waste my time with unnecessary orders! I am waiting for the first blockchain confirmation...';
 const RASKEL_WAITING_FIRST_CONFIRMATION =
-  "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation...";
+  'Thank you for trust me my fellow, I am waiting for the first blockchain confirmation...';
 
 export default {
-  props: ["type"],
+  props: ['type'],
   components: {
     VAddress,
     Amount,
@@ -194,35 +194,35 @@ export default {
       page: 1,
       quantity: 1,
       isLoading: true,
-      loadingText: "Loading... Please wait",
+      loadingText: 'Loading... Please wait',
       dataMarket: [],
       headers: [
         {
-          text: "Player",
-          value: "sender",
-          width: "15%",
+          text: 'Player',
+          value: 'sender',
+          width: '15%',
           sortable: false,
         },
         {
-          text: "Game Item",
-          value: "nft.title",
-          width: "25%",
+          text: 'Game Item',
+          value: 'nft.title',
+          width: '25%',
           sortable: false,
         },
-        { text: "Type", value: "nft.typeDesc", width: "15%", sortable: false },
-        // {
-        //   text: "Quantity",
-        //   value: "nft.quantity",
-        //   width: "10%",
-        //   sortable: false,
-        // },
+        { text: 'Type', value: 'nft.typeDesc', width: '15%', sortable: false },
         {
-          text: "Price/Unit",
-          value: "amountFormatted",
-          width: "15%",
+          text: 'Quantity',
+          value: 'quantity',
+          width: '10%',
           sortable: false,
         },
-        { text: "", value: "action", width: "20%", sortable: false },
+        {
+          text: 'Price/Unit',
+          value: 'amountFormatted',
+          width: '15%',
+          sortable: false,
+        },
+        { text: '', value: 'action', width: '20%', sortable: false },
       ],
 
       raskelCancelText: RASKEL_DEFAULT_CANCEL_TEXT,
@@ -234,29 +234,29 @@ export default {
 
   computed: {
     isConnected() {
-      return this.$store.getters["user/isConnected"];
+      return this.$store.getters['user/isConnected'];
     },
 
     account() {
-      return this.$store.getters["user/account"];
+      return this.$store.getters['user/account'];
     },
 
     addresses() {
-      return this.$store.getters["user/addresses"];
+      return this.$store.getters['user/addresses'];
     },
 
     networkInfo() {
-      return this.$store.getters["user/networkInfo"];
+      return this.$store.getters['user/networkInfo'];
     },
 
     currentBlockNumber() {
-      return this.$store.getters["user/currentBlockNumber"];
+      return this.$store.getters['user/currentBlockNumber'];
     },
 
     confirmOrderModalTitle() {
       return !this.isBuy
-        ? "Are you sure you want to buy this item?"
-        : "Are you sure you want to sell this item?";
+        ? 'Are you sure you want to buy this item?'
+        : 'Are you sure you want to sell this item?';
     },
 
     hasQuantity() {
@@ -265,9 +265,7 @@ export default {
       }
 
       if (!this.isBuy) {
-        const amountOrder = parseFloat(
-          Convert.fromWei(this.nftCollectible.amountOrder)
-        );
+        const amountOrder = parseFloat(Convert.fromWei(this.nftCollectible.amountOrder));
         return amountOrder > this.amountwGOLD ? false : true;
       } else {
         return this.balanceItem > 0 ? true : false;
@@ -279,16 +277,14 @@ export default {
         return [];
       }
 
-      return this.dataMarket.filter((item) => {
+      return this.dataMarket.filter(item => {
         item.openModal = false;
         if (item.orderType === this.typeEnum) {
-          item.orderTypeDesc = this.typeEnum === "1" ? "buy" : "sell";
-          item.amountOrder =
-            this.typeEnum === "0" ? item.amount : item.totalAmount;
+          item.orderTypeDesc = this.typeEnum === '1' ? 'buy' : 'sell';
+          item.amountOrder = this.typeEnum === '0' ? item.amount : item.totalAmount;
           item.amountFormatted = Convert.fromWei(item.amountOrder);
           item.nft = getCollectibles().find(
-            (collectible) =>
-              collectible.id.toString() === item.tokenId.toString()
+            collectible => collectible.id.toString() === item.tokenId.toString()
           );
           return item;
         }
@@ -296,15 +292,15 @@ export default {
     },
 
     isBuy() {
-      return this.type === "buy";
+      return this.type === 'buy';
     },
 
     typeEnum() {
-      return this.type === "buy" ? "0" : "1";
+      return this.type === 'buy' ? '0' : '1';
     },
 
     playerColumnTitle() {
-      return this.type === "sell" ? "Seller" : "Buyer";
+      return this.type === 'sell' ? 'Seller' : 'Buyer';
     },
   },
 
@@ -345,34 +341,27 @@ export default {
         // this.dataMarket = noLoading !== undefined ? this.dataMarket : [];
         this.page = page || 1;
 
-        this.amountwGOLD = Convert.fromWei(
-          await this.wGOLDContract.balanceOf(this.account)
-        );
+        this.amountwGOLD = Convert.fromWei(await this.wGOLDContract.balanceOf(this.account));
 
-        const market = await this.marketNFTS.getMarket(
-          this.typeEnum,
-          this.itemsPerPage,
-          page
-        );
+        const market = await this.marketNFTS.getMarket(this.typeEnum, this.itemsPerPage, page);
         this.dataMarket = market.data;
         this.totalItems = parseInt(market.total);
       } catch (error) {
         console.log(error);
-        this.loadingText = "Sorry, an error occurred";
+        this.loadingText = 'Sorry, an error occurred';
       } finally {
         this.isLoading = false;
       }
     },
 
     getSizeIcon(icon) {
-      return icon === "swap" ? 16 : 12;
+      return icon === 'swap' ? 16 : 12;
     },
 
     async openModal(item) {
+      this.quantity = 0;
       this.nftCollectible = item;
-      const isApproved = await this.isApprovedContract(
-        this.nftCollectible.orderTypeDesc
-      );
+      const isApproved = await this.isApprovedContract(this.nftCollectible.orderTypeDesc);
 
       if (!isApproved) {
         this.isRaskelApprovalModalOpen = true;
@@ -406,22 +395,20 @@ export default {
           this.account
         );
 
-        confirmTransaction.on("error", (error) => {
+        confirmTransaction.on('error', error => {
           this.setInitialStateConfirmOrder();
 
           if (error.message) {
             return ToastSnackbar.error(error.message);
           }
-          return ToastSnackbar.error(
-            "An error has occurred, please try again!"
-          );
+          return ToastSnackbar.error('An error has occurred, please try again!');
         });
 
-        confirmTransaction.on("transactionHash", () => {
+        confirmTransaction.on('transactionHash', () => {
           this.confirmOrderWaitingStage = 2;
         });
 
-        confirmTransaction.on("receipt", () => {
+        confirmTransaction.on('receipt', () => {
           this.setInitialStateConfirmOrder();
 
           ToastSnackbar.success(`The order has been executed successful!`);
@@ -440,10 +427,7 @@ export default {
           );
         },
         buy: async () => {
-          return await this.wGOLDContract.hasAllowance(
-            this.account,
-            this.addresses.marketNFTS
-          );
+          return await this.wGOLDContract.hasAllowance(this.account, this.addresses.marketNFTS);
         },
       };
       return listApproved[type]();
@@ -458,10 +442,7 @@ export default {
           );
         },
         buy: () => {
-          return this.wGOLDContract.approve(
-            this.account,
-            this.addresses.marketNFTS
-          );
+          return this.wGOLDContract.approve(this.account, this.addresses.marketNFTS);
         },
       };
 
@@ -469,7 +450,7 @@ export default {
       this.isLoadingApproveRaskel = true;
       this.raskelApproveText = RASKEL_WAITING_WALLET_APPROVAL;
 
-      confirmTransaction.on("error", (error) => {
+      confirmTransaction.on('error', error => {
         this.isLoadingApproveRaskel = false;
 
         this.raskelApproveText = RASKEL_DEFAULT_APPROVE_TEXT;
@@ -478,14 +459,14 @@ export default {
           return ToastSnackbar.error(error.message);
         }
 
-        return ToastSnackbar.error("An error has occurred");
+        return ToastSnackbar.error('An error has occurred');
       });
 
-      confirmTransaction.on("transactionHash", async () => {
+      confirmTransaction.on('transactionHash', async () => {
         this.raskelApproveText = RASKEL_WAITING_FIRST_CONFIRMATION;
       });
 
-      confirmTransaction.on("receipt", async () => {
+      confirmTransaction.on('receipt', async () => {
         this.openModal(this.nftCollectible);
         this.isLoadingApproveRaskel = false;
         this.raskelApproveText = RASKEL_DEFAULT_APPROVE_TEXT;
@@ -496,6 +477,7 @@ export default {
     },
 
     openModalCancelOrder(item) {
+      this.quantity = 0;
       this.nftCollectible = item;
       this.isLoadingConfirm = false;
       this.openCancelOrderGameItem = true;
@@ -517,22 +499,22 @@ export default {
           this.account
         );
 
-        confirmTransaction.on("error", (error) => {
+        confirmTransaction.on('error', error => {
           this.setInitialStateCancelOrder();
 
           if (error.message) {
             return ToastSnackbar.error(error.message);
           }
           return ToastSnackbar.error(
-            "Raskel - The traveler, an error has occurred, please try again!"
+            'Raskel - The traveler, an error has occurred, please try again!'
           );
         });
 
-        confirmTransaction.on("transactionHash", () => {
+        confirmTransaction.on('transactionHash', () => {
           this.raskelCancelText = RASKEL_CANCEL_WAITING_FIRST_CONFIRMATION;
         });
 
-        confirmTransaction.on("receipt", () => {
+        confirmTransaction.on('receipt', () => {
           this.setInitialStateCancelOrder();
 
           ToastSnackbar.success(`Order canceled!`);
@@ -541,6 +523,18 @@ export default {
         });
       } catch (e) {
         this.setInitialStateCancelOrder();
+      }
+    },
+
+    decrement() {
+      if (this.quantity > 1) {
+        this.quantity--;
+      }
+    },
+
+    increment(max) {
+      if (this.quantity < max) {
+        this.quantity++;
       }
     },
   },
@@ -566,12 +560,7 @@ export default {
   color: #ffb800;
 }
 
-.table-black-market
-  >>> .v-data-table__wrapper
-  > table
-  > thead
-  > tr:last-child
-  > th {
+.table-black-market >>> .v-data-table__wrapper > table > thead > tr:last-child > th {
   border-bottom: thin solid #ffffff;
 }
 

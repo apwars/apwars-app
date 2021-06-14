@@ -150,9 +150,6 @@ export default {
         this.isLoading = false;
       }
     },
-    sendItem(){
-      console.log("SEND ITEM");
-    }
   },
 };
 </script>
