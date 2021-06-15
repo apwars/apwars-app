@@ -11,14 +11,28 @@
           class="table-black-market elevation-0"
           :headers="headers"
           :items="listMarket"
-          :items-per-page="itemsPerPage"
+          :items-per-page="listMarket.length"
           :loading="isLoading"
           :loading-text="loadingText"
           :show-expand="false"
-          :footer-props="{
-            'items-per-page-options': [itemsPerPage],
-          }"
+          hide-default-footer
         >
+          <template v-slot:footer>
+            <wButton
+              class="d-flex justify-center my-3"
+              v-if="listMarket.length > 0"
+              @click="loadData(0)"
+              :disabled="isEndLoading || isLoading"
+            >
+              <div v-if="isLoading" class="mx-6">
+                Loading...
+              </div>
+              <div v-else class="mx-6">
+                {{ isEndLoading ? 'No more items to load' : 'Load more' }}
+              </div>
+            </wButton>
+          </template>
+
           <template v-slot:[`item.sender`]="{ item }">
             <v-address :address="item.sender" link tooltip></v-address>
           </template>
@@ -91,16 +105,20 @@
           :title="confirmOrderModalTitle"
           :disabledBuy="!hasQuantity"
         >
-          <v-currency-field outlined label="Units" v-model="quantity">
-            <template v-slot:append>
-              <v-icon @click="decrement">
-                mdi-minus
-              </v-icon>
-              <v-icon @click="increment(nftCollectible.quantity)">
-                mdi-plus
-              </v-icon>
-            </template>
-          </v-currency-field>
+          <p v-if="isBuy">
+            How many items do you want to sell?
+          </p>
+          <p v-else>How many items do you want to buy?</p>
+          <v-row>
+            <v-col cols="12" md="9">
+              <number-field
+                class="mt-n1"
+                v-model="quantity"
+                :max="nftCollectible.quantity"
+              ></number-field>
+            </v-col>
+          </v-row>
+
           <h4>
             <span v-if="!isBuy">You will pay</span>
             <span v-else>You will receive</span>
@@ -112,9 +130,10 @@
               symbol="wGOLD"
               icon
             />
-            for this item.
+            per item.
           </h4>
-          <v-alert class="mt-3" outlined v-if="!hasQuantity" type="warning" border="left" dense>
+
+          <v-alert class="mb-2" outlined v-if="!hasQuantity" type="warning" border="left" dense>
             Your balance is less than your offer.
           </v-alert>
         </game-item-wood-modal>
@@ -141,6 +160,7 @@
 
 <script>
 import Amount from '@/lib/components/ui/Utils/Amount';
+import NumberField from '@/lib/components/ui/Utils/NumberField';
 import VAddress from '@/lib/components/ui/Utils/VAddress';
 import wButton from '@/lib/components/ui/Buttons/wButton';
 import GameItemWoodModal from '@/lib/components/ui/Modals/GameItemWoodModal';
@@ -173,6 +193,7 @@ export default {
     wButton,
     GameItemWoodModal,
     RaskelModal,
+    NumberField,
   },
 
   data() {
@@ -184,13 +205,14 @@ export default {
       nftCollectible: {
         nft: {},
       },
+      isEndLoading: false,
       isConfirmOrderModalOpen: false,
       openCancelOrderGameItem: false,
       isLoadingConfirm: false,
       isLoadingCancel: false,
       marketNFTS: {},
-      itemsPerPage: 200,
-      totalItems: 0,
+      itemsPerPage: 5,
+      lastIndex: undefined,
       page: 1,
       quantity: 1,
       isLoading: true,
@@ -265,7 +287,8 @@ export default {
       }
 
       if (!this.isBuy) {
-        const amountOrder = parseFloat(Convert.fromWei(this.nftCollectible.amountOrder));
+        const amountOrder =
+          parseFloat(Convert.fromWei(this.nftCollectible.amountOrder)) * this.quantity;
         return amountOrder > this.amountwGOLD ? false : true;
       } else {
         return this.balanceItem > 0 ? true : false;
@@ -306,17 +329,19 @@ export default {
 
   watch: {
     isConnected() {
-      this.initData();
-      this.loadData();
+      if (this.isConnected) {
+        this.initData();
+        this.loadData(this.page);
+      }
     },
-    currentBlockNumber() {
-      this.loadData(this.page, false);
-    },
+    // currentBlockNumber() {
+    //   !this.isLoading && this.loadData(this.page);
+    // },
   },
 
   mounted() {
     this.initData();
-    this.loadData();
+    this.loadData(this.page);
   },
 
   methods: {
@@ -331,21 +356,25 @@ export default {
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
 
-    async loadData(page, noLoading) {
+    async loadData(page) {
       if (!this.isConnected) {
         return;
       }
 
       try {
-        // this.isLoading = noLoading !== undefined ? false : true;
-        // this.dataMarket = noLoading !== undefined ? this.dataMarket : [];
+        this.isLoading = true;
         this.page = page || 1;
 
         this.amountwGOLD = Convert.fromWei(await this.wGOLDContract.balanceOf(this.account));
 
-        const market = await this.marketNFTS.getMarket(this.typeEnum, this.itemsPerPage, page);
-        this.dataMarket = market.data;
-        this.totalItems = parseInt(market.total);
+        const market = await this.marketNFTS.getMarketLoadMore(
+          this.typeEnum,
+          this.itemsPerPage,
+          this.lastIndex
+        );
+        this.dataMarket = [].concat(this.dataMarket, market.data);
+        this.lastIndex = market.lastIndex;
+        this.isEndLoading = market.isEnd;
       } catch (error) {
         console.log(error);
         this.loadingText = 'Sorry, an error occurred';
