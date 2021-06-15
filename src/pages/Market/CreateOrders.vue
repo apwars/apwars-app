@@ -43,31 +43,12 @@
             <game-text header="h4">{{ nftCollectible.title }}</game-text>
             <div>
               <p v-if="isBuy">
-                How much wGOLD do you want to pay for this item?
+                How much wGOLD do you want to pay for each item?
               </p>
-              <p v-else>How much wGOLD do you want for this item</p>
-
+              <p v-else>How much wGOLD do you want for each item?</p>
               <v-currency-field
-                class="mb-1"
+                class="mt-n1"
                 outlined
-                label="Units"
-                v-model="quantity"
-                :hint="hintLabel"
-                persistent-hint
-              >
-                <template v-slot:append>
-                  <v-icon @click="decrement">
-                    mdi-minus
-                  </v-icon>
-                  <v-icon @click="increment">
-                    mdi-plus
-                  </v-icon>
-                </template>
-              </v-currency-field>
-
-              <v-currency-field
-                outlined
-                label="Quantity"
                 v-bind="currencyConfig"
                 v-model="amount"
                 @input="calcFee()"
@@ -78,9 +59,24 @@
                   </div>
                 </template>
               </v-currency-field>
-
+              <div class="mt-n2">
+                <p v-if="isBuy">
+                  How many items do you want to buy?
+                </p>
+                <p v-else>How many items do you want to sell?</p>
+                <v-row>
+                  <v-col cols="12" md="3">
+                    <number-field
+                      class="mt-n1"
+                      v-model="quantity"
+                      :max="userAmount"
+                      @input="calcFee()"
+                    ></number-field>
+                  </v-col>
+                </v-row>
+              </div>
               <v-alert
-                class="mt-3"
+                class="mt-2"
                 v-if="amount > amountwGOLD && buyOrSell === 'buy'"
                 outlined
                 type="warning"
@@ -89,7 +85,7 @@
               >
                 Your balance is less than your offer.
               </v-alert>
-              <div class="mr-1 mb-2">
+              <div class="mr-1 mb-1">
                 This transaction has a fee of:
                 <amount
                   class="d-block d-md-inline-block"
@@ -99,13 +95,37 @@
                   symbol="wGOLD"
                   icon
                 />
+                per item.
               </div>
 
-              <div class="mr-1 mb-2">
-                {{ totalAmountDescription }} for this item:
+              <div class="mr-1 mb-1">
+                {{ totalAmountDescription }}:
                 <amount
                   class="d-block d-md-inline-block"
                   :amount="amountInfo.totalAmount"
+                  decimals="2"
+                  tooltip
+                  symbol="wGOLD"
+                  icon
+                />
+                per item.
+              </div>
+              <div v-if="isBuy" class="mr-1 mb-1">
+                You will pay for {{ quantity }} items:
+                <amount
+                  class="d-block d-md-inline-block"
+                  :amount="amountInfo.calcAmount"
+                  decimals="2"
+                  tooltip
+                  symbol="wGOLD"
+                  icon
+                />
+              </div>
+              <div v-else class="mr-1 mb-1">
+                You will receive for {{ quantity }} items:
+                <amount
+                  class="d-block d-md-inline-block"
+                  :amount="amountInfo.calcAmount"
                   decimals="2"
                   tooltip
                   symbol="wGOLD"
@@ -138,39 +158,48 @@
         :gameItemTitle="nftCollectible.title"
         title="Are you sure you want to create this order?"
       >
-        <div v-if="isBuy" class="mt-2">
-          <p>
-            You will pay
-            <amount :amount="amountInfo.totalAmount" :decimals="2" symbol="wGOLD" icon />
-            for this item.
-          </p>
-        </div>
-        <div v-else>
-          <p>
-            You will receive
-            <amount :amount="amountInfo.amount" :decimals="2" symbol="wGOLD" icon />
-            for this item.
-          </p>
-        </div>
-
-        <div v-if="isBuy">
-          <p>
-            Transaction fee:
-            <amount :amount="amountInfo.feeAmount" :decimals="2" symbol="wGOLD" icon />
-          </p>
-          <p>
+        <div v-if="isBuy" class="mt-n1">
+          <p class="mt-n1">
             Net amount:
             <amount :amount="amountInfo.amount" :decimals="2" symbol="wGOLD" icon />
+            per item
+          </p>
+          <p class="mt-n1">
+            Transaction fee:
+            <amount :amount="amountInfo.feeAmount" :decimals="2" symbol="wGOLD" icon />
+            per item
+          </p>
+
+          <div v-if="isBuy" class="mt-2">
+            <p>
+              You will pay
+              <amount :amount="amountInfo.totalAmount" :decimals="2" symbol="wGOLD" icon />
+              per item.
+            </p>
+          </div>
+          <div v-else>
+            <p>
+              You will receive
+              <amount :amount="amountInfo.amount" :decimals="2" symbol="wGOLD" icon />
+              per item.
+            </p>
+          </div>
+          <p>
+            You will pay for {{ quantity }} items:
+            <amount
+              class="d-block d-md-inline-block"
+              :amount="amountInfo.calcAmount"
+              decimals="2"
+              tooltip
+              symbol="wGOLD"
+              icon
+            />
           </p>
         </div>
         <div v-else>
           <p>
-            Transaction fee:
-            <amount :amount="amountInfo.feeAmount" :decimals="2" symbol="wGOLD" icon />
-          </p>
-          <p>
-            Total amount:
-            <amount :amount="amountInfo.totalAmount" :decimals="2" symbol="wGOLD" icon />
+            You will receive for {{ quantity }} items:
+            <amount :amount="amountInfo.calcAmount" :decimals="2" symbol="wGOLD" icon />
           </p>
         </div>
       </game-item-wood-modal>
@@ -243,7 +272,7 @@ export default {
       supply: 0,
       remaining: 0,
       isLoadingRaskel: false,
-      amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0 },
+      amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0, calcAmount: 0 },
       waitingStage: 0,
     };
   },
@@ -422,7 +451,13 @@ export default {
         return;
       }
       this.amountInfo = await this.marketNFTS.getOrderAmountInfo(this.amount);
+      1;
       this.amountInfo.amount = Convert.toWei(this.amount);
+      const totalAmount = Convert.fromWei(this.amountInfo.totalAmount);
+
+      this.amountInfo.calcAmount = this.isBuy
+        ? Convert.toWei(totalAmount * this.quantity)
+        : Convert.toWei(this.amount * this.quantity);
     },
 
     async createOrder() {
@@ -473,12 +508,14 @@ export default {
       if (this.quantity > 1) {
         this.quantity--;
         this.$emit('change', this.quantity);
+        this.calcFee();
       }
     },
 
     increment() {
       this.quantity++;
       this.$emit('change', this.quantity);
+      this.calcFee();
     },
   },
 };
