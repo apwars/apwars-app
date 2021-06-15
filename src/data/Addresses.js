@@ -19,11 +19,11 @@ export default {
     "56": process.env.VUE_APP_FED_ADDRESS_56,
   },
   marketNFTS: {
-    "5777": process.env.VUE_APP_MARKETNFTS_CONTRACT_5777,
+    "5777": 0x8FCC46678541C07341b62A23A0efDE7A237D3A61,
     "56": process.env.VUE_APP_MARKETNFTS_CONTRACT_56,
   },
-  transporter: {
-    "5777": process.env.VUE_APP_TRANSPORTER_CONTRACT_5777,
-    "56": process.env.VUE_APP_TRANSPORTER_CONTRACT_56,
-  },
+  // transporter: {
+  //   "5777": process.env.VUE_APP_TRANSPORTER_CONTRACT_5777,
+  //   "56": process.env.VUE_APP_TRANSPORTER_CONTRACT_56,
+  // },
 };
