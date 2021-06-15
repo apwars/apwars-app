@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span v-if="!isTruncated">
     <span v-if="header === 'h1'">
       <h1 class="text-h1 text-wGOLD">
         <slot></slot>
@@ -31,14 +31,26 @@
       </span>
     </span>
   </span>
+  <div v-else :class="`text-wGOLD truncated-text text-${header}`">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
 export default {
-  props: ["header"]
+  props: ["header", "truncated"],
+  computed: {
+    isTruncated() {
+      return this.truncated !== undefined;
+    },
+  },
 };
 </script>
 
 <style scoped>
-
+.truncated-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 </style>

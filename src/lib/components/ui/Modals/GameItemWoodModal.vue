@@ -29,7 +29,7 @@
             :src="imageUrl"
             class="mr-2"
           />
-          <game-text header="h4">{{ gameItemTitle }}</game-text>
+          <game-text header="h4" truncated>{{ gameItemTitle }}</game-text>
         </div>
 
         <slot></slot>

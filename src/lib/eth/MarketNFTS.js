@@ -58,8 +58,44 @@ export default class MarketNFTS {
     const market = await Promise.all(promises);
 
     return {
-      data: market.filter(m => m.orderStatus === "0"),
-      total: total
+      data: market.filter((m) => m.orderStatus === "0"),
+      total: total,
+    };
+  }
+
+  async getMarketLoadMore(type, limit, startIndex) {
+    const market = [];
+    const total =
+      type === "0"
+        ? await this.getBuyOrdersLength()
+        : await this.getSellOrdersLength();
+    startIndex = startIndex === undefined ? total : startIndex;
+    let index = startIndex;
+    let lastIndex = index;
+
+    let blockLoading = 0;
+    do {
+      if (lastIndex > 0) {
+        const orderId =
+          type === "0"
+            ? await this.getOrderIdBuy(lastIndex - 1)
+            : await this.getOrderIdSell(lastIndex - 1);
+        const order = await this.getOrderInfo(orderId);
+        if (order.orderStatus === "0") {
+          market.push(order);
+          index--;
+        }
+        lastIndex--;
+      } else {
+        index = 0;
+      }
+      blockLoading++;
+    } while (index > startIndex - limit || blockLoading < limit);
+
+    return {
+      data: market,
+      lastIndex: lastIndex,
+      isEnd: lastIndex == 0,
     };
   }
 
