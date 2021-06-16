@@ -88,7 +88,7 @@
               >
                 Your balance is less than your offer.
               </v-alert>
-              <div class="mr-1 mb-1">
+              <div class="d-flex mr-1 mb-1">
                 This transaction has a fee of:
                 <amount
                   class="d-block d-md-inline-block"
@@ -98,10 +98,10 @@
                   symbol="wGOLD"
                   icon
                 />
-                per item.
+                <span class="ml-1">per item.</span>
               </div>
 
-              <div class="mr-1 mb-1">
+              <div class="d-flex mr-1 mb-1">
                 {{ totalAmountDescription }}:
                 <amount
                   class="d-block d-md-inline-block"
@@ -111,9 +111,9 @@
                   symbol="wGOLD"
                   icon
                 />
-                per item.
+               <span class="ml-1">per item.</span>
               </div>
-              <h4 v-if="isBuy" class="mr-1 mb-1">
+              <h4 v-if="isBuy" class="d-flex mr-1 mb-1">
                 You will pay for {{ quantity }} items:
                 <amount
                   class="d-block d-md-inline-block"
@@ -122,9 +122,9 @@
                   tooltip
                   symbol="wGOLD"
                   icon
-                />
+                />.
               </h4>
-              <h4 v-else class="mr-1 mb-1">
+              <h4 v-else class="d-flex mr-1 mb-1">
                 You will receive for {{ quantity }} items:
                 <amount
                   class="d-block d-md-inline-block"
@@ -133,7 +133,7 @@
                   tooltip
                   symbol="wGOLD"
                   icon
-                />
+                />.
               </h4>
             </div>
             <div class="d-flex flex-row-reverse mt-3 mb-n1">
@@ -163,32 +163,32 @@
         :amount="userAmount"
       >
         <div v-if="isBuy" class="mt-n1">
-          <p class="mt-n1">
+          <p class="d-flex mt-n1">
             Net amount:
             <amount :amount="amountInfo.amount" :decimals="2" symbol="wGOLD" icon />
-            per item
+            <span class="ml-1">per item.</span>
           </p>
-          <p class="mt-n1">
+          <p class="d-flex mt-n1">
             Transaction fee:
             <amount :amount="amountInfo.feeAmount" :decimals="2" symbol="wGOLD" icon />
-            per item
+            <span class="ml-1">per item.</span>
           </p>
 
           <div v-if="isBuy" class="mt-2">
-            <p>
+            <p class="d-flex">
               You will pay
               <amount :amount="amountInfo.totalAmount" :decimals="2" symbol="wGOLD" icon />
-              per item.
+              <span class="ml-1">per item.</span>
             </p>
           </div>
           <div v-else>
-            <p>
+            <p class="d-flex">
               You will receive
               <amount :amount="amountInfo.amount" :decimals="2" symbol="wGOLD" icon />
-              per item.
+              <span class="ml-1">per item.</span>
             </p>
           </div>
-          <h4>
+          <h4 class="d-flex">
             You will pay for {{ quantity }} items:
             <amount
               class="d-block d-md-inline-block"
@@ -197,13 +197,13 @@
               tooltip
               symbol="wGOLD"
               icon
-            />
+            />.
           </h4>
         </div>
         <div v-else>
-          <h4>
+          <h4 class="d-flex">
             You will receive for {{ quantity }} items:
-            <amount :amount="amountInfo.calcAmount" :decimals="2" symbol="wGOLD" icon />
+            <amount :amount="amountInfo.calcAmount" :decimals="2" symbol="wGOLD" icon />.
           </h4>
         </div>
       </game-item-wood-modal>

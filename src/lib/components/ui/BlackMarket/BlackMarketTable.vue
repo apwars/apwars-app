@@ -58,7 +58,7 @@
             </div>
           </template>
           <template v-slot:[`item.amountFormatted`]="{ item }">
-            <div class="d-flex">
+            <div>
               <amount
                 :amount="item.amountFormatted"
                 decimals="2"
@@ -117,13 +117,12 @@
                 class="mt-n1"
                 v-model="quantity"
                 :max="nftCollectible.quantity"
-                :hidden="!hasQuantity"
                 @input="calcFee()"
               ></number-field>
             </v-col>
           </v-row>
           <div class="mt-n6" v-if="hasQuantity">
-            <h4>
+            <h4 class="d-flex">
               <span v-if="!isBuy">You will pay</span>
               <span v-else>You will receive</span>
               <amount
@@ -134,9 +133,9 @@
                 symbol="wGOLD"
                 icon
               />
-              per item.
+              <span class="ml-1">per item.</span>
             </h4>
-            <h4 v-if="!isBuy" class="mr-1 mb-1">
+            <h4 v-if="!isBuy" class="d-flex mr-1 mb-1">
               You will pay for {{ quantity }} items:
               <amount
                 class="d-block d-md-inline-block"
