@@ -384,12 +384,23 @@
     "constant": true
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
     "name": "getFeeAmount",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "currentFeeAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftId",
         "type": "uint256"
       }
     ],
@@ -427,6 +438,21 @@
         "internalType": "address",
         "name": "_feeTokenAddress",
         "type": "address"
+      },
+      {
+        "internalType": "contract IERC1155",
+        "name": "_collectiblesAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_allowedNFTsForFee",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_pricesByNFT",
+        "type": "uint256[]"
       }
     ],
     "name": "setup",

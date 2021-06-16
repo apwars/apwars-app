@@ -493,7 +493,8 @@ export default {
         const tranporterContract = await new Transporter(
           this.addresses.transporter
         );
-        this.transportationFee = await tranporterContract.getFeeAmount();
+        const getTransportationFee = await tranporterContract.getFeeAmount(this.account);
+        this.transportationFee = getTransportationFee.currentFeeAmount
 
         this.showInfo = false;
         this.isLoadingShowInfo = false;
