@@ -71,13 +71,15 @@
                       v-model="quantity"
                       :max="userAmount"
                       @input="calcFee()"
+                      :buyOrSell="isBuy"
                     ></number-field>
                   </v-col>
                 </v-row>
               </div>
               <v-alert
-                class="mt-2"
-                v-if="amount > amountwGOLD && buyOrSell === 'buy'"
+                v-if="
+                  (amount > amountwGOLD && buyOrSell === 'buy') || !quantityIsLess
+                "
                 outlined
                 type="warning"
                 border="left"
@@ -274,6 +276,7 @@ export default {
       isLoadingRaskel: false,
       amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0, calcAmount: 0 },
       waitingStage: 0,
+      alert: false,
     };
   },
 
@@ -330,6 +333,18 @@ export default {
 
     disabledSell() {
       return this.amount === 0 || this.userAmount === 0;
+    },
+
+    quantityIsLess() {
+      if (!this.isBuy) {
+        if (this.quantity <= this.userAmount) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
     },
   },
 

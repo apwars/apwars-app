@@ -1,19 +1,26 @@
 <template>
   <div class="number-field">
-    <v-text-field :label="label" v-model="quantity"  outlined>
+    <v-currency-field
+      :label="label"
+      v-model="quantity"
+      outlined
+      v-bind="currencyConfig"
+      v-on:change="update"
+      v-on:keyPress="update"
+    >
       <v-icon slot="append" @click="increment">
         mdi-plus
       </v-icon>
       <v-icon slot="prepend-inner" @click="decrement">
         mdi-minus
       </v-icon>
-    </v-text-field>
+    </v-currency-field>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['label', 'max'],
+  props: ['label', 'max', 'buyOrSell'],
   data() {
     return {
       quantity: 1,
@@ -25,25 +32,36 @@ export default {
         autoDecimalMode: true,
         allowNegative: false,
       },
+      alert: false,
     };
   },
   model: {
     prop: 'quantity',
     event: 'change',
   },
+  computed: {},
   methods: {
+    update() {
+      this.$emit('change', this.quantity);
+      this.$emit('input');
+    },
     decrement() {
       if (this.quantity !== 0) {
         this.quantity--;
-        this.$emit('change', this.quantity);
-        this.$emit('input');
+        this.update();
       }
     },
     increment() {
-      if (this.quantity < this.max) {
+      if (this.buyOrSell) {
         this.quantity++;
-        this.$emit('change', this.quantity);
-        this.$emit('input');
+        this.update();
+      } else {
+        if (this.quantity <= this.max) {
+          this.quantity++;
+          this.update();
+        }else{
+          this.$emit('alert');
+        }
       }
     },
   },
@@ -51,8 +69,7 @@ export default {
 </script>
 
 <style scoped>
-.number-field >>>
-.v-text-field input {
+.number-field >>> .v-text-field input {
   text-align: center !important;
 }
 </style>
