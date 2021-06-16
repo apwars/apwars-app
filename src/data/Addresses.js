@@ -20,10 +20,10 @@ export default {
   },
   marketNFTS: {
     "5777": process.env.VUE_APP_MARKETNFTS_CONTRACT_5777,
-    "56": process.env.VUE_APP_MARKETNFTS_CONTRACT_56,
+    "56": '0x8FCC46678541C07341b62A23A0efDE7A237D3A61',
   },
   transporter: {
     "5777": process.env.VUE_APP_TRANSPORTER_CONTRACT_5777,
-    "56": "0x8FCC46678541C07341b62A23A0efDE7A237D3A61",
+    "56": process.env.VUE_APP_TRANSPORTER_CONTRACT_56,
   },
 };
