@@ -104,6 +104,7 @@
           :waitingStage="confirmOrderWaitingStage"
           :title="confirmOrderModalTitle"
           :disabledBuy="!hasQuantity"
+          :amount="balanceItem"
         >
           <p v-if="isBuy">
             How many items do you want to sell?
@@ -115,24 +116,48 @@
                 class="mt-n1"
                 v-model="quantity"
                 :max="nftCollectible.quantity"
+                :hidden="!hasQuantity"
+                @input="calcFee()"
               ></number-field>
             </v-col>
           </v-row>
-
-          <h4>
-            <span v-if="!isBuy">You will pay</span>
-            <span v-else>You will receive</span>
-            <amount
-              :amount="nftCollectible.amountOrder"
-              decimals="2"
-              tooltip
-              title="wGOLD"
-              symbol="wGOLD"
-              icon
-            />
-            per item.
-          </h4>
-
+          <div class="mt-n6" v-if="hasQuantity">
+            <h4>
+              <span v-if="!isBuy">You will pay</span>
+              <span v-else>You will receive</span>
+              <amount
+                :amount="nftCollectible.amountOrder"
+                decimals="2"
+                tooltip
+                title="wGOLD"
+                symbol="wGOLD"
+                icon
+              />
+              per item.
+            </h4>
+            <h4 v-if="!isBuy" class="mr-1 mb-1">
+              You will pay for {{ quantity }} items:
+              <amount
+                class="d-block d-md-inline-block"
+                :amount="amountInfo.calcAmount"
+                decimals="2"
+                tooltip
+                symbol="wGOLD"
+                icon
+              />
+            </h4>
+            <h4 v-else class="mr-1 mb-1">
+              You will receive for {{ quantity }} items:
+              <amount
+                class="d-block d-md-inline-block"
+                :amount="amountInfo.calcAmount"
+                decimals="2"
+                tooltip
+                symbol="wGOLD"
+                icon
+              />
+            </h4>
+          </div>
           <v-alert class="mb-2" outlined v-if="!hasQuantity" type="warning" border="left" dense>
             Your balance is less than your offer.
           </v-alert>
@@ -251,6 +276,8 @@ export default {
       raskelApproveText: RASKEL_DEFAULT_APPROVE_TEXT,
 
       confirmOrderWaitingStage: 0,
+
+      amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0, calcAmount: 0 },
     };
   },
 
@@ -381,6 +408,12 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+
+    calcFee() {
+      const amountOrder = Convert.fromWei(this.nftCollectible.amountOrder);
+      const amount = Convert.toWei(amountOrder * this.quantity);
+      return (this.amountInfo.calcAmount = amount);
     },
 
     getSizeIcon(icon) {

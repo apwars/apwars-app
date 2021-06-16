@@ -43,6 +43,23 @@
             <game-text header="h4">{{ nftCollectible.title }}</game-text>
             <div>
               <p v-if="isBuy">
+                How many items do you want to buy?
+              </p>
+              <p v-else>How many items do you want to sell?</p>
+              <v-row>
+                <v-col cols="12" md="3">
+                  <number-field
+                    class="mt-n1"
+                    v-model="quantity"
+                    :max="userAmount"
+                    @input="calcFee()"
+                    :buyOrSell="isBuy"
+                  ></number-field>
+                </v-col>
+              </v-row>
+            </div>
+            <div class="mt-n5">
+              <p v-if="isBuy">
                 How much wGOLD do you want to pay for each item?
               </p>
               <p v-else>How much wGOLD do you want for each item?</p>
@@ -59,26 +76,10 @@
                   </div>
                 </template>
               </v-currency-field>
-              <div class="mt-n2">
-                <p v-if="isBuy">
-                  How many items do you want to buy?
-                </p>
-                <p v-else>How many items do you want to sell?</p>
-                <v-row>
-                  <v-col cols="12" md="3">
-                    <number-field
-                      class="mt-n1"
-                      v-model="quantity"
-                      :max="userAmount"
-                      @input="calcFee()"
-                      :buyOrSell="isBuy"
-                    ></number-field>
-                  </v-col>
-                </v-row>
-              </div>
               <v-alert
                 v-if="
-                  (amount > amountwGOLD && buyOrSell === 'buy') || !quantityIsLess
+                  (amount > amountwGOLD && buyOrSell === 'buy') ||
+                    (calcAmountComputed > amountwGOLD && buyOrSell === 'buy')
                 "
                 outlined
                 type="warning"
@@ -112,7 +113,7 @@
                 />
                 per item.
               </div>
-              <div v-if="isBuy" class="mr-1 mb-1">
+              <h4 v-if="isBuy" class="mr-1 mb-1">
                 You will pay for {{ quantity }} items:
                 <amount
                   class="d-block d-md-inline-block"
@@ -122,8 +123,8 @@
                   symbol="wGOLD"
                   icon
                 />
-              </div>
-              <div v-else class="mr-1 mb-1">
+              </h4>
+              <h4 v-else class="mr-1 mb-1">
                 You will receive for {{ quantity }} items:
                 <amount
                   class="d-block d-md-inline-block"
@@ -133,7 +134,7 @@
                   symbol="wGOLD"
                   icon
                 />
-              </div>
+              </h4>
             </div>
             <div class="d-flex flex-row-reverse mt-3 mb-n1">
               <wButton v-if="isBuy" @click="openModal()" :disabled="disabledBuy">
@@ -159,6 +160,7 @@
         :imageUrl="nftCollectible.image"
         :gameItemTitle="nftCollectible.title"
         title="Are you sure you want to create this order?"
+        :amount="userAmount"
       >
         <div v-if="isBuy" class="mt-n1">
           <p class="mt-n1">
@@ -186,7 +188,7 @@
               per item.
             </p>
           </div>
-          <p>
+          <h4>
             You will pay for {{ quantity }} items:
             <amount
               class="d-block d-md-inline-block"
@@ -196,13 +198,13 @@
               symbol="wGOLD"
               icon
             />
-          </p>
+          </h4>
         </div>
         <div v-else>
-          <p>
+          <h4>
             You will receive for {{ quantity }} items:
             <amount :amount="amountInfo.calcAmount" :decimals="2" symbol="wGOLD" icon />
-          </p>
+          </h4>
         </div>
       </game-item-wood-modal>
 
@@ -255,7 +257,7 @@ export default {
       buyOrSell: this.$route.params.type,
       fee: 0,
       amount: 0,
-      quantity: 1,
+      quantity: 0,
       nftId: this.$route.params.nftId,
       loading: true,
       currencyConfig: {
@@ -328,24 +330,16 @@ export default {
     },
 
     disabledBuy() {
-      return this.amount === 0 || this.amountwGOLD === 0 || this.amountwGOLD < this.amount;
+      return this.amount === 0 || this.amountwGOLD === 0 || this.amountwGOLD < this.amount || this.calcAmountComputed > this.amountwGOLD && this.buyOrSell === 'buy';
     },
 
     disabledSell() {
       return this.amount === 0 || this.userAmount === 0;
     },
 
-    quantityIsLess() {
-      if (!this.isBuy) {
-        if (this.quantity <= this.userAmount) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return true;
-      }
-    },
+    calcAmountComputed(){
+      return parseInt(Convert.fromWei(this.amountInfo.calcAmount));
+    }
   },
 
   watch: {
@@ -466,13 +460,24 @@ export default {
         return;
       }
       this.amountInfo = await this.marketNFTS.getOrderAmountInfo(this.amount);
-      1;
       this.amountInfo.amount = Convert.toWei(this.amount);
       const totalAmount = Convert.fromWei(this.amountInfo.totalAmount);
 
       this.amountInfo.calcAmount = this.isBuy
         ? Convert.toWei(totalAmount * this.quantity)
         : Convert.toWei(this.amount * this.quantity);
+    },
+
+    quantityIsLess() {
+      if (!this.isBuy) {
+        if (this.quantity <= this.userAmount) {
+          return (this.alert = true);
+        } else {
+          return (this.alert = false);
+        }
+      } else {
+        return (this.alert = true);
+      }
     },
 
     async createOrder() {

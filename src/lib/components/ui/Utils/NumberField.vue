@@ -1,5 +1,5 @@
 <template>
-  <div class="number-field">
+  <div class="number-field mt-n1" :hidden="hidden">
     <v-currency-field
       :label="label"
       v-model="quantity"
@@ -20,10 +20,10 @@
 
 <script>
 export default {
-  props: ['label', 'max', 'buyOrSell'],
+  props: ['label', 'max', 'buyOrSell', 'hidden'],
   data() {
     return {
-      quantity: 1,
+      quantity: 0,
       currencyConfig: {
         locale: 'en-US',
         prefix: '',
@@ -42,6 +42,11 @@ export default {
   computed: {},
   methods: {
     update() {
+      if (!this.buyOrSell) {
+        if (this.quantity > this.max) {
+          this.quantity = this.max;
+        }
+      }
       this.$emit('change', this.quantity);
       this.$emit('input');
     },
@@ -59,7 +64,7 @@ export default {
         if (this.quantity <= this.max) {
           this.quantity++;
           this.update();
-        }else{
+        } else {
           this.$emit('alert');
         }
       }
