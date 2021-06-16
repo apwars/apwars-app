@@ -2,7 +2,7 @@
   <v-tooltip top>
     <template v-slot:activator="{ on, attrs }">
       <span v-bind="attrs" v-on="isTooltip ? on : false">
-        <span>
+        <span class="d-flex">
           <img
             v-if="isIcon"
             :src="`/images/${symbol.toLowerCase()}.png`"

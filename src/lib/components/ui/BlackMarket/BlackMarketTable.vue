@@ -16,6 +16,7 @@
           :loading-text="loadingText"
           :show-expand="false"
           hide-default-footer
+          nonwrap
         >
           <template v-slot:footer>
             <wButton
@@ -256,7 +257,7 @@ export default {
           width: '25%',
           sortable: false,
         },
-        { text: 'Type', value: 'nft.typeDesc', width: '15%', sortable: false },
+        { text: 'Type', value: 'nft.typeDesc', width: '10%', sortable: false },
         {
           text: 'Quantity',
           value: 'quantity',
@@ -266,7 +267,7 @@ export default {
         {
           text: 'Price/Unit',
           value: 'amountFormatted',
-          width: '15%',
+          width: '20%',
           sortable: false,
         },
         { text: '', value: 'action', width: '20%', sortable: false },
