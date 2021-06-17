@@ -146,7 +146,7 @@
                 icon
               />
             </h4>
-            <h4 v-else class="mr-1 mb-1">
+            <h4 v-else class="d-flex mr-1 mb-1">
               You will receive for {{ quantity }} items:
               <amount
                 class="d-block d-md-inline-block"
@@ -158,9 +158,9 @@
               />
             </h4>
           </div>
-          <v-alert class="mb-2" outlined v-if="!hasQuantity" type="warning" border="left" dense>
-            Your balance is less than your offer.
-          </v-alert>
+            <v-alert class="mb-2" outlined v-if="!hasQuantity" type="warning" border="left" dense>
+              {{ textAlert }}
+            </v-alert>
         </game-item-wood-modal>
 
         <raskel-modal
@@ -256,7 +256,7 @@ export default {
           width: '25%',
           sortable: false,
         },
-        { text: 'Type', value: 'nft.typeDesc', width: '10%', sortable: false },
+        { text: 'Type', value: 'nft.typeDesc', width: '15%', sortable: false },
         {
           text: 'Quantity',
           value: 'quantity',
@@ -266,7 +266,7 @@ export default {
         {
           text: 'Price/Unit',
           value: 'amountFormatted',
-          width: '20%',
+          width: '15%',
           sortable: false,
         },
         { text: '', value: 'action', width: '20%', sortable: false },
@@ -306,6 +306,12 @@ export default {
       return !this.isBuy
         ? 'Are you sure you want to buy this item?'
         : 'Are you sure you want to sell this item?';
+    },
+
+    textAlert() {
+      return this.nftCollectible.orderTypeDesc === 'buy'
+        ? 'Your balance wGOLD is less than your offer.'
+        : 'Your balance for this Item is less than the offer';
     },
 
     hasQuantity() {

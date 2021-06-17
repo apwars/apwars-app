@@ -86,7 +86,7 @@
                 border="left"
                 dense
               >
-                Your balance is less than your offer.
+                Your balance wGOLD is less than your offer.
               </v-alert>
               <div class="d-flex mr-1 mb-1">
                 This transaction has a fee of:
