@@ -17,5 +17,13 @@ module.exports = {
 
   devServer: {
     disableHostCheck: true,
-  }
+    proxy: {
+      '^/api': {
+        target: process.env.VUE_APP_SERVERLESS,
+        pathRewrite: { '^/api': '' },
+        ws: true,
+        changeOrigin: true,
+      },
+    },
+  },
 }
