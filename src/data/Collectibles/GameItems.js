@@ -339,7 +339,7 @@ export function getGameItems() {
       },
     },
     {
-      id: 26,
+      id: 27,
       type: 'spendable',
       typeDesc: 'Spendable',
       contractAddress: addresses.collectibles,
