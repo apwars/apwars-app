@@ -124,7 +124,7 @@ export default {
 <style scoped>
 .bg-market {
   background-image: url("/images/black-market/Market.jpg");
-  background-size: contain;
+  background-size: cover;
   background-position: top;
 }
 
@@ -159,6 +159,9 @@ export default {
   .h1-black-market {
     font-size: 32px;
     line-height: 36px;
+  }
+  .bg-market {
+    background-size: contain;
   }
 }
 @media only screen and (max-width: 1280px) {
