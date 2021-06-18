@@ -110,7 +110,7 @@
           <p v-if="isBuy">
             How many items do you want to sell?
           </p>
-          <p v-else>How many items do you want to buy?</p>
+          <p v-else>How many items do you want to buy? </p>
           <v-row>
             <v-col cols="12" md="9">
               <number-field
@@ -122,9 +122,9 @@
             </v-col>
           </v-row>
           <div class="mt-n6" v-if="hasQuantity">
-            <h4 class="d-flex">
-              <span v-if="!isBuy">You will pay</span>
-              <span v-else>You will receive</span>
+            <h4 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
+              <span v-if="!isBuy">You will pay per item:</span>
+              <span v-else>You will receive per item:</span>
               <amount
                 :amount="nftCollectible.amountOrder"
                 decimals="2"
@@ -133,9 +133,8 @@
                 symbol="wGOLD"
                 icon
               />
-              <span class="ml-1">per item.</span>
             </h4>
-            <h4 v-if="!isBuy" class="d-flex mr-1 mb-1">
+            <h4 v-if="!isBuy" :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'">
               You will pay for {{ quantity }} items:
               <amount
                 class="d-block d-md-inline-block"
@@ -146,7 +145,7 @@
                 icon
               />
             </h4>
-            <h4 v-else class="d-flex mr-1 mb-1">
+            <h4 v-else :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'">
               You will receive for {{ quantity }} items:
               <amount
                 class="d-block d-md-inline-block"
@@ -158,9 +157,9 @@
               />
             </h4>
           </div>
-            <v-alert class="mb-2" outlined v-if="!hasQuantity" type="warning" border="left" dense>
-              {{ textAlert }}
-            </v-alert>
+          <v-alert class="mb-2" outlined v-if="!hasQuantity" type="warning" border="left" dense>
+            {{ textAlert }}
+          </v-alert>
         </game-item-wood-modal>
 
         <raskel-modal
@@ -239,7 +238,7 @@ export default {
       itemsPerPage: 5,
       lastIndex: undefined,
       page: 1,
-      quantity: 1,
+      quantity: 0,
       isLoading: true,
       loadingText: 'Loading... Please wait',
       dataMarket: [],
@@ -309,9 +308,13 @@ export default {
     },
 
     textAlert() {
-      return this.nftCollectible.orderTypeDesc === 'buy'
-        ? 'Your balance wGOLD is less than your offer.'
-        : 'Your balance for this Item is less than the offer';
+      if (this.quantity < 1) {
+        return 'Put an amount greater than 0 to sell the item';
+      } else {
+        return this.nftCollectible.orderTypeDesc === 'buy'
+          ? 'Your balance wGOLD is less than your offer.'
+          : 'Your balance for this Item is less than the offer';
+      }
     },
 
     hasQuantity() {
@@ -324,7 +327,11 @@ export default {
           parseFloat(Convert.fromWei(this.nftCollectible.amountOrder)) * this.quantity;
         return amountOrder > this.amountwGOLD ? false : true;
       } else {
-        return this.balanceItem > 0 ? true : false;
+        if (this.quantity < 1) {
+          return false;
+        } else {
+          return this.balanceItem > 0 ? true : false;
+        }
       }
     },
 

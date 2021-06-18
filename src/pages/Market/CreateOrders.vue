@@ -88,8 +88,8 @@
               >
                 Your balance wGOLD is less than your offer.
               </v-alert>
-              <div class="d-flex mr-1 mb-1">
-                This transaction has a fee of:
+              <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'">
+                This transaction has a fee per item of:
                 <amount
                   class="d-block d-md-inline-block"
                   :amount="amountInfo.feeAmount"
@@ -98,11 +98,10 @@
                   symbol="wGOLD"
                   icon
                 />
-                <span class="ml-1">per item.</span>
               </div>
 
-              <div class="d-flex mr-1 mb-1">
-                {{ totalAmountDescription }}:
+              <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'">
+                {{ totalAmountDescription }}
                 <amount
                   class="d-block d-md-inline-block"
                   :amount="amountInfo.totalAmount"
@@ -111,9 +110,8 @@
                   symbol="wGOLD"
                   icon
                 />
-               <span class="ml-1">per item.</span>
               </div>
-              <h4 v-if="isBuy" class="d-flex mr-1 mb-1">
+              <h4 v-if="isBuy" :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'">
                 You will pay for {{ quantity }} items:
                 <amount
                   class="d-block d-md-inline-block"
@@ -122,9 +120,9 @@
                   tooltip
                   symbol="wGOLD"
                   icon
-                />.
+                />
               </h4>
-              <h4 v-else class="d-flex mr-1 mb-1">
+              <h4 v-else :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'">
                 You will receive for {{ quantity }} items:
                 <amount
                   class="d-block d-md-inline-block"
@@ -133,7 +131,7 @@
                   tooltip
                   symbol="wGOLD"
                   icon
-                />.
+                />
               </h4>
             </div>
             <div class="d-flex flex-row-reverse mt-3 mb-n1">
@@ -163,32 +161,28 @@
         :amount="userAmount"
       >
         <div v-if="isBuy" class="mt-n1">
-          <p class="d-flex mt-n1">
-            Net amount:
+          <p :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mt-n1' : 'mt-1'">
+            Net amount per item:
             <amount :amount="amountInfo.amount" :decimals="2" symbol="wGOLD" icon />
-            <span class="ml-1">per item.</span>
           </p>
-          <p class="d-flex mt-n1">
-            Transaction fee:
+          <p :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mt-n1' : 'mt-1'">
+            Transaction fee per item:
             <amount :amount="amountInfo.feeAmount" :decimals="2" symbol="wGOLD" icon />
-            <span class="ml-1">per item.</span>
           </p>
 
           <div v-if="isBuy" class="mt-2">
-            <p class="d-flex">
-              You will pay
+            <p :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'mt-1'">
+              You will pay per item:
               <amount :amount="amountInfo.totalAmount" :decimals="2" symbol="wGOLD" icon />
-              <span class="ml-1">per item.</span>
             </p>
           </div>
           <div v-else>
-            <p class="d-flex">
-              You will receive
+            <p :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'mt-1'">
+              You will receive per item:
               <amount :amount="amountInfo.amount" :decimals="2" symbol="wGOLD" icon />
-              <span class="ml-1">per item.</span>
             </p>
           </div>
-          <h4 class="d-flex">
+          <h4 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'mt-1'">
             You will pay for {{ quantity }} items:
             <amount
               class="d-block d-md-inline-block"
@@ -197,13 +191,13 @@
               tooltip
               symbol="wGOLD"
               icon
-            />.
+            />
           </h4>
         </div>
         <div v-else>
-          <h4 class="d-flex">
+          <h4 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'mt-1'">
             You will receive for {{ quantity }} items:
-            <amount :amount="amountInfo.calcAmount" :decimals="2" symbol="wGOLD" icon />.
+            <amount :amount="amountInfo.calcAmount" :decimals="2" symbol="wGOLD" icon />
           </h4>
         </div>
       </game-item-wood-modal>
@@ -312,10 +306,10 @@ export default {
 
     totalAmountDescription() {
       if (this.isBuy) {
-        return 'Total price for transaction';
+        return 'Total price for transaction per item:';
       }
 
-      return 'The buyer will pay';
+      return 'The buyer will pay per item';
     },
 
     hintLabel() {
@@ -330,11 +324,11 @@ export default {
     },
 
     disabledBuy() {
-      return this.amount === 0 || this.amountwGOLD === 0 || this.amountwGOLD < this.amount || this.calcAmountComputed > this.amountwGOLD && this.buyOrSell === 'buy';
+      return this.amount === 0 || this.amountwGOLD === 0 || this.amountwGOLD < this.amount || this.calcAmountComputed > this.amountwGOLD && this.buyOrSell === 'buy' || this.quantity === 0;
     },
 
     disabledSell() {
-      return this.amount === 0 || this.userAmount === 0;
+      return this.amount === 0 || this.userAmount === 0 || this.quantity === 0;
     },
 
     calcAmountComputed(){
