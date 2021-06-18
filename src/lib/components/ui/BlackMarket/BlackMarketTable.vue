@@ -191,7 +191,7 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import Convert from "@/lib/helpers/Convert";
 
-import OrdensController from "@/controller/OrdensController";
+import OrdersController from "@/controller/OrdersController";
 
 import MarketNFTS from "@/lib/eth/MarketNFTS.js";
 import Collectibles from "@/lib/eth/Collectibles";
@@ -414,11 +414,11 @@ export default {
         this.isLoading = reloadData;
         this.page = page || 1;
 
-        const ordensController = new OrdensController();
+        const ordersController = new OrdersController();
         let orders = [];
         let skip = (this.page - 1) * this.itemsPerPage;
         if (this.showMyOrders) {
-          orders = await ordensController.getMyOpenOrdens(
+          orders = await ordersController.getMyOpenOrders(
             this.account,
             parseInt(this.typeEnum),
             skip,
@@ -426,13 +426,13 @@ export default {
             this.sort
           );
         } else if (this.isBuy) {
-          orders = await ordensController.getOpenBuyOrdens(
+          orders = await ordersController.getOpenBuyOrders(
             skip,
             this.itemsPerPage,
             this.sort
           );
         } else {
-          orders = await ordensController.getOpenSellOrdens(
+          orders = await ordersController.getOpenSellOrders(
             skip,
             this.itemsPerPage,
             this.sort
