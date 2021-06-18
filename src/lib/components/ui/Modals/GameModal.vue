@@ -11,7 +11,6 @@
       :isLoading="isLoading"
       :disabledConfirm="isLoading"
       :disabledClose="isLoading"
-      hideConfirm
     >
       <slot> </slot>
     </template-modal-papyrus>

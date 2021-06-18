@@ -25,6 +25,7 @@
           @update:page="loadData"
           @update:sort-by="sortBy"
           @update:sort-desc="sortDesc"
+          @update:items-per-page="updateItemsPerPage"
           :footer-props="{
             'items-per-page-options': [5, 10, 20],
           }"
@@ -268,7 +269,7 @@ export default {
           text: 'Price/Unit',
           value: 'formattedAmount',
           width: '15%',
-          sortable: false,
+          sortable: true,
         },
         { text: "", value: "action", width: "20%", sortable: false },
       ],
@@ -445,6 +446,11 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+
+    updateItemsPerPage(itemsPerPage) {
+      this.itemsPerPage = itemsPerPage;
+      this.loadData(1, true);
     },
 
     calcFee() {
