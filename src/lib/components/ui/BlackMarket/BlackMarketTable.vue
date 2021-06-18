@@ -5,6 +5,12 @@
         <h4 class="text-h4" v-if="!isBuy">Items for sale</h4>
         <h4 class="text-h4" v-else>Wanted items</h4>
         <v-spacer></v-spacer>
+        <v-checkbox
+          v-model="showMyOrders"
+          @change="loadData(1, true)"
+          label="Show only my orders"
+          color="primary"
+        ></v-checkbox>
       </v-card-title>
       <v-card-text>
         <v-data-table
@@ -15,6 +21,7 @@
           :loading="isLoading"
           :loading-text="loadingText"
           :server-items-length="totalItems"
+          :page="page"
           @update:page="loadData"
           @update:sort-by="sortBy"
           @update:sort-desc="sortDesc"
@@ -46,10 +53,10 @@
               </span>
             </div>
           </template>
-          <template v-slot:[`item.amountFormatted`]="{ item }">
+          <template v-slot:[`item.formattedAmount`]="{ item }">
             <div>
               <amount
-                :amount="item.amountFormatted"
+                :amount="item.formattedAmount"
                 decimals="2"
                 formatted
                 tooltip
@@ -192,8 +199,6 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import Convert from "@/lib/helpers/Convert";
 
-import { getCollectibles } from "@/data/Collectibles";
-
 import OrdensController from "@/controller/OrdensController";
 
 import MarketNFTS from "@/lib/eth/MarketNFTS.js";
@@ -224,6 +229,7 @@ export default {
 
   data() {
     return {
+      showMyOrders: false,
       amountwGOLD: 0,
       balanceItem: 0,
       isRaskelApprovalModalOpen: false,
@@ -268,7 +274,7 @@ export default {
         },
         {
           text: "Price/Unit",
-          value: "amountFormatted",
+          value: "formattedAmount",
           width: "20%",
           sortable: true,
         },
@@ -364,7 +370,7 @@ export default {
     },
     currentBlockNumber() {
       if (this.isConnected && !this.isLoading) {
-        this.loadData(this.page);
+        this.loadData(this.page, false);
       }
     },
   },
@@ -392,22 +398,30 @@ export default {
       }
 
       try {
-        reloadData = reloadData || false;
+        reloadData = reloadData === undefined ? true : reloadData;
         this.dataMarket = reloadData ? [] : this.dataMarket;
-        this.isLoading = true;
+        this.isLoading = reloadData;
         this.page = page || 1;
 
         const ordensController = new OrdensController();
         let orders = [];
         let skip = (this.page - 1) * this.itemsPerPage;
-        if (this.isBuy) {
-          orders = await ordensController.getOrdensBuy(
+        if (this.showMyOrders) {
+          orders = await ordensController.getMyOpenOrdens(
+            this.account,
+            parseInt(this.typeEnum),
+            skip,
+            this.itemsPerPage,
+            this.sort
+          );
+        } else if (this.isBuy) {
+          orders = await ordensController.getOpenBuyOrdens(
             skip,
             this.itemsPerPage,
             this.sort
           );
         } else {
-          orders = await ordensController.getOrdensSell(
+          orders = await ordensController.getOpenSellOrdens(
             skip,
             this.itemsPerPage,
             this.sort
