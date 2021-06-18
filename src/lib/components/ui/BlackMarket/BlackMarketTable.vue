@@ -111,12 +111,11 @@
           </p>
           <p v-else>How many items do you want to buy? </p>
           <v-row>
-            <v-col cols="12" md="9">
+            <v-col cols="12" md="6">
               <number-field
                 class="mt-n1"
                 v-model="quantity"
                 :max="nftCollectible.quantity"
-                @input="calcFee()"
               ></number-field>
             </v-col>
           </v-row>
@@ -137,7 +136,7 @@
               You will pay for {{ quantity }} items:
               <amount
                 class="d-block d-md-inline-block"
-                :amount="amountInfo.calcAmount"
+                :amount="calcAmountFee"
                 decimals="2"
                 tooltip
                 symbol="wGOLD"
@@ -148,7 +147,7 @@
               You will receive for {{ quantity }} items:
               <amount
                 class="d-block d-md-inline-block"
-                :amount="amountInfo.calcAmount"
+                :amount="calcAmountFee"
                 decimals="2"
                 tooltip
                 symbol="wGOLD"
@@ -366,6 +365,11 @@ export default {
     playerColumnTitle() {
       return this.type === "sell" ? "Seller" : "Buyer";
     },
+
+    calcAmountFee() {
+      const amountOrder = Convert.fromWei(this.nftCollectible.amountOrder, true);
+      return Convert.toWei(amountOrder * this.quantity);
+    },
   },
 
   watch: {
@@ -451,12 +455,6 @@ export default {
     updateItemsPerPage(itemsPerPage) {
       this.itemsPerPage = itemsPerPage;
       this.loadData(1, true);
-    },
-
-    calcFee() {
-      const amountOrder = Convert.fromWei(this.nftCollectible.amountOrder);
-      const amount = Convert.toWei(amountOrder * this.quantity);
-      return (this.amountInfo.calcAmount = amount);
     },
 
     getSizeIcon(icon) {

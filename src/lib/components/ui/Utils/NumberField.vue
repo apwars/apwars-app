@@ -1,12 +1,12 @@
 <template>
-  <div class="number-field mt-n1" :hidden="hidden">
+  <div class="number-field">
     <v-currency-field
+      v-bind:dense="dense"
       :label="label"
       v-model="quantity"
       outlined
+      @input="update"
       v-bind="currencyConfig"
-      v-on:change="update"
-      v-on:keyPress="update"
     >
       <v-icon slot="append" @click="increment">
         mdi-plus
@@ -20,53 +20,73 @@
 
 <script>
 export default {
-  props: ['label', 'max', 'buyOrSell', 'hidden'],
+  props: ["label", "min", "max", "dense"],
   data() {
     return {
-      quantity: 0,
+      quantity: null,
       currencyConfig: {
-        locale: 'en-US',
-        prefix: '',
-        suffix: '',
+        locale: window.navigator.userLanguage || window.navigator.language,
+        prefix: "",
+        suffix: "",
         decimalLength: 0,
         autoDecimalMode: true,
-        allowNegative: false,
+        allowNegative: true,
       },
-      alert: false,
     };
   },
   model: {
-    prop: 'quantity',
-    event: 'change',
+    prop: "quantity",
+    event: "change",
   },
-  computed: {},
+  mounted() {
+    this.quantity = this.getMin;
+  },
+  computed: {
+    getMin() {
+      if (this.min === undefined || this.min === null) {
+        return 0;
+      }
+      return parseFloat(this.min);
+    },
+    getMax() {
+      if (this.max === undefined || this.max === null) {
+        return Number.MAX_SAFE_INTEGER;
+      }
+      return parseFloat(this.max);
+    },
+  },
   methods: {
     update() {
-      if (!this.buyOrSell) {
-        if (this.quantity > this.max) {
-          this.quantity = this.max;
-        }
+      if (this.quantity === null) return;
+
+      if (this.quantity > this.getMax) {
+        this.$emit("error", { error: "Value greater than allowed" });
+        this.$nextTick(() => {
+          this.quantity = this.getMax;
+        });
+        return;
       }
-      this.$emit('change', this.quantity);
-      this.$emit('input');
+      if (this.quantity < this.getMin) {
+        this.$emit("error", { error: "Value less than allowed" });
+        this.$nextTick(() => {
+          this.quantity = this.getMin;
+        });
+        return;
+      }
+
+      this.$emit("change", this.quantity);
+      this.$emit("input", this.quantity);
     },
     decrement() {
-      if (this.quantity !== 0) {
+      if (this.quantity > this.getMin) {
         this.quantity--;
         this.update();
       }
     },
     increment() {
-      if (this.buyOrSell) {
+      if (this.quantity < this.getMax) {
         this.quantity++;
         this.update();
-      } else {
-        if (this.quantity <= this.max) {
-          this.quantity++;
-          this.update();
-        } else {
-          this.$emit('alert');
-        }
       }
     },
   },

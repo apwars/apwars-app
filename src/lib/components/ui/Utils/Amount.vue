@@ -2,7 +2,7 @@
   <v-tooltip top>
     <template v-slot:activator="{ on, attrs }">
       <span v-bind="attrs" v-on="isTooltip ? on : false">
-        <span class="d-flex">
+        <span>
           <img
             v-if="isIcon"
             :src="`/images/${symbol.toLowerCase()}.png`"
@@ -10,10 +10,8 @@
             alt="wGOLD"
             class="image-symbol"
           />
-          <div class="d-flex">
-            <span> {{ computedAmount }} </span>
-            <span v-if="symbol" class="ml-1"> {{ symbol }} </span>
-          </div>
+          <span> {{ computedAmount }} </span>
+          <span v-if="symbol"> {{ symbol }} </span>
         </span>
       </span>
     </template>
@@ -66,7 +64,6 @@ export default {
 <style scoped>
 .image-symbol {
   vertical-align: bottom;
-
   margin-left: 2px !important;
 }
 </style>

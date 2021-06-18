@@ -3,22 +3,42 @@
     <div>
       <div class="bg-market">
         <v-container class="pb-0">
-          <page-title 
-            title="Black Market" 
-            description="The Black Market is an interesting place for those who want to strengthen their army or collect rare items that can only be found here." 
+          <page-title
+            title="Black Market"
+            description="The Black Market is an interesting place for those who want to strengthen their army or collect rare items that can only be found here."
             image="/images/black-market/black-market.png"
           />
         </v-container>
-        <v-container class="d-flex justify-space-around" :class="{'flex-column': $vuetify.breakpoint.smAndDown}">
-           <wButton width="180px" class="d-flex align-self-center" @click="goToCreateBuyOrder()">
+        <v-container
+          class="d-flex justify-space-around"
+          :class="{ 'flex-column': $vuetify.breakpoint.smAndDown }"
+        >
+          <wButton
+            width="180px"
+            class="d-flex align-self-center"
+            @click="goToCreateBuyOrder()"
+          >
             <div class="d-flex justify-center">
-              <img src="/images/buttons/btn-icon-buy.svg" class="mx-1 align-self-center" height="12" />
+              <img
+                src="/images/buttons/btn-icon-buy.svg"
+                class="mx-1 align-self-center"
+                height="12"
+              />
               <small class="align-self-center">Create buy order</small>
             </div>
           </wButton>
-          <wButton width="180px" class="d-flex align-self-center" :class="{'mt-1': $vuetify.breakpoint.smAndDown}" @click="goToCreateSellOrder()">
+          <wButton
+            width="180px"
+            class="d-flex align-self-center"
+            :class="{ 'mt-1': $vuetify.breakpoint.smAndDown }"
+            @click="goToCreateSellOrder()"
+          >
             <div class="d-flex justify-center">
-              <img src="/images/buttons/btn-icon-sell.svg" class="mx-1 align-self-center" height="12" />
+              <img
+                src="/images/buttons/btn-icon-sell.svg"
+                class="mx-1 align-self-center"
+                height="12"
+              />
               <small class="align-self-center">Create sell order</small>
             </div>
           </wButton>
@@ -44,7 +64,7 @@
 
 <script>
 import BlackMarketTable from "@/lib/components/ui/BlackMarket/BlackMarketTable";
-import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
+import PageTitle from "@/lib/components/ui/Utils/PageTitle.vue";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 
 export default {
@@ -63,28 +83,27 @@ export default {
 
   computed: {
     isConnected() {
-      return this.$store.getters['user/isConnected'];
+      return this.$store.getters["user/isConnected"];
     },
 
     account() {
-      return this.$store.getters['user/account'];
+      return this.$store.getters["user/account"];
     },
 
     addresses() {
-      return this.$store.getters['user/addresses'];
+      return this.$store.getters["user/addresses"];
     },
 
     networkInfo() {
-      return this.$store.getters['user/networkInfo'];
+      return this.$store.getters["user/networkInfo"];
     },
 
     currentBlockNumber() {
-      return this.$store.getters['user/currentBlockNumber'];
+      return this.$store.getters["user/currentBlockNumber"];
     },
   },
 
-  mounted() {
-  },
+  mounted() {},
 
   methods: {
     goToCreateBuyOrder() {
@@ -96,7 +115,7 @@ export default {
     },
 
     goToSwap() {
-      this.$router.push('/exchange');
+      this.$router.push("/exchange");
     },
   },
 };
@@ -104,11 +123,11 @@ export default {
 
 <style scoped>
 .bg-market {
-  background-image: url('/images/black-market/Market.jpg');
-  background-size: cover;
+  background-image: url("/images/black-market/Market.jpg");
+  background-size: contain;
   background-position: top;
-
 }
+
 .img-black-market {
   width: 100%;
 }
