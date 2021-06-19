@@ -57,7 +57,7 @@
           <template v-slot:[`item.formattedAmount`]="{ item }">
             <div>
               <amount
-                :amount="item.formattedAmount"
+                :amount="item.amountOrder"
                 decimals="2"
                 formatted
                 tooltip
@@ -109,7 +109,7 @@
           <p v-if="isBuy">
             How many items do you want to sell?
           </p>
-          <p v-else>How many items do you want to buy? </p>
+          <p v-else>How many items do you want to buy?</p>
           <v-row>
             <v-col cols="12" md="6">
               <number-field
@@ -125,6 +125,7 @@
               <span v-else>You will receive per item:</span>
               <amount
                 :amount="nftCollectible.amountOrder"
+                formatted
                 decimals="2"
                 tooltip
                 title="wGOLD"
@@ -132,7 +133,10 @@
                 icon
               />
             </h4>
-            <h4 v-if="!isBuy" :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'">
+            <h4
+              v-if="!isBuy"
+              :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'"
+            >
               You will pay for {{ quantity }} items:
               <amount
                 class="d-block d-md-inline-block"
@@ -143,7 +147,10 @@
                 icon
               />
             </h4>
-            <h4 v-else :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'">
+            <h4
+              v-else
+              :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'"
+            >
               You will receive for {{ quantity }} items:
               <amount
                 class="d-block d-md-inline-block"
@@ -155,7 +162,14 @@
               />
             </h4>
           </div>
-          <v-alert class="mb-2" outlined v-if="!hasQuantity" type="warning" border="left" dense>
+          <v-alert
+            class="mb-2"
+            outlined
+            v-if="!hasQuantity"
+            type="warning"
+            border="left"
+            dense
+          >
             {{ textAlert }}
           </v-alert>
         </game-item-wood-modal>
@@ -254,20 +268,20 @@ export default {
         {
           text: "Game Item",
           value: "nft.title",
-          width: "25%",
+          width: "20%",
           sortable: true,
         },
-        { text: 'Type', value: 'nft.typeDesc', width: '15%', sortable: false },
+        { text: "Type", value: "nft.typeDesc", width: "15%", sortable: false },
         {
           text: "Quantity",
           value: "quantity",
-          width: "10%",
+          width: "15%",
           sortable: true,
         },
         {
-          text: 'Price/Unit',
-          value: 'formattedAmount',
-          width: '15%',
+          text: "Price/Unit",
+          value: "formattedAmount",
+          width: "15%",
           sortable: true,
         },
         { text: "", value: "action", width: "20%", sortable: false },
@@ -311,11 +325,11 @@ export default {
 
     textAlert() {
       if (this.quantity < 1) {
-        return 'Put an amount greater than 0 to sell the item';
+        return "Put an amount greater than 0 to sell the item";
       } else {
-        return this.nftCollectible.orderTypeDesc === 'buy'
-          ? 'Your balance wGOLD is less than your offer.'
-          : 'Your balance for this Item is less than the offer';
+        return this.nftCollectible.orderTypeDesc.toLowerCase() === "buy"
+          ? "Your balance wGOLD is less than your offer."
+          : "Your balance for this Item is less than the offer";
       }
     },
 
@@ -325,9 +339,7 @@ export default {
       }
 
       if (!this.isBuy) {
-        const amountOrder =
-          parseFloat(Convert.fromWei(this.nftCollectible.amountOrder)) *
-          this.quantity;
+        const amountOrder = this.nftCollectible.amountOrder * this.quantity;
         return amountOrder > this.amountwGOLD ? false : true;
       } else {
         if (this.quantity < 1) {
@@ -348,7 +360,9 @@ export default {
         if (item.orderType == this.typeEnum) {
           item.orderTypeDesc = this.typeEnum === "1" ? "buy" : "sell";
           item.amountOrder =
-            this.typeEnum == "0" ? item.amount : item.totalAmount;
+            this.typeEnum == "0"
+              ? item.formattedAmount
+              : item.formattedAmount + item.formattedFeeAmount;
           return item;
         }
       });
@@ -367,8 +381,7 @@ export default {
     },
 
     calcAmountFee() {
-      const amountOrder = Convert.fromWei(this.nftCollectible.amountOrder, true);
-      return Convert.toWei(amountOrder * this.quantity);
+      return Convert.toWei(this.nftCollectible.amountOrder * this.quantity);
     },
   },
 
@@ -537,7 +550,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           this.setInitialStateConfirmOrder();
-
+          this.loadData(this.page, true);
           ToastSnackbar.success(`The order has been executed successful!`);
         });
       } catch (e) {
@@ -546,6 +559,7 @@ export default {
     },
 
     async isApprovedContract(type) {
+      type = type.toLowerCase();
       const listApproved = {
         sell: async () => {
           return await this.collectibleContract.isApprovedForAll(
@@ -564,6 +578,7 @@ export default {
     },
 
     approve(type) {
+      type = type.toLowerCase();
       const listApproved = {
         sell: () => {
           return this.collectibleContract.setApprovalForAll(
@@ -579,7 +594,7 @@ export default {
         },
       };
 
-      const confirmTransaction = listApproved[type]();
+      const confirmTransaction = listApproved[type.toLowe]();
       this.isLoadingApproveRaskel = true;
       this.raskelApproveText = RASKEL_WAITING_WALLET_APPROVAL;
 
@@ -649,10 +664,8 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           this.setInitialStateCancelOrder();
-
+          this.loadData(this.page, true);
           ToastSnackbar.success(`Order canceled!`);
-
-          this.loadData();
         });
       } catch (e) {
         this.setInitialStateCancelOrder();

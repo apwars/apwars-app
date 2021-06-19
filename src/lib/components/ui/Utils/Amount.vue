@@ -1,7 +1,7 @@
 <template>
   <v-tooltip top>
     <template v-slot:activator="{ on, attrs }">
-      <span v-bind="attrs" v-on="isTooltip ? on : false">
+      <span class="amount" v-bind="attrs" v-on="isTooltip ? on : false">
         <span>
           <img
             v-if="isIcon"
@@ -65,5 +65,8 @@ export default {
 .image-symbol {
   vertical-align: bottom;
   margin-left: 2px !important;
+}
+.amount {
+  white-space: nowrap;
 }
 </style>
