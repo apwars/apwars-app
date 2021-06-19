@@ -392,11 +392,11 @@ export default {
         this.loadData(this.page);
       }
     },
-    currentBlockNumber() {
-      if (this.isConnected && !this.isLoading) {
-        this.loadData(this.page, false);
-      }
-    },
+    // currentBlockNumber() {
+    //   if (this.isConnected && !this.isLoading) {
+    //     this.loadData(this.page, false);
+    //   }
+    // },
   },
 
   mounted() {
