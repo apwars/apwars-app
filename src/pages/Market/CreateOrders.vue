@@ -321,7 +321,7 @@ export default {
       nftId: this.$route.params.nftId,
       loading: true,
       currencyConfig: {
-        locale: (window.navigator.userLanguage || window.navigator.language),
+        locale: window.navigator.userLanguage || window.navigator.language,
         prefix: "",
         suffix: "",
         decimalLength: 2,
@@ -478,6 +478,14 @@ export default {
       this.openConfirmOrderGameItem = true;
     },
 
+    delay() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 4000);
+      });
+    },
+
     async isApprovedContract(type) {
       const listApproved = {
         sell: async () => {
@@ -603,7 +611,10 @@ export default {
           );
         });
 
-        confirmTransaction.on("receipt", () => {
+        confirmTransaction.on("receipt", async () => {
+          console.log('delay ' + new Date());
+          await this.delay();
+          console.log('delay ' + new Date());
           ToastSnackbar.success("The order has been created successfully!");
           this.openConfirmOrderGameItem = false;
           this.isLoadingMarket = false;

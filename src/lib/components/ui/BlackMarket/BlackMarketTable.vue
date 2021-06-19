@@ -470,6 +470,14 @@ export default {
       this.loadData(1, true);
     },
 
+    delay() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 4000);
+      });
+    },
+
     getSizeIcon(icon) {
       return icon === "swap" ? 16 : 12;
     },
@@ -548,7 +556,8 @@ export default {
           this.confirmOrderWaitingStage = 2;
         });
 
-        confirmTransaction.on("receipt", () => {
+        confirmTransaction.on("receipt", async () => {
+          await this.delay();
           this.setInitialStateConfirmOrder();
           this.loadData(this.page, true);
           ToastSnackbar.success(`The order has been executed successful!`);
@@ -662,7 +671,8 @@ export default {
           this.raskelCancelText = RASKEL_CANCEL_WAITING_FIRST_CONFIRMATION;
         });
 
-        confirmTransaction.on("receipt", () => {
+        confirmTransaction.on("receipt", async () => {
+          await this.delay();
           this.setInitialStateCancelOrder();
           this.loadData(this.page, true);
           ToastSnackbar.success(`Order canceled!`);
