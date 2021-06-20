@@ -49,7 +49,7 @@
           </template>
           <template v-slot:[`item.quantity`]="{ item }">
             <div class="text-center">
-              {{ item.quantity }}
+                       {{ item.quantity }}
             </div>
           </template>
           <template v-slot:[`item.formattedAmount`]="{ item }">
@@ -65,7 +65,7 @@
             </div>
           </template>
           <template v-slot:[`item.action`]="{ item }">
-            <div class="d-flex justify-center my-2">
+            <div class="d-flex justify-end my-2">
               <wButton
                 v-if="item.sender.toLowerCase() == account.toLowerCase()"
                 @click="openModalCancelOrder(item)"
