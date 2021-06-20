@@ -49,9 +49,7 @@
           </template>
           <template v-slot:[`item.quantity`]="{ item }">
             <div class="text-center">
-              <span>
-                {{ item.quantity }}
-              </span>
+              {{ item.quantity }}
             </div>
           </template>
           <template v-slot:[`item.formattedAmount`]="{ item }">
@@ -67,7 +65,7 @@
             </div>
           </template>
           <template v-slot:[`item.action`]="{ item }">
-            <div class="d-flex justify-end my-2">
+            <div class="d-flex justify-center my-2">
               <wButton
                 v-if="item.sender.toLowerCase() == account.toLowerCase()"
                 @click="openModalCancelOrder(item)"
@@ -79,8 +77,8 @@
                   <div class="ml-1 align-self-center">cancel</div>
                 </div>
               </wButton>
-              <wButton class="ml-2" @click="openModal(item)">
-                <div class="d-flex justify-center px-2">
+              <wButton class="ml-1" @click="openModal(item)">
+                <div class="d-flex justify-center">
                   <img
                     :src="
                       `/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`
@@ -277,6 +275,7 @@ export default {
           value: "quantity",
           width: "15%",
           sortable: true,
+          align: "center",
         },
         {
           text: "Price/Unit",

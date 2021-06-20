@@ -612,9 +612,7 @@ export default {
         });
 
         confirmTransaction.on("receipt", async () => {
-          console.log('delay ' + new Date());
           await this.delay();
-          console.log('delay ' + new Date());
           ToastSnackbar.success("The order has been created successfully!");
           this.openConfirmOrderGameItem = false;
           this.isLoadingMarket = false;
