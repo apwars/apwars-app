@@ -131,7 +131,8 @@ export default {
       try {
         this.isLoading = true;
         const wgold = new wGOLD(this.addresses.wGOLD);
-        this.balance = web3.utils.fromWei(await wgold.balanceOf(this.account));
+        this.balance = await wgold.balanceOf(this.account);
+        console.log(this.balance);
 
         this.collectibles = getCollectibles();
 
