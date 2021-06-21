@@ -63,15 +63,28 @@
             <game-text header="h4">{{ nftCollectible.title }}</game-text>
             <div>
               <p v-if="isBuy">
-                How much wGOLD do you want to pay for this item?
+                How many items do you want to buy?
               </p>
-              <p v-else>How much wGOLD do you want for this item</p>
+              <p v-else>How many items do you want to sell?</p>
+              <v-row>
+                <v-col cols="12" md="3">
+                  <number-field
+                    class="mt-n1"
+                    v-model="quantity"
+                    :max="maxAmount"
+                    @input="calcFee()"
+                  ></number-field>
+                </v-col>
+              </v-row>
+            </div>
+            <div class="mt-n5">
+              <p v-if="isBuy">
+                How much wGOLD do you want to pay for each item?
+              </p>
+              <p v-else>How much wGOLD do you want for each item?</p>
               <v-currency-field
-                class="mb-2"
+                class="mt-n1"
                 outlined
-                label="Quantity"
-                :hint="hintLabel"
-                persistent-hint
                 v-bind="currencyConfig"
                 v-model="amount"
                 @input="calcFee()"
@@ -83,17 +96,23 @@
                 </template>
               </v-currency-field>
               <v-alert
-                class="mt-3"
-                v-if="amount > amountwGOLD && buyOrSell === 'buy'"
+                v-if="
+                  (amount > amountwGOLD && buyOrSell === 'buy') ||
+                    (calcAmountComputed > amountwGOLD && buyOrSell === 'buy')
+                "
                 outlined
                 type="warning"
                 border="left"
                 dense
               >
-                Your balance is less than your offer.
+                Your balance wGOLD is less than your offer.
               </v-alert>
-              <div class="mr-1 mb-2">
-                This transaction has a fee of:
+              <div
+                :class="
+                  $vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'
+                "
+              >
+                This transaction has a fee per item of:
                 <amount
                   class="d-block d-md-inline-block"
                   :amount="amountInfo.feeAmount"
@@ -104,8 +123,12 @@
                 />
               </div>
 
-              <div class="mr-1 mb-2">
-                {{ totalAmountDescription }} for this item:
+              <div
+                :class="
+                  $vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'
+                "
+              >
+                {{ totalAmountDescription }}
                 <amount
                   class="d-block d-md-inline-block"
                   :amount="amountInfo.totalAmount"
@@ -115,6 +138,38 @@
                   icon
                 />
               </div>
+              <h4
+                v-if="isBuy"
+                :class="
+                  $vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'
+                "
+              >
+                You will pay for {{ quantity }} items:
+                <amount
+                  class="d-block d-md-inline-block"
+                  :amount="amountInfo.calcAmount"
+                  decimals="2"
+                  tooltip
+                  symbol="wGOLD"
+                  icon
+                />
+              </h4>
+              <h4
+                v-else
+                :class="
+                  $vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'
+                "
+              >
+                You will receive for {{ quantity }} items:
+                <amount
+                  class="d-block d-md-inline-block"
+                  :amount="amountInfo.calcAmount"
+                  decimals="2"
+                  tooltip
+                  symbol="wGOLD"
+                  icon
+                />
+              </h4>
             </div>
             <div class="d-flex flex-row-reverse mt-3 mb-n1">
               <wButton
@@ -144,71 +199,72 @@
         :imageUrl="nftCollectible.image"
         :gameItemTitle="nftCollectible.title"
         title="Are you sure you want to create this order?"
+        :amount="userAmount"
       >
-        <div v-if="isBuy" class="mt-2">
-          <p>
-            You will pay
-            <amount
-              :amount="amountInfo.totalAmount"
-              :decimals="2"
-              symbol="wGOLD"
-              icon
-            />
-            for this item.
-          </p>
-        </div>
-        <div v-else>
-          <p>
-            You will receive
+        <div v-if="isBuy" class="mt-n1">
+          <p :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mt-n1' : 'mt-1'">
+            Net amount per item:
             <amount
               :amount="amountInfo.amount"
               :decimals="2"
               symbol="wGOLD"
               icon
             />
-            for this item.
           </p>
-        </div>
+          <p :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mt-n1' : 'mt-1'">
+            Transaction fee per item:
+            <amount
+              :amount="amountInfo.feeAmount"
+              :decimals="2"
+              symbol="wGOLD"
+              icon
+            />
+          </p>
 
-        <div v-if="isBuy">
-          <p>
-            Transaction fee:
+          <div v-if="isBuy" class="mt-2">
+            <p :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'mt-1'">
+              You will pay per item:
+              <amount
+                :amount="amountInfo.totalAmount"
+                :decimals="2"
+                symbol="wGOLD"
+                icon
+              />
+            </p>
+          </div>
+          <div v-else>
+            <p :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'mt-1'">
+              You will receive per item:
+              <amount
+                :amount="amountInfo.amount"
+                :decimals="2"
+                symbol="wGOLD"
+                icon
+              />
+            </p>
+          </div>
+          <h4 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'mt-1'">
+            You will pay for {{ quantity }} items:
             <amount
-              :amount="amountInfo.feeAmount"
-              :decimals="2"
+              class="d-block d-md-inline-block"
+              :amount="amountInfo.calcAmount"
+              decimals="2"
+              tooltip
               symbol="wGOLD"
               icon
             />
-          </p>
-          <p>
-            Net amount:
-            <amount
-              :amount="amountInfo.amount"
-              :decimals="2"
-              symbol="wGOLD"
-              icon
-            />
-          </p>
+          </h4>
         </div>
         <div v-else>
-          <p>
-            Transaction fee:
+          <h4 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : 'mt-1'">
+            You will receive for {{ quantity }} items:
             <amount
-              :amount="amountInfo.feeAmount"
+              :amount="amountInfo.calcAmount"
               :decimals="2"
               symbol="wGOLD"
               icon
             />
-          </p>
-          <p>
-            Total amount:
-            <amount
-              :amount="amountInfo.totalAmount"
-              :decimals="2"
-              symbol="wGOLD"
-              icon
-            />
-          </p>
+          </h4>
         </div>
       </game-item-wood-modal>
 
@@ -225,6 +281,7 @@
 
 <script>
 import GameTitle from "@/lib/components/ui/Utils/GameTitle";
+import NumberField from "@/lib/components/ui/Utils/NumberField";
 import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Collectibles from "@/lib/eth/Collectibles";
@@ -241,6 +298,7 @@ import { getCollectibles } from "@/data/Collectibles";
 
 export default {
   components: {
+    NumberField,
     GameTitle,
     GameText,
     GameItemWoodModal,
@@ -259,11 +317,11 @@ export default {
       buyOrSell: this.$route.params.type,
       fee: 0,
       amount: 0,
-      quantity: 1,
+      quantity: 0,
       nftId: this.$route.params.nftId,
       loading: true,
       currencyConfig: {
-        locale: "en-US",
+        locale: window.navigator.userLanguage || window.navigator.language,
         prefix: "",
         suffix: "",
         decimalLength: 2,
@@ -278,9 +336,9 @@ export default {
       supply: 0,
       remaining: 0,
       isLoadingRaskel: false,
-      amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0 },
-
+      amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0, calcAmount: 0 },
       waitingStage: 0,
+      alert: false,
     };
   },
 
@@ -314,10 +372,10 @@ export default {
 
     totalAmountDescription() {
       if (this.isBuy) {
-        return "Total price for transaction";
+        return "Total price for transaction per item:";
       }
 
-      return "The buyer will pay";
+      return "The buyer will pay per item";
     },
 
     hintLabel() {
@@ -335,12 +393,23 @@ export default {
       return (
         this.amount === 0 ||
         this.amountwGOLD === 0 ||
-        this.amountwGOLD < this.amount
+        this.amountwGOLD < this.amount ||
+        (this.calcAmountComputed > this.amountwGOLD &&
+          this.buyOrSell === "buy") ||
+        this.quantity === 0
       );
     },
 
     disabledSell() {
-      return this.amount === 0 || this.userAmount === 0;
+      return this.amount === 0 || this.userAmount === 0 || this.quantity === 0;
+    },
+
+    calcAmountComputed() {
+      return parseInt(Convert.fromWei(this.amountInfo.calcAmount));
+    },
+
+    maxAmount() {
+      return this.isBuy ? Number.MAX_SAFE_INTEGER : this.userAmount;
     },
   },
 
@@ -407,6 +476,14 @@ export default {
 
     openModal() {
       this.openConfirmOrderGameItem = true;
+    },
+
+    delay() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 4000);
+      });
     },
 
     async isApprovedContract(type) {
@@ -476,10 +553,28 @@ export default {
       if (this.amount === null) {
         this.amountInfo = await this.marketNFTS.getOrderAmountInfo(0);
         this.amountInfo.amount = "0";
+        this.amountInfo.calcAmount = 0;
         return;
       }
       this.amountInfo = await this.marketNFTS.getOrderAmountInfo(this.amount);
       this.amountInfo.amount = Convert.toWei(this.amount);
+      const totalAmount = Convert.fromWei(this.amountInfo.totalAmount);
+
+      this.amountInfo.calcAmount = this.isBuy
+        ? Convert.toWei(totalAmount * this.quantity)
+        : Convert.toWei(this.amount * this.quantity);
+    },
+
+    quantityIsLess() {
+      if (!this.isBuy) {
+        if (this.quantity <= this.userAmount) {
+          return (this.alert = true);
+        } else {
+          return (this.alert = false);
+        }
+      } else {
+        return (this.alert = true);
+      }
     },
 
     async createOrder() {
@@ -516,7 +611,8 @@ export default {
           );
         });
 
-        confirmTransaction.on("receipt", () => {
+        confirmTransaction.on("receipt", async () => {
+          await this.delay();
           ToastSnackbar.success("The order has been created successfully!");
           this.openConfirmOrderGameItem = false;
           this.isLoadingMarket = false;
@@ -526,6 +622,20 @@ export default {
       } catch (e) {
         this.waitingStage = 0;
       }
+    },
+
+    decrement() {
+      if (this.quantity > 1) {
+        this.quantity--;
+        this.$emit("change", this.quantity);
+        this.calcFee();
+      }
+    },
+
+    increment() {
+      this.quantity++;
+      this.$emit("change", this.quantity);
+      this.calcFee();
     },
   },
 };

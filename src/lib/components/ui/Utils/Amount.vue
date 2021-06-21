@@ -1,7 +1,7 @@
 <template>
   <v-tooltip top>
     <template v-slot:activator="{ on, attrs }">
-      <span v-bind="attrs" v-on="isTooltip ? on : false">
+      <span class="amount" v-bind="attrs" v-on="isTooltip ? on : false">
         <span>
           <img
             v-if="isIcon"
@@ -20,26 +20,15 @@
 </template>
 
 <script>
-import Convert from "@/lib/helpers/Convert";
+import Convert from '@/lib/helpers/Convert';
 
 export default {
-  props: [
-    "amount",
-    "compact",
-    "formatted",
-    "decimals",
-    "approximate",
-    "tooltip",
-    "symbol",
-    "icon",
-  ],
+  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon'],
 
   computed: {
     computedAmount() {
-      let numberAmount = this.amount || "0";
-      numberAmount = this.isFormatted
-        ? numberAmount
-        : Convert.fromWei(numberAmount.toString());
+      let numberAmount = this.amount || '0';
+      numberAmount = this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
       if (this.compact !== undefined) {
         numberAmount = Convert.compactNumber(numberAmount, this.getDecimals);
       } else {
@@ -53,10 +42,8 @@ export default {
       return numberAmount;
     },
     tooltipAmount() {
-      let numberAmount = this.amount || "0";
-      return this.isFormatted
-        ? numberAmount
-        : Convert.fromWei(numberAmount.toString());
+      let numberAmount = this.amount || '0';
+      return this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
     },
     isTooltip() {
       return this.tooltip !== undefined;
@@ -68,11 +55,7 @@ export default {
       return this.formatted !== undefined;
     },
     isIcon() {
-      return (
-        this.icon !== undefined &&
-        this.symbol !== undefined &&
-        this.symbol.length > 0
-      );
+      return this.icon !== undefined && this.symbol !== undefined && this.symbol.length > 0;
     },
   },
 };
@@ -81,7 +64,9 @@ export default {
 <style scoped>
 .image-symbol {
   vertical-align: bottom;
-
   margin-left: 2px !important;
+}
+.amount {
+  white-space: nowrap;
 }
 </style>

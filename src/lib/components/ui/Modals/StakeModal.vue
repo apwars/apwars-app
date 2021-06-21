@@ -102,7 +102,7 @@ export default {
       checkbox: false,
       amount: 0,
       currencyConfig: {
-        locale: "en-US",
+        locale: (window.navigator.userLanguage || window.navigator.language),
         prefix: "",
         suffix: "",
         decimalLength: 8,

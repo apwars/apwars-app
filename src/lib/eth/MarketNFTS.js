@@ -70,10 +70,12 @@ export default class MarketNFTS {
         ? await this.getBuyOrdersLength()
         : await this.getSellOrdersLength();
     startIndex = startIndex === undefined ? total : startIndex;
+    limit = limit > total ? total : limit;
     let index = startIndex;
     let lastIndex = index;
 
     let blockLoading = 0;
+    let loopOrders = true;
     do {
       if (lastIndex > 0) {
         const orderId =
@@ -90,7 +92,12 @@ export default class MarketNFTS {
         index = 0;
       }
       blockLoading++;
-    } while (index > startIndex - limit || blockLoading < limit);
+      if (!(index > startIndex - limit)) {
+        loopOrders = false;
+      } else if (blockLoading > limit) {
+        loopOrders = false;
+      }
+    } while (loopOrders);
 
     return {
       data: market,

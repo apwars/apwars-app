@@ -4,7 +4,10 @@ export default {
     return web3.utils.toWei(amount.toString(), "ether");
   },
 
-  fromWei(amount) {
+  fromWei(amount, convertFloat) {
+    if (convertFloat) {
+      return parseFloat(web3.utils.fromWei(amount.toString()));
+    }
     return web3.utils.fromWei(amount.toString());
   },
 

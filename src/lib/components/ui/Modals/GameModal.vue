@@ -11,7 +11,6 @@
       :isLoading="isLoading"
       :disabledConfirm="isLoading"
       :disabledClose="isLoading"
-      hideConfirm
     >
       <slot> </slot>
     </template-modal-papyrus>
@@ -23,7 +22,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
 
 export default {
-  props: ["open", "title", "hideOk", "isLoading"],
+  props: ["open", "title", "isLoading"],
 
   data() {
     return {

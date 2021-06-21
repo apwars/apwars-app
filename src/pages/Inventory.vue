@@ -131,7 +131,7 @@ export default {
       try {
         this.isLoading = true;
         const wgold = new wGOLD(this.addresses.wGOLD);
-        this.balance = web3.utils.fromWei(await wgold.balanceOf(this.account));
+        this.balance = await wgold.balanceOf(this.account);
 
         this.collectibles = getCollectibles();
 
@@ -150,9 +150,6 @@ export default {
         this.isLoading = false;
       }
     },
-    sendItem(){
-      console.log("SEND ITEM");
-    }
   },
 };
 </script>

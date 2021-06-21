@@ -45,16 +45,13 @@
         <v-layout justify-center align-center>
           <v-flex shrink class="text-center">
             <div class="d-flex title justify-center">
-              <img
-                src="/images/wgold.png"
-                height="30px"
-                alt="wGOLD"
-              />
+              <img src="/images/wgold.png" height="30px" alt="wGOLD" />
               wGOLD
             </div>
-            <div class="value" :title="balance">
-              {{ formattedAmount }}
+            <div class="value">
+              <amount :amount="balance" decimals="2" compact tooltip />
             </div>
+
             <v-img
               @click="goToSwap()"
               class="btn"
@@ -69,13 +66,15 @@
 </template>
 
 <script>
-import GameText from '@/lib/components/ui/Utils/GameText';
+import GameText from "@/lib/components/ui/Utils/GameText";
+import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
-  props: ['balance', 'collectibles', 'collection'],
+  props: ["balance", "collectibles", "collection"],
 
   components: {
     GameText,
+    Amount,
   },
 
   data() {
@@ -84,32 +83,18 @@ export default {
 
   computed: {
     avatar() {
-      return this.$store.getters['user/avatar'];
-    },
-
-    formattedAmount() {
-      const num = parseInt(this.balance);
-
-      if (this.balance < 1) {
-        return '~0';
-      } else if (num > 999 && num < 1000000) {
-        return (num / 1000).toFixed(2) + 'K';
-      } else if (num > 1000000) {
-        return (num / 1000000).toFixed(2) + 'M';
-      } else if (num < 900) {
-        return num;
-      }
+      return this.$store.getters["user/avatar"];
     },
   },
 
   methods: {
     goToSwap() {
-      this.$router.push('/exchange');
+      this.$router.push("/exchange");
     },
 
     changeAvatar() {
-      const avatar = this.avatar === 'degen' ? 'corp' : 'degen';
-      this.$store.dispatch('user/changeAvatar', { avatar });
+      const avatar = this.avatar === "degen" ? "corp" : "degen";
+      this.$store.dispatch("user/changeAvatar", { avatar });
     },
   },
 };

@@ -5,34 +5,32 @@
         <h4 class="text-h4" v-if="!isBuy">Items for sale</h4>
         <h4 class="text-h4" v-else>Wanted items</h4>
         <v-spacer></v-spacer>
+        <v-checkbox
+          v-model="showMyOrders"
+          @change="loadData(1, true)"
+          label="Show only my orders"
+          color="primary"
+        ></v-checkbox>
       </v-card-title>
       <v-card-text>
         <v-data-table
           class="table-black-market elevation-0"
           :headers="headers"
           :items="listMarket"
-          :items-per-page="listMarket.length"
+          :items-per-page="itemsPerPage"
           :loading="isLoading"
           :loading-text="loadingText"
-          :show-expand="false"
-          hide-default-footer
+          :server-items-length="totalItems"
+          :page="page"
+          @update:page="loadData"
+          @update:sort-by="sortBy"
+          @update:sort-desc="sortDesc"
+          @update:items-per-page="updateItemsPerPage"
+          :footer-props="{
+            'items-per-page-options': [5, 10, 20],
+          }"
+          nonwrap
         >
-          <template v-slot:footer>
-            <wButton
-              class="d-flex justify-center my-3"
-              v-if="listMarket.length > 0"
-              @click="loadData(0)"
-              :disabled="isEndLoading || isLoading"
-            >
-              <div v-if="isLoading" class="mx-6">
-                Loading...
-              </div>
-              <div v-else class="mx-6">
-                {{ isEndLoading ? "No more items to load" : "Load more" }}
-              </div>
-            </wButton>
-          </template>
-
           <template v-slot:[`item.sender`]="{ item }">
             <v-address :address="item.sender" link tooltip></v-address>
           </template>
@@ -49,17 +47,15 @@
               </span>
             </div>
           </template>
-          <template v-slot:[`item.nft.quantity`]="{ item }">
-            <div class="d-flex">
-              <span class="ml-1 align-self-center">
-                <!-- {{ item.nft.quantity }} -->
-              </span>
+          <template v-slot:[`item.quantity`]="{ item }">
+            <div class="text-center">
+                       {{ item.quantity }}
             </div>
           </template>
-          <template v-slot:[`item.amountFormatted`]="{ item }">
-            <div class="d-flex">
+          <template v-slot:[`item.formattedAmount`]="{ item }">
+            <div>
               <amount
-                :amount="item.amountFormatted"
+                :amount="item.amountOrder"
                 decimals="2"
                 formatted
                 tooltip
@@ -81,8 +77,8 @@
                   <div class="ml-1 align-self-center">cancel</div>
                 </div>
               </wButton>
-              <wButton class="ml-2" @click="openModal(item)">
-                <div class="d-flex justify-center px-2">
+              <wButton class="ml-1" @click="openModal(item)">
+                <div class="d-flex justify-center">
                   <img
                     :src="
                       `/images/buttons/btn-icon-${item.orderTypeDesc.toLowerCase()}.svg`
@@ -106,29 +102,73 @@
           :waitingStage="confirmOrderWaitingStage"
           :title="confirmOrderModalTitle"
           :disabledBuy="!hasQuantity"
+          :amount="balanceItem"
         >
-          <h4 class="mt-3">
-            <span v-if="!isBuy">You will pay</span>
-            <span v-else>You will receive</span>
-            <amount
-              :amount="nftCollectible.amountOrder"
-              decimals="2"
-              tooltip
-              title="wGOLD"
-              symbol="wGOLD"
-              icon
-            />
-            for this item.
-          </h4>
+          <p v-if="isBuy">
+            How many items do you want to sell?
+          </p>
+          <p v-else>How many items do you want to buy?</p>
+          <v-row>
+            <v-col cols="12" md="6">
+              <number-field
+                class="mt-n1"
+                v-model="quantity"
+                :max="nftCollectible.quantity"
+              ></number-field>
+            </v-col>
+          </v-row>
+          <div class="mt-n6" v-if="hasQuantity">
+            <h4 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
+              <span v-if="!isBuy">You will pay per item:</span>
+              <span v-else>You will receive per item:</span>
+              <amount
+                :amount="nftCollectible.amountOrder"
+                formatted
+                decimals="2"
+                tooltip
+                title="wGOLD"
+                symbol="wGOLD"
+                icon
+              />
+            </h4>
+            <h4
+              v-if="!isBuy"
+              :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'"
+            >
+              You will pay for {{ quantity }} items:
+              <amount
+                class="d-block d-md-inline-block"
+                :amount="calcAmountFee"
+                decimals="2"
+                tooltip
+                symbol="wGOLD"
+                icon
+              />
+            </h4>
+            <h4
+              v-else
+              :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'"
+            >
+              You will receive for {{ quantity }} items:
+              <amount
+                class="d-block d-md-inline-block"
+                :amount="calcAmountFee"
+                decimals="2"
+                tooltip
+                symbol="wGOLD"
+                icon
+              />
+            </h4>
+          </div>
           <v-alert
-            class="mt-3"
+            class="mb-2"
             outlined
             v-if="!hasQuantity"
             type="warning"
             border="left"
             dense
           >
-            Your balance is less than your offer.
+            {{ textAlert }}
           </v-alert>
         </game-item-wood-modal>
 
@@ -154,6 +194,7 @@
 
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
+import NumberField from "@/lib/components/ui/Utils/NumberField";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import GameItemWoodModal from "@/lib/components/ui/Modals/GameItemWoodModal";
@@ -162,7 +203,7 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import Convert from "@/lib/helpers/Convert";
 
-import { getCollectibles } from "@/data/Collectibles";
+import OrdersController from "@/controller/OrdersController";
 
 import MarketNFTS from "@/lib/eth/MarketNFTS.js";
 import Collectibles from "@/lib/eth/Collectibles";
@@ -187,10 +228,12 @@ export default {
     wButton,
     GameItemWoodModal,
     RaskelModal,
+    NumberField,
   },
 
   data() {
     return {
+      showMyOrders: false,
       amountwGOLD: 0,
       balanceItem: 0,
       isRaskelApprovalModalOpen: false,
@@ -205,37 +248,40 @@ export default {
       isLoadingCancel: false,
       marketNFTS: {},
       itemsPerPage: 5,
+      totalItems: 0,
       lastIndex: undefined,
       page: 1,
-      quantity: 1,
+      quantity: 0,
       isLoading: true,
       loadingText: "Loading... Please wait",
       dataMarket: [],
+      sort: "orderId:-1",
       headers: [
         {
           text: "Player",
           value: "sender",
           width: "15%",
-          sortable: false,
+          sortable: true,
         },
         {
           text: "Game Item",
           value: "nft.title",
-          width: "25%",
-          sortable: false,
+          width: "20%",
+          sortable: true,
         },
         { text: "Type", value: "nft.typeDesc", width: "15%", sortable: false },
-        // {
-        //   text: "Quantity",
-        //   value: "nft.quantity",
-        //   width: "10%",
-        //   sortable: false,
-        // },
+        {
+          text: "Quantity",
+          value: "quantity",
+          width: "15%",
+          sortable: true,
+          align: "center",
+        },
         {
           text: "Price/Unit",
-          value: "amountFormatted",
+          value: "formattedAmount",
           width: "15%",
-          sortable: false,
+          sortable: true,
         },
         { text: "", value: "action", width: "20%", sortable: false },
       ],
@@ -244,6 +290,8 @@ export default {
       raskelApproveText: RASKEL_DEFAULT_APPROVE_TEXT,
 
       confirmOrderWaitingStage: 0,
+
+      amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0, calcAmount: 0 },
     };
   },
 
@@ -274,18 +322,30 @@ export default {
         : "Are you sure you want to sell this item?";
     },
 
+    textAlert() {
+      if (this.quantity < 1) {
+        return "Put an amount greater than 0 to sell the item";
+      } else {
+        return this.nftCollectible.orderTypeDesc.toLowerCase() === "buy"
+          ? "Your balance wGOLD is less than your offer."
+          : "Your balance for this Item is less than the offer";
+      }
+    },
+
     hasQuantity() {
       if (this.nftCollectible.amountOrder === undefined) {
         return false;
       }
 
       if (!this.isBuy) {
-        const amountOrder = parseFloat(
-          Convert.fromWei(this.nftCollectible.amountOrder)
-        );
+        const amountOrder = this.nftCollectible.amountOrder * this.quantity;
         return amountOrder > this.amountwGOLD ? false : true;
       } else {
-        return this.balanceItem > 0 ? true : false;
+        if (this.quantity < 1) {
+          return false;
+        } else {
+          return this.balanceItem > 0 ? true : false;
+        }
       }
     },
 
@@ -296,15 +356,12 @@ export default {
 
       return this.dataMarket.filter((item) => {
         item.openModal = false;
-        if (item.orderType === this.typeEnum) {
+        if (item.orderType == this.typeEnum) {
           item.orderTypeDesc = this.typeEnum === "1" ? "buy" : "sell";
           item.amountOrder =
-            this.typeEnum === "0" ? item.amount : item.totalAmount;
-          item.amountFormatted = Convert.fromWei(item.amountOrder);
-          item.nft = getCollectibles().find(
-            (collectible) =>
-              collectible.id.toString() === item.tokenId.toString()
-          );
+            this.typeEnum == "0"
+              ? item.formattedAmount
+              : item.formattedAmount + item.formattedFeeAmount;
           return item;
         }
       });
@@ -321,6 +378,10 @@ export default {
     playerColumnTitle() {
       return this.type === "sell" ? "Seller" : "Buyer";
     },
+
+    calcAmountFee() {
+      return Convert.toWei(this.nftCollectible.amountOrder * this.quantity);
+    },
   },
 
   watch: {
@@ -331,7 +392,9 @@ export default {
       }
     },
     // currentBlockNumber() {
-    //   !this.isLoading && this.loadData(this.page);
+    //   if (this.isConnected && !this.isLoading) {
+    //     this.loadData(this.page, false);
+    //   }
     // },
   },
 
@@ -352,33 +415,66 @@ export default {
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
     },
 
-    async loadData(page) {
+    async loadData(page, reloadData) {
       if (!this.isConnected) {
         return;
       }
 
       try {
-        this.isLoading = true;
+        reloadData = reloadData === undefined ? true : reloadData;
+        this.dataMarket = reloadData ? [] : this.dataMarket;
+        this.isLoading = reloadData;
         this.page = page || 1;
+
+        const ordersController = new OrdersController();
+        let orders = [];
+        let skip = (this.page - 1) * this.itemsPerPage;
+        if (this.showMyOrders) {
+          orders = await ordersController.getMyOpenOrders(
+            this.account,
+            parseInt(this.typeEnum),
+            skip,
+            this.itemsPerPage,
+            this.sort
+          );
+        } else if (this.isBuy) {
+          orders = await ordersController.getOpenBuyOrders(
+            skip,
+            this.itemsPerPage,
+            this.sort
+          );
+        } else {
+          orders = await ordersController.getOpenSellOrders(
+            skip,
+            this.itemsPerPage,
+            this.sort
+          );
+        }
+
+        this.dataMarket = orders.items;
+        this.totalItems = orders.total;
 
         this.amountwGOLD = Convert.fromWei(
           await this.wGOLDContract.balanceOf(this.account)
         );
-
-        const market = await this.marketNFTS.getMarketLoadMore(
-          this.typeEnum,
-          this.itemsPerPage,
-          this.lastIndex
-        );
-        this.dataMarket = [].concat(this.dataMarket, market.data);
-        this.lastIndex = market.lastIndex;
-        this.isEndLoading = market.isEnd;
       } catch (error) {
-        console.log(error);
         this.loadingText = "Sorry, an error occurred";
       } finally {
         this.isLoading = false;
       }
+    },
+
+    updateItemsPerPage(itemsPerPage) {
+      this.itemsPerPage = itemsPerPage;
+      this.loadData(1, true);
+    },
+
+    delay() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 4000);
+      });
     },
 
     getSizeIcon(icon) {
@@ -386,6 +482,7 @@ export default {
     },
 
     async openModal(item) {
+      this.quantity = 0;
       this.nftCollectible = item;
       const isApproved = await this.isApprovedContract(
         this.nftCollectible.orderTypeDesc
@@ -410,6 +507,26 @@ export default {
       this.isConfirmOrderModalOpen = false;
       this.isLoadingConfirm = false;
       this.confirmOrderWaitingStage = 0;
+    },
+
+    sortBy(sort) {
+      if (this.isLoading || !sort.length || !sort[0]) {
+        if (!sort.length) {
+          this.sort = "orderId:-1";
+          this.loadData(this.page, true);
+        }
+        return;
+      }
+      this.sort = `${sort[0]}:1`;
+      this.loadData(this.page, true);
+    },
+
+    sortDesc(sort) {
+      if (this.isLoading || !sort.length || !sort[0]) {
+        return;
+      }
+      this.sort = this.sort.replace(":1", ":-1");
+      this.loadData(this.page, true);
     },
 
     executeOrder() {
@@ -438,9 +555,10 @@ export default {
           this.confirmOrderWaitingStage = 2;
         });
 
-        confirmTransaction.on("receipt", () => {
+        confirmTransaction.on("receipt", async () => {
+          await this.delay();
           this.setInitialStateConfirmOrder();
-
+          this.loadData(this.page, true);
           ToastSnackbar.success(`The order has been executed successful!`);
         });
       } catch (e) {
@@ -449,6 +567,7 @@ export default {
     },
 
     async isApprovedContract(type) {
+      type = type.toLowerCase();
       const listApproved = {
         sell: async () => {
           return await this.collectibleContract.isApprovedForAll(
@@ -467,6 +586,7 @@ export default {
     },
 
     approve(type) {
+      type = type.toLowerCase();
       const listApproved = {
         sell: () => {
           return this.collectibleContract.setApprovalForAll(
@@ -482,7 +602,7 @@ export default {
         },
       };
 
-      const confirmTransaction = listApproved[type]();
+      const confirmTransaction = listApproved[type.toLowe]();
       this.isLoadingApproveRaskel = true;
       this.raskelApproveText = RASKEL_WAITING_WALLET_APPROVAL;
 
@@ -513,6 +633,7 @@ export default {
     },
 
     openModalCancelOrder(item) {
+      this.quantity = 0;
       this.nftCollectible = item;
       this.isLoadingConfirm = false;
       this.openCancelOrderGameItem = true;
@@ -549,15 +670,26 @@ export default {
           this.raskelCancelText = RASKEL_CANCEL_WAITING_FIRST_CONFIRMATION;
         });
 
-        confirmTransaction.on("receipt", () => {
+        confirmTransaction.on("receipt", async () => {
+          await this.delay();
           this.setInitialStateCancelOrder();
-
+          this.loadData(this.page, true);
           ToastSnackbar.success(`Order canceled!`);
-
-          this.loadData();
         });
       } catch (e) {
         this.setInitialStateCancelOrder();
+      }
+    },
+
+    decrement() {
+      if (this.quantity > 1) {
+        this.quantity--;
+      }
+    },
+
+    increment(max) {
+      if (this.quantity < max) {
+        this.quantity++;
       }
     },
   },

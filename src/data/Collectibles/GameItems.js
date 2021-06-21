@@ -338,5 +338,15 @@ export function getGameItems() {
           "0xccccd8b9a1a40bc5cc150d61439fe4d12bde18d5f46bf8c379bef53a7458b2996b516231134dbeb3b7583ae99c4a7e1f3f68f365ad304509b4076c0cebde52dc00",
       },
     },
+    {
+      id: 27,
+      type: 'spendable',
+      typeDesc: 'Spendable',
+      contractAddress: addresses.collectibles,
+      isGift: false,
+      title: "Free Transport",
+      description: "I am an active transporter. However, for some particular fellows, I can carry some items without charge my regular fee. WARNING: This is a spendable item.",
+      image: "/images/nfts/lilith-100off.png",
+    }
   ];
 }

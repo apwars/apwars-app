@@ -125,62 +125,61 @@
       height="300px"
       textClose="Back"
     >
-      <div class="mt-2">
-        <v-text-field
-          outlined
-          class="input"
-          label="Address"
-          dense
-          v-model="addressSendNFT"
-        ></v-text-field>
-        <v-currency-field
-          dense
-          outlined
-          v-bind="currencyConfig"
-          label="Quantity"
-          v-model="qty"
-        >
-        </v-currency-field>
-        <p class="ma-0 pa-0 mt-n1">
-          Transportation fee of:
-          <amount
-            class="align-self-center mt-n2 mr-1"
-            :amount="transportationFee"
-            decimals="2"
-            symbol="wGOLD"
-            icon
-          />
-        </p>
-        <p class="mt-1">
-          Your balance:
-          <amount
-            class="align-self-center mt-n2 mr-1"
-            :amount="userBalance"
-            decimals="2"
-            symbol="wGOLD"
-            icon
-          />
-          <v-alert
-            v-if="!isBalanceFee"
-            class="mt-1"
-            outlined
-            type="warning"
-            border="left"
-            dense
-          >
-            Your balance is less than the fee.
-          </v-alert>
-          <v-alert
-            v-else-if="!isBalanceItem"
-            class="mt-1"
-            outlined
-            type="warning"
-            border="left"
-            dense
-          >
-            Your balance is less than the amount for transport.
-          </v-alert>
-        </p>
+      <div class="mt-6">
+        <v-row >
+          <v-col class="py-0" cols="12" md="6">
+            <number-field dense label="Quantity" v-model="qty" :max="userAmount"></number-field>
+          </v-col>
+          <v-col class="py-0" cols="12">
+            <v-text-field
+              outlined
+              class="input"
+              label="Address"
+              dense
+              v-model="addressSendNFT"
+            ></v-text-field>
+            <p class="ma-0 pa-0 mt-n1">
+              Transportation fee of:
+              <amount
+                class="mr-1"
+                :amount="transportationFee"
+                decimals="2"
+                symbol="wGOLD"
+                icon
+              />
+            </p>
+            <p class="mt-1">
+              Your balance:
+              <amount
+                class="mr-1"
+                :amount="userBalance"
+                decimals="2"
+                symbol="wGOLD"
+                icon
+              />
+              <v-alert
+                v-if="!isBalanceFee"
+                class="mt-1"
+                outlined
+                type="warning"
+                border="left"
+                dense
+              >
+                Your balance is less than the fee.
+              </v-alert>
+              <v-alert
+                v-else-if="!isBalanceItem"
+                class="mt-1"
+                outlined
+                type="warning"
+                border="left"
+                dense
+              >
+                Your balance is less than the amount for transport.
+              </v-alert>
+            </p>
+          </v-col>
+        </v-row>
       </div>
     </game-item-wood-modal>
 
@@ -208,6 +207,7 @@ import ItemPrice from "@/lib/components/ui/Utils/ItemPrice";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 import Convert from "@/lib/helpers/Convert";
+import NumberField from "@/lib/components/ui/Utils/NumberField";
 
 import Collectibles from "@/lib/eth/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
@@ -235,6 +235,7 @@ export default {
     LilithModal,
     Amount,
     wButton,
+    NumberField,
   },
 
   data() {
@@ -263,14 +264,6 @@ export default {
       stepLilith: "wGOLD",
       wGOLDContract: {},
       collectiblesContract: {},
-      currencyConfig: {
-        locale: "en-US",
-        prefix: "",
-        suffix: "",
-        decimalLength: 0,
-        autoDecimalMode: true,
-        allowNegative: false,
-      },
     };
   },
 
@@ -300,15 +293,15 @@ export default {
         this.addressSendNFT === "" ||
         !this.qty ||
         (this.qty && this.qty > this.userAmount) ||
-        Convert.fromWei(this.transportationFee) >
-          Convert.fromWei(this.userBalance)
+        Convert.fromWei(this.transportationFee, true) >
+          Convert.fromWei(this.userBalance, true)
       );
     },
 
     isBalanceFee() {
       return (
-        Convert.fromWei(this.userBalance) >=
-        Convert.fromWei(this.transportationFee)
+        Convert.fromWei(this.userBalance, true) >=
+        Convert.fromWei(this.transportationFee, true)
       );
     },
 
@@ -427,7 +420,6 @@ export default {
           this.account,
           this.collectible.contractAddress
         );
-        console.log({ res });
         this.isApprovedwGOLD = await this.wGOLDContract.hasAllowance(
           this.account,
           this.collectible.contractAddress
@@ -493,7 +485,10 @@ export default {
         const tranporterContract = await new Transporter(
           this.addresses.transporter
         );
-        this.transportationFee = await tranporterContract.getFeeAmount();
+        const getTransportationFee = await tranporterContract.getFeeAmount(
+          this.account
+        );
+        this.transportationFee = getTransportationFee.currentFeeAmount;
 
         this.showInfo = false;
         this.isLoadingShowInfo = false;
