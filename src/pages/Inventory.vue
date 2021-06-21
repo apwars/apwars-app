@@ -132,7 +132,6 @@ export default {
         this.isLoading = true;
         const wgold = new wGOLD(this.addresses.wGOLD);
         this.balance = await wgold.balanceOf(this.account);
-        console.log(this.balance);
 
         this.collectibles = getCollectibles();
 
