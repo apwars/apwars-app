@@ -602,7 +602,7 @@ export default {
         },
       };
 
-      const confirmTransaction = listApproved[type.toLowe]();
+      const confirmTransaction = listApproved[type.toLowerCase]();
       this.isLoadingApproveRaskel = true;
       this.raskelApproveText = RASKEL_WAITING_WALLET_APPROVAL;
 
