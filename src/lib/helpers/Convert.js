@@ -30,13 +30,13 @@ export default {
     if (value < 1e3) {
       return this.formatString(value, decimals);
     } else if (value >= 1e3 && value < 1e6) {
-      return `${this.formatString(value / 1e3, decimals)} K`;
+      return `${this.formatString(value / 1e3, decimals)}K`;
     } else if (value >= 1e6 && value < 1e9) {
-      return `${this.formatString(value / 1e6, decimals)} M`;
+      return `${this.formatString(value / 1e6, decimals)}M`;
     } else if (value >= 1e9 && value < 1e12) {
-      return `${this.formatString(value / 1e9, decimals)} B`;
+      return `${this.formatString(value / 1e9, decimals)}B`;
     } else if (value >= 1e12) {
-      return `${this.formatString(value / 1e12, decimals)} T`;
+      return `${this.formatString(value / 1e12, decimals)}T`;
     }
   },
 };

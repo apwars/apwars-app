@@ -257,10 +257,10 @@ export default {
       }
 
       try {
-        const wgold = new wGOLD(this.addresses.wGOLD);
-        this.balance = web3.utils.fromWei(await wgold.balanceOf(this.account));
-        this.balanceFED = await wgold.balanceOf(this.addresses.FED);
-        this.priceWGOLD = await wgold.priceWGOLD();
+        const contractwGOLD = new wGOLD(this.addresses.wGOLD);
+        this.balance = web3.utils.fromWei(await contractwGOLD.balanceOf(this.account));
+        this.balanceFED = await contractwGOLD.balanceOf(this.addresses.FED);
+        this.priceWGOLD = await contractwGOLD.priceWGOLD(this.networkInfo.id);
 
         const troops = getTroops();
 
@@ -283,7 +283,8 @@ export default {
                 const qtyAccount = await getTropper.balanceOf(this.account);
                 const qtyGlobal = await getTropper.totalSupply();
                 const priceWGOLD = await getTropper.priceWGOLD(
-                  trooper.lpAddresses
+                  trooper.lpAddresses,
+                  this.networkInfo.id
                 );
                 resolve({
                   name: trooper.name,

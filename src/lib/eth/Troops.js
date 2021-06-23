@@ -33,17 +33,22 @@ export default class Troops {
     return bn.gt(0);
   }
 
-  async priceWGOLD(account) {
-    const wGOLD = new window.web3.eth.Contract(
-      APWarsTroops,
-      Addresss.wGOLD[56]
-    );
-    const balanceOfwGOLD = await wGOLD.methods.balanceOf(account).call();
-    const balanceOfTrooper = await this.balanceOf(account);
+  async priceWGOLD(account, networkId) {
+    try {
+      const wGOLD = new window.web3.eth.Contract(
+        APWarsTroops,
+        Addresss.wGOLD[networkId]
+      );
+      const balanceOfwGOLD = await wGOLD.methods.balanceOf(account).call();
+      const balanceOfTrooper = await this.balanceOf(account);
 
-    return window.web3.utils.toWei(
-      (balanceOfwGOLD / balanceOfTrooper).toString(),
-      "ether"
-    );
+      return window.web3.utils.toWei(
+        (balanceOfwGOLD / balanceOfTrooper).toString(),
+        "ether"
+      );
+    } catch (error) {
+      console.log(error);
+      return "0";
+    }
   }
 }
