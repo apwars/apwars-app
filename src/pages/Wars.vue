@@ -166,9 +166,9 @@ export default {
       }
 
       try {
-        this.wars = getWars();
-      } catch (e) {
-        console.log(e);
+        this.wars = getWars(this.networkInfo.id !== "56");
+      } catch (error) {
+        console.log(error);
       } finally {
         setTimeout(() => {
           this.isLoading = false;

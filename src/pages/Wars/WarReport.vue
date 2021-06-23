@@ -403,7 +403,7 @@ export default {
 
     initData() {
       try {
-        this.isWar = getWars().find(
+        this.isWar = getWars(this.networkInfo.id !== "56").find(
           (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
         );
         if (!this.isWar) {
