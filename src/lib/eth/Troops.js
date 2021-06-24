@@ -2,6 +2,7 @@ import APWarsTroops from "./APWarsTroops.json";
 import Addresss from "../../data/Addresses";
 import { ethers } from "ethers";
 import BigNumber from "bignumber.js";
+import Convert from "../helpers/Convert";
 
 export default class Troops {
   constructor(contract) {
@@ -33,19 +34,18 @@ export default class Troops {
     return bn.gt(0);
   }
 
-  async priceWGOLD(account, networkId) {
+  async priceWGOLD(account) {
     try {
       const wGOLD = new window.web3.eth.Contract(
         APWarsTroops,
-        Addresss.wGOLD[networkId]
+        Addresss.wGOLD[56]
       );
       const balanceOfwGOLD = await wGOLD.methods.balanceOf(account).call();
       const balanceOfTrooper = await this.balanceOf(account);
-
-      return window.web3.utils.toWei(
-        (balanceOfwGOLD / balanceOfTrooper).toString(),
-        "ether"
-      );
+  
+      const result = new BigNumber(balanceOfwGOLD).dividedBy(balanceOfTrooper);
+  
+      return Convert.toWei(result);
     } catch (error) {
       console.log(error);
       return "0";

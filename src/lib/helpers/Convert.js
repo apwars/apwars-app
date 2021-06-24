@@ -1,7 +1,10 @@
 const DEFAULT_DECIMALS = 2;
+const DEFAULT_DECIMALS_BIGNUMBER = 18;
+
 export default {
   toWei(amount) {
-    return web3.utils.toWei(amount.toString(), "ether");
+    amount = (parseFloat(amount)).toFixed(DEFAULT_DECIMALS_BIGNUMBER);
+    return web3.utils.toWei(amount, "ether");
   },
 
   fromWei(amount, convertFloat) {
