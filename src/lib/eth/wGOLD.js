@@ -2,6 +2,7 @@ import APWarsGoldToken from "./APWarsGoldToken.json";
 import { ethers } from "ethers";
 import BigNumber from "bignumber.js";
 import Addresss from "../../data/Addresses";
+import Convert from "../helpers/Convert";
 
 export default class wGOLD {
   constructor(contract) {
@@ -42,9 +43,8 @@ export default class wGOLD {
       .call();
     const balanceOfWgold = await this.balanceOf(Addresss.wGOLD_BUSD_LP[56]);
 
-    return window.web3.utils.toWei(
-      (balanceOfUSD / balanceOfWgold).toString(),
-      "ether"
-    );
+    const result = new BigNumber(balanceOfUSD).dividedBy(balanceOfWgold);
+
+    return Convert.toWei(result);
   }
 }
