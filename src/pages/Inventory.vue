@@ -60,7 +60,7 @@ export default {
 
   data() {
     return {
-      balance: 0,
+      balance: "0",
       collectibles: [],
       balances: [],
       itemsCount: 0,

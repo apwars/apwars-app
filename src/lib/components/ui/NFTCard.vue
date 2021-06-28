@@ -126,9 +126,14 @@
       textClose="Back"
     >
       <div class="mt-6">
-        <v-row >
+        <v-row>
           <v-col class="py-0" cols="12" md="6">
-            <number-field dense label="Quantity" v-model="qty" :max="userAmount"></number-field>
+            <number-field
+              dense
+              label="Quantity"
+              v-model="qty"
+              :max="userAmountItem"
+            ></number-field>
           </v-col>
           <v-col class="py-0" cols="12">
             <v-text-field
@@ -148,36 +153,42 @@
                 icon
               />
             </p>
-            <p class="mt-1">
-              Your balance:
-              <amount
-                class="mr-1"
-                :amount="userBalance"
-                decimals="2"
-                symbol="wGOLD"
-                icon
-              />
-              <v-alert
-                v-if="!isBalanceFee"
-                class="mt-1"
-                outlined
-                type="warning"
-                border="left"
-                dense
-              >
-                Your balance is less than the fee.
-              </v-alert>
-              <v-alert
-                v-else-if="!isBalanceItem"
-                class="mt-1"
-                outlined
-                type="warning"
-                border="left"
-                dense
-              >
-                Your balance is less than the amount for transport.
-              </v-alert>
+
+            <p
+              v-if="itemTransport.title && isBalanceFee"
+              class="ma-0 pa-0 mt-1"
+            >
+              Game Item to be spent:
+              {{ itemTransport.title }}
             </p>
+
+            <div v-if="isBalanceFee">
+              <p class="mt-1">
+                Your balance:
+                <amount
+                  class="mr-1"
+                  :amount="userBalance"
+                  decimals="2"
+                  symbol="wGOLD"
+                  icon
+                />
+              </p>
+            </div>
+            <div v-else>
+              <p class="mt-1">
+                <v-alert outlined type="warning" border="left" dense>
+                  Your balance
+                  <amount
+                    class="mr-1"
+                    :amount="userBalance"
+                    decimals="2"
+                    symbol="wGOLD"
+                    icon
+                  />
+                  is less than the fee.
+                </v-alert>
+              </p>
+            </div>
           </v-col>
         </v-row>
       </div>
@@ -208,6 +219,8 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 import Convert from "@/lib/helpers/Convert";
 import NumberField from "@/lib/components/ui/Utils/NumberField";
+
+import { getCollectibles } from "@/data/Collectibles";
 
 import Collectibles from "@/lib/eth/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
@@ -264,6 +277,8 @@ export default {
       stepLilith: "wGOLD",
       wGOLDContract: {},
       collectiblesContract: {},
+      listItemsTransport: [27],
+      itemTransport: {},
     };
   },
 
@@ -305,8 +320,11 @@ export default {
       );
     },
 
-    isBalanceItem() {
-      return this.userAmount >= this.qty;
+    userAmountItem() {
+      if (this.listItemsTransport.indexOf(this.collectible.id) >= 0) {
+        return this.userAmount - 1;
+      }
+      return this.userAmount;
     },
   },
 
@@ -485,9 +503,18 @@ export default {
         const tranporterContract = await new Transporter(
           this.addresses.transporter
         );
+
         const getTransportationFee = await tranporterContract.getFeeAmount(
           this.account
         );
+        getTransportationFee.nftId = parseInt(getTransportationFee.nftId);
+
+        if (getTransportationFee.nftId) {
+          this.itemTransport = getCollectibles().find(
+            (collectible) => collectible.id === getTransportationFee.nftId
+          );
+        }
+
         this.transportationFee = getTransportationFee.currentFeeAmount;
 
         this.showInfo = false;
@@ -501,6 +528,7 @@ export default {
           this.initStateShowSendItem();
         }
       } catch (error) {
+        this.isLoadingShowInfo = false;
         return ToastSnackbar.error(error.toString());
       }
     },

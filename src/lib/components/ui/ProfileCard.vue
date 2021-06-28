@@ -49,7 +49,13 @@
               wGOLD
             </div>
             <div class="value">
-              <amount :amount="balance" decimals="2" compact tooltip />
+              <amount
+                v-if="isConnected"
+                :amount="balance"
+                decimals="2"
+                compact
+                tooltip
+              />
             </div>
 
             <v-img
@@ -84,6 +90,9 @@ export default {
   computed: {
     avatar() {
       return this.$store.getters["user/avatar"];
+    },
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
     },
   },
 

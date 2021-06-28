@@ -33,119 +33,76 @@
       </v-row>
     </v-container>
 
-    <v-container v-if="isConnected && !isLoading">
+    <v-container>
       <v-row>
-        <v-col cols="12" md="12" lg="6" class="d-none d-md-none d-lg-flex">
-          <div class="d-flex justify-start">
-            <wButton
-              class="mr-3 align-self-center"
-              @click="selectTroops = 'myTroops'"
-              :actived="selectTroops === 'myTroops'"
-            >
-              My Troops
-            </wButton>
-            <wButton
-              class="align-self-center"
-              @click="selectTroops = 'globalTroops'"
-              :actived="selectTroops === 'globalTroops'"
-            >
-              Global Troops
-            </wButton>
-          </div>
+        <v-col cols="12" lg="3">
+          <v-select
+            v-model="select.teams"
+            :items="filter.teamDesc"
+            label="Select teams"
+            multiple
+            chips
+            solo
+            @change="updateTroopFilters()"
+          >
+          </v-select>
         </v-col>
-        <v-col cols="12" md="6" lg="4">
-          <div class="d-flex justify-center justify-md-end my-n3 my-md-0">
-            <v-img
-              class="btn mr-3 align-self-center"
-              src="/images/wgold.png"
-              max-width="80"
-              max-height="80"
-            />
-            <div class="align-self-center">
-              <span class="label-current">
-                Current Price:
+        <v-col cols="12" lg="3">
+          <v-select
+            v-model="select.tiers"
+            :items="filter.tierDesc"
+            label="Select tier"
+            multiple
+            chips
+            solo
+            @change="updateTroopFilters()"
+          >
+          </v-select>
+        </v-col>
+        <v-col cols="12" lg="3">
+          <v-select
+            v-model="select.races"
+            :items="filter.raceDesc"
+            label="Select races"
+            multiple
+            chips
+            solo
+            @change="updateTroopFilters()"
+          >
+          </v-select>
+        </v-col>
+        <v-col cols="12" lg="3">
+          <v-select
+            v-model="select.names"
+            :items="filter.name"
+            label="Select trooper"
+            multiple
+            chips
+            solo
+            @change="updateTroopFilters()"
+          >
+            <template v-slot:selection="{ item, index }">
+              <v-chip v-if="index === 0">
+                <span>{{ item }}</span>
+              </v-chip>
+              <span v-if="index === 1" class="grey--text text-caption">
+                (+{{ select.names.length - 1 }} others)
               </span>
-              <div class="price-WGOLD" v-if="isConnected">
-                <amount :amount="priceWGOLD" decimals="3" />
-                <span class="suffix">BUSD</span>
-              </div>
-            </div>
-          </div>
-        </v-col>
-        <v-col
-          cols="12"
-          md="6"
-          lg="2"
-          class="d-flex justify-center justify-md-end"
-        >
-          <v-img
-            @click="goToSwap()"
-            class="btn cursor-pointer align-self-center"
-            width="237"
-            src="/images/buttons/btn-buy-wgold.png"
-          />
-        </v-col>
-      </v-row>
-
-      <v-row class="d-flex d-lg-none">
-        <v-col cols="12" md="6" class="d-flex justify-center mt-n3 mt-md-0">
-          <wButton
-            @click="selectTroops = 'myTroops'"
-            :actived="selectTroops === 'myTroops'"
-          >
-            My Troops
-          </wButton>
-        </v-col>
-
-        <v-col cols="12" md="6" class="d-flex justify-center mt-n3 mt-md-0">
-          <wButton
-            @click="selectTroops = 'globalTroops'"
-            :actived="selectTroops === 'globalTroops'"
-          >
-            Global Troops
-          </wButton>
+            </template>
+          </v-select>
         </v-col>
       </v-row>
     </v-container>
 
     <v-container v-if="isConnected && !isLoading">
       <v-row>
-        <v-col cols="12" lg="6">
-          <v-img
-            class="mb-3 mt-n3 mt-md-0"
-            width="318"
-            src="/images/corp.png"
-          />
-          <v-row>
-            <v-col
-              cols="12"
-              lg="6"
-              md="4"
-              v-for="trooper in troopsHumans"
-              v-bind:key="trooper.name"
-            >
-              <trooper :info="trooper" />
-            </v-col>
-          </v-row>
-        </v-col>
-
-        <v-col cols="12" lg="6">
-          <v-img
-            class="mb-3 mt-n3 mt-md-0"
-            width="318"
-            src="/images/degen.png"
-          />
-          <v-row>
-            <v-col
-              cols="12"
-              lg="6"
-              md="4"
-              v-for="trooper in troopsOrcs"
-              v-bind:key="trooper.name"
-            >
-              <trooper :info="trooper" />
-            </v-col>
-          </v-row>
+        <v-col
+          cols="12"
+          md="4"
+          v-for="trooper in filterTroops"
+          v-bind:key="trooper.name"
+        >
+          <trooper :info="trooper" />
         </v-col>
       </v-row>
     </v-container>
@@ -188,9 +145,21 @@ export default {
       itemsCount: 0,
       totalItems: 0,
       isLoading: true,
-      selectTroops: "myTroops",
-      myTroops: [],
-      gobalTroops: [],
+      select: {
+        teams: [],
+        tiers: [],
+        races: [],
+        names: [],
+      },
+      filter: {
+        teamDesc: [],
+        tierDesc: [],
+        raceDesc: [],
+        name: [],
+      },
+      teams: ["The Corporation", "The Degenerate"],
+      globalTroops: [],
+      filterTroops: [],
     };
   },
 
@@ -214,18 +183,6 @@ export default {
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
-
-    troopsHumans() {
-      return this.selectTroops === "myTroops"
-        ? this.myTroops.filter((trooper) => trooper.team === 1)
-        : this.gobalTroops.filter((trooper) => trooper.team === 1);
-    },
-
-    troopsOrcs() {
-      return this.selectTroops === "myTroops"
-        ? this.myTroops.filter((trooper) => trooper.team === 2)
-        : this.gobalTroops.filter((trooper) => trooper.team === 2);
-    },
   },
 
   watch: {
@@ -237,9 +194,9 @@ export default {
       this.loadData();
     },
 
-    currentBlockNumber() {
-      this.loadData();
-    },
+    // currentBlockNumber() {
+    //   this.loadData();
+    // },
   },
 
   mounted() {
@@ -258,13 +215,15 @@ export default {
 
       try {
         const contractwGOLD = new wGOLD(this.addresses.wGOLD);
-        this.balance = web3.utils.fromWei(await contractwGOLD.balanceOf(this.account));
+        this.balance = web3.utils.fromWei(
+          await contractwGOLD.balanceOf(this.account)
+        );
         this.balanceFED = await contractwGOLD.balanceOf(this.addresses.FED);
         this.priceWGOLD = await contractwGOLD.priceWGOLD(this.networkInfo.id);
 
         const troops = getTroops();
 
-        this.gobalTroops = await Promise.all(
+        this.globalTroops = await Promise.all(
           troops.map((trooper) => {
             return new Promise(async (resolve) => {
               try {
@@ -273,27 +232,30 @@ export default {
                     name: trooper.name,
                     team: trooper.team,
                     tier: trooper.tier,
-                    qtyAccount: "0",
-                    qtyGlobal: "0",
+                    myQty: "0",
+                    globalQty: "0",
                     priceWGOLD: "0",
                     disabled: true,
                   });
                 }
-                const getTropper = new Troops(trooper.contractAddress[this.networkInfo.id]);
-                const qtyAccount = await getTropper.balanceOf(this.account);
-                const qtyGlobal = await getTropper.totalSupply();
+                const getTropper = new Troops(
+                  trooper.contractAddress[this.networkInfo.id]
+                );
+                const myQty = await getTropper.balanceOf(this.account);
+                const globalQty = await getTropper.totalSupply();
                 const priceWGOLD = await getTropper.priceWGOLD(
                   trooper.lpAddresses,
                   this.networkInfo.id
                 );
+
                 resolve({
-                  name: trooper.name,
-                  team: trooper.team,
-                  tier: trooper.tier,
-                  qtyAccount: qtyAccount,
-                  qtyGlobal: qtyGlobal,
-                  priceWGOLD: priceWGOLD,
-                  disabled: false,
+                  ...trooper,
+                  ...{
+                    myQty: myQty,
+                    globalQty: globalQty,
+                    priceWGOLD: priceWGOLD,
+                    disabled: false,
+                  },
                 });
               } catch (error) {
                 console.log(error);
@@ -302,18 +264,99 @@ export default {
           })
         );
 
-        this.myTroops = this.gobalTroops.map((trooper) => {
-          return { ...trooper, ...{ qty: trooper.qtyAccount } };
+        this.globalTroops = this.globalTroops.map((trooper) => {
+          return {
+            ...trooper,
+            ...{ globalQty: trooper.globalQty, myQty: trooper.myQty },
+          };
         });
 
-        this.gobalTroops = this.gobalTroops.map((trooper) => {
-          return { ...trooper, ...{ qty: trooper.qtyGlobal } };
-        });
-      } catch (e) {
-        console.log(e);
+        this.filterTroops = this.globalTroops;
+        this.updateSelectFilters();
+      } catch (error) {
+        console.log(error);
       } finally {
         this.isLoading = false;
       }
+    },
+
+    updateSelectFilters() {
+      const filterSelect = {
+        raceDesc: [],
+        name: [],
+      };
+      const filterGlobal = {
+        teamDesc: [],
+        tierDesc: [],
+      };
+      const filterRaces = this.globalTroops.filter((trooper) => {
+        if (!this.select.teams.length) {
+          return trooper;
+        }
+        return this.select.teams.indexOf(trooper.teamDesc) !== -1;
+      });
+      filterRaces.map((trooper) => {
+        if (filterSelect.raceDesc.indexOf(trooper.raceDesc) === -1) {
+          filterSelect.raceDesc.push(trooper.raceDesc);
+        }
+      });
+      const filterNames = filterRaces.filter((trooper) => {
+        if (
+          this.select.tiers.length &&
+          this.select.tiers.indexOf(trooper.tierDesc) !== -1 &&
+          this.select.races.length &&
+          this.select.races.indexOf(trooper.raceDesc) !== -1
+        ) {
+          return trooper;
+        } else if (this.select.tiers.length && !this.select.races.length) {
+          return this.select.tiers.indexOf(trooper.tierDesc) !== -1;
+        } else if (!this.select.tiers.length && this.select.races.length) {
+          return this.select.races.indexOf(trooper.raceDesc) !== -1;
+        } else if (!this.select.tiers.length && !this.select.races.length) {
+          return trooper;
+        }
+      });
+      filterNames.map((trooper) => {
+        if (filterSelect.name.indexOf(trooper.name) === -1) {
+          filterSelect.name.push(trooper.name);
+        }
+      });
+      this.globalTroops.map((trooper) => {
+        for (const filter in filterGlobal) {
+          if (filterGlobal[filter].indexOf(trooper[filter]) === -1) {
+            filterGlobal[filter].push(trooper[filter]);
+          }
+        }
+      });
+      this.filter = { ...filterGlobal, ...filterSelect };
+    },
+
+    async updateTroopFilters() {
+      this.filterTroops = this.globalTroops.filter((trooper) => {
+        if (!this.select.teams.length) {
+          return trooper;
+        }
+        return this.select.teams.indexOf(trooper.teamDesc) !== -1;
+      });
+      this.filterTroops = this.filterTroops.filter((trooper) => {
+        if (!this.select.tiers.length) {
+          return trooper;
+        }
+        return this.select.tiers.indexOf(trooper.tierDesc) !== -1;
+      });
+      this.filterTroops = this.filterTroops.filter((trooper) => {
+        if (!this.select.races.length) {
+          return trooper;
+        }
+        return this.select.races.indexOf(trooper.raceDesc) !== -1;
+      });
+      this.filterTroops = this.filterTroops.filter((trooper) => {
+        if (!this.select.names.length) {
+          return trooper;
+        }
+        return this.select.names.indexOf(trooper.name) !== -1;
+      });
+      this.updateSelectFilters();
     },
   },
 };
