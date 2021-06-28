@@ -6,9 +6,13 @@
       </div>
       <div class="ml-1 align-self-center">
         <div class="stats mt-6">Stats</div>
+        <div class="qty">
+          GLOBAL QTY:
+          <amount :amount="info.globalQty" decimals="2" compact />
+        </div>
         <div class="qty mb-3">
-          QTY:
-          <amount :amount="info.qty" decimals="2" compact />
+          MY QTY:
+          <amount :amount="info.myQty" decimals="2" compact />
         </div>
         <div class="current-price">Current Price:</div>
         <div class="d-flex justify-start">

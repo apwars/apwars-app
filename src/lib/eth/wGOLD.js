@@ -48,7 +48,6 @@ export default class wGOLD {
 
       return Convert.toWei(result);
     } catch (error) {
-      console.log(error);
       return "0";
     }
   }
