@@ -33,7 +33,7 @@
       </v-row>
     </v-container>
 
-    <v-container>
+    <v-container v-if="isConnected && !isLoading">
       <v-row>
         <v-col cols="12" lg="3">
           <v-select
@@ -194,9 +194,9 @@ export default {
       this.loadData();
     },
 
-    // currentBlockNumber() {
-    //   this.loadData();
-    // },
+    currentBlockNumber() {
+      this.loadData();
+    },
   },
 
   mounted() {
