@@ -222,7 +222,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x016a5FB7678Bc5d2d87430fb01376c13c9d82a3f",
-        "97": "0x5A7483ae442c0867aC2206ad9477B2A06fBBBaE2",
+        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
       },
       image: "/images/troops/wHOUND.png",
       strength: 8,
