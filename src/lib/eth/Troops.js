@@ -35,15 +35,19 @@ export default class Troops {
   }
 
   async priceWGOLD(account) {
-    const wGOLD = new window.web3.eth.Contract(
-      APWarsTroops,
-      Addresss.wGOLD[56]
-    );
-    const balanceOfwGOLD = await wGOLD.methods.balanceOf(account).call();
-    const balanceOfTrooper = await this.balanceOf(account);
-
-    const result = new BigNumber(balanceOfwGOLD).dividedBy(balanceOfTrooper);
-
-    return Convert.toWei(result);
+    try {
+      const wGOLD = new window.web3.eth.Contract(
+        APWarsTroops,
+        Addresss.wGOLD[56]
+      );
+      const balanceOfwGOLD = await wGOLD.methods.balanceOf(account).call();
+      const balanceOfTrooper = await this.balanceOf(account);
+  
+      const result = new BigNumber(balanceOfwGOLD).dividedBy(balanceOfTrooper);
+  
+      return Convert.toWei(result);
+    } catch (error) {
+      return "0";
+    }
   }
 }

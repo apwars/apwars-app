@@ -33,18 +33,22 @@ export default class wGOLD {
     return bn.gt(0);
   }
 
-  async priceWGOLD() {
-    const busd = new window.web3.eth.Contract(
-      APWarsGoldToken,
-      Addresss.BUSD[56]
-    );
-    const balanceOfUSD = await busd.methods
-      .balanceOf(Addresss.wGOLD_BUSD_LP[56])
-      .call();
-    const balanceOfWgold = await this.balanceOf(Addresss.wGOLD_BUSD_LP[56]);
+  async priceWGOLD(networkId) {
+    try {
+      const busd = new window.web3.eth.Contract(
+        APWarsGoldToken,
+        Addresss.BUSD[networkId]
+      );
+      const balanceOfUSD = await busd.methods
+        .balanceOf(Addresss.wGOLD_BUSD_LP[networkId])
+        .call();
+      const balanceOfWgold = await this.balanceOf(Addresss.wGOLD_BUSD_LP[networkId]);
 
-    const result = new BigNumber(balanceOfUSD).dividedBy(balanceOfWgold);
+      const result = new BigNumber(balanceOfUSD).dividedBy(balanceOfWgold);
 
-    return Convert.toWei(result);
+      return Convert.toWei(result);
+    } catch (error) {
+      return "0";
+    }
   }
 }

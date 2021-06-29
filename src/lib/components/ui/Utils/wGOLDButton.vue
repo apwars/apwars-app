@@ -7,7 +7,8 @@
         src="/images/buttons/btn-wgold.png"
       />
       <span class="amount-wGOLD">
-        <amount :amount="amount" decimals="2" compact />
+        <amount :amount="amount" decimals="2" compact           
+            tooltip />
         <span class="suffix">wGOLD</span>
       </span>
     </div>
