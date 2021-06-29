@@ -39,7 +39,7 @@
           <v-select
             v-model="select.teams"
             :items="filter.teamDesc"
-            label="Select teams"
+            label="Select Factions"
             multiple
             chips
             solo
@@ -51,7 +51,7 @@
           <v-select
             v-model="select.tiers"
             :items="filter.tierDesc"
-            label="Select tier"
+            label="Select Tier"
             multiple
             chips
             solo
@@ -63,7 +63,7 @@
           <v-select
             v-model="select.races"
             :items="filter.raceDesc"
-            label="Select races"
+            label="Select Races"
             multiple
             chips
             solo
@@ -75,7 +75,7 @@
           <v-select
             v-model="select.names"
             :items="filter.name"
-            label="Select trooper"
+            label="Select Units"
             multiple
             chips
             solo
@@ -92,10 +92,30 @@
           </v-select>
         </v-col>
       </v-row>
+      <v-row dense>
+        <v-col class="py-0 my-0" cols="12">
+          <div class="d-flex align-center">
+            <wButton @click="clearFilters()" class="mr-3">
+              <div class="d-flex justify-center">
+                <v-icon class="mx-1">
+                  mdi-minus-circle
+                </v-icon>
+                <small class="align-self-center">Clear filter</small>
+              </div>
+            </wButton>
+            <v-checkbox
+              v-model="showMyUnits"
+              @change="updateTroopFilters()"
+              label="Show only my units"
+              color="primary"
+            ></v-checkbox>
+          </div>
+        </v-col>
+      </v-row>
     </v-container>
 
     <v-container v-if="isConnected && !isLoading">
-      <v-row>
+      <v-row v-if="filterTroops.length > 0">
         <v-col
           cols="12"
           md="4"
@@ -103,6 +123,11 @@
           v-bind:key="trooper.name"
         >
           <trooper :info="trooper" />
+        </v-col>
+      </v-row>
+      <v-row v-else>
+        <v-col cols="12">
+          <h1 class="text-center">No data available</h1>
         </v-col>
       </v-row>
     </v-container>
@@ -137,6 +162,7 @@ export default {
 
   data() {
     return {
+      showMyUnits: false,
       balance: 0,
       balanceFED: 0,
       priceWGOLD: 0,
@@ -272,7 +298,7 @@ export default {
         });
 
         this.filterTroops = this.globalTroops;
-        this.updateSelectFilters();
+        this.updateTroopFilters();
       } catch (error) {
         console.log(error);
       } finally {
@@ -356,7 +382,23 @@ export default {
         }
         return this.select.names.indexOf(trooper.name) !== -1;
       });
+
+      if (this.showMyUnits) {
+        this.filterTroops = this.filterTroops.filter((trooper) => {
+          return trooper.myQty != "0";
+        });
+      }
       this.updateSelectFilters();
+    },
+
+    clearFilters() {
+      this.select = {
+        teams: [],
+        tiers: [],
+        races: [],
+        names: [],
+      };
+      this.updateTroopFilters();
     },
   },
 };
