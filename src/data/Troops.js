@@ -7,7 +7,7 @@ export function getTroops() {
       race: 1,
       raceDesc: 'Humans',
       tier: 1,
-      tierDesc: 'Tier 1',
+      tierDesc: 'Barracks',
       name: "wWARRIOR",
       lpAddresses: "0x6CABE6C94DC8BC63F8b71BBA7B2ed3381B1fe6e9",
       contractAddress: {
@@ -26,7 +26,7 @@ export function getTroops() {
       race: 1,
       raceDesc: 'Humans',
       tier: 1,
-      tierDesc: 'Tier 1',
+      tierDesc: 'Barracks',
       name: "wARCHER",
       lpAddresses: "0x764A521590ebd2686cC629E47f3464E8fD53b0F0",
       contractAddress: {
@@ -45,7 +45,7 @@ export function getTroops() {
       race: 1,
       raceDesc: 'Humans',
       tier: 2,
-      tierDesc: 'Tier 2',
+      tierDesc: 'Armory',
       name: "wARMORED-WARRIOR",
       lpAddresses: "0xcb7a7E4257ABC87745B40B5b51B82FFFBAa087A0",
       contractAddress: {
@@ -64,7 +64,7 @@ export function getTroops() {
       race: 1,
       raceDesc: 'Humans',
       tier: 2,
-      tierDesc: 'Tier 2',
+      tierDesc: 'Armory',
       name: "wCROSSBOWMAN",
       lpAddresses: "0xEd5D84185d0BB1d9fEAF7b59F38220Fc26F4FDD0",
       contractAddress: {
@@ -83,7 +83,7 @@ export function getTroops() {
       race: 1,
       raceDesc: 'Humans',
       tier: 3,
-      tierDesc: 'Tier 3',
+      tierDesc: 'Arcane Library',
       name: "wWIZARD",
       lpAddresses: "0x651E5fE33a17f39E65c94A4e4D6AA220C33C9b2B",
       contractAddress: {
@@ -102,7 +102,7 @@ export function getTroops() {
       race: 2,
       raceDesc: 'Orcs',
       tier: 1,
-      tierDesc: 'Tier 1',
+      tierDesc: 'Barracks',
       name: "wGRUNT",
       lpAddresses: "0x8C58f3aEe4924D0Ab0a8e0Ee680a6611296573FF",
       contractAddress: {
@@ -121,7 +121,7 @@ export function getTroops() {
       race: 2,
       raceDesc: 'Orcs',
       tier: 1,
-      tierDesc: 'Tier 1',
+      tierDesc: 'Barracks',
       name: "wORC-ARCHER",
       lpAddresses: "0x9e15154b80a68191E2D5C4B220a24bd99a422DeE",
       contractAddress: {
@@ -140,7 +140,7 @@ export function getTroops() {
       race: 2,
       raceDesc: 'Orcs',
       tier: 2,
-      tierDesc: 'Tier 2',
+      tierDesc: 'Armory',
       name: "wARMORED-GRUNT",
       lpAddresses: "0xc0749fA16072c377B786213aCa2837D4Aa203c8A",
       contractAddress: {
@@ -159,7 +159,7 @@ export function getTroops() {
       race: 2,
       raceDesc: 'Orcs',
       tier: 2,
-      tierDesc: 'Tier 2',
+      tierDesc: 'Armory',
       name: "wPIKE-ORC",
       lpAddresses: "0xC3Bc2A25C100fEf3A38f99543f89dCE330ceaBa0",
       contractAddress: {
@@ -178,7 +178,7 @@ export function getTroops() {
       race: 2,
       raceDesc: 'Orcs',
       tier: 3,
-      tierDesc: 'Tier 3',
+      tierDesc: 'Arcane Library',
       name: "wSHAMAN",
       lpAddresses: "0xA6Ab5C50F7db14b96d03e64AE3fe3B0041f6aE0C",
       contractAddress: {
@@ -189,44 +189,6 @@ export function getTroops() {
       image: "/images/troops/wSHAMAN.png",
       strength: 0,
       defense: 0,
-    },
-    {
-      id: 10,
-      team: 2,
-      teamDesc: 'The Genererate',
-      race: 3,
-      raceDesc: 'Undead',
-      tier: 1,
-      tierDesc: 'Tier 1',
-      name: "wSKELETONWARRIOR",
-      lpAddresses: "0x3ca13bafe9908bb693a4398410d4fcc2de16573a",
-      contractAddress: {
-        "5777": "",
-        "56": "0x269431eFE57e235e959f5D6Cc4DBfA5F570CAE33",
-        "97": "0x2C0018Bd7a4418287B03f4917E936A990605A5f3",
-      },
-      image: "/images/troops/wSKELETONWARRIOR.png",
-      strength: 8,
-      defense: 2,
-    },
-    {
-      id: 11,
-      team: 2,
-      teamDesc: 'The Genererate',
-      race: 3,
-      raceDesc: 'Undead',
-      tier: 1,
-      tierDesc: 'Tier 1',
-      name: "wHOUND",
-      lpAddresses: "0xaa8e2ac94c7508d8151d9665a59ec18c1cba1529",
-      contractAddress: {
-        "5777": "",
-        "56": "0x016a5FB7678Bc5d2d87430fb01376c13c9d82a3f",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
-      },
-      image: "/images/troops/wHOUND.png",
-      strength: 8,
-      defense: 2,
     },
   ];
 }
