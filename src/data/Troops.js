@@ -197,7 +197,7 @@ export function getTroops() {
       race: 3,
       raceDesc: 'Undead',
       tier: 1,
-      tierDesc: 'Tier 1',
+      tierDesc: 'Barracks',
       name: "wSKELETONWARRIOR",
       lpAddresses: "0xf101954d51ffc12640b006e9c951ffebbd6b7259",
       contractAddress: {
@@ -216,7 +216,7 @@ export function getTroops() {
       race: 3,
       raceDesc: 'Undead',
       tier: 1,
-      tierDesc: 'Tier 1',
+      tierDesc: 'Barracks',
       name: "wHOUND",
       lpAddresses: "0xe8eae2eac9e1d87932c4e94303894ac28304ee23",
       contractAddress: {
@@ -235,7 +235,7 @@ export function getTroops() {
       race: 3,
       raceDesc: 'Undead',
       tier: 2,
-      tierDesc: 'Tier 2',
+      tierDesc: 'Armory',
       name: "wUNDEAD-ARCHER",
       lpAddresses: "0xdf9aff48816e5e9930b050b7ab8ec2de04db2772",
       contractAddress: {
@@ -248,13 +248,13 @@ export function getTroops() {
       defense: 8,
     },
     {
-      id: 12,
+      id: 13,
       team: 2,
       teamDesc: 'The Genererate',
       race: 3,
       raceDesc: 'Undead',
       tier: 2,
-      tierDesc: 'Tier 2',
+      tierDesc: 'Armory',
       name: "wUNDEAD-PIKEMAN",
       lpAddresses: "0x9e102025a7f643955cc881d2211dccb5ff71a6fc",
       contractAddress: {
