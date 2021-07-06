@@ -256,10 +256,10 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wUNDEAD-PIKEMAN",
-      lpAddresses: "0x9e102025a7f643955cc881d2211dccb5ff71a6fc",
+      lpAddresses: "0xD6406A6b247436bbc07a5B021740746c0dc1081d",
       contractAddress: {
         "5777": "",
-        "56": "0x70cAa78CdDf1A372EF213adA87141180DFAf54CB",
+        "56": "0x8b394cfAeBA9812801C92388570C95208Ad1300D",
         "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
       },
       image: "/images/troops/wUNDEAD-PIKEMAN.png",
