@@ -98,7 +98,7 @@ export function getTroops() {
     {
       id: 5,
       team: 2,
-      teamDesc: 'The Genererate',
+      teamDesc: 'The Degenerate',
       race: 2,
       raceDesc: 'Orcs',
       tier: 1,
@@ -117,7 +117,7 @@ export function getTroops() {
     {
       id: 6,
       team: 2,
-      teamDesc: 'The Genererate',
+      teamDesc: 'The Degenerate',
       race: 2,
       raceDesc: 'Orcs',
       tier: 1,
@@ -136,7 +136,7 @@ export function getTroops() {
     {
       id: 7,
       team: 2,
-      teamDesc: 'The Genererate',
+      teamDesc: 'The Degenerate',
       race: 2,
       raceDesc: 'Orcs',
       tier: 2,
@@ -155,7 +155,7 @@ export function getTroops() {
     {
       id: 8,
       team: 2,
-      teamDesc: 'The Genererate',
+      teamDesc: 'The Degenerate',
       race: 2,
       raceDesc: 'Orcs',
       tier: 2,
@@ -174,7 +174,7 @@ export function getTroops() {
     {
       id: 9,
       team: 2,
-      teamDesc: 'The Genererate',
+      teamDesc: 'The Degenerate',
       race: 2,
       raceDesc: 'Orcs',
       tier: 3,
@@ -193,7 +193,7 @@ export function getTroops() {
     {
       id: 10,
       team: 2,
-      teamDesc: 'The Genererate',
+      teamDesc: 'The Degenerate',
       race: 3,
       raceDesc: 'Undead',
       tier: 1,
@@ -212,7 +212,7 @@ export function getTroops() {
     {
       id: 11,
       team: 2,
-      teamDesc: 'The Genererate',
+      teamDesc: 'The Degenerate',
       race: 3,
       raceDesc: 'Undead',
       tier: 1,
@@ -231,7 +231,7 @@ export function getTroops() {
     {
       id: 12,
       team: 2,
-      teamDesc: 'The Genererate',
+      teamDesc: 'The Degenerate',
       race: 3,
       raceDesc: 'Undead',
       tier: 2,
@@ -250,7 +250,7 @@ export function getTroops() {
     {
       id: 13,
       team: 2,
-      teamDesc: 'The Genererate',
+      teamDesc: 'The Degenerate',
       race: 3,
       raceDesc: 'Undead',
       tier: 2,
