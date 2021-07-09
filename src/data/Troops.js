@@ -266,5 +266,24 @@ export function getTroops() {
       strength: 22,
       defense: 22,
     },
+    {
+      id: 14,
+      team: 2,
+      teamDesc: 'The Degenerate',
+      race: 3,
+      raceDesc: 'Undead',
+      tier: 3,
+      tierDesc: 'Arcane Library',
+      name: "wWITCH",
+      lpAddresses: "0xc706987bfe6a81de045480772786c8d945d52b56",
+      contractAddress: {
+        "5777": "",
+        "56": "0x2a63DDDD2c0ba10F465080a06563aF3acb5d1d3c",
+        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+      },
+      image: "/images/troops/wWITCH.png",
+      strength: 70,
+      defense: 20,
+    },
   ];
 }
