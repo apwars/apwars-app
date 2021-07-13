@@ -1,41 +1,6 @@
 <template>
   <div>
-    <v-container>
-      <v-row>
-        <v-col cols="12" class="my-0">
-          <v-img
-            class="mx-auto"
-            width="550"
-            src="/images/treasury/title-fed-treasury.png"
-          />
-        </v-col>
-      </v-row>
-
-      <v-row class="mt-n3">
-        <v-col cols="12">
-          <v-img
-            class="mx-auto"
-            width="550"
-            src="/images/treasury/fed-treasury.png"
-          />
-        </v-col>
-      </v-row>
-
-      <v-row class="amount-fed">
-        <v-col cols="12">
-          <wGOLD-button
-            v-if="isConnected"
-            class="mx-auto"
-            :amount="balanceFED"
-            :size="$vuetify.breakpoint.name === 'xs' ? 'small' : 'medium'"
-          ></wGOLD-button>
-        </v-col>
-      </v-row>
-    </v-container>
-
-    <list-units></list-units>
-
-    <!-- <v-container v-if="isConnected && !isLoading">
+    <v-container v-if="isConnected && !isLoading">
       <v-row>
         <v-col cols="12" lg="3">
           <v-select
@@ -140,7 +105,7 @@
           <h3 class="text-h3">Loading...</h3>
         </v-col>
       </v-row>
-    </v-container> -->
+    </v-container>
   </div>
 </template>
 
@@ -149,7 +114,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Trooper from "@/lib/components/ui/Utils/Trooper";
-import ListUnits from "@/lib/components/ui/Lists/ListUnits";
+import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
@@ -161,19 +126,16 @@ export default {
     Amount,
     wButton,
     Trooper,
-    ListUnits,
+    StakeTrooper,
   },
+
+  props: ['type'],
 
   data() {
     return {
       showMyUnits: false,
       balance: 0,
-      balanceFED: 0,
       pricewGOLD: 0,
-      collectibles: [],
-      balances: [],
-      itemsCount: 0,
-      totalItems: 0,
       isLoading: true,
       select: {
         teams: [],
@@ -248,7 +210,6 @@ export default {
         this.balance = web3.utils.fromWei(
           await contractwGOLD.balanceOf(this.account)
         );
-        this.balanceFED = await contractwGOLD.balanceOf(this.addresses.FED);
         this.pricewGOLD = await contractwGOLD.pricewGOLD(this.networkInfo.id);
 
         const troops = getTroops();
