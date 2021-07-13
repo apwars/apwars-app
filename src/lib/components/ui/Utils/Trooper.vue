@@ -7,16 +7,16 @@
       <div class="ml-1 align-self-center">
         <div class="stats mt-6">Stats</div>
         <div class="qty">
-          GLOBAL QTY:
+          Global Qty:
           <amount :amount="info.globalQty" decimals="2" compact />
         </div>
         <div class="qty mb-3">
-          MY QTY:
+          My Qty:
           <amount :amount="info.myQty" decimals="2" compact />
         </div>
         <div class="current-price">Current Price:</div>
         <div class="d-flex justify-start">
-          <v-img
+          <img
             class="btn mr-1 align-self-center"
             src="/images/wgold.png"
             width="38"
@@ -40,11 +40,13 @@
 
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 
 export default {
   props: ["info"],
   components: {
     Amount,
+    wButton,
   },
 };
 </script>
@@ -58,6 +60,7 @@ export default {
   color: #ffb800;
   font-weight: bold;
   font-size: 16px;
+  text-transform: uppercase;
 }
 .current-price {
   font-weight: bold;

@@ -69,34 +69,18 @@
               title="The enlistment ends in"
               @end="loadData"
             ></countdown>
-            <h2 class="text-h2 text-wGOLD text-center mt-2">Troops</h2>
+            <h2 class="text-h2 text-wGOLD text-center mt-2">Units</h2>
           </v-col>
         </v-row>
 
         <v-row v-if="isConnected && !isLoading && isEnlistment">
-          <v-col cols="12" lg="6" class="dividing-line">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center"
-                v-for="trooper in teamA"
-                v-bind:key="trooper.name"
-              >
-                <stake-trooper :trooper="trooper" :contract-war="contractWar" />
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center"
-                v-for="trooper in teamB"
-                v-bind:key="trooper.name"
-              >
-                <stake-trooper :trooper="trooper" :contract-war="contractWar" />
-              </v-col>
-            </v-row>
+          <v-col
+            cols="4"
+            class="d-flex justify-center"
+            v-for="trooper in globalTroops"
+            v-bind:key="trooper.name"
+          >
+            <stake-trooper :trooper="trooper" :contract-war="contractWar" />
           </v-col>
         </v-row>
 
@@ -309,6 +293,38 @@ export default {
   display: none;
 }
 
+.stats {
+  font-weight: bold;
+  font-size: 28px;
+}
+.qty {
+  color: #ffb800;
+  font-weight: bold;
+  font-size: 16px;
+}
+.current-price {
+  font-weight: bold;
+  font-size: 18px;
+}
+.price-wgold {
+  font-weight: bold;
+  font-size: 16px;
+  color: #f6ff00;
+}
+.disabled {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
+@media only screen and (max-width: 1920px) {
+  .qty {
+    font-size: 14px;
+  }
+  .current-price {
+    font-size: 14px;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .gradient {
     display: none;
@@ -320,3 +336,4 @@ export default {
   }
 }
 </style>
+
