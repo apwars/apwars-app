@@ -194,7 +194,7 @@ export default {
       prize: {},
       isLoading: true,
       myTroops: [],
-      priceWGOLD: 0,
+      pricewGOLD: 0,
       balance: 0,
       globalTroops: [],
       warMachine: {},

@@ -1,39 +1,116 @@
 <template>
   <div>
-    <v-container>
+    <v-container v-if="isConnected && !isLoading">
       <v-row>
-        <v-col cols="12" class="my-0">
-          <v-img
-            class="mx-auto"
-            width="550"
-            src="/images/treasury/title-fed-treasury.png"
-          />
+        <v-col cols="12" lg="3">
+          <v-select
+            v-model="select.teams"
+            :items="filter.teamDesc"
+            label="Select Factions"
+            multiple
+            chips
+            solo
+            @change="updateTroopFilters()"
+          >
+          </v-select>
+        </v-col>
+        <v-col cols="12" lg="3">
+          <v-select
+            v-model="select.tiers"
+            :items="filter.tierDesc"
+            label="Select Tier"
+            multiple
+            chips
+            solo
+            @change="updateTroopFilters()"
+          >
+          </v-select>
+        </v-col>
+        <v-col cols="12" lg="3">
+          <v-select
+            v-model="select.races"
+            :items="filter.raceDesc"
+            label="Select Races"
+            multiple
+            chips
+            solo
+            @change="updateTroopFilters()"
+          >
+          </v-select>
+        </v-col>
+        <v-col cols="12" lg="3">
+          <v-select
+            v-model="select.names"
+            :items="filter.name"
+            label="Select Units"
+            multiple
+            chips
+            solo
+            @change="updateTroopFilters()"
+          >
+            <template v-slot:selection="{ item, index }">
+              <v-chip v-if="index === 0">
+                <span>{{ item }}</span>
+              </v-chip>
+              <span v-if="index === 1" class="grey--text text-caption">
+                (+{{ select.names.length - 1 }} others)
+              </span>
+            </template>
+          </v-select>
         </v-col>
       </v-row>
-
-      <v-row class="mt-n3">
-        <v-col cols="12">
-          <v-img
-            class="mx-auto"
-            width="550"
-            src="/images/treasury/fed-treasury.png"
-          />
-        </v-col>
-      </v-row>
-
-      <v-row class="amount-fed">
-        <v-col cols="12">
-          <wGOLD-button
-            v-if="isConnected"
-            class="mx-auto"
-            :amount="balanceFED"
-            :size="$vuetify.breakpoint.name === 'xs' ? 'small' : 'medium'"
-          ></wGOLD-button>
+      <v-row dense>
+        <v-col class="py-0 my-0" cols="12">
+          <div class="d-flex align-center">
+            <wButton @click="clearFilters()" class="mr-3">
+              <div class="d-flex justify-center">
+                <v-icon class="mx-1">
+                  mdi-minus-circle
+                </v-icon>
+                <small class="align-self-center">Clear filter</small>
+              </div>
+            </wButton>
+            <v-checkbox
+              v-model="showMyUnits"
+              @change="updateTroopFilters()"
+              label="Show only my units"
+              color="primary"
+            ></v-checkbox>
+          </div>
         </v-col>
       </v-row>
     </v-container>
 
-    <list-units></list-units>
+    <v-container v-if="isConnected && !isLoading">
+      <v-row v-if="filterTroops.length > 0">
+        <v-col
+          cols="12"
+          md="4"
+          v-for="trooper in filterTroops"
+          v-bind:key="trooper.name"
+        >
+          <trooper v-if="getType === 'trooper'" :info="trooper" />
+          <stake-trooper
+            v-else-if="getType === 'enlistment'"
+            :trooper="trooper"
+            :contract-war="contractWar"
+          />
+        </v-col>
+      </v-row>
+      <v-row v-else>
+        <v-col cols="12">
+          <h1 class="text-center">No data available</h1>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-container v-if="isLoading">
+      <v-row>
+        <v-col cols="12" class="text-center ma-6 ma-sm-0">
+          <h3 class="text-h3">Loading...</h3>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -42,7 +119,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Trooper from "@/lib/components/ui/Utils/Trooper";
-import ListUnits from "@/lib/components/ui/Lists/ListUnits";
+import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
@@ -54,19 +131,16 @@ export default {
     Amount,
     wButton,
     Trooper,
-    ListUnits,
+    StakeTrooper,
   },
+
+  props: ["type", "contractWar"],
 
   data() {
     return {
       showMyUnits: false,
       balance: 0,
-      balanceFED: 0,
       pricewGOLD: 0,
-      collectibles: [],
-      balances: [],
-      itemsCount: 0,
-      totalItems: 0,
       isLoading: true,
       select: {
         teams: [],
@@ -106,6 +180,21 @@ export default {
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
+
+    getType() {
+      switch (this.type) {
+        case "trooper":
+          return this.type;
+        case "enlistment":
+          return this.type;
+        case "bring-home":
+          return this.type;
+        case "report-trooper":
+          return this.type;
+        default:
+          return "trooper";
+      }
+    },
   },
 
   watch: {
@@ -141,7 +230,6 @@ export default {
         this.balance = web3.utils.fromWei(
           await contractwGOLD.balanceOf(this.account)
         );
-        this.balanceFED = await contractwGOLD.balanceOf(this.addresses.FED);
         this.pricewGOLD = await contractwGOLD.pricewGOLD(this.networkInfo.id);
 
         const troops = getTroops();
