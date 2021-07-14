@@ -151,7 +151,7 @@ export default {
     ReportTrooper,
   },
 
-  props: ["type", "contractWar"],
+  props: ["type", "contractWar", "onlyShow"],
 
   data() {
     return {
@@ -171,7 +171,7 @@ export default {
         raceDesc: [],
         name: [],
       },
-      teams: ["The Corporation", "The Degenerate"],
+      teams: [],
       globalTroops: [],
       filterTroops: [],
     };
@@ -249,7 +249,15 @@ export default {
         );
         this.pricewGOLD = await contractwGOLD.pricewGOLD(this.networkInfo.id);
 
-        const troops = getTroops();
+        let troops = getTroops();
+
+        if(this.onlyShow) {
+          for(let filter in this.onlyShow) {
+            troops = troops.filter(trooper => {
+              return this.onlyShow[filter].indexOf(trooper[filter]) !== -1;
+            });
+          }
+        }
 
         this.globalTroops = await Promise.all(
           troops.map((trooper) => {

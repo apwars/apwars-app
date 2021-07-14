@@ -129,20 +129,16 @@
           </v-col>
         </v-row>
       </v-container>
-
-      <v-container>
-        <v-row v-if="isConnected && !isLoading">
-          <v-col
-            cols="12"
-            lg="6"
-            class="d-flex justify-center"
-            v-for="trooper in teamWinner"
-            v-bind:key="trooper.name"
-          >
-            <report-trooper :trooper="trooper" :contract-war="contractWar" />
-          </v-col>
-        </v-row>
-      </v-container>
+      
+      <list-units
+        class="my-3"
+        v-if="isConnected && !isLoading"
+        type="report-trooper"
+        :contract-war="contractWar"
+        :only-show="{
+          team: [teamWinner],
+        }"
+      ></list-units>
     </div>
     <div v-else-if="isConnected && !isLoading">
       <div class="bg-fed">
@@ -177,6 +173,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
 import WarMachine from "@/lib/eth/WarMachine";
+import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -187,6 +184,7 @@ export default {
     Amount,
     wButton,
     ReportTrooper,
+    ListUnits,
   },
 
   data() {
@@ -227,9 +225,8 @@ export default {
     },
 
     teamWinner() {
-      return this.globalTroops.filter(
-        (trooper) => trooper.team === parseInt(this.warStats.winner)
-      );
+      if (!this.warStats.winner) return -1;
+      return parseInt(this.warStats.winner);
     },
 
     winner() {
