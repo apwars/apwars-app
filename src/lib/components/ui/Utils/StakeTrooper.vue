@@ -320,47 +320,6 @@ export default {
 </script>
 
 <style scoped>
-.troop {
-  position: relative;
-}
-.staked {
-  position: absolute;
-  font-size: 22px;
-  font-weight: bold;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 210px;
-}
-.troop-symbol {
-  position: absolute;
-  top: 50%;
-  font-size: 13px;
-  font-weight: bold;
-  right: 15px;
-  transform: translate(0%, -50%);
-  color: #ffb800;
-}
-.my-troops {
-  position: absolute;
-  font-size: 18px;
-  font-weight: bold;
-  bottom: 0px;
-  left: 295px;
-  transform: translate(-50%, -50%);
-  color: #ffb800;
-  width: 300px;
-}
-.global-troops {
-  font-size: 18px;
-  font-weight: bold;
-  margin-right: 32px;
-}
-.global-troops > div {
-  font-size: 22px;
-  color: #ffb800;
-}
-
 .stats {
   font-weight: bold;
   font-size: 28px;
@@ -380,29 +339,6 @@ export default {
 @media only screen and (max-width: 1920px) {
   .qty {
     font-size: 14px;
-  }
-  .current-price {
-    font-size: 14px;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .troop {
-    margin: 0 auto;
-  }
-  .troop-symbol {
-    top: 15%;
-    font-size: 11px;
-    right: 0px;
-  }
-  .staked {
-    font-size: 14px;
-    top: 50%;
-    left: 65%;
-  }
-  .my-troops {
-    font-size: 12px;
-    left: 240px;
   }
 }
 </style>

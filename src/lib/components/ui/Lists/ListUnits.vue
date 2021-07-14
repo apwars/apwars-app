@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <v-container :fluid="$vuetify.breakpoint.mobile" class="pa-3 pd-md-0" v-if="isConnected && !isLoading">
+  <div class="list-units">
+    <v-container
+      :fluid="$vuetify.breakpoint.mobile"
+      class="pa-3 pd-md-0"
+      v-if="isConnected && !isLoading"
+    >
       <v-row :no-gutters="$vuetify.breakpoint.mobile">
         <v-col cols="12" lg="3">
           <v-select
@@ -81,7 +85,11 @@
       </v-row>
     </v-container>
 
-    <v-container :fluid="$vuetify.breakpoint.mobile" class="pa-3 pd-md-0" v-if="isConnected && !isLoading">
+    <v-container
+      :fluid="$vuetify.breakpoint.mobile"
+      class="pa-3 pd-md-0"
+      v-if="isConnected && !isLoading"
+    >
       <v-row v-if="filterTroops.length > 0">
         <v-col
           class="px-lg-0"
@@ -94,6 +102,11 @@
           <trooper v-if="getType === 'trooper'" :info="trooper" />
           <stake-trooper
             v-else-if="getType === 'enlistment'"
+            :trooper="trooper"
+            :contract-war="contractWar"
+          />
+          <report-trooper
+            v-else-if="getType === 'report-trooper'"
             :trooper="trooper"
             :contract-war="contractWar"
           />
@@ -122,6 +135,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Trooper from "@/lib/components/ui/Utils/Trooper";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
+import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
 
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
@@ -134,6 +148,7 @@ export default {
     wButton,
     Trooper,
     StakeTrooper,
+    ReportTrooper,
   },
 
   props: ["type", "contractWar"],
@@ -392,6 +407,17 @@ export default {
 </script>
 
 <style scoped>
+.list-units
+  >>> .theme--dark.v-text-field--solo
+  > .v-input__control
+  > .v-input__slot {
+  border: 1px solid #ffb800;
+}
+
+.theme--dark.v-list {
+  border: 2px solid #ffb800;
+}
+
 .amount-fed {
   margin-top: -85px !important;
 }
@@ -404,15 +430,8 @@ export default {
   font-weight: bold;
   font-size: 14px;
 }
-.price-WGOLD {
-  font-weight: bold;
-  font-size: 32px;
-}
 
 @media only screen and (max-width: 375px) {
-  .price-WGOLD {
-    font-size: 18px;
-  }
   .amount-fed {
     margin-top: -65px !important;
   }

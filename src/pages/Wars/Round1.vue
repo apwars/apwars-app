@@ -93,40 +93,14 @@
             />
           </v-col>
         </v-row>
-
-        <v-row class="my-6">
-          <v-col cols="12" lg="6" class="dividing-line">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center pa-0 ma-0"
-                v-for="trooper in teamA"
-                v-bind:key="trooper.name"
-              >
-                <report-trooper
-                  :trooper="trooper"
-                  :contract-war="contractWar"
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center"
-                v-for="trooper in teamB"
-                v-bind:key="trooper.name"
-              >
-                <report-trooper
-                  :trooper="trooper"
-                  :contract-war="contractWar"
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
       </v-container>
+
+      <list-units
+        class="my-3"
+        v-if="isConnected && !isLoading"
+        type="report-trooper"
+        :contract-war="contractWar"
+      ></list-units>
     </div>
     <div v-else-if="isConnected && !isLoading">
       <div class="bg-fed">
@@ -161,6 +135,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
 import WarMachine from "@/lib/eth/WarMachine";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
+import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -171,6 +146,7 @@ export default {
     wButton,
     ReportTrooper,
     Countdown,
+    ListUnits,
   },
 
   data() {
