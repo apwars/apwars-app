@@ -84,13 +84,13 @@
 
         <v-row v-if="isConnected && !isLoading" class="bg-burned">
           <v-col cols="12" md="6">
-            <div class="d-flex justify-end mx-0 mx-md-6">
+            <div class="d-flex justify-center justify-md-end mx-0 mx-md-6">
               <v-img
                 class="btn mr-1 align-self-center"
                 src="/images/wgold.png"
-                max-width="120"
-                width="120"
-                height="120"
+                max-width="100"
+                width="100"
+                height="100"
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">ENTIRE PRIZE:</div>
@@ -100,12 +100,12 @@
             </div>
           </v-col>
           <v-col cols="12" md="6">
-            <div class="d-flex justify-start mx-0 mx-md-6">
+            <div class="d-flex justify-center justify-md-start mx-0 mx-md-6">
               <v-img
                 class="btn mr-1 align-self-center"
                 src="/images/battle/burned.png"
-                max-width="120"
-                width="120"
+                max-width="100"
+                width="100"
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">BURNED:</div>

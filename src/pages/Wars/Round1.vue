@@ -17,7 +17,7 @@
               <v-img
                 class="mx-auto"
                 max-width="400"
-                :src="`/images/battle/${teamAimagem}`"
+                :src="`/images/battle/${teamAImagem}`"
               />
             </v-col>
             <v-col cols="12" md="4" class="d-flex justify-center">
@@ -47,7 +47,7 @@
               <v-img
                 class="mx-auto"
                 max-width="400"
-                :src="`/images/battle/${teamBimagem}`"
+                :src="`/images/battle/${teamBImagem}`"
               />
             </v-col>
           </v-row>
@@ -191,14 +191,14 @@ export default {
     teamB() {
       return this.gobalTroops.filter((trooper) => trooper.team === 2);
     },
-    teamAimagem() {
+    teamAImagem() {
       if (!this.warStats.winner) return "the-corporation.png";
       if (this.warStats.winner == "1") {
         return "the-corporation-win.png";
       }
       return "the-corporation-loser.png";
     },
-    teamBimagem() {
+    teamBImagem() {
       if (!this.warStats.winner) return "the-degenerate.png";
       if (this.warStats.winner == "2") {
         return "the-degenerate-win.png";

@@ -11,7 +11,7 @@
               <v-img
                 class="mx-auto"
                 max-width="400"
-                :src="`/images/battle/${teamAimagem}`"
+                :src="`/images/battle/${teamAImagem}`"
               />
             </v-col>
             <v-col cols="12" md="4" class="d-flex justify-center">
@@ -40,7 +40,7 @@
               <v-img
                 class="mx-auto"
                 max-width="400"
-                :src="`/images/battle/${teamBimagem}`"
+                :src="`/images/battle/${teamBImagem}`"
               />
             </v-col>
           </v-row>
@@ -78,13 +78,13 @@
 
         <v-row v-if="!isLoading" class="bg-burned">
           <v-col cols="12" md="6">
-            <div class="d-flex justify-end mx-0 mx-md-6">
+            <div class="d-flex justify-center justify-md-end mx-0 mx-md-6">
               <v-img
                 class="btn mr-1 align-self-center"
                 src="/images/wgold.png"
-                max-width="120"
-                width="120"
-                height="120"
+                max-width="100"
+                width="100"
+                height="100"
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">ENTIRE PRIZE:</div>
@@ -98,9 +98,9 @@
               <v-img
                 class="btn mr-1 align-self-center"
                 src="/images/wgold.png"
-                max-width="120"
-                width="120"
-                height="120"
+                max-width="100"
+                width="100"
+                height="100"
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">MY EARNINGS:</div>
@@ -163,41 +163,6 @@
       ></list-units>
 
       <v-container v-else>
-
-        <!-- <v-row v-if="!isLoading">
-          <v-col cols="12" lg="6" class="dividing-line">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center"
-                v-for="trooper in teamA"
-                v-bind:key="trooper.name"
-              >
-                <stake-trooper
-                  :trooper="trooper"
-                  :contract-war="contractWar"
-                  bring-home
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center"
-                v-for="trooper in teamB"
-                v-bind:key="trooper.name"
-              >
-                <stake-trooper
-                  :trooper="trooper"
-                  :contract-war="contractWar"
-                  bring-home
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row> -->
 
         <v-row >
           <v-col cols="12" class="d-flex justify-center">
@@ -336,7 +301,7 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    teamAimagem() {
+    teamAImagem() {
       if (!this.warStats.winner) return "the-corporation.png";
       if (this.warStats.winner == "1") {
         return "the-corporation-win.png";
@@ -344,7 +309,7 @@ export default {
       return "the-corporation-loser.png";
     },
 
-    teamBimagem() {
+    teamBImagem() {
       if (!this.warStats.winner) return "the-degenerate.png";
       if (this.warStats.winner == "2") {
         return "the-degenerate-win.png";
@@ -359,14 +324,6 @@ export default {
       } else if (this.warStats.winner == "2") {
         return "The Degenerate";
       }
-    },
-
-    teamA() {
-      return this.globalTroops.filter((trooper) => trooper.team === 1);
-    },
-
-    teamB() {
-      return this.globalTroops.filter((trooper) => trooper.team === 2);
     },
   },
 

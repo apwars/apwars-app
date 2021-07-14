@@ -285,11 +285,6 @@ export default {
   background: linear-gradient(180deg, rgb(49 45 35 / 0%) 0, rgb(17 17 17) 100%);
 }
 
-.dividing-line {
-  background-image: url("/images/battle/line.png");
-  background-position: right;
-}
-
 .isLoading {
   opacity: 0;
 }
@@ -306,15 +301,7 @@ export default {
   font-weight: bold;
   font-size: 16px;
 }
-.current-price {
-  font-weight: bold;
-  font-size: 18px;
-}
-.price-wgold {
-  font-weight: bold;
-  font-size: 16px;
-  color: #f6ff00;
-}
+
 .disabled {
   opacity: 0.5;
   filter: grayscale(100%);
@@ -324,19 +311,11 @@ export default {
   .qty {
     font-size: 14px;
   }
-  .current-price {
-    font-size: 14px;
-  }
 }
 
 @media only screen and (max-width: 600px) {
   .gradient {
     display: none;
-  }
-}
-@media only screen and (max-width: 1280px) {
-  .dividing-line {
-    background: none;
   }
 }
 </style>
