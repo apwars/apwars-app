@@ -89,7 +89,12 @@
           v-for="trooper in filterTroops"
           v-bind:key="trooper.name"
         >
-          <trooper :info="trooper" />
+          <trooper v-if="getType === 'trooper'" :info="trooper" />
+          <stake-trooper
+            v-else-if="getType === 'enlistment'"
+            :trooper="trooper"
+            :contract-war="contractWar"
+          />
         </v-col>
       </v-row>
       <v-row v-else>
@@ -129,7 +134,7 @@ export default {
     StakeTrooper,
   },
 
-  props: ['type'],
+  props: ["type", "contractWar"],
 
   data() {
     return {
@@ -174,6 +179,21 @@ export default {
 
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
+    },
+
+    getType() {
+      switch (this.type) {
+        case "trooper":
+          return this.type;
+        case "enlistment":
+          return this.type;
+        case "bring-home":
+          return this.type;
+        case "report-trooper":
+          return this.type;
+        default:
+          return "trooper";
+      }
     },
   },
 

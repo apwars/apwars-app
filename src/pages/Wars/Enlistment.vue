@@ -73,16 +73,9 @@
           </v-col>
         </v-row>
 
-        <v-row v-if="isConnected && !isLoading && isEnlistment">
-          <v-col
-            cols="4"
-            class="d-flex justify-center"
-            v-for="trooper in globalTroops"
-            v-bind:key="trooper.name"
-          >
-            <stake-trooper :trooper="trooper" :contract-war="contractWar" />
-          </v-col>
-        </v-row>
+        <div class="my-3" v-if="isConnected && !isLoading && isEnlistment">
+          <list-units type="enlistment" :contract-war="contractWar"></list-units>
+        </div>
 
         <v-row v-else-if="!isLoading && !isEnlistment">
           <v-col cols="12" class="d-flex justify-center">
@@ -134,6 +127,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
+import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -146,6 +140,7 @@ export default {
     wButton,
     StakeTrooper,
     Countdown,
+    ListUnits,
   },
 
   data() {
@@ -336,4 +331,3 @@ export default {
   }
 }
 </style>
-
