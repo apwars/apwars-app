@@ -150,11 +150,21 @@
       <v-container>
         <v-row class="mt-n3 mt-sm-n9">
           <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3 ma-0 ma-sm-6 text-wGOLD">Troops</h3>
+            <h3 class="text-h3 ma-0 ma-sm-6 text-wGOLD">Units</h3>
           </v-col>
         </v-row>
+      </v-container>
 
-        <v-row v-if="!isLoading">
+      <list-units
+        class="my-3"
+        v-if="isConnected && !isLoading"
+        type="bring-home"
+        :contract-war="contractWar"
+      ></list-units>
+
+      <v-container v-else>
+
+        <!-- <v-row v-if="!isLoading">
           <v-col cols="12" lg="6" class="dividing-line">
             <v-row>
               <v-col
@@ -187,9 +197,9 @@
               </v-col>
             </v-row>
           </v-col>
-        </v-row>
+        </v-row> -->
 
-        <v-row v-else>
+        <v-row >
           <v-col cols="12" class="d-flex justify-center">
             <h3 class="text-h3">Loading...</h3>
           </v-col>
@@ -270,6 +280,7 @@ import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 import TableWarReport from "@/lib/components/ui/Utils/Tables/TableWarReport";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
+import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
@@ -287,6 +298,7 @@ export default {
     Countdown,
     TableWarReport,
     VAddress,
+    ListUnits,
   },
 
   data() {

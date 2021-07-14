@@ -105,6 +105,12 @@
             :trooper="trooper"
             :contract-war="contractWar"
           />
+          <stake-trooper
+            v-else-if="getType === 'bring-home'"
+            :trooper="trooper"
+            :contract-war="contractWar"
+            bring-home
+          />
           <report-trooper
             v-else-if="getType === 'report-trooper'"
             :trooper="trooper"
@@ -251,9 +257,9 @@ export default {
 
         let troops = getTroops();
 
-        if(this.onlyShow) {
-          for(let filter in this.onlyShow) {
-            troops = troops.filter(trooper => {
+        if (this.onlyShow) {
+          for (let filter in this.onlyShow) {
+            troops = troops.filter((trooper) => {
               return this.onlyShow[filter].indexOf(trooper[filter]) !== -1;
             });
           }
