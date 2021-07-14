@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-container v-if="isConnected && !isLoading">
-      <v-row>
+    <v-container :fluid="$vuetify.breakpoint.mobile" class="pa-3 pd-md-0" v-if="isConnected && !isLoading">
+      <v-row :no-gutters="$vuetify.breakpoint.mobile">
         <v-col cols="12" lg="3">
           <v-select
             v-model="select.teams"
@@ -59,10 +59,10 @@
           </v-select>
         </v-col>
       </v-row>
-      <v-row dense>
+      <v-row class="mt-0 mt-lg-n5 mb-3">
         <v-col class="py-0 my-0" cols="12">
-          <div class="d-flex align-center">
-            <wButton @click="clearFilters()" class="mr-3">
+          <div class="d-flex flex-column flex-md-row align-center">
+            <wButton @click="clearFilters()" class=" mr-3">
               <div class="d-flex justify-center">
                 <v-icon class="mx-1">
                   mdi-minus-circle
@@ -81,11 +81,13 @@
       </v-row>
     </v-container>
 
-    <v-container v-if="isConnected && !isLoading">
+    <v-container :fluid="$vuetify.breakpoint.mobile" class="pa-3 pd-md-0" v-if="isConnected && !isLoading">
       <v-row v-if="filterTroops.length > 0">
         <v-col
+          class="px-lg-0"
           cols="12"
           md="4"
+          sm="6"
           v-for="trooper in filterTroops"
           v-bind:key="trooper.name"
         >
@@ -104,7 +106,7 @@
       </v-row>
     </v-container>
 
-    <v-container v-if="isLoading">
+    <v-container :fluid="$vuetify.breakpoint.mobile" v-if="isLoading">
       <v-row>
         <v-col cols="12" class="text-center ma-6 ma-sm-0">
           <h3 class="text-h3">Loading...</h3>

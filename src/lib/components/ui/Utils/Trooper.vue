@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex" v-bind:class="{ disabled: info.disabled }">
+    <div class="d-flex justify-center" v-bind:class="{ disabled: info.disabled }">
       <div class="align-self-center">
         <v-img width="160" :src="`/images/troops/${info.name}.png`" />
       </div>

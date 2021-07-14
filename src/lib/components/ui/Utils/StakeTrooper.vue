@@ -2,7 +2,7 @@
   <div>
     <div v-if="!isConnected">Connect wallet</div>
     <div>
-      <div class="d-flex">
+      <div class="d-flex justify-center">
         <div class="align-self-center">
           <v-img width="160" :src="`/images/troops/${getTrooper.name}.png`" />
         </div>
@@ -20,7 +20,7 @@
             Global qty in war:
             <amount :amount="getTrooper.globalTroops" decimals="2" compact />
           </div>
-          <div>
+          <div class="d-none d-sm-none d-md-none d-lg-flex">
             <div v-if="!isbringHome">
               <div v-if="isApproved" class="stake align-self-center">
                 <wButton
@@ -62,6 +62,44 @@
               max-width="80"
               :src="`/images/tier-${getTrooper.tier}.png`"
             />
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex d-sm-flex d-md-flex d-lg-none justify-center justify-md-start">
+        <div v-if="!isbringHome">
+          <div v-if="isApproved" class="stake">
+            <wButton
+              class="my-1"
+              :actived="false"
+              @click="openModal = true"
+              :disabled="isSendingWar || getTrooper.myTroops === '0'"
+            >
+              {{ isSendingWar ? "Sending to war..." : "Enlist at war" }}
+            </wButton>
+          </div>
+          <div v-else class="stake">
+            <wButton
+              class="my-1"
+              :actived="false"
+              @click="approve"
+              :disabled="getTrooper.myTroops === '0' || loadingApproved"
+            >
+              {{ loadingApproved ? "Approving..." : "Approve enlistment" }}
+            </wButton>
+          </div>
+        </div>
+
+        <div v-else>
+          <div class="stake">
+            <wButton
+              class="my-1 my-md-0"
+              :actived="false"
+              @click="bringHomeWithdraw"
+              :disabled="getTrooper.staked === '0' || btnBringHomeDisabled"
+            >
+              Bring home
+            </wButton>
           </div>
         </div>
       </div>
