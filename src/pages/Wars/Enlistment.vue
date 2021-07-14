@@ -6,7 +6,7 @@
           Danger, it's a test war
         </v-alert>
         <v-container>
-          <v-row class="d-none d-sm-none d-md-flex my-3">
+          <v-row class="d-none d-sm-none d-md-flex my-0 my-md-3">
             <v-col cols="12" md="4">
               <v-img
                 class="mx-auto"
@@ -44,7 +44,7 @@
             </v-col>
           </v-row>
 
-          <v-row class="d-flex d-sm-flex d-md-none">
+          <v-row class="d-flex d-sm-flex d-md-none mt-n3">
             <v-col cols="12">
               <v-img
                 class="mx-auto"
@@ -62,7 +62,7 @@
       </div>
 
       <v-container>
-        <v-row class="mt-n16">
+        <v-row class="mt-n6 mt-md-n16">
           <v-col cols="12">
             <countdown
               :time="countdownTimeEnd"
@@ -72,18 +72,27 @@
             <h2 class="text-h2 text-wGOLD text-center mt-2">Units</h2>
           </v-col>
         </v-row>
+      </v-container>
 
-        <div class="my-3" v-if="isConnected && !isLoading && isEnlistment">
-          <list-units type="enlistment" :contract-war="contractWar"></list-units>
-        </div>
+      <list-units
+        class="my-3"
+        v-if="isConnected && !isLoading && isEnlistment"
+        type="enlistment"
+        :contract-war="contractWar"
+      ></list-units>
 
-        <v-row v-else-if="!isLoading && !isEnlistment">
+      <v-container v-else-if="!isLoading && !isEnlistment">
+        <v-row>
           <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3 ma-6">Enlistment period ended</h3>
+            <h3 class="text-h4 text-md-h3 ma-0 ma-md-6">
+              Enlistment period ended
+            </h3>
           </v-col>
         </v-row>
+      </v-container>
 
-        <v-row v-else>
+      <v-container v-else>
+        <v-row>
           <v-col cols="12" class="d-flex justify-center">
             <h3 class="text-h3">Loading...</h3>
           </v-col>
@@ -276,11 +285,6 @@ export default {
   background: linear-gradient(180deg, rgb(49 45 35 / 0%) 0, rgb(17 17 17) 100%);
 }
 
-.dividing-line {
-  background-image: url("/images/battle/line.png");
-  background-position: right;
-}
-
 .isLoading {
   opacity: 0;
 }
@@ -297,15 +301,7 @@ export default {
   font-weight: bold;
   font-size: 16px;
 }
-.current-price {
-  font-weight: bold;
-  font-size: 18px;
-}
-.price-wgold {
-  font-weight: bold;
-  font-size: 16px;
-  color: #f6ff00;
-}
+
 .disabled {
   opacity: 0.5;
   filter: grayscale(100%);
@@ -315,19 +311,11 @@ export default {
   .qty {
     font-size: 14px;
   }
-  .current-price {
-    font-size: 14px;
-  }
 }
 
 @media only screen and (max-width: 600px) {
   .gradient {
     display: none;
-  }
-}
-@media only screen and (max-width: 1280px) {
-  .dividing-line {
-    background: none;
   }
 }
 </style>

@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <v-container v-if="isConnected && !isLoading">
-      <v-row>
+  <div class="list-units">
+    <v-container
+      :fluid="$vuetify.breakpoint.mobile"
+      class="pa-3 pd-md-0"
+      v-if="isConnected && !isLoading"
+    >
+      <v-row :no-gutters="$vuetify.breakpoint.mobile">
         <v-col cols="12" lg="3">
           <v-select
             v-model="select.teams"
@@ -59,10 +63,10 @@
           </v-select>
         </v-col>
       </v-row>
-      <v-row dense>
+      <v-row class="mt-0 mt-lg-n5 mb-3">
         <v-col class="py-0 my-0" cols="12">
-          <div class="d-flex align-center">
-            <wButton @click="clearFilters()" class="mr-3">
+          <div class="d-flex flex-column flex-md-row align-center">
+            <wButton @click="clearFilters()" class=" mr-3">
               <div class="d-flex justify-center">
                 <v-icon class="mx-1">
                   mdi-minus-circle
@@ -81,17 +85,34 @@
       </v-row>
     </v-container>
 
-    <v-container v-if="isConnected && !isLoading">
+    <v-container
+      :fluid="$vuetify.breakpoint.mobile"
+      class="pa-3 pd-md-0"
+      v-if="isConnected && !isLoading"
+    >
       <v-row v-if="filterTroops.length > 0">
         <v-col
+          class="px-lg-0"
           cols="12"
           md="4"
+          sm="6"
           v-for="trooper in filterTroops"
           v-bind:key="trooper.name"
         >
           <trooper v-if="getType === 'trooper'" :info="trooper" />
           <stake-trooper
             v-else-if="getType === 'enlistment'"
+            :trooper="trooper"
+            :contract-war="contractWar"
+          />
+          <stake-trooper
+            v-else-if="getType === 'bring-home'"
+            :trooper="trooper"
+            :contract-war="contractWar"
+            bring-home
+          />
+          <report-trooper
+            v-else-if="getType === 'report-trooper'"
             :trooper="trooper"
             :contract-war="contractWar"
           />
@@ -104,7 +125,7 @@
       </v-row>
     </v-container>
 
-    <v-container v-if="isLoading">
+    <v-container :fluid="$vuetify.breakpoint.mobile" v-if="isLoading">
       <v-row>
         <v-col cols="12" class="text-center ma-6 ma-sm-0">
           <h3 class="text-h3">Loading...</h3>
@@ -120,6 +141,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Trooper from "@/lib/components/ui/Utils/Trooper";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
+import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
 
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
@@ -132,9 +154,10 @@ export default {
     wButton,
     Trooper,
     StakeTrooper,
+    ReportTrooper,
   },
 
-  props: ["type", "contractWar"],
+  props: ["type", "contractWar", "onlyShow"],
 
   data() {
     return {
@@ -154,7 +177,7 @@ export default {
         raceDesc: [],
         name: [],
       },
-      teams: ["The Corporation", "The Degenerate"],
+      teams: [],
       globalTroops: [],
       filterTroops: [],
     };
@@ -232,7 +255,15 @@ export default {
         );
         this.pricewGOLD = await contractwGOLD.pricewGOLD(this.networkInfo.id);
 
-        const troops = getTroops();
+        let troops = getTroops();
+
+        if (this.onlyShow) {
+          for (let filter in this.onlyShow) {
+            troops = troops.filter((trooper) => {
+              return this.onlyShow[filter].indexOf(trooper[filter]) !== -1;
+            });
+          }
+        }
 
         this.globalTroops = await Promise.all(
           troops.map((trooper) => {
@@ -390,6 +421,17 @@ export default {
 </script>
 
 <style scoped>
+.list-units
+  >>> .theme--dark.v-text-field--solo
+  > .v-input__control
+  > .v-input__slot {
+  border: 1px solid #ffb800;
+}
+
+.theme--dark.v-list {
+  border: 2px solid #ffb800;
+}
+
 .amount-fed {
   margin-top: -85px !important;
 }
@@ -402,15 +444,8 @@ export default {
   font-weight: bold;
   font-size: 14px;
 }
-.price-WGOLD {
-  font-weight: bold;
-  font-size: 32px;
-}
 
 @media only screen and (max-width: 375px) {
-  .price-WGOLD {
-    font-size: 18px;
-  }
   .amount-fed {
     margin-top: -65px !important;
   }
