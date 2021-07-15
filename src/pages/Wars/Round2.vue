@@ -171,7 +171,6 @@
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
-import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
 import WarMachine from "@/lib/eth/WarMachine";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
@@ -183,7 +182,6 @@ export default {
     wGOLDButton,
     Amount,
     wButton,
-    ReportTrooper,
     ListUnits,
   },
 
