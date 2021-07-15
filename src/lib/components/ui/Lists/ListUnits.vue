@@ -14,7 +14,7 @@
             multiple
             chips
             solo
-            @change="updateTroopFilters()"
+            @change="updateTroopsFilters()"
           >
           </v-select>
         </v-col>
@@ -26,7 +26,7 @@
             multiple
             chips
             solo
-            @change="updateTroopFilters()"
+            @change="updateTroopsFilters()"
           >
           </v-select>
         </v-col>
@@ -38,7 +38,7 @@
             multiple
             chips
             solo
-            @change="updateTroopFilters()"
+            @change="updateTroopsFilters()"
           >
           </v-select>
         </v-col>
@@ -50,7 +50,7 @@
             multiple
             chips
             solo
-            @change="updateTroopFilters()"
+            @change="updateTroopsFilters()"
           >
             <template v-slot:selection="{ item, index }">
               <v-chip v-if="index === 0">
@@ -76,7 +76,7 @@
             </wButton>
             <v-checkbox
               v-model="showMyUnits"
-              @change="updateTroopFilters()"
+              @change="updateTroopsFilters()"
               label="Show only my units"
               color="primary"
             ></v-checkbox>
@@ -314,7 +314,7 @@ export default {
         });
 
         this.filterTroops = this.globalTroops;
-        this.updateTroopFilters();
+        this.updateTroopsFilters();
       } catch (error) {
         console.log(error);
       } finally {
@@ -370,10 +370,15 @@ export default {
           }
         }
       });
+
       this.filter = { ...filterGlobal, ...filterSelect };
+
+      if (this.filter.teamDesc.length === 1) {
+        this.select.teams = [this.filter.teamDesc[0]];
+      }
     },
 
-    async updateTroopFilters() {
+    async updateTroopsFilters() {
       this.filterTroops = this.globalTroops.filter((trooper) => {
         if (!this.select.teams.length) {
           return trooper;
@@ -414,7 +419,7 @@ export default {
         races: [],
         names: [],
       };
-      this.updateTroopFilters();
+      this.updateTroopsFilters();
     },
   },
 };

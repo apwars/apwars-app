@@ -18,12 +18,12 @@
           My dead units:
           <amount :amount="getTrooper.myDead" decimals="2" compact />
         </div>
-        <div class="qty">
+        <div class="globalQty">
           Global survivors:
           <amount :amount="getTrooper.troopsSurvivors" decimals="2" compact />
         </div>
-        <div class="qty">
-          Global dead:
+        <div class="globalQty">
+          Global death:
           <amount :amount="getTrooper.troopsDead" decimals="2" compact />
         </div>
         <div class="d-flex justify-start">
@@ -145,16 +145,24 @@ export default {
   color: #ffb800;
   font-weight: bold;
   font-size: 16px;
-  text-transform: uppercase;
 }
-
+.globalQty {
+  color: #f6ff00;
+  font-weight: bold;
+  font-size: 16px;
+}
+.qty >>> span,
+.globalQty >>> span {
+  color: #fff;
+}
 .disabled {
   opacity: 0.5;
   filter: grayscale(100%);
 }
 
-@media only screen and (max-width: 1920px) {
-  .qty {
+@media only screen and (max-width: 600px) {
+  .qty,
+  .globalQty {
     font-size: 14px;
   }
 }

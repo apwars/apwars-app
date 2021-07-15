@@ -328,16 +328,23 @@ export default {
   color: #ffb800;
   font-weight: bold;
   font-size: 16px;
-  text-transform: uppercase;
 }
-
+.globalQty {
+  color: #f6ff00;
+  font-weight: bold;
+  font-size: 16px;
+}
+.qty >>> span,
+.globalQty >>> span {
+  color: #fff;
+}
 .disabled {
   opacity: 0.5;
   filter: grayscale(100%);
 }
 
-@media only screen and (max-width: 1920px) {
-  .qty {
+@media only screen and (max-width: 600px) {
+  .qty, .globalQty {
     font-size: 14px;
   }
 }

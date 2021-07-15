@@ -203,7 +203,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0xb5d488dc4DE64A6a968D8f317DB8DE2cDBF52828",
-        "97": "0x2C0018Bd7a4418287B03f4917E936A990605A5f3",
+        "97": "0x7a355C7633d3d097F6ed009faC66727E7C4E0Dee",
       },
       image: "/images/troops/wSKELETONWARRIOR.png",
       strength: 8,
@@ -222,7 +222,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x4D21177Bf8a0F9cfAca6d0f568Ff3e79a121B106",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0x7DC031d20cc8DB621A9aaD99D834CfBCF1DCA8bf",
       },
       image: "/images/troops/wHOUND.png",
       strength: 8,
@@ -241,7 +241,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0xd048cDf2e870E60D46527463a14aEFC0377D754c",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0x2d533A617956f47E63150A0fb13441Da202DAC9F",
       },
       image: "/images/troops/wUNDEAD-ARCHER.png",
       strength: 35,
@@ -260,7 +260,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x8b394cfAeBA9812801C92388570C95208Ad1300D",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0x8df7145Fc3a1B7BC590a229737d8c39bD058Ab49",
       },
       image: "/images/troops/wUNDEAD-PIKEMAN.png",
       strength: 22,
@@ -279,7 +279,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x2a63DDDD2c0ba10F465080a06563aF3acb5d1d3c",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0xB80797707aa7b6663d87cc4Cd754DC0F206c6eB3",
       },
       image: "/images/troops/wWITCH.png",
       strength: 70,
@@ -298,7 +298,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x820c6a4f940a4470E9D2933aAb831a2eE7508fcF",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0x022465BCd48f6eE55236a555E0Da21c960c2d8EA",
       },
       image: "/images/troops/wHORSEMAN.png",
       strength: 150,
@@ -317,7 +317,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x66e22551BCe75874f91d46dB684621500C9480ae",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0x9a1E2a31A6a7BF8d8daCA7C6e2b7Ba3b16F2A554",
       },
       image: "/images/troops/wWARG.png",
       strength: 150,
@@ -336,7 +336,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0xD35d5bCCb4141ed62f5cf6B0b020e74eBf793EE5",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0xaF583Ff10E58f2FD3dc00E831eEF1db1A4B1D65f",
       },
       image: "/images/troops/wDEATH-KNIGHT.png",
       strength: 150,

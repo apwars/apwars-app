@@ -256,7 +256,7 @@ export default {
       remaining: 0,
       supply: 0,
       isLoading: false,
-      isApprovedWGOLD: false,
+      isApprovedwGOLD: false,
       isApprovedCollectibles: false,
       waitingMetamask: false,
       isSending: false,

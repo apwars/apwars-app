@@ -314,15 +314,8 @@ export default {
   font-weight: bold;
   font-size: 14px;
 }
-.price-WGOLD {
-  font-weight: bold;
-  font-size: 32px;
-}
 
 @media only screen and (max-width: 375px) {
-  .price-WGOLD {
-    font-size: 18px;
-  }
   .amount-fed {
     margin-top: -65px !important;
   }
