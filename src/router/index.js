@@ -3,7 +3,7 @@ import Router from "vue-router";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import Items from "@/pages/Items.vue";
 import CreateOrders from "@/pages/Market/CreateOrders.vue";
-import ListItems from "@/pages/GateItems.vue";
+import GameItems from "@/pages/GameItems.vue";
 import Inventory from "@/pages/Inventory.vue";
 import Units from "@/pages/Units.vue";
 import Wars from "@/pages/Wars.vue";
@@ -34,7 +34,7 @@ export const routes = [
       {
         path: "/game-items",
         name: "/game-items",
-        component: ListItems
+        component: GameItems
       },
       {
         path: "/inventory",
