@@ -97,6 +97,25 @@ const wars = [
     totalPrize: "10000000000000000000000",
     test: true,
     report: war1FinalReport,
+  },
+  {
+    id: 5,
+    name: "The second conflict [4]",
+    description: `
+    For a long time all the attention in Decentraland was spent on the rising tensions between Humans and Orcs, after a golden period of bonanza an age of military preparation has begun. A lot of wGOLD was spent in recruiting Warriors and Archers across the Human empire, from the Capital to the extended countryside, men of all ages were being recruited, children and seniors capable of holding a sword were considered able to fight. At the same time at Orc pits, Grunts and Orc Archers were being raised and united to form a monstrous army. This animosity and arousement of forces shadowed the real threat to liberty of all races that was lurking into the shadows. Silently in an obscure form the Forces of Extreme Darkness were growing in power day by day, night by night in a subversive manner. This ultimate enemy has not yet been faced.`,
+    dateStart: "2021-07-26",
+    dateEnd: "2021-07-30",
+    contractAddress: {
+      "97": "0x07287338eA7C2043AEa78649FD63e1d79281A7E2",
+    },
+    countdown: {
+      enlistment: 1626361220000,
+      round1: 1626429080000,
+      round2: 1626443480000,
+    },
+    totalPrize: "10000000000000000000000",
+    test: true,
+    report: war1FinalReport,
   }
 ];
 
