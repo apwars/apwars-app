@@ -113,14 +113,16 @@
                 />
                 <span class="suffix">wGOLD</span>
               </div>
-              <!-- <wButton
+            </div>
+            <div class="d-flex ml-6 mt-1">
+              <wButton
                 class="ml-1 align-self-center"
                 :actived="false"
                 @click="redeemPrize"
                 :disabled="isReedemPrize"
               >
                 {{ isReedemPrize ? "Already withdrawn" : "Redeem prize" }}
-              </wButton> -->
+              </wButton>
             </div>
           </v-col>
           <v-col cols="12" class="mb-9">
@@ -163,8 +165,7 @@
       ></list-units>
 
       <v-container v-else>
-
-        <v-row >
+        <v-row>
           <v-col cols="12" class="d-flex justify-center">
             <h3 class="text-h3">Loading...</h3>
           </v-col>

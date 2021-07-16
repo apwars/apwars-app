@@ -7,11 +7,11 @@
       <div class="ml-1 align-self-center">
         <div class="stats mt-6">Stats</div>
         <div class="qty">
-          Global Qty:
+          Global qty:
           <amount :amount="info.globalQty" decimals="2" compact />
         </div>
         <div class="qty mb-3">
-          My Qty:
+          My qty:
           <amount :amount="info.myQty" decimals="2" compact />
         </div>
         <div class="current-price">Current Price:</div>

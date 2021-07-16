@@ -7,7 +7,7 @@
       <div class="ml-1 align-self-center">
         <div class="stats mt-2">Report</div>
         <div class="qty">
-          My Survivors:
+          My survivors:
           <amount :amount="getTrooper.mySurvivor" decimals="2" compact />
         </div>
         <div class="qty">
