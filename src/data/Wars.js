@@ -49,7 +49,7 @@ const wars = [
     dateStart: "2021-07-26",
     dateEnd: "2021-07-30",
     contractAddress: {
-      "97": "0xd8201c8900A152652eFEf2c7b11a1f2bc76dD7a5",
+      "97": "0xC6e02dBa96977B6aA7E678ADCf15B45326B6D080",
     },
     countdown: {
       enlistment: 1626361220000,
