@@ -13,7 +13,7 @@
             <amount :amount="getTrooper.myTroops" decimals="2" compact />
           </div>
           <div class="qty">
-            My qty In War:
+            My qty in war:
             <amount :amount="getTrooper.staked" decimals="2" compact />
           </div>
           <div class="qty mb-3">
