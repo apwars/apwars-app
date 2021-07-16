@@ -120,7 +120,7 @@ export default {
           href: "/game-items",
         },
         {
-          title: "War Stats",
+          title: "Units",
           href: "/war-stats",
         },
         {

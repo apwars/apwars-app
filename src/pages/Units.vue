@@ -41,7 +41,6 @@
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
-import Trooper from "@/lib/components/ui/Utils/Trooper";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 import { getTroops } from "@/data/Troops";
@@ -53,7 +52,6 @@ export default {
     wGOLDButton,
     Amount,
     wButton,
-    Trooper,
     ListUnits,
   },
 
