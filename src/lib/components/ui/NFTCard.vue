@@ -226,7 +226,7 @@ import Collectibles from "@/lib/eth/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
 import Transporter from "@/lib/eth/Transporter";
 
-const LILITH_APPROVE_SECOUND_PAGE_CONTRACT =
+const LILITH_APPROVE_SECOND_PAGE_CONTRACT =
   "The first page has been successfully signed. <br /> I am waiting for the approval in your precious wallet, for signing the second page of the contract...";
 const LILITH_APPROVE_FIRST_PAGE_CONTRACT =
   "To transport your items, you have to sign the transportation contract, it's only 2 pages for you to sign. Using my services, you don't have to worry about bureaucratic processes, but I charge a small fee.";
@@ -234,7 +234,7 @@ const LILITH_WAITING_WALLET_APPROVAL =
   "I am waiting for the approval in your precious wallet, for signing the first page of the contract...";
 const LILITH_WAITING_FIRST_CONFIRMATION =
   "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation, so you can sign the second page of the contract...";
-const LILITH_WAITING_SECOUND_CONFIRMATION =
+const LILITH_WAITING_SECOND_CONFIRMATION =
   "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation, so you can start transporting your items safely...";
 
 export default {
@@ -476,7 +476,7 @@ export default {
 
     initStateSecoundPageContract() {
       this.lilith = true;
-      this.textLilithModal = LILITH_APPROVE_SECOUND_PAGE_CONTRACT;
+      this.textLilithModal = LILITH_APPROVE_SECOND_PAGE_CONTRACT;
       this.stepLilith = "secoundPage";
     },
 
@@ -598,13 +598,13 @@ export default {
 
     setInitialStateApproveSecoundPageContract() {
       this.isLoadingLilith = false;
-      this.textLilithModal = LILITH_APPROVE_SECOUND_PAGE_CONTRACT;
+      this.textLilithModal = LILITH_APPROVE_SECOND_PAGE_CONTRACT;
     },
 
     approveSecoundPageContract() {
       try {
         this.isLoadingLilith = true;
-        this.textLilithModal = LILITH_APPROVE_SECOUND_PAGE_CONTRACT;
+        this.textLilithModal = LILITH_APPROVE_SECOND_PAGE_CONTRACT;
         const confirmTransaction = this.collectiblesContract.setApprovalForAll(
           this.addresses.transporter,
           this.account
@@ -621,7 +621,7 @@ export default {
         });
 
         confirmTransaction.on("transactionHash", () => {
-          this.textLilithModal = LILITH_WAITING_SECOUND_CONFIRMATION;
+          this.textLilithModal = LILITH_WAITING_SECOND_CONFIRMATION;
         });
 
         confirmTransaction.on("receipt", () => {

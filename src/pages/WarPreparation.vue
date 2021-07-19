@@ -4,23 +4,33 @@
       <v-container class="pb-0">
         <page-title
           title="War Preparation"
-          description="Send your units with the raw material of wGOLD so they can work and create tools of war."
-          image="/images/black-market/black-market.png"
+          description="It is essential to strengthen your troops in combat whether with training or magical portions, use your time to improve your strategy!"
+          image="/images/war-preparation/icon-war-preparation.png"
         />
       </v-container>
+      <div class="d-flex justify-center">
+        <v-img
+          max-width="800px"
+          src="/images/war-preparation/create-weapon.png"
+        />
+      </div>
       <div class="gradient"></div>
     </div>
+
+    <list-units class="mt-n6" type="war-preparation"></list-units>
   </div>
 </template>
 
 <script>
 import PageTitle from "@/lib/components/ui/Utils/PageTitle.vue";
 import wButton from "@/lib/components/ui/Buttons/wButton";
+import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 export default {
   components: {
     PageTitle,
     wButton,
+    ListUnits,
   },
 
   data() {
@@ -53,17 +63,15 @@ export default {
 
   mounted() {},
 
-  methods: {
-    
-  },
+  methods: {},
 };
 </script>
 
 <style scoped>
 .bg-war-preparation {
-  background-image: url("/images/black-market/Market.jpg");
+  background-image: url("/images/war-preparation/bg-war-preparation.png");
   background-size: cover;
-  background-position: top;
+  background-position: center;
 }
 
 .gradient {
@@ -77,5 +85,4 @@ export default {
     background-size: contain;
   }
 }
-
 </style>
