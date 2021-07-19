@@ -2,9 +2,9 @@ import Vue from "vue";
 import Router from "vue-router";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import CreateOrders from "@/pages/Market/CreateOrders.vue";
-import ListItems from "@/pages/GateItems.vue";
+import GameItems from "@/pages/GameItems.vue";
 import Inventory from "@/pages/Inventory.vue";
-import WarStats from "@/pages/WarStats.vue";
+import Units from "@/pages/Units.vue";
 import Wars from "@/pages/Wars.vue";
 import Enlistment from "@/pages/Wars/Enlistment.vue";
 import Round1 from "@/pages/Wars/Round1.vue";
@@ -34,7 +34,7 @@ export const routes = [
       {
         path: "/game-items",
         name: "/game-items",
-        component: ListItems
+        component: GameItems
       },
       {
         path: "/inventory",
@@ -44,7 +44,7 @@ export const routes = [
       {
         path: "/war-stats",
         name: "/war-stats",
-        component: WarStats
+        component: Units
       },
       {
         path: "/wars",

@@ -1,84 +1,40 @@
 <template>
   <div>
-    <div class="troop" :style="`width: ${imgWidth}`">
-      <div class="d-flex">
-        <v-img
-          :max-width="imgWidth"
-          :src="`/images/battle/troops/${getTrooper.name}.png`"
-        />
+    <div class="d-flex justify-center">
+      <div class="align-self-center">
+        <v-img width="160" :src="`/images/troops/${getTrooper.name}.png`" />
       </div>
-      <span class="staked">
-        Survivors:
-        <amount
-          :amount="getTrooper.mySurvivor"
-          decimals="2"
-          compact
-          approximate
-          tooltip
-        ></amount>
-      </span>
-      <span class="troop-symbol">{{ getTrooper.name }}</span>
-      <span class="my-troops">
-        My enlisted troops:
-        <br class="d-flex d-sm-none" />
-        <amount
-          :amount="getTrooper.myEnlisted"
-          decimals="2"
-          compact
-          approximate
-          tooltip
-        />
-        / dead:
-        <amount
-          :amount="getTrooper.myDead"
-          decimals="2"
-          compact
-          approximate
-          tooltip
-        />
-      </span>
+      <div class="ml-1 align-self-center">
+        <div class="stats mt-2">Report</div>
+        <div class="qty">
+          My survivors:
+          <amount :amount="getTrooper.mySurvivor" decimals="2" compact />
+        </div>
+        <div class="qty">
+          My units enlisted:
+          <amount :amount="getTrooper.myEnlisted" decimals="2" compact />
+        </div>
+        <div class="qty mb-3">
+          My dead units:
+          <amount :amount="getTrooper.myDead" decimals="2" compact />
+        </div>
+        <div class="globalQty">
+          Global survivors:
+          <amount :amount="getTrooper.troopsSurvivors" decimals="2" compact />
+        </div>
+        <div class="globalQty">
+          Global death:
+          <amount :amount="getTrooper.troopsDead" decimals="2" compact />
+        </div>
+        <div class="d-flex justify-start">
+          <v-img
+            class="mt-3"
+            max-width="80"
+            :src="`/images/tier-${getTrooper.tier}.png`"
+          />
+        </div>
+      </div>
     </div>
-
-    <v-row class="ma-3 md-sm-0">
-      <v-col
-        cols="12"
-        md="6"
-        class="d-flex justify-center justify-md-start pa-0"
-      >
-        <div class="global-troops align-self-center">
-          Global troops survivors:
-          <div>
-            QTY:
-            <amount
-              :amount="getTrooper.troopsSurvivors"
-              decimals="2"
-              compact
-              approximate
-              tooltip
-            />
-          </div>
-        </div>
-      </v-col>
-      <v-col
-        cols="12"
-        md="6"
-        class="d-flex justify-center justify-md-start pa-0"
-      >
-        <div class="global-troops align-self-center">
-          Global dead troops:
-          <div>
-            QTY:
-            <amount
-              :amount="getTrooper.troopsDead"
-              decimals="2"
-              compact
-              approximate
-              tooltip
-            />
-          </div>
-        </div>
-      </v-col>
-    </v-row>
   </div>
 </template>
 
@@ -181,67 +137,33 @@ export default {
 </script>
 
 <style scoped>
-.troop {
-  position: relative;
-}
-.staked {
-  position: absolute;
-  font-size: 22px;
+.stats {
   font-weight: bold;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 210px;
+  font-size: 28px;
 }
-.troop-symbol {
-  position: absolute;
-  top: 50%;
-  font-size: 13px;
-  font-weight: bold;
-  right: 15px;
-  transform: translate(0%, -50%);
+.qty {
   color: #ffb800;
-}
-.my-troops {
-  position: absolute;
+  font-weight: bold;
   font-size: 16px;
-  font-weight: bold;
-  bottom: 5px;
-  left: 322px;
-  transform: translate(-50%, -50%);
-  color: #ffb800;
-  width: 350px;
 }
-.global-troops {
-  font-size: 18px;
+.globalQty {
+  color: #f6ff00;
   font-weight: bold;
-  margin-right: 32px;
-  width: 100%;
+  font-size: 16px;
 }
-.global-troops > div {
-  font-size: 22px;
-  color: #ffb800;
+.qty >>> span,
+.globalQty >>> span {
+  color: #fff;
+}
+.disabled {
+  opacity: 0.5;
+  filter: grayscale(100%);
 }
 
 @media only screen and (max-width: 600px) {
-  .troop {
-    margin: 0 auto;
-  }
-  .troop-symbol {
-    top: 15%;
-    font-size: 11px;
-    right: 0px;
-  }
-  .staked {
+  .qty,
+  .globalQty {
     font-size: 14px;
-    top: 50%;
-    left: 65%;
-  }
-  .my-troops {
-    font-size: 13px;
-    left: 175px;
-    bottom: -30px;
-    width: 170px;
   }
 }
 </style>

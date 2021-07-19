@@ -2,103 +2,107 @@
   <div>
     <div v-if="!isConnected">Connect wallet</div>
     <div>
-      <div class="troop" :style="`width: ${imgWidth}`">
-        <div class="d-flex">
-          <v-img
-            :max-width="imgWidth"
-            :src="`/images/battle/troops/${getTrooper.name}.png`"
-          />
+      <div class="d-flex justify-center">
+        <div class="align-self-center">
+          <v-img width="160" :src="`/images/troops/${getTrooper.name}.png`" />
         </div>
-        <span class="staked">
-          In War:
-          <amount
-            :amount="getTrooper.staked"
-            decimals="2"
-            compact
-            approximate
-            tooltip
-          />
-        </span>
-        <span class="troop-symbol">{{ getTrooper.name }}</span>
-        <span class="my-troops">
-          At home:
-          <amount
-            :amount="getTrooper.myTroops"
-            decimals="2"
-            compact
-            approximate
-            tooltip
-          />
-          <span v-if="isbringHome">
-            / Dead:
-            <amount
-              :amount="getTrooper.myDead"
-              decimals="2"
-              compact
-              approximate
-              tooltip
+        <div class="ml-1 align-self-center">
+          <div class="stats mt-2">Stats</div>
+          <div class="qty">
+            My qty:
+            <amount :amount="getTrooper.myTroops" decimals="2" compact />
+          </div>
+          <div class="qty">
+            My qty in war:
+            <amount :amount="getTrooper.staked" decimals="2" compact />
+          </div>
+          <div class="qty mb-3">
+            Global qty in war:
+            <amount :amount="getTrooper.globalTroops" decimals="2" compact />
+          </div>
+          <div class="d-none d-sm-none d-md-none d-lg-flex">
+            <div v-if="!isbringHome">
+              <div v-if="isApproved" class="stake align-self-center">
+                <wButton
+                  :actived="false"
+                  @click="openModal = true"
+                  :disabled="isSendingWar || getTrooper.myTroops === '0'"
+                >
+                  {{ isSendingWar ? "Sending to war..." : "Enlist at war" }}
+                </wButton>
+              </div>
+              <div v-else class="stake align-self-center">
+                <wButton
+                  class="my-2 my-md-0"
+                  :actived="false"
+                  @click="approve"
+                  :disabled="getTrooper.myTroops === '0' || loadingApproved"
+                >
+                  {{ loadingApproved ? "Approving..." : "Approve enlistment" }}
+                </wButton>
+              </div>
+            </div>
+
+            <div v-else>
+              <div class="stake align-self-center">
+                <wButton
+                  class="my-2 my-md-0"
+                  :actived="false"
+                  @click="bringHomeWithdraw"
+                  :disabled="getTrooper.staked === '0' || btnBringHomeDisabled"
+                >
+                  Bring home
+                </wButton>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-start">
+            <v-img
+              class="mt-3"
+              max-width="80"
+              :src="`/images/tier-${getTrooper.tier}.png`"
             />
-          </span>
-        </span>
+          </div>
+        </div>
       </div>
 
-      <v-row class="ma-0">
-        <v-col
-          cols="12"
-          md="6"
-          class="d-flex justify-center justify-md-start pa-0"
-        >
-          <div class="global-troops align-self-center">
-            Global troops in war:
-            <div>
-              QTY:
-              <amount
-                :amount="getTrooper.globalTroops"
-                decimals="2"
-                compact
-                approximate
-                tooltip
-              />
-            </div>
+      <div class="d-flex d-sm-flex d-md-flex d-lg-none justify-center justify-md-start">
+        <div v-if="!isbringHome">
+          <div v-if="isApproved" class="stake">
+            <wButton
+              class="my-1"
+              :actived="false"
+              @click="openModal = true"
+              :disabled="isSendingWar || getTrooper.myTroops === '0'"
+            >
+              {{ isSendingWar ? "Sending to war..." : "Enlist at war" }}
+            </wButton>
           </div>
-        </v-col>
-        <v-col cols="12" md="6" class="pa-0">
-          <div v-if="!isbringHome">
-            <div v-if="isApproved" class="stake align-self-center">
-              <wButton
-                :actived="false"
-                @click="openModal = true"
-                :disabled="isSendingWar || getTrooper.myTroops === '0'"
-              >
-                {{ isSendingWar ? "Sending to war..." : "Enlist at war" }}
-              </wButton>
-            </div>
-            <div v-else class="stake align-self-center">
-              <wButton
-                class="my-2 my-md-0"
-                :actived="false"
-                @click="approve"
-                :disabled="getTrooper.myTroops === '0' || loadingApproved"
-              >
-                {{ loadingApproved ? "Approving..." : "Approve enlistment" }}
-              </wButton>
-            </div>
+          <div v-else class="stake">
+            <wButton
+              class="my-1"
+              :actived="false"
+              @click="approve"
+              :disabled="getTrooper.myTroops === '0' || loadingApproved"
+            >
+              {{ loadingApproved ? "Approving..." : "Approve enlistment" }}
+            </wButton>
           </div>
+        </div>
 
-          <div v-else>
-            <div class="stake align-self-center">
-              <wButton
-                class="my-2 my-md-0"
-                :actived="false"
-                @click="bringHomeWithdraw"
-                :disabled="getTrooper.staked === '0' || btnBringHomeDisabled"
-              >
-                Bring home
-              </wButton>
-            </div>
+        <div v-else>
+          <div class="stake">
+            <wButton
+              class="my-1 my-md-0"
+              :actived="false"
+              @click="bringHomeWithdraw"
+              :disabled="getTrooper.staked === '0' || btnBringHomeDisabled"
+            >
+              Bring home
+            </wButton>
           </div>
-        </v-col>
-      </v-row>
+        </div>
+      </div>
 
       <stake-modal
         :open="openModal"
@@ -316,64 +320,32 @@ export default {
 </script>
 
 <style scoped>
-.troop {
-  position: relative;
-}
-.staked {
-  position: absolute;
-  font-size: 22px;
+.stats {
   font-weight: bold;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 210px;
+  font-size: 28px;
 }
-.troop-symbol {
-  position: absolute;
-  top: 50%;
-  font-size: 13px;
-  font-weight: bold;
-  right: 15px;
-  transform: translate(0%, -50%);
+.qty {
   color: #ffb800;
-}
-.my-troops {
-  position: absolute;
-  font-size: 18px;
   font-weight: bold;
-  bottom: 0px;
-  left: 295px;
-  transform: translate(-50%, -50%);
-  color: #ffb800;
-  width: 300px;
+  font-size: 16px;
 }
-.global-troops {
-  font-size: 18px;
+.globalQty {
+  color: #f6ff00;
   font-weight: bold;
-  margin-right: 32px;
+  font-size: 16px;
 }
-.global-troops > div {
-  font-size: 22px;
-  color: #ffb800;
+.qty >>> span,
+.globalQty >>> span {
+  color: #fff;
+}
+.disabled {
+  opacity: 0.5;
+  filter: grayscale(100%);
 }
 
 @media only screen and (max-width: 600px) {
-  .troop {
-    margin: 0 auto;
-  }
-  .troop-symbol {
-    top: 15%;
-    font-size: 11px;
-    right: 0px;
-  }
-  .staked {
+  .qty, .globalQty {
     font-size: 14px;
-    top: 50%;
-    left: 65%;
-  }
-  .my-troops {
-    font-size: 12px;
-    left: 240px;
   }
 }
 </style>

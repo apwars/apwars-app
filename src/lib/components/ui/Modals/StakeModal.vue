@@ -66,10 +66,9 @@
             </v-currency-field>
 
             <div class="d-flex justify-center mt-2">
-              <wButton class="mx-2" size="small" @click="close">Cancel</wButton>
+              <wButton class="mx-2" @click="close">Cancel</wButton>
               <wButton
                 class="mx-2"
-                size="small"
                 @click="confirm"
                 :actived="true"
                 :disabled="!checkbox || amount === 0"
@@ -210,6 +209,10 @@ export default {
 
 .content {
   color: #201813;
+}
+
+.content >>> .btn-bg-c > .label {
+  color: #FFFFFF !important;
 }
 
 .btn {
