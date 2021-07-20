@@ -1,11 +1,25 @@
 <template>
   <v-footer app>
-      <div class="overline">
+    <div class="overline">
       Copyright © 2021 <a href="#" target="_blank">APWars</a>, All rights Reserved
-      </div>
-      <v-spacer></v-spacer>
-      <div class="overline">
-      Made with <v-icon small color="pink">mdi-heart</v-icon> by <a href="#" target="_blank">Orcs and Humans</a>
-      </div>
+    </div>
+    <v-spacer></v-spacer>
+    <div class="overline">
+      Version<a href="#" target="_blank"> {{ $store.getters.appVersion }} </a>
+    </div>
+    <v-spacer></v-spacer>
+    <div class="overline">
+      Made with <v-icon small color="pink">mdi-heart</v-icon> by
+      <a href="#" target="_blank">Orcs and Humans</a>
+    </div>
   </v-footer>
 </template>
+<script>
+export default {
+  computed: {
+    appVersion() {
+      return this.$store.getters.appVersion;
+    },
+  },
+};
+</script>
