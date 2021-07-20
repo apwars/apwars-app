@@ -18,6 +18,9 @@ export function getTroops() {
       image: "/images/troops/wWARRIOR.png",
       strength: 2,
       defense: 4,
+      combinators: {
+        warPreparation: 1,
+      }
     },
     {
       id: 1,

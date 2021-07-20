@@ -118,7 +118,7 @@
           />
           <unit-war-preparation
             v-else-if="getType === 'war-preparation'"
-            :trooper="trooper"
+            :unit="trooper"
           />
         </v-col>
       </v-row>
