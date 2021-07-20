@@ -34,6 +34,9 @@
           <template v-slot:[`item.sender`]="{ item }">
             <v-address :address="item.sender" link tooltip></v-address>
           </template>
+          <template v-slot:[`item.date`]="{ item }">
+            <v-address :address="item.date" link tooltip></v-address>
+          </template>
           <template v-slot:[`item.nft.title`]="{ item }">
             <div class="d-flex">
               <img
@@ -264,12 +267,18 @@ export default {
           sortable: true,
         },
         {
+          text: "Date",
+          value: "nft.title",
+          width: "15%",
+          sortable: true,
+        },
+        {
           text: "Game Item",
           value: "nft.title",
           width: "20%",
           sortable: true,
         },
-        { text: "Type", value: "nft.typeDesc", width: "15%", sortable: false },
+        { text: "Type", value: "nft.typeDesc", width: "10%", sortable: false },
         {
           text: "Quantity",
           value: "quantity",
