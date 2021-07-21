@@ -160,6 +160,13 @@ export default {
       }
       return {};
     },
+    combinatorId() {
+      if(this.unit.combinators){
+        return this.unit.combinators.warPreparation || 0;
+      }
+      return 0;
+      
+    },
   },
   watch: {
     isConnected() {
@@ -180,7 +187,11 @@ export default {
     initData() {
       this.tokenA = this.addresses.wGOLD;
       this.tokenB = this.unit.contractAddress[this.networkInfo.id];
-      this.combinatorContract = new Combinator(this.addresses.combinator);
+      this.combinatorContract = new Combinator(
+        this.addresses.combinator,
+        this.addresses.combinatorManager
+      );
+      console.log(this.addresses.combinatorManager);
       this.tokenAContract = new wGOLD(this.tokenA);
       this.tokenBContract = new Troops(this.tokenB);
     },
@@ -193,6 +204,12 @@ export default {
         this.account,
         this.addresses.combinator
       );
+      const timeBlock = this.combinatorContract.getGeneralConfig(
+        this.account,
+        this.account,
+        this.combinatorId
+      );
+      console.log(timeBlock);
     },
     openModalArimedesApproval() {
       if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
@@ -333,7 +350,7 @@ export default {
       try {
         this.isLoadingNewResearch = true;
         await this.combinatorContract.combineTokens(
-          this.unit.combinators.warPreparation,
+          this.combinatorId,
           1,
           this.account
         );
