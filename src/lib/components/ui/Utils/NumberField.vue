@@ -2,6 +2,7 @@
   <div class="number-field">
     <v-currency-field
       v-bind:dense="dense"
+      v-bind:disabled="disabled"
       :label="label"
       v-model="quantity"
       outlined
@@ -20,7 +21,7 @@
 
 <script>
 export default {
-  props: ["label", "min", "max", "dense"],
+  props: ["label", "min", "max", "dense", "disabled", "value"],
   data() {
     return {
       quantity: null,
@@ -39,7 +40,12 @@ export default {
     event: "change",
   },
   mounted() {
-    this.quantity = this.getMin;
+    this.quantity = this.$attrs.quantity;
+    if (this.quantity === undefined || this.quantity === null) {
+      this.quantity = this.getMin;
+    } else {
+      this.update();
+    }
   },
   computed: {
     getMin() {

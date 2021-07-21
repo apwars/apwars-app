@@ -50,7 +50,7 @@
         >
           Approve Research
         </wButton>
-        <wButton v-else class="mt-1">
+        <wButton v-else @click="modalArimedesNewResearch = true" class="mt-1">
           New Research
         </wButton>
       </div>
@@ -64,6 +64,14 @@
       :text="textArimedesModal"
       :textConfirm="textConfirmArimdesModal"
     ></arimedes-modal>
+
+    <new-research-modal
+      :open="modalArimedesNewResearch"
+      @confirm="combineTokens()"
+      @close="modalArimedesNewResearch = false"
+      :isLoading="isLoadingNewResearch"
+      :info="combinatorInfo"
+    ></new-research-modal>
   </div>
 </template>
 
@@ -71,6 +79,7 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ArimedesModal from "@/lib/components/ui/Modals/ArimedesModal";
+import NewResearchModal from "@/lib/components/ui/Modals/NewResearchModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import Combinator from "@/lib/eth/Combinator";
@@ -96,11 +105,14 @@ export default {
     Amount,
     wButton,
     ArimedesModal,
+    NewResearchModal,
   },
   data() {
     return {
+      modalArimedesNewResearch: false,
       modalArimedesApproval: false,
       isLoadingApprove: false,
+      isLoadingNewResearch: false,
       signPage: 0,
       textArimedesModal: "",
       textConfirmArimdesModal: "Sign contract",
@@ -111,6 +123,16 @@ export default {
       tokenB: "",
       tokenAContract: {},
       tokenBContract: {},
+      combinatorInfo: {
+        tokenA: {
+          amount: "10000000000000000000000",
+          name: "wGOLD",
+        },
+        tokenB: {
+          amount: "1000000000000000000000",
+          name: "wWarrior",
+        },
+      },
     };
   },
   computed: {
@@ -122,6 +144,9 @@ export default {
     },
     networkInfo() {
       return this.$store.getters["user/networkInfo"];
+    },
+    currentBlockNumber() {
+      return this.$store.getters["user/currentBlockNumber"];
     },
     isApproved() {
       return this.isApprovedTokenA && this.isApprovedTokenB;
@@ -136,6 +161,21 @@ export default {
       return {};
     },
   },
+  watch: {
+    isConnected() {
+      this.initData();
+      this.loadData();
+    },
+
+    account() {
+      this.loadData();
+    },
+
+    currentBlockNumber() {
+      this.loadData();
+    },
+  },
+
   methods: {
     initData() {
       this.tokenA = this.addresses.wGOLD;
@@ -287,6 +327,24 @@ export default {
       } catch (error) {
         this.setInitialStateApproveFirstPage();
         return ToastSnackbar.error(error.toString());
+      }
+    },
+    async combineTokens() {
+      try {
+        this.isLoadingNewResearch = true;
+        await this.combinatorContract.combineTokens(
+          this.unit.combinators.warPreparation,
+          1,
+          this.account
+        );
+        ToastSnackbar.success(
+          "New search successfully sent Arimedes - War Engineer"
+        );
+        this.modalArimedesNewResearch = false;
+      } catch (error) {
+        return ToastSnackbar.error(error.toString());
+      } finally {
+        this.isLoadingNewResearch = false;
       }
     },
   },

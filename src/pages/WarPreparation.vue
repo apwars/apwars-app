@@ -10,7 +10,7 @@
       </v-container>
       <div class="d-flex justify-center">
         <v-img
-          max-width="800px"
+          max-width="609px"
           src="/images/war-preparation/create-weapon.png"
         />
       </div>
