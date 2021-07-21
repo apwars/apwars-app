@@ -6,11 +6,22 @@ import UserModule from './user'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+
+export default new Vuex.Store({
+
   modules: {
     app: AppModule,
     user: UserModule
-  }
-})
+  },
 
-export default store
+  state: {
+    packageVersion: process.env.PACKAGE_VERSION || '1.0.0'
+  },
+
+  getters: {
+    appVersion: (state) => {
+      return state.packageVersion
+    }
+  },
+
+})
