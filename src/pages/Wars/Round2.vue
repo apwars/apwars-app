@@ -26,7 +26,7 @@
                 v-else
                 class="mx-auto"
                 max-width="400"
-                src="/images/battle/the-degenerate-round-2.png"
+                src="/images/battle/the-degenerate-2.png"
               />
             </v-col>
             <v-col cols="12" md="4" class="d-flex justify-center">

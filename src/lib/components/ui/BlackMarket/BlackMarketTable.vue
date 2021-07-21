@@ -254,12 +254,18 @@ export default {
         },
         { text: 'Date', value: 'createdAt', width: '15%', sortable: false },
         {
-          text: 'Game Item',
-          value: 'nft.title',
-          width: '20%',
+          text: "Date",
+          value: "nft.title",
+          width: "15%",
           sortable: true,
         },
-        { text: 'Type', value: 'nft.typeDesc', width: '10%', sortable: false },
+        {
+          text: "Game Item",
+          value: "nft.title",
+          width: "20%",
+          sortable: true,
+        },
+        { text: "Type", value: "nft.typeDesc", width: "10%", sortable: false },
         {
           text: 'Quantity',
           value: 'quantity',
