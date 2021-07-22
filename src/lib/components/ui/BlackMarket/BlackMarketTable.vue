@@ -254,12 +254,6 @@ export default {
         },
         { text: 'Date', value: 'createdAt', width: '15%', sortable: false },
         {
-          text: "Date",
-          value: "nft.title",
-          width: "15%",
-          sortable: true,
-        },
-        {
           text: "Game Item",
           value: "nft.title",
           width: "20%",
