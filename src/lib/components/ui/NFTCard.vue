@@ -103,6 +103,7 @@
       :imageUrl="collectible.image"
       :gameItemTitle="collectible.title"
       :isLoading="isLoadingShowInfo"
+      textConfirm="Send Item"
     >
       <span v-html="collectible.description" />
     </game-modal>
