@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isConnected && !isLoading && warStage > 1">
-      <v-alert v-if="isWar.test" type="warning">
+      <v-alert v-if="isWar.showTest" type="warning">
         Danger, it's a test war
       </v-alert>
       <div class="bg-fed">
@@ -116,10 +116,11 @@
             </div>
             <div class="d-flex ml-6 mt-1">
               <wButton
+                v-if="showReedemPrize"
                 class="ml-1 align-self-center"
                 :actived="false"
                 @click="redeemPrize"
-                :disabled="isReedemPrize"
+                :disabled="isReedemPrize || !myEarnings"
               >
                 {{ isReedemPrize ? "Already withdrawn" : "Redeem prize" }}
               </wButton>
@@ -164,13 +165,7 @@
         :contract-war="contractWar"
       ></list-units>
 
-      <v-container v-else>
-        <v-row>
-          <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3">Loading...</h3>
-          </v-col>
-        </v-row>
-
+      <v-container v-if="isConnected && !isLoading && isWar.report">
         <v-row>
           <v-col cols="12" class="d-flex justify-center">
             <h3 class="text-h3 text-wGOLD">Players</h3>
@@ -253,6 +248,7 @@ import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
 
 import WarMachine from "@/lib/eth/WarMachine";
+import Convert from "@/lib/helpers/Convert";
 
 export default {
   components: {
@@ -272,7 +268,8 @@ export default {
       contractWar: this.$route.params.contractWar,
       warStats: {},
       prize: {},
-      isReedemPrize: true,
+      isReedemPrize: false,
+      showReedemPrize: false,
       warStage: 0,
       myEarnings: "0",
       isWar: { test: false },
@@ -378,6 +375,7 @@ export default {
           this.router.push("/wars");
         }
         this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
+        this.showReedemPrize = this.isWar.showReedemPrize;
 
         this.globalTroops = getTroops();
       } catch (error) {
@@ -398,18 +396,22 @@ export default {
           this.addresses.wGOLD
         );
 
-        let prizeWon = web3.utils.fromWei(this.prize.won.toString());
-        prizeWon = parseFloat(prizeWon);
-        const reportUser = this.isWar.report.players.find(
-          (player) =>
-            player.address.toLowerCase() === this.account.toLowerCase()
-        );
-        if (reportUser) {
-          const wGOLDShare =
-            this.isWar.report.winner === "TeamA"
-              ? reportUser.teamAShare
-              : reportUser.teamBShare;
-          this.myEarnings = prizeWon * wGOLDShare;
+        if (this.isWar.report) {
+          let prizeWon = web3.utils.fromWei(this.prize.won.toString());
+          prizeWon = parseFloat(prizeWon);
+          const reportUser = this.isWar.report.players.find(
+            (player) =>
+              player.address.toLowerCase() === this.account.toLowerCase()
+          );
+          if (reportUser) {
+            const wGOLDShare =
+              this.isWar.report.winner === "TeamA"
+                ? reportUser.teamAShare
+                : reportUser.teamBShare;
+            this.myEarnings = prizeWon * wGOLDShare;
+          }
+        } else {
+          this.myEarnings = Convert.fromWei(await this.warMachine.myAmountPrize(this.account), true);
         }
       } catch (e) {
         console.log(e);

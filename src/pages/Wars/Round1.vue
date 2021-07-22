@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-alert v-if="isWar.test" type="warning">Danger, it's a test war</v-alert>
+    <v-alert v-if="isWar.showTest" type="warning">Danger, it's a test war</v-alert>
     <div v-if="isConnected && !isLoading && warStage > 0">
       <div class="bg-fed">
         <v-container>
