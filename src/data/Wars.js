@@ -20,6 +20,7 @@ const wars = [
     },
     totalPrize: "4874364487632384826939128",
     test: false,
+    showTest: false,
     report: war1FinalReport,
     showReedemPrize: false,
   },
@@ -40,6 +41,7 @@ const wars = [
     },
     totalPrize: "10000000000000000000000",
     test: true,
+    showTest: true,
     showReedemPrize: true,
   },
   {
@@ -59,6 +61,7 @@ const wars = [
     },
     totalPrize: "10000000000000000000000",
     test: true,
+    showTest: true,
     showReedemPrize: true,
   },
   {
@@ -78,6 +81,7 @@ const wars = [
     },
     totalPrize: "150000000000000000000000",
     test: true,
+    showTest: true,
     showReedemPrize: true,
   },
   {
@@ -97,6 +101,7 @@ const wars = [
     },
     totalPrize: "10000000000000000000000",
     test: true,
+    showTest: true,
     showReedemPrize: true,
   },
   {
@@ -116,6 +121,7 @@ const wars = [
     },
     totalPrize: "10000000000000000000000",
     test: true,
+    showTest: true,
     showReedemPrize: true,
   },
   {
@@ -135,6 +141,7 @@ const wars = [
     },
     totalPrize: "1000000000000000000000",
     test: true,
+    showTest: true,
     showReedemPrize: true,
   },
   {
@@ -154,6 +161,27 @@ const wars = [
     },
     totalPrize: "1000000000000000000000",
     test: true,
+    showTest: true,
+    showReedemPrize: true,
+  },
+  {
+    id: 7,
+    name: "The second conflict #Test",
+    description: `
+    For a long time all the attention in Decentraland was spent on the rising tensions between Humans and Orcs, after a golden period of bonanza an age of military preparation has begun. A lot of wGOLD was spent in recruiting Warriors and Archers across the Human empire, from the Capital to the extended countryside, men of all ages were being recruited, children and seniors capable of holding a sword were considered able to fight. At the same time at Orc pits, Grunts and Orc Archers were being raised and united to form a monstrous army. This animosity and arousement of forces shadowed the real threat to liberty of all races that was lurking into the shadows. Silently in an obscure form the Forces of Extreme Darkness were growing in power day by day, night by night in a subversive manner. This ultimate enemy has not yet been faced.`,
+    dateStart: "2021-07-26",
+    dateEnd: "2021-07-30",
+    contractAddress: {
+      "56": "0xe32b0f2456285e389e54e25f81064bef77b14e9d",
+    },
+    countdown: {
+      enlistment: 1626963304000,
+      round1: 1626970504000,
+      round2: 1626974104000,
+    },
+    totalPrize: "1000000000000000000000",
+    test: false,
+    showTest: true,
     showReedemPrize: true,
   }
 ];
