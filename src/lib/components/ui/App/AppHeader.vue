@@ -141,7 +141,7 @@ export default {
           href: "",
           submenu: [
             {
-              title: "FED War",
+              title: "War against FED",
               href: "/wars",
             },
             {

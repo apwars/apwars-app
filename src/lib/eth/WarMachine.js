@@ -204,48 +204,9 @@ export default class WarMachine {
 
   async myAmountPrize(address) {
     try {
-      const warStats = await this.warStats();
-      let troops = getTroops();
-      const contractFake = troops[0].contractAddress[this.networkId];
-
-      let isAttacker = warStats.attackerTeam == warStats.winner;
-
-      const teamA = await this.smc.methods.getWarInfo(1, [contractFake]).call();
-      const teamB = await this.smc.methods.getWarInfo(2, [contractFake]).call();
-
-      const winner = warStats.winner === "1" ? teamA : teamB;
-
-      const teamTotalPower = isAttacker
-        ? winner.totalAttackPower
-        : winner.totalDefensePower;
-
-      const myInfo = await this.smc.methods
-        .getPlayerInfo([contractFake], address)
-        .call();
-
-      const totalAttackPower =
-        warStats.winner === "1"
-          ? myInfo.totalAttackPowerTeamA
-          : myInfo.totalAttackPowerTeamB;
-
-      const totalDefensePower =
-        warStats.winner === "1"
-          ? myInfo.totalDefensePowerTeamA
-          : myInfo.totalDefensePowerTeamB;
-
-      const userTotalPower = isAttacker ? totalAttackPower : totalDefensePower;
-      const getTotalPrize = await this.getWarReportwGOLD();
-      let userShare = new BigNumber("0");
-
-      if (userTotalPower.toString() !== "0") {
-        userShare = new BigNumber(userTotalPower)
-          .div(teamTotalPower)
-          .times(getTotalPrize.won);
-      }
-
-      return userShare.toFixed(0);
+      const getWithdrawPrize = await this.smc.methods.getWithdrawPrize(address).call();
+      return getWithdrawPrize.net;
     } catch (error) {
-      console.log(error);
       return "0";
     }
   }
