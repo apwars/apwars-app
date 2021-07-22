@@ -40,17 +40,17 @@
             </span>
           </template>
           <template v-slot:[`item.nft.title`]="{ item }">
-            <div class="d-flex">
+            <a class="d-flex" @click="openInfo(item.nft.title, item.nft.description)">
               <img
                 :src="item.nft.image"
                 class="align-self-center my-1"
                 width="30px"
                 :alt="item.nft.title"
               />
-              <span class="ml-1 align-self-center">
+              <span class="ml-1 align-self-center lighten-5">
                 {{ item.nft.title }}
               </span>
-            </div>
+            </a>
           </template>
           <template v-slot:[`item.quantity`]="{ item }">
             <div class="text-center">
@@ -93,6 +93,16 @@
                 </div>
               </wButton>
             </div>
+            <game-modal
+              :open="showInfo"
+              :title="cardInfo.title"
+              @confirm="goGameItems()"
+              @close="closeInfo()"
+              :gameItemTitle="cardInfo.title"
+              textConfirm="Game Items"
+            >
+              <span v-html="cardInfo.description" />
+            </game-modal>
           </template>
         </v-data-table>
         <game-item-wood-modal
@@ -190,6 +200,7 @@ import wButton from '@/lib/components/ui/Buttons/wButton';
 import GameItemWoodModal from '@/lib/components/ui/Modals/GameItemWoodModal';
 import RaskelModal from '@/lib/components/ui/Modals/RaskelModal';
 import ToastSnackbar from '@/plugins/ToastSnackbar';
+import GameModal from '@/lib/components/ui/Modals/GameModal';
 
 import Convert from '@/lib/helpers/Convert';
 
@@ -218,6 +229,7 @@ export default {
     GameItemWoodModal,
     RaskelModal,
     NumberField,
+    GameModal,
   },
 
   data() {
@@ -254,12 +266,12 @@ export default {
         },
         { text: 'Date', value: 'createdAt', width: '15%', sortable: false },
         {
-          text: "Game Item",
-          value: "nft.title",
-          width: "20%",
+          text: 'Game Item',
+          value: 'nft.title',
+          width: '20%',
           sortable: true,
         },
-        { text: "Type", value: "nft.typeDesc", width: "10%", sortable: false },
+        { text: 'Type', value: 'nft.typeDesc', width: '15%', sortable: false },
         {
           text: 'Quantity',
           value: 'quantity',
@@ -282,6 +294,12 @@ export default {
       confirmOrderWaitingStage: 0,
 
       amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0, calcAmount: 0 },
+
+      showInfo: false,
+      cardInfo:{
+        title: '',
+        description: '',
+      }
     };
   },
 
@@ -398,6 +416,7 @@ export default {
       if (!this.isConnected) {
         return;
       }
+
       this.headers[0].text = this.playerColumnTitle;
       this.collectibleContract = new Collectibles(this.addresses.collectibles);
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
@@ -614,6 +633,20 @@ export default {
       this.openCancelOrderGameItem = false;
     },
 
+    openInfo(title, description) {
+      this.cardInfo.title = title;
+      this.cardInfo.description = description;
+      this.showInfo = true;
+    },
+
+    closeInfo() {
+      this.showInfo = false;
+    },
+
+    goGameItems(){
+      return this.$router.push('/game-items')
+    },
+
     cancelOrder() {
       try {
         this.isLoadingCancel = true;
@@ -669,6 +702,10 @@ export default {
 .card-table-black-market,
 .table-black-market {
   background: transparent;
+}
+
+a {
+  color: #ffffff !important;
 }
 
 .table-black-market >>> .v-data-table__wrapper > table > tbody > tr > td,
