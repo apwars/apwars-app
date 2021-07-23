@@ -16,17 +16,19 @@
         <div
           class="d-flex flex-column flex-md-row justify-space-between align-center you-will-need"
         >
-          <div class="d-flex">
-            <img width="52px" src="/images/weapon-research/arimedes.png" />
+          <div>
+            <img width="70px" src="/images/weapon-research/arimedes.png" />
           </div>
 
-          <div class="d-flex align-center px-3 font-weight-black">
-            There is a fee in wGOLD for me to train your troops and you get the
-            reward
+          <div class="d-flex align-center px-1 font-weight-black">
+            If you want my services, and I can tell you need it badly, lets sign
+            a research agreement. You will pay me wGold and I will work with
+            your wUnits to develop weapons. Whenever I am finished I will keep
+            the wGold, return your wUnits and your newly created Weapons.
           </div>
 
-          <div class="d-flex">
-            <v-img class="mr-3" max-width="52px" :src="getInfo.infoWeapon.image" />
+          <div>
+            <img width="50px" :src="getInfo.infoWeapon.image" />
           </div>
         </div>
 
@@ -84,7 +86,9 @@
                   compact
                 />blocks
               </div>
-              <div><time-block :blocks="getInfo.getGeneralConfig.blocks" /></div>
+              <div>
+                <time-block :blocks="getInfo.getGeneralConfig.blocks" />
+              </div>
             </div>
           </div>
         </div>

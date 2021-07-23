@@ -197,7 +197,7 @@ export function getTroops() {
         "56": "0x56c09E954690d80C5728194f7eAf473737Dc2180",
         "97": "0xC2d75018Cd8c2e87794d5839B80c35a09EeeA1BB",
       },
-      image: "/images/troops/wARMORED-GRUNT.png",
+      image: "/images/troops/wARMOURED-GRUNT.png",
       strength: 0,
       defense: 0,
       combinators: {

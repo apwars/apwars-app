@@ -1,6 +1,7 @@
 import store from "@/store";
 import { getGameItems } from "./Collectibles/GameItems";
 import { getLegendaryRelics } from "./Collectibles/LegendaryRelics";
+import { getWeapons } from "./Collectibles/Weapons";
 
 export function getCollectibles() {
   const addresses = store.getters["user/addresses"];
@@ -9,5 +10,5 @@ export function getCollectibles() {
     return [];
   }
 
-  return [].concat(getGameItems(), getLegendaryRelics());
+  return [].concat(getGameItems(), getLegendaryRelics(), getWeapons());
 }
