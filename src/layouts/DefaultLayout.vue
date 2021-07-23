@@ -100,6 +100,9 @@
                   </v-list-item-content>
                 </v-list-item>
               </div>
+              <div v-else class="d-flex justify-center align-center" style="max-height: 260px; overflow-y: scroll; overflow-x: hide">
+                <img src="/images/chat.png" class="mt-2" style="width: 260px; height: 260px" />
+              </div>
             </v-card-text>
             <v-spacer v-if="playerName"></v-spacer>
             <v-card-actions class="d-flex flex-row" style="height: 70px;" v-if="playerName">
@@ -327,8 +330,8 @@ export default {
   position: fixed;
   bottom: 0;
   right: 0;
-  height: 200px;
-  margin-bottom: 10px;
+  height: 400px;
+  margin-bottom: 60px;
   z-index: 10000;
 }
 
