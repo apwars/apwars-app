@@ -30,12 +30,12 @@
       </div>
 
       <v-slide-y-transition>
-        <div class="message-box" v-show="showChatBox">
+        <div :class="{'message-box': playerName, 'player-box': !playerName}" v-if="showChatBox">
           <v-card
             class="d-flex flex-column space-between"
             width="350"
             outlined
-            height="100%"
+            :height="playerName ? `100%` : null"
           >
             <v-card-text>
               <div
@@ -45,14 +45,47 @@
                   Live Chat - APWars 
                   <span v-if="playerName">({{playerName}})</span>
                 </div>
-                <v-btn
-                  icon
-                  @click="toggleChat()"
-                >
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
+                <v-menu
+                  bottom
+                  origin="center center"
+                  transition="scale-transition"
+                  >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      dark
+                      icon
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                  </template>
+
+                  <v-list>
+                    <v-list-item>
+                      <v-list-item-title @click="toggleChat()">
+                        <v-btn text>
+                          <v-icon left>
+                            mdi-close
+                          </v-icon>
+                          Close
+                        </v-btn>
+                      </v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                       <v-list-item-title @click="clearPlayerName()">
+                        <v-btn text>
+                          <v-icon left>
+                            mdi-account-arrow-right
+                          </v-icon>
+                          Change name
+                        </v-btn>
+                      </v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
               </div>
-              <div id="messages-container" style="max-height: 260px; overflow: scroll">
+              <div v-if="playerName" id="messages-container" style="max-height: 260px; overflow-y: scroll; overflow-x: hide">
                 <v-list-item v-for="(message, index) in messages" :key="index" :id="`message-${index}`">
                   <v-list-item-avatar>
                     <v-img :src="`https://avatar.apwars.farm?seed=${message.id}`"></v-img>
@@ -68,7 +101,7 @@
                 </v-list-item>
               </div>
             </v-card-text>
-            <v-spacer></v-spacer>
+            <v-spacer v-if="playerName"></v-spacer>
             <v-card-actions class="d-flex flex-row" style="height: 70px;" v-if="playerName">
                 <div style="width: 100%">
                   <v-text-field
@@ -248,6 +281,16 @@ export default {
       sessionStorage.setItem('signature', this.signature);
     },
 
+    async clearPlayerName() {
+      this.guid = '';
+      this.signature = ''
+      this.playerName = '';
+
+      sessionStorage.setItem('playerName', '');
+      sessionStorage.setItem('guid', '');
+      sessionStorage.setItem('signature', '');
+    },
+
     parseDate(date) {
       return moment(date).startOf('minute').fromNow()
     }
@@ -277,6 +320,15 @@ export default {
   right: 0;
   height: 400px;
   margin-bottom: 60px;
+  z-index: 10000;
+}
+
+.player-box {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 200px;
+  margin-bottom: 10px;
   z-index: 10000;
 }
 
