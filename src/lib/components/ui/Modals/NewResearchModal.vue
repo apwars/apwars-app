@@ -2,45 +2,31 @@
   <modal-wood
     :open="open"
     :isLoading="isLoading"
-    :disabledConfirm="isLoading || disabledConfirm"
+    :disabledConfirm="isLoading || disabledConfirm || !checkbox"
     :disabledClose="isLoading"
     title="Research for new weapon"
     @close="$emit('close')"
     @confirm="$emit('confirm')"
     :width="width"
     :height="height"
-    textConfirm="Create"
+    textConfirm="Research"
   >
     <v-row dense>
       <v-col dense cols="12" md="12">
         <div
           class="d-flex flex-column flex-md-row justify-space-between align-center you-will-need"
         >
-          <div class="d-flex align-center font-weight-black text-h6">
-            You will need:
+          <div class="d-flex">
+            <img width="52px" src="/images/weapon-research/arimedes.png" />
           </div>
 
-          <div class="d-flex align-center">
-            <v-img class="mx-1" max-width="26px" src="/images/wGOLD.png" />
-            <amount
-              :amount="info.tokenA.amount"
-              decimals="2"
-              compact
-              :symbol="info.tokenA.name"
-            />
+          <div class="d-flex align-center px-3 font-weight-black">
+            There is a fee in wGOLD for me to train your troops and you get the
+            reward
           </div>
-          <div class="d-flex align-center">
-            <v-img
-              class="mx-1"
-              max-width="26px"
-              src="/images/icons/battle-shield.png"
-            />
-            <amount
-              :amount="info.tokenB.amount"
-              decimals="2"
-              compact
-              :symbol="info.tokenB.name"
-            />
+
+          <div class="d-flex">
+            <v-img class="mr-3" max-width="52px" :src="getInfo.infoWeapon.image" />
           </div>
         </div>
 
@@ -52,8 +38,9 @@
               <v-img src="/images/wGOLD.png" />
             </div>
             <number-field
+              no-icons
               class="mt-3"
-              v-model="info.tokenA.amountFormatted"
+              v-model="getInfo.getTokenAConfig.amountFormatted"
               dense
               disabled
             ></number-field>
@@ -65,26 +52,54 @@
               +
             </div>
           </div>
-          <div class="d-flex align-center">
+          <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img src="/images/icons/battle-shield.png" />
+              <v-img :src="`/images/icons/${info.unit.name}.png`" />
             </div>
             <number-field
+              no-icons
               class="mt-3"
-              v-model="info.tokenA.amountFormatted"
+              v-model="getInfo.getTokenBConfig.amountFormatted"
               dense
               disabled
             ></number-field>
           </div>
         </div>
 
-        <div class="d-flex justify-center align-center mt-2 mt-md-0">
+        <div class="d-flex justify-center align-center mt-2 mt-md-1">
           <v-img
             class="mr-1"
             max-width="52px"
             src="/images/icons/hourglass.png"
           />
-          <div class="primary--text font-weight-black text-h6">Time required: 9,600 blocks</div>
+          <div class="primary--text font-weight-black text-h6">
+            <div class="d-flex flex-column">
+              <div>
+                Time required:
+                <amount
+                  :amount="getInfo.getGeneralConfig.blocks"
+                  formatted
+                  fo
+                  decimals="0"
+                  compact
+                />blocks
+              </div>
+              <div><time-block :blocks="getInfo.getGeneralConfig.blocks" /></div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-center align-center">
+          <v-checkbox
+            v-model="checkbox"
+            class="checkbox-modal-input ma-0 pa-0"
+            color="secondary"
+          >
+            <template v-slot:label>
+              <div>
+                I have read and agreed with the research rules
+              </div>
+            </template>
+          </v-checkbox>
         </div>
       </v-col>
     </v-row>
@@ -93,6 +108,7 @@
 
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
+import TimeBlock from "@/lib/components/ui/Utils/TimeBlock";
 import ModalWood from "@/lib/components/ui/Modals/Templates/Wood";
 import NumberField from "@/lib/components/ui/Utils/NumberField";
 import Convert from "@/lib/helpers/Convert";
@@ -108,23 +124,32 @@ export default {
     "info",
   ],
 
+  data() {
+    return {
+      checkbox: false,
+    };
+  },
+
   components: {
     Amount,
     ModalWood,
     NumberField,
+    TimeBlock,
   },
 
-  mounted() {
-    if (this.info) {
-      this.info.tokenA.amountFormatted = Convert.fromWei(
-        this.info.tokenA.amount,
+  computed: {
+    getInfo() {
+      let data = { ...this.info };
+      data.getTokenAConfig.amountFormatted = Convert.fromWei(
+        data.getTokenAConfig.amount,
         true
       );
-      this.info.tokenB.amountFormatted = Convert.fromWei(
-        this.info.tokenB.amount,
+      data.getTokenBConfig.amountFormatted = Convert.fromWei(
+        data.getTokenBConfig.amount,
         true
       );
-    }
+      return data;
+    },
   },
 };
 </script>
@@ -143,8 +168,45 @@ export default {
   background-size: 200%;
   background-position: center;
   border-radius: 8px;
-  padding: 16px;
-  width: 75px;
-  height: 75px;
+  padding: 6px;
+  width: 85px;
+  height: 85px;
+}
+
+.checkbox-modal-input >>> .v-input__control > .v-input__slot fieldset {
+  color: #fff !important;
+  border-width: 3px !important;
+  border-radius: 18px !important;
+}
+
+.checkbox-modal-input >>> .v-label {
+  transform-origin: top left !important;
+  font-weight: bold !important;
+  color: #fff !important;
+}
+
+.checkbox-modal-input >>> .v-input__append-inner {
+  color: #fff !important;
+  font-weight: bold !important;
+  font-size: 13px;
+}
+
+.checkbox-modal-input >>> .v-icon {
+  color: #fff !important;
+}
+
+.checkbox-modal-input.v-input--is-disabled {
+  opacity: 0.2;
+}
+
+.checkbox-modal-input >>> input {
+  color: #fff;
+  font-weight: bold;
+}
+
+.checkbox-modal-input >>> .v-messages__message {
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold;
 }
 </style>

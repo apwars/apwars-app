@@ -8,6 +8,7 @@ export default class Combinator {
     this.contractAddress = contract;
     this.contractManagerAddress = contractManager;
     this.smc = new window.web3.eth.Contract(APWarsCombinator, this.contractAddress);
+    window.test = this.smc;
     this.smcManager = {};
     if (contractManager) {
       this.smcManager = new window.web3.eth.Contract(APWarsCombinatorManager, this.contractManagerAddress);
@@ -18,8 +19,25 @@ export default class Combinator {
     return this.smc.methods.combineTokens(combinatorId, multiple).send({ from });
   }
 
+  combinators(combinatorId, player) {
+    return this.smc.methods.combinators(combinatorId, player).call();
+  }
+
+  claimGameItemFromTokens(combinatorId, from) {
+    this.smc.methods.claimGameItemFromTokens(combinatorId).call({ from })
+    return this.smc.methods.claimGameItemFromTokens(combinatorId).send({ from });
+  }
+
   getGeneralConfig(player, source, combinatorId) {
     return this.smcManager.methods.getGeneralConfig(player, source, combinatorId).call();
+  }
+
+  getTokenAConfig(player, source, combinatorId) {
+    return this.smcManager.methods.getTokenAConfig(player, source, combinatorId).call();
+  }
+
+  getTokenBConfig(player, source, combinatorId) {
+    return this.smcManager.methods.getTokenBConfig(player, source, combinatorId).call();
   }
 
 }

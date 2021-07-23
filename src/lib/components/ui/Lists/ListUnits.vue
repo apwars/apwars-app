@@ -116,8 +116,8 @@
             :trooper="trooper"
             :contract-war="contractWar"
           />
-          <unit-war-preparation
-            v-else-if="getType === 'war-preparation'"
+          <unit-weapon-research
+            v-else-if="getType === 'weapon-research'"
             :unit="trooper"
           />
         </v-col>
@@ -146,7 +146,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import Trooper from "@/lib/components/ui/Utils/Trooper";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
-import UnitWarPreparation from "@/lib/components/ui/Units/UnitWarPreparation";
+import UnitWeaponResearch from "@/lib/components/ui/Units/UnitWeaponResearch";
 
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
@@ -160,7 +160,7 @@ export default {
     Trooper,
     StakeTrooper,
     ReportTrooper,
-    UnitWarPreparation,
+    UnitWeaponResearch,
   },
 
   props: ["type", "contractWar", "onlyShow"],
@@ -220,7 +220,7 @@ export default {
           return this.type;
         case "report-trooper":
           return this.type;
-        case "war-preparation":
+        case "weapon-research":
           return this.type;
         default:
           return "trooper";

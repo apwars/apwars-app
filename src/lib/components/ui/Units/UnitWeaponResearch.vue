@@ -7,24 +7,29 @@
       <div class="align-self-center">
         <v-img width="160" :src="`/images/troops/${unit.name}.png`" />
       </div>
-      <div class="ml-1 align-self-center">
-        <div class="title mt-6">Necessary Resources</div>
+      <div v-if="isLoadingUnit" class="ml-1 align-self-start">
+        <div class="title">Necessary Resources</div>
+        <div class="d-flex mt-1 qty">
+          <v-img class="mr-1" max-width="26px" src="/images/wGOLD.png" />
+          <amount
+            :amount="getTokenAConfig.amount"
+            decimals="2"
+            compact
+            symbol="wGOLD"
+          />
+        </div>
         <div class="d-flex  mt-1 qty">
           <v-img
             class="mr-1"
             max-width="26px"
-            src="/images/icons/battle-shield.png"
+            :src="`/images/icons/${unit.name}.png`"
           />
           <amount
-            :amount="unit.myQty"
+            :amount="getTokenBConfig.amount"
             decimals="2"
             compact
             :symbol="unit.name"
           />
-        </div>
-        <div class="d-flex mt-1 qty">
-          <v-img class="mr-1" max-width="26px" src="/images/wGOLD.png" />
-          <amount :amount="unit.myQty" decimals="2" compact symbol="wGOLD" />
         </div>
         <div class="d-flex my-1 qty">
           <v-img
@@ -32,51 +37,114 @@
             max-width="26px"
             src="/images/icons/hourglass.png"
           />
-          <span>9600 blocks - Working time</span>
+
+          <div class="d-flex flex-column">
+            <span>
+              Working time:
+              <amount
+                :amount="getGeneralConfig.blocks"
+                decimals="0"
+                formatted
+                compact
+              />
+              blocks</span
+            >
+            <span><time-block :blocks="getGeneralConfig.blocks"/></span>
+          </div>
         </div>
         <hr />
-        <div class="d-flex mt-1 qty">
-          <img class="mr-1" src="/images/icons/battle-shield.png" />
-          <span
-            >Weapon conquered: <br />
-            Gold shield</span
-          >
+        <div class="d-flex mt-1 qty" v-if="infoWeapon.image">
+          <img
+            class="mr-1"
+            width="45px"
+            height="45px"
+            :src="infoWeapon.image"
+          />
+          <span>
+            Weapon conquered: <br />
+            {{ infoWeapon.name }}
+          </span>
         </div>
 
         <wButton
           v-if="!isApproved"
           class="mt-1"
+          :disabled="!getGeneralConfig.isEnabled"
           @click="openModalArimedesApproval()"
         >
           Approve Research
         </wButton>
-        <wButton v-else @click="modalArimedesNewResearch = true" class="mt-1">
+        <wButton
+          v-else-if="combinators.combinatorId === '0'"
+          :disabled="!getGeneralConfig.isEnabled"
+          @click="openModalArimedesNewResearch"
+          class="mt-1"
+        >
           New Research
         </wButton>
+        <wButton
+          v-else-if="combinators.combinatorId !== '0' && isClaim === true"
+          @click="openModalClaim()"
+          class="mt-1"
+        >
+          Claim
+        </wButton>
+        <div class="mt-1" v-else>
+          <span class="qty">Time for claim:</span>
+          <v-progress-linear
+            color="teal"
+            buffer-value="0"
+            :value="claimPercentage"
+            stream
+            height="5"
+          ></v-progress-linear>
+          <time-block :blocks="isClaim" countdown />
+        </div>
       </div>
+      <v-skeleton-loader
+        v-else
+        class="mt-3 mx-1"
+        width="200px"
+        type="text, paragraph, paragraph, paragraph, button"
+      ></v-skeleton-loader>
     </div>
 
     <arimedes-modal
+      v-if="modalArimedesApproval"
       :open="modalArimedesApproval"
-      @confirm="approveContract()"
+      @confirm="approveContract"
       @close="modalArimedesApproval = false"
       :isLoading="isLoadingApprove"
       :text="textArimedesModal"
       :textConfirm="textConfirmArimdesModal"
     ></arimedes-modal>
 
+    <arimedes-modal
+      v-if="modalArimedesClaim"
+      :open="modalArimedesClaim"
+      @confirm="claim"
+      @close="modalArimedesClaim = false"
+      :isLoading="isLoadingClaim"
+      :text="textClaim"
+      :textConfirm="textConfirmClaim"
+    ></arimedes-modal>
+
     <new-research-modal
+      v-if="modalArimedesNewResearch"
       :open="modalArimedesNewResearch"
-      @confirm="combineTokens()"
+      @confirm="combineTokens"
       @close="modalArimedesNewResearch = false"
       :isLoading="isLoadingNewResearch"
       :info="combinatorInfo"
+      width="720px"
+      height="315px"
     ></new-research-modal>
   </div>
 </template>
 
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
+import TimeBlock from "@/lib/components/ui/Utils/TimeBlock";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ArimedesModal from "@/lib/components/ui/Modals/ArimedesModal";
 import NewResearchModal from "@/lib/components/ui/Modals/NewResearchModal";
@@ -106,11 +174,15 @@ export default {
     wButton,
     ArimedesModal,
     NewResearchModal,
+    TimeBlock,
   },
   data() {
     return {
+      isLoadingUnit: false,
+      modalArimedesClaim: false,
       modalArimedesNewResearch: false,
       modalArimedesApproval: false,
+      isLoadingClaim: false,
       isLoadingApprove: false,
       isLoadingNewResearch: false,
       signPage: 0,
@@ -123,16 +195,25 @@ export default {
       tokenB: "",
       tokenAContract: {},
       tokenBContract: {},
-      combinatorInfo: {
-        tokenA: {
-          amount: "10000000000000000000000",
-          name: "wGOLD",
-        },
-        tokenB: {
-          amount: "1000000000000000000000",
-          name: "wWarrior",
-        },
+      combinatorInfo: {},
+      combinators: {
+        combinatorId: "0",
       },
+      getGeneralConfig: {},
+      getTokenAConfig: {
+        amount: "0",
+        burningRate: "0",
+        feeRate: "0",
+        tokenAddress: "",
+      },
+      getTokenBConfig: {
+        amount: "0",
+        burningRate: "0",
+        feeRate: "0",
+        tokenAddress: "",
+      },
+      claimPercentage: 0,
+      isClaim: false,
     };
   },
   computed: {
@@ -161,11 +242,16 @@ export default {
       return {};
     },
     combinatorId() {
-      if(this.unit.combinators){
-        return this.unit.combinators.warPreparation || 0;
+      if (this.unit.combinators && this.unit.combinators.warPreparation) {
+        return this.unit.combinators.warPreparation.idCombinator || 0;
       }
       return 0;
-      
+    },
+    infoWeapon() {
+      if (this.unit.combinators && this.unit.combinators.warPreparation) {
+        return this.unit.combinators.warPreparation;
+      }
+      return {};
     },
   },
   watch: {
@@ -191,7 +277,6 @@ export default {
         this.addresses.combinator,
         this.addresses.combinatorManager
       );
-      console.log(this.addresses.combinatorManager);
       this.tokenAContract = new wGOLD(this.tokenA);
       this.tokenBContract = new Troops(this.tokenB);
     },
@@ -204,12 +289,41 @@ export default {
         this.account,
         this.addresses.combinator
       );
-      const timeBlock = this.combinatorContract.getGeneralConfig(
+      this.getGeneralConfig = await this.combinatorContract.getGeneralConfig(
         this.account,
         this.account,
         this.combinatorId
       );
-      console.log(timeBlock);
+      if (this.getGeneralConfig.isEnabled) {
+        this.combinators = await this.combinatorContract.combinators(
+          this.combinatorId,
+          this.account
+        );
+
+        const blockClaim =
+          parseInt(this.combinators.startBlock) +
+          parseInt(this.getGeneralConfig.blocks);
+
+        if (this.currentBlockNumber > blockClaim) {
+          this.isClaim = true;
+        } else {
+          this.isClaim = blockClaim - this.currentBlockNumber;
+          this.claimPercentage =
+            100 - parseInt((this.isClaim / this.getGeneralConfig.blocks) * 100);
+        }
+
+        this.getTokenAConfig = await this.combinatorContract.getTokenAConfig(
+          this.account,
+          this.tokenA,
+          this.combinatorId
+        );
+        this.getTokenBConfig = await this.combinatorContract.getTokenBConfig(
+          this.account,
+          this.tokenB,
+          this.combinatorId
+        );
+      }
+      this.isLoadingUnit = true;
     },
     openModalArimedesApproval() {
       if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
@@ -346,6 +460,16 @@ export default {
         return ToastSnackbar.error(error.toString());
       }
     },
+    openModalArimedesNewResearch() {
+      this.modalArimedesNewResearch = true;
+      this.combinatorInfo = {
+        getGeneralConfig: this.getGeneralConfig,
+        getTokenAConfig: this.getTokenAConfig,
+        getTokenBConfig: this.getTokenBConfig,
+        unit: this.unit,
+        infoWeapon: this.infoWeapon,
+      };
+    },
     async combineTokens() {
       try {
         this.isLoadingNewResearch = true;
@@ -359,9 +483,50 @@ export default {
         );
         this.modalArimedesNewResearch = false;
       } catch (error) {
-        return ToastSnackbar.error(error.toString());
+        return ToastSnackbar.error(error);
       } finally {
         this.isLoadingNewResearch = false;
+      }
+    },
+    openModalClaim() {
+      this.textClaim = "Your search has been completed, and yours is available";
+      this.textConfirmClaim = "Finish research";
+      this.modalArimedesClaim = true;
+    },
+    async claim() {
+      try {
+        this.isLoadingClaim = true;
+        const confirmTransaction = this.combinatorContract.claimGameItemFromTokens(
+          this.combinatorId,
+          this.account
+        );
+
+        this.textConfirmClaim = ARIMEDES_WAITING_WALLET_APPROVAL;
+
+        confirmTransaction.on("error", (error) => {
+          this.openModalClaim();
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error(
+            "An error has occurred while to signing contract to Arimedes - War Engineer"
+          );
+        });
+
+        confirmTransaction.on("transactionHash", () => {
+          this.textConfirmClaim = "I'm sending your weapon....";
+        });
+
+        confirmTransaction.on("receipt", () => {
+          ToastSnackbar.success(
+            "Weapon send successfully Arimedes - War Engineer"
+          );
+          this.isLoadingClaim = false;
+          this.modalArimedesClaim = false;
+        });
+      } catch (error) {
+        this.isLoadingClaim = true;
+        return ToastSnackbar.error(error);
       }
     },
   },

@@ -9,10 +9,10 @@
       @input="update"
       v-bind="currencyConfig"
     >
-      <v-icon slot="append" @click="increment">
+      <v-icon v-if="getNoIcons" slot="append" @click="increment">
         mdi-plus
       </v-icon>
-      <v-icon slot="prepend-inner" @click="decrement">
+      <v-icon v-if="getNoIcons" slot="prepend-inner" @click="decrement">
         mdi-minus
       </v-icon>
     </v-currency-field>
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  props: ["label", "min", "max", "dense", "disabled", "value"],
+  props: ["label", "min", "max", "dense", "disabled", "value", "no-icons"],
   data() {
     return {
       quantity: null,
@@ -59,6 +59,12 @@ export default {
         return Number.MAX_SAFE_INTEGER;
       }
       return parseFloat(this.max);
+    },
+    getNoIcons() {
+      if(this.noIcons === undefined) {
+        return true;
+      }
+      return false;
     },
   },
   methods: {

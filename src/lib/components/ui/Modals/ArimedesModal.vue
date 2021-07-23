@@ -12,7 +12,7 @@
     >
       <v-row dense class="d-flex">
         <v-col cols="12" md="3" class="align-self-center">
-          <img class="lilith-img" src="/images/war-preparation/arimedes.png" />
+          <img class="lilith-img" src="/images/weapon-research/arimedes.png" />
         </v-col>
         <v-col cols="12" md="9" class="align-self-center">
           <p class="ml-2 mt-1 align-self-center content">
@@ -26,6 +26,9 @@
             ></v-progress-circular>
             <span v-html="text"></span>
           </p>
+          <div class="d-flex justify-center mt-n2">
+            <img width="60px" src="/images/icons/simple-sword.png" />
+          </div>
         </v-col>
       </v-row>
     </template-modal-papyrus>
@@ -33,11 +36,11 @@
 </template>
 
 <script>
-import wButton from '@/lib/components/ui/Buttons/wButton';
+import wButton from "@/lib/components/ui/Buttons/wButton";
 import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
 
 export default {
-  props: ['open', 'isLoading', 'text', 'textConfirm'],
+  props: ["open", "isLoading", "text", "textConfirm"],
 
   components: {
     wButton,
@@ -46,7 +49,7 @@ export default {
 
   methods: {
     close() {
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };
