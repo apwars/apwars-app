@@ -277,6 +277,7 @@ export default {
   right: 0;
   height: 400px;
   margin-bottom: 60px;
+  z-index: 10000;
 }
 
 .date {
