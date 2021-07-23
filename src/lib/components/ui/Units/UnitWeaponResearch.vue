@@ -5,7 +5,7 @@
       v-bind:class="{ disabled: unit.disabled }"
     >
       <div class="align-self-center">
-        <v-img :width="$vuetify.breakpoint.mobile ? 110 : 160" :src="`/images/troops/${unit.name}.png`" />
+        <v-img :width="$vuetify.breakpoint.mobile ? 100 : 160" :src="`/images/troops/${unit.name}.png`" />
       </div>
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
@@ -137,8 +137,8 @@
       @close="modalArimedesNewResearch = false"
       :isLoading="isLoadingNewResearch"
       :info="combinatorInfo"
-      width="720px"
-      height="315px"
+      width="800px"
+      height="360px"
     ></new-research-modal>
   </div>
 </template>
@@ -158,13 +158,13 @@ import Troops from "@/lib/eth/Troops";
 const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT =
   "The first page has been successfully signed. <br /> I am waiting for the approval in your precious wallet, for signing the second page of the contract...";
 const ARIMEDES_APPROVE_FIRST_PAGE_CONTRACT =
-  "To work for you and start your research you need to sign an employment contract, there are only 2 pages to sign. Hurry up, you're wasting your time!";
+  "I can put your troops to work to create weapons if I get paid enought. If you want this I will need your blood print from your two best fingers. Hurry up, you are wasting our time!";
 const ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT =
   "To work for you and start your research you need to sign an employment contract, there are only 1 page to sign. Hurry up, you're wasting your time!";
 const ARIMEDES_WAITING_WALLET_APPROVAL =
-  "I am waiting for the approval in your precious wallet, for signing the contract...";
+  "Keep pressing over here on this first page.";
 const ARIMEDES_WAITING_FIRST_CONFIRMATION =
-  "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation, so you can sign the second page of the contract...";
+  "Keep pressing over here on this second page.";
 const ARIMEDES_WAITING_SECOND_CONFIRMATION =
   "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation, so you can start your research...";
 
