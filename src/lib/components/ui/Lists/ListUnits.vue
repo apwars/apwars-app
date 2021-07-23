@@ -86,16 +86,14 @@
     </v-container>
 
     <v-container
-      :fluid="$vuetify.breakpoint.mobile"
-      class="pa-3 pd-md-0"
+      :fluid="$vuetify.breakpoint.md||$vuetify.breakpoint.mobile"
       v-if="isConnected && !isLoading"
     >
       <v-row v-if="filterTroops.length > 0">
         <v-col
-          class="px-lg-0"
           cols="12"
-          md="4"
-          sm="6"
+          lg="6"
+          xl="4"
           v-for="trooper in filterTroops"
           v-bind:key="trooper.name"
         >

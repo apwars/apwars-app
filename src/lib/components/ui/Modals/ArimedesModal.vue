@@ -26,7 +26,7 @@
             ></v-progress-circular>
             <span v-html="text"></span>
           </p>
-          <div class="d-flex justify-center mt-n2">
+          <div v-if="weaponIcon!==undefined" class="d-flex justify-center mt-n2">
             <img width="60px" src="/images/icons/simple-sword.png" />
           </div>
         </v-col>
@@ -40,7 +40,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
 
 export default {
-  props: ["open", "isLoading", "text", "textConfirm"],
+  props: ["open", "isLoading", "text", "textConfirm", "weaponIcon"],
 
   components: {
     wButton,
