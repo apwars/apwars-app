@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-alert v-if="isWar.test" type="warning">Danger, it's a test war</v-alert>
+    <v-alert v-if="isWar.showTest" type="warning">Danger, it's a test war</v-alert>
     <div v-if="isConnected && !isLoading && warStage > 0">
       <div class="bg-fed">
         <v-container>
@@ -17,7 +17,7 @@
               <v-img
                 class="mx-auto"
                 max-width="400"
-                :src="`/images/battle/${teamAimagem}`"
+                :src="`/images/battle/${teamAImagem}`"
               />
             </v-col>
             <v-col cols="12" md="4" class="d-flex justify-center">
@@ -47,7 +47,7 @@
               <v-img
                 class="mx-auto"
                 max-width="400"
-                :src="`/images/battle/${teamBimagem}`"
+                :src="`/images/battle/${teamBImagem}`"
               />
             </v-col>
           </v-row>
@@ -93,47 +93,21 @@
             />
           </v-col>
         </v-row>
-
-        <v-row class="my-6">
-          <v-col cols="12" lg="6" class="dividing-line">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center pa-0 ma-0"
-                v-for="trooper in teamA"
-                v-bind:key="trooper.name"
-              >
-                <report-trooper
-                  :trooper="trooper"
-                  :contract-war="contractWar"
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center"
-                v-for="trooper in teamB"
-                v-bind:key="trooper.name"
-              >
-                <report-trooper
-                  :trooper="trooper"
-                  :contract-war="contractWar"
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
       </v-container>
+
+      <list-units
+        class="my-3"
+        v-if="isConnected && !isLoading"
+        type="report-trooper"
+        :contract-war="contractWar"
+      ></list-units>
     </div>
     <div v-else-if="isConnected && !isLoading">
       <div class="bg-fed">
         <v-container>
           <v-row class="my-9">
             <v-col cols="12" class="d-flex justify-center my-9">
-              <h3 class="text-h3 text-wGOLD text-center">Awaiting result...</h3>
+              <h3 class="text-h3 text-wGOLD text-center">Waiting result...</h3>
             </v-col>
           </v-row>
         </v-container>
@@ -157,10 +131,10 @@
 
 <script>
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
-import wButton from "@/lib/components/ui/Utils/wButton";
-import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 import WarMachine from "@/lib/eth/WarMachine";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
+import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -169,8 +143,8 @@ export default {
   components: {
     wGOLDButton,
     wButton,
-    ReportTrooper,
     Countdown,
+    ListUnits,
   },
 
   data() {
@@ -215,14 +189,14 @@ export default {
     teamB() {
       return this.gobalTroops.filter((trooper) => trooper.team === 2);
     },
-    teamAimagem() {
+    teamAImagem() {
       if (!this.warStats.winner) return "the-corporation.png";
       if (this.warStats.winner == "1") {
         return "the-corporation-win.png";
       }
       return "the-corporation-loser.png";
     },
-    teamBimagem() {
+    teamBImagem() {
       if (!this.warStats.winner) return "the-degenerate.png";
       if (this.warStats.winner == "2") {
         return "the-degenerate-win.png";
@@ -270,7 +244,7 @@ export default {
     initData() {
       try {
         this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
-        this.isWar = getWars().find(
+        this.isWar = getWars(this.networkInfo.id !== "56").find(
           (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
         );
         if (!this.isWar) {

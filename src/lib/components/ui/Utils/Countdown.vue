@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="text-h3 ma-3 text-wGOLD text-center">{{ title }}</h3>
+    <h3 class="text-wGOLD text-center text-h4 text-md-h3 ma-0 ma-md-3">{{ title }}</h3>
     <div class="d-flex justify-center mt-6">
       <countdown
         :time="setTime"

@@ -1,41 +1,39 @@
 <template>
-  <span v-if="isTooltip">
-    <v-tooltip top>
-      <template v-slot:activator="{ on, attrs }">
-        <span v-bind="attrs" v-on="on">
-          {{ computedAmount }}
+  <v-tooltip top>
+    <template v-slot:activator="{ on, attrs }">
+      <span class="amount" v-bind="attrs" v-on="isTooltip ? on : false">
+        <span>
+          <img
+            v-if="isIcon"
+            :src="`/images/${symbol.toLowerCase()}.png`"
+            height="22px"
+            alt="wGOLD"
+            class="image-symbol"
+          />
+          <span> {{ computedAmount }} </span>
+          <span v-if="symbol"> {{ symbol }} </span>
         </span>
-      </template>
-      <span>{{ tooltipAmount }}</span>
-    </v-tooltip>
-  </span>
-  <span v-else> {{ computedAmount }} </span>
+      </span>
+    </template>
+    <span>{{ tooltipAmount }}</span>
+  </v-tooltip>
 </template>
 
 <script>
+import Convert from '@/lib/helpers/Convert';
+
 export default {
-  props: [
-    "amount",
-    "compact",
-    "formatted",
-    "decimals",
-    "approximate",
-    "tooltip",
-  ],
+  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon'],
 
   computed: {
     computedAmount() {
-      let numberAmount = this.amount || "0";
-      numberAmount = this.isFormatted
-        ? numberAmount
-        : web3.utils.fromWei(numberAmount.toString());
+      let numberAmount = this.amount || '0';
+      numberAmount = this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
       if (this.compact !== undefined) {
-        numberAmount = this.compactNumber(numberAmount, this.getDecimals);
+        numberAmount = Convert.compactNumber(numberAmount, this.getDecimals);
       } else {
-        numberAmount = this.roundDown(
-          parseFloat(numberAmount),
-          this.getDecimals
-        );
+        numberAmount = Convert.roundDown(numberAmount, this.getDecimals);
+        numberAmount = Convert.formatString(numberAmount, this.getDecimals);
       }
 
       if (this.approximate !== undefined) {
@@ -44,10 +42,8 @@ export default {
       return numberAmount;
     },
     tooltipAmount() {
-      let numberAmount = this.amount || "0";
-      return this.isFormatted
-        ? numberAmount
-        : web3.utils.fromWei(numberAmount.toString());
+      let numberAmount = this.amount || '0';
+      return this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
     },
     isTooltip() {
       return this.tooltip !== undefined;
@@ -58,25 +54,19 @@ export default {
     isFormatted() {
       return this.formatted !== undefined;
     },
-  },
-
-  methods: {
-    compactNumber(value, decimals) {
-      if (value < 1e3) return this.roundDown(value, decimals);
-      if (value >= 1e3 && value < 1e6)
-        return +this.roundDown(value / 1e3, decimals) + "K";
-      if (value >= 1e6 && value < 1e9)
-        return +this.roundDown(value / 1e6, decimals) + "M";
-      if (value >= 1e9 && value < 1e12)
-        return +this.roundDown(value / 1e9, decimals) + "B";
-      if (value >= 1e12) return +this.roundDown(value / 1e12, decimals) + "T";
-    },
-    roundDown(value, decimals) {
-      const setDecimals = Math.pow(10, decimals);
-      return parseFloat(Math.floor(value * setDecimals) / setDecimals).toFixed(
-        decimals
-      );
+    isIcon() {
+      return this.icon !== undefined && this.symbol !== undefined && this.symbol.length > 0;
     },
   },
 };
 </script>
+
+<style scoped>
+.image-symbol {
+  vertical-align: bottom;
+  margin-left: 2px !important;
+}
+.amount {
+  white-space: nowrap;
+}
+</style>

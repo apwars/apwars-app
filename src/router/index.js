@@ -1,14 +1,17 @@
 import Vue from "vue";
 import Router from "vue-router";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import Items from "@/pages/Items.vue";
-import MyItems from "@/pages/MyItems.vue";
-import WarStats from "@/pages/WarStats.vue";
+import CreateOrders from "@/pages/Market/CreateOrders.vue";
+import GameItems from "@/pages/GameItems.vue";
+import Inventory from "@/pages/Inventory.vue";
+import Units from "@/pages/Units.vue";
 import Wars from "@/pages/Wars.vue";
 import Enlistment from "@/pages/Wars/Enlistment.vue";
 import Round1 from "@/pages/Wars/Round1.vue";
 import Round2 from "@/pages/Wars/Round2.vue";
 import WarReport from "@/pages/Wars/WarReport.vue";
+import BlackMarket from "@/pages/BlackMarket.vue";
+import WarPreparation from "@/pages/WarPreparation.vue";
 
 Vue.use(Router);
 
@@ -21,60 +24,75 @@ export const routes = [
       {
         path: "/",
         name: "/",
-        component: Items,
+        component: BlackMarket
       },
       {
-        path: "/collection",
-        name: "/collection",
-        component: MyItems,
+        path: "/game-items/:nftId/:type-orders/new",
+        name: "/game-items-create-orders",
+        component: CreateOrders
+      },
+      {
+        path: "/game-items",
+        name: "/game-items",
+        component: GameItems
+      },
+      {
+        path: "/inventory",
+        name: "/inventory",
+        component: Inventory
       },
       {
         path: "/war-stats",
         name: "/war-stats",
-        component: WarStats,
+        component: Units
       },
       {
         path: "/wars",
         name: "/wars",
-        component: Wars,
+        component: Wars
+      },
+      {
+        path: "/war-preparation",
+        name: "/war-preparation",
+        component: WarPreparation
       },
       {
         path: "/wars/:contractWar/enlistment",
         name: "/wars-enlistment",
-        component: Enlistment,
+        component: Enlistment
       },
       {
         path: "/wars/:contractWar/round-1",
         name: "/wars-round-1",
-        component: Round1,
+        component: Round1
       },
       {
         path: "/wars/:contractWar/round-2",
         name: "/wars-round-2",
-        component: Round2,
+        component: Round2
       },
       {
         path: "/wars/:contractWar/report",
         name: "/wars-report",
-        component: WarReport,
+        component: WarReport
       },
       {
         path: "/farms",
         beforeEnter() {
           redirectBlank("https://farms.apwars.farm");
-        },
+        }
       },
       {
         path: "/exchange",
         beforeEnter() {
           redirectBlank("https://exchange.apwars.farm");
-        },
-      },
-    ],
-  },
+        }
+      }
+    ]
+  }
 ];
 
-const redirectBlank = (url) => {
+const redirectBlank = url => {
   var a = document.createElement("a");
   a.target = "_blank";
   a.href = url;
@@ -87,7 +105,7 @@ const router = new Router({
   scrollBehavior() {
     return { x: 0, y: 0 };
   },
-  routes,
+  routes
 });
 
 // /**

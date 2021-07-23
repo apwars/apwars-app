@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isConnected && !isLoading && warStage > 1">
-      <v-alert v-if="isWar.test" type="warning"
+      <v-alert v-if="isWar.showTest" type="warning"
         >Danger, it's a test war</v-alert
       >
       <div class="bg-fed">
@@ -26,7 +26,7 @@
                 v-else
                 class="mx-auto"
                 max-width="400"
-                src="/images/battle/the-degenerate-round-2.png"
+                src="/images/battle/the-degenerate-2.png"
               />
             </v-col>
             <v-col cols="12" md="4" class="d-flex justify-center">
@@ -84,13 +84,13 @@
 
         <v-row v-if="isConnected && !isLoading" class="bg-burned">
           <v-col cols="12" md="6">
-            <div class="d-flex justify-end mx-0 mx-md-6">
+            <div class="d-flex justify-center justify-md-end mx-0 mx-md-6">
               <v-img
                 class="btn mr-1 align-self-center"
                 src="/images/wgold.png"
-                max-width="120"
-                width="120"
-                height="120"
+                max-width="100"
+                width="100"
+                height="100"
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">ENTIRE PRIZE:</div>
@@ -100,12 +100,12 @@
             </div>
           </v-col>
           <v-col cols="12" md="6">
-            <div class="d-flex justify-start mx-0 mx-md-6">
+            <div class="d-flex justify-center justify-md-start mx-0 mx-md-6">
               <v-img
                 class="btn mr-1 align-self-center"
                 src="/images/battle/burned.png"
-                max-width="120"
-                width="120"
+                max-width="100"
+                width="100"
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">BURNED:</div>
@@ -129,27 +129,23 @@
           </v-col>
         </v-row>
       </v-container>
-
-      <v-container>
-        <v-row v-if="isConnected && !isLoading">
-          <v-col
-            cols="12"
-            lg="6"
-            class="d-flex justify-center"
-            v-for="trooper in teamWinner"
-            v-bind:key="trooper.name"
-          >
-            <report-trooper :trooper="trooper" :contract-war="contractWar" />
-          </v-col>
-        </v-row>
-      </v-container>
+      
+      <list-units
+        class="my-3"
+        v-if="isConnected && !isLoading"
+        type="report-trooper"
+        :contract-war="contractWar"
+        :only-show="{
+          team: [teamWinner],
+        }"
+      ></list-units>
     </div>
     <div v-else-if="isConnected && !isLoading">
       <div class="bg-fed">
         <v-container>
           <v-row class="my-9">
             <v-col cols="12" class="d-flex justify-center my-9">
-              <h3 class="text-h3 text-wGOLD text-center">Awaiting result...</h3>
+              <h3 class="text-h3 text-wGOLD text-center">Waiting result...</h3>
             </v-col>
           </v-row>
         </v-container>
@@ -173,10 +169,10 @@
 
 <script>
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
-import wButton from "@/lib/components/ui/Utils/wButton";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
-import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
 import WarMachine from "@/lib/eth/WarMachine";
+import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -186,7 +182,7 @@ export default {
     wGOLDButton,
     Amount,
     wButton,
-    ReportTrooper,
+    ListUnits,
   },
 
   data() {
@@ -194,7 +190,7 @@ export default {
       prize: {},
       isLoading: true,
       myTroops: [],
-      priceWGOLD: 0,
+      pricewGOLD: 0,
       balance: 0,
       globalTroops: [],
       warMachine: {},
@@ -227,9 +223,8 @@ export default {
     },
 
     teamWinner() {
-      return this.globalTroops.filter(
-        (trooper) => trooper.team === parseInt(this.warStats.winner)
-      );
+      if (!this.warStats.winner) return -1;
+      return parseInt(this.warStats.winner);
     },
 
     winner() {
@@ -272,7 +267,7 @@ export default {
 
     initData() {
       this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
-      this.isWar = getWars().find(
+      this.isWar = getWars(this.networkInfo.id !== "56").find(
         (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
       );
       if (!this.isWar) {

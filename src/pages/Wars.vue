@@ -93,7 +93,7 @@
 
 <script>
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
-import wButton from "@/lib/components/ui/Utils/wButton";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import WarInfo from "@/lib/components/ui/Utils/WarInfo";
 
@@ -166,9 +166,10 @@ export default {
       }
 
       try {
-        this.wars = getWars();
-      } catch (e) {
-        console.log(e);
+        this.wars = getWars(this.networkInfo.id !== "56");
+        this.wars = this.wars.reverse();
+      } catch (error) {
+        console.log(error);
       } finally {
         setTimeout(() => {
           this.isLoading = false;

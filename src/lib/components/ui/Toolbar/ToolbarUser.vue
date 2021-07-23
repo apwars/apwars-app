@@ -18,18 +18,6 @@
     <v-list dense nav>
       <v-list-item
         link
-        :disabled="isConnected"
-        @click="connectToMetaMask"
-      >
-        <v-list-item-icon>
-          <v-icon small>mdi-cog-outline</v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Connect To MetaMask</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item
-        link
         @click="goToWebSite"
       >
         <v-list-item-icon>

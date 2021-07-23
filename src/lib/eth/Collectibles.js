@@ -34,4 +34,14 @@ export default class Collectibles {
     const intialSupply = await this.smc.methods.getTotalSupply(id).call();
     return parseInt(intialSupply, 10);
   }
+
+  setApprovalForAll(address, from) {
+    return this.smc.methods.setApprovalForAll(address, true).send({
+      from
+    });
+  }
+
+  isApprovedForAll(from, address) {
+    return this.smc.methods.isApprovedForAll(from, address).call();
+  }
 }

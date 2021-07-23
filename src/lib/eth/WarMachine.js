@@ -5,14 +5,13 @@ import { getWars } from "@/data/Wars";
 import BigNumber from "bignumber.js";
 
 export default class WarMachine {
-  constructor(contract, networkInfo) {
+  constructor(contract, networkId) {
     this.contractAddress = contract;
-    this.networkInfo = networkInfo;
+    this.networkId = networkId;
     this.smc = new window.web3.eth.Contract(
       WarMachineABI,
       this.contractAddress
     );
-    window.WarMachine = this.smc;
   }
 
   allowance(owner, spender) {
@@ -90,11 +89,11 @@ export default class WarMachine {
     troops = troops.filter(
       (trooper) =>
         trooper.team === parseInt(team) &&
-        trooper.contractAddress[this.networkInfo] === IAPWarsUnit
+        trooper.contractAddress[this.networkId] === IAPWarsUnit
     );
     const warInfo = await this.getWarInfo(
       team,
-      troops.map((trooper) => trooper.contractAddress[this.networkInfo])
+      troops.map((trooper) => trooper.contractAddress[this.networkId])
     );
     const enlisted = new BigNumber(warInfo.totalDepositAmount);
     let percentageLoss = "";
@@ -119,7 +118,7 @@ export default class WarMachine {
     troops = troops.filter((trooper) => trooper.team === parseInt(team));
     const warInfo = await this.getWarInfo(
       team,
-      troops.map((trooper) => trooper.contractAddress[this.networkInfo])
+      troops.map((trooper) => trooper.contractAddress[this.networkId])
     );
     const enlisted = new BigNumber(warInfo.totalDepositAmount);
 
@@ -150,8 +149,8 @@ export default class WarMachine {
 
   async getWarReportwGOLD() {
     const stage = parseInt(await this.warStage());
-    const war = getWars().find(
-      (war) => war.contractAddress[this.networkInfo] === this.contractAddress
+    const war = getWars(this.networkId !== "56").find(
+      (war) => war.contractAddress[this.networkId] === this.contractAddress
     );
     if (!war) {
       return {
@@ -205,48 +204,9 @@ export default class WarMachine {
 
   async myAmountPrize(address) {
     try {
-      const warStats = await this.warStats();
-      let troops = getTroops();
-      const contractFake = troops[0].contractAddress[this.networkInfo];
-
-      let isAttacker = warStats.attackerTeam == warStats.winner;
-
-      const teamA = await this.smc.methods.getWarInfo(1, [contractFake]).call();
-      const teamB = await this.smc.methods.getWarInfo(2, [contractFake]).call();
-
-      const winner = warStats.winner === "1" ? teamA : teamB;
-
-      const teamTotalPower = isAttacker
-        ? winner.totalAttackPower
-        : winner.totalDefensePower;
-
-      const myInfo = await this.smc.methods
-        .getPlayerInfo([contractFake], address)
-        .call();
-
-      const totalAttackPower =
-        warStats.winner === "1"
-          ? myInfo.totalAttackPowerTeamA
-          : myInfo.totalAttackPowerTeamB;
-
-      const totalDefensePower =
-        warStats.winner === "1"
-          ? myInfo.totalDefensePowerTeamA
-          : myInfo.totalDefensePowerTeamB;
-
-      const userTotalPower = isAttacker ? totalAttackPower : totalDefensePower;
-      const getTotalPrize = await this.getWarReportwGOLD();
-      let userShare = new BigNumber("0");
-
-      if (userTotalPower.toString() !== "0") {
-        userShare = new BigNumber(userTotalPower)
-          .div(teamTotalPower)
-          .times(getTotalPrize.won);
-      }
-
-      return userShare.toFixed(0);
+      const getWithdrawPrize = await this.smc.methods.getWithdrawPrize(address).call();
+      return getWithdrawPrize.net;
     } catch (error) {
-      console.log(error);
       return "0";
     }
   }

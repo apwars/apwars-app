@@ -66,10 +66,9 @@
             </v-currency-field>
 
             <div class="d-flex justify-center mt-2">
-              <wButton class="mx-2" size="small" @click="close">Cancel</wButton>
+              <wButton class="mx-2" @click="close">Cancel</wButton>
               <wButton
                 class="mx-2"
-                size="small"
                 @click="confirm"
                 :actived="true"
                 :disabled="!checkbox || amount === 0"
@@ -85,7 +84,7 @@
 </template>
 
 <script>
-import wButton from "@/lib/components/ui/Utils/wButton";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 import BigNumber from "bignumber.js";
 
@@ -102,7 +101,7 @@ export default {
       checkbox: false,
       amount: 0,
       currencyConfig: {
-        locale: "en-US",
+        locale: (window.navigator.userLanguage || window.navigator.language),
         prefix: "",
         suffix: "",
         decimalLength: 8,
@@ -210,6 +209,10 @@ export default {
 
 .content {
   color: #201813;
+}
+
+.content >>> .btn-bg-c > .label {
+  color: #FFFFFF !important;
 }
 
 .btn {

@@ -8,7 +8,7 @@
       />
       <v-row class="my-1">
         <v-col cols="12" class="d-flex justify-space-between">
-          <game-title class="align-self-center">My Collection</game-title>
+          <game-title class="align-self-center">Inventory</game-title>
           <square-button
             label="See all items"
             icon="mdi-format-list-bulleted"
@@ -60,7 +60,7 @@ export default {
 
   data() {
     return {
-      balance: 0,
+      balance: "0",
       collectibles: [],
       balances: [],
       itemsCount: 0,
@@ -131,7 +131,7 @@ export default {
       try {
         this.isLoading = true;
         const wgold = new wGOLD(this.addresses.wGOLD);
-        this.balance = web3.utils.fromWei(await wgold.balanceOf(this.account));
+        this.balance = await wgold.balanceOf(this.account);
 
         this.collectibles = getCollectibles();
 

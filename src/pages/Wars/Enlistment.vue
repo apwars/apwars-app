@@ -2,11 +2,11 @@
   <div>
     <div v-if="!isCountdown">
       <div class="bg-fed">
-        <v-alert v-if="isWar.test" type="warning">
+        <v-alert v-if="isWar.showTest" type="warning">
           Danger, it's a test war
         </v-alert>
         <v-container>
-          <v-row class="d-none d-sm-none d-md-flex my-3">
+          <v-row class="d-none d-sm-none d-md-flex my-0 my-md-3">
             <v-col cols="12" md="4">
               <v-img
                 class="mx-auto"
@@ -44,7 +44,7 @@
             </v-col>
           </v-row>
 
-          <v-row class="d-flex d-sm-flex d-md-none">
+          <v-row class="d-flex d-sm-flex d-md-none mt-n3">
             <v-col cols="12">
               <v-img
                 class="mx-auto"
@@ -62,51 +62,37 @@
       </div>
 
       <v-container>
-        <v-row class="mt-n16">
+        <v-row class="mt-n6 mt-md-n16">
           <v-col cols="12">
             <countdown
               :time="countdownTimeEnd"
               title="The enlistment ends in"
               @end="loadData"
             ></countdown>
-            <h2 class="text-h2 text-wGOLD text-center mt-2">Troops</h2>
+            <h2 class="text-h2 text-wGOLD text-center mt-2">Units</h2>
           </v-col>
         </v-row>
+      </v-container>
 
-        <v-row v-if="isConnected && !isLoading && isEnlistment">
-          <v-col cols="12" lg="6" class="dividing-line">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center"
-                v-for="trooper in teamA"
-                v-bind:key="trooper.name"
-              >
-                <stake-trooper :trooper="trooper" :contract-war="contractWar" />
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center"
-                v-for="trooper in teamB"
-                v-bind:key="trooper.name"
-              >
-                <stake-trooper :trooper="trooper" :contract-war="contractWar" />
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
+      <list-units
+        class="my-3"
+        v-if="isConnected && !isLoading && isEnlistment"
+        type="enlistment"
+        :contract-war="contractWar"
+      ></list-units>
 
-        <v-row v-else-if="!isLoading && !isEnlistment">
+      <v-container v-else-if="!isLoading && !isEnlistment">
+        <v-row>
           <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3 ma-6">Enlistment period ended</h3>
+            <h3 class="text-h4 text-md-h3 ma-0 ma-md-6">
+              Enlistment period ended
+            </h3>
           </v-col>
         </v-row>
+      </v-container>
 
-        <v-row v-else>
+      <v-container v-else>
+        <v-row>
           <v-col cols="12" class="d-flex justify-center">
             <h3 class="text-h3">Loading...</h3>
           </v-col>
@@ -147,9 +133,9 @@
 
 <script>
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
-import wButton from "@/lib/components/ui/Utils/wButton";
-import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
+import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -160,8 +146,8 @@ export default {
   components: {
     wGOLDButton,
     wButton,
-    StakeTrooper,
     Countdown,
+    ListUnits,
   },
 
   data() {
@@ -241,7 +227,7 @@ export default {
     initData() {
       try {
         this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
-        this.isWar = getWars().find(
+        this.isWar = getWars(this.networkInfo.id !== "56").find(
           (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
         );
 
@@ -297,11 +283,6 @@ export default {
   background: linear-gradient(180deg, rgb(49 45 35 / 0%) 0, rgb(17 17 17) 100%);
 }
 
-.dividing-line {
-  background-image: url("/images/battle/line.png");
-  background-position: right;
-}
-
 .isLoading {
   opacity: 0;
 }
@@ -309,14 +290,30 @@ export default {
   display: none;
 }
 
+.stats {
+  font-weight: bold;
+  font-size: 28px;
+}
+.qty {
+  color: #ffb800;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.disabled {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
+@media only screen and (max-width: 1920px) {
+  .qty {
+    font-size: 14px;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .gradient {
     display: none;
-  }
-}
-@media only screen and (max-width: 1280px) {
-  .dividing-line {
-    background: none;
   }
 }
 </style>

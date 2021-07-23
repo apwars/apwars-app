@@ -1,25 +1,29 @@
 <template>
   <div>
-    <div class="d-flex" v-bind:class="{ disabled: info.disabled }">
+    <div class="d-flex justify-center" v-bind:class="{ disabled: info.disabled }">
       <div class="align-self-center">
         <v-img width="160" :src="`/images/troops/${info.name}.png`" />
       </div>
       <div class="ml-1 align-self-center">
         <div class="stats mt-6">Stats</div>
+        <div class="qty">
+          Global qty:
+          <amount :amount="info.globalQty" decimals="2" compact />
+        </div>
         <div class="qty mb-3">
-          QTY:
-          <amount :amount="info.qty" decimals="2" compact />
+          My qty:
+          <amount :amount="info.myQty" decimals="2" compact />
         </div>
         <div class="current-price">Current Price:</div>
         <div class="d-flex justify-start">
-          <v-img
+          <img
             class="btn mr-1 align-self-center"
             src="/images/wgold.png"
             width="38"
             height="38"
           />
           <div class="price-wgold align-self-center">
-            <amount :amount="info.priceWGOLD" decimals="2" compact /> wGOLD
+            <amount :amount="info.pricewGOLD" decimals="2" compact /> wGOLD
           </div>
         </div>
         <div class="d-flex justify-start">
@@ -36,11 +40,13 @@
 
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
+import wButton from "@/lib/components/ui/Buttons/wButton";
 
 export default {
   props: ["info"],
   components: {
     Amount,
+    wButton,
   },
 };
 </script>
@@ -54,6 +60,15 @@ export default {
   color: #ffb800;
   font-weight: bold;
   font-size: 16px;
+}
+.globalQty {
+  color: #f6ff00;
+  font-weight: bold;
+  font-size: 16px;
+}
+.qty >>> span,
+.globalQty >>> span {
+  color: #fff;
 }
 .current-price {
   font-weight: bold;
@@ -69,8 +84,8 @@ export default {
   filter: grayscale(100%);
 }
 
-@media only screen and (max-width: 1920px) {
-  .qty {
+@media only screen and (max-width: 600px) {
+  .qty, .globalQty {
     font-size: 14px;
   }
   .current-price {

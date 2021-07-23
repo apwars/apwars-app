@@ -16,6 +16,18 @@ export default {
     "56": process.env.VUE_APP_wGOLD_BUSD_LP_CONTRACT_56,
   },
   FED: {
+    "5777": process.env.VUE_APP_FED_ADDRESS_5777,
     "56": process.env.VUE_APP_FED_ADDRESS_56,
+    "97": process.env.VUE_APP_FED_ADDRESS_97,
+  },
+  marketNFTS: {
+    "5777": process.env.VUE_APP_MARKETNFTS_CONTRACT_5777,
+    "56": process.env.VUE_APP_MARKETNFTS_CONTRACT_56,
+    "97": process.env.VUE_APP_MARKETNFTS_CONTRACT_97,
+  },
+  transporter: {
+    "5777": process.env.VUE_APP_TRANSPORTER_CONTRACT_5777,
+    "56": process.env.VUE_APP_TRANSPORTER_CONTRACT_56,
+    "97": process.env.VUE_APP_TRANSPORTER_CONTRACT_97,
   },
 };

@@ -26,10 +26,10 @@
 </template>
 
 <script>
-import Amount from "@/lib/components/ui/Utils/Amount";
+import Amount from '@/lib/components/ui/Utils/Amount';
 
 export default {
-  props: ["amount", "actived", "size", "disabled"],
+  props: ['amount', 'actived', 'size', 'disabled'],
 
   data() {
     return {
@@ -46,29 +46,31 @@ export default {
       if (this.actived === undefined || this.disabled) {
         return false;
       }
-      return this.actived === "" || this.actived ? true : this.hover;
+      return this.actived === '' || this.actived ? true : this.hover;
     },
     getSize() {
       switch (this.size) {
-        case "small":
-          return "btn btn-small";
+        case 'small':
+          return 'btn btn-small';
+        case 'lazy':
+          return 'btn btn-lazy';
         default:
-          return "btn btn-medium";
+          return 'btn btn-medium';
       }
     },
     getWidth() {
       switch (this.size) {
-        case "small":
-          return "160px";
+        case 'small':
+          return '160px';
         default:
-          return "222px";
+          return '222px';
       }
     },
   },
 
   methods: {
     emitClick() {
-      !this.disabled && this.$emit("click");
+      !this.disabled && this.$emit('click');
     },
   },
 };
@@ -98,6 +100,9 @@ export default {
 }
 .btn-small {
   width: 160px;
+}
+.btn-lazy {
+  width: 80px;
 }
 .btn-small .label {
   font-size: 16px;

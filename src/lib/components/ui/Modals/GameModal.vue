@@ -1,81 +1,80 @@
 <template>
   <div>
-    <v-dialog
-    content-class="elevation-0"
-    persistent
-    :value="open"
-    width="556"
-    style="box-shadow: none"
-  >
-    <v-card>
-      <v-card-title>
-        {{ title }}
-      </v-card-title>
-      <v-card-text style="height: 340px">
-        <div class="content">
-          <slot></slot>
-        </div>
-        <div class="button" v-if="!hideOk">
-          <img
-            @click="close"
-            class="btn"
-            src="/images/buttons/btn-ok.png"
-          />
-        </div>
-      </v-card-text>
-    </v-card>
-  </v-dialog>
+    <template-modal-papyrus
+      :open="open"
+      :title="title"
+      :width="700"
+      :height="'220px'"
+      @close="close"
+      @confirm="confirm"
+      :textConfirm="textConfirm"
+      :isLoading="isLoading"
+      :disabledConfirm="isLoading"
+      :disabledClose="isLoading"
+    >
+      <slot> </slot>
+    </template-modal-papyrus>
   </div>
 </template>
 
 <script>
+import wButton from "@/lib/components/ui/Buttons/wButton";
+import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
 
 export default {
-  props: ['open', 'title', 'hideOk'],
-  
+  props: ["open", "title", "isLoading", "textConfirm"],
+
   data() {
     return {
-      address: '',
-    }
+      address: "",
+    };
+  },
+
+  components: {
+    wButton,
+    TemplateModalPapyrus,
   },
 
   computed: {
     isConnected() {
-      return this.$store.getters['user/isConnected'];
+      return this.$store.getters["user/isConnected"];
     },
 
     account() {
-      return this.$store.getters['user/account'];
+      return this.$store.getters["user/account"];
     },
 
     networkInfo() {
-      return this.$store.getters['user/networkInfo'];
+      return this.$store.getters["user/networkInfo"];
     },
 
     addresses() {
-      return this.$store.getters['user/addresses'];
-    }
+      return this.$store.getters["user/addresses"];
+    },
   },
 
   methods: {
     close() {
-      this.$emit('close');
+      this.$emit("close");
     },
-  }
-}
+    confirm() {
+      this.$emit("confirm");
+    },
+  },
+};
 </script>
 
 <style scoped>
 .theme--dark.v-card {
-  background-color:transparent !important;
-  background: url('/images/modal-background.png');
+  background-color: transparent !important;
+  background: url("/images/modal-background.png");
   background-size: 100%;
   background-repeat: no-repeat;
   padding: 15px;
 }
 
 .v-card__title {
-  color: #765E55;
+  color: #765e55;
   font-size: 15x !important;
   font-weight: bold !important;
 }
@@ -91,6 +90,6 @@ export default {
 .btn {
   cursor: pointer;
   width: 150px;
-  float:right;
+  float: right;
 }
 </style>
