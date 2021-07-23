@@ -10,7 +10,13 @@
       </v-container>
       <div class="d-flex justify-center">
         <v-img
-          max-width="609px"
+          v-if="$vuetify.breakpoint.mobile"
+          width="100%"
+          src="/images/weapon-research/create-weapon.png"
+        />
+        <v-img
+          v-else
+          max-width="610px"
           src="/images/weapon-research/create-weapon.png"
         />
       </div>

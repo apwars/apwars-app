@@ -5,11 +5,11 @@
       v-bind:class="{ disabled: unit.disabled }"
     >
       <div class="align-self-center">
-        <v-img width="160" :src="`/images/troops/${unit.name}.png`" />
+        <v-img :width="$vuetify.breakpoint.mobile ? 110 : 160" :src="`/images/troops/${unit.name}.png`" />
       </div>
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
-        <div class="d-flex mt-1 qty">
+        <div class="d-flex qty">
           <v-img class="mr-1" max-width="26px" src="/images/wGOLD.png" />
           <amount
             :amount="getTokenAConfig.amount"
@@ -18,7 +18,7 @@
             symbol="wGOLD"
           />
         </div>
-        <div class="d-flex  mt-1 qty">
+        <div class="d-flex mt-1 qty">
           <v-img
             class="mr-1"
             max-width="26px"
@@ -31,10 +31,10 @@
             :symbol="unit.name"
           />
         </div>
-        <div class="d-flex my-1 qty">
-          <v-img
+        <div class="d-flex align-center my-1 qty">
+          <img
             class="mr-1"
-            max-width="26px"
+            height="32px"
             src="/images/icons/hourglass.png"
           />
 
@@ -127,6 +127,7 @@
       :isLoading="isLoadingClaim"
       :text="textClaim"
       :textConfirm="textConfirmClaim"
+      weapon-icon
     ></arimedes-modal>
 
     <new-research-modal
