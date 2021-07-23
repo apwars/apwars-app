@@ -72,7 +72,7 @@ export function getTroops() {
       defense: 0,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 7,
           name: 'Simple spear',
           image: '/images/icons/simple-spear.png'
         },
@@ -98,7 +98,7 @@ export function getTroops() {
       defense: 0,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 8,
           name: 'Simple spear',
           image: '/images/icons/simple-spear.png'
         },
@@ -124,7 +124,7 @@ export function getTroops() {
       defense: 0,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 13,
           name: 'Simple potion',
           image: '/images/icons/simple-potion.png'
         },
@@ -190,7 +190,7 @@ export function getTroops() {
       raceDesc: 'Orcs',
       tier: 2,
       tierDesc: 'Armory',
-      name: "wARMORED-GRUNT",
+      name: "wARMOURED-GRUNT",
       lpAddresses: "0xc0749fA16072c377B786213aCa2837D4Aa203c8A",
       contractAddress: {
         "5777": "0xbBe4AA52a30bC5d360d6497F5cf2Dcd17ee0a6F2",
@@ -202,7 +202,7 @@ export function getTroops() {
       defense: 0,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 10,
           name: 'Simple spear',
           image: '/images/icons/simple-spear.png'
         },
@@ -228,7 +228,7 @@ export function getTroops() {
       defense: 0,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 9,
           name: 'Simple spear',
           image: '/images/icons/simple-spear.png'
         },
@@ -254,7 +254,7 @@ export function getTroops() {
       defense: 0,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 14,
           name: 'Simple potion',
           image: '/images/icons/simple-potion.png'
         },
@@ -268,7 +268,7 @@ export function getTroops() {
       raceDesc: 'Undead',
       tier: 1,
       tierDesc: 'Barracks',
-      name: "wSKELETONWARRIOR",
+      name: "wSKELETON-WARRIOR",
       lpAddresses: "0xf101954d51ffc12640b006e9c951ffebbd6b7259",
       contractAddress: {
         "5777": "",
@@ -280,7 +280,7 @@ export function getTroops() {
       defense: 2,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 5,
           name: 'Simple sword',
           image: '/images/icons/simple-sword.png'
         },
@@ -306,7 +306,7 @@ export function getTroops() {
       defense: 2,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 6,
           name: 'Simple sword',
           image: '/images/icons/simple-sword.png'
         },
@@ -332,7 +332,7 @@ export function getTroops() {
       defense: 8,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 11,
           name: 'Simple spear',
           image: '/images/icons/simple-spear.png'
         },
@@ -358,7 +358,7 @@ export function getTroops() {
       defense: 22,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 12,
           name: 'Simple spear',
           image: '/images/icons/simple-spear.png'
         },
@@ -384,7 +384,7 @@ export function getTroops() {
       defense: 20,
       combinators: {
         warPreparation: {
-          idCombinator: 0,
+          idCombinator: 15,
           name: 'Simple potion',
           image: '/images/icons/simple-potion.png'
         },
