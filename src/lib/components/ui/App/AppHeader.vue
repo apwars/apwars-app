@@ -145,8 +145,8 @@ export default {
               href: "/wars",
             },
             {
-              title: "War Preparation",
-              href: "/war-preparation",
+              title: "Weapon Research",
+              href: "/weapon-research",
             },
           ],
         },

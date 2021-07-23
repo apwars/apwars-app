@@ -1,23 +1,23 @@
 <template>
   <div>
-    <div class="bg-war-preparation">
+    <div class="bg-weapon-research">
       <v-container class="pb-0">
         <page-title
-          title="War Preparation"
+          title="Weapon Research"
           description="It is essential to strengthen your troops in combat whether with training or magical portions, use your time to improve your strategy!"
-          image="/images/war-preparation/icon-war-preparation.png"
+          image="/images/weapon-research/icon-weapon-research.png"
         />
       </v-container>
       <div class="d-flex justify-center">
         <v-img
-          max-width="800px"
-          src="/images/war-preparation/create-weapon.png"
+          max-width="609px"
+          src="/images/weapon-research/create-weapon.png"
         />
       </div>
       <div class="gradient"></div>
     </div>
 
-    <list-units class="mt-n6" type="war-preparation"></list-units>
+    <list-units class="mt-n6" type="weapon-research"></list-units>
   </div>
 </template>
 
@@ -68,8 +68,8 @@ export default {
 </script>
 
 <style scoped>
-.bg-war-preparation {
-  background-image: url("/images/war-preparation/bg-war-preparation.png");
+.bg-weapon-research {
+  background-image: url("/images/weapon-research/bg-weapon-research.png");
   background-size: cover;
   background-position: center;
 }
@@ -81,7 +81,7 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-  .bg-war-preparation {
+  .bg-weapon-research {
     background-size: contain;
   }
 }
