@@ -14,7 +14,7 @@
         <v-col cols="12" md="3" class="align-self-center">
           <img class="lilith-img" src="/images/weapon-research/arimedes.png" />
         </v-col>
-        <v-col cols="12" md="9" class="align-self-center">
+        <v-col cols="12" md="9" class="d-flex align-self-center">
           <p class="ml-2 mt-1 align-self-center content">
             <v-progress-circular
               class="mr-1"
@@ -26,8 +26,8 @@
             ></v-progress-circular>
             <span v-html="text"></span>
           </p>
-          <div v-if="weaponIcon!==undefined" class="d-flex justify-center mt-n2">
-            <img width="60px" src="/images/icons/simple-sword.png" />
+          <div v-if="weaponIcon!==undefined" class="align-self-center">
+            <img width="60px" height="60px" :src="weaponIcon" />
           </div>
         </v-col>
       </v-row>
