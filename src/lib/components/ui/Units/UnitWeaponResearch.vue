@@ -5,7 +5,10 @@
       v-bind:class="{ disabled: unit.disabled }"
     >
       <div class="align-self-center">
-        <v-img :width="$vuetify.breakpoint.mobile ? 100 : 160" :src="`/images/troops/${unit.name}.png`" />
+        <v-img
+          :width="$vuetify.breakpoint.mobile ? 100 : 160"
+          :src="`/images/troops/${unit.name}.png`"
+        />
       </div>
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
@@ -32,11 +35,7 @@
           />
         </div>
         <div class="d-flex align-center my-1 qty">
-          <img
-            class="mr-1"
-            height="32px"
-            src="/images/icons/hourglass.png"
-          />
+          <img class="mr-1" height="32px" src="/images/icons/hourglass.png" />
 
           <div class="d-flex flex-column">
             <span>
@@ -83,7 +82,7 @@
           New Research
         </wButton>
         <wButton
-          v-else-if="combinators.combinatorId !== '0' && isClaim === true"
+          v-else-if="combinators.combinatorId !== '0' && isClaim"
           @click="openModalClaim()"
           class="mt-1"
         >
@@ -91,14 +90,13 @@
         </wButton>
         <div class="mt-1" v-else>
           <span class="qty">Time for claim:</span>
-          <v-progress-linear
-            color="teal"
-            buffer-value="0"
-            :value="claimPercentage"
-            stream
-            height="5"
-          ></v-progress-linear>
-          <time-block :blocks="isClaim" countdown />
+          <countdown-block
+            v-if="getGeneralConfig.isEnabled"
+            :start-blocks="combinators.startBlock"
+            :end-blocks="combinators.endBlock"
+            show-progress
+            @end="loadCombinators()"
+          />
         </div>
       </div>
       <v-skeleton-loader
@@ -146,6 +144,7 @@
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
 import TimeBlock from "@/lib/components/ui/Utils/TimeBlock";
+import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ArimedesModal from "@/lib/components/ui/Modals/ArimedesModal";
 import NewResearchModal from "@/lib/components/ui/Modals/NewResearchModal";
@@ -176,6 +175,7 @@ export default {
     ArimedesModal,
     NewResearchModal,
     TimeBlock,
+    CountdownBlock,
   },
   data() {
     return {
@@ -282,6 +282,13 @@ export default {
       this.tokenBContract = new Troops(this.tokenB);
     },
     async loadData() {
+      if (
+        this.getGeneralConfig.isEnabled !== undefined &&
+        !this.getGeneralConfig.isEnabled
+      ) {
+        return;
+      }
+
       this.isApprovedTokenA = await this.tokenAContract.hasAllowance(
         this.account,
         this.addresses.combinator
@@ -296,23 +303,6 @@ export default {
         this.combinatorId
       );
       if (this.getGeneralConfig.isEnabled) {
-        this.combinators = await this.combinatorContract.combinators(
-          this.combinatorId,
-          this.account
-        );
-
-        const blockClaim =
-          parseInt(this.combinators.startBlock) +
-          parseInt(this.getGeneralConfig.blocks);
-
-        if (this.currentBlockNumber > blockClaim) {
-          this.isClaim = true;
-        } else {
-          this.isClaim = blockClaim - this.currentBlockNumber;
-          this.claimPercentage =
-            100 - parseInt((this.isClaim / this.getGeneralConfig.blocks) * 100);
-        }
-
         this.getTokenAConfig = await this.combinatorContract.getTokenAConfig(
           this.account,
           this.tokenA,
@@ -323,8 +313,25 @@ export default {
           this.tokenB,
           this.combinatorId
         );
+
+        await this.loadCombinators();
       }
       this.isLoadingUnit = true;
+    },
+    async loadCombinators() {
+      this.combinators = await this.combinatorContract.combinators(
+        this.combinatorId,
+        this.account
+      );
+
+      this.combinators.endBlock =
+        parseInt(this.combinators.startBlock) +
+        parseInt(this.getGeneralConfig.blocks);
+
+      this.isClaim = false;
+      if (this.currentBlockNumber >= this.combinators.endBlock) {
+        this.isClaim = true;
+      }
     },
     openModalArimedesApproval() {
       if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
@@ -483,6 +490,7 @@ export default {
           "New search successfully sent Arimedes - War Engineer"
         );
         this.modalArimedesNewResearch = false;
+        this.loadCombinators();
       } catch (error) {
         return ToastSnackbar.error(error);
       } finally {
@@ -493,6 +501,7 @@ export default {
       this.textClaim = "Your search has been completed, and yours is available";
       this.textConfirmClaim = "Finish research";
       this.modalArimedesClaim = true;
+      this.isLoadingClaim = false;
     },
     async claim() {
       try {
@@ -524,6 +533,7 @@ export default {
           );
           this.isLoadingClaim = false;
           this.modalArimedesClaim = false;
+          this.loadCombinators();
         });
       } catch (error) {
         this.isLoadingClaim = true;
