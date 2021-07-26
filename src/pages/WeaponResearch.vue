@@ -8,10 +8,11 @@
           image="/images/weapon-research/icon-weapon-research.png"
         />
       </v-container>
-      <div class="d-flex justify-center">
+      <div class="d-flex text-center justify-center">
         <v-img
           v-if="$vuetify.breakpoint.mobile"
-          width="100%"
+          class="mx-auto"
+          max-width="90%"
           src="/images/weapon-research/create-weapon.png"
         />
         <v-img
@@ -89,6 +90,7 @@ export default {
 @media only screen and (max-width: 600px) {
   .bg-weapon-research {
     background-size: contain;
+    background-position: top;
   }
 }
 </style>

@@ -125,7 +125,7 @@
       :isLoading="isLoadingClaim"
       :text="textClaim"
       :textConfirm="textConfirmClaim"
-      weapon-icon
+      :weapon-icon="infoWeapon.image"
     ></arimedes-modal>
 
     <new-research-modal
@@ -155,7 +155,7 @@ import wGOLD from "@/lib/eth/wGOLD";
 import Troops from "@/lib/eth/Troops";
 
 const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT =
-  "The first page has been successfully signed. <br /> I am waiting for the approval in your precious wallet, for signing the second page of the contract...";
+  "Keep pressing over here on this second page.";
 const ARIMEDES_APPROVE_FIRST_PAGE_CONTRACT =
   "I can put your troops to work to create weapons if I get paid enought. If you want this I will need your blood print from your two best fingers. Hurry up, you are wasting our time!";
 const ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT =
@@ -163,9 +163,15 @@ const ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT =
 const ARIMEDES_WAITING_WALLET_APPROVAL =
   "Keep pressing over here on this first page.";
 const ARIMEDES_WAITING_FIRST_CONFIRMATION =
-  "Keep pressing over here on this second page.";
+  "I am checking if is everything right...";
 const ARIMEDES_WAITING_SECOND_CONFIRMATION =
   "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation, so you can start your research...";
+const ARIMEDES_CLAIM =
+  "Your research has been completed, and yours is available.";
+const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL =
+  "I need your signature...";
+const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
+  "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your weapon.";
 
 export default {
   props: ["unit"],
@@ -498,8 +504,8 @@ export default {
       }
     },
     openModalClaim() {
-      this.textClaim = "Your search has been completed, and yours is available";
-      this.textConfirmClaim = "Finish research";
+      this.textClaim = ARIMEDES_CLAIM;
+      this.textConfirmClaim = "Claim";
       this.modalArimedesClaim = true;
       this.isLoadingClaim = false;
     },
@@ -511,7 +517,7 @@ export default {
           this.account
         );
 
-        this.textConfirmClaim = ARIMEDES_WAITING_WALLET_APPROVAL;
+        this.textClaim = ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL;
 
         confirmTransaction.on("error", (error) => {
           this.openModalClaim();
@@ -524,7 +530,7 @@ export default {
         });
 
         confirmTransaction.on("transactionHash", () => {
-          this.textConfirmClaim = "I'm sending your weapon....";
+          this.textClaim = ARIMEDES_WAITING_CLAIM_CONFIRMATION;
         });
 
         confirmTransaction.on("receipt", () => {

@@ -15,7 +15,7 @@
       @progress="progress"
     >
       <template slot-scope="props">
-        {{ props.hours }} hours, {{ props.minutes }} minutes,
+        ~{{ props.hours }} hours, {{ props.minutes }} minutes,
         {{ props.seconds }} seconds.
       </template>
     </countdown>

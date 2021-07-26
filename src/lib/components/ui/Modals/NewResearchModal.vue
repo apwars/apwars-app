@@ -21,10 +21,8 @@
           </div>
 
           <div class="d-flex align-center px-1 font-weight-black">
-            If you want my services, and I can tell you need it badly, lets sign
-            a research agreement. You will pay me wGold and I will work with
-            your wUnits to develop weapons. Whenever I am finished I will keep
-            the wGold, return your wUnits and your newly created Weapons.
+            Let's sign a research agreement. You will pay me wGOLD to work with
+            your army, and they will return with newly created weapons.
           </div>
 
           <div>
@@ -100,7 +98,14 @@
           >
             <template v-slot:label>
               <div>
-                I have read and agreed with the research rules
+                I understand that I will pay
+                <amount
+                  :amount="getInfo.getTokenAConfig.amount"
+                  decimals="2"
+                  compact
+                  symbol="wGOLD"
+                />
+                to this research.
               </div>
             </template>
           </v-checkbox>
@@ -167,6 +172,7 @@ export default {
   border-radius: 8px;
   color: #000;
 }
+
 .box-token {
   background: url("/images/modal-background.png");
   background-size: 200%;
@@ -212,5 +218,11 @@ export default {
   font-size: 14px;
   color: #fff;
   font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+  .you-will-need {
+    background-size: 180%;
+  }
 }
 </style>
