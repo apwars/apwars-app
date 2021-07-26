@@ -9,7 +9,7 @@ export function getWeapons() {
 
   return [
     {
-      id: 28,
+      id: 4,
       type: "weapons",
       typeDesc: "Weapons",
       contractAddress: addresses.collectibles,
@@ -19,7 +19,7 @@ export function getWeapons() {
       image: "/images/nfts/weapon-simple-sword.png",
     },
     {
-      id: 29,
+      id: 5,
       type: "weapons",
       typeDesc: "Weapons",
       contractAddress: addresses.collectibles,
@@ -29,7 +29,7 @@ export function getWeapons() {
       image: "/images/nfts/weapon-simple-spear.png",
     },
     {
-      id: 30,
+      id: 6,
       type: "weapons",
       typeDesc: "Weapons",
       contractAddress: addresses.collectibles,
@@ -39,7 +39,7 @@ export function getWeapons() {
       image: "/images/nfts/weapon-simple-potion.png",
     },
     {
-      id: 31,
+      id: 7,
       type: "weapons",
       typeDesc: "Weapons",
       contractAddress: addresses.collectibles,
