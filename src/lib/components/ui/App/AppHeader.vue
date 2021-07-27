@@ -133,8 +133,18 @@ export default {
           href: "/game-items",
         },
         {
-          title: "Units",
-          href: "/war-stats",
+          title: "Army",
+          href: "",
+          submenu: [
+            {
+              title: "Available Units",
+              href: "/war-stats",
+            },
+            {
+              title: "Training Center",
+              href: "/training-center",
+            },
+          ],
         },
         {
           title: "Wars",

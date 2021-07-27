@@ -135,7 +135,7 @@
         v-if="isConnected && !isLoading"
         type="report-trooper"
         :contract-war="contractWar"
-        :only-show="{
+        :filter-rules="{
           team: [teamWinner],
         }"
       ></list-units>

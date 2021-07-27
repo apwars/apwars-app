@@ -86,7 +86,7 @@
     </v-container>
 
     <v-container
-      :fluid="$vuetify.breakpoint.md||$vuetify.breakpoint.mobile"
+      :fluid="$vuetify.breakpoint.md || $vuetify.breakpoint.mobile"
       v-if="isConnected && !isLoading"
     >
       <v-row v-if="filterTroops.length > 0">
@@ -161,7 +161,7 @@ export default {
     UnitWeaponResearch,
   },
 
-  props: ["type", "contractWar", "onlyShow"],
+  props: ["type", "contractWar", "filterRules", "showOnlyMyUnits"],
 
   data() {
     return {
@@ -241,6 +241,9 @@ export default {
   },
 
   mounted() {
+    if (this.showOnlyMyUnits !== undefined) {
+      this.showMyUnits = true;
+    }
     this.loadData();
   },
 
@@ -263,10 +266,10 @@ export default {
 
         let troops = getTroops();
 
-        if (this.onlyShow) {
-          for (let filter in this.onlyShow) {
+        if (this.filterRules) {
+          for (let filter in this.filterRules) {
             troops = troops.filter((trooper) => {
-              return this.onlyShow[filter].indexOf(trooper[filter]) !== -1;
+              return this.filterRules[filter].indexOf(trooper[filter]) !== -1;
             });
           }
         }
@@ -320,6 +323,7 @@ export default {
         });
 
         this.filterTroops = this.globalTroops;
+
         this.updateTroopsFilters();
       } catch (error) {
         console.log(error);
