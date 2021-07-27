@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="bg-weapon-research">
+    <div class="bg-training-center">
       <v-container class="pb-0">
         <page-title
-          title="Weapon Research"
+          title="Training Center"
           description="It is essential to strengthen your troops in combat whether with training or magical portions, use your time to improve your strategy!"
-          image="/images/weapon-research/icon-weapon-research.png"
+          image="/images/training-center/icon-training-center.png"
         />
       </v-container>
       <div class="d-flex text-center justify-center">
@@ -13,12 +13,12 @@
           v-if="$vuetify.breakpoint.mobile"
           class="mx-auto"
           max-width="90%"
-          src="/images/weapon-research/create-weapon.png"
+          src="/images/training-center/create-stables.png"
         />
         <v-img
           v-else
           max-width="610px"
-          src="/images/weapon-research/create-weapon.png"
+          src="/images/training-center/create-stables.png"
         />
       </div>
       <div class="gradient"></div>
@@ -26,7 +26,8 @@
 
     <list-units
       class="mt-n6"
-      type="weapon-research"
+      type="training-center"
+      :filter-rules="filters"
       show-only-my-units
     ></list-units>
   </div>
@@ -47,6 +48,9 @@ export default {
   data() {
     return {
       isLoading: true,
+      filters: {
+        name: ["wCROSSBOWMAN", "wPIKE-ORC", "wUNDEAD-PIKEMAN"],
+      },
     };
   },
 
@@ -79,8 +83,8 @@ export default {
 </script>
 
 <style scoped>
-.bg-weapon-research {
-  background-image: url("/images/weapon-research/bg-weapon-research.png");
+.bg-training-center {
+  background-image: url("/images/training-center/bg-training-center.png");
   background-size: cover;
   background-position: center;
 }
@@ -92,7 +96,7 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-  .bg-weapon-research {
+  .bg-training-center {
     background-size: contain;
     background-position: top;
   }

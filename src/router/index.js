@@ -12,6 +12,7 @@ import Round2 from "@/pages/Wars/Round2.vue";
 import WarReport from "@/pages/Wars/WarReport.vue";
 import BlackMarket from "@/pages/BlackMarket.vue";
 import WeaponResearch from "@/pages/WeaponResearch.vue";
+import TrainingCenter from "@/pages/TrainingCenter.vue";
 
 Vue.use(Router);
 
@@ -55,6 +56,11 @@ export const routes = [
         path: "/weapon-research",
         name: "/weapon-research",
         component: WeaponResearch
+      },
+      {
+        path: "/training-center",
+        name: "/training-center",
+        component: TrainingCenter
       },
       {
         path: "/wars/:contractWar/enlistment",
