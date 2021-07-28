@@ -102,6 +102,11 @@ export function getTroops() {
           name: 'Simple spear',
           image: '/images/icons/simple-spear.png'
         },
+        trainingCenter: {
+          idCombinator: 18,
+          name: 'wHORSEMAN',
+          image: '/images/icons/wHORSEMAN.png'
+        },
       }
     },
     {
@@ -231,6 +236,11 @@ export function getTroops() {
           idCombinator: 9,
           name: 'Simple spear',
           image: '/images/icons/simple-spear.png'
+        },
+        trainingCenter: {
+          idCombinator: 17,
+          name: 'wWARG',
+          image: '/images/icons/wWARG.png'
         },
       }
     },
@@ -362,6 +372,11 @@ export function getTroops() {
           name: 'Simple spear',
           image: '/images/icons/simple-spear.png'
         },
+        trainingCenter: {
+          idCombinator: 16,
+          name: 'wDEATH-KNIGHT',
+          image: '/images/icons/wDEATH-KNIGHT.png'
+        },
       }
     },
     {
@@ -403,7 +418,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x820c6a4f940a4470E9D2933aAb831a2eE7508fcF",
-        "97": "0x022465BCd48f6eE55236a555E0Da21c960c2d8EA",
+        "97": "0xab51802A31724A5239F9993b55eE86464f837fda",
       },
       image: "/images/troops/wHORSEMAN.png",
       strength: 150,
@@ -429,7 +444,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x66e22551BCe75874f91d46dB684621500C9480ae",
-        "97": "0x9a1E2a31A6a7BF8d8daCA7C6e2b7Ba3b16F2A554",
+        "97": "0x3CFAb3A52d5C67C361B4c0E1A9D9A0fF26F6D1C1",
       },
       image: "/images/troops/wWARG.png",
       strength: 150,
@@ -455,7 +470,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0xD35d5bCCb4141ed62f5cf6B0b020e74eBf793EE5",
-        "97": "0xaF583Ff10E58f2FD3dc00E831eEF1db1A4B1D65f",
+        "97": "0x677E1df390B30e9795A7fCf56908f529DB024C75",
       },
       image: "/images/troops/wDEATH-KNIGHT.png",
       strength: 150,

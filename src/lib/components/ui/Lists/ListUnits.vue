@@ -118,6 +118,10 @@
             v-else-if="getType === 'weapon-research'"
             :unit="trooper"
           />
+          <unit-training-center
+            v-else-if="getType === 'training-center'"
+            :unit="trooper"
+          />
         </v-col>
       </v-row>
       <v-row v-else>
@@ -145,6 +149,7 @@ import Trooper from "@/lib/components/ui/Utils/Trooper";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
 import UnitWeaponResearch from "@/lib/components/ui/Units/UnitWeaponResearch";
+import UnitTrainingCenter from "@/lib/components/ui/Units/UnitTrainingCenter";
 
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
@@ -159,6 +164,7 @@ export default {
     StakeTrooper,
     ReportTrooper,
     UnitWeaponResearch,
+    UnitTrainingCenter,
   },
 
   props: ["type", "contractWar", "filterRules", "showOnlyMyUnits"],
@@ -220,6 +226,9 @@ export default {
           return this.type;
         case "weapon-research":
           return this.type;
+        case "training-center":
+          return this.type;
+
         default:
           return "trooper";
       }

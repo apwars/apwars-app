@@ -4,7 +4,7 @@
       <v-container class="pb-0">
         <page-title
           title="Weapon Research"
-          description="It is essential to strengthen your troops in combat whether with training or magical portions, use your time to improve your strategy!"
+          description="It is essential to strengthen your troops in combat by researching weapons and magical portions, use your time to improve your strategy!"
           image="/images/weapon-research/icon-weapon-research.png"
         />
       </v-container>

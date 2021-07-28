@@ -24,9 +24,14 @@ export default class Combinator {
   }
 
   claimGameItemFromTokens(combinatorId, from) {
-    this.smc.methods.claimGameItemFromTokens(combinatorId).call({ from })
     return this.smc.methods.claimGameItemFromTokens(combinatorId).send({ from });
   }
+
+  claimTokenFromTokens(combinatorId, from) {
+    this.smc.methods.claimTokenFromTokens(combinatorId).call({ from });
+    return this.smc.methods.claimTokenFromTokens(combinatorId).send({ from });
+  }
+
 
   getGeneralConfig(player, source, combinatorId) {
     return this.smcManager.methods.getGeneralConfig(player, source, combinatorId).call();

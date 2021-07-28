@@ -2,7 +2,7 @@
   <div>
     <template-modal-papyrus
       :open="open"
-      :title="'Arimedes - War Engineer'"
+      :title="'Dora Noble - The Horse Trainer'"
       @close="$emit('close')"
       @confirm="$emit('confirm')"
       :textConfirm="textConfirm"
@@ -12,7 +12,7 @@
     >
       <v-row dense class="d-flex">
         <v-col cols="12" md="3" class="align-self-center">
-          <img class="arimedes-img" src="/images/weapon-research/arimedes.png" />
+          <img class="doranoble-img" src="/images/training-center/dora-noble.png" />
         </v-col>
         <v-col cols="12" md="9" class="d-flex align-self-center">
           <p class="ml-2 mt-1 align-self-center content">
@@ -56,12 +56,12 @@ export default {
 </script>
 
 <style scoped>
-.arimedes-img {
+.doranoble-img {
   width: 100%;
 }
 
 @media only screen and (max-width: 600px) {
-  .arimedes-img {
+  .doranoble-img {
     width: 80px;
     margin: 0 auto;
     display: block;

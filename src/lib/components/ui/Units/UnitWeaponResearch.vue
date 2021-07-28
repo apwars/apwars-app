@@ -167,9 +167,8 @@ const ARIMEDES_WAITING_FIRST_CONFIRMATION =
 const ARIMEDES_WAITING_SECOND_CONFIRMATION =
   "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation, so you can start your research...";
 const ARIMEDES_CLAIM =
-  "Your research has been completed, and yours is available.";
-const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL =
-  "I need your signature...";
+  "Your research has been completed, and your item is available.";
+const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
   "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your weapon.";
 
@@ -498,6 +497,9 @@ export default {
         this.modalArimedesNewResearch = false;
         this.loadCombinators();
       } catch (error) {
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
         return ToastSnackbar.error(error);
       } finally {
         this.isLoadingNewResearch = false;
