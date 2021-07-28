@@ -103,7 +103,7 @@ export function getTroops() {
           image: '/images/icons/simple-spear.png'
         },
         trainingCenter: {
-          idCombinator: 18,
+          idCombinator: 3,
           name: 'wHORSEMAN',
           image: '/images/icons/wHORSEMAN.png'
         },
@@ -238,7 +238,7 @@ export function getTroops() {
           image: '/images/icons/simple-spear.png'
         },
         trainingCenter: {
-          idCombinator: 17,
+          idCombinator: 2,
           name: 'wWARG',
           image: '/images/icons/wWARG.png'
         },
@@ -373,7 +373,7 @@ export function getTroops() {
           image: '/images/icons/simple-spear.png'
         },
         trainingCenter: {
-          idCombinator: 16,
+          idCombinator: 1,
           name: 'wDEATH-KNIGHT',
           image: '/images/icons/wDEATH-KNIGHT.png'
         },
