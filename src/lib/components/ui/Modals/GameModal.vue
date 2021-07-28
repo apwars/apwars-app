@@ -7,7 +7,7 @@
       :height="'220px'"
       @close="close"
       @confirm="confirm"
-      textConfirm="Send Item"
+      :textConfirm="textConfirm"
       :isLoading="isLoading"
       :disabledConfirm="isLoading"
       :disabledClose="isLoading"
@@ -22,7 +22,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
 
 export default {
-  props: ["open", "title", "isLoading"],
+  props: ["open", "title", "isLoading", "textConfirm"],
 
   data() {
     return {
