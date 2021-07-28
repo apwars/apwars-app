@@ -33,7 +33,7 @@ export default class wGOLD {
     return bn.gt(0);
   }
 
-  async priceWGOLD(networkId) {
+  async pricewGOLD(networkId) {
     try {
       const busd = new window.web3.eth.Contract(
         APWarsGoldToken,
