@@ -63,6 +63,25 @@
               disabled
             ></number-field>
           </div>
+          <div class="d-flex align-center mx-3">
+            <div
+              class="d-flex white--text align-center font-weight-black text-h4"
+            >
+              <v-img max-width="25px" src="/images/icons/arrow.png" />
+            </div>
+          </div>
+          <div class="d-flex justify-center align-center">
+            <div class="box-token mr-2">
+              <v-img :src="getInfo.infoWeapon.image" />
+            </div>
+            <number-field
+              no-icons
+              class="mt-3"
+              v-model="getInfo.getTokenCConfig.amountFormatted"
+              dense
+              disabled
+            ></number-field>
+          </div>
         </div>
 
         <div class="d-flex justify-center align-center mt-2 mt-md-1">
@@ -148,6 +167,10 @@ export default {
       );
       data.getTokenBConfig.amountFormatted = Convert.fromWei(
         data.getTokenBConfig.amount,
+        true
+      );
+      data.getTokenCConfig.amountFormatted = Convert.fromWei(
+        data.getTokenCConfig.amount,
         true
       );
       return data;

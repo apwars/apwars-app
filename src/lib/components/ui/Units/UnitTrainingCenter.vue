@@ -158,11 +158,11 @@ import wCOURAGE from "@/lib/eth/wCOURAGE";
 import Troops from "@/lib/eth/Troops";
 
 const DORANOBLE_APPROVE_SECOND_PAGE_CONTRACT =
-  "I need some wCOURAGE and a wUnit and I can transform a walker into a rider.";
+  "I need some wCOURAGE and a wUNIT and I can transform a walker into a rider.";
 const DORANOBLE_APPROVE_FIRST_PAGE_CONTRACT =
-  "I need some wCOURAGE and a wUnit and I can transform a walker into a rider.";
+  "I need some wCOURAGE and a wUNIT and I can transform a walker into a rider.";
 const DORANOBLE_APPROVE_ONLY_ONE_PAGE_CONTRACT =
-  "I need some wUnit and I can transform a walker into a rider.";
+  "I need some wUNIT and I can transform a walker into a rider.";
 const DORANOBLE_WAITING_WALLET_APPROVAL =
   "I need you to brand horses with your mark. Here, pick up this cattle marker.";
 const DORANOBLE_WAITING_FIRST_CONFIRMATION =
@@ -222,6 +222,12 @@ export default {
         tokenAddress: "",
       },
       getTokenBConfig: {
+        amount: "0",
+        burningRate: "0",
+        feeRate: "0",
+        tokenAddress: "",
+      },
+      getTokenCConfig: {
         amount: "0",
         burningRate: "0",
         feeRate: "0",
@@ -324,6 +330,11 @@ export default {
         this.getTokenBConfig = await this.combinatorContract.getTokenBConfig(
           this.account,
           this.tokenB,
+          this.combinatorId
+        );
+        this.getTokenCConfig = await this.combinatorContract.getTokenCConfig(
+          this.account,
+          this.account,
           this.combinatorId
         );
 
@@ -489,6 +500,7 @@ export default {
           getGeneralConfig: this.getGeneralConfig,
           getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
           getTokenBConfig: { ...this.unit, ...this.getTokenBConfig },
+          getTokenCConfig: this.getTokenCConfig,
           infoWeapon: this.infoWeapon,
         },
       };

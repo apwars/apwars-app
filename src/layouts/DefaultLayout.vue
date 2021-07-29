@@ -27,6 +27,43 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        <v-dialog v-model="changeNetwork" persistent max-width="350">
+          <v-card>
+            <v-card-title class="headline">
+              <v-alert
+                dense
+                border="left"
+                type="warning"
+                outlined
+                class="text-change-network"
+              >
+                Change your network, you need to connect to BSC
+                {{ networkConnect }}
+                network
+              </v-alert>
+            </v-card-title>
+            <v-card-text>
+              <v-container fill-height>
+                <v-row class="d-flex justify-center align-center">
+                  <v-col cols="12">
+                    <div class="d-flex justify-center align-center">
+                      <div>Awaiting change...</div>
+                      <v-progress-circular
+                        class="mx-3"
+                        :size="26"
+                        :width="2"
+                        indeterminate
+                        color="orange"
+                      ></v-progress-circular>
+                    </div>
+                    <v-img class="text-center" src="/images/metamask.svg" />
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
       </div>
     </v-main>
     <app-footer />
@@ -46,6 +83,7 @@ export default {
   data() {
     return {
       showModal: true,
+      changeNetwork: false,
     };
   },
 
@@ -56,12 +94,32 @@ export default {
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
+    },
+    addresses() {
+      return this.$store.getters["user/addresses"];
+    },
+    networkConnect() {
+      if (this.networkInfo.definedNetwork === "56") {
+        return "production";
+      }
+      return "testnet";
+    },
   },
 
   watch: {
     isConnected() {
       this.showModal = !this.isConnected;
       this.watchBlockchain();
+    },
+    networkInfo() {
+      if (
+        this.networkInfo.definedNetwork !== "ALL" &&
+        this.networkInfo.definedNetwork !== this.networkInfo.id
+      ) {
+        this.changeNetwork = true;
+      }
     },
   },
 
@@ -110,5 +168,9 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: normal !important;
+}
+
+.text-change-network {
+  word-break: break-word;
 }
 </style>

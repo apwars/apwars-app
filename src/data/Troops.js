@@ -417,7 +417,7 @@ export function getTroops() {
       lpAddresses: "0xfd82da44f0098741bbe10681208390c57f9a7c27",
       contractAddress: {
         "5777": "",
-        "56": "0x820c6a4f940a4470E9D2933aAb831a2eE7508fcF",
+        "56": "0x5898d096deC52527A2900F7482492C71107B7520",
         "97": "0xab51802A31724A5239F9993b55eE86464f837fda",
       },
       image: "/images/troops/wHORSEMAN.png",
@@ -443,7 +443,7 @@ export function getTroops() {
       lpAddresses: "0xcfe993fbf111cb2de1f17536661519741a7a6582",
       contractAddress: {
         "5777": "",
-        "56": "0x66e22551BCe75874f91d46dB684621500C9480ae",
+        "56": "0xc15bE042471eBAC1908d7bD93648161A1B82Ee3d",
         "97": "0x3CFAb3A52d5C67C361B4c0E1A9D9A0fF26F6D1C1",
       },
       image: "/images/troops/wWARG.png",
@@ -469,7 +469,7 @@ export function getTroops() {
       lpAddresses: "0x88e491b65af6663bb0a496a9a90e3428e0c60724",
       contractAddress: {
         "5777": "",
-        "56": "0xD35d5bCCb4141ed62f5cf6B0b020e74eBf793EE5",
+        "56": "0x62876880fd6fe05285ea758aac09d68a90337f51",
         "97": "0x677E1df390B30e9795A7fCf56908f529DB024C75",
       },
       image: "/images/troops/wDEATH-KNIGHT.png",

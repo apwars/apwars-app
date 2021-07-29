@@ -32,7 +32,6 @@ export default class Combinator {
     return this.smc.methods.claimTokenFromTokens(combinatorId).send({ from });
   }
 
-
   getGeneralConfig(player, source, combinatorId) {
     return this.smcManager.methods.getGeneralConfig(player, source, combinatorId).call();
   }
@@ -43,6 +42,10 @@ export default class Combinator {
 
   getTokenBConfig(player, source, combinatorId) {
     return this.smcManager.methods.getTokenBConfig(player, source, combinatorId).call();
+  }
+
+  getTokenCConfig(player, source, combinatorId) {
+    return this.smcManager.methods.getTokenCConfig(player, source, combinatorId).call();
   }
 
 }
