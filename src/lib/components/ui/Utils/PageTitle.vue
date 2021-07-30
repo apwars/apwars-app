@@ -42,7 +42,6 @@ export default {
 <style scoped>
 .img-full {
   width: 251px !important;
-  height: 251px !important;
 }
 
 .img-mobile {

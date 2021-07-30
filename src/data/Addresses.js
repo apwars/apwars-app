@@ -9,6 +9,11 @@ export default {
     "56": process.env.VUE_APP_WGOLD_SMART_CONTRACT_56,
     "97": process.env.VUE_APP_WGOLD_SMART_CONTRACT_97,
   },
+  wCOURAGE: {
+    "5777": process.env.VUE_APP_WCOURAGE_SMART_CONTRACT_5777,
+    "56": process.env.VUE_APP_WCOURAGE_SMART_CONTRACT_56,
+    "97": process.env.VUE_APP_WCOURAGE_SMART_CONTRACT_97,
+  },
   BUSD: {
     "56": process.env.VUE_APP_BUSD_CONTRACT_56,
   },
@@ -29,5 +34,13 @@ export default {
     "5777": process.env.VUE_APP_TRANSPORTER_CONTRACT_5777,
     "56": process.env.VUE_APP_TRANSPORTER_CONTRACT_56,
     "97": process.env.VUE_APP_TRANSPORTER_CONTRACT_97,
+  },
+  combinator: {
+    "56": process.env.VUE_APP_COMBINATOR_56,
+    "97": process.env.VUE_APP_COMBINATOR_97,
+  },
+  combinatorManager: {
+    "56": process.env.VUE_APP_COMBINATOR_MANAGER_56,
+    "97": process.env.VUE_APP_COMBINATOR_MANAGER_97,
   },
 };

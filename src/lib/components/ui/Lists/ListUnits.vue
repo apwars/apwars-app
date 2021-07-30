@@ -1,40 +1,11 @@
 <template>
-  <div>
-    <v-container>
-      <v-row>
-        <v-col cols="12" class="my-0">
-          <v-img
-            class="mx-auto"
-            width="550"
-            src="/images/treasury/title-fed-treasury.png"
-          />
-        </v-col>
-      </v-row>
-
-      <v-row class="mt-n3">
-        <v-col cols="12">
-          <v-img
-            class="mx-auto"
-            width="550"
-            src="/images/treasury/fed-treasury.png"
-          />
-        </v-col>
-      </v-row>
-
-      <v-row class="amount-fed">
-        <v-col cols="12">
-          <wGOLD-button
-            v-if="isConnected"
-            class="mx-auto"
-            :amount="balanceFED"
-            :size="$vuetify.breakpoint.name === 'xs' ? 'small' : 'medium'"
-          ></wGOLD-button>
-        </v-col>
-      </v-row>
-    </v-container>
-
-    <v-container v-if="isConnected && !isLoading">
-      <v-row>
+  <div class="list-units">
+    <v-container
+      :fluid="$vuetify.breakpoint.mobile"
+      class="pa-3 pd-md-0"
+      v-if="isConnected && !isLoading"
+    >
+      <v-row :no-gutters="$vuetify.breakpoint.mobile">
         <v-col cols="12" lg="3">
           <v-select
             v-model="select.teams"
@@ -43,7 +14,7 @@
             multiple
             chips
             solo
-            @change="updateTroopFilters()"
+            @change="updateTroopsFilters()"
           >
           </v-select>
         </v-col>
@@ -55,7 +26,7 @@
             multiple
             chips
             solo
-            @change="updateTroopFilters()"
+            @change="updateTroopsFilters()"
           >
           </v-select>
         </v-col>
@@ -67,7 +38,7 @@
             multiple
             chips
             solo
-            @change="updateTroopFilters()"
+            @change="updateTroopsFilters()"
           >
           </v-select>
         </v-col>
@@ -79,7 +50,7 @@
             multiple
             chips
             solo
-            @change="updateTroopFilters()"
+            @change="updateTroopsFilters()"
           >
             <template v-slot:selection="{ item, index }">
               <v-chip v-if="index === 0">
@@ -92,10 +63,10 @@
           </v-select>
         </v-col>
       </v-row>
-      <v-row dense>
+      <v-row class="mt-0 mt-lg-n5 mb-3">
         <v-col class="py-0 my-0" cols="12">
-          <div class="d-flex align-center">
-            <wButton @click="clearFilters()" class="mr-3">
+          <div class="d-flex flex-column flex-md-row align-center">
+            <wButton @click="clearFilters()" class=" mr-3">
               <div class="d-flex justify-center">
                 <v-icon class="mx-1">
                   mdi-minus-circle
@@ -105,7 +76,7 @@
             </wButton>
             <v-checkbox
               v-model="showMyUnits"
-              @change="updateTroopFilters()"
+              @change="updateTroopsFilters()"
               label="Show only my units"
               color="primary"
             ></v-checkbox>
@@ -114,15 +85,43 @@
       </v-row>
     </v-container>
 
-    <v-container v-if="isConnected && !isLoading">
+    <v-container
+      :fluid="$vuetify.breakpoint.md || $vuetify.breakpoint.mobile"
+      v-if="isConnected && !isLoading"
+    >
       <v-row v-if="filterTroops.length > 0">
         <v-col
           cols="12"
-          md="4"
+          lg="6"
+          xl="4"
           v-for="trooper in filterTroops"
           v-bind:key="trooper.name"
         >
-          <trooper :info="trooper" />
+          <trooper v-if="getType === 'trooper'" :info="trooper" />
+          <stake-trooper
+            v-else-if="getType === 'enlistment'"
+            :trooper="trooper"
+            :contract-war="contractWar"
+          />
+          <stake-trooper
+            v-else-if="getType === 'bring-home'"
+            :trooper="trooper"
+            :contract-war="contractWar"
+            bring-home
+          />
+          <report-trooper
+            v-else-if="getType === 'report-trooper'"
+            :trooper="trooper"
+            :contract-war="contractWar"
+          />
+          <unit-weapon-research
+            v-else-if="getType === 'weapon-research'"
+            :unit="trooper"
+          />
+          <unit-training-center
+            v-else-if="getType === 'training-center'"
+            :unit="trooper"
+          />
         </v-col>
       </v-row>
       <v-row v-else>
@@ -132,7 +131,7 @@
       </v-row>
     </v-container>
 
-    <v-container v-if="isLoading">
+    <v-container :fluid="$vuetify.breakpoint.mobile" v-if="isLoading">
       <v-row>
         <v-col cols="12" class="text-center ma-6 ma-sm-0">
           <h3 class="text-h3">Loading...</h3>
@@ -147,6 +146,11 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Trooper from "@/lib/components/ui/Utils/Trooper";
+import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
+import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
+import UnitWeaponResearch from "@/lib/components/ui/Units/UnitWeaponResearch";
+import UnitTrainingCenter from "@/lib/components/ui/Units/UnitTrainingCenter";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
@@ -158,18 +162,19 @@ export default {
     Amount,
     wButton,
     Trooper,
+    StakeTrooper,
+    ReportTrooper,
+    UnitWeaponResearch,
+    UnitTrainingCenter,
   },
+
+  props: ["type", "contractWar", "filterRules", "showOnlyMyUnits"],
 
   data() {
     return {
       showMyUnits: false,
       balance: 0,
-      balanceFED: 0,
-      priceWGOLD: 0,
-      collectibles: [],
-      balances: [],
-      itemsCount: 0,
-      totalItems: 0,
+      pricewGOLD: 0,
       isLoading: true,
       select: {
         teams: [],
@@ -183,7 +188,7 @@ export default {
         raceDesc: [],
         name: [],
       },
-      teams: ["The Corporation", "The Degenerate"],
+      teams: [],
       globalTroops: [],
       filterTroops: [],
     };
@@ -209,6 +214,26 @@ export default {
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
+
+    getType() {
+      switch (this.type) {
+        case "trooper":
+          return this.type;
+        case "enlistment":
+          return this.type;
+        case "bring-home":
+          return this.type;
+        case "report-trooper":
+          return this.type;
+        case "weapon-research":
+          return this.type;
+        case "training-center":
+          return this.type;
+
+        default:
+          return "trooper";
+      }
+    },
   },
 
   watch: {
@@ -226,14 +251,13 @@ export default {
   },
 
   mounted() {
+    if (this.showOnlyMyUnits !== undefined) {
+      this.showMyUnits = true;
+    }
     this.loadData();
   },
 
   methods: {
-    goToSwap() {
-      this.$router.push("/exchange");
-    },
-
     async loadData() {
       if (!this.isConnected) {
         return;
@@ -244,10 +268,17 @@ export default {
         this.balance = web3.utils.fromWei(
           await contractwGOLD.balanceOf(this.account)
         );
-        this.balanceFED = await contractwGOLD.balanceOf(this.addresses.FED);
-        this.priceWGOLD = await contractwGOLD.priceWGOLD(this.networkInfo.id);
+        this.pricewGOLD = await contractwGOLD.pricewGOLD(this.networkInfo.id);
 
-        const troops = getTroops();
+        let troops = getTroops();
+
+        if (this.filterRules) {
+          for (let filter in this.filterRules) {
+            troops = troops.filter((trooper) => {
+              return this.filterRules[filter].indexOf(trooper[filter]) !== -1;
+            });
+          }
+        }
 
         this.globalTroops = await Promise.all(
           troops.map((trooper) => {
@@ -260,7 +291,7 @@ export default {
                     tier: trooper.tier,
                     myQty: "0",
                     globalQty: "0",
-                    priceWGOLD: "0",
+                    pricewGOLD: "0",
                     disabled: true,
                   });
                 }
@@ -269,7 +300,7 @@ export default {
                 );
                 const myQty = await getTropper.balanceOf(this.account);
                 const globalQty = await getTropper.totalSupply();
-                const priceWGOLD = await getTropper.priceWGOLD(
+                const pricewGOLD = await getTropper.pricewGOLD(
                   trooper.lpAddresses,
                   this.networkInfo.id
                 );
@@ -279,12 +310,20 @@ export default {
                   ...{
                     myQty: myQty,
                     globalQty: globalQty,
-                    priceWGOLD: priceWGOLD,
+                    pricewGOLD: pricewGOLD,
                     disabled: false,
                   },
                 });
               } catch (error) {
-                console.log(error);
+                resolve({
+                  name: trooper.name,
+                  team: trooper.team,
+                  tier: trooper.tier,
+                  myQty: "0",
+                  globalQty: "0",
+                  pricewGOLD: "0",
+                  disabled: true,
+                });
               }
             });
           })
@@ -298,11 +337,15 @@ export default {
         });
 
         this.filterTroops = this.globalTroops;
-        this.updateTroopFilters();
-      } catch (error) {
-        console.log(error);
-      } finally {
+
+        this.updateTroopsFilters();
+
         this.isLoading = false;
+      } catch (error) {
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(error);
       }
     },
 
@@ -354,10 +397,15 @@ export default {
           }
         }
       });
+
       this.filter = { ...filterGlobal, ...filterSelect };
+
+      if (this.filter.teamDesc.length === 1) {
+        this.select.teams = [this.filter.teamDesc[0]];
+      }
     },
 
-    async updateTroopFilters() {
+    async updateTroopsFilters() {
       this.filterTroops = this.globalTroops.filter((trooper) => {
         if (!this.select.teams.length) {
           return trooper;
@@ -398,13 +446,24 @@ export default {
         races: [],
         names: [],
       };
-      this.updateTroopFilters();
+      this.updateTroopsFilters();
     },
   },
 };
 </script>
 
 <style scoped>
+.list-units
+  >>> .theme--dark.v-text-field--solo
+  > .v-input__control
+  > .v-input__slot {
+  border: 1px solid #ffb800;
+}
+
+.theme--dark.v-list {
+  border: 2px solid #ffb800;
+}
+
 .amount-fed {
   margin-top: -85px !important;
 }
@@ -417,15 +476,8 @@ export default {
   font-weight: bold;
   font-size: 14px;
 }
-.price-WGOLD {
-  font-weight: bold;
-  font-size: 32px;
-}
 
 @media only screen and (max-width: 375px) {
-  .price-WGOLD {
-    font-size: 18px;
-  }
   .amount-fed {
     margin-top: -65px !important;
   }
