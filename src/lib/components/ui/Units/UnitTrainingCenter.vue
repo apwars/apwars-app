@@ -52,16 +52,16 @@
           </div>
         </div>
         <hr />
-        <div class="d-flex mt-1 qty" v-if="infoWeapon.image">
+        <div class="d-flex mt-1 qty" v-if="infoTraining.image">
           <img
             class="mr-1"
             width="45px"
             height="45px"
-            :src="infoWeapon.image"
+            :src="infoTraining.image"
           />
           <span>
             Produced unit: <br />
-            {{ infoWeapon.name }}
+            {{ infoTraining.name }}
           </span>
         </div>
 
@@ -125,7 +125,16 @@
       :isLoading="isLoadingClaim"
       :text="textClaim"
       :textConfirm="textConfirmClaim"
-      :weapon-icon="infoWeapon.image"
+      :training-icon="infoTraining.image"
+    ></dora-noble-modal>
+
+    <dora-noble-modal
+      v-if="modalDoraNobleNoBalance"
+      :open="modalDoraNobleNoBalance"
+      @close="modalDoraNobleNoBalance = false"
+      :text="textNoBalance"
+      :training-icon="infoTraining.image"
+      hideConfirm
     ></dora-noble-modal>
 
     <combinator-modal
@@ -173,7 +182,7 @@ const DORANOBLE_CLAIM =
   "Your training is complete, and your Stables Unit is available.";
 const DORANOBLE_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const DORANOBLE_WAITING_CLAIM_CONFIRMATION =
-  "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your weapon.";
+  "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your wUNIT.";
 
 export default {
   props: ["unit"],
@@ -188,6 +197,7 @@ export default {
   data() {
     return {
       isLoadingUnit: false,
+      modalDoraNobleNoBalance: false,
       modalDoraNobleClaim: false,
       modalDoraNobleNewTraining: false,
       modalDoraNobleApproval: false,
@@ -195,6 +205,7 @@ export default {
       isLoadingApprove: false,
       isLoadingNewTraining: false,
       signPage: 0,
+      textNoBalance: "",
       textDoraNobleModal: "",
       textConfirmArimdesModal: "Sign contract",
       combinatorContract: {},
@@ -263,16 +274,34 @@ export default {
       return {};
     },
     combinatorId() {
-      if (this.unit.combinators && this.unit.combinators.trainingCenter) {
-        return this.unit.combinators.trainingCenter.idCombinator || 0;
+      if (this.infoTraining.idCombinator) {
+        return (
+          this.unit.combinators.trainingCenter.idCombinator[
+            this.networkInfo.id
+          ] || 0
+        );
       }
       return 0;
     },
-    infoWeapon() {
+    infoTraining() {
       if (this.unit.combinators && this.unit.combinators.trainingCenter) {
         return this.unit.combinators.trainingCenter;
       }
       return {};
+    },
+    isBalanceCombinator() {
+      if (!this.getTokenAConfig.balance || !this.getTokenBConfig.balance) {
+        return false;
+      }
+      const amountTokenA = Convert.fromWei(this.getTokenAConfig.amount, true);
+      const balanceTokenA = Convert.fromWei(this.getTokenAConfig.balance, true);
+      const amountTokenB = Convert.fromWei(this.getTokenBConfig.amount, true);
+      const balanceTokenB = Convert.fromWei(this.getTokenBConfig.balance, true);
+      if (balanceTokenA > amountTokenA && balanceTokenB > amountTokenB) {
+        return true;
+      }
+
+      return false;
     },
   },
   watch: {
@@ -290,13 +319,11 @@ export default {
     },
   },
   methods: {
-    initData() {
+    async initData() {
       this.tokenA = this.addresses.wCOURAGE;
       this.tokenB = this.unit.contractAddress[this.networkInfo.id];
-      this.combinatorContract = new Combinator(
-        this.addresses.combinator,
-        this.addresses.combinatorManager
-      );
+      this.combinatorContract = new Combinator(this.addresses.combinator);
+      await this.combinatorContract.getContractManager();
       this.tokenAContract = new wCOURAGE(this.tokenA);
       this.tokenBContract = new Troops(this.tokenB);
     },
@@ -321,6 +348,7 @@ export default {
         this.account,
         this.combinatorId
       );
+
       if (this.getGeneralConfig.isEnabled) {
         this.getTokenAConfig = await this.combinatorContract.getTokenAConfig(
           this.account,
@@ -339,6 +367,7 @@ export default {
         );
 
         await this.loadCombinators();
+        await this.getBalance();
       }
       this.isLoadingUnit = true;
     },
@@ -356,6 +385,14 @@ export default {
       if (this.currentBlockNumber >= this.combinators.endBlock) {
         this.isClaim = true;
       }
+    },
+    async getBalance() {
+      this.getTokenAConfig.balance = await this.tokenAContract.balanceOf(
+        this.account
+      );
+      this.getTokenBConfig.balance = await this.tokenBContract.balanceOf(
+        this.account
+      );
     },
     openModalDoraNobleApproval() {
       if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
@@ -493,6 +530,13 @@ export default {
       }
     },
     openModalDoraNobleNewTraining() {
+      if (!this.isBalanceCombinator) {
+        const amountTokenA = Convert.fromWei(this.getTokenAConfig.amount, true);
+        const amountTokenB = Convert.fromWei(this.getTokenBConfig.amount, true);
+
+        this.textNoBalance = `I see that you do not have the necessary requirements for your training. You must have ${amountTokenA} wCOURAGE and ${amountTokenB} ${this.unit.name}.`;
+        return (this.modalDoraNobleNoBalance = true);
+      }
       this.modalDoraNobleNewTraining = true;
       this.combinatorInfo = {
         ...this.combinatorInfo,
@@ -501,13 +545,13 @@ export default {
           getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
           getTokenBConfig: { ...this.unit, ...this.getTokenBConfig },
           getTokenCConfig: this.getTokenCConfig,
-          infoWeapon: this.infoWeapon,
+          infoTraining: this.infoTraining,
         },
       };
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
         this.getTokenAConfig.amount,
         true
-      )} wCOURAGE to this research.`;
+      )} wCOURAGE to this training.`;
     },
     async combineTokens() {
       try {
@@ -518,7 +562,7 @@ export default {
           this.account
         );
         ToastSnackbar.success(
-          "New search successfully sent Dora Noble - The Horse Trainer"
+          "New training successfully sent Dora Noble - The Horse Trainer"
         );
         this.modalDoraNobleNewTraining = false;
         this.loadCombinators();
@@ -563,7 +607,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           ToastSnackbar.success(
-            "Weapon send successfully Dora Noble - The Horse Trainer"
+            "Training send successfully Dora Noble - The Horse Trainer"
           );
           this.isLoadingClaim = false;
           this.modalDoraNobleClaim = false;
@@ -575,8 +619,8 @@ export default {
       }
     },
   },
-  mounted() {
-    this.initData();
+  async mounted() {
+    await this.initData();
     this.loadData();
   },
 };

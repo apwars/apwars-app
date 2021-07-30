@@ -4,15 +4,19 @@ import { ethers } from "ethers";
 import Convert from "../helpers/Convert";
 
 export default class Combinator {
-  constructor(contract, contractManager) {
+  constructor(contract) {
     this.contractAddress = contract;
-    this.contractManagerAddress = contractManager;
     this.smc = new window.web3.eth.Contract(APWarsCombinator, this.contractAddress);
-    window.test = this.smc;
     this.smcManager = {};
-    if (contractManager) {
-      this.smcManager = new window.web3.eth.Contract(APWarsCombinatorManager, this.contractManagerAddress);
-    }
+  }
+
+  async getContractManager() {
+    this.contractManagerAddress = await this.getCombinatorManagerAddress();
+    this.smcManager = new window.web3.eth.Contract(APWarsCombinatorManager, this.contractManagerAddress);
+  }
+
+  getCombinatorManagerAddress() {
+    return this.smc.methods.combinatorManagerAddress().call();
   }
 
   combineTokens(combinatorId, multiple, from) {

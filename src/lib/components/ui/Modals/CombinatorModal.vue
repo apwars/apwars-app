@@ -25,7 +25,7 @@
           </div>
 
           <div>
-            <img width="50px" :src="getInfo.infoWeapon.image" />
+            <img width="50px" :src="getInfo.infoTraining.image" />
           </div>
         </div>
 
@@ -72,7 +72,7 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="getInfo.infoWeapon.image" />
+              <v-img :src="getInfo.infoTraining.image" />
             </div>
             <number-field
               no-icons

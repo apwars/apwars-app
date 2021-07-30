@@ -9,10 +9,14 @@
       :isLoading="isLoading"
       :disabledConfirm="isLoading"
       :disabledClose="isLoading"
+      v-bind:hideConfirm="hideConfirm"
     >
       <v-row dense class="d-flex">
         <v-col cols="12" md="3" class="align-self-center">
-          <img class="doranoble-img" src="/images/training-center/dora-noble.png" />
+          <img
+            class="doranoble-img"
+            src="/images/training-center/dora-noble.png"
+          />
         </v-col>
         <v-col cols="12" md="9" class="d-flex align-self-center">
           <p class="ml-2 mt-1 align-self-center content">
@@ -26,8 +30,8 @@
             ></v-progress-circular>
             <span v-html="text"></span>
           </p>
-          <div v-if="weaponIcon!==undefined" class="align-self-center">
-            <img width="60px" height="60px" :src="weaponIcon" />
+          <div v-if="trainingIcon !== undefined" class="align-self-center">
+            <img width="60px" height="60px" :src="trainingIcon" />
           </div>
         </v-col>
       </v-row>
@@ -40,7 +44,14 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
 
 export default {
-  props: ["open", "isLoading", "text", "textConfirm", "weaponIcon"],
+  props: [
+    "open",
+    "isLoading",
+    "text",
+    "textConfirm",
+    "trainingIcon",
+    "hideConfirm",
+  ],
 
   components: {
     wButton,
