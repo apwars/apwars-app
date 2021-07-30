@@ -15,7 +15,7 @@
           </h3>
           <v-img src="/images/project/arcadia.png" max-height="1167" min-height="261"></v-img>
         </div>
-        <div class="gradient mt-11"></div>
+        <div class="gradient mt-15"></div>
       </v-img>
     </div>
     <!-- end Top -->
@@ -106,7 +106,7 @@
               max-width="788"
             >
               <v-row class="mt-1 justify-center">
-                <v-col cols="12" lg="7">
+                <v-col cols="11" lg="7">
                   <h5>QTY:</h5>
                   <v-currency-field
                     outlined
@@ -127,16 +127,23 @@
                   :class="
                     $vuetify.breakpoint.mdAndUp
                       ? 'd-flex align-center ml-n3'
-                      : 'd-flex mt-n6 mb-4 align-center'
+                      : 'd-flex mt-n6 mb-4 align-center '
                   "
                   style=""
                 >
-                  <v-img src="/images/project/wLAND.png" max-height="50" max-width="50"></v-img>
-                  <h6 class="ml-1">YOUR SUPPORTING SUGGESTION IS AVAILABLE</h6>
+                  <v-img
+                    v-if="$vuetify.breakpoint.mdAndUp"
+                    src="/images/project/wLAND.png"
+                    max-height="50"
+                    max-width="50"
+                  ></v-img>
+                  <h6 class="text-center" style="width: 100%">
+                    YOUR SUPPORTING SUGGESTION IS AVAILABLE
+                  </h6>
                 </v-col>
               </v-row>
               <v-row class="justify-center mt-n8">
-                <v-col cols="12" lg="7">
+                <v-col cols="11" lg="7">
                   <h5>QTY:</h5>
                   <v-currency-field
                     outlined
@@ -157,11 +164,16 @@
                   :class="
                     $vuetify.breakpoint.mdAndUp
                       ? 'd-flex align-center ml-n3'
-                      : 'd-flex mt-n6 mb-4 align-center'
+                      : 'd-flex mt-n6 mb-4 align-center h-align'
                   "
                   style=""
                 >
-                  <v-img src="/images/project/BUSD.png" max-height="36" max-width="35"></v-img>
+                  <v-img
+                    v-if="$vuetify.breakpoint.mdAndUp"
+                    src="/images/project/BUSD.png"
+                    max-height="36"
+                    max-width="35"
+                  ></v-img>
                   <wButton width="170px" class="mx-1 ml-2" size="large">
                     <div class="d-flex justify-center">
                       <large class="align-self-center">Approve</large>
@@ -180,7 +192,90 @@
     </v-container>
 
     <!-- END WHITELIST -->
-
+    <v-container>
+      <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">
+        Reservation Tickets
+      </h1>
+      <h1 v-else class="h3Y text-center mt-4 mb-4">Reservation Tickets</h1>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+          :class="
+            $vuetify.breakpoint.mdAndUp
+              ? 'd-flex align-center justify-center'
+              : 'align-center justify-center text-center'
+          "
+        >
+          <div class="text-center">
+            <v-img
+              src="/images/project/world.png"
+              max-width="300"
+              min-height="100"
+              :class="$vuetify.breakpoint.mdAndUp ? '' : 'w-align'"
+            >
+            </v-img>
+            <span class="span">You buy: {{ unitsWorld }} </span>
+          </div>
+          <div class="ml-1">
+            <h1 class="h1W">World</h1>
+            <h1 class="h3Y">39,999 BUSD</h1>
+            <p>2 units to be sold</p>
+            <p class="h4B">Fee after private sale</p>
+            <p class="h4B mt-n3">(in the game)</p>
+            <div class="d-flex align-center justify-center mt-n2 mb-2">
+              <h1 class="h3Y">
+                100,000
+              </h1>
+              <span class="span ml-1">wLAND</span>
+            </div>
+            <wButton width="170px" class="mx-1 mt-n1" size="large">
+              <div class="d-flex justify-center">
+                <large class="align-self-center">BUY TICKET</large>
+              </div>
+            </wButton>
+          </div>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+          :class="
+            $vuetify.breakpoint.mdAndUp
+              ? 'd-flex align-center justify-center'
+              : 'align-center justify-center text-center'
+          "
+        >
+          <div class="text-center">
+            <v-img
+              src="/images/project/clans.png"
+              max-width="300"
+              min-height="100"
+              :class="$vuetify.breakpoint.mdAndUp ? '' : 'w-align'"
+            >
+            </v-img>
+            <span class="span">You buy: {{ unitsClans }} </span>
+          </div>
+          <div class="ml-1">
+            <h1 class="h1W">Clans</h1>
+            <h1 class="h3Y">3,999 BUSD</h1>
+            <p>50 units to be sold</p>
+            <p class="h4B">Fee after private sale</p>
+            <p class="h4B mt-n3">(in the game)</p>
+            <div class="d-flex align-center justify-center mt-n2 mb-2">
+              <h1 class="h3Y">
+                10,000
+              </h1>
+              <span class="span ml-1">wLAND</span>
+            </div>
+            <wButton width="170px" class="mx-1 mt-n1" size="large">
+              <div class="d-flex justify-center">
+                <large class="align-self-center">BUY TICKET</large>
+              </div>
+            </wButton>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
     <!-- Distribution Timeline -->
 
     <v-img
@@ -242,7 +337,7 @@
           </v-col>
         </v-row>
         <v-row class="justify-center mt-n4">
-          <wButton width="170px" class="mx-1 mt-n1" @click="goToSell(collectible.id)">
+          <wButton width="170px" class="mx-1 mt-n1" @click="">
             <div class="d-flex justify-center">
               <large class="align-self-center">CLAIM</large>
             </div>
@@ -288,6 +383,8 @@ export default {
       tokenPrice: 0.5,
       wWisdom: 5000,
       nextClaim: 5000,
+      unitsClans: 4,
+      unitsWorld: 4,
       panel: [0],
       faq: [
         {
@@ -359,6 +456,10 @@ export default {
   position: relative;
   left: 20%;
 }
+.w-align {
+  position: relative;
+  left: 10%;
+}
 .h3Y {
   background: -webkit-linear-gradient(#faff00, #ffb800);
   -webkit-background-clip: text;
@@ -370,6 +471,20 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 60px;
+}
+.h4B {
+  background: -webkit-linear-gradient(#8fb5ff, #0085ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 18px;
+  font-weight: bold;
+}
+.h1W {
+  font-size: 60px;
+}
+.span {
+  font-size: 16px;
+  color: #c4c4c4;
 }
 .gradient {
   width: 100%;
