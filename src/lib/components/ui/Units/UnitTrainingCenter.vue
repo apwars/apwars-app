@@ -296,7 +296,7 @@ export default {
       const balanceTokenA = Convert.fromWei(this.getTokenAConfig.balance, true);
       const amountTokenB = Convert.fromWei(this.getTokenBConfig.amount, true);
       const balanceTokenB = Convert.fromWei(this.getTokenBConfig.balance, true);
-      if (balanceTokenA > amountTokenA && balanceTokenB > amountTokenB) {
+      if (balanceTokenA >= amountTokenA && balanceTokenB >= amountTokenB) {
         return true;
       }
 
