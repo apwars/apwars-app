@@ -167,6 +167,7 @@ export default {
 
       try {
         this.wars = getWars(this.networkInfo.id !== "56");
+        this.wars = this.wars.reverse();
       } catch (error) {
         console.log(error);
       } finally {

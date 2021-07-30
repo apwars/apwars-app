@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isConnected && !isLoading && warStage > 1">
-      <v-alert v-if="isWar.test" type="warning">
+      <v-alert v-if="isWar.showTest" type="warning">
         Danger, it's a test war
       </v-alert>
       <div class="bg-fed">
@@ -11,7 +11,7 @@
               <v-img
                 class="mx-auto"
                 max-width="400"
-                :src="`/images/battle/${teamAimagem}`"
+                :src="`/images/battle/${teamAImage}`"
               />
             </v-col>
             <v-col cols="12" md="4" class="d-flex justify-center">
@@ -40,7 +40,7 @@
               <v-img
                 class="mx-auto"
                 max-width="400"
-                :src="`/images/battle/${teamBimagem}`"
+                :src="`/images/battle/${teamBImage}`"
               />
             </v-col>
           </v-row>
@@ -78,13 +78,13 @@
 
         <v-row v-if="!isLoading" class="bg-burned">
           <v-col cols="12" md="6">
-            <div class="d-flex justify-end mx-0 mx-md-6">
+            <div class="d-flex justify-center justify-md-end mx-0 mx-md-6">
               <v-img
                 class="btn mr-1 align-self-center"
                 src="/images/wgold.png"
-                max-width="120"
-                width="120"
-                height="120"
+                max-width="100"
+                width="100"
+                height="100"
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">ENTIRE PRIZE:</div>
@@ -98,9 +98,9 @@
               <v-img
                 class="btn mr-1 align-self-center"
                 src="/images/wgold.png"
-                max-width="120"
-                width="120"
-                height="120"
+                max-width="100"
+                width="100"
+                height="100"
               />
               <div class="price-wGOLD align-self-center">
                 <div class="subtitle-won">MY EARNINGS:</div>
@@ -113,14 +113,17 @@
                 />
                 <span class="suffix">wGOLD</span>
               </div>
-              <!-- <wButton
+            </div>
+            <div class="d-flex ml-6 mt-1">
+              <wButton
+                v-if="showReedemPrize"
                 class="ml-1 align-self-center"
                 :actived="false"
                 @click="redeemPrize"
-                :disabled="isReedemPrize"
+                :disabled="isReedemPrize || !myEarnings"
               >
                 {{ isReedemPrize ? "Already withdrawn" : "Redeem prize" }}
-              </wButton> -->
+              </wButton>
             </div>
           </v-col>
           <v-col cols="12" class="mb-9">
@@ -150,51 +153,19 @@
       <v-container>
         <v-row class="mt-n3 mt-sm-n9">
           <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3 ma-0 ma-sm-6 text-wGOLD">Troops</h3>
+            <h3 class="text-h3 ma-0 ma-sm-6 text-wGOLD">Units</h3>
           </v-col>
         </v-row>
+      </v-container>
 
-        <v-row v-if="!isLoading">
-          <v-col cols="12" lg="6" class="dividing-line">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center"
-                v-for="trooper in teamA"
-                v-bind:key="trooper.name"
-              >
-                <stake-trooper
-                  :trooper="trooper"
-                  :contract-war="contractWar"
-                  bring-home
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <v-row>
-              <v-col
-                cols="12"
-                class="d-flex justify-center"
-                v-for="trooper in teamB"
-                v-bind:key="trooper.name"
-              >
-                <stake-trooper
-                  :trooper="trooper"
-                  :contract-war="contractWar"
-                  bring-home
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
+      <list-units
+        class="my-3"
+        v-if="isConnected && !isLoading"
+        type="bring-home"
+        :contract-war="contractWar"
+      ></list-units>
 
-        <v-row v-else>
-          <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3">Loading...</h3>
-          </v-col>
-        </v-row>
-
+      <v-container v-if="isConnected && !isLoading && isWar.report">
         <v-row>
           <v-col cols="12" class="d-flex justify-center">
             <h3 class="text-h3 text-wGOLD">Players</h3>
@@ -266,10 +237,10 @@
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
-import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 import TableWarReport from "@/lib/components/ui/Utils/Tables/TableWarReport";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
+import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
@@ -277,16 +248,17 @@ import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
 
 import WarMachine from "@/lib/eth/WarMachine";
+import Convert from "@/lib/helpers/Convert";
 
 export default {
   components: {
     wGOLDButton,
     Amount,
     wButton,
-    StakeTrooper,
     Countdown,
     TableWarReport,
     VAddress,
+    ListUnits,
   },
 
   data() {
@@ -296,7 +268,8 @@ export default {
       contractWar: this.$route.params.contractWar,
       warStats: {},
       prize: {},
-      isReedemPrize: true,
+      isReedemPrize: false,
+      showReedemPrize: false,
       warStage: 0,
       myEarnings: "0",
       isWar: { test: false },
@@ -324,7 +297,7 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    teamAimagem() {
+    teamAImage() {
       if (!this.warStats.winner) return "the-corporation.png";
       if (this.warStats.winner == "1") {
         return "the-corporation-win.png";
@@ -332,7 +305,7 @@ export default {
       return "the-corporation-loser.png";
     },
 
-    teamBimagem() {
+    teamBImage() {
       if (!this.warStats.winner) return "the-degenerate.png";
       if (this.warStats.winner == "2") {
         return "the-degenerate-win.png";
@@ -347,14 +320,6 @@ export default {
       } else if (this.warStats.winner == "2") {
         return "The Degenerate";
       }
-    },
-
-    teamA() {
-      return this.globalTroops.filter((trooper) => trooper.team === 1);
-    },
-
-    teamB() {
-      return this.globalTroops.filter((trooper) => trooper.team === 2);
     },
   },
 
@@ -410,6 +375,7 @@ export default {
           this.router.push("/wars");
         }
         this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
+        this.showReedemPrize = this.isWar.showReedemPrize;
 
         this.globalTroops = getTroops();
       } catch (error) {
@@ -430,18 +396,22 @@ export default {
           this.addresses.wGOLD
         );
 
-        let prizeWon = web3.utils.fromWei(this.prize.won.toString());
-        prizeWon = parseFloat(prizeWon);
-        const reportUser = this.isWar.report.players.find(
-          (player) =>
-            player.address.toLowerCase() === this.account.toLowerCase()
-        );
-        if (reportUser) {
-          const wGOLDShare =
-            this.isWar.report.winner === "TeamA"
-              ? reportUser.teamAShare
-              : reportUser.teamBShare;
-          this.myEarnings = prizeWon * wGOLDShare;
+        if (this.isWar.report) {
+          let prizeWon = web3.utils.fromWei(this.prize.won.toString());
+          prizeWon = parseFloat(prizeWon);
+          const reportUser = this.isWar.report.players.find(
+            (player) =>
+              player.address.toLowerCase() === this.account.toLowerCase()
+          );
+          if (reportUser) {
+            const wGOLDShare =
+              this.isWar.report.winner === "TeamA"
+                ? reportUser.teamAShare
+                : reportUser.teamBShare;
+            this.myEarnings = prizeWon * wGOLDShare;
+          }
+        } else {
+          this.myEarnings = Convert.fromWei(await this.warMachine.myAmountPrize(this.account), true);
         }
       } catch (e) {
         console.log(e);

@@ -139,13 +139,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "initialAttackPower",
+        "name": "initialAttackTeamPower",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "initialDefensePower",
+        "name": "initialDefenseTeamPower",
         "type": "uint256"
       },
       {
@@ -484,6 +484,46 @@
         "type": "uint256"
       }
     ],
+    "name": "initialAttackPower",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "initialDefensePower",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "nfts",
     "outputs": [
       {
@@ -681,7 +721,7 @@
     "name": "warStage",
     "outputs": [
       {
-        "internalType": "enum APWarsWarMachine.WarStage",
+        "internalType": "enum APWarsWarMachineV2.WarStage",
         "name": "",
         "type": "uint8"
       }
@@ -972,6 +1012,51 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_player",
+        "type": "address"
+      }
+    ],
+    "name": "getWithdrawPrize",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "net",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountToBurn",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "userPrize",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "userTotalPower",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "teamTotalPower",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "userShare",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
