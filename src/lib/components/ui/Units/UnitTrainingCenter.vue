@@ -16,8 +16,7 @@
           <v-img class="mr-1" max-width="26px" src="/images/wcourage.png" />
           <amount
             :amount="getTokenAConfig.amount"
-            decimals="2"
-            compact
+            decimals="0"
             symbol="wCOURAGE"
           />
         </div>
@@ -29,8 +28,7 @@
           />
           <amount
             :amount="getTokenBConfig.amount"
-            decimals="2"
-            compact
+            decimals="0"
             :symbol="unit.name"
           />
         </div>
@@ -44,24 +42,25 @@
                 :amount="getGeneralConfig.blocks"
                 decimals="0"
                 formatted
-                compact
               />
-              blocks</span
-            >
+              blocks
+            </span>
             <span><time-block :blocks="getGeneralConfig.blocks"/></span>
           </div>
         </div>
         <hr />
         <div class="d-flex mt-1 qty" v-if="infoTraining.image">
           <img
-            class="mr-1"
-            width="45px"
-            height="45px"
+            :class="`mr-1 bg-img-tier-${unit.tier}`"
+            width="80px"
+            height="80px"
             :src="infoTraining.image"
           />
           <span>
             Produced unit: <br />
-            {{ infoTraining.name }}
+            <amount :amount="getTokenBConfig.amount" decimals="0" />{{
+              infoTraining.name
+            }}
           </span>
         </div>
 
@@ -318,6 +317,10 @@ export default {
       this.loadData();
     },
   },
+  async mounted() {
+    await this.initData();
+    this.loadData();
+  },
   methods: {
     async initData() {
       this.tokenA = this.addresses.wCOURAGE;
@@ -350,21 +353,30 @@ export default {
       );
 
       if (this.getGeneralConfig.isEnabled) {
-        this.getTokenAConfig = await this.combinatorContract.getTokenAConfig(
-          this.account,
-          this.tokenA,
-          this.combinatorId
-        );
-        this.getTokenBConfig = await this.combinatorContract.getTokenBConfig(
-          this.account,
-          this.tokenB,
-          this.combinatorId
-        );
-        this.getTokenCConfig = await this.combinatorContract.getTokenCConfig(
-          this.account,
-          this.account,
-          this.combinatorId
-        );
+        this.getTokenAConfig = {
+          ...this.getTokenAConfig,
+          ...(await this.combinatorContract.getTokenAConfig(
+            this.account,
+            this.tokenA,
+            this.combinatorId
+          )),
+        };
+        this.getTokenBConfig = {
+          ...this.getTokenBConfig,
+          ...(await this.combinatorContract.getTokenBConfig(
+            this.account,
+            this.tokenB,
+            this.combinatorId
+          )),
+        };
+        this.getTokenCConfig = {
+          ...this.getTokenCConfig,
+          ...(await this.combinatorContract.getTokenCConfig(
+            this.account,
+            this.account,
+            this.combinatorId
+          )),
+        };
 
         await this.loadCombinators();
         await this.getBalance();
@@ -551,7 +563,7 @@ export default {
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
         this.getTokenAConfig.amount,
         true
-      )} wCOURAGE to this training.`;
+      )} wCOURAGE to this training and my army will be replaced.`;
     },
     async combineTokens() {
       try {
@@ -619,10 +631,6 @@ export default {
       }
     },
   },
-  async mounted() {
-    await this.initData();
-    this.loadData();
-  },
 };
 </script>
 
@@ -657,6 +665,11 @@ export default {
 .disabled {
   opacity: 0.5;
   filter: grayscale(100%);
+}
+
+.bg-img-tier-2 {
+  background-color: #d7b796;
+  border-radius: 3px;
 }
 
 @media only screen and (max-width: 600px) {
