@@ -6,7 +6,7 @@
         <div class="d-flex flex-column align-center mt-3">
           <v-img
             src="/images/project/ArcadiaExpansion.png"
-            max-height="480"
+            max-height="400"
             min-height="110"
           ></v-img>
           <h3 :style="secondaryText" class="mt-4 mb-8 px-md-12 text-center">
@@ -15,13 +15,13 @@
           </h3>
           <v-img src="/images/project/arcadia.png" max-height="1167" min-height="261"></v-img>
         </div>
-        <div class="gradient mt-15"></div>
+        <div class="gradient mt-11"></div>
       </v-img>
     </div>
     <!-- end Top -->
     <v-container id="background">
       <!-- wLAND -->
-      <v-row class="mt-4 justify-center">
+      <v-row class="justify-center">
         <v-col cols="12" lg="8">
           <h1 class="h3Y">As a World Owners manage your ROI and fees</h1>
           <h2 class="paragraph">
@@ -32,7 +32,7 @@
         </v-col>
         <v-col cols="12" lg="4">
           <div>
-            <v-img src="/images/project/wLAND.png" max-width="106" class="h-align"></v-img>
+            <v-img src="/images/project/wLAND.png" max-width="80" class="img"></v-img>
           </div>
           <h3>
             wLAND is a <span class="h3Y">utility token</span> used to create worlds, clans and also
@@ -42,7 +42,7 @@
       </v-row>
       <!-- END wLAND -->
       <!-- PRIVATE SALE -->
-      <div class="d-flex flex-column align-center mt-3">
+      <div class="d-flex flex-column align-center mt-2">
         <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">Private Sale</h1>
         <h1 v-else class="h3Y text-center mt-4 mb-4">Private Sale</h1>
         <v-img src="/images/project/prices.png" max-height="1167" min-height="261"></v-img>
@@ -76,7 +76,7 @@
       </div>
       <!-- END PRIVATE SALE -->
       <!-- WHITELIST -->
-      <div class="border mt-3 mb-4">
+      <div class="border mt-3">
         <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">
           You were whitelisted
         </h1>
@@ -84,14 +84,14 @@
         <v-row class="align-center">
           <v-col cols="12" lg="3" class="text-center">
             <div>
-              <v-img src="/images/project/wLAND.png" max-width="106" class="h-align"></v-img>
+              <v-img src="/images/project/wLAND.png" max-width="106" class="img"></v-img>
             </div>
             <h1 class="h1Y">$0.50</h1>
             <h3 class="h3Y mt-n2">per wLAND</h3>
             <p>500,000.00 wLAND (locked*)</p>
             <div>
               <v-progress-linear
-                class="ml-1"
+                class="ml-1 mr-1"
                 color="#11D300"
                 buffer-value="0"
                 value="20"
@@ -108,12 +108,7 @@
               <v-row class="mt-1 justify-center">
                 <v-col cols="11" lg="7">
                   <h5>QTY:</h5>
-                  <v-currency-field
-                    outlined
-                    v-bind="currencyConfig"
-                    v-model="amount"
-                    @input="calcFee()"
-                  >
+                  <v-currency-field outlined v-bind="currencyConfig" v-model="amount">
                     <template v-slot:append>
                       <div class="d-flex">
                         <span class="mr-1 align-self-center">wLAND</span>
@@ -136,6 +131,7 @@
                     src="/images/project/wLAND.png"
                     max-height="50"
                     max-width="50"
+                    class="img"
                   ></v-img>
                   <h6 class="text-center" style="width: 100%">
                     YOUR SUPPORTING SUGGESTION IS AVAILABLE
@@ -145,12 +141,7 @@
               <v-row class="justify-center mt-n8">
                 <v-col cols="11" lg="7">
                   <h5>QTY:</h5>
-                  <v-currency-field
-                    outlined
-                    v-bind="currencyConfig"
-                    v-model="amount"
-                    @input="calcFee()"
-                  >
+                  <v-currency-field outlined v-bind="currencyConfig" v-model="amount">
                     <template v-slot:append>
                       <div class="d-flex">
                         <span class="mr-1 align-self-center">BUSD</span>
@@ -164,7 +155,7 @@
                   :class="
                     $vuetify.breakpoint.mdAndUp
                       ? 'd-flex align-center ml-n3'
-                      : 'd-flex mt-n6 mb-4 align-center h-align'
+                      : 'd-flex mt-n6 mb-4 align-center img'
                   "
                   style=""
                 >
@@ -173,6 +164,7 @@
                     src="/images/project/BUSD.png"
                     max-height="36"
                     max-width="35"
+                    class="img"
                   ></v-img>
                   <wButton width="170px" class="mx-1 ml-2" size="large">
                     <div class="d-flex justify-center">
@@ -193,7 +185,7 @@
 
     <!-- END WHITELIST -->
     <v-container>
-      <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">
+      <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center">
         Reservation Tickets
       </h1>
       <h1 v-else class="h3Y text-center mt-4 mb-4">Reservation Tickets</h1>
@@ -208,14 +200,9 @@
           "
         >
           <div class="text-center">
-            <v-img
-              src="/images/project/world.png"
-              max-width="300"
-              min-height="100"
-              :class="$vuetify.breakpoint.mdAndUp ? '' : 'w-align'"
-            >
+            <v-img src="/images/project/world.png" max-width="300" min-height="100" class="img">
             </v-img>
-            <span class="span">You buy: {{ unitsWorld }} </span>
+            <span class="span">Your buy: {{ unitsWorld }} </span>
           </div>
           <div class="ml-1">
             <h1 class="h1W">World</h1>
@@ -246,14 +233,9 @@
           "
         >
           <div class="text-center">
-            <v-img
-              src="/images/project/clans.png"
-              max-width="300"
-              min-height="100"
-              :class="$vuetify.breakpoint.mdAndUp ? '' : 'w-align'"
-            >
+            <v-img src="/images/project/clans.png" max-width="300" min-height="100" class="img">
             </v-img>
-            <span class="span">You buy: {{ unitsClans }} </span>
+            <span class="span">Your buy: {{ unitsClans }} </span>
           </div>
           <div class="ml-1">
             <h1 class="h1W">Clans</h1>
@@ -280,17 +262,17 @@
 
     <v-img
       src="/images/project/bg-fire.png"
-      max-height="500"
+      max-height="600"
       min-height="400"
       class="justify-center align-center"
     >
-      <v-container class="justify-center">
-        <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">
+      <v-container class="justify-center mt-n10">
+        <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-n10 mb-5">
           Distribution Timeline
         </h1>
         <h1 v-else class="h3Y text-center mt-4 mb-4">Distribution Timeline</h1>
         <v-img
-          :class="$vuetify.breakpoint.mdAndUp ? 'h-align' : ''"
+          :class="$vuetify.breakpoint.mdAndUp ? 'img' : ''"
           src="/images/project/distributionTimeline.png"
           max-height="250"
           max-width="800"
@@ -298,7 +280,7 @@
       </v-container>
     </v-img>
     <!-- END Distribution Timeline -->
-    <v-row class="justify-center">
+    <v-row class="justify-center mt-n16">
       <v-img
         class="justify-center mt-1"
         :src="$vuetify.breakpoint.mdAndUp ? '/images/project/rectangle2.png' : ''"
@@ -307,7 +289,7 @@
         <v-row class="mt-1 justify-center">
           <v-col cols="12" md="3" lg="3">
             <h6>TOTAL CLAIMED:</h6>
-            <v-currency-field outlined v-bind="currencyConfig" v-model="amount" @input="calcFee()">
+            <v-currency-field outlined v-bind="currencyConfig" v-model="amount">
               <template v-slot:append>
                 <div class="d-flex">
                   <span class="mr-1 align-self-center">wLAND</span>
@@ -317,7 +299,7 @@
           </v-col>
           <v-col cols="12" md="3" lg="3">
             <h6>UNLOCKED AMOUNT TO CLAIM:</h6>
-            <v-currency-field outlined v-bind="currencyConfig" v-model="amount" @input="calcFee()">
+            <v-currency-field outlined v-bind="currencyConfig" v-model="amount">
               <template v-slot:append>
                 <div class="d-flex">
                   <span class="mr-1 align-self-center">wLAND</span>
@@ -327,7 +309,7 @@
           </v-col>
           <v-col cols="12" md="3" lg="3">
             <h6>REMANING LOCKED TOKENS:</h6>
-            <v-currency-field outlined v-bind="currencyConfig" v-model="amount" @input="calcFee()">
+            <v-currency-field outlined v-bind="currencyConfig" v-model="amount">
               <template v-slot:append>
                 <div class="d-flex">
                   <span class="mr-1 align-self-center">wLAND</span>
@@ -449,16 +431,13 @@ export default {
 </script>
 
 <style scoped>
+.img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .sub {
   color: white;
-}
-.h-align {
-  position: relative;
-  left: 20%;
-}
-.w-align {
-  position: relative;
-  left: 10%;
 }
 .h3Y {
   background: -webkit-linear-gradient(#faff00, #ffb800);
