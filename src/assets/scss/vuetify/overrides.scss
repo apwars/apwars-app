@@ -87,3 +87,19 @@
   font-size: 16px !important;
   font-weight: bold !important;
 }
+
+.theme--dark.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state)
+  > .v-input__control
+  > .v-input__slot
+  fieldset {
+  border-width: 2px;
+  color: rgb(191 146 29);
+}
+
+.theme--dark.v-input input {
+  color: #fff;
+}
+
+.theme--dark.v-input.v-input--is-disabled {
+  opacity: 0.6;
+}

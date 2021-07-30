@@ -18,6 +18,13 @@ export function getTroops() {
       image: "/images/troops/wWARRIOR.png",
       strength: 2,
       defense: 4,
+      combinators: {
+        warPreparation: {
+          idCombinator: 1,
+          name: 'Simple sword',
+          image: '/images/icons/simple-sword.png'
+        },
+      }
     },
     {
       id: 1,
@@ -37,6 +44,13 @@ export function getTroops() {
       image: "/images/troops/wARCHER.png",
       strength: 5,
       defense: 1,
+      combinators: {
+        warPreparation: {
+          idCombinator: 2,
+          name: 'Simple sword',
+          image: '/images/icons/simple-sword.png'
+        },
+      }
     },
     {
       id: 2,
@@ -46,16 +60,23 @@ export function getTroops() {
       raceDesc: 'Humans',
       tier: 2,
       tierDesc: 'Armory',
-      name: "wARMORED-WARRIOR",
+      name: "wARMOURED-WARRIOR",
       lpAddresses: "0xcb7a7E4257ABC87745B40B5b51B82FFFBAa087A0",
       contractAddress: {
         "5777": "0xF234C4AF44D4345269d433ce74Bf0366eAD25067",
         "56": "0xd67761dF2b76eE251d48816691f5ff7728d94DAa",
         "97": "0x84866c7C2c490242ae37C9d73de588203B93e0B2",
       },
-      image: "/images/troops/wARMORED-WARRIOR.png",
+      image: "/images/troops/wARMOURED-WARRIOR.png",
       strength: 0,
       defense: 0,
+      combinators: {
+        warPreparation: {
+          idCombinator: 3,
+          name: 'Simple spear',
+          image: '/images/icons/simple-spear.png'
+        },
+      }
     },
     {
       id: 3,
@@ -75,6 +96,13 @@ export function getTroops() {
       image: "/images/troops/wCROSSBOWMAN.png",
       strength: 0,
       defense: 0,
+      combinators: {
+        warPreparation: {
+          idCombinator: 4,
+          name: 'Simple spear',
+          image: '/images/icons/simple-spear.png'
+        },
+      }
     },
     {
       id: 4,
@@ -94,6 +122,13 @@ export function getTroops() {
       image: "/images/troops/wWIZARD.png",
       strength: 0,
       defense: 0,
+      combinators: {
+        warPreparation: {
+          idCombinator: 5,
+          name: 'Simple potion',
+          image: '/images/icons/simple-potion.png'
+        },
+      }
     },
     {
       id: 5,
@@ -113,6 +148,13 @@ export function getTroops() {
       image: "/images/troops/wGRUNT.png",
       strength: 2,
       defense: 4,
+      combinators: {
+        warPreparation: {
+          idCombinator: 6,
+          name: 'Simple sword',
+          image: '/images/icons/simple-sword.png'
+        },
+      }
     },
     {
       id: 6,
@@ -132,6 +174,13 @@ export function getTroops() {
       image: "/images/troops/wORC-ARCHER.png",
       strength: 5,
       defense: 1,
+      combinators: {
+        warPreparation: {
+          idCombinator: 7,
+          name: 'Simple sword',
+          image: '/images/icons/simple-sword.png'
+        },
+      }
     },
     {
       id: 7,
@@ -141,16 +190,23 @@ export function getTroops() {
       raceDesc: 'Orcs',
       tier: 2,
       tierDesc: 'Armory',
-      name: "wARMORED-GRUNT",
+      name: "wARMOURED-GRUNT",
       lpAddresses: "0xc0749fA16072c377B786213aCa2837D4Aa203c8A",
       contractAddress: {
         "5777": "0xbBe4AA52a30bC5d360d6497F5cf2Dcd17ee0a6F2",
         "56": "0x56c09E954690d80C5728194f7eAf473737Dc2180",
         "97": "0xC2d75018Cd8c2e87794d5839B80c35a09EeeA1BB",
       },
-      image: "/images/troops/wARMORED-GRUNT.png",
+      image: "/images/troops/wARMOURED-GRUNT.png",
       strength: 0,
       defense: 0,
+      combinators: {
+        warPreparation: {
+          idCombinator: 8,
+          name: 'Simple spear',
+          image: '/images/icons/simple-spear.png'
+        },
+      }
     },
     {
       id: 8,
@@ -170,6 +226,13 @@ export function getTroops() {
       image: "/images/troops/wPIKE-ORC.png",
       strength: 0,
       defense: 0,
+      combinators: {
+        warPreparation: {
+          idCombinator: 9,
+          name: 'Simple spear',
+          image: '/images/icons/simple-spear.png'
+        },
+      }
     },
     {
       id: 9,
@@ -189,6 +252,13 @@ export function getTroops() {
       image: "/images/troops/wSHAMAN.png",
       strength: 0,
       defense: 0,
+      combinators: {
+        warPreparation: {
+          idCombinator: 10,
+          name: 'Simple potion',
+          image: '/images/icons/simple-potion.png'
+        },
+      }
     },
     {
       id: 10,
@@ -198,16 +268,23 @@ export function getTroops() {
       raceDesc: 'Undead',
       tier: 1,
       tierDesc: 'Barracks',
-      name: "wSKELETONWARRIOR",
+      name: "wSKELETON-WARRIOR",
       lpAddresses: "0xf101954d51ffc12640b006e9c951ffebbd6b7259",
       contractAddress: {
         "5777": "",
         "56": "0xb5d488dc4DE64A6a968D8f317DB8DE2cDBF52828",
-        "97": "0x2C0018Bd7a4418287B03f4917E936A990605A5f3",
+        "97": "0x7a355C7633d3d097F6ed009faC66727E7C4E0Dee",
       },
       image: "/images/troops/wSKELETONWARRIOR.png",
       strength: 8,
       defense: 2,
+      combinators: {
+        warPreparation: {
+          idCombinator: 11,
+          name: 'Simple sword',
+          image: '/images/icons/simple-sword.png'
+        },
+      }
     },
     {
       id: 11,
@@ -222,11 +299,18 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x4D21177Bf8a0F9cfAca6d0f568Ff3e79a121B106",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0x7DC031d20cc8DB621A9aaD99D834CfBCF1DCA8bf",
       },
       image: "/images/troops/wHOUND.png",
       strength: 8,
       defense: 2,
+      combinators: {
+        warPreparation: {
+          idCombinator: 12,
+          name: 'Simple sword',
+          image: '/images/icons/simple-sword.png'
+        },
+      }
     },
     {
       id: 12,
@@ -241,11 +325,18 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0xd048cDf2e870E60D46527463a14aEFC0377D754c",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0x2d533A617956f47E63150A0fb13441Da202DAC9F",
       },
       image: "/images/troops/wUNDEAD-ARCHER.png",
       strength: 35,
       defense: 8,
+      combinators: {
+        warPreparation: {
+          idCombinator: 13,
+          name: 'Simple spear',
+          image: '/images/icons/simple-spear.png'
+        },
+      }
     },
     {
       id: 13,
@@ -260,11 +351,18 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x8b394cfAeBA9812801C92388570C95208Ad1300D",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0x8df7145Fc3a1B7BC590a229737d8c39bD058Ab49",
       },
       image: "/images/troops/wUNDEAD-PIKEMAN.png",
       strength: 22,
       defense: 22,
+      combinators: {
+        warPreparation: {
+          idCombinator: 14,
+          name: 'Simple spear',
+          image: '/images/icons/simple-spear.png'
+        },
+      }
     },
     {
       id: 14,
@@ -279,11 +377,97 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x2a63DDDD2c0ba10F465080a06563aF3acb5d1d3c",
-        "97": "0x80804474CE771A41a15AeF1cCcD17c25365AC866",
+        "97": "0xB80797707aa7b6663d87cc4Cd754DC0F206c6eB3",
       },
       image: "/images/troops/wWITCH.png",
       strength: 70,
       defense: 20,
+      combinators: {
+        warPreparation: {
+          idCombinator: 15,
+          name: 'Simple potion',
+          image: '/images/icons/simple-potion.png'
+        },
+      }
     },
+    {
+      id: 15,
+      team: 1,
+      teamDesc: 'The Corporation',
+      race: 1,
+      raceDesc: 'Humans',
+      tier: 4,
+      tierDesc: 'Stables',
+      name: "wHORSEMAN",
+      lpAddresses: "0xfd82da44f0098741bbe10681208390c57f9a7c27",
+      contractAddress: {
+        "5777": "",
+        "56": "0x820c6a4f940a4470E9D2933aAb831a2eE7508fcF",
+        "97": "0x022465BCd48f6eE55236a555E0Da21c960c2d8EA",
+      },
+      image: "/images/troops/wHORSEMAN.png",
+      strength: 150,
+      defense: 50,
+      combinators: {
+        warPreparation: {
+          idCombinator: 0,
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
+        },
+      }
+    },
+    {
+      id: 16,
+      team: 2,
+      teamDesc: 'The Degenerate',
+      race: 2,
+      raceDesc: 'Orcs',
+      tier: 4,
+      tierDesc: 'Stables',
+      name: "wWARG",
+      lpAddresses: "0xcfe993fbf111cb2de1f17536661519741a7a6582",
+      contractAddress: {
+        "5777": "",
+        "56": "0x66e22551BCe75874f91d46dB684621500C9480ae",
+        "97": "0x9a1E2a31A6a7BF8d8daCA7C6e2b7Ba3b16F2A554",
+      },
+      image: "/images/troops/wWARG.png",
+      strength: 150,
+      defense: 50,
+      combinators: {
+        warPreparation: {
+          idCombinator: 0,
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
+        },
+      }
+    },
+    {
+      id: 17,
+      team: 2,
+      teamDesc: 'The Degenerate',
+      race: 2,
+      raceDesc: 'Undead',
+      tier: 4,
+      tierDesc: 'Stables',
+      name: "wDEATH-KNIGHT",
+      lpAddresses: "0x88e491b65af6663bb0a496a9a90e3428e0c60724",
+      contractAddress: {
+        "5777": "",
+        "56": "0xD35d5bCCb4141ed62f5cf6B0b020e74eBf793EE5",
+        "97": "0xaF583Ff10E58f2FD3dc00E831eEF1db1A4B1D65f",
+      },
+      image: "/images/troops/wDEATH-KNIGHT.png",
+      strength: 150,
+      defense: 50,
+      combinators: {
+        warPreparation: {
+          idCombinator: 0,
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
+        },
+      }
+    },
+
   ];
 }

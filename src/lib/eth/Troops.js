@@ -34,7 +34,7 @@ export default class Troops {
     return bn.gt(0);
   }
 
-  async priceWGOLD(account) {
+  async pricewGOLD(account) {
     try {
       const wGOLD = new window.web3.eth.Contract(
         APWarsTroops,
