@@ -97,9 +97,7 @@
                 <amount
                   :amount="getInfo.getGeneralConfig.blocks"
                   formatted
-                  fo
                   decimals="0"
-                  compact
                 />blocks
               </div>
               <div>

@@ -426,7 +426,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wHORSEMAN",
-      lpAddresses: "0xfd82da44f0098741bbe10681208390c57f9a7c27",
+      lpAddresses: "0x205e51964a88ecfcfe0ee3516d0b4a952d1b2425",
       contractAddress: {
         "5777": "",
         "56": "0x5898d096deC52527A2900F7482492C71107B7520",
@@ -452,7 +452,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wWARG",
-      lpAddresses: "0xcfe993fbf111cb2de1f17536661519741a7a6582",
+      lpAddresses: "0xae387d80862bdbf818adf80885e1039db1739a34",
       contractAddress: {
         "5777": "",
         "56": "0xc15bE042471eBAC1908d7bD93648161A1B82Ee3d",
@@ -478,7 +478,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wDEATH-KNIGHT",
-      lpAddresses: "0x88e491b65af6663bb0a496a9a90e3428e0c60724",
+      lpAddresses: "0x65ede43524c68c5b7d14bc9d8792a46dda7f50ac",
       contractAddress: {
         "5777": "",
         "56": "0x62876880fd6fe05285ea758aac09d68a90337f51",
