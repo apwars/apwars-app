@@ -2,7 +2,7 @@
   <div>
     <div v-if="!isCountdown">
       <div class="bg-fed">
-        <v-alert v-if="isWar.test" type="warning">
+        <v-alert v-if="isWar.showTest" type="warning">
           Danger, it's a test war
         </v-alert>
         <v-container>

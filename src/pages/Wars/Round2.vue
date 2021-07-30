@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isConnected && !isLoading && warStage > 1">
-      <v-alert v-if="isWar.test" type="warning"
+      <v-alert v-if="isWar.showTest" type="warning"
         >Danger, it's a test war</v-alert
       >
       <div class="bg-fed">
@@ -26,7 +26,7 @@
                 v-else
                 class="mx-auto"
                 max-width="400"
-                src="/images/battle/the-degenerate-round-2.png"
+                src="/images/battle/the-degenerate-2.png"
               />
             </v-col>
             <v-col cols="12" md="4" class="d-flex justify-center">
