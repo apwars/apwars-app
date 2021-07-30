@@ -319,7 +319,7 @@
           </v-col>
         </v-row>
         <v-row class="justify-center mt-n4">
-          <wButton width="170px" class="mx-1 mt-n1" @click="">
+          <wButton width="170px" class="mx-1 mt-n1">
             <div class="d-flex justify-center">
               <large class="align-self-center">CLAIM</large>
             </div>
