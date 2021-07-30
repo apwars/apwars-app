@@ -20,7 +20,8 @@ export default {
       const accounts = await window.ethereum.enable();
       const networkInfo = {
         id: (await web3.eth.net.getId()).toString(),
-        type: await web3.eth.net.getNetworkType()
+        type: await web3.eth.net.getNetworkType(),
+        definedNetwork: process.env.VUE_APP_BSC_NETWORK,
       };
 
       const addresses = getSmartContractAddresses(networkInfo.id);

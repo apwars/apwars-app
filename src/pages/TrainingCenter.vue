@@ -28,7 +28,6 @@
       class="mt-n6"
       type="training-center"
       :filter-rules="filters"
-      show-only-my-units
     ></list-units>
   </div>
 </template>

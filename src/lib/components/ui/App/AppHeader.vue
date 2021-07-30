@@ -154,10 +154,10 @@ export default {
               title: "War against FED",
               href: "/wars",
             },
-            {
-              title: "Weapon Research",
-              href: "/weapon-research",
-            },
+            // {
+            //   title: "Weapon Research",
+            //   href: "/weapon-research",
+            // },
           ],
         },
         {
