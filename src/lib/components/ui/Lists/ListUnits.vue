@@ -150,6 +150,7 @@ import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
 import UnitWeaponResearch from "@/lib/components/ui/Units/UnitWeaponResearch";
 import UnitTrainingCenter from "@/lib/components/ui/Units/UnitTrainingCenter";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import { getTroops } from "@/data/Troops";
 import Troops from "@/lib/eth/Troops";
@@ -257,10 +258,6 @@ export default {
   },
 
   methods: {
-    goToSwap() {
-      this.$router.push("/exchange");
-    },
-
     async loadData() {
       if (!this.isConnected) {
         return;
@@ -318,7 +315,15 @@ export default {
                   },
                 });
               } catch (error) {
-                console.log(error);
+                resolve({
+                  name: trooper.name,
+                  team: trooper.team,
+                  tier: trooper.tier,
+                  myQty: "0",
+                  globalQty: "0",
+                  pricewGOLD: "0",
+                  disabled: true,
+                });
               }
             });
           })
@@ -334,10 +339,13 @@ export default {
         this.filterTroops = this.globalTroops;
 
         this.updateTroopsFilters();
-      } catch (error) {
-        console.log(error);
-      } finally {
+
         this.isLoading = false;
+      } catch (error) {
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(error);
       }
     },
 
