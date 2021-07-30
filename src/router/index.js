@@ -12,6 +12,7 @@ import Round1 from "@/pages/Wars/Round1.vue";
 import Round2 from "@/pages/Wars/Round2.vue";
 import WarReport from "@/pages/Wars/WarReport.vue";
 import BlackMarket from "@/pages/BlackMarket.vue";
+import PrivateSale from "@/pages/Arcadia/PrivateSale.vue";
 
 Vue.use(Router);
 
@@ -70,6 +71,11 @@ export const routes = [
         path: "/wars/:contractWar/report",
         name: "/wars-report",
         component: WarReport
+      },
+      {
+        path: "/private-sale",
+        name: "/private-sale",
+        component: PrivateSale
       },
       {
         path: "/farms",
