@@ -34,6 +34,11 @@
           <template v-slot:[`item.sender`]="{ item }">
             <v-address :address="item.sender" link tooltip></v-address>
           </template>
+          <template v-slot:[`item.createdAt`]="{ item }">
+            <span>
+              {{ new Date(item.createdAt).toLocaleString() }}
+            </span>
+          </template>
           <template v-slot:[`item.nft.title`]="{ item }">
             <a class="d-flex" @click="openInfo(item.nft.title, item.nft.description)">
               <img
@@ -259,6 +264,7 @@ export default {
           width: '15%',
           sortable: true,
         },
+        { text: 'Date', value: 'createdAt', width: '15%', sortable: false },
         {
           text: 'Game Item',
           value: 'nft.title',
