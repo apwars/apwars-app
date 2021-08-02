@@ -170,8 +170,8 @@ const wars = [
     description: `
     Tales of sages describe the first war as thrilling, their old tomes comprise a story about a miraculous twist in the war that made the Corporation thrive even is disadvantageous circumstances. The Degenerate were brought home discouraged and fearful. But a foul scourge of cadaveric beings raised from the corpses of the fallen to join forces with the Degenerates. Known as the undead, this race of skeletons, witches and warlocks uses dark magic as vital force and means of destruction towards its enemies.
     Both factions are preparing for an eminent conflict of unseen proportions, while some pray for protection, others seek vengeance.`,
-    dateStart: "2021-08-02",
-    dateEnd: "2021-08-06",
+    dateStart: "2021-08-03",
+    dateEnd: "2021-08-08",
     contractAddress: {
       "5777": "0x027C51b5235CF7103a04D429cDa314B1ef1F5319",
       "56": "0x3CE0594a8BA6163cE5e4A23E0a0741B2cae6312d",
