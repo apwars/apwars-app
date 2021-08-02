@@ -165,15 +165,16 @@ const wars = [
     showReedemPrize: true,
   },
   {
-    id: 0,
-    name: "The second conflict",
+    id: 8,
+    name: "The second conflict #Test",
     description: `
-    For a long time all the attention in Decentraland was spent on the rising tensions between Humans and Orcs, after a golden period of bonanza an age of military preparation has begun. A lot of wGOLD was spent in recruiting Warriors and Archers across the Human empire, from the Capital to the extended countryside, men of all ages were being recruited, children and seniors capable of holding a sword were considered able to fight. At the same time at Orc pits, Grunts and Orc Archers were being raised and united to form a monstrous army. This animosity and arousement of forces shadowed the real threat to liberty of all races that was lurking into the shadows. Silently in an obscure form the Forces of Extreme Darkness were growing in power day by day, night by night in a subversive manner. This ultimate enemy has not yet been faced.`,
+    Tales of sages describe the first war as thrilling, their old tomes comprise a story about a miraculous twist in the war that made the Corporation thrive even is disadvantageous circumstances. The Degenerate were brought home discouraged and fearful. But a foul scourge of cadaveric beings raised from the corpses of the fallen to join forces with the Degenerates. Known as the undead, this race of skeletons, witches and warlocks uses dark magic as vital force and means of destruction towards its enemies.
+    Both factions are preparing for an eminent conflict of unseen proportions, while some pray for protection, others seek vengeance.`,
     dateStart: "2021-05-08",
     dateEnd: "2021-05-14",
     contractAddress: {
       "5777": "0x027C51b5235CF7103a04D429cDa314B1ef1F5319",
-      "56": "0x0866bfde63fd01687ad6b36c3063828af50b62ea",
+      "56": "0x1a2C379Ed1348f5C69A92679dcfA43DB48f7A481",
       "97": "0x7f1B535deb4e12dE9cF3EEd8ccb1B92833618E72",
     },
     countdown: {
