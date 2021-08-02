@@ -66,7 +66,9 @@
         </div>
       </div>
 
-      <div class="d-flex d-sm-flex d-md-flex d-lg-none justify-center justify-md-start">
+      <div
+        class="d-flex d-sm-flex d-md-flex d-lg-none justify-center justify-md-start"
+      >
         <div v-if="!isbringHome">
           <div v-if="isApproved" class="stake">
             <wButton
@@ -299,10 +301,10 @@ export default {
         );
         this.btnBringHomeDisabled = true;
         withdraw.on("error", (error) => {
+          this.btnBringHomeDisabled = false;
           if (error.message) {
             return ToastSnackbar.error(error.message);
           }
-          this.btnBringHomeDisabled = false;
           return ToastSnackbar.error("Troop sending failed");
         });
         withdraw.on("receipt", (receipt) => {
@@ -344,7 +346,8 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-  .qty, .globalQty {
+  .qty,
+  .globalQty {
     font-size: 14px;
   }
 }

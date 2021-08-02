@@ -411,6 +411,7 @@ export default {
             this.myEarnings = prizeWon * wGOLDShare;
           }
         } else {
+          console.log("myEarnings");
           this.myEarnings = Convert.fromWei(await this.warMachine.myAmountPrize(this.account), true);
         }
       } catch (e) {

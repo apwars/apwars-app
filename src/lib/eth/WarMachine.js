@@ -205,6 +205,7 @@ export default class WarMachine {
   async myAmountPrize(address) {
     try {
       const getWithdrawPrize = await this.smc.methods.getWithdrawPrize(address).call();
+      console.log(getWithdrawPrize);
       return getWithdrawPrize.net;
     } catch (error) {
       return "0";
