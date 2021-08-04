@@ -13,6 +13,7 @@ import WarReport from "@/pages/Wars/WarReport.vue";
 import BlackMarket from "@/pages/BlackMarket.vue";
 import WeaponResearch from "@/pages/WeaponResearch.vue";
 import TrainingCenter from "@/pages/TrainingCenter.vue";
+import Home from "@/pages/Home.vue";
 
 Vue.use(Router);
 
@@ -26,6 +27,11 @@ export const routes = [
         path: "/",
         name: "/",
         component: BlackMarket
+      },
+      {
+        path: "/home",
+        name: "/home",
+        component: Home
       },
       {
         path: "/game-items/:nftId/:type-orders/new",

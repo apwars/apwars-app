@@ -18,6 +18,10 @@ import store from "./store";
 
 import router from "./router";
 
+import VTooltip from 'v-tooltip'
+
+Vue.use(VTooltip)
+
 // PLUGINS
 import vuetify from "./plugins/vuetify";
 import "./plugins/vue-head";
