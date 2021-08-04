@@ -2,7 +2,11 @@
   <v-sheet color="black" style="justify-content: center;" id="background">
     <!-- Top -->
     <div>
-      <v-img src="/images/project/bg-castle.png" :max-height="$vuetify.breakpoint.mdAndUp ? '720' : '1250'" min-height="400">
+      <v-img
+        src="/images/project/bg-castle.png"
+        :max-height="$vuetify.breakpoint.mdAndUp ? '720' : '1250'"
+        min-height="400"
+      >
         <div class="d-flex flex-column align-center mt-3">
           <v-img
             src="/images/project/ArcadiaExpansion.png"
@@ -21,12 +25,27 @@
             min-height="261"
           ></v-img>
           <div v-if="!$vuetify.breakpoint.mdAndUp" class="d-block">
-            <v-img src="/images/project/0.png" max-height="250" min-height="150" class="mb-4"></v-img>
-            <v-img src="/images/project/1.png" max-height="250" min-height="150" class="mb-4"></v-img>
-            <v-img src="/images/project/2.png" max-height="250" min-height="150" class="mb-4"></v-img>
+            <v-img
+              src="/images/project/0.png"
+              max-height="250"
+              min-height="150"
+              class="mb-4"
+            ></v-img>
+            <v-img
+              src="/images/project/1.png"
+              max-height="250"
+              min-height="150"
+              class="mb-4"
+            ></v-img>
+            <v-img
+              src="/images/project/2.png"
+              max-height="250"
+              min-height="150"
+              class="mb-4"
+            ></v-img>
           </div>
         </div>
-        <div class="gradient mt-11"></div>
+        <div class="gradient mt-16"></div>
       </v-img>
     </div>
     <!-- end Top -->
@@ -34,25 +53,31 @@
       <!-- wLAND -->
       <v-row class="justify-center">
         <v-col cols="12" lg="8">
-          <h1 class="h3Y">As a World Owners manage your ROI and fees</h1>
-          <h2 class="paragraph">
-            In Arcadia you will be able to create your own blockchain world with your farming rules,
-            collect taxes and have players engaged in your ecosystem. Establish your own clan,
-            collect deposit fees or just play the game and conquer your enemy’s riches!
+          <h1 class="h3Y">wLAND Utility:</h1>
+          <h2>
+            wLand is game item resource with utility that enables the player to buy World and Clan
+            reservation tickets and lands.
           </h2>
-        </v-col>
-        <v-col cols="12" lg="4">
-          <div>
-            <v-img src="/images/project/wLAND.png" max-width="80" class="img"></v-img>
-          </div>
-          <h3>
-            wLand is game item resource with utility that enables the player to:
-          </h3>
           <ul>
-            <li>Buy wWorld tickets</li>
-            <li>Buy wClan tickets</li>
-            <li>Buy lands in worlds</li>
+            <li>
+              wWorld and wClan tickets: These represent reservation tickets that enable the bearer
+              to establish a world and a clan when these respective features are available.
+            </li>
+            <li>
+              Lands will be available to be bought only with wLAND. This is necessary for a player
+              that wishes to establish villages and foundations.
+            </li>
           </ul>
+        </v-col>
+        
+        <v-col cols="12" lg="4">
+          <div class="text-center">
+            <v-img src="/images/project/wLAND.png" max-width="80" class="img"></v-img>
+            <h3 class="h3Y">wLAND</h3>
+          </div>
+          <h3 class="text-center">
+            wLAND is the main resource of the Arcadia Expansion.
+          </h3>
         </v-col>
       </v-row>
       <!-- END wLAND -->
@@ -242,7 +267,7 @@
           <div class="text-center">
             <v-img src="/images/project/world.png" max-width="300" min-height="100" class="img">
             </v-img>
-            <span class="span">Your buy: {{ unitsWorld }} </span>
+            <span class="span">Your balance: {{ unitsWorld }} </span>
           </div>
           <div class="ml-1">
             <h1 class="h1W">World</h1>
@@ -275,7 +300,7 @@
           <div class="text-center">
             <v-img src="/images/project/clans.png" max-width="300" min-height="100" class="img">
             </v-img>
-            <span class="span">Your buy: {{ unitsClans }} </span>
+            <span class="span">Your balance: {{ unitsClans }} </span>
           </div>
           <div class="ml-1">
             <h1 class="h1W">Clans</h1>
