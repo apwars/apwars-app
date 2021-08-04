@@ -2,7 +2,7 @@
   <v-sheet color="black" style="justify-content: center;" id="background">
     <!-- Top -->
     <div>
-      <v-img src="/images/project/bg-castle.png" max-height="1250" min-height="400">
+      <v-img src="/images/project/bg-castle.png" :max-height="$vuetify.breakpoint.mdAndUp ? '720' : '1250'" min-height="400">
         <div class="d-flex flex-column align-center mt-3">
           <v-img
             src="/images/project/ArcadiaExpansion.png"
