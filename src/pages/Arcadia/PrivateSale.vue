@@ -2,7 +2,7 @@
   <v-sheet color="black" style="justify-content: center;" id="background">
     <!-- Top -->
     <div>
-      <v-img src="/images/project/bg-castle.png" max-height="720" min-height="400">
+      <v-img src="/images/project/bg-castle.png" max-height="1250" min-height="400">
         <div class="d-flex flex-column align-center mt-3">
           <v-img
             src="/images/project/ArcadiaExpansion.png"
@@ -10,10 +10,21 @@
             min-height="110"
           ></v-img>
           <h3 :style="secondaryText" class="mt-4 mb-8 px-md-12 text-center">
-            Arcadia is the expansion to a world of turn-based Village Ecosystem in which players
-            will manage domestic economies, handle attacks and defenses, join clans and much more!
+            Arcadia is the first expansion of APWars to a turn-based Village building world in which
+            players will manage domestic economies, handle attacks and defenses, join clans and much
+            more!
           </h3>
-          <v-img src="/images/project/arcadia.png" max-height="1167" min-height="261"></v-img>
+          <v-img
+            v-if="$vuetify.breakpoint.mdAndUp"
+            src="/images/project/arcadia.png"
+            max-height="1167"
+            min-height="261"
+          ></v-img>
+          <div v-if="!$vuetify.breakpoint.mdAndUp" class="d-block">
+            <v-img src="/images/project/0.png" max-height="250" min-height="150" class="mb-4"></v-img>
+            <v-img src="/images/project/1.png" max-height="250" min-height="150" class="mb-4"></v-img>
+            <v-img src="/images/project/2.png" max-height="250" min-height="150" class="mb-4"></v-img>
+          </div>
         </div>
         <div class="gradient mt-11"></div>
       </v-img>
@@ -35,9 +46,13 @@
             <v-img src="/images/project/wLAND.png" max-width="80" class="img"></v-img>
           </div>
           <h3>
-            wLAND is a <span class="h3Y">utility token</span> used to create worlds, clans and also
-            to buy lands for the creation of villages and foundations.
+            wLand is game item resource with utility that enables the player to:
           </h3>
+          <ul>
+            <li>Buy wWorld tickets</li>
+            <li>Buy wClan tickets</li>
+            <li>Buy lands in worlds</li>
+          </ul>
         </v-col>
       </v-row>
       <!-- END wLAND -->
@@ -45,7 +60,32 @@
       <div class="d-flex flex-column align-center mt-2">
         <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">Private Sale</h1>
         <h1 v-else class="h3Y text-center mt-4 mb-4">Private Sale</h1>
-        <v-img src="/images/project/prices.png" max-height="1167" min-height="261"></v-img>
+        <v-img
+          v-if="$vuetify.breakpoint.mdAndUp"
+          src="/images/project/prices.png"
+          max-height="1167"
+          min-height="261"
+        ></v-img>
+        <div v-else class="d-block">
+          <v-img
+            src="/images/project/50.png"
+            max-height="400"
+            min-height="150"
+            class="mt-3"
+          ></v-img>
+          <v-img
+            src="/images/project/75.png"
+            max-height="400"
+            min-height="150"
+            class="mt-3"
+          ></v-img>
+          <v-img
+            src="/images/project/150.png"
+            max-height="400"
+            min-height="150"
+            class="mt-3"
+          ></v-img>
+        </div>
         <div class="mt-6 text-center" style="width: 100%">
           <v-progress-linear
             color="#11D300"
@@ -54,7 +94,7 @@
             stream
           ></v-progress-linear>
           <p class="mt-1">UNITS SOLD: 375,000.00</p>
-          <p>CURRENT PRICE: $0.50</p>
+          <p :style="$vuetify.breakpoint.mdAndUp ? '' : 'font-size: 30px'">CURRENT PRICE: $0.50</p>
         </div>
         <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">
           Total Supply: 1,500,000.00 wLAND
