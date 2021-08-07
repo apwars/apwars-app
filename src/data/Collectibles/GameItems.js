@@ -347,6 +347,17 @@ export function getGameItems() {
       title: "Free Transport",
       description: "I am an active transporter. However, for some particular fellows, I can carry some items without charge my regular fee. WARNING: This is a spendable item.",
       image: "/images/nfts/lilith-100off.png",
+    },
+    {
+      id: 28,
+      type: 'gameItem',
+      typeDesc: 'Game Item',
+      contractAddress: addresses.collectibles,
+      isGift: false,
+      title: "Experience Ring",
+      description: "Coming soon...",
+      image: "/images/nfts/experience-ring.png",
     }
+    
   ];
 }
