@@ -262,7 +262,7 @@ export default {
           }, 3000);
           return "";
         }
-        this.isEnlistment = false;
+        // this.isEnlistment = false;
       } catch (error) {
         console.log(error);
       } finally {

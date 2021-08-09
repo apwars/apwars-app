@@ -195,7 +195,7 @@
             <h5 class="text-h5 text-wGOLD text-center">
               Winner
             </h5>
-            <div class="text-center">
+            <div class="text-center d-flex justify-center">
               <span v-if="nft.winner">
                 {{ nft.winner }}
               </span>
