@@ -1,12 +1,4 @@
 {
-  "teamAInitialPower": 20027202.9879,
-  "teamBInitialPower": 12599499.6948,
-  "WCOURAGESupply": 32626702.69,
-  "externalRandomSource1": "0x3181348e7b173dbce6898383652b9d6fdd04f502f528515e6efd3e511ee79a93",
-  "externalRandomSource2": "0x34f969805a96c2ed50e34b152891700a03cffd74f2e0d1bce62aaaf7a1676b89",
-  "winner": "TeamB",
-  "attack": "TeamA",
-  "defense": "TeamB",
   "nfts": {
     "humanLegend": {
       "image": "war2-the-legend-corp.png",
@@ -57,8 +49,8 @@
       "Team": "Corporation",
       "wCOURAGE": 6765.467798,
       "wGOLD": 63.0034754,
-      "wGOLD Loss": 2590.658575,
-      "wGOLD Earnings": 3384.848164,
+      "wGOLDLoss": 2590.658575,
+      "wGOLDEarnings": 3384.848164,
       "PnL": 0.3065589565
     },
     {
@@ -68,8 +60,8 @@
       "Team": "Degen",
       "wCOURAGE": 10434.4449,
       "wGOLD": 352.7123676,
-      "wGOLD Loss": 5402.431865,
-      "wGOLD Earnings": 5476.024815,
+      "wGOLDLoss": 5402.431865,
+      "wGOLDEarnings": 5476.024815,
       "PnL": 0.01362218952
     },
     {
@@ -79,8 +71,8 @@
       "Team": "Corporation",
       "wCOURAGE": 741755.4749,
       "wGOLD": 0,
-      "wGOLD Loss": 246007.332,
-      "wGOLD Earnings": 364201.9382,
+      "wGOLDLoss": 246007.332,
+      "wGOLDEarnings": 364201.9382,
       "PnL": 0.4804515588
     },
     {
@@ -90,8 +82,8 @@
       "Team": "Corporation",
       "wCOURAGE": 4554.493958,
       "wGOLD": 0,
-      "wGOLD Loss": 1510.523273,
-      "wGOLD Earnings": 2236.256534,
+      "wGOLDLoss": 1510.523273,
+      "wGOLDEarnings": 2236.256534,
       "PnL": 0.4804515588
     },
     {
@@ -101,8 +93,8 @@
       "Team": "Corporation",
       "wCOURAGE": 227.3193774,
       "wGOLD": 0,
-      "wGOLD Loss": 75.39173683,
-      "wGOLD Earnings": 111.6138143,
+      "wGOLDLoss": 75.39173683,
+      "wGOLDEarnings": 111.6138143,
       "PnL": 0.4804515588
     },
     {
@@ -112,8 +104,8 @@
       "Team": "Corporation",
       "wCOURAGE": 4695.031858,
       "wGOLD": 0,
-      "wGOLD Loss": 1557.133449,
-      "wGOLD Earnings": 2305.260642,
+      "wGOLDLoss": 1557.133449,
+      "wGOLDEarnings": 2305.260642,
       "PnL": 0.4804515588
     },
     {
@@ -123,8 +115,8 @@
       "Team": "Corporation",
       "wCOURAGE": 24.28135507,
       "wGOLD": 0,
-      "wGOLD Loss": 8.053046564,
-      "wGOLD Earnings": 11.92214534,
+      "wGOLDLoss": 8.053046564,
+      "wGOLDEarnings": 11.92214534,
       "PnL": 0.4804515588
     },
     {
@@ -134,8 +126,8 @@
       "Team": "Degen",
       "wCOURAGE": 170.3919021,
       "wGOLD": 5.685252429,
-      "wGOLD Loss": 87.81048706,
-      "wGOLD Earnings": 89.34767638,
+      "wGOLDLoss": 87.81048706,
+      "wGOLDEarnings": 89.34767638,
       "PnL": 0.01750576011
     },
     {
@@ -145,8 +137,8 @@
       "Team": "Degen",
       "wCOURAGE": 93.63717609,
       "wGOLD": 3.165188985,
-      "wGOLD Loss": 48.48063011,
-      "wGOLD Earnings": 49.14104245,
+      "wGOLDLoss": 48.48063011,
+      "wGOLDEarnings": 49.14104245,
       "PnL": 0.01362218952
     },
     {
@@ -156,8 +148,8 @@
       "Team": "Corporation",
       "wCOURAGE": 186.3775525,
       "wGOLD": 0,
-      "wGOLD Loss": 61.81315272,
-      "wGOLD Earnings": 91.51137829,
+      "wGOLDLoss": 61.81315272,
+      "wGOLDEarnings": 91.51137829,
       "PnL": 0.4804515588
     },
     {
@@ -167,8 +159,8 @@
       "Team": "Corporation",
       "wCOURAGE": 683.1740937,
       "wGOLD": 0,
-      "wGOLD Loss": 226.5784909,
-      "wGOLD Earnings": 335.43848,
+      "wGOLDLoss": 226.5784909,
+      "wGOLDEarnings": 335.43848,
       "PnL": 0.4804515588
     },
     {
@@ -178,8 +170,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1048.025806,
       "wGOLD": 0,
-      "wGOLD Loss": 347.583592,
-      "wGOLD Earnings": 514.5806705,
+      "wGOLDLoss": 347.583592,
+      "wGOLDEarnings": 514.5806705,
       "PnL": 0.4804515588
     },
     {
@@ -189,8 +181,8 @@
       "Team": "Degen",
       "wCOURAGE": 249.568507,
       "wGOLD": 8.436088341,
-      "wGOLD Loss": 129.2140471,
-      "wGOLD Earnings": 130.9742253,
+      "wGOLDLoss": 129.2140471,
+      "wGOLDEarnings": 130.9742253,
       "PnL": 0.01362218952
     },
     {
@@ -200,8 +192,8 @@
       "Team": "Degen",
       "wCOURAGE": 12617.93274,
       "wGOLD": 426.520143,
-      "wGOLD Loss": 6532.932278,
-      "wGOLD Earnings": 6621.92512,
+      "wGOLDLoss": 6532.932278,
+      "wGOLDEarnings": 6621.92512,
       "PnL": 0.01362218952
     },
     {
@@ -211,8 +203,8 @@
       "Team": "Degen",
       "wCOURAGE": 3129.550584,
       "wGOLD": 105.7872466,
-      "wGOLD Loss": 1620.32422,
-      "wGOLD Earnings": 1642.396583,
+      "wGOLDLoss": 1620.32422,
+      "wGOLDEarnings": 1642.396583,
       "PnL": 0.01362218952
     },
     {
@@ -222,8 +214,8 @@
       "Team": "Corporation",
       "wCOURAGE": 41121.1048,
       "wGOLD": 0,
-      "wGOLD Loss": 13638.0433,
-      "wGOLD Earnings": 20190.46246,
+      "wGOLDLoss": 13638.0433,
+      "wGOLDEarnings": 20190.46246,
       "PnL": 0.4804515588
     },
     {
@@ -233,8 +225,8 @@
       "Team": "Degen",
       "wCOURAGE": 37088.00033,
       "wGOLD": 1253.674396,
-      "wGOLD Loss": 19202.30512,
-      "wGOLD Earnings": 19463.88256,
+      "wGOLDLoss": 19202.30512,
+      "wGOLDEarnings": 19463.88256,
       "PnL": 0.01362218952
     },
     {
@@ -244,8 +236,8 @@
       "Team": "Degen",
       "wCOURAGE": 15472.80772,
       "wGOLD": 523.0226136,
-      "wGOLD Loss": 8011.043256,
-      "wGOLD Earnings": 8120.171205,
+      "wGOLDLoss": 8011.043256,
+      "wGOLDEarnings": 8120.171205,
       "PnL": 0.01362218952
     },
     {
@@ -255,8 +247,8 @@
       "Team": "Degen",
       "wCOURAGE": 2.187404969,
       "wGOLD": 0.07394018492,
-      "wGOLD Loss": 1.132528507,
-      "wGOLD Earnings": 1.147956025,
+      "wGOLDLoss": 1.132528507,
+      "wGOLDEarnings": 1.147956025,
       "PnL": 0.01362218952
     },
     {
@@ -266,8 +258,8 @@
       "Team": "Corporation",
       "wCOURAGE": 4372.3142,
       "wGOLD": 0,
-      "wGOLD Loss": 1450.102342,
-      "wGOLD Earnings": 2146.806272,
+      "wGOLDLoss": 1450.102342,
+      "wGOLDEarnings": 2146.806272,
       "PnL": 0.4804515588
     },
     {
@@ -277,8 +269,8 @@
       "Team": "Degen",
       "wCOURAGE": 5379.929567,
       "wGOLD": 166.1379422,
-      "wGOLD Loss": 2698.924088,
-      "wGOLD Earnings": 2807.68336,
+      "wGOLDLoss": 2698.924088,
+      "wGOLDEarnings": 2807.68336,
       "PnL": 0.0402972696
     },
     {
@@ -288,8 +280,8 @@
       "Team": "Degen",
       "wCOURAGE": 25225.22892,
       "wGOLD": 852.6807413,
-      "wGOLD Loss": 13060.35747,
-      "wGOLD Earnings": 13238.26814,
+      "wGOLDLoss": 13060.35747,
+      "wGOLDEarnings": 13238.26814,
       "PnL": 0.01362218952
     },
     {
@@ -299,8 +291,8 @@
       "Team": "Degen",
       "wCOURAGE": 1279.553385,
       "wGOLD": 43.25235392,
-      "wGOLD Loss": 662.4885217,
-      "wGOLD Earnings": 671.5130659,
+      "wGOLDLoss": 662.4885217,
+      "wGOLDEarnings": 671.5130659,
       "PnL": 0.01362218952
     },
     {
@@ -310,8 +302,8 @@
       "Team": "Degen",
       "wCOURAGE": 3670.047949,
       "wGOLD": 58.47303648,
-      "wGOLD Loss": 1539.103892,
-      "wGOLD Earnings": 1860.46658,
+      "wGOLDLoss": 1539.103892,
+      "wGOLDEarnings": 1860.46658,
       "PnL": 0.2087985675
     },
     {
@@ -321,8 +313,8 @@
       "Team": "Degen",
       "wCOURAGE": 372.137131,
       "wGOLD": 12.57923826,
-      "wGOLD Loss": 192.6739288,
-      "wGOLD Earnings": 195.2985696,
+      "wGOLDLoss": 192.6739288,
+      "wGOLDEarnings": 195.2985696,
       "PnL": 0.01362218952
     },
     {
@@ -332,8 +324,8 @@
       "Team": "Degen",
       "wCOURAGE": 4636.40858,
       "wGOLD": 156.7231092,
-      "wGOLD Loss": 2400.499661,
-      "wGOLD Earnings": 2433.199722,
+      "wGOLDLoss": 2400.499661,
+      "wGOLDEarnings": 2433.199722,
       "PnL": 0.01362218952
     },
     {
@@ -343,8 +335,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1393.305321,
       "wGOLD": 19.08658994,
-      "wGOLD Loss": 567.1750167,
-      "wGOLD Earnings": 703.1995025,
+      "wGOLDLoss": 567.1750167,
+      "wGOLDEarnings": 703.1995025,
       "PnL": 0.2398280633
     },
     {
@@ -354,8 +346,8 @@
       "Team": "Degen",
       "wCOURAGE": 12859.98431,
       "wGOLD": 434.7021386,
-      "wGOLD Loss": 6658.254432,
-      "wGOLD Earnings": 6748.954436,
+      "wGOLDLoss": 6658.254432,
+      "wGOLDEarnings": 6748.954436,
       "PnL": 0.01362218952
     },
     {
@@ -365,8 +357,8 @@
       "Team": "Corporation",
       "wCOURAGE": 14452.08905,
       "wGOLD": 128.2074061,
-      "wGOLD Loss": 5498.937003,
-      "wGOLD Earnings": 7224.183129,
+      "wGOLDLoss": 5498.937003,
+      "wGOLDEarnings": 7224.183129,
       "PnL": 0.3137417513
     },
     {
@@ -376,8 +368,8 @@
       "Team": "Degen",
       "wCOURAGE": 785.9162496,
       "wGOLD": 26.56608796,
-      "wGOLD Loss": 406.9079888,
-      "wGOLD Earnings": 412.4509665,
+      "wGOLDLoss": 406.9079888,
+      "wGOLDEarnings": 412.4509665,
       "PnL": 0.01362218952
     },
     {
@@ -387,8 +379,8 @@
       "Team": "Corporation",
       "wCOURAGE": 274.2492929,
       "wGOLD": 0,
-      "wGOLD Loss": 90.95630452,
-      "wGOLD Earnings": 134.6564028,
+      "wGOLDLoss": 90.95630452,
+      "wGOLDEarnings": 134.6564028,
       "PnL": 0.4804515588
     },
     {
@@ -398,8 +390,8 @@
       "Team": "Corporation",
       "wCOURAGE": 389505.41,
       "wGOLD": 0,
-      "wGOLD Loss": 129181.6373,
-      "wGOLD Earnings": 191247.1563,
+      "wGOLDLoss": 129181.6373,
+      "wGOLDEarnings": 191247.1563,
       "PnL": 0.4804515588
     },
     {
@@ -409,8 +401,8 @@
       "Team": "Corporation",
       "wCOURAGE": 6222.5611,
       "wGOLD": 56.38516629,
-      "wGOLD Loss": 2374.164718,
-      "wGOLD Earnings": 3111.662667,
+      "wGOLDLoss": 2374.164718,
+      "wGOLDEarnings": 3111.662667,
       "PnL": 0.3106347014
     },
     {
@@ -420,8 +412,8 @@
       "Team": "Degen",
       "wCOURAGE": 4745.263366,
       "wGOLD": 160.4026944,
-      "wGOLD Loss": 2456.859206,
-      "wGOLD Earnings": 2490.327007,
+      "wGOLDLoss": 2456.859206,
+      "wGOLDEarnings": 2490.327007,
       "PnL": 0.01362218952
     },
     {
@@ -431,8 +423,8 @@
       "Team": "Degen",
       "wCOURAGE": 494.7414988,
       "wGOLD": 16.72359642,
-      "wGOLD Loss": 256.1523169,
-      "wGOLD Earnings": 259.6416723,
+      "wGOLDLoss": 256.1523169,
+      "wGOLDEarnings": 259.6416723,
       "PnL": 0.01362218952
     },
     {
@@ -442,8 +434,8 @@
       "Team": "Corporation",
       "wCOURAGE": 29286.81673,
       "wGOLD": 0,
-      "wGOLD Loss": 9713.135786,
-      "wGOLD Earnings": 14379.82702,
+      "wGOLDLoss": 9713.135786,
+      "wGOLDEarnings": 14379.82702,
       "PnL": 0.4804515588
     },
     {
@@ -453,8 +445,8 @@
       "Team": "Corporation",
       "wCOURAGE": 17196.66006,
       "wGOLD": 178.6907689,
-      "wGOLD Loss": 6687.115705,
-      "wGOLD Earnings": 8622.250859,
+      "wGOLDLoss": 6687.115705,
+      "wGOLDEarnings": 8622.250859,
       "PnL": 0.2893826336
     },
     {
@@ -464,8 +456,8 @@
       "Team": "Corporation",
       "wCOURAGE": 683.1740937,
       "wGOLD": 0,
-      "wGOLD Loss": 226.5784909,
-      "wGOLD Earnings": 335.43848,
+      "wGOLDLoss": 226.5784909,
+      "wGOLDEarnings": 335.43848,
       "PnL": 0.4804515588
     },
     {
@@ -475,8 +467,8 @@
       "Team": "Corporation",
       "wCOURAGE": 2049.522281,
       "wGOLD": 0,
-      "wGOLD Loss": 679.7354727,
-      "wGOLD Earnings": 1006.31544,
+      "wGOLDLoss": 679.7354727,
+      "wGOLDEarnings": 1006.31544,
       "PnL": 0.4804515588
     },
     {
@@ -486,8 +478,8 @@
       "Team": "Corporation",
       "wCOURAGE": 39986.35655,
       "wGOLD": 157.466323,
-      "wGOLD Loss": 14128.59829,
-      "wGOLD Earnings": 19790.76739,
+      "wGOLDLoss": 14128.59829,
+      "wGOLDEarnings": 19790.76739,
       "PnL": 0.400759437
     },
     {
@@ -497,8 +489,8 @@
       "Team": "Corporation",
       "wCOURAGE": 97.11303231,
       "wGOLD": 0,
-      "wGOLD Loss": 32.20807772,
-      "wGOLD Earnings": 47.68249886,
+      "wGOLDLoss": 32.20807772,
+      "wGOLDEarnings": 47.68249886,
       "PnL": 0.4804515588
     },
     {
@@ -508,8 +500,8 @@
       "Team": "Corporation",
       "wCOURAGE": 350.2573518,
       "wGOLD": 2.60239229,
-      "wGOLD Loss": 130.4917708,
-      "wGOLD Earnings": 174.578752,
+      "wGOLDLoss": 130.4917708,
+      "wGOLDEarnings": 174.578752,
       "PnL": 0.3378525785
     },
     {
@@ -519,8 +511,8 @@
       "Team": "Degen",
       "wCOURAGE": 102.7785985,
       "wGOLD": 3.474193708,
-      "wGOLD Loss": 53.21359984,
-      "wGOLD Earnings": 53.93848558,
+      "wGOLDLoss": 53.21359984,
+      "wGOLDEarnings": 53.93848558,
       "PnL": 0.01362218952
     },
     {
@@ -530,8 +522,8 @@
       "Team": "Corporation",
       "wCOURAGE": 327.5525886,
       "wGOLD": 4.44974075,
-      "wGOLD Loss": 133.1318315,
-      "wGOLD Earnings": 165.2780618,
+      "wGOLDLoss": 133.1318315,
+      "wGOLDEarnings": 165.2780618,
       "PnL": 0.2414616393
     },
     {
@@ -541,8 +533,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1657.232857,
       "wGOLD": 0,
-      "wGOLD Loss": 549.6305016,
-      "wGOLD Earnings": 813.7013328,
+      "wGOLDLoss": 549.6305016,
+      "wGOLDEarnings": 813.7013328,
       "PnL": 0.4804515588
     },
     {
@@ -552,8 +544,8 @@
       "Team": "Degen",
       "wCOURAGE": 88911.45542,
       "wGOLD": 3005.446887,
-      "wGOLD Loss": 46033.88913,
-      "wGOLD Earnings": 46660.9715,
+      "wGOLDLoss": 46033.88913,
+      "wGOLDEarnings": 46660.9715,
       "PnL": 0.01362218952
     },
     {
@@ -563,8 +555,8 @@
       "Team": "Corporation",
       "wCOURAGE": 695.2263917,
       "wGOLD": 6.18068169,
-      "wGOLD Loss": 264.6022574,
-      "wGOLD Earnings": 347.53684,
+      "wGOLDLoss": 264.6022574,
+      "wGOLDEarnings": 347.53684,
       "PnL": 0.3134311226
     },
     {
@@ -574,8 +566,8 @@
       "Team": "Degen",
       "wCOURAGE": 8348.568157,
       "wGOLD": 282.2041103,
-      "wGOLD Loss": 4322.469576,
-      "wGOLD Earnings": 4381.351076,
+      "wGOLDLoss": 4322.469576,
+      "wGOLDEarnings": 4381.351076,
       "PnL": 0.01362218952
     },
     {
@@ -585,8 +577,8 @@
       "Team": "Degen",
       "wCOURAGE": 271.3320162,
       "wGOLD": 9.171753622,
-      "wGOLD Loss": 140.4820998,
-      "wGOLD Earnings": 142.3957736,
+      "wGOLDLoss": 140.4820998,
+      "wGOLDEarnings": 142.3957736,
       "PnL": 0.01362218952
     },
     {
@@ -596,8 +588,8 @@
       "Team": "Degen",
       "wCOURAGE": 12455.75718,
       "wGOLD": 421.0381717,
-      "wGOLD Loss": 6448.965911,
-      "wGOLD Earnings": 6536.814946,
+      "wGOLDLoss": 6448.965911,
+      "wGOLDEarnings": 6536.814946,
       "PnL": 0.01362218952
     },
     {
@@ -607,8 +599,8 @@
       "Team": "Degen",
       "wCOURAGE": 3164.49316,
       "wGOLD": 80.76030814,
-      "wGOLD Loss": 1494.132121,
-      "wGOLD Earnings": 1634.52645,
+      "wGOLDLoss": 1494.132121,
+      "wGOLDEarnings": 1634.52645,
       "PnL": 0.09396379772
     },
     {
@@ -618,8 +610,8 @@
       "Team": "Corporation",
       "wCOURAGE": 2148209.519,
       "wGOLD": 2782.988337,
-      "wGOLD Loss": 727786.8518,
-      "wGOLD Earnings": 1057553.862,
+      "wGOLDLoss": 727786.8518,
+      "wGOLDEarnings": 1057553.862,
       "PnL": 0.4531093269
     },
     {
@@ -629,8 +621,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1924.293725,
       "wGOLD": 0,
-      "wGOLD Loss": 638.2027251,
-      "wGOLD Earnings": 944.8282191,
+      "wGOLDLoss": 638.2027251,
+      "wGOLDEarnings": 944.8282191,
       "PnL": 0.4804515588
     },
     {
@@ -640,8 +632,8 @@
       "Team": "Degen",
       "wCOURAGE": 128466.2092,
       "wGOLD": 4333.322989,
-      "wGOLD Loss": 66462.80999,
-      "wGOLD Earnings": 67410.2317,
+      "wGOLDLoss": 66462.80999,
+      "wGOLDEarnings": 67410.2317,
       "PnL": 0.01425491502
     },
     {
@@ -651,8 +643,8 @@
       "Team": "Corporation",
       "wCOURAGE": 7.514194618,
       "wGOLD": 0,
-      "wGOLD Loss": 2.492124471,
-      "wGOLD Earnings": 3.689469557,
+      "wGOLDLoss": 2.492124471,
+      "wGOLDEarnings": 3.689469557,
       "PnL": 0.4804515588
     },
     {
@@ -662,8 +654,8 @@
       "Team": "Degen",
       "wCOURAGE": 1264.68171,
       "wGOLD": 42.7496512,
-      "wGOLD Loss": 654.7887146,
-      "wGOLD Earnings": 663.7083706,
+      "wGOLDLoss": 654.7887146,
+      "wGOLDEarnings": 663.7083706,
       "PnL": 0.01362218952
     },
     {
@@ -673,8 +665,8 @@
       "Team": "Degen",
       "wCOURAGE": 6226203.839,
       "wGOLD": 167842.5196,
-      "wGOLD Loss": 2988979.884,
-      "wGOLD Earnings": 3224908.605,
+      "wGOLDLoss": 2988979.884,
+      "wGOLDEarnings": 3224908.605,
       "PnL": 0.07893285656
     },
     {
@@ -684,8 +676,8 @@
       "Team": "Degen",
       "wCOURAGE": 9.468306306,
       "wGOLD": 0.3200542784,
-      "wGOLD Loss": 4.902213789,
-      "wGOLD Earnings": 4.968992675,
+      "wGOLDLoss": 4.902213789,
+      "wGOLDEarnings": 4.968992675,
       "PnL": 0.01362218952
     },
     {
@@ -695,8 +687,8 @@
       "Team": "Degen",
       "wCOURAGE": 8022.301613,
       "wGOLD": 157.769867,
-      "wGOLD Loss": 3529.212656,
-      "wGOLD Earnings": 4096.719959,
+      "wGOLDLoss": 3529.212656,
+      "wGOLDEarnings": 4096.719959,
       "PnL": 0.1608028075
     },
     {
@@ -706,8 +698,8 @@
       "Team": "Corporation",
       "wCOURAGE": 40.99044562,
       "wGOLD": 0,
-      "wGOLD Loss": 13.59470945,
-      "wGOLD Earnings": 20.1263088,
+      "wGOLDLoss": 13.59470945,
+      "wGOLDEarnings": 20.1263088,
       "PnL": 0.4804515588
     },
     {
@@ -717,8 +709,8 @@
       "Team": "Corporation",
       "wCOURAGE": 63469.97724,
       "wGOLD": 0,
-      "wGOLD Loss": 21050.17124,
-      "wGOLD Earnings": 31163.75883,
+      "wGOLDLoss": 21050.17124,
+      "wGOLDEarnings": 31163.75883,
       "PnL": 0.4804515588
     },
     {
@@ -728,8 +720,8 @@
       "Team": "Corporation",
       "wCOURAGE": 481.4916805,
       "wGOLD": 0,
-      "wGOLD Loss": 159.6893959,
-      "wGOLD Earnings": 236.4124151,
+      "wGOLDLoss": 159.6893959,
+      "wGOLDEarnings": 236.4124151,
       "PnL": 0.4804515588
     },
     {
@@ -739,8 +731,8 @@
       "Team": "Degen",
       "wCOURAGE": 6949.299689,
       "wGOLD": 225.0256398,
-      "wGOLD Loss": 3543.609322,
-      "wGOLD Earnings": 3637.131787,
+      "wGOLDLoss": 3543.609322,
+      "wGOLDEarnings": 3637.131787,
       "PnL": 0.02639186665
     },
     {
@@ -750,8 +742,8 @@
       "Team": "Degen",
       "wCOURAGE": 9.797516651,
       "wGOLD": 0.3311824756,
-      "wGOLD Loss": 5.072662383,
-      "wGOLD Earnings": 5.141763151,
+      "wGOLDLoss": 5.072662383,
+      "wGOLDEarnings": 5.141763151,
       "PnL": 0.01362218952
     },
     {
@@ -761,8 +753,8 @@
       "Team": "Corporation",
       "wCOURAGE": 2188.669983,
       "wGOLD": 9.22109798,
-      "wGOLD Loss": 776.6495646,
-      "wGOLD Earnings": 1083.858059,
+      "wGOLDLoss": 776.6495646,
+      "wGOLDEarnings": 1083.858059,
       "PnL": 0.3955561284
     },
     {
@@ -772,8 +764,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1481.676448,
       "wGOLD": 15.21559439,
-      "wGOLD Loss": 575.1727712,
-      "wGOLD Earnings": 742.7187306,
+      "wGOLDLoss": 575.1727712,
+      "wGOLDEarnings": 742.7187306,
       "PnL": 0.2912967507
     },
     {
@@ -783,8 +775,8 @@
       "Team": "Degen",
       "wCOURAGE": 37.33654221,
       "wGOLD": 1.262075781,
-      "wGOLD Loss": 19.33098763,
-      "wGOLD Earnings": 19.594318,
+      "wGOLDLoss": 19.33098763,
+      "wGOLDEarnings": 19.594318,
       "PnL": 0.01362218952
     },
     {
@@ -794,8 +786,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1068.975931,
       "wGOLD": 12.28613652,
-      "wGOLD Loss": 422.1707802,
-      "wGOLD Earnings": 537.1533185,
+      "wGOLDLoss": 422.1707802,
+      "wGOLDEarnings": 537.1533185,
       "PnL": 0.2723602477
     },
     {
@@ -805,8 +797,8 @@
       "Team": "Corporation",
       "wCOURAGE": 6854.685302,
       "wGOLD": 0,
-      "wGOLD Loss": 2273.394535,
-      "wGOLD Earnings": 3365.650483,
+      "wGOLDLoss": 2273.394535,
+      "wGOLDEarnings": 3365.650483,
       "PnL": 0.4804515588
     },
     {
@@ -816,8 +808,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1260.707729,
       "wGOLD": 0.260239229,
-      "wGOLD Loss": 419.5534327,
-      "wGOLD Earnings": 619.2677341,
+      "wGOLDLoss": 419.5534327,
+      "wGOLDEarnings": 619.2677341,
       "PnL": 0.4760163684
     },
     {
@@ -827,8 +819,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1384.559855,
       "wGOLD": 9.701999185,
-      "wGOLD Loss": 512.6094741,
-      "wGOLD Earnings": 689.5208881,
+      "wGOLDLoss": 512.6094741,
+      "wGOLDEarnings": 689.5208881,
       "PnL": 0.3451192827
     },
     {
@@ -838,8 +830,8 @@
       "Team": "Corporation",
       "wCOURAGE": 151.7580405,
       "wGOLD": 0,
-      "wGOLD Loss": 50.33139887,
-      "wGOLD Earnings": 74.51319791,
+      "wGOLDLoss": 50.33139887,
+      "wGOLDEarnings": 74.51319791,
       "PnL": 0.4804515588
     },
     {
@@ -849,8 +841,8 @@
       "Team": "Degen",
       "wCOURAGE": 722.9922965,
       "wGOLD": 24.43908871,
-      "wGOLD Loss": 374.329124,
-      "wGOLD Earnings": 379.4283063,
+      "wGOLDLoss": 374.329124,
+      "wGOLDEarnings": 379.4283063,
       "PnL": 0.01362218952
     },
     {
@@ -860,8 +852,8 @@
       "Team": "Corporation",
       "wCOURAGE": 10482.20414,
       "wGOLD": 0,
-      "wGOLD Loss": 3476.48135,
-      "wGOLD Earnings": 5146.762234,
+      "wGOLDLoss": 3476.48135,
+      "wGOLDEarnings": 5146.762234,
       "PnL": 0.4804515588
     },
     {
@@ -871,8 +863,8 @@
       "Team": "Degen",
       "wCOURAGE": 398.7716812,
       "wGOLD": 13.47955786,
-      "wGOLD Loss": 206.4639621,
-      "wGOLD Earnings": 209.2764533,
+      "wGOLDLoss": 206.4639621,
+      "wGOLDEarnings": 209.2764533,
       "PnL": 0.01362218952
     },
     {
@@ -882,8 +874,8 @@
       "Team": "Corporation",
       "wCOURAGE": 23190.31014,
       "wGOLD": 0,
-      "wGOLD Loss": 7691.195441,
-      "wGOLD Earnings": 11386.44228,
+      "wGOLDLoss": 7691.195441,
+      "wGOLDEarnings": 11386.44228,
       "PnL": 0.4804515588
     },
     {
@@ -893,8 +885,8 @@
       "Team": "Degen",
       "wCOURAGE": 2932953.837,
       "wGOLD": 99141.74654,
-      "wGOLD Loss": 1518536.291,
-      "wGOLD Earnings": 1539222.08,
+      "wGOLDLoss": 1518536.291,
+      "wGOLDEarnings": 1539222.08,
       "PnL": 0.01362218952
     },
     {
@@ -904,8 +896,8 @@
       "Team": "Degen",
       "wCOURAGE": 81.80315061,
       "wGOLD": 2.765167021,
-      "wGOLD Loss": 42.35356567,
-      "wGOLD Earnings": 42.93051397,
+      "wGOLDLoss": 42.35356567,
+      "wGOLDEarnings": 42.93051397,
       "PnL": 0.01362218952
     },
     {
@@ -915,8 +907,8 @@
       "Team": "Degen",
       "wCOURAGE": 5.230304663,
       "wGOLD": 0.1767983978,
-      "wGOLD Loss": 2.707989244,
-      "wGOLD Earnings": 2.744877987,
+      "wGOLDLoss": 2.707989244,
+      "wGOLDEarnings": 2.744877987,
       "PnL": 0.01362218952
     },
     {
@@ -926,8 +918,8 @@
       "Team": "Corporation",
       "wCOURAGE": 19774.84432,
       "wGOLD": 0,
-      "wGOLD Loss": 6558.43719,
-      "wGOLD Earnings": 9709.448561,
+      "wGOLDLoss": 6558.43719,
+      "wGOLDEarnings": 9709.448561,
       "PnL": 0.4804515588
     },
     {
@@ -937,8 +929,8 @@
       "Team": "Corporation",
       "wCOURAGE": 316.35118,
       "wGOLD": 0,
-      "wGOLD Loss": 104.9196297,
-      "wGOLD Earnings": 155.3284294,
+      "wGOLDLoss": 104.9196297,
+      "wGOLDEarnings": 155.3284294,
       "PnL": 0.4804515588
     },
     {
@@ -948,8 +940,8 @@
       "Team": "Degen",
       "wCOURAGE": 319.4990141,
       "wGOLD": 10.799928,
-      "wGOLD Loss": 165.4205538,
-      "wGOLD Earnings": 167.6739439,
+      "wGOLDLoss": 165.4205538,
+      "wGOLDEarnings": 167.6739439,
       "PnL": 0.01362218952
     },
     {
@@ -959,8 +951,8 @@
       "Team": "Degen",
       "wCOURAGE": 86523.77413,
       "wGOLD": 2924.736822,
-      "wGOLD Loss": 44797.6676,
-      "wGOLD Earnings": 45407.90992,
+      "wGOLDLoss": 44797.6676,
+      "wGOLDEarnings": 45407.90992,
       "PnL": 0.01362218952
     },
     {
@@ -970,8 +962,8 @@
       "Team": "Corporation",
       "wCOURAGE": 560.1758117,
       "wGOLD": 6.337652804,
-      "wGOLD Loss": 220.6761551,
-      "wGOLD Earnings": 281.3839763,
+      "wGOLDLoss": 220.6761551,
+      "wGOLDEarnings": 281.3839763,
       "PnL": 0.2750991433
     },
     {
@@ -981,8 +973,8 @@
       "Team": "Degen",
       "wCOURAGE": 222.0963935,
       "wGOLD": 7.507456844,
-      "wGOLD Loss": 114.9903655,
-      "wGOLD Earnings": 116.5567861,
+      "wGOLDLoss": 114.9903655,
+      "wGOLDEarnings": 116.5567861,
       "PnL": 0.01362218952
     },
     {
@@ -992,8 +984,8 @@
       "Team": "Corporation",
       "wCOURAGE": 87.56433794,
       "wGOLD": 0.6505980726,
-      "wGOLD Loss": 32.62294269,
-      "wGOLD Earnings": 43.644688,
+      "wGOLDLoss": 32.62294269,
+      "wGOLDEarnings": 43.644688,
       "PnL": 0.3378525785
     },
     {
@@ -1003,8 +995,8 @@
       "Team": "Corporation",
       "wCOURAGE": 2418.888115,
       "wGOLD": 8.763182231,
-      "wGOLD Loss": 850.4817224,
-      "wGOLD Earnings": 1196.437247,
+      "wGOLDLoss": 850.4817224,
+      "wGOLDEarnings": 1196.437247,
       "PnL": 0.4067759659
     },
     {
@@ -1014,8 +1006,8 @@
       "Team": "Degen",
       "wCOURAGE": 44048.9698,
       "wGOLD": 1488.97393,
-      "wGOLD Loss": 22806.34574,
-      "wGOLD Earnings": 23117.0181,
+      "wGOLDLoss": 22806.34574,
+      "wGOLDEarnings": 23117.0181,
       "PnL": 0.01362218952
     },
     {
@@ -1025,8 +1017,8 @@
       "Team": "Corporation",
       "wCOURAGE": 6605.238419,
       "wGOLD": 0,
-      "wGOLD Loss": 2190.664088,
-      "wGOLD Earnings": 3243.172064,
+      "wGOLDLoss": 2190.664088,
+      "wGOLDEarnings": 3243.172064,
       "PnL": 0.4804515588
     },
     {
@@ -1036,8 +1028,8 @@
       "Team": "Degen",
       "wCOURAGE": 9173.756813,
       "wGOLD": 156.1435374,
-      "wGOLD Loss": 3902.145737,
-      "wGOLD Earnings": 4660.458133,
+      "wGOLDLoss": 3902.145737,
+      "wGOLDEarnings": 4660.458133,
       "PnL": 0.1943321563
     },
     {
@@ -1047,8 +1039,8 @@
       "Team": "Corporation",
       "wCOURAGE": 156239.0013,
       "wGOLD": 630.5939242,
-      "wGOLD Loss": 55289.14808,
-      "wGOLD Earnings": 77343.94358,
+      "wGOLDLoss": 55289.14808,
+      "wGOLDEarnings": 77343.94358,
       "PnL": 0.3988991741
     },
     {
@@ -1058,8 +1050,8 @@
       "Team": "Degen",
       "wCOURAGE": 5004.201426,
       "wGOLD": 169.1554989,
-      "wGOLD Loss": 2590.924337,
-      "wGOLD Earnings": 2626.218399,
+      "wGOLDLoss": 2590.924337,
+      "wGOLDEarnings": 2626.218399,
       "PnL": 0.01362218952
     },
     {
@@ -1069,8 +1061,8 @@
       "Team": "Degen",
       "wCOURAGE": 4464.451231,
       "wGOLD": 150.9104872,
-      "wGOLD Loss": 2311.468776,
-      "wGOLD Earnings": 2342.956042,
+      "wGOLDLoss": 2311.468776,
+      "wGOLDEarnings": 2342.956042,
       "PnL": 0.01362218952
     },
     {
@@ -1080,8 +1072,8 @@
       "Team": "Degen",
       "wCOURAGE": 48.34065469,
       "wGOLD": 0.8855088008,
-      "wGOLD Loss": 20.90744567,
-      "wGOLD Earnings": 24.62077026,
+      "wGOLDLoss": 20.90744567,
+      "wGOLDEarnings": 24.62077026,
       "PnL": 0.1776077597
     },
     {
@@ -1091,8 +1083,8 @@
       "Team": "Degen",
       "wCOURAGE": 435046.8829,
       "wGOLD": 14705.75747,
-      "wGOLD Loss": 225245.4409,
-      "wGOLD Earnings": 228313.777,
+      "wGOLDLoss": 225245.4409,
+      "wGOLDEarnings": 228313.777,
       "PnL": 0.01362218952
     },
     {
@@ -1102,8 +1094,8 @@
       "Team": "Corporation",
       "wCOURAGE": 7020.773751,
       "wGOLD": 0,
-      "wGOLD Loss": 2328.478694,
-      "wGOLD Earnings": 3447.199912,
+      "wGOLDLoss": 2328.478694,
+      "wGOLDEarnings": 3447.199912,
       "PnL": 0.4804515588
     },
     {
@@ -1113,8 +1105,8 @@
       "Team": "Corporation",
       "wCOURAGE": 846.568078,
       "wGOLD": 0,
-      "wGOLD Loss": 280.7690153,
-      "wGOLD Earnings": 415.6649263,
+      "wGOLDLoss": 280.7690153,
+      "wGOLDEarnings": 415.6649263,
       "PnL": 0.4804515588
     },
     {
@@ -1124,8 +1116,8 @@
       "Team": "Corporation",
       "wCOURAGE": 791.8419022,
       "wGOLD": 0,
-      "wGOLD Loss": 262.6187744,
-      "wGOLD Earnings": 388.794374,
+      "wGOLDLoss": 262.6187744,
+      "wGOLDEarnings": 388.794374,
       "PnL": 0.4804515588
     },
     {
@@ -1135,8 +1127,8 @@
       "Team": "Degen",
       "wCOURAGE": 1707.640036,
       "wGOLD": 57.72283678,
-      "wGOLD Loss": 884.1303038,
-      "wGOLD Earnings": 896.1740944,
+      "wGOLDLoss": 884.1303038,
+      "wGOLDEarnings": 896.1740944,
       "PnL": 0.01362218952
     },
     {
@@ -1146,8 +1138,8 @@
       "Team": "Corporation",
       "wCOURAGE": 337.3146678,
       "wGOLD": 0.8198631939,
-      "wGOLD Loss": 116.3858863,
-      "wGOLD Earnings": 166.4413651,
+      "wGOLDLoss": 116.3858863,
+      "wGOLDEarnings": 166.4413651,
       "PnL": 0.4300820341
     },
     {
@@ -1157,8 +1149,8 @@
       "Team": "Corporation",
       "wCOURAGE": 4554.493958,
       "wGOLD": 0,
-      "wGOLD Loss": 1510.523273,
-      "wGOLD Earnings": 2236.256534,
+      "wGOLDLoss": 1510.523273,
+      "wGOLDEarnings": 2236.256534,
       "PnL": 0.4804515588
     },
     {
@@ -1168,8 +1160,8 @@
       "Team": "Corporation",
       "wCOURAGE": 18461.88899,
       "wGOLD": 0,
-      "wGOLD Loss": 6122.988248,
-      "wGOLD Earnings": 9064.787495,
+      "wGOLDLoss": 6122.988248,
+      "wGOLDEarnings": 9064.787495,
       "PnL": 0.4804515588
     },
     {
@@ -1179,8 +1171,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1768192.646,
       "wGOLD": 10013.30797,
-      "wGOLD Loss": 641557.2753,
-      "wGOLD Earnings": 878195.8973,
+      "wGOLDLoss": 641557.2753,
+      "wGOLDEarnings": 878195.8973,
       "PnL": 0.3688503445
     },
     {
@@ -1190,8 +1182,8 @@
       "Team": "Degen",
       "wCOURAGE": 464.3631864,
       "wGOLD": 15.69672756,
-      "wGOLD Loss": 240.4239515,
-      "wGOLD Earnings": 243.6990521,
+      "wGOLDLoss": 240.4239515,
+      "wGOLDEarnings": 243.6990521,
       "PnL": 0.01362218952
     },
     {
@@ -1201,8 +1193,8 @@
       "Team": "Corporation",
       "wCOURAGE": 3058.631805,
       "wGOLD": 0,
-      "wGOLD Loss": 1014.412263,
-      "wGOLD Earnings": 1501.788216,
+      "wGOLDLoss": 1014.412263,
+      "wGOLDEarnings": 1501.788216,
       "PnL": 0.4804515588
     },
     {
@@ -1212,8 +1204,8 @@
       "Team": "Degen",
       "wCOURAGE": 16.74083723,
       "wGOLD": 0.5658854295,
-      "wGOLD Loss": 8.667565293,
-      "wGOLD Earnings": 8.78563651,
+      "wGOLDLoss": 8.667565293,
+      "wGOLDEarnings": 8.78563651,
       "PnL": 0.01362218952
     },
     {
@@ -1223,8 +1215,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1588.119026,
       "wGOLD": 6.216523368,
-      "wGOLD Loss": 560.9323892,
-      "wGOLD Earnings": 785.9829653,
+      "wGOLDLoss": 560.9323892,
+      "wGOLDEarnings": 785.9829653,
       "PnL": 0.4012080251
     },
     {
@@ -1234,8 +1226,8 @@
       "Team": "Corporation",
       "wCOURAGE": 19.63337978,
       "wGOLD": 0,
-      "wGOLD Loss": 6.511519689,
-      "wGOLD Earnings": 9.639989473,
+      "wGOLDLoss": 6.511519689,
+      "wGOLDEarnings": 9.639989473,
       "PnL": 0.4804515588
     },
     {
@@ -1245,8 +1237,8 @@
       "Team": "Degen",
       "wCOURAGE": 3286.118408,
       "wGOLD": 111.0796611,
-      "wGOLD Loss": 1701.387181,
-      "wGOLD Earnings": 1724.563799,
+      "wGOLDLoss": 1701.387181,
+      "wGOLDEarnings": 1724.563799,
       "PnL": 0.01362218952
     },
     {
@@ -1256,8 +1248,8 @@
       "Team": "Corporation",
       "wCOURAGE": 24966.96332,
       "wGOLD": 0,
-      "wGOLD Loss": 8280.432357,
-      "wGOLD Earnings": 12258.77899,
+      "wGOLDLoss": 8280.432357,
+      "wGOLDEarnings": 12258.77899,
       "PnL": 0.4804515588
     },
     {
@@ -1267,8 +1259,8 @@
       "Team": "Degen",
       "wCOURAGE": 7.188394412,
       "wGOLD": 0.2429871101,
-      "wGOLD Loss": 3.72178984,
-      "wGOLD Earnings": 3.772488767,
+      "wGOLDLoss": 3.72178984,
+      "wGOLDEarnings": 3.772488767,
       "PnL": 0.01362218952
     },
     {
@@ -1278,8 +1270,8 @@
       "Team": "Corporation",
       "wCOURAGE": 5682.398969,
       "wGOLD": 0,
-      "wGOLD Loss": 1884.599248,
-      "wGOLD Earnings": 2790.057894,
+      "wGOLDLoss": 1884.599248,
+      "wGOLDEarnings": 2790.057894,
       "PnL": 0.4804515588
     },
     {
@@ -1289,8 +1281,8 @@
       "Team": "Corporation",
       "wCOURAGE": 93062.32186,
       "wGOLD": 0,
-      "wGOLD Loss": 30864.63705,
-      "wGOLD Earnings": 45693.60003,
+      "wGOLDLoss": 30864.63705,
+      "wGOLDEarnings": 45693.60003,
       "PnL": 0.4804515588
     },
     {
@@ -1300,8 +1292,8 @@
       "Team": "Degen",
       "wCOURAGE": 3336.134284,
       "wGOLD": 112.7703326,
-      "wGOLD Loss": 1727.282891,
-      "wGOLD Earnings": 1750.812266,
+      "wGOLDLoss": 1727.282891,
+      "wGOLDEarnings": 1750.812266,
       "PnL": 0.01362218952
     },
     {
@@ -1311,8 +1303,8 @@
       "Team": "Corporation",
       "wCOURAGE": 112350.4837,
       "wGOLD": 0,
-      "wGOLD Loss": 37261.66329,
-      "wGOLD Earnings": 55164.0875,
+      "wGOLDLoss": 37261.66329,
+      "wGOLDEarnings": 55164.0875,
       "PnL": 0.4804515588
     },
     {
@@ -1322,8 +1314,8 @@
       "Team": "Degen",
       "wCOURAGE": 217.5807099,
       "wGOLD": 7.354814562,
-      "wGOLD Loss": 112.6523712,
-      "wGOLD Earnings": 114.1869431,
+      "wGOLDLoss": 112.6523712,
+      "wGOLDEarnings": 114.1869431,
       "PnL": 0.01362218952
     },
     {
@@ -1333,8 +1325,8 @@
       "Team": "Corporation",
       "wCOURAGE": 9596.046878,
       "wGOLD": 0,
-      "wGOLD Loss": 3182.582361,
-      "wGOLD Earnings": 4711.659017,
+      "wGOLDLoss": 3182.582361,
+      "wGOLDEarnings": 4711.659017,
       "PnL": 0.4804515588
     },
     {
@@ -1344,8 +1336,8 @@
       "Team": "Degen",
       "wCOURAGE": 208.1337131,
       "wGOLD": 6.388873073,
-      "wGOLD Loss": 104.2014169,
-      "wGOLD Earnings": 108.5825262,
+      "wGOLDLoss": 104.2014169,
+      "wGOLDEarnings": 108.5825262,
       "PnL": 0.04204462291
     },
     {
@@ -1355,8 +1347,8 @@
       "Team": "Corporation",
       "wCOURAGE": 11492.88531,
       "wGOLD": 0,
-      "wGOLD Loss": 3811.679386,
-      "wGOLD Earnings": 5643.006689,
+      "wGOLDLoss": 3811.679386,
+      "wGOLDEarnings": 5643.006689,
       "PnL": 0.4804515588
     },
     {
@@ -1366,8 +1358,8 @@
       "Team": "Degen",
       "wCOURAGE": 3429.720712,
       "wGOLD": 115.9338061,
-      "wGOLD Loss": 1775.737246,
-      "wGOLD Earnings": 1799.926676,
+      "wGOLDLoss": 1775.737246,
+      "wGOLDEarnings": 1799.926676,
       "PnL": 0.01362218952
     },
     {
@@ -1377,8 +1369,8 @@
       "Team": "Corporation",
       "wCOURAGE": 11.55199711,
       "wGOLD": 0,
-      "wGOLD Loss": 3.831284142,
-      "wGOLD Earnings": 5.67203058,
+      "wGOLDLoss": 3.831284142,
+      "wGOLDEarnings": 5.67203058,
       "PnL": 0.4804515588
     },
     {
@@ -1388,8 +1380,8 @@
       "Team": "Corporation",
       "wCOURAGE": 486.0665911,
       "wGOLD": 0,
-      "wGOLD Loss": 161.2066905,
-      "wGOLD Earnings": 238.6586962,
+      "wGOLDLoss": 161.2066905,
+      "wGOLDEarnings": 238.6586962,
       "PnL": 0.4804515588
     },
     {
@@ -1399,8 +1391,8 @@
       "Team": "Corporation",
       "wCOURAGE": 700.5147035,
       "wGOLD": 5.204784581,
-      "wGOLD Loss": 260.9835415,
-      "wGOLD Earnings": 349.157504,
+      "wGOLDLoss": 260.9835415,
+      "wGOLDEarnings": 349.157504,
       "PnL": 0.3378525785
     },
     {
@@ -1410,8 +1402,8 @@
       "Team": "Degen",
       "wCOURAGE": 5153.413646,
       "wGOLD": 115.7329248,
-      "wGOLD Loss": 2346.303689,
-      "wGOLD Earnings": 2646.059025,
+      "wGOLDLoss": 2346.303689,
+      "wGOLDEarnings": 2646.059025,
       "PnL": 0.1277564101
     },
     {
@@ -1421,8 +1413,8 @@
       "Team": "Degen",
       "wCOURAGE": 11.83137563,
       "wGOLD": 0.3999323921,
-      "wGOLD Loss": 6.125692483,
-      "wGOLD Earnings": 6.209137827,
+      "wGOLDLoss": 6.125692483,
+      "wGOLDEarnings": 6.209137827,
       "PnL": 0.01362218952
     },
     {
@@ -1432,8 +1424,8 @@
       "Team": "Degen",
       "wCOURAGE": 18119.47961,
       "wGOLD": 458.5330844,
-      "wGOLD Loss": 8533.792014,
-      "wGOLD Earnings": 9355.197573,
+      "wGOLDLoss": 8533.792014,
+      "wGOLDEarnings": 9355.197573,
       "PnL": 0.09625329014
     },
     {
@@ -1443,8 +1435,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1.382310923,
       "wGOLD": 0,
-      "wGOLD Loss": 0.4584511119,
-      "wGOLD Earnings": 0.6787146633,
+      "wGOLDLoss": 0.4584511119,
+      "wGOLDEarnings": 0.6787146633,
       "PnL": 0.4804515588
     },
     {
@@ -1454,8 +1446,8 @@
       "Team": "Degen",
       "wCOURAGE": 1.583445463,
       "wGOLD": 0.05352472542,
-      "wGOLD Loss": 0.8198285876,
-      "wGOLD Earnings": 0.830996448,
+      "wGOLDLoss": 0.8198285876,
+      "wGOLDEarnings": 0.830996448,
       "PnL": 0.01362218952
     },
     {
@@ -1465,8 +1457,8 @@
       "Team": "Corporation",
       "wCOURAGE": 9200.376389,
       "wGOLD": 0,
-      "wGOLD Loss": 3051.356041,
-      "wGOLD Earnings": 4517.384807,
+      "wGOLDLoss": 3051.356041,
+      "wGOLDEarnings": 4517.384807,
       "PnL": 0.4804515588
     },
     {
@@ -1476,8 +1468,8 @@
       "Team": "Degen",
       "wCOURAGE": 40341.98039,
       "wGOLD": 1243.897664,
-      "wGOLD Loss": 20227.6818,
-      "wGOLD Earnings": 21051.81004,
+      "wGOLDLoss": 20227.6818,
+      "wGOLDEarnings": 21051.81004,
       "PnL": 0.04074259438
     },
     {
@@ -1487,8 +1479,8 @@
       "Team": "Corporation",
       "wCOURAGE": 29.31189757,
       "wGOLD": 0,
-      "wGOLD Loss": 9.721453986,
-      "wGOLD Earnings": 14.39214171,
+      "wGOLDLoss": 9.721453986,
+      "wGOLDEarnings": 14.39214171,
       "PnL": 0.4804515588
     },
     {
@@ -1498,8 +1490,8 @@
       "Team": "Degen",
       "wCOURAGE": 23597.79005,
       "wGOLD": 797.6689203,
-      "wGOLD Loss": 12217.75131,
-      "wGOLD Earnings": 12384.18384,
+      "wGOLDLoss": 12217.75131,
+      "wGOLDEarnings": 12384.18384,
       "PnL": 0.01362218952
     },
     {
@@ -1509,8 +1501,8 @@
       "Team": "Corporation",
       "wCOURAGE": 28.69702352,
       "wGOLD": 0.3370026466,
-      "wGOLD Loss": 11.37283087,
-      "wGOLD Earnings": 14.42724119,
+      "wGOLDLoss": 11.37283087,
+      "wGOLDEarnings": 14.42724119,
       "PnL": 0.2685708038
     },
     {
@@ -1520,8 +1512,8 @@
       "Team": "Corporation",
       "wCOURAGE": 4090.416097,
       "wGOLD": 0,
-      "wGOLD Loss": 1356.609267,
-      "wGOLD Earnings": 2008.394304,
+      "wGOLDLoss": 1356.609267,
+      "wGOLDEarnings": 2008.394304,
       "PnL": 0.4804515588
     },
     {
@@ -1531,8 +1523,8 @@
       "Team": "Degen",
       "wCOURAGE": 2915.207376,
       "wGOLD": 98.54186832,
-      "wGOLD Loss": 1509.348065,
-      "wGOLD Earnings": 1529.90869,
+      "wGOLDLoss": 1509.348065,
+      "wGOLDEarnings": 1529.90869,
       "PnL": 0.01362218952
     },
     {
@@ -1542,8 +1534,8 @@
       "Team": "Degen",
       "wCOURAGE": 662.5014061,
       "wGOLD": 22.39433354,
-      "wGOLD Loss": 343.009977,
-      "wGOLD Earnings": 347.682524,
+      "wGOLDLoss": 343.009977,
+      "wGOLDEarnings": 347.682524,
       "PnL": 0.01362218952
     },
     {
@@ -1553,8 +1545,8 @@
       "Team": "Degen",
       "wCOURAGE": 333.748089,
       "wGOLD": 11.28158515,
-      "wGOLD Loss": 172.7980096,
-      "wGOLD Earnings": 175.1518969,
+      "wGOLDLoss": 172.7980096,
+      "wGOLDEarnings": 175.1518969,
       "PnL": 0.01362218952
     },
     {
@@ -1564,8 +1556,8 @@
       "Team": "Corporation",
       "wCOURAGE": 9400.168996,
       "wGOLD": 114.0572851,
-      "wGOLD Loss": 3745.538827,
-      "wGOLD Earnings": 4729.540262,
+      "wGOLDLoss": 3745.538827,
+      "wGOLDEarnings": 4729.540262,
       "PnL": 0.2627129181
     },
     {
@@ -1575,8 +1567,8 @@
       "Team": "Degen",
       "wCOURAGE": 1162.729234,
       "wGOLD": 39.30338269,
-      "wGOLD Loss": 602.00284,
-      "wGOLD Earnings": 610.2034368,
+      "wGOLDLoss": 602.00284,
+      "wGOLDEarnings": 610.2034368,
       "PnL": 0.01362218952
     },
     {
@@ -1586,8 +1578,8 @@
       "Team": "Degen",
       "wCOURAGE": 2.691808165,
       "wGOLD": 0.09099037273,
-      "wGOLD Loss": 1.393683166,
-      "wGOLD Earnings": 1.412668182,
+      "wGOLDLoss": 1.393683166,
+      "wGOLDEarnings": 1.412668182,
       "PnL": 0.01362218952
     },
     {
@@ -1597,8 +1589,8 @@
       "Team": "Corporation",
       "wCOURAGE": 449.1100368,
       "wGOLD": 0,
-      "wGOLD Loss": 148.9498436,
-      "wGOLD Earnings": 220.5130281,
+      "wGOLDLoss": 148.9498436,
+      "wGOLDEarnings": 220.5130281,
       "PnL": 0.4804515588
     },
     {
@@ -1608,8 +1600,8 @@
       "Team": "Corporation",
       "wCOURAGE": 14030.31722,
       "wGOLD": 0,
-      "wGOLD Loss": 4653.232803,
-      "wGOLD Earnings": 6888.885756,
+      "wGOLDLoss": 4653.232803,
+      "wGOLDEarnings": 6888.885756,
       "PnL": 0.4804515588
     },
     {
@@ -1619,8 +1611,8 @@
       "Team": "Corporation",
       "wCOURAGE": 2237041.109,
       "wGOLD": 24623.02955,
-      "wGOLD Loss": 877484.4911,
-      "wGOLD Earnings": 1123010.214,
+      "wGOLDLoss": 877484.4911,
+      "wGOLDEarnings": 1123010.214,
       "PnL": 0.2798063389
     },
     {
@@ -1630,8 +1622,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1233.548905,
       "wGOLD": 9.702208309,
-      "wGOLD Loss": 462.5270033,
-      "wGOLD Earnings": 615.3747208,
+      "wGOLDLoss": 462.5270033,
+      "wGOLDEarnings": 615.3747208,
       "PnL": 0.3304622572
     },
     {
@@ -1641,8 +1633,8 @@
       "Team": "Degen",
       "wCOURAGE": 28531.28014,
       "wGOLD": 964.4341854,
-      "wGOLD Loss": 14772.06487,
-      "wGOLD Earnings": 14973.29274,
+      "wGOLDLoss": 14772.06487,
+      "wGOLDEarnings": 14973.29274,
       "PnL": 0.01362218952
     },
     {
@@ -1652,8 +1644,8 @@
       "Team": "Degen",
       "wCOURAGE": 2090.742252,
       "wGOLD": 66.74689305,
-      "wGOLD Loss": 1060.868493,
-      "wGOLD Earnings": 1093.301339,
+      "wGOLDLoss": 1060.868493,
+      "wGOLDEarnings": 1093.301339,
       "PnL": 0.03057197557
     },
     {
@@ -1663,8 +1655,8 @@
       "Team": "Degen",
       "wCOURAGE": 11186.97755,
       "wGOLD": 378.1499999,
-      "wGOLD Loss": 5792.0555,
-      "wGOLD Earnings": 5870.955978,
+      "wGOLDLoss": 5792.0555,
+      "wGOLDEarnings": 5870.955978,
       "PnL": 0.01362218952
     },
     {
@@ -1674,8 +1666,8 @@
       "Team": "Degen",
       "wCOURAGE": 61554.35713,
       "wGOLD": 1141.582751,
-      "wGOLD Loss": 26699.60954,
-      "wGOLD Earnings": 31364.7721,
+      "wGOLDLoss": 26699.60954,
+      "wGOLDEarnings": 31364.7721,
       "PnL": 0.1747277449
     },
     {
@@ -1685,8 +1677,8 @@
       "Team": "Degen",
       "wCOURAGE": 30824.19151,
       "wGOLD": 498.4636909,
-      "wGOLD Loss": 12967.21071,
-      "wGOLD Earnings": 15633.14172,
+      "wGOLDLoss": 12967.21071,
+      "wGOLDEarnings": 15633.14172,
       "PnL": 0.2055901667
     },
     {
@@ -1696,8 +1688,8 @@
       "Team": "Corporation",
       "wCOURAGE": 437.23142,
       "wGOLD": 0,
-      "wGOLD Loss": 145.0102342,
-      "wGOLD Earnings": 214.6806272,
+      "wGOLDLoss": 145.0102342,
+      "wGOLDEarnings": 214.6806272,
       "PnL": 0.4804515588
     },
     {
@@ -1707,8 +1699,8 @@
       "Team": "Corporation",
       "wCOURAGE": 160631.6884,
       "wGOLD": 200.3716573,
-      "wGOLD Loss": 54377.50122,
-      "wGOLD Earnings": 79070.53068,
+      "wGOLDLoss": 54377.50122,
+      "wGOLDEarnings": 79070.53068,
       "PnL": 0.4541037912
     },
     {
@@ -1718,8 +1710,8 @@
       "Team": "Degen",
       "wCOURAGE": 13017.00678,
       "wGOLD": 440.0099212,
-      "wGOLD Loss": 6739.552784,
-      "wGOLD Earnings": 6831.360249,
+      "wGOLDLoss": 6739.552784,
+      "wGOLDEarnings": 6831.360249,
       "PnL": 0.01362218952
     },
     {
@@ -1729,8 +1721,8 @@
       "Team": "Corporation",
       "wCOURAGE": 49226.87044,
       "wGOLD": 0,
-      "wGOLD Loss": 16326.36559,
-      "wGOLD Earnings": 24170.39339,
+      "wGOLDLoss": 16326.36559,
+      "wGOLDEarnings": 24170.39339,
       "PnL": 0.4804515588
     },
     {
@@ -1740,8 +1732,8 @@
       "Team": "Corporation",
       "wCOURAGE": 660.7445423,
       "wGOLD": 0,
-      "wGOLD Loss": 219.1396053,
-      "wGOLD Earnings": 324.4255703,
+      "wGOLDLoss": 219.1396053,
+      "wGOLDEarnings": 324.4255703,
       "PnL": 0.4804515588
     },
     {
@@ -1751,8 +1743,8 @@
       "Team": "Corporation",
       "wCOURAGE": 56.64692356,
       "wGOLD": 0,
-      "wGOLD Loss": 18.78726751,
-      "wGOLD Earnings": 27.81363947,
+      "wGOLDLoss": 18.78726751,
+      "wGOLDEarnings": 27.81363947,
       "PnL": 0.4804515588
     },
     {
@@ -1762,8 +1754,8 @@
       "Team": "Degen",
       "wCOURAGE": 22991.37827,
       "wGOLD": 777.1705671,
-      "wGOLD Loss": 11903.78173,
-      "wGOLD Earnings": 12065.9373,
+      "wGOLDLoss": 11903.78173,
+      "wGOLDEarnings": 12065.9373,
       "PnL": 0.01362218952
     },
     {
@@ -1773,8 +1765,8 @@
       "Team": "Degen",
       "wCOURAGE": 1924.692856,
       "wGOLD": 65.05980726,
-      "wGOLD Loss": 996.5093603,
-      "wGOLD Earnings": 1010.084,
+      "wGOLDLoss": 996.5093603,
+      "wGOLDEarnings": 1010.084,
       "PnL": 0.01362218952
     },
     {
@@ -1784,8 +1776,8 @@
       "Team": "Degen",
       "wCOURAGE": 1683.170351,
       "wGOLD": 35.29927003,
-      "wGOLD Loss": 752.5661608,
-      "wGOLD Earnings": 861.7359124,
+      "wGOLDLoss": 752.5661608,
+      "wGOLDEarnings": 861.7359124,
       "PnL": 0.1450633277
     },
     {
@@ -1795,8 +1787,8 @@
       "Team": "Degen",
       "wCOURAGE": 241.2027572,
       "wGOLD": 8.153303443,
-      "wGOLD Loss": 124.8826817,
-      "wGOLD Earnings": 126.5838572,
+      "wGOLDLoss": 124.8826817,
+      "wGOLDEarnings": 126.5838572,
       "PnL": 0.01362218952
     },
     {
@@ -1806,8 +1798,8 @@
       "Team": "Corporation",
       "wCOURAGE": 107.3649424,
       "wGOLD": 0,
-      "wGOLD Loss": 35.60818076,
-      "wGOLD Earnings": 52.71618671,
+      "wGOLDLoss": 35.60818076,
+      "wGOLDEarnings": 52.71618671,
       "PnL": 0.4804515588
     },
     {
@@ -1817,8 +1809,8 @@
       "Team": "Degen",
       "wCOURAGE": 84051.07469,
       "wGOLD": 2841.152915,
-      "wGOLD Loss": 43517.42794,
-      "wGOLD Earnings": 44110.23059,
+      "wGOLDLoss": 43517.42794,
+      "wGOLDEarnings": 44110.23059,
       "PnL": 0.01362218952
     },
     {
@@ -1828,8 +1820,8 @@
       "Team": "Degen",
       "wCOURAGE": 38.97773393,
       "wGOLD": 1.317552486,
-      "wGOLD Loss": 20.18071433,
-      "wGOLD Earnings": 20.45561985,
+      "wGOLDLoss": 20.18071433,
+      "wGOLDEarnings": 20.45561985,
       "PnL": 0.01362218952
     },
     {
@@ -1839,8 +1831,8 @@
       "Team": "Corporation",
       "wCOURAGE": 115461.8183,
       "wGOLD": 286.9382501,
-      "wGOLD Loss": 39873.23809,
-      "wGOLD Earnings": 56978.69102,
+      "wGOLDLoss": 39873.23809,
+      "wGOLDEarnings": 56978.69102,
       "PnL": 0.4289958316
     },
     {
@@ -1850,8 +1842,8 @@
       "Team": "Degen",
       "wCOURAGE": 8747.688174,
       "wGOLD": 295.6954429,
-      "wGOLD Loss": 4529.113889,
-      "wGOLD Earnings": 4590.810336,
+      "wGOLDLoss": 4529.113889,
+      "wGOLDEarnings": 4590.810336,
       "PnL": 0.01362218952
     },
     {
@@ -1861,8 +1853,8 @@
       "Team": "Degen",
       "wCOURAGE": 60535.15068,
       "wGOLD": 2046.251288,
-      "wGOLD Loss": 31342.06275,
-      "wGOLD Earnings": 31769.01027,
+      "wGOLDLoss": 31342.06275,
+      "wGOLDEarnings": 31769.01027,
       "PnL": 0.01362218952
     },
     {
@@ -1872,8 +1864,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1347.941883,
       "wGOLD": 0,
-      "wGOLD Loss": 447.0524286,
-      "wGOLD Earnings": 661.8394647,
+      "wGOLDLoss": 447.0524286,
+      "wGOLDEarnings": 661.8394647,
       "PnL": 0.4804515588
     },
     {
@@ -1883,8 +1875,8 @@
       "Team": "Degen",
       "wCOURAGE": 173388.6735,
       "wGOLD": 5861.004598,
-      "wGOLD Loss": 89771.95275,
-      "wGOLD Earnings": 90994.8433,
+      "wGOLDLoss": 89771.95275,
+      "wGOLDEarnings": 90994.8433,
       "PnL": 0.01362218952
     },
     {
@@ -1894,8 +1886,8 @@
       "Team": "Degen",
       "wCOURAGE": 2.339521888,
       "wGOLD": 0.07908214686,
-      "wGOLD Loss": 1.211287013,
-      "wGOLD Earnings": 1.227787394,
+      "wGOLDLoss": 1.211287013,
+      "wGOLDEarnings": 1.227787394,
       "PnL": 0.01362218952
     },
     {
@@ -1905,8 +1897,8 @@
       "Team": "Corporation",
       "wCOURAGE": 741.0997596,
       "wGOLD": 3.82387708,
-      "wGOLD Loss": 266.8414805,
-      "wGOLD Earnings": 367.703859,
+      "wGOLDLoss": 266.8414805,
+      "wGOLDEarnings": 367.703859,
       "PnL": 0.3779861298
     },
     {
@@ -1916,8 +1908,8 @@
       "Team": "Corporation",
       "wCOURAGE": 8262.064496,
       "wGOLD": 66.16461628,
-      "wGOLD Loss": 3104.416254,
-      "wGOLD Earnings": 4122.838284,
+      "wGOLDLoss": 3104.416254,
+      "wGOLDEarnings": 4122.838284,
       "PnL": 0.3280558878
     },
     {
@@ -1927,8 +1919,8 @@
       "Team": "Corporation",
       "wCOURAGE": 127195.4419,
       "wGOLD": 0,
-      "wGOLD Loss": 42185.07631,
-      "wGOLD Earnings": 62452.96198,
+      "wGOLDLoss": 42185.07631,
+      "wGOLDEarnings": 62452.96198,
       "PnL": 0.4804515588
     },
     {
@@ -1938,8 +1930,8 @@
       "Team": "Degen",
       "wCOURAGE": 1832.85299,
       "wGOLD": 61.9553722,
-      "wGOLD Loss": 948.9592871,
-      "wGOLD Earnings": 961.8861904,
+      "wGOLDLoss": 948.9592871,
+      "wGOLDEarnings": 961.8861904,
       "PnL": 0.01362218952
     },
     {
@@ -1949,8 +1941,8 @@
       "Team": "Degen",
       "wCOURAGE": 936.4539853,
       "wGOLD": 31.65466926,
-      "wGOLD Loss": 484.8488728,
-      "wGOLD Earnings": 491.4535761,
+      "wGOLDLoss": 484.8488728,
+      "wGOLDEarnings": 491.4535761,
       "PnL": 0.01362218952
     },
     {
@@ -1960,8 +1952,8 @@
       "Team": "Degen",
       "wCOURAGE": 22357.86467,
       "wGOLD": 755.7560997,
-      "wGOLD Loss": 11575.78018,
-      "wGOLD Earnings": 11733.46765,
+      "wGOLDLoss": 11575.78018,
+      "wGOLDEarnings": 11733.46765,
       "PnL": 0.01362218952
     },
     {
@@ -1971,8 +1963,8 @@
       "Team": "Corporation",
       "wCOURAGE": 2946.58306,
       "wGOLD": 0,
-      "wGOLD Loss": 977.2506731,
-      "wGOLD Earnings": 1446.772282,
+      "wGOLDLoss": 977.2506731,
+      "wGOLDEarnings": 1446.772282,
       "PnL": 0.4804515588
     },
     {
@@ -1982,8 +1974,8 @@
       "Team": "Degen",
       "wCOURAGE": 69081.60633,
       "wGOLD": 1070.791954,
-      "wGOLD Loss": 28806.33851,
-      "wGOLD Earnings": 34989.86066,
+      "wGOLDLoss": 28806.33851,
+      "wGOLDEarnings": 34989.86066,
       "PnL": 0.2146583868
     },
     {
@@ -1993,8 +1985,8 @@
       "Team": "Corporation",
       "wCOURAGE": 4590.358305,
       "wGOLD": 0,
-      "wGOLD Loss": 1522.417883,
-      "wGOLD Earnings": 2253.865928,
+      "wGOLDLoss": 1522.417883,
+      "wGOLDEarnings": 2253.865928,
       "PnL": 0.4804515588
     },
     {
@@ -2004,8 +1996,8 @@
       "Team": "Corporation",
       "wCOURAGE": 2066401.873,
       "wGOLD": 25540.99701,
-      "wGOLD Loss": 825944.732,
-      "wGOLD Earnings": 1040144.317,
+      "wGOLDLoss": 825944.732,
+      "wGOLDEarnings": 1040144.317,
       "PnL": 0.2593388834
     },
     {
@@ -2015,8 +2007,8 @@
       "Team": "Corporation",
       "wCOURAGE": 4093.111052,
       "wGOLD": 42.10226647,
-      "wGOLD Loss": 1589.288997,
-      "wGOLD Earnings": 2051.819793,
+      "wGOLDLoss": 1589.288997,
+      "wGOLDEarnings": 2051.819793,
       "PnL": 0.2910300116
     },
     {
@@ -2026,8 +2018,8 @@
       "Team": "Degen",
       "wCOURAGE": 61996.77739,
       "wGOLD": 2095.658211,
-      "wGOLD Loss": 32098.8197,
-      "wGOLD Earnings": 32536.07591,
+      "wGOLDLoss": 32098.8197,
+      "wGOLDEarnings": 32536.07591,
       "PnL": 0.01362218952
     },
     {
@@ -2037,8 +2029,8 @@
       "Team": "Corporation",
       "wCOURAGE": 2647.101702,
       "wGOLD": 33.38276764,
-      "wGOLD Loss": 1061.708423,
-      "wGOLD Earnings": 1333.109703,
+      "wGOLDLoss": 1061.708423,
+      "wGOLDEarnings": 1333.109703,
       "PnL": 0.2556269443
     },
     {
@@ -2048,8 +2040,8 @@
       "Team": "Corporation",
       "wCOURAGE": 5101.926732,
       "wGOLD": 0,
-      "wGOLD Loss": 1692.082399,
-      "wGOLD Earnings": 2505.046025,
+      "wGOLDLoss": 1692.082399,
+      "wGOLDEarnings": 2505.046025,
       "PnL": 0.4804515588
     },
     {
@@ -2059,8 +2051,8 @@
       "Team": "Degen",
       "wCOURAGE": 651.2613507,
       "wGOLD": 22.01438937,
-      "wGOLD Loss": 337.1904405,
-      "wGOLD Earnings": 341.7837126,
+      "wGOLDLoss": 337.1904405,
+      "wGOLDEarnings": 341.7837126,
       "PnL": 0.01362218952
     },
     {
@@ -2070,8 +2062,8 @@
       "Team": "Degen",
       "wCOURAGE": 1737.300921,
       "wGOLD": 58.72545468,
-      "wGOLD Loss": 899.4872217,
-      "wGOLD Earnings": 911.7402071,
+      "wGOLDLoss": 899.4872217,
+      "wGOLDEarnings": 911.7402071,
       "PnL": 0.01362218952
     },
     {
@@ -2081,8 +2073,8 @@
       "Team": "Corporation",
       "wCOURAGE": 22754.26769,
       "wGOLD": 302.6490456,
-      "wGOLD Loss": 9212.75567,
-      "wGOLD Earnings": 11474.99448,
+      "wGOLDLoss": 9212.75567,
+      "wGOLDEarnings": 11474.99448,
       "PnL": 0.2455550641
     },
     {
@@ -2092,8 +2084,8 @@
       "Team": "Corporation",
       "wCOURAGE": 2239.346545,
       "wGOLD": 0,
-      "wGOLD Loss": 742.6917464,
-      "wGOLD Earnings": 1099.519154,
+      "wGOLDLoss": 742.6917464,
+      "wGOLDEarnings": 1099.519154,
       "PnL": 0.4804515588
     },
     {
@@ -2103,8 +2095,8 @@
       "Team": "Degen",
       "wCOURAGE": 26555.09765,
       "wGOLD": 897.6338897,
-      "wGOLD Loss": 13748.89676,
-      "wGOLD Earnings": 13936.18684,
+      "wGOLDLoss": 13748.89676,
+      "wGOLDEarnings": 13936.18684,
       "PnL": 0.01362218952
     },
     {
@@ -2114,8 +2106,8 @@
       "Team": "Corporation",
       "wCOURAGE": 16373.31667,
       "wGOLD": 0,
-      "wGOLD Loss": 5430.301611,
-      "wGOLD Earnings": 8039.298484,
+      "wGOLDLoss": 5430.301611,
+      "wGOLDEarnings": 8039.298484,
       "PnL": 0.4804515588
     },
     {
@@ -2125,8 +2117,8 @@
       "Team": "Degen",
       "wCOURAGE": 74839.7915,
       "wGOLD": 2529.786711,
-      "wGOLD Loss": 38748.28782,
-      "wGOLD Earnings": 39276.12434,
+      "wGOLDLoss": 38748.28782,
+      "wGOLDEarnings": 39276.12434,
       "PnL": 0.01362218952
     },
     {
@@ -2136,8 +2128,8 @@
       "Team": "Corporation",
       "wCOURAGE": 13663.48187,
       "wGOLD": 0,
-      "wGOLD Loss": 4531.569818,
-      "wGOLD Earnings": 6708.769601,
+      "wGOLDLoss": 4531.569818,
+      "wGOLDEarnings": 6708.769601,
       "PnL": 0.4804515588
     },
     {
@@ -2147,8 +2139,8 @@
       "Team": "Degen",
       "wCOURAGE": 1539.547438,
       "wGOLD": 52.04085381,
-      "wGOLD Loss": 797.1003931,
-      "wGOLD Earnings": 807.9586457,
+      "wGOLDLoss": 797.1003931,
+      "wGOLDEarnings": 807.9586457,
       "PnL": 0.01362218952
     },
     {
@@ -2158,8 +2150,8 @@
       "Team": "Degen",
       "wCOURAGE": 3218.435379,
       "wGOLD": 108.7917923,
-      "wGOLD Loss": 1666.344305,
-      "wGOLD Earnings": 1689.043563,
+      "wGOLDLoss": 1666.344305,
+      "wGOLDEarnings": 1689.043563,
       "PnL": 0.01362218952
     },
     {
@@ -2169,8 +2161,8 @@
       "Team": "Corporation",
       "wCOURAGE": 7558.105243,
       "wGOLD": 7.488952954,
-      "wGOLD Loss": 2547.916665,
-      "wGOLD Earnings": 3718.518627,
+      "wGOLDLoss": 2547.916665,
+      "wGOLDEarnings": 3718.518627,
       "PnL": 0.4594349488
     },
     {
@@ -2180,8 +2172,8 @@
       "Team": "Degen",
       "wCOURAGE": 1725.187016,
       "wGOLD": 58.31597201,
-      "wGOLD Loss": 893.2152494,
-      "wGOLD Earnings": 905.3827968,
+      "wGOLDLoss": 893.2152494,
+      "wGOLDEarnings": 905.3827968,
       "PnL": 0.01362218952
     },
     {
@@ -2191,8 +2183,8 @@
       "Team": "Corporation",
       "wCOURAGE": 8800.648676,
       "wGOLD": 0,
-      "wGOLD Loss": 2918.78412,
-      "wGOLD Earnings": 4321.1185,
+      "wGOLDLoss": 2918.78412,
+      "wGOLDEarnings": 4321.1185,
       "PnL": 0.4804515588
     },
     {
@@ -2202,8 +2194,8 @@
       "Team": "Degen",
       "wCOURAGE": 2687.958113,
       "wGOLD": 90.86023059,
-      "wGOLD Loss": 1391.689802,
-      "wGOLD Earnings": 1410.647664,
+      "wGOLDLoss": 1391.689802,
+      "wGOLDEarnings": 1410.647664,
       "PnL": 0.01362218952
     },
     {
@@ -2213,8 +2205,8 @@
       "Team": "Degen",
       "wCOURAGE": 2330.589102,
       "wGOLD": 78.78019461,
-      "wGOLD Loss": 1206.662064,
-      "wGOLD Earnings": 1223.099444,
+      "wGOLDLoss": 1206.662064,
+      "wGOLDEarnings": 1223.099444,
       "PnL": 0.01362218952
     },
     {
@@ -2224,8 +2216,8 @@
       "Team": "Degen",
       "wCOURAGE": 15247.88941,
       "wGOLD": 515.4197684,
-      "wGOLD Loss": 7894.591843,
-      "wGOLD Earnings": 8002.133469,
+      "wGOLDLoss": 7894.591843,
+      "wGOLDEarnings": 8002.133469,
       "PnL": 0.01362218952
     },
     {
@@ -2235,8 +2227,8 @@
       "Team": "Corporation",
       "wCOURAGE": 4973.901248,
       "wGOLD": 0,
-      "wGOLD Loss": 1649.622035,
-      "wGOLD Earnings": 2442.185513,
+      "wGOLDLoss": 1649.622035,
+      "wGOLDEarnings": 2442.185513,
       "PnL": 0.4804515588
     },
     {
@@ -2246,8 +2238,8 @@
       "Team": "Degen",
       "wCOURAGE": 1294.685677,
       "wGOLD": 43.76386618,
-      "wGOLD Loss": 670.323263,
-      "wGOLD Earnings": 679.4545335,
+      "wGOLDLoss": 670.323263,
+      "wGOLDEarnings": 679.4545335,
       "PnL": 0.01362218952
     },
     {
@@ -2257,8 +2249,8 @@
       "Team": "Degen",
       "wCOURAGE": 9326.166992,
       "wGOLD": 315.2495864,
-      "wGOLD Loss": 4828.621186,
-      "wGOLD Earnings": 4894.397579,
+      "wGOLDLoss": 4828.621186,
+      "wGOLDEarnings": 4894.397579,
       "PnL": 0.01362218952
     },
     {
@@ -2268,8 +2260,8 @@
       "Team": "Degen",
       "wCOURAGE": 11735.25084,
       "wGOLD": 396.6831152,
-      "wGOLD Loss": 6075.923893,
-      "wGOLD Earnings": 6158.691279,
+      "wGOLDLoss": 6075.923893,
+      "wGOLDEarnings": 6158.691279,
       "PnL": 0.01362218952
     },
     {
@@ -2279,8 +2271,8 @@
       "Team": "Corporation",
       "wCOURAGE": 21594.42202,
       "wGOLD": 156.8024777,
-      "wGOLD Loss": 8025.15616,
-      "wGOLD Earnings": 10759.66369,
+      "wGOLDLoss": 8025.15616,
+      "wGOLDEarnings": 10759.66369,
       "PnL": 0.3407419715
     },
     {
@@ -2290,8 +2282,8 @@
       "Team": "Degen",
       "wCOURAGE": 1.688341259,
       "wGOLD": 0.05707048609,
-      "wGOLD Loss": 0.8741383657,
-      "wGOLD Earnings": 0.8860460442,
+      "wGOLDLoss": 0.8741383657,
+      "wGOLDEarnings": 0.8860460442,
       "PnL": 0.01362218952
     },
     {
@@ -2301,8 +2293,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1421197.192,
       "wGOLD": 8374.779131,
-      "wGOLD Loss": 517453.6959,
-      "wGOLD Earnings": 706182.6004,
+      "wGOLDLoss": 517453.6959,
+      "wGOLDEarnings": 706182.6004,
       "PnL": 0.3647261697
     },
     {
@@ -2312,8 +2304,8 @@
       "Team": "Corporation",
       "wCOURAGE": 69416.8758,
       "wGOLD": 0,
-      "wGOLD Loss": 23022.49325,
-      "wGOLD Earnings": 34083.68602,
+      "wGOLDLoss": 23022.49325,
+      "wGOLDEarnings": 34083.68602,
       "PnL": 0.4804515588
     },
     {
@@ -2323,8 +2315,8 @@
       "Team": "Corporation",
       "wCOURAGE": 68.31740937,
       "wGOLD": 0,
-      "wGOLD Loss": 22.65784909,
-      "wGOLD Earnings": 33.543848,
+      "wGOLDLoss": 22.65784909,
+      "wGOLDEarnings": 33.543848,
       "PnL": 0.4804515588
     },
     {
@@ -2334,8 +2326,8 @@
       "Team": "Corporation",
       "wCOURAGE": 68.31740937,
       "wGOLD": 0,
-      "wGOLD Loss": 22.65784909,
-      "wGOLD Earnings": 33.543848,
+      "wGOLDLoss": 22.65784909,
+      "wGOLDEarnings": 33.543848,
       "PnL": 0.4804515588
     },
     {
@@ -2345,8 +2337,8 @@
       "Team": "Corporation",
       "wCOURAGE": 68.31740937,
       "wGOLD": 0,
-      "wGOLD Loss": 22.65784909,
-      "wGOLD Earnings": 33.543848,
+      "wGOLDLoss": 22.65784909,
+      "wGOLDEarnings": 33.543848,
       "PnL": 0.4804515588
     },
     {
@@ -2356,8 +2348,8 @@
       "Team": "Corporation",
       "wCOURAGE": 68.31740937,
       "wGOLD": 0,
-      "wGOLD Loss": 22.65784909,
-      "wGOLD Earnings": 33.543848,
+      "wGOLDLoss": 22.65784909,
+      "wGOLDEarnings": 33.543848,
       "PnL": 0.4804515588
     },
     {
@@ -2367,8 +2359,8 @@
       "Team": "Corporation",
       "wCOURAGE": 68.31740937,
       "wGOLD": 0,
-      "wGOLD Loss": 22.65784909,
-      "wGOLD Earnings": 33.543848,
+      "wGOLDLoss": 22.65784909,
+      "wGOLDEarnings": 33.543848,
       "PnL": 0.4804515588
     },
     {
@@ -2378,8 +2370,8 @@
       "Team": "Degen",
       "wCOURAGE": 19.24692856,
       "wGOLD": 0.6505980726,
-      "wGOLD Loss": 9.965093603,
-      "wGOLD Earnings": 10.10084,
+      "wGOLDLoss": 9.965093603,
+      "wGOLDEarnings": 10.10084,
       "PnL": 0.01362218952
     },
     {
@@ -2389,8 +2381,8 @@
       "Team": "Degen",
       "wCOURAGE": 19.24692856,
       "wGOLD": 0.6505980726,
-      "wGOLD Loss": 9.965093603,
-      "wGOLD Earnings": 10.10084,
+      "wGOLDLoss": 9.965093603,
+      "wGOLDEarnings": 10.10084,
       "PnL": 0.01362218952
     },
     {
@@ -2400,8 +2392,8 @@
       "Team": "Corporation",
       "wCOURAGE": 119.8288543,
       "wGOLD": 0.7123108141,
-      "wGOLD Loss": 43.66339677,
-      "wGOLD Earnings": 59.54827827,
+      "wGOLDLoss": 43.66339677,
+      "wGOLDEarnings": 59.54827827,
       "PnL": 0.363803155
     },
     {
@@ -2411,8 +2403,8 @@
       "Team": "Degen",
       "wCOURAGE": 25.24801534,
       "wGOLD": 0.6505980726,
-      "wGOLD Loss": 11.95538744,
-      "wGOLD Earnings": 13.04737361,
+      "wGOLDLoss": 11.95538744,
+      "wGOLDEarnings": 13.04737361,
       "PnL": 0.09133841746
     },
     {
@@ -2422,8 +2414,8 @@
       "Team": "Degen",
       "wCOURAGE": 65.14201548,
       "wGOLD": 2.201975738,
-      "wGOLD Loss": 33.72726613,
-      "wGOLD Earnings": 34.18670534,
+      "wGOLDLoss": 33.72726613,
+      "wGOLDEarnings": 34.18670534,
       "PnL": 0.01362218952
     },
     {
@@ -2433,8 +2425,8 @@
       "Team": "Degen",
       "wCOURAGE": 70.80981436,
       "wGOLD": 2.393562619,
-      "wGOLD Loss": 36.66176792,
-      "wGOLD Earnings": 37.16118147,
+      "wGOLDLoss": 36.66176792,
+      "wGOLDEarnings": 37.16118147,
       "PnL": 0.01362218952
     },
     {
@@ -2444,8 +2436,8 @@
       "Team": "Degen",
       "wCOURAGE": 2431.163115,
       "wGOLD": 82.17986738,
-      "wGOLD Loss": 1258.73424,
-      "wGOLD Earnings": 1275.880957,
+      "wGOLDLoss": 1258.73424,
+      "wGOLDEarnings": 1275.880957,
       "PnL": 0.01362218952
     },
     {
@@ -2455,8 +2447,8 @@
       "Team": "Corporation",
       "wCOURAGE": 27.32696375,
       "wGOLD": 0,
-      "wGOLD Loss": 9.063139636,
-      "wGOLD Earnings": 13.4175392,
+      "wGOLDLoss": 9.063139636,
+      "wGOLDEarnings": 13.4175392,
       "PnL": 0.4804515588
     },
     {
@@ -2466,8 +2458,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1304982.692,
       "wGOLD": 7706.491093,
-      "wGOLD Loss": 475231.3789,
-      "wGOLD Earnings": 648452.9931,
+      "wGOLDLoss": 475231.3789,
+      "wGOLDEarnings": 648452.9931,
       "PnL": 0.3644995297
     },
     {
@@ -2477,8 +2469,8 @@
       "Team": "Degen",
       "wCOURAGE": 451.2323339,
       "wGOLD": 15.25286935,
-      "wGOLD Loss": 233.6254551,
-      "wGOLD Earnings": 236.8079453,
+      "wGOLDLoss": 233.6254551,
+      "wGOLDEarnings": 236.8079453,
       "PnL": 0.01362218952
     },
     {
@@ -2488,8 +2480,8 @@
       "Team": "Corporation",
       "wCOURAGE": 0.7093726034,
       "wGOLD": 0,
-      "wGOLD Loss": 0.2352673724,
-      "wGOLD Earnings": 0.3483019483,
+      "wGOLDLoss": 0.2352673724,
+      "wGOLDEarnings": 0.3483019483,
       "PnL": 0.4804515588
     },
     {
@@ -2499,8 +2491,8 @@
       "Team": "Degen",
       "wCOURAGE": 53648.91734,
       "wGOLD": 1813.478037,
-      "wGOLD Loss": 27776.71675,
-      "wGOLD Earnings": 28155.09645,
+      "wGOLDLoss": 27776.71675,
+      "wGOLDEarnings": 28155.09645,
       "PnL": 0.01362218952
     },
     {
@@ -2510,8 +2502,8 @@
       "Team": "Degen",
       "wCOURAGE": 35398.56387,
       "wGOLD": 1196.566889,
-      "wGOLD Loss": 18327.59971,
-      "wGOLD Earnings": 18577.26175,
+      "wGOLDLoss": 18327.59971,
+      "wGOLDEarnings": 18577.26175,
       "PnL": 0.01362218952
     },
     {
@@ -2521,8 +2513,8 @@
       "Team": "Degen",
       "wCOURAGE": 0.9930172669,
       "wGOLD": 0.03356666066,
-      "wGOLD Loss": 0.5141345011,
-      "wGOLD Earnings": 0.5211381387,
+      "wGOLDLoss": 0.5141345011,
+      "wGOLDEarnings": 0.5211381387,
       "PnL": 0.01362218952
     },
     {
@@ -2532,8 +2524,8 @@
       "Team": "Degen",
       "wCOURAGE": 4243.163074,
       "wGOLD": 66.45326386,
-      "wGOLD Loss": 1773.114321,
-      "wGOLD Earnings": 2149.846333,
+      "wGOLDLoss": 1773.114321,
+      "wGOLDEarnings": 2149.846333,
       "PnL": 0.2124691049
     },
     {
@@ -2543,8 +2535,8 @@
       "Team": "Corporation",
       "wCOURAGE": 540850.8703,
       "wGOLD": 7105.582631,
-      "wGOLD Loss": 218494.6208,
-      "wGOLD Earnings": 272663.3599,
+      "wGOLDLoss": 218494.6208,
+      "wGOLDEarnings": 272663.3599,
       "PnL": 0.2479179532
     },
     {
@@ -2554,8 +2546,8 @@
       "Team": "Corporation",
       "wCOURAGE": 3729074.402,
       "wGOLD": 27485.27695,
-      "wGOLD Loss": 1388083.191,
-      "wGOLD Earnings": 1858460.808,
+      "wGOLDLoss": 1388083.191,
+      "wGOLDEarnings": 1858460.808,
       "PnL": 0.3388684633
     },
     {
@@ -2565,8 +2557,8 @@
       "Team": "Corporation",
       "wCOURAGE": 76250.85043,
       "wGOLD": 0,
-      "wGOLD Loss": 25289.01897,
-      "wGOLD Earnings": 37439.16756,
+      "wGOLDLoss": 25289.01897,
+      "wGOLDEarnings": 37439.16756,
       "PnL": 0.4804515588
     },
     {
@@ -2576,8 +2568,8 @@
       "Team": "Degen",
       "wCOURAGE": 2953.507124,
       "wGOLD": 99.83650305,
-      "wGOLD Loss": 1529.177752,
-      "wGOLD Earnings": 1550.008501,
+      "wGOLDLoss": 1529.177752,
+      "wGOLDEarnings": 1550.008501,
       "PnL": 0.01362218952
     },
     {
@@ -2587,8 +2579,8 @@
       "Team": "Corporation",
       "wCOURAGE": 1946.276867,
       "wGOLD": 0,
-      "wGOLD Loss": 645.4935563,
-      "wGOLD Earnings": 955.6219417,
+      "wGOLDLoss": 645.4935563,
+      "wGOLDEarnings": 955.6219417,
       "PnL": 0.4804515588
     },
     {
@@ -2598,8 +2590,8 @@
       "Team": "Corporation",
       "wCOURAGE": 3226.273712,
       "wGOLD": 9.073548016,
-      "wGOLD Loss": 1119.964309,
-      "wGOLD Earnings": 1593.173941,
+      "wGOLDLoss": 1119.964309,
+      "wGOLDEarnings": 1593.173941,
       "PnL": 0.4225220641
     },
     {
@@ -2609,8 +2601,8 @@
       "Team": "Corporation",
       "wCOURAGE": 9333.977232,
       "wGOLD": 59.71417716,
-      "wGOLD Loss": 3424.410427,
-      "wGOLD Earnings": 4642.696998,
+      "wGOLDLoss": 3424.410427,
+      "wGOLDEarnings": 4642.696998,
       "PnL": 0.3557653493
     },
     {
@@ -2620,8 +2612,8 @@
       "Team": "Degen",
       "wCOURAGE": 1159.398611,
       "wGOLD": 31.66243953,
-      "wGOLD Loss": 558.8324767,
-      "wGOLD Earnings": 600.9271577,
+      "wGOLDLoss": 558.8324767,
+      "wGOLDEarnings": 600.9271577,
       "PnL": 0.07532611776
     },
     {
@@ -2631,8 +2623,8 @@
       "Team": "Corporation",
       "wCOURAGE": 39066.58843,
       "wGOLD": 0,
-      "wGOLD Loss": 12956.65151,
-      "wGOLD Earnings": 19181.69492,
+      "wGOLDLoss": 12956.65151,
+      "wGOLDEarnings": 19181.69492,
       "PnL": 0.4804515588
     },
     {
@@ -2642,8 +2634,8 @@
       "Team": "Corporation",
       "wCOURAGE": 465.962433,
       "wGOLD": 0.2267789702,
-      "wGOLD Loss": 155.7875226,
-      "wGOLD Earnings": 229.0143336,
+      "wGOLDLoss": 155.7875226,
+      "wGOLDEarnings": 229.0143336,
       "PnL": 0.4700428492
     },
     {
@@ -2653,8 +2645,8 @@
       "Team": "Corporation",
       "wCOURAGE": 38906.64928,
       "wGOLD": 0,
-      "wGOLD Loss": 12903.6068,
-      "wGOLD Earnings": 19103.1648,
+      "wGOLDLoss": 12903.6068,
+      "wGOLDEarnings": 19103.1648,
       "PnL": 0.4804515588
     },
     {
@@ -2664,8 +2656,8 @@
       "Team": "Degen",
       "wCOURAGE": 23998.20149,
       "wGOLD": 811.2039065,
-      "wGOLD Loss": 12425.06426,
-      "wGOLD Earnings": 12594.32084,
+      "wGOLDLoss": 12425.06426,
+      "wGOLDEarnings": 12594.32084,
       "PnL": 0.01362218952
     },
     {
@@ -2675,8 +2667,8 @@
       "Team": "Corporation",
       "wCOURAGE": 9289.771342,
       "wGOLD": 0,
-      "wGOLD Loss": 3081.004375,
-      "wGOLD Earnings": 4561.277729,
+      "wGOLDLoss": 3081.004375,
+      "wGOLDEarnings": 4561.277729,
       "PnL": 0.4804515588
     },
     {
@@ -2686,8 +2678,8 @@
       "Team": "Degen",
       "wCOURAGE": 23997.07053,
       "wGOLD": 811.1656769,
-      "wGOLD Loss": 12424.4787,
-      "wGOLD Earnings": 12593.72731,
+      "wGOLDLoss": 12424.4787,
+      "wGOLDEarnings": 12593.72731,
       "PnL": 0.01362218952
     },
     {
@@ -2697,8 +2689,8 @@
       "Team": "Corporation",
       "wCOURAGE": 64797.5075,
       "wGOLD": 0,
-      "wGOLD Loss": 21490.45404,
-      "wGOLD Earnings": 31815.57618,
+      "wGOLDLoss": 21490.45404,
+      "wGOLDEarnings": 31815.57618,
       "PnL": 0.4804515588
     },
     {
@@ -2708,8 +2700,8 @@
       "Team": "Corporation",
       "wCOURAGE": 683.1740937,
       "wGOLD": 0,
-      "wGOLD Loss": 226.5784909,
-      "wGOLD Earnings": 335.43848,
+      "wGOLDLoss": 226.5784909,
+      "wGOLDEarnings": 335.43848,
       "PnL": 0.4804515588
     },
     {
@@ -2719,8 +2711,8 @@
       "Team": "Corporation",
       "wCOURAGE": 683.1740937,
       "wGOLD": 0,
-      "wGOLD Loss": 226.5784909,
-      "wGOLD Earnings": 335.43848,
+      "wGOLDLoss": 226.5784909,
+      "wGOLDEarnings": 335.43848,
       "PnL": 0.4804515588
     },
     {
@@ -2730,8 +2722,8 @@
       "Team": "Corporation",
       "wCOURAGE": 683.1740937,
       "wGOLD": 0,
-      "wGOLD Loss": 226.5784909,
-      "wGOLD Earnings": 335.43848,
+      "wGOLDLoss": 226.5784909,
+      "wGOLDEarnings": 335.43848,
       "PnL": 0.4804515588
     },
     {
@@ -2741,8 +2733,8 @@
       "Team": "Degen",
       "wCOURAGE": 1335.908325,
       "wGOLD": 45.15730281,
-      "wGOLD Loss": 691.6662811,
-      "wGOLD Earnings": 701.0882903,
+      "wGOLDLoss": 691.6662811,
+      "wGOLDEarnings": 701.0882903,
       "PnL": 0.01362218952
     },
     {
@@ -2752,8 +2744,8 @@
       "Team": "Corporation",
       "wCOURAGE": 2146.168858,
       "wGOLD": 0,
-      "wGOLD Loss": 711.7888478,
-      "wGOLD Earnings": 1053.768909,
+      "wGOLDLoss": 711.7888478,
+      "wGOLDEarnings": 1053.768909,
       "PnL": 0.4804515588
     },
     {
@@ -2763,8 +2755,8 @@
       "Team": "Corporation",
       "wCOURAGE": 683.1740937,
       "wGOLD": 0,
-      "wGOLD Loss": 226.5784909,
-      "wGOLD Earnings": 335.43848,
+      "wGOLDLoss": 226.5784909,
+      "wGOLDEarnings": 335.43848,
       "PnL": 0.4804515588
     },
     {
@@ -2774,8 +2766,8 @@
       "Team": "Degen",
       "wCOURAGE": 192.4692856,
       "wGOLD": 6.505980726,
-      "wGOLD Loss": 99.65093603,
-      "wGOLD Earnings": 101.0084,
+      "wGOLDLoss": 99.65093603,
+      "wGOLDEarnings": 101.0084,
       "PnL": 0.01362218952
     },
     {
@@ -2785,8 +2777,8 @@
       "Team": "Degen",
       "wCOURAGE": 192.4692856,
       "wGOLD": 6.505980726,
-      "wGOLD Loss": 99.65093603,
-      "wGOLD Earnings": 101.0084,
+      "wGOLDLoss": 99.65093603,
+      "wGOLDEarnings": 101.0084,
       "PnL": 0.01362218952
     },
     {
@@ -2796,8 +2788,8 @@
       "Team": "Degen",
       "wCOURAGE": 96.23464281,
       "wGOLD": 3.252990363,
-      "wGOLD Loss": 49.82546802,
-      "wGOLD Earnings": 50.50419998,
+      "wGOLDLoss": 49.82546802,
+      "wGOLDEarnings": 50.50419998,
       "PnL": 0.01362218952
     },
     {
@@ -2807,8 +2799,8 @@
       "Team": "Degen",
       "wCOURAGE": 192.4692856,
       "wGOLD": 6.505980726,
-      "wGOLD Loss": 99.65093603,
-      "wGOLD Earnings": 101.0084,
+      "wGOLDLoss": 99.65093603,
+      "wGOLDEarnings": 101.0084,
       "PnL": 0.01362218952
     },
     {
@@ -2818,8 +2810,8 @@
       "Team": "Degen",
       "wCOURAGE": 192.4692856,
       "wGOLD": 6.505980726,
-      "wGOLD Loss": 99.65093603,
-      "wGOLD Earnings": 101.0084,
+      "wGOLDLoss": 99.65093603,
+      "wGOLDEarnings": 101.0084,
       "PnL": 0.01362218952
     },
     {
@@ -2829,8 +2821,8 @@
       "Team": "Degen",
       "wCOURAGE": 192.4692856,
       "wGOLD": 6.505980726,
-      "wGOLD Loss": 99.65093603,
-      "wGOLD Earnings": 101.0084,
+      "wGOLDLoss": 99.65093603,
+      "wGOLDEarnings": 101.0084,
       "PnL": 0.01362218952
     },
     {
@@ -2840,8 +2832,8 @@
       "Team": "Degen",
       "wCOURAGE": 673.6424997,
       "wGOLD": 22.77093254,
-      "wGOLD Loss": 348.7782761,
-      "wGOLD Earnings": 353.5293999,
+      "wGOLDLoss": 348.7782761,
+      "wGOLDEarnings": 353.5293999,
       "PnL": 0.01362218952
     },
     {
@@ -2851,8 +2843,8 @@
       "Team": "Corporation",
       "wCOURAGE": 580407.2397,
       "wGOLD": 1490.093765,
-      "wGOLD Loss": 200698.7165,
-      "wGOLD Earnings": 286470.0485,
+      "wGOLDLoss": 200698.7165,
+      "wGOLDEarnings": 286470.0485,
       "PnL": 0.4273636298
     },
     {
@@ -2862,8 +2854,8 @@
       "Team": "Corporation",
       "wCOURAGE": 88477.20251,
       "wGOLD": 0,
-      "wGOLD Loss": 29343.9567,
-      "wGOLD Earnings": 43442.30643,
+      "wGOLDLoss": 29343.9567,
+      "wGOLDEarnings": 43442.30643,
       "PnL": 0.4804515588
     },
     {
@@ -2873,8 +2865,8 @@
       "Team": "Corporation",
       "wCOURAGE": 48303.92706,
       "wGOLD": 663.5604655,
-      "wGOLD Loss": 19673.37086,
-      "wGOLD Earnings": 24380.78865,
+      "wGOLDLoss": 19673.37086,
+      "wGOLDEarnings": 24380.78865,
       "PnL": 0.2392786591
     },
     {
@@ -2884,8 +2876,8 @@
       "Team": "Corporation",
       "wCOURAGE": 36207.29943,
       "wGOLD": 50.55317692,
-      "wGOLD Loss": 12286.66319,
-      "wGOLD Earnings": 17828.3372,
+      "wGOLDLoss": 12286.66319,
+      "wGOLDEarnings": 17828.3372,
       "PnL": 0.4510316528
     }
   ]

@@ -14,68 +14,66 @@
     <v-data-table
       class="table-war-report"
       :headers="headers"
-      :items="war.players"
+      :items="players"
       :search="search"
     >
-      <template v-slot:[`item.address`]="{ item }">
-        <v-address :address="item.address" link tooltip></v-address>
+      <template v-slot:[`item.PlayerAddress`]="{ item }">
+        <v-address :address="item.PlayerAddress" link tooltip></v-address>
       </template>
-      <template v-slot:[`item.powerTeamA`]="{ item }">
+      <template v-slot:[`item.corporationPower`]="{ item }">
         <amount
-          :amount="item.teamAShareLabel"
+          :amount="100 * item.corporationPower"
           formatted
-          decimals="5"
-          compact
+          decimals="4"
           approximate
-        />
+        />%
       </template>
-      <template v-slot:[`item.powerTeamB`]="{ item }">
+      <template v-slot:[`item.degenPower`]="{ item }">
         <amount
-          :amount="item.powerTeamB"
+          :amount="100 * item.degenPower"
           formatted
-          decimals="5"
-          compact
+          decimals="4"
           approximate
-        />
-        (<amount
-          :amount="item.teamBShareLabel"
-          formatted
-          decimals="5"
-          compact
-          approximate
-        />%)
+        />%
       </template>
       <template v-slot:[`item.wCOURAGE`]="{ item }">
         <amount
           :amount="item.wCOURAGE"
           formatted
-          decimals="5"
+          decimals="4"
           compact
           approximate
         />
-        (<amount
-          :amount="item.wCOURAGEShare"
-          formatted
-          decimals="5"
-          compact
-          approximate
-        />%)
       </template>
       <template v-slot:[`item.wGOLD`]="{ item }">
         <amount
           :amount="item.wGOLD"
           formatted
-          decimals="5"
+          decimals="4"
           compact
           approximate
         />
-        (<amount
-          :amount="item.wGOLDShare"
+      </template>
+      <template v-slot:[`item.wGOLDLoss`]="{ item }">
+        <amount
+          :amount="item.wGOLDLoss"
           formatted
-          decimals="5"
+          decimals="4"
           compact
           approximate
-        />%)
+        />
+      </template>
+      <template v-slot:[`item.wGOLDEarnings`]="{ item }">
+        <amount
+          :amount="item.wGOLDEarnings"
+          formatted
+          decimals="4"
+          compact
+          approximate
+        />
+      </template>
+      <template v-slot:[`item.PnL`]="{ item }">
+        <amount :amount="100 * item.PnL" formatted decimals="2" approximate />%
       </template>
     </v-data-table>
   </v-card>
@@ -84,8 +82,6 @@
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
-
-import WarMachine from "@/lib/eth/WarMachine";
 
 export default {
   props: ["war"],
@@ -104,66 +100,53 @@ export default {
           text: "Player",
           value: "PlayerAddress",
         },
-        { text: "Corporation Power", value: "Corporation Power" },
-        { text: "Degenerate Power", value: "Degen Power" },
+        { text: "Corporation Power", value: "corporationPower" },
+        { text: "Degenerate Power", value: "degenPower" },
         { text: "Team", value: "Team" },
         { text: "wCOURAGE", value: "wCOURAGE" },
         { text: "wGOLD", value: "wGOLD" },
-        { text: "wGOLD Loss", value: "wGOLD Loss" },
-        { text: "wGOLD Earnings", value: "wGOLD Earnings" },
-        { text: "PnL", value: "wGOLD Earnings" },
+        { text: "wGOLD Loss", value: "wGOLDLoss" },
+        { text: "wGOLD Earnings", value: "wGOLDEarnings" },
+        { text: "PnL", value: "PnL" },
       ],
     };
   },
 
-  async mounted() {
-    this.warMachine = new WarMachine(
-      this.war.contractAddress[this.networkInfo.id],
-      this.networkInfo.id
-    );
-    const prize = await this.warMachine.getWarReportwGOLD();
-    this.prizeWon = web3.utils.fromWei(prize.won.toString());
-    this.prizeWon = parseFloat(this.prizeWon);
-  },
-
   computed: {
     players() {
-      if (
-        !this.war ||
-        !this.war.report ||
-        !this.war.report.players ||
-        this.prizeWon === false
-      ) {
+      if (!this.war || !this.war.report || !this.war.report.players) {
         return [];
       }
 
-      return this.war.report.players.map((player) => {
-        player.powerTeamA =
-          this.war.report.attack === "TeamA"
-            ? player.totalAttackPowerTeamA
-            : player.totalDefensePowerTeamA;
-        player.powerTeamB =
-          this.war.report.attack === "TeamB"
-            ? player.totalAttackPowerTeamB
-            : player.totalDefensePowerTeamB;
+      return this.war.report.players;
 
-        player.team =
-          player.powerTeamA > player.powerTeamB ? "Corporation" : "Degenerate";
+      // return this.war.report.players.map((player) => {
+      //   player.powerTeamA =
+      //     this.war.report.attack === "TeamA"
+      //       ? player.totalAttackPowerTeamA
+      //       : player.totalDefensePowerTeamA;
+      //   player.powerTeamB =
+      //     this.war.report.attack === "TeamB"
+      //       ? player.totalAttackPowerTeamB
+      //       : player.totalDefensePowerTeamB;
 
-        player.teamAShareLabel = 100 * player.teamAShare;
-        player.teamBShareLabel = 100 * player.teamBShare;
-        player.wCOURAGEShare =
-          100 * (player.wCOURAGEAmount / this.war.report.WCOURAGESupply);
+      //   player.team =
+      //     player.powerTeamA > player.powerTeamB ? "Corporation" : "Degenerate";
 
-        const wGOLDShare =
-          this.war.report.winner === "TeamA"
-            ? player.teamAShare
-            : player.teamBShare;
-        player.wGOLD = this.prizeWon * wGOLDShare;
-        player.wGOLDShare = 100 * wGOLDShare;
+      //   player.teamAShareLabel = 100 * player.teamAShare;
+      //   player.teamBShareLabel = 100 * player.teamBShare;
+      //   player.wCOURAGEShare =
+      //     100 * (player.wCOURAGEAmount / this.war.report.WCOURAGESupply);
 
-        return player;
-      });
+      //   const wGOLDShare =
+      //     this.war.report.winner === "TeamA"
+      //       ? player.teamAShare
+      //       : player.teamBShare;
+      //   player.wGOLD = this.prizeWon * wGOLDShare;
+      //   player.wGOLDShare = 100 * wGOLDShare;
+
+      //   return player;
+      // });
     },
     networkInfo() {
       return this.$store.getters["user/networkInfo"];
