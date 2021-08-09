@@ -83,7 +83,12 @@
       <!-- END wLAND -->
       <!-- PRIVATE SALE -->
       <div class="d-flex flex-column align-center mt-2">
-        <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">Private Sale</h1>
+        <h1
+          v-if="$vuetify.breakpoint.mdAndUp"
+          class="h1Y text-center mt-4 mb-4"
+        >
+          Private Sale
+        </h1>
         <h1 v-else class="h3Y text-center mt-4 mb-4">Private Sale</h1>
         <v-img
           v-if="$vuetify.breakpoint.mdAndUp"
@@ -115,43 +120,63 @@
           <v-progress-linear
             color="#11D300"
             buffer-value="100"
-            value="20"
+            :value="percentagemUnitsSold"
             stream
           ></v-progress-linear>
           <p class="mt-1">UNITS SOLD: 375,000.00</p>
           <p :style="$vuetify.breakpoint.mdAndUp ? '' : 'font-size: 30px'">CURRENT PRICE: $0.50</p>
         </div>
-        <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">
+        <h1
+          v-if="$vuetify.breakpoint.mdAndUp"
+          class="h1Y text-center mt-4 mb-4"
+        >
           Total Supply: 1,500,000.00 wLAND
         </h1>
-        <h1 v-else class="h3Y text-center mt-4">Total Supply: 1,500,000.00 wLAND</h1>
+        <h1 v-else class="h3Y text-center mt-4">
+          Total Supply: 1,500,000.00 wLAND
+        </h1>
         <div
-          :class="$vuetify.breakpoint.mdAndUp ? 'd-flex justify-space-around' : 'text-center'"
+          :class="
+            $vuetify.breakpoint.mdAndUp
+              ? 'd-flex justify-space-around'
+              : 'text-center'
+          "
           style="width: 80%"
         >
-          <h3 :class="$vuetify.breakpoint.mdAndUp ? '' : 'mt-2'">Soft Cap: 200,000.00 BUSD</h3>
+          <h3 :class="$vuetify.breakpoint.mdAndUp ? '' : 'mt-2'">
+            Soft Cap: 200,000.00 BUSD
+          </h3>
           <h3 :class="$vuetify.breakpoint.mdAndUp ? '' : 'mt-2 mb-2'">
             Hard Cap: 1,375,000.00 BUSD
           </h3>
         </div>
         <p class="mt-1">
-          Cliff: *Vesting for private sale wLAND begins 1 month after TGE. Vesting: Monthly claims
-          during 9 months up to 100%
+          Cliff: *Vesting for private sale wLAND begins 1 month after TGE.
+          Vesting: Monthly claims during 9 months up to 100%
         </p>
       </div>
       <!-- END PRIVATE SALE -->
       <!-- WHITELIST -->
       <div class="border mt-3">
-        <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">
+        <h1
+          v-if="$vuetify.breakpoint.mdAndUp"
+          class="h1Y text-center mt-4 mb-4"
+        >
           You were whitelisted
         </h1>
         <h1 v-else class="h3Y text-center mt-4 mb-4">You were whitelisted</h1>
         <v-row class="align-center">
           <v-col cols="12" lg="3" class="text-center">
             <div>
-              <v-img src="/images/project/wLAND.png" max-width="106" class="img"></v-img>
+              <v-img
+                src="/images/project/wLAND.png"
+                max-width="106"
+                class="img"
+              ></v-img>
             </div>
-            <h1 class="h1Y">$0.50</h1>
+            <h1 class="h1Y">
+              $<amount :amount="pricewLAND" formatted decimals="2" />
+            </h1>
             <h3 class="h3Y mt-n2">per wLAND</h3>
             <p>500,000.00 wLAND (locked*)</p>
             <div>
@@ -159,21 +184,33 @@
                 class="ml-1 mr-1"
                 color="#11D300"
                 buffer-value="0"
-                value="20"
+                :value="percentagemUnitsSoldStage"
                 stream
               ></v-progress-linear>
-              <p class="mt-1">UNITS SOLD: 375,000.00</p>
+              <p class="mt-1">
+                UNITS SOLD:
+                <amount :amount="wLANDSoldAmountStage" formatted decimals="2" />
+              </p>
             </div>
           </v-col>
           <v-col cols="12" lg="8">
             <v-img
-              :src="$vuetify.breakpoint.mdAndUp ? '/images/project/rectangle.png' : ''"
+              :src="
+                $vuetify.breakpoint.mdAndUp
+                  ? '/images/project/rectangle.png'
+                  : ''
+              "
               max-width="788"
             >
               <v-row class="mt-1 justify-center">
                 <v-col cols="11" lg="7">
                   <h5>QTY:</h5>
-                  <v-currency-field outlined v-bind="currencyConfig" v-model="amount">
+                  <v-currency-field
+                    outlined
+                    v-bind="currencyConfig"
+                    v-model="amountwLAND"
+                    @input="calcAmountBUSD"
+                  >
                     <template v-slot:append>
                       <div class="d-flex">
                         <span class="mr-1 align-self-center">wLAND</span>
@@ -206,7 +243,12 @@
               <v-row class="justify-center mt-n8">
                 <v-col cols="11" lg="7">
                   <h5>QTY:</h5>
-                  <v-currency-field outlined v-bind="currencyConfig" v-model="amount">
+                  <v-currency-field
+                    outlined
+                    v-bind="currencyConfig"
+                    v-model="amountBUSD"
+                    disabled
+                  >
                     <template v-slot:append>
                       <div class="d-flex">
                         <span class="mr-1 align-self-center">BUSD</span>
@@ -231,20 +273,44 @@
                     max-width="35"
                     class="img"
                   ></v-img>
-                  <wButton width="170px" class="mx-1 ml-2" size="large">
+                  <wButton
+                    v-if="isApprovedBUSD"
+                    width="170px"
+                    class="mx-1 ml-2"
+                    size="large"
+                    @click="buywLAND"
+                    :disabled="isLoadingBuy"
+                  >
                     <div class="d-flex justify-center">
-                      <large class="align-self-center">Approve</large>
+                      <span class="align-self-center">
+                        {{ isLoadingBuy ? "Waiting..." : "Buy" }}
+                      </span>
+                    </div>
+                  </wButton>
+                  <wButton
+                    v-else
+                    width="170px"
+                    class="mx-1 ml-2"
+                    size="large"
+                    @click="approveBUSD"
+                    :disabled="isLoadingApprove"
+                  >
+                    <div class="d-flex justify-center">
+                      <span class="align-self-center">
+                        {{ isLoadingApprove ? "Waiting..." : "Approve" }}
+                      </span>
                     </div>
                   </wButton>
                 </v-col>
                 <p class="mt-n4">
-                  You will received <span class="h3Y">{{ wWisdom }}</span> wWISDOM
+                  You will received
+                  <span class="h3Y"><amount :amount="wWISDOM" formatted decimals="2" /></span> wWISDOM
                 </p>
               </v-row>
             </v-img>
           </v-col>
         </v-row>
-        <countdown class="mt-10 mb-4" :time="countdownTimeEnd" @end="loadData"></countdown>
+        <countdown class="mt-10 mb-4" :time="1000000"></countdown>
       </div>
     </v-container>
     <v-row class="justify-center align-center mt-4">
@@ -255,7 +321,7 @@
         </div>
         <div class="my-2 ml-2">
           <h3 class="d-flex">
-            <span>You receive:</span>
+            <span>You balance:</span>
             <span class="h3Y ml-1 mr-1">{{ wWISDOM }}</span>
             <span>wWISDOM</span>
           </h3>
@@ -284,7 +350,12 @@
           "
         >
           <div class="text-center">
-            <v-img src="/images/project/world.png" max-width="300" min-height="100" class="img">
+            <v-img
+              src="/images/project/world.png"
+              max-width="300"
+              min-height="100"
+              class="img"
+            >
             </v-img>
             <span class="span">Your balance: {{ unitsWorld }} </span>
           </div>
@@ -302,7 +373,7 @@
             </div>
             <wButton width="170px" class="mx-1 mt-n1" size="large">
               <div class="d-flex justify-center">
-                <large class="align-self-center">BUY TICKET</large>
+                <span class="align-self-center">BUY TICKET</span>
               </div>
             </wButton>
           </div>
@@ -317,7 +388,12 @@
           "
         >
           <div class="text-center">
-            <v-img src="/images/project/clans.png" max-width="300" min-height="100" class="img">
+            <v-img
+              src="/images/project/clans.png"
+              max-width="300"
+              min-height="100"
+              class="img"
+            >
             </v-img>
             <span class="span">Your balance: {{ unitsClans }} </span>
           </div>
@@ -335,7 +411,7 @@
             </div>
             <wButton width="170px" class="mx-1 mt-n1" size="large">
               <div class="d-flex justify-center">
-                <large class="align-self-center">BUY TICKET</large>
+                <span class="align-self-center">BUY TICKET</span>
               </div>
             </wButton>
           </div>
@@ -351,7 +427,10 @@
       class="justify-center align-center"
     >
       <v-container class="justify-center mt-n10">
-        <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-n10 mb-5">
+        <h1
+          v-if="$vuetify.breakpoint.mdAndUp"
+          class="h1Y text-center mt-n10 mb-5"
+        >
           Distribution Timeline
         </h1>
         <h1 v-else class="h3Y text-center mt-4 mb-4">Distribution Timeline</h1>
@@ -367,7 +446,9 @@
     <v-row class="justify-center mt-n16">
       <v-img
         class="justify-center mt-1"
-        :src="$vuetify.breakpoint.mdAndUp ? '/images/project/rectangle2.png' : ''"
+        :src="
+          $vuetify.breakpoint.mdAndUp ? '/images/project/rectangle2.png' : ''
+        "
         :max-width="$vuetify.breakpoint.mdAndUp ? '1185' : '300'"
       >
         <v-row class="mt-1 justify-center">
@@ -405,7 +486,7 @@
         <v-row class="justify-center mt-n4">
           <wButton width="170px" class="mx-1 mt-n1">
             <div class="d-flex justify-center">
-              <large class="align-self-center">CLAIM</large>
+              <span class="align-self-center">CLAIM</span>
             </div>
           </wButton>
         </v-row>
@@ -416,7 +497,9 @@
     <!-- FAQ -->
     <v-container class="py-4 py-lg-8">
       <div class="text-center">
-        <div class="text-uppercase font-weight-bold body-2 primary--text mb-2">PRIVATE SALE</div>
+        <div class="text-uppercase font-weight-bold body-2 primary--text mb-2">
+          PRIVATE SALE
+        </div>
         <h2 class="text-h3 text-lg-h2">Frequently Asked Questions</h2>
       </div>
 
@@ -435,79 +518,230 @@
 </template>
 
 <script>
-import wButton from '@/lib/components/ui/Buttons/wButton';
-import Countdown from '@/lib/components/ui/Utils/Countdown';
+import Amount from "@/lib/components/ui/Utils/Amount";
+import wButton from "@/lib/components/ui/Buttons/wButton";
+import Countdown from "@/lib/components/ui/Utils/Countdown";
+
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+
+import Convert from "@/lib/helpers/Convert";
+
+import LandPrivateSale from "@/lib/eth/LandPrivateSale";
+import ERC20 from "@/lib/eth/ERC20";
 
 export default {
-  name: 'Landing',
+  name: "Landing",
   components: {
     wButton,
     Countdown,
+    Amount,
   },
   data() {
     return {
-      tokenPrice: 0.5,
-      wWisdom: 5000,
-      wWISDOM: 12,
+      currencyConfig: {
+        locale: window.navigator.userLanguage || window.navigator.language,
+        prefix: "",
+        suffix: "",
+        decimalLength: 2,
+        autoDecimalMode: true,
+        allowNegative: false,
+      },
+      amountwLAND: 0,
+      amountBUSD: 0,
+      amount: 0,
+      wLAND: "0x9eBF0D313dce8117625076BA572920e79194A2e6",
+      addresslandPrivateSale: "0x1B18638a1975DCBd777F9AC4fd90e7c2001F23A5",
+      addressBUSD: "0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee",
       nextClaim: 5000,
       unitsClans: 4,
       unitsWorld: 4,
       panel: [0],
       faq: [
         {
-          question: 'What is Cliff?',
+          question: "What is Cliff?",
           answer:
-            'Cliff is a phase in which users cannot use their tokens, they are fully locked in a smart contract.',
+            "Cliff is a phase in which users cannot use their tokens, they are fully locked in a smart contract.",
         },
         {
-          question: 'What is Vesting?',
+          question: "What is Vesting?",
           answer:
-            'Vesting represents the slow dispersion of tokens. For this sale the total amount of tokens is going to be claimable in even parts for 9 consecutive months.',
+            "Vesting represents the slow dispersion of tokens. For this sale the total amount of tokens is going to be claimable in even parts for 9 consecutive months.",
         },
         {
-          question: 'What is wLAND?',
+          question: "What is wLAND?",
           answer:
-            'wLAND is an utility token used to exchange for Worlds, Clans and actual terrains used to place buildings, foundations and Villages. The maximum supply of wLAND is 1.500.000 tokens and it will be sold in three different batches.',
+            "wLAND is an utility token used to exchange for Worlds, Clans and actual terrains used to place buildings, foundations and Villages. The maximum supply of wLAND is 1.500.000 tokens and it will be sold in three different batches.",
         },
         {
-          question: 'What is wWinsdom?',
+          question: "What is wWinsdom?",
           answer:
-            'wWisdom is a utility token for community voting power accountability. It is not a governance token but it can become one in the future. It will be distributed for the team, private buyers, and ring holders.',
+            "wWisdom is a utility token for community voting power accountability. It is not a governance token but it can become one in the future. It will be distributed for the team, private buyers, and ring holders.",
         },
         {
-          question: 'What are the liquidity and listing plans for wLAND?',
+          question: "What are the liquidity and listing plans for wLAND?",
           answer:
-            '2.5% of total amount sold in game items will be used for liquidity provision. wLAND will be listed at an equivalent value of 1.5 BUSD in wGOLD.',
+            "2.5% of total amount sold in game items will be used for liquidity provision. wLAND will be listed at an equivalent value of 1.5 BUSD in wGOLD.",
         },
         {
-          question: 'What is the hard cap of 1.375M BUSD?',
-          answer: 'No more sales of the game item wLAND will be made passed this value.',
-        },
-        {
-          question: 'How are tokens going to be released to investors?',
-          answer: 'Tokens will be periodically claimable from a smart contract.',
-        },
-        {
-          question: 'How long will the private sale period last?',
-          answer: 'Private sale will last 1 month.',
-        },
-        {
-          question: 'What happens if game itens/tokens become unsold?',
-          answer: 'All unsold supply will be burned.',
-        },
-        {
-          question: 'What are the vesting terms for private sale?',
-          answer: '3 month cliff, 9 months vesting until 100% unlocked.',
-        },
-        {
-          question: 'What is the immediate utility of wLAND on TGE?',
+          question: "What is the hard cap of 1.375M BUSD?",
           answer:
-            'It can be used instantly to buy tickets for worlds and clans via a smart contract. As soon as  game starts it will be used to buy land. ',
+            "No more sales of the game item wLAND will be made passed this value.",
+        },
+        {
+          question: "How are tokens going to be released to investors?",
+          answer:
+            "Tokens will be periodically claimable from a smart contract.",
+        },
+        {
+          question: "How long will the private sale period last?",
+          answer: "Private sale will last 1 month.",
+        },
+        {
+          question: "What happens if game itens/tokens become unsold?",
+          answer: "All unsold supply will be burned.",
+        },
+        {
+          question: "What are the vesting terms for private sale?",
+          answer: "3 month cliff, 9 months vesting until 100% unlocked.",
+        },
+        {
+          question: "What is the immediate utility of wLAND on TGE?",
+          answer:
+            "It can be used instantly to buy tickets for worlds and clans via a smart contract. As soon as  game starts it will be used to buy land. ",
         },
       ],
+      wLANDSoldAmount: "0",
+      maxSupply: "0",
+      pricewLAND: "0",
+      soldPerStage: 500000,
+      isApprovedBUSD: false,
+      isLoadingApprove: false,
+      isLoadingBuy: false,
     };
   },
+  computed: {
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
+    account() {
+      return this.$store.getters["user/account"];
+    },
+    percentagemUnitsSold() {
+      return parseInt((this.wLANDSoldAmount / this.maxSupply) * 100);
+    },
+    percentagemUnitsSoldStage() {
+      return parseInt((this.wLANDSoldAmountStage / this.soldPerStage) * 100);
+    },
+    wLANDSoldAmountStage() {
+      let _wLANDSoldAmount = this.wLANDSoldAmount;
+      if (_wLANDSoldAmount > this.soldPerStage) {
+        _wLANDSoldAmount = _wLANDSoldAmount - this.soldPerStage;
+      } else if (_wLANDSoldAmount > this.soldPerStage * 2) {
+        _wLANDSoldAmount = _wLANDSoldAmount - this.soldPerStage * 2;
+      }
+
+      return _wLANDSoldAmount;
+    },
+    wWISDOM() {
+      return this.amountwLAND / 10000;
+    },
+  },
+  watch: {
+    isConnected() {
+      this.initData();
+    },
+  },
+
+  mounted() {
+    this.initData();
+  },
   methods: {
+    async initData() {
+      if (!this.isConnected) {
+        return;
+      }
+
+      this.contractBUSD = new ERC20(this.addressBUSD);
+      this.isApprovedBUSD = await this.contractBUSD.hasAllowance(
+        this.account,
+        this.addresslandPrivateSale
+      );
+
+      console.log(this.isApprovedBUSD);
+
+      this.contractLandPrivateSale = new LandPrivateSale(
+        this.addresslandPrivateSale
+      );
+      this.wLANDSoldAmount = await this.contractLandPrivateSale.wLANDSoldAmount();
+      this.maxSupply = await this.contractLandPrivateSale.maxSupply();
+      this.pricewLAND = await this.contractLandPrivateSale.pricewLAND(
+        this.wLANDSoldAmount
+      );
+      this.wLANDSoldAmount = Convert.fromWei(this.wLANDSoldAmount, true);
+      this.maxSupply = Convert.fromWei(this.maxSupply, true);
+      this.pricewLAND = Convert.fromWei(this.pricewLAND, true);
+    },
+    async approveBUSD() {
+      try {
+        this.isLoadingApprove = true;
+        const confirmTransaction = this.contractBUSD.approve(
+          this.account,
+          this.addresslandPrivateSale
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.isLoadingApprove = false;
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error("An error has occurred while to approve");
+        });
+
+        confirmTransaction.on("receipt", () => {
+          this.isLoadingApprove = false;
+          ToastSnackbar.success("Successfully approved");
+        });
+      } catch (error) {
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error("An error has occurred while to approve");
+      }
+    },
+    calcAmountBUSD(amount) {
+      this.amountBUSD = amount * this.pricewLAND;
+    },
+    async buywLAND() {
+      try {
+        this.isLoadingApprove = true;
+
+        const confirmTransaction = await this.contractLandPrivateSale.buywLAND(
+          Convert.toWei(this.amountwLAND),
+          this.account
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.isLoadingApprove = false;
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error("An error has occurred while to approve");
+        });
+
+        confirmTransaction.on("receipt", () => {
+          this.isLoadingApprove = false;
+          ToastSnackbar.success("Successfully approved");
+        });
+      } catch (error) {
+        if (error.message) {
+          const ErrorMessage = JSON.parse(
+            error.message.replace("Internal JSON-RPC error.", "")
+          );
+          return ToastSnackbar.error(ErrorMessage.message);
+        }
+        return ToastSnackbar.error("An error has occurred while to approve");
+      }
+    },
     openNewTab(obj) {
       window.open(obj);
     },

@@ -8,7 +8,6 @@ export default class Combinator {
     this.contractAddress = contract;
     this.contractManagerAddress = contractManager;
     this.smc = new window.web3.eth.Contract(APWarsCombinator, this.contractAddress);
-    window.test = this.smc;
     this.smcManager = {};
     if (contractManager) {
       this.smcManager = new window.web3.eth.Contract(APWarsCombinatorManager, this.contractManagerAddress);
