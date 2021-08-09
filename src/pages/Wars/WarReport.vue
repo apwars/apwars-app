@@ -171,7 +171,8 @@
             <h3 class="text-h3 text-wGOLD">Players</h3>
           </v-col>
           <v-col cols="12" class="d-flex justify-center pa-0">
-            <table-war-report :war="isWar"></table-war-report>
+            <table-war-report v-if="isWar.reportVersion==='1'" :war="isWar"></table-war-report>
+            <table-war-report-v2 v-if="isWar.reportVersion==='2'" :war="isWar"></table-war-report-v2>
           </v-col>
 
           <v-col cols="12" class="d-flex justify-center">
@@ -195,7 +196,7 @@
             <h5 class="text-h5 text-wGOLD text-center">
               Winner
             </h5>
-            <div class="text-center">
+            <div class="text-center d-flex justify-center">
               <span v-if="nft.winner">
                 {{ nft.winner }}
               </span>
@@ -239,6 +240,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 import TableWarReport from "@/lib/components/ui/Utils/Tables/TableWarReport";
+import TableWarReportV2 from "@/lib/components/ui/Utils/Tables/TableWarReportV2";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
@@ -257,6 +259,7 @@ export default {
     wButton,
     Countdown,
     TableWarReport,
+    TableWarReportV2,
     VAddress,
     ListUnits,
   },

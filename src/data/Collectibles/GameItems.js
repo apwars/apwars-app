@@ -347,6 +347,18 @@ export function getGameItems() {
       title: "Free Transport",
       description: "I am an active transporter. However, for some particular fellows, I can carry some items without charge my regular fee. WARNING: This is a spendable item.",
       image: "/images/nfts/lilith-100off.png",
+    },
+    {
+      id: 28,
+      type: 'gameItem',
+      typeDesc: 'Game Item',
+      contractAddress: addresses.collectibles,
+      isGift: false,
+      title: "Experience Ring",
+      description: `And to you my youngest son I leave you this. This ring is for you to measure how much you already learned from life. As you get older it will change its appearance, in the moment you wear it its stone will turn to white, as you learn from difficulties it will get green, yellow, red, blue and eventually purple. I desire you were destined to a simpler life but with the responsibilities you heir I think your purple will be more intense than mine.
+      - "King Leonidas of the first human empire at his deathbed"`,
+      image: "/images/nfts/experience-ring.png",
     }
+
   ];
 }
