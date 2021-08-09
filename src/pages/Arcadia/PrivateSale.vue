@@ -69,7 +69,7 @@
             </li>
           </ul>
         </v-col>
-        
+
         <v-col cols="12" lg="4">
           <div class="text-center">
             <v-img src="/images/project/wLAND.png" max-width="80" class="img"></v-img>
@@ -247,7 +247,26 @@
         <countdown class="mt-10 mb-4" :time="countdownTimeEnd" @end="loadData"></countdown>
       </div>
     </v-container>
-
+    <v-row class="justify-center align-center mt-4">
+      <v-col cols="12" md="4" lg="4" class="d-flex">
+        <div class="text-center">
+          <v-img src="/images/wWISDOM.png" max-width="100" class="img"></v-img>
+          <h3 class="h3Y">wWISDOM</h3>
+        </div>
+        <div class="my-2 ml-2">
+          <h3 class="d-flex">
+            <span>You receive:</span>
+            <span class="h3Y ml-1 mr-1">{{ wWISDOM }}</span>
+            <span>wWISDOM</span>
+          </h3>
+          <wButton width="170px" class="mx-10 mt-2">
+            <div class="d-flex justify-center">
+              <large class="align-self-center">CLAIM</large>
+            </div>
+          </wButton>
+        </div>
+      </v-col>
+    </v-row>
     <!-- END WHITELIST -->
     <v-container>
       <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center">
@@ -429,6 +448,7 @@ export default {
     return {
       tokenPrice: 0.5,
       wWisdom: 5000,
+      wWISDOM: 12,
       nextClaim: 5000,
       unitsClans: 4,
       unitsWorld: 4,
