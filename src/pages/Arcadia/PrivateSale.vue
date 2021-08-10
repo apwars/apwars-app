@@ -75,8 +75,7 @@
       </v-row>
       <!-- END wLAND -->
 
-      <!-- <div v-if="isWhitelisted"> -->
-      <div>
+      <div v-if="isWhitelisted">
         <!-- PRIVATE SALE -->
         <div class="d-flex flex-column align-center mt-2">
           <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center mt-4 mb-4">
