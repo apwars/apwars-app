@@ -13,7 +13,7 @@
             max-height="400"
             min-height="110"
           ></v-img>
-          <h3 :style="secondaryText" class="mt-4 mb-8 px-md-12 text-center">
+          <h3 class="mt-4 mb-8 px-md-12 text-center">
             Arcadia is the first expansion of APWars to a turn-based Village building world in which
             players will manage domestic economies, handle attacks and defenses, join clans and much
             more!
@@ -123,8 +123,8 @@
             :value="percentagemUnitsSold"
             stream
           ></v-progress-linear>
-          <p class="mt-1">UNITS SOLD: 375,000.00</p>
-          <p :style="$vuetify.breakpoint.mdAndUp ? '' : 'font-size: 30px'">CURRENT PRICE: $0.50</p>
+          <p class="mt-1">SOLD UNITS: <amount :amount="wLANDSoldAmount" formatted decimals="2" /></p>
+          <p :style="$vuetify.breakpoint.mdAndUp ? '' : 'font-size: 30px'">CURRENT PRICE: $<amount :amount="pricewLAND" formatted decimals="2" /></p>
         </div>
         <h1
           v-if="$vuetify.breakpoint.mdAndUp"
@@ -188,12 +188,25 @@
                 stream
               ></v-progress-linear>
               <p class="mt-1">
-                UNITS SOLD:
-                <amount :amount="wLANDSoldAmountStage" formatted decimals="2" />
+                AVAILABLE UNITS:
+                <amount :amount="wLANDAvailableAmountStage" formatted decimals="2" />
               </p>
             </div>
           </v-col>
           <v-col cols="12" lg="8">
+             <div v-if="isInPriorityPeriod" class="mb-1">
+                <small>During the priority level you need to buy exactly the specified amount in your hard commit.</small>
+                <br />
+                <small>Your hard commit is: <amount :amount="hardCommit" formatted decimals="2" /></small>
+                <v-alert
+                  dense
+                  border="left"
+                  type="warning"
+                  class="mt-1"
+                >
+                  You already bought during the priority level. You need to wait for more {{priorityEndBlock - currentBlockNumber}} blocks.
+                </v-alert>
+             </div>
             <v-img
               :src="
                 $vuetify.breakpoint.mdAndUp
@@ -210,6 +223,7 @@
                     v-bind="currencyConfig"
                     v-model="amountwLAND"
                     @input="calcAmountBUSD"
+                    :disabled="isInPriorityPeriod"
                   >
                     <template v-slot:append>
                       <div class="d-flex">
@@ -242,7 +256,7 @@
               </v-row>
               <v-row class="justify-center mt-n8">
                 <v-col cols="11" lg="7">
-                  <h5>QTY:</h5>
+                  <h5>BUSD PRICE:</h5>
                   <v-currency-field
                     outlined
                     v-bind="currencyConfig"
@@ -279,12 +293,13 @@
                     class="mx-1 ml-2"
                     size="large"
                     @click="buywLAND"
-                    :disabled="isLoadingBuy"
+                    :disabled="isLoadingBuy || (hasBoughtInPriotiryLevel && isInPriorityPeriod)"
                   >
                     <div class="d-flex justify-center">
-                      <span class="align-self-center">
+                      <span v-if="!(hasBoughtInPriotiryLevel && isInPriorityPeriod)" class="align-self-center">
                         {{ isLoadingBuy ? "Waiting..." : "Buy" }}
                       </span>
+                      <span v-else class="align-self-center">WAIT</span>
                     </div>
                   </wButton>
                   <wButton
@@ -303,14 +318,14 @@
                   </wButton>
                 </v-col>
                 <p class="mt-n4">
-                  You will received
+                  You will receive
                   <span class="h3Y"><amount :amount="wWISDOM" formatted decimals="2" /></span> wWISDOM
                 </p>
               </v-row>
             </v-img>
           </v-col>
         </v-row>
-        <countdown class="mt-10 mb-4" :time="1000000"></countdown>
+        <countdown class="mt-10 mb-4" :time="privateSaleTimer"></countdown>
       </div>
     </v-container>
 
@@ -432,10 +447,10 @@
         "
         :max-width="$vuetify.breakpoint.mdAndUp ? '1185' : '300'"
       >
-        <v-row class="mt-1 justify-center">
+        <v-row class="mt-4 justify-center">
           <v-col cols="12" md="3" lg="3">
             <h6>TOTAL CLAIMED:</h6>
-            <v-currency-field outlined v-bind="currencyConfig" v-model="amount">
+            <v-currency-field disabled outlined v-bind="currencyConfig" v-model="claimedAmount">
               <template v-slot:append>
                 <div class="d-flex">
                   <span class="mr-1 align-self-center">wLAND</span>
@@ -444,8 +459,8 @@
             </v-currency-field>
           </v-col>
           <v-col cols="12" md="3" lg="3">
-            <h6>UNLOCKED AMOUNT TO CLAIM:</h6>
-            <v-currency-field outlined v-bind="currencyConfig" v-model="amount">
+            <h6>NEXT AMOUNT TO CLAIM:</h6>
+            <v-currency-field  disabled outlined v-bind="currencyConfig" v-model="unlockedAmount">
               <template v-slot:append>
                 <div class="d-flex">
                   <span class="mr-1 align-self-center">wLAND</span>
@@ -455,7 +470,7 @@
           </v-col>
           <v-col cols="12" md="3" lg="3">
             <h6>REMANING LOCKED TOKENS:</h6>
-            <v-currency-field outlined v-bind="currencyConfig" v-model="amount">
+            <v-currency-field  disabled outlined v-bind="currencyConfig" v-model="remainingAmount">
               <template v-slot:append>
                 <div class="d-flex">
                   <span class="mr-1 align-self-center">wLAND</span>
@@ -465,15 +480,25 @@
           </v-col>
         </v-row>
         <v-row class="justify-center mt-n4">
-          <wButton width="170px" class="mx-1 mt-n1">
+          <wButton @click="claimwLAND()" width="170px" class="mx-1 mt-n1">
             <div class="d-flex justify-center">
               <span class="align-self-center">CLAIM</span>
             </div>
           </wButton>
         </v-row>
-
-        <p class="text-center mt-3">NEXT CLAIM: {{ nextClaim }} BLOCKS</p>
       </v-img>
+    </v-row>
+    <v-row>
+       <v-container class="justify-center mt-10">
+        <h1
+          v-if="$vuetify.breakpoint.mdAndUp"
+          class="h1Y text-center mt-n10 mb-5"
+        >
+          Next Claim
+        </h1>
+        <h1 v-else class="h3Y text-center mt-4 mb-4">Next Claim</h1>
+       <countdown class="mt-10 mb-4" :time="nextClaimTimer"></countdown>
+      </v-container>
     </v-row>
     <!-- FAQ -->
     <v-container class="py-4 py-lg-8">
@@ -530,10 +555,12 @@ export default {
       amountwLAND: 0,
       amountBUSD: 0,
       amount: 0,
-      wLAND: "0x9eBF0D313dce8117625076BA572920e79194A2e6",
-      addresslandPrivateSale: "0x1B18638a1975DCBd777F9AC4fd90e7c2001F23A5",
-      addressBUSD: "0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee",
-      nextClaim: 5000,
+
+      wLAND: "0xB1c9d01Ad22236A1e044a5d63a3CB8eAF74991e1",
+      addresslandPrivateSale: "0xA4BB7130bBe5c6d7ea43eF025325A17542fbf6E1",
+      addressBUSD: "0x61CCFBF80B61fa65Be10761b07281616cE9f812C",
+      nextClaim: 0,
+      nextClaimTimer: 0,
       unitsClans: 4,
       unitsWorld: 4,
       panel: [0],
@@ -591,38 +618,48 @@ export default {
             "It can be used instantly to buy tickets for worlds and clans via a smart contract. As soon as  game starts it will be used to buy land. ",
         },
       ],
-      wLANDSoldAmount: "0",
-      maxSupply: "0",
-      pricewLAND: "0",
+      wLANDAvailableAmountStage: 0,
+      wLANDSoldAmount: 0,
+      hardCommit: 0,
+      priorityEndBlock: 0,
+      privateSaleEndBlock: 0,
+      hasBoughtInPriotiryLevel: false,
+      isInPriorityPeriod: false,
+      maxSupply: 0,
+      pricewLAND: 0,
       soldPerStage: 500000,
       isApprovedBUSD: false,
       isLoadingApprove: false,
       isLoadingBuy: false,
+      claimInfo: {},
+      remainingAmount: 0,
+      claimedAmount: 0,
+      unlockedAmount: 0,
+      wLANDAmount: 0,
+      isClaimingwLAND: false,
     };
   },
   computed: {
     isConnected() {
       return this.$store.getters["user/isConnected"];
     },
+    
     account() {
       return this.$store.getters["user/account"];
     },
+    
+    currentBlockNumber() {
+      return this.$store.getters["user/currentBlockNumber"];
+    },
+    
     percentagemUnitsSold() {
       return parseInt((this.wLANDSoldAmount / this.maxSupply) * 100);
     },
+    
     percentagemUnitsSoldStage() {
-      return parseInt((this.wLANDSoldAmountStage / this.soldPerStage) * 100);
+      return parseInt((1 - this.wLANDAvailableAmountStage / this.soldPerStage ) * 100);
     },
-    wLANDSoldAmountStage() {
-      let _wLANDSoldAmount = this.wLANDSoldAmount;
-      if (_wLANDSoldAmount > this.soldPerStage) {
-        _wLANDSoldAmount = _wLANDSoldAmount - this.soldPerStage;
-      } else if (_wLANDSoldAmount > this.soldPerStage * 2) {
-        _wLANDSoldAmount = _wLANDSoldAmount - this.soldPerStage * 2;
-      }
-
-      return _wLANDSoldAmount;
-    },
+    
     wWISDOM() {
       return this.amountwLAND / 10000;
     },
@@ -631,11 +668,16 @@ export default {
     isConnected() {
       this.initData();
     },
+
+    currentBlockNumber() {
+      this.initData();
+    }
   },
 
   mounted() {
     this.initData();
   },
+  
   methods: {
     async initData() {
       if (!this.isConnected) {
@@ -643,25 +685,45 @@ export default {
       }
 
       this.contractBUSD = new ERC20(this.addressBUSD);
+      this.contractLandPrivateSale = new LandPrivateSale(
+        this.addresslandPrivateSale
+      );
+
       this.isApprovedBUSD = await this.contractBUSD.hasAllowance(
         this.account,
         this.addresslandPrivateSale
       );
 
-      console.log(this.isApprovedBUSD);
-
-      this.contractLandPrivateSale = new LandPrivateSale(
-        this.addresslandPrivateSale
-      );
-      this.wLANDSoldAmount = await this.contractLandPrivateSale.wLANDSoldAmount();
-      this.maxSupply = await this.contractLandPrivateSale.maxSupply();
-      this.pricewLAND = await this.contractLandPrivateSale.pricewLAND(
+      this.claimInfo = await this.contractLandPrivateSale.getClaimInfo(this.account);
+      this.remainingAmount = Convert.fromWei(this.claimInfo.remainingAmount, true);
+      this.claimedAmount = Convert.fromWei(this.claimInfo.claimedAmount, true);
+      this.wLANDAmount = Convert.fromWei(this.claimInfo.wLANDAmount, true);
+      this.unlockedAmount = this.wLANDAmount / 9;
+      if (this.unlockedAmount > this.remainingAmount) {
+        this.unlockedAmount = this.remainingAmount;
+      }
+      this.nextClaim = this.claimInfo.nextBlock - this.currentBlockNumber;
+      this.nextClaimTimer = this.nextClaim * 3 * 10000; 
+      this.wLANDSoldAmount = Convert.fromWei(await this.contractLandPrivateSale.wLANDSoldAmount(), true);
+      this.priorityEndBlock = await this.contractLandPrivateSale.getPriorityEndBlock();
+      this.privateSaleEndBlock = await this.contractLandPrivateSale.getPrivateSaleEndBlock();
+      this.privateSaleTimer = (this.privateSaleEndBlock - this.currentBlockNumber) * 3 * 10000; 
+      this.hardCommit = Convert.fromWei(await this.contractLandPrivateSale.getHardCommit(this.account), true);
+      this.hasBoughtInPriotiryLevel = await this.contractLandPrivateSale.hasBoughtInPriotiryLevel(this.account);
+      this.isInPriorityPeriod = await this.contractLandPrivateSale.isInPriorityPeriod(this.currentBlockNumber);
+      this.maxSupply = Convert.fromWei(await this.contractLandPrivateSale.maxSupply(), true);
+      this.pricewLAND = Convert.fromWei(await this.contractLandPrivateSale.pricewLAND(
         this.wLANDSoldAmount
-      );
-      this.wLANDSoldAmount = Convert.fromWei(this.wLANDSoldAmount, true);
-      this.maxSupply = Convert.fromWei(this.maxSupply, true);
-      this.pricewLAND = Convert.fromWei(this.pricewLAND, true);
+      ), true);
+
+      if (this.isInPriorityPeriod) {
+        this.amountwLAND = this.hardCommit;
+      }
+
+      const availableAmounts = await this.contractLandPrivateSale.getAvailableAmounts();
+      this.wLANDAvailableAmountStage = availableAmounts[0] > 0 ? availableAmounts[0] : availableAmounts[1] > 0 ? availableAmounts[1] : availableAmounts[2];
     },
+    
     async approveBUSD() {
       try {
         this.isLoadingApprove = true;
@@ -680,6 +742,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           this.isLoadingApprove = false;
+          this.isApprovedBUSD = true;
           ToastSnackbar.success("Successfully approved");
         });
       } catch (error) {
@@ -689,9 +752,11 @@ export default {
         return ToastSnackbar.error("An error has occurred while to approve");
       }
     },
-    calcAmountBUSD(amount) {
-      this.amountBUSD = amount * this.pricewLAND;
+
+    async calcAmountBUSD(amount) {
+      this.amountBUSD = Convert.fromWei(await this.contractLandPrivateSale.pricewLAND(this.wLANDSoldAmount, amount), true);
     },
+
     async buywLAND() {
       try {
         this.isLoadingApprove = true;
@@ -723,9 +788,43 @@ export default {
         return ToastSnackbar.error("An error has occurred while to approve");
       }
     },
+    
     openNewTab(obj) {
       window.open(obj);
     },
+
+    async claimwLAND() {
+      try {
+        this.isClaimingwLAND = true;
+
+        const confirmTransaction = await this.contractLandPrivateSale.claimwLAND(
+          this.account
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.isClaimingwLAND = false;
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error("An error has occurred while claiming wLAND");
+        });
+
+        confirmTransaction.on("receipt", () => {
+          this.isClaimingwLAND = false;
+          ToastSnackbar.success("Claimed successfully!");
+        });
+      } catch (error) {
+        this.isClaimingwLAND = false;
+        
+        if (error.message) {
+          const ErrorMessage = JSON.parse(
+            error.message.replace("Internal JSON-RPC error.", "")
+          );
+          return ToastSnackbar.error(ErrorMessage.message);
+        }
+        return ToastSnackbar.error("An error has occurred while claiming wLAND");
+      }
+    }
   },
 };
 </script>
