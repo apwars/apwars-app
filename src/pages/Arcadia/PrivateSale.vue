@@ -593,9 +593,9 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
-      wLAND: "0xEa80879aa2B8D7B053F9f42447460b076a80bA13",
-      addresslandPrivateSale: "0x0E84AF6c9B598C6788c861D1770bd77d2DEF71Ce",
-      addressBUSD: "0x7e71238ff893b48145e65e3d469a9b83Fb5eD6ff",
+      wLAND: "0x2572e80a748050C3d927b6173FC3A8836d4C563c",
+      addresslandPrivateSale: "0xbc534c1fC1B5A7750a51B62Bd782f96eA98C7422",
+      addressBUSD: "0x4589158Da9629Fc06F413da5aCDAf53f649F73aD",
 
       nextClaim: 0,
       nextClaimTimer: 0,
