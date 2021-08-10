@@ -205,6 +205,7 @@
                     border="left"
                     type="warning"
                     class="mt-1"
+                    v-if="hasBoughtInPriotiryLevel"
                   >
                     You already bought during the priority level. You need to wait for more {{priorityEndBlock - currentBlockNumber}} blocks.
                   </v-alert>
@@ -512,7 +513,7 @@
               </v-col>
             </v-row>
             <v-row class="justify-center mt-n4">
-              <wButton :disabled="isClaimingwLAND" @click="claimwLAND()" width="170px" class="mx-1 mt-n1">
+              <wButton :disabled="isClaimingwLAND || nextClaimTimer > 0" @click="claimwLAND()" width="170px" class="mx-1 mt-n1">
                 <div class="d-flex justify-center">
                   <span v-if="!isClaimingwLAND" class="align-self-center">CLAIM</span>
                   <span v-else class="align-self-center">WAITING...</span>
@@ -592,15 +593,9 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
-      /*
-      wLAND 0x58cFddB00744E5AbD7BC99d9f8855Ac5eE3B5774
-      busd 0x47E555e6234aB6d2A4aa8Edf25f770Ec56861453
-      privateSale 0xD9e852A190f9Fd6c26FD5dA979c5729CFA61CB14
-      */
-
-      wLAND: "0x1623a3197cb4643Fca03956b0fB423BEDa861c0D",
-      addresslandPrivateSale: "0xf710c5BE7a0Bb0ea15B0b7B05f1771C877726B8c",
-      addressBUSD: "0x9B44Dbc92FEFDD44Ace841c380FaAE86Ed5195fC",
+      wLAND: "0x2572e80a748050C3d927b6173FC3A8836d4C563c",
+      addresslandPrivateSale: "0xbc534c1fC1B5A7750a51B62Bd782f96eA98C7422",
+      addressBUSD: "0x4589158Da9629Fc06F413da5aCDAf53f649F73aD",
 
       nextClaim: 0,
       nextClaimTimer: 0,
@@ -731,6 +726,10 @@ export default {
 
     account() {
       this.initData();
+    },
+
+    amountwLAND() {
+      this.calcAmountBUSD(this.amountwLAND);
     }
   },
 
@@ -765,14 +764,14 @@ export default {
       }
       this.wWISDOMBalance = Convert.fromWei(this.claimInfo.wWISDOWToClaim);
       this.nextClaim = this.claimInfo.nextBlock - this.currentBlockNumber;
-      this.nextClaimTimer = this.nextClaim * 3 * 10000; 
+      this.nextClaimTimer = this.nextClaim * 3 * 1000; 
       if (this.nextClaimTimer < 0) {
         this.nextClaimTimer = 0;
       }
       this.wLANDSoldAmount = Convert.fromWei(await this.contractLandPrivateSale.wLANDSoldAmount(), true);
       this.priorityEndBlock = await this.contractLandPrivateSale.getPriorityEndBlock();
       this.privateSaleEndBlock = await this.contractLandPrivateSale.getPrivateSaleEndBlock();
-      this.privateSaleTimer = (this.privateSaleEndBlock - this.currentBlockNumber) * 3 * 10000; 
+      this.privateSaleTimer = (this.privateSaleEndBlock - this.currentBlockNumber) * 3 * 1000; 
       if (this.privateSaleTimer < 0) {
         this.privateSaleTimer = 0;
       }
