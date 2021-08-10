@@ -743,12 +743,6 @@ export default {
         return;
       }
 
-      console.log({ 
-        wLAND: "0xbAFf0b25baf1BC5ab931F2945a20f9Df82F12eDe",
-        addresslandPrivateSale: "0xCFE6a44DaC58010eD02F420e8A34FD4087327C31",
-        addressBUSD: "0x778c7605a23368310873A7D14Bec29dd10F742d2",
-      });
-
       this.contractBUSD = new ERC20(this.addressBUSD);
       this.contractLandPrivateSale = new LandPrivateSale(
         this.addresslandPrivateSale
