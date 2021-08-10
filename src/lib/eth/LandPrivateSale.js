@@ -70,7 +70,7 @@ export default class LandPrivateSale {
       .call();
     const amount = await this.getHardCommit(_account);
 
-    return amount > 0 && !whitelistPriority;
+    return Convert.fromWei(amount, true) > 0 && !whitelistPriority;
   }
 
   getHardCommit(_account) {
