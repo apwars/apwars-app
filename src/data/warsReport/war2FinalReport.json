@@ -2880,5 +2880,27 @@
       "wGOLDEarnings": 17828.3372,
       "PnL": 0.4510316528
     }
+  ],
+  "pricewGOLD": 0.007,
+  "pricewCOURAGE": 0.491,
+  "pricesUnits": [
+    { "name": "wWARRIOR", "price": 0.437 },
+    { "name": "wARCHER", "price": 0.44 },
+    { "name": "wARMOURED-WARRIOR", "price": 1.903 },
+    { "name": "wCROSSBOWMAN", "price": 3.419 },
+    { "name": "wWIZARD", "price": 6.378 },
+    { "name": "wHORSEMAN", "price": 13.324 },
+    { "name": "wGRUNT", "price": 0.423 },
+    { "name": "wORC-ARCHER", "price": 0.424 },
+    { "name": "wARMOURED-GRUNT", "price": 1.721 },
+    { "name": "wPIKE-ORC", "price": 3.179 },
+    { "name": "wSHAMAN", "price": 6.302 },
+    { "name": "wWARG", "price": 11.457 },
+    { "name": "wSKELETON-WARRIOR", "price": 1.039 },
+    { "name": "wHOUND", "price": 1.197 },
+    { "name": "wUNDEAD-ARCHER", "price": 3.465 },
+    { "name": "wUNDEAD-PIKEMAN", "price": 4.606 },
+    { "name": "wWITCH", "price": 6.705 },
+    { "name": "wDEATH-KNIGHT", "price": 11.262 }
   ]
 }
