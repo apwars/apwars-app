@@ -76,6 +76,33 @@
         <amount :amount="100 * item.PnL" formatted decimals="2" approximate />%
       </template>
     </v-data-table>
+    <p class="mx-3">
+      <b>Disclaimer</b>: PNL is an estimate of gain based on the wGOLD
+      conversion of troops sent. Prices in wGOLD were collected after the war.
+    </p>
+    <p class="mx-3">
+      <b>Price wGOLD:</b>
+      <amount
+        :amount="war.report.pricewGOLD"
+        formatted
+        decimals="3"
+        compact
+        approximate
+      />
+    </p>
+    <p class="mx-3">
+      <b>Price wUNITS: </b>
+      <span v-for="unit in war.report.pricesUnits" v-bind:key="unit.name">
+        <b>{{ unit.name }}:</b>
+        <amount
+          :amount="unit.price"
+          formatted
+          decimals="3"
+          compact
+          approximate
+        />
+      </span>
+    </p>
   </v-card>
 </template>
 
