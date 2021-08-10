@@ -292,11 +292,11 @@
                       class="mx-1 ml-2"
                       size="large"
                       @click="buywLAND"
-                      :disabled="isLoadingBuy || (hasBoughtInPriotiryLevel && isInPriorityPeriod)"
+                      :disabled="amountBUSD == 0 || isBuyingwLAND || (hasBoughtInPriotiryLevel && isInPriorityPeriod)"
                     >
                       <div class="d-flex justify-center">
                         <span v-if="!(hasBoughtInPriotiryLevel && isInPriorityPeriod)" class="align-self-center">
-                          {{ isLoadingBuy ? "Waiting..." : "Buy" }}
+                          {{ isBuyingwLAND ? "Waiting..." : "Buy" }}
                         </span>
                         <span v-else class="align-self-center">WAIT</span>
                       </div>
@@ -598,9 +598,9 @@ export default {
       privateSale 0xD9e852A190f9Fd6c26FD5dA979c5729CFA61CB14
       */
 
-      wLAND: "0x559cd3459D18aB7c936C7349b0CE237793F76291",
-      addresslandPrivateSale: "0xd29F8Edc3B1B8798D84e805264Cb3b0ac7130193",
-      addressBUSD: "0x8791F2979F5F6ACbC50633307AA2E5942201446A",
+      wLAND: "0x1623a3197cb4643Fca03956b0fB423BEDa861c0D",
+      addresslandPrivateSale: "0xf710c5BE7a0Bb0ea15B0b7B05f1771C877726B8c",
+      addressBUSD: "0x9B44Dbc92FEFDD44Ace841c380FaAE86Ed5195fC",
 
       nextClaim: 0,
       nextClaimTimer: 0,
