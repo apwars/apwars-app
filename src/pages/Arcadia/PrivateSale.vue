@@ -175,6 +175,7 @@
             </v-col>
             <v-col cols="12" lg="8">
               <div v-if="isInPriorityPeriod" class="mb-1">
+<<<<<<< HEAD
                 <small
                   >During the priority level you need to buy exactly the specified amount in your
                   hard commit.</small
@@ -188,6 +189,20 @@
                   You already bought during the priority level. You need to wait for more
                   {{ priorityEndBlock - currentBlockNumber }} blocks.
                 </v-alert>
+=======
+                  <small>During the priority level you need to buy exactly the specified amount in your hard commit.</small>
+                  <br />
+                  <small>Your hard commit is: <amount :amount="hardCommit" formatted decimals="2" /> wLAND</small>
+                  <v-alert
+                    dense
+                    border="left"
+                    type="warning"
+                    class="mt-1"
+                    v-if="hasBoughtInPriotiryLevel"
+                  >
+                    You already bought during the priority level. You need to wait for more {{priorityEndBlock - currentBlockNumber}} blocks.
+                  </v-alert>
+>>>>>>> 55a4c9094776504095ce16b7d644488a13343c20
               </div>
               <v-img
                 :src="$vuetify.breakpoint.mdAndUp ? '/images/project/rectangle.png' : ''"
@@ -515,6 +530,7 @@
                 </v-currency-field>
               </v-col>
             </v-row>
+<<<<<<< HEAD
             <v-row
               class="justify-center mt-n4"
               :style="$vuetify.breakpoint.mdAndUp ? '' : 'height: 300px'"
@@ -525,6 +541,10 @@
                 width="170px"
                 class="mx-1 mt-n1"
               >
+=======
+            <v-row class="justify-center mt-n4">
+              <wButton :disabled="isClaimingwLAND || nextClaimTimer > 0" @click="claimwLAND()" width="170px" class="mx-1 mt-n1">
+>>>>>>> 55a4c9094776504095ce16b7d644488a13343c20
                 <div class="d-flex justify-center">
                   <span v-if="!isClaimingwLAND" class="align-self-center">CLAIM</span>
                   <span v-else class="align-self-center">WAITING...</span>
@@ -601,6 +621,7 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
+<<<<<<< HEAD
       /*
       wLAND 0x58cFddB00744E5AbD7BC99d9f8855Ac5eE3B5774
       busd 0x47E555e6234aB6d2A4aa8Edf25f770Ec56861453
@@ -610,6 +631,11 @@ export default {
       wLAND: '0x1623a3197cb4643Fca03956b0fB423BEDa861c0D',
       addresslandPrivateSale: '0xf710c5BE7a0Bb0ea15B0b7B05f1771C877726B8c',
       addressBUSD: '0x9B44Dbc92FEFDD44Ace841c380FaAE86Ed5195fC',
+=======
+      wLAND: "0x97BFAB5B3991D0680395049972ee7722d43E4E2d",
+      addresslandPrivateSale: "0x534C34f55aBEF94D6260E5739970829a13770464",
+      addressBUSD: "0xe2Bee1f0Ed0dA91741837607BE230bfDBd239EB9",
+>>>>>>> 55a4c9094776504095ce16b7d644488a13343c20
 
       nextClaim: 0,
       nextClaimTimer: 0,
@@ -739,6 +765,13 @@ export default {
     account() {
       this.initData();
     },
+<<<<<<< HEAD
+=======
+
+    amountwLAND() {
+      this.calcAmountBUSD(this.amountwLAND);
+    }
+>>>>>>> 55a4c9094776504095ce16b7d644488a13343c20
   },
 
   mounted() {
@@ -770,7 +803,11 @@ export default {
       }
       this.wWISDOMBalance = Convert.fromWei(this.claimInfo.wWISDOWToClaim);
       this.nextClaim = this.claimInfo.nextBlock - this.currentBlockNumber;
+<<<<<<< HEAD
       this.nextClaimTimer = this.nextClaim * 3 * 10000;
+=======
+      this.nextClaimTimer = this.nextClaim * 3 * 1000; 
+>>>>>>> 55a4c9094776504095ce16b7d644488a13343c20
       if (this.nextClaimTimer < 0) {
         this.nextClaimTimer = 0;
       }
@@ -780,7 +817,11 @@ export default {
       );
       this.priorityEndBlock = await this.contractLandPrivateSale.getPriorityEndBlock();
       this.privateSaleEndBlock = await this.contractLandPrivateSale.getPrivateSaleEndBlock();
+<<<<<<< HEAD
       this.privateSaleTimer = (this.privateSaleEndBlock - this.currentBlockNumber) * 3 * 10000;
+=======
+      this.privateSaleTimer = (this.privateSaleEndBlock - this.currentBlockNumber) * 3 * 1000; 
+>>>>>>> 55a4c9094776504095ce16b7d644488a13343c20
       if (this.privateSaleTimer < 0) {
         this.privateSaleTimer = 0;
       }
