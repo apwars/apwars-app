@@ -88,4 +88,54 @@ export default class LandPrivateSale {
     console.log(error);
     return this.smc.methods.claimwLAND().send({ from });
   }
+
+  checkWhitelist(_account) {
+    return this.smc.methods.checkWhitelist(_account).call();
+  }
+
+  getAvailableWorldTickets() {
+    return this.smc.methods.getAvailableWorldTickets().call();
+  }
+
+  getAvailableClanTickets() {
+    return this.smc.methods.getAvailableClanTickets().call();
+  }
+
+  getWorldTicketBalance(_account) {
+    return this.smc.methods.worldTicketOwners(_account).call();
+  }
+
+  getClanTicketBalance(_account) {
+    return this.smc.methods.clanTicketOwners(_account).call();
+  }
+
+  async claimwWISDOW(from) {
+    const error = await this.smc.methods.claimwWISDOW().call({ from });
+    console.log(error);
+    return this.smc.methods.claimwWISDOW().send({ from });
+  }
+
+  async claimWorldTicket(from) {
+    const error = await this.smc.methods.claimWorldTicket().call({ from });
+    console.log(error);
+    return this.smc.methods.claimWorldTicket().send({ from });
+  }
+
+  async claimClanTicket(from) {
+    const error = await this.smc.methods.claimClanTicket().call({ from });
+    console.log(error);
+    return this.smc.methods.claimClanTicket().send({ from });
+  }
+
+  async buyWorldTicket(from) {
+    const error = await this.smc.methods.buyWorldTicket().call({ from });
+    console.log(error);
+    return this.smc.methods.buyWorldTicket().send({ from });
+  }
+
+  async buyClanTicket(from) {
+    const error = await this.smc.methods.buyClanTicket().call({ from });
+    console.log(error);
+    return this.smc.methods.buyClanTicket().send({ from });
+  }
 }
