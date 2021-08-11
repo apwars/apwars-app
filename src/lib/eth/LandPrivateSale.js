@@ -24,6 +24,10 @@ export default class LandPrivateSale {
     return parseInt(await this.smc.methods.priorityEndBlock().call());
   }
 
+  async getCliffEndBlock() {
+    return parseInt(await this.smc.methods.cliffEndBlock().call());
+  }
+
   async getAvailableAmounts() {
     return (
       await this.smc.methods

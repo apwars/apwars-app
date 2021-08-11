@@ -14,9 +14,9 @@
             min-height="110"
           ></v-img>
           <h3 class="mt-4 mb-8 px-md-12 text-center">
-            Arcadia is the first expansion of APWars to a turn-based Village building world in which
-            players will manage domestic economies, handle attacks and defenses, join clans and much
-            more!
+            Arcadia is the first expansion of APWars to a turn-based Village
+            building world in which players will manage domestic economies,
+            handle attacks and defenses, join clans and much more!
           </h3>
           <v-img
             v-if="$vuetify.breakpoint.mdAndUp"
@@ -24,25 +24,23 @@
             max-height="1167"
             min-height="261"
           ></v-img>
-          <div v-if="!$vuetify.breakpoint.mdAndUp" class="d-block">
-            <v-img
-              src="/images/project/0.png"
-              max-height="250"
-              min-height="150"
-              class="mb-4"
-            ></v-img>
-            <v-img
-              src="/images/project/1.png"
-              max-height="250"
-              min-height="150"
-              class="mb-4"
-            ></v-img>
-            <v-img
-              src="/images/project/2.png"
-              max-height="250"
-              min-height="150"
-              class="mb-4"
-            ></v-img>
+          <div v-else class="d-block">
+            <v-carousel
+              cycle
+              height="400"
+              hide-delimiter-background
+              show-arrows-on-hover
+            >
+              <v-carousel-item v-for="(slide, i) in slides" :key="i">
+                <v-sheet height="100%">
+                  <v-img
+                    :src="`/images/project/${i}.png`"
+                    max-height="100%"
+                    min-height="120"
+                  ></v-img>
+                </v-sheet>
+              </v-carousel-item>
+            </v-carousel>
           </div>
         </div>
         <div class="gradient mt-16"></div>
@@ -55,24 +53,30 @@
         <v-col cols="12" lg="8">
           <h1 class="h3Y">wLAND Utility:</h1>
           <h2>
-            wLand is game item resource with utility that enables the player to buy World and Clan
-            reservation tickets and lands.
+            wLand is game item resource with utility that enables the player to
+            buy World and Clan reservation tickets and lands.
           </h2>
           <ul>
             <li>
-              wWorld and wClan tickets: These represent reservation tickets that enable the bearer
-              to establish a world and a clan when these respective features are available.
+              wWorld and wClan tickets: These represent reservation tickets that
+              enable the bearer to establish a world and a clan when these
+              respective features are available.
             </li>
             <li>
-              Lands will be available to be bought only with wLAND. This is necessary for a player
-              that wishes to establish villages and foundations.
+              Lands will be available to be bought only with wLAND. This is
+              necessary for a player that wishes to establish villages and
+              foundations.
             </li>
           </ul>
         </v-col>
 
         <v-col cols="12" lg="4">
           <div class="text-center">
-            <v-img src="/images/project/wLAND.png" max-width="80" class="img"></v-img>
+            <v-img
+              src="/images/project/wLAND.png"
+              max-width="80"
+              class="img"
+            ></v-img>
             <h3 class="h3Y">wLAND</h3>
           </div>
           <h3 class="text-center">
@@ -81,7 +85,7 @@
         </v-col>
       </v-row>
       <!-- END wLAND -->
-      
+
       <div v-if="isWhitelisted">
         <!-- PRIVATE SALE -->
         <div class="d-flex flex-column align-center mt-2">
@@ -92,41 +96,52 @@
             Private Sale
           </h1>
           <h1 v-else class="h3Y text-center mt-4 mb-4">Private Sale</h1>
-          <v-img
-            v-if="$vuetify.breakpoint.mdAndUp"
-            src="/images/project/prices.png"
-            max-height="1167"
-            min-height="261"
-          ></v-img>
-          <div v-else class="d-block">
+          <div class="d-flex justify-space-between">
             <v-img
+              v-bind:class="{ 'price-disabled': pricewLAND > 0.5 }"
               src="/images/project/50.png"
               max-height="400"
               min-height="150"
-              class="mt-3"
+              class="mt-3 mx-6 mx-lg-9"
             ></v-img>
             <v-img
+              v-bind:class="{ 'price-disabled': pricewLAND > 0.75 }"
               src="/images/project/75.png"
               max-height="400"
               min-height="150"
-              class="mt-3"
+              class="mt-3 mx-6 mx-lg-9"
             ></v-img>
             <v-img
+              v-bind:class="{ 'price-disabled': percentageUnitsSold === 100 }"
               src="/images/project/150.png"
               max-height="400"
               min-height="150"
-              class="mt-3"
+              class="mt-3 mx-6 mx-lg-9"
             ></v-img>
           </div>
           <div class="mt-6 text-center" style="width: 100%">
             <v-progress-linear
-              color="#11D300"
+              :color="colorProgress(percentageUnitsSold)"
               buffer-value="100"
-              :value="percentagemUnitsSold"
+              :value="percentageUnitsSold"
               stream
-            ></v-progress-linear>
-            <p class="mt-1">SOLD UNITS: <amount :amount="wLANDSoldAmount" formatted decimals="2" /></p>
-            <p :style="$vuetify.breakpoint.mdAndUp ? '' : 'font-size: 30px'">CURRENT PRICE: $<amount :amount="pricewLAND" formatted decimals="2" /></p>
+              height="30"
+            >
+              <template v-slot:default="{ value }">
+                <strong>{{ Math.ceil(value) }}%</strong>
+              </template>
+            </v-progress-linear>
+            <p class="mt-1">
+              SOLD UNITS:
+              <amount :amount="wLANDSoldAmount" formatted decimals="2" />
+            </p>
+            <p :style="$vuetify.breakpoint.mdAndUp ? '' : 'font-size: 30px'">
+              CURRENT PRICE: $<amount
+                :amount="pricewLAND"
+                formatted
+                decimals="2"
+              />
+            </p>
           </div>
           <h1
             v-if="$vuetify.breakpoint.mdAndUp"
@@ -184,31 +199,48 @@
               <div>
                 <v-progress-linear
                   class="ml-1 mr-1"
-                  color="#11D300"
-                  buffer-value="0"
-                  :value="percentagemUnitsSoldStage"
+                  :color="colorProgress(percentageUnitsSoldStage)"
+                  buffer-value="100"
+                  :value="percentageUnitsSoldStage"
                   stream
-                ></v-progress-linear>
+                  height="30"
+                >
+                  <template v-slot:default="{ value }">
+                    <strong>{{ Math.ceil(value) }}%</strong>
+                  </template>
+                </v-progress-linear>
                 <p class="mt-1">
                   AVAILABLE UNITS:
-                  <amount :amount="wLANDAvailableAmountStage" formatted decimals="2" />
+                  <amount
+                    :amount="wLANDAvailableAmountStage"
+                    formatted
+                    decimals="2"
+                  />
                 </p>
               </div>
             </v-col>
             <v-col cols="12" lg="8">
               <div v-if="isInPriorityPeriod" class="mb-1">
-                  <small>During the priority level you need to buy exactly the specified amount in your hard commit.</small>
-                  <br />
-                  <small>Your hard commit is: <amount :amount="hardCommit" formatted decimals="2" /> wLAND</small>
-                  <v-alert
-                    dense
-                    border="left"
-                    type="warning"
-                    class="mt-1"
-                    v-if="hasBoughtInPriotiryLevel"
-                  >
-                    You already bought during the priority level. You need to wait for more {{priorityEndBlock - currentBlockNumber}} blocks.
-                  </v-alert>
+                <small
+                  >During the priority level you need to buy exactly the
+                  specified amount in your hard commit.</small
+                >
+                <br />
+                <small
+                  >Your hard commit is:
+                  <amount :amount="hardCommit" formatted decimals="2" />
+                  wLAND</small
+                >
+                <v-alert
+                  dense
+                  border="left"
+                  type="warning"
+                  class="mt-1"
+                  v-if="hasBoughtInPriotiryLevel"
+                >
+                  You already bought during the priority level. You need to wait
+                  for more {{ priorityEndBlock - currentBlockNumber }} blocks.
+                </v-alert>
               </div>
               <v-img
                 :src="
@@ -243,14 +275,12 @@
                         ? 'd-flex align-center ml-n3'
                         : 'd-flex mt-n6 mb-4 align-center '
                     "
-                    style=""
                   >
                     <v-img
                       v-if="$vuetify.breakpoint.mdAndUp"
                       src="/images/project/wLAND.png"
                       max-height="50"
                       max-width="50"
-                      class="img"
                     ></v-img>
                   </v-col>
                 </v-row>
@@ -285,18 +315,28 @@
                       src="/images/project/BUSD.png"
                       max-height="36"
                       max-width="35"
-                      class="img"
                     ></v-img>
                     <wButton
                       v-if="isApprovedBUSD"
                       width="170px"
-                      class="mx-1 ml-2"
+                      :class="
+                        $vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'
+                      "
                       size="large"
                       @click="buywLAND"
-                      :disabled="amountBUSD == 0 || isBuyingwLAND || (hasBoughtInPriotiryLevel && isInPriorityPeriod)"
+                      :disabled="
+                        amountBUSD == 0 ||
+                          isBuyingwLAND ||
+                          (hasBoughtInPriotiryLevel && isInPriorityPeriod)
+                      "
                     >
                       <div class="d-flex justify-center">
-                        <span v-if="!(hasBoughtInPriotiryLevel && isInPriorityPeriod)" class="align-self-center">
+                        <span
+                          v-if="
+                            !(hasBoughtInPriotiryLevel && isInPriorityPeriod)
+                          "
+                          class="align-self-center"
+                        >
                           {{ isBuyingwLAND ? "Waiting..." : "Buy" }}
                         </span>
                         <span v-else class="align-self-center">WAIT</span>
@@ -305,7 +345,9 @@
                     <wButton
                       v-else
                       width="170px"
-                      class="mx-1 ml-2"
+                      :class="
+                        $vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'
+                      "
                       size="large"
                       @click="approveBUSD"
                       :disabled="isLoadingApprove"
@@ -319,7 +361,10 @@
                   </v-col>
                   <p class="mt-n4">
                     You will receive
-                    <span class="h3Y"><amount :amount="wWISDOM" formatted decimals="2" /></span> wWISDOM
+                    <span class="h3Y"
+                      ><amount :amount="wWISDOM" formatted decimals="4"
+                    /></span>
+                    wWISDOM
                   </p>
                 </v-row>
               </v-img>
@@ -331,13 +376,19 @@
         <v-row class="justify-center align-center mt-4">
           <v-col cols="12" md="4" lg="4" class="d-flex">
             <div class="text-center">
-              <v-img src="/images/wWISDOM.png" max-width="100" class="img"></v-img>
+              <v-img
+                src="/images/wWISDOM.png"
+                max-width="100"
+                class="img"
+              ></v-img>
               <h3 class="h3Y">wWISDOM</h3>
             </div>
             <div class="my-2 ml-2">
               <h3 class="d-flex">
                 <span>Available Balance:</span>
-                <span class="h3Y ml-1 mr-1">{{ wWISDOMBalance }}</span>
+                <span class="h3Y ml-1 mr-1"
+                  ><amount :amount="wWISDOMBalance" formatted decimals="4"
+                /></span>
                 <span>wWISDOM</span>
               </h3>
               <wButton @click="claimwWISDOW()" width="170px" class="mx-10 mt-2">
@@ -372,12 +423,14 @@
                   class="img"
                 >
                 </v-img>
-                <span class="span">Your balance: {{ worldTicketBalance }} </span>
+                <span class="span"
+                  >Your balance: {{ worldTicketBalance }}
+                </span>
               </div>
               <div class="ml-1">
                 <h1 class="h1W">World</h1>
                 <h1 class="h3Y">39,999 BUSD</h1>
-                <p>{{availableWorldTickets}} units to be sold</p>
+                <p>{{ availableWorldTickets }} units to be sold</p>
                 <p class="h4B">Fee after private sale</p>
                 <p class="h4B mt-n3">(in the game)</p>
                 <div class="d-flex align-center justify-center mt-n2 mb-2">
@@ -386,15 +439,37 @@
                   </h1>
                   <span class="span ml-1">wLAND</span>
                 </div>
-                <wButton :disabled="isBuyingWorldTicket || availableWorldTickets == 0" v-if="privateSaleTimer > 0" @click="buyWorldTicket()" width="170px" class="mx-1 mt-n1" size="large">
+                <wButton
+                  :disabled="isBuyingWorldTicket || availableWorldTickets == 0"
+                  v-if="privateSaleTimer > 0"
+                  @click="buyWorldTicket()"
+                  width="170px"
+                  class="mx-1 mt-n1"
+                  size="large"
+                >
                   <div class="d-flex justify-center">
-                    <span v-if="!isBuyingWorldTicket" class="align-self-center">BUY TICKET</span>
+                    <span v-if="!isBuyingWorldTicket" class="align-self-center"
+                      >BUY TICKET</span
+                    >
                     <span v-else class="align-self-center">WAITING...</span>
                   </div>
                 </wButton>
-                <wButton :disabled="isClaimingWorldTicket" v-if="privateSaleTimer === 0 && worldTicketBalance > 0" @click="claimWorldTicket()" width="170px" class="mx-1 mt-n1" size="large">
+                <wButton
+                  :disabled="
+                    isClaimingWorldTicket || cliffEndBlock > currentBlockNumber
+                  "
+                  v-if="privateSaleTimer === 0 && worldTicketBalance > 0"
+                  @click="claimWorldTicket()"
+                  width="170px"
+                  class="mx-1 mt-n1"
+                  size="large"
+                >
                   <div class="d-flex justify-center">
-                    <span v-if="!isClaimingWorldTicket" class="align-self-center">CLAIM</span>
+                    <span
+                      v-if="!isClaimingWorldTicket"
+                      class="align-self-center"
+                      >CLAIM</span
+                    >
                     <span v-else class="align-self-center">WAITING...</span>
                   </div>
                 </wButton>
@@ -422,7 +497,7 @@
               <div class="ml-1">
                 <h1 class="h1W">Clans</h1>
                 <h1 class="h3Y">3,999 BUSD</h1>
-                <p>{{availableClanTickets}} units to be sold</p>
+                <p>{{ availableClanTickets }} units to be sold</p>
                 <p class="h4B">Fee after private sale</p>
                 <p class="h4B mt-n3">(in the game)</p>
                 <div class="d-flex align-center justify-center mt-n2 mb-2">
@@ -431,15 +506,38 @@
                   </h1>
                   <span class="span ml-1">wLAND</span>
                 </div>
-                <wButton :disabled="isBuyingClanTicket || availableClanTickets == 0" v-if="privateSaleTimer > 0" @click="buyClanTicket()" width="170px" class="mx-1 mt-n1" size="large">
+                <wButton
+                  :disabled="isBuyingClanTicket || availableClanTickets == 0"
+                  v-if="privateSaleTimer > 0"
+                  @click="buyClanTicket()"
+                  width="170px"
+                  class="mx-1 mt-n1"
+                  size="large"
+                >
                   <div class="d-flex justify-center">
-                    <span v-if="!isBuyingClanTicket" class="align-self-center">BUY TICKET</span>
+                    <span v-if="!isBuyingClanTicket" class="align-self-center"
+                      >BUY TICKET</span
+                    >
                     <span v-else class="align-self-center">WAITING...</span>
                   </div>
                 </wButton>
-                <wButton :disabled="isClaimingClanTicket" v-if="privateSaleTimer === 0 && clanTicketBalance > 0" @click="claimClanTicket()" width="170px" class="mx-1 mt-n1" size="large">
+                <wButton
+                  :disabled="
+                    isClaimingClanTicket || cliffEndBlock > currentBlockNumber
+                  "
+                  v-if="privateSaleTimer === 0 && clanTicketBalance > 0"
+                  @click="claimClanTicket()"
+                  width="170px"
+                  class="mx-1 mt-n1"
+                  size="large"
+                >
                   <div class="d-flex justify-center">
-                    <span v-if="!isClaimingClanTicket" class="align-self-center">CLAIM</span>
+                    <span
+                      v-if="!isClaimingClanTicket"
+                      class="align-self-center"
+                    >
+                      CLAIM
+                    </span>
                     <span v-else class="align-self-center">WAITING...</span>
                   </div>
                 </wButton>
@@ -450,7 +548,9 @@
         <!-- Distribution Timeline -->
 
         <v-img
-          src="/images/project/bg-fire.png"
+          :src="
+            $vuetify.breakpoint.mdAndUp ? '/images/project/bg-fire.png' : ''
+          "
           max-height="600"
           min-height="400"
           class="justify-center align-center"
@@ -462,7 +562,9 @@
             >
               wLAND Distribution Timeline
             </h1>
-            <h1 v-else class="h3Y text-center mt-4 mb-4">wLAND Distribution Timeline</h1>
+            <h1 v-else class="h3Y text-center mt-4 mb-4">
+              wLAND Distribution Timeline
+            </h1>
             <v-img
               :class="$vuetify.breakpoint.mdAndUp ? 'img' : ''"
               src="/images/project/distributionTimeline.png"
@@ -472,18 +574,30 @@
           </v-container>
         </v-img>
         <!-- END Distribution Timeline -->
-        <v-row class="justify-center mt-n16">
+        <v-row class="justify-center">
           <v-img
             class="justify-center mt-1"
             :src="
-              $vuetify.breakpoint.mdAndUp ? '/images/project/rectangle2.png' : ''
+              $vuetify.breakpoint.mdAndUp
+                ? '/images/project/rectangle2.png'
+                : ''
             "
             :max-width="$vuetify.breakpoint.mdAndUp ? '1185' : '300'"
           >
             <v-row class="mt-4 justify-center">
-              <v-col cols="12" md="3" lg="3">
+              <v-col
+                cols="12"
+                md="3"
+                lg="3"
+                :class="$vuetify.breakpoint.mdAndUp ? '' : 'mt-n5'"
+              >
                 <h6>TOTAL CLAIMED:</h6>
-                <v-currency-field disabled outlined v-bind="currencyConfig" v-model="claimedAmount">
+                <v-currency-field
+                  disabled
+                  outlined
+                  v-bind="currencyConfig"
+                  v-model="claimedAmount"
+                >
                   <template v-slot:append>
                     <div class="d-flex">
                       <span class="mr-1 align-self-center">wLAND</span>
@@ -491,9 +605,19 @@
                   </template>
                 </v-currency-field>
               </v-col>
-              <v-col cols="12" md="3" lg="3">
+              <v-col
+                cols="12"
+                md="3"
+                lg="3"
+                :class="$vuetify.breakpoint.mdAndUp ? '' : 'mt-n8'"
+              >
                 <h6>NEXT AMOUNT TO CLAIM:</h6>
-                <v-currency-field  disabled outlined v-bind="currencyConfig" v-model="unlockedAmount">
+                <v-currency-field
+                  disabled
+                  outlined
+                  v-bind="currencyConfig"
+                  v-model="unlockedAmount"
+                >
                   <template v-slot:append>
                     <div class="d-flex">
                       <span class="mr-1 align-self-center">wLAND</span>
@@ -501,9 +625,19 @@
                   </template>
                 </v-currency-field>
               </v-col>
-              <v-col cols="12" md="3" lg="3">
+              <v-col
+                cols="12"
+                md="3"
+                lg="3"
+                :class="$vuetify.breakpoint.mdAndUp ? '' : 'mt-n8'"
+              >
                 <h6>REMANING LOCKED TOKENS:</h6>
-                <v-currency-field  disabled outlined v-bind="currencyConfig" v-model="remainingAmount">
+                <v-currency-field
+                  disabled
+                  outlined
+                  v-bind="currencyConfig"
+                  v-model="remainingAmount"
+                >
                   <template v-slot:append>
                     <div class="d-flex">
                       <span class="mr-1 align-self-center">wLAND</span>
@@ -512,10 +646,20 @@
                 </v-currency-field>
               </v-col>
             </v-row>
-            <v-row class="justify-center mt-n4">
-              <wButton :disabled="isClaimingwLAND || nextClaimTimer > 0" @click="claimwLAND()" width="170px" class="mx-1 mt-n1">
+            <v-row
+              class="justify-center mt-n4"
+              :style="$vuetify.breakpoint.mdAndUp ? '' : 'height: 300px'"
+            >
+              <wButton
+                :disabled="isClaimingwLAND"
+                @click="claimwLAND()"
+                width="170px"
+                class="mx-1 mt-n1"
+              >
                 <div class="d-flex justify-center">
-                  <span v-if="!isClaimingwLAND" class="align-self-center">CLAIM</span>
+                  <span v-if="!isClaimingwLAND" class="align-self-center"
+                    >CLAIM</span
+                  >
                   <span v-else class="align-self-center">WAITING...</span>
                 </div>
               </wButton>
@@ -523,7 +667,7 @@
           </v-img>
         </v-row>
         <v-row>
-          <v-container class="justify-center mt-10">
+          <v-container class="justify-center mt-8">
             <h1
               v-if="$vuetify.breakpoint.mdAndUp"
               class="h1Y text-center mt-n10 mb-5"
@@ -531,13 +675,15 @@
               Next Claim
             </h1>
             <h1 v-else class="h3Y text-center mt-4 mb-4">Next Claim</h1>
-          <countdown class="mt-10 mb-4" :time="nextClaimTimer"></countdown>
+            <countdown class="mt-10 mb-4" :time="nextClaimTimer"></countdown>
           </v-container>
         </v-row>
         <!-- FAQ -->
         <v-container class="py-4 py-lg-8">
           <div class="text-center">
-            <div class="text-uppercase font-weight-bold body-2 primary--text mb-2">
+            <div
+              class="text-uppercase font-weight-bold body-2 primary--text mb-2"
+            >
               PRIVATE SALE
             </div>
             <h2 class="text-h3 text-lg-h2">Frequently Asked Questions</h2>
@@ -556,7 +702,6 @@
         </v-container>
       </div>
     </v-container>
-    
   </v-sheet>
 </template>
 
@@ -581,6 +726,11 @@ export default {
   },
   data() {
     return {
+      slides: [
+        "/images/project/0.png",
+        "/images/project/1.png",
+        "/images/project/2.png",
+      ],
       currencyConfig: {
         locale: window.navigator.userLanguage || window.navigator.language,
         prefix: "",
@@ -593,9 +743,9 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
-      wLAND: "0x97BFAB5B3991D0680395049972ee7722d43E4E2d",
-      addresslandPrivateSale: "0x534C34f55aBEF94D6260E5739970829a13770464",
-      addressBUSD: "0xe2Bee1f0Ed0dA91741837607BE230bfDBd239EB9",
+      wLAND: "0x6BeCEf3E9E54eC3F93C90EDdE47bD97b5453D007",
+      addresslandPrivateSale: "0xcD04cb1955B812AC9647c34dFCfd6c77d9b1e58C",
+      addressBUSD: "0xd65C666735649749bCFBf3aD4eD775E653Cb8810",
 
       nextClaim: 0,
       nextClaimTimer: 0,
@@ -688,29 +838,32 @@ export default {
       isClaimingClanTicket: false,
       isBuyingClanTicket: false,
       isBuyingWorldTicket: false,
+      cliffEndBlock: 0,
     };
   },
   computed: {
     isConnected() {
       return this.$store.getters["user/isConnected"];
     },
-    
+
     account() {
       return this.$store.getters["user/account"];
     },
-    
+
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
-    
-    percentagemUnitsSold() {
+
+    percentageUnitsSold() {
       return parseInt((this.wLANDSoldAmount / this.maxSupply) * 100);
     },
-    
-    percentagemUnitsSoldStage() {
-      return parseInt((1 - this.wLANDAvailableAmountStage / this.soldPerStage ) * 100);
+
+    percentageUnitsSoldStage() {
+      return parseInt(
+        (1 - this.wLANDAvailableAmountStage / this.soldPerStage) * 100
+      );
     },
-    
+
     wWISDOM() {
       return this.amountwLAND / 10000;
     },
@@ -730,13 +883,13 @@ export default {
 
     amountwLAND() {
       this.calcAmountBUSD(this.amountwLAND);
-    }
+    },
   },
 
   mounted() {
     this.initData();
   },
-  
+
   methods: {
     async initData() {
       if (!this.isConnected) {
@@ -753,9 +906,16 @@ export default {
         this.addresslandPrivateSale
       );
 
-      this.isWhitelisted = await this.contractLandPrivateSale.checkWhitelist(this.account);
-      this.claimInfo = await this.contractLandPrivateSale.getClaimInfo(this.account);
-      this.remainingAmount = Convert.fromWei(this.claimInfo.remainingAmount, true);
+      this.isWhitelisted = await this.contractLandPrivateSale.checkWhitelist(
+        this.account
+      );
+      this.claimInfo = await this.contractLandPrivateSale.getClaimInfo(
+        this.account
+      );
+      this.remainingAmount = Convert.fromWei(
+        this.claimInfo.remainingAmount,
+        true
+      );
       this.claimedAmount = Convert.fromWei(this.claimInfo.claimedAmount, true);
       this.wLANDAmount = Convert.fromWei(this.claimInfo.wLANDAmount, true);
       this.unlockedAmount = this.wLANDAmount / 9;
@@ -764,46 +924,71 @@ export default {
       }
       this.wWISDOMBalance = Convert.fromWei(this.claimInfo.wWISDOWToClaim);
       this.nextClaim = this.claimInfo.nextBlock - this.currentBlockNumber;
-      this.nextClaimTimer = this.nextClaim * 3 * 1000; 
+      this.nextClaimTimer = this.nextClaim * 3 * 1000;
       if (this.nextClaimTimer < 0) {
         this.nextClaimTimer = 0;
       }
-      this.wLANDSoldAmount = Convert.fromWei(await this.contractLandPrivateSale.wLANDSoldAmount(), true);
+      this.wLANDSoldAmount = Convert.fromWei(
+        await this.contractLandPrivateSale.wLANDSoldAmount(),
+        true
+      );
+      this.cliffEndBlock = await this.contractLandPrivateSale.getCliffEndBlock();
       this.priorityEndBlock = await this.contractLandPrivateSale.getPriorityEndBlock();
       this.privateSaleEndBlock = await this.contractLandPrivateSale.getPrivateSaleEndBlock();
-      this.privateSaleTimer = (this.privateSaleEndBlock - this.currentBlockNumber) * 3 * 1000; 
+      this.privateSaleTimer =
+        (this.privateSaleEndBlock - this.currentBlockNumber) * 3 * 1000;
       if (this.privateSaleTimer < 0) {
         this.privateSaleTimer = 0;
       }
-      this.hardCommit = Convert.fromWei(await this.contractLandPrivateSale.getHardCommit(this.account), true);
-      this.hasBoughtInPriotiryLevel = await this.contractLandPrivateSale.hasBoughtInPriotiryLevel(this.account);
-      this.isInPriorityPeriod = await this.contractLandPrivateSale.isInPriorityPeriod(this.currentBlockNumber);
-      this.maxSupply = Convert.fromWei(await this.contractLandPrivateSale.maxSupply(), true);
-      this.pricewLAND = Convert.fromWei(await this.contractLandPrivateSale.pricewLAND(
-        this.wLANDSoldAmount
-      ), true);
+      this.hardCommit = Convert.fromWei(
+        await this.contractLandPrivateSale.getHardCommit(this.account),
+        true
+      );
+      this.hasBoughtInPriotiryLevel = await this.contractLandPrivateSale.hasBoughtInPriotiryLevel(
+        this.account
+      );
+      this.isInPriorityPeriod = await this.contractLandPrivateSale.isInPriorityPeriod(
+        this.currentBlockNumber
+      );
+      this.maxSupply = Convert.fromWei(
+        await this.contractLandPrivateSale.maxSupply(),
+        true
+      );
+      this.pricewLAND = Convert.fromWei(
+        await this.contractLandPrivateSale.pricewLAND(this.wLANDSoldAmount),
+        true
+      );
 
       if (this.isInPriorityPeriod) {
         this.amountwLAND = this.hardCommit;
       }
       this.availableClanTickets = await this.contractLandPrivateSale.getAvailableClanTickets();
-      this.clanTicketBalance = await this.contractLandPrivateSale.getClanTicketBalance(this.account);
+      this.clanTicketBalance = await this.contractLandPrivateSale.getClanTicketBalance(
+        this.account
+      );
       this.availableWorldTickets = await this.contractLandPrivateSale.getAvailableWorldTickets();
-      this.worldTicketBalance = await this.contractLandPrivateSale.getWorldTicketBalance(this.account);
+      this.worldTicketBalance = await this.contractLandPrivateSale.getWorldTicketBalance(
+        this.account
+      );
 
       const availableAmounts = await this.contractLandPrivateSale.getAvailableAmounts();
-      this.wLANDAvailableAmountStage = availableAmounts[0] > 0 ? availableAmounts[0] : availableAmounts[1] > 0 ? availableAmounts[1] : availableAmounts[2];
+      this.wLANDAvailableAmountStage =
+        availableAmounts[0] > 0
+          ? availableAmounts[0]
+          : availableAmounts[1] > 0
+          ? availableAmounts[1]
+          : availableAmounts[2];
     },
-    
+
     async approveBUSD() {
       try {
         this.isLoadingApprove = true;
-        
+
         await this.contractBUSD.approve(
           this.account,
           this.addresslandPrivateSale
         );
-        
+
         this.isLoadingApprove = false;
         this.isApprovedBUSD = true;
         ToastSnackbar.success("BUSD smart contract approved successfully!");
@@ -816,7 +1001,13 @@ export default {
     },
 
     async calcAmountBUSD(amount) {
-      this.amountBUSD = Convert.fromWei(await this.contractLandPrivateSale.pricewLAND(this.wLANDSoldAmount, amount), true);
+      this.amountBUSD = Convert.fromWei(
+        await this.contractLandPrivateSale.pricewLAND(
+          this.wLANDSoldAmount,
+          amount
+        ),
+        true
+      );
     },
 
     async buywLAND() {
@@ -829,6 +1020,7 @@ export default {
         );
 
         this.isBuyingwLAND = false;
+        this.amountwLAND = 0;
         ToastSnackbar.success("wLAND secured successfully!");
       } catch (error) {
         this.isBuyingwLAND = false;
@@ -839,7 +1031,7 @@ export default {
         return ToastSnackbar.error("An error has occurred while buying wLAND");
       }
     },
-    
+
     openNewTab(obj) {
       window.open(obj);
     },
@@ -848,21 +1040,21 @@ export default {
       try {
         this.isClaimingwLAND = true;
 
-        await this.contractLandPrivateSale.claimwLAND(
-          this.account
-        );
+        await this.contractLandPrivateSale.claimwLAND(this.account);
 
         this.isClaimingwLAND = false;
         ToastSnackbar.success("wLAND was claimed successfully!");
       } catch (error) {
         console.log(error);
         this.isClaimingwLAND = false;
-        
+
         if (error.message) {
           return this.showError(error.message);
         }
 
-        return ToastSnackbar.error("An error has occurred while claiming wLAND");
+        return ToastSnackbar.error(
+          "An error has occurred while claiming wLAND"
+        );
       }
     },
 
@@ -878,20 +1070,22 @@ export default {
         ToastSnackbar.success("wWISDOW was claimed successfully!");
       } catch (error) {
         this.isClaimingwWISDOM = false;
-        
+
         if (error.message) {
           return this.showError(error.message);
         }
-        return ToastSnackbar.error("An error has occurred while claiming wWISDOW");
+        return ToastSnackbar.error(
+          "An error has occurred while claiming wWISDOW"
+        );
       }
     },
 
     showError(message) {
-      if (message.indexOf("Internal JSON-RPC error.") >=0) {
+      if (message.indexOf("Internal JSON-RPC error.") >= 0) {
         const obj = JSON.parse(message.replace("Internal JSON-RPC error.", ""));
         return ToastSnackbar.error(obj.message);
       }
-          
+
       return ToastSnackbar.error(message);
     },
 
@@ -899,19 +1093,19 @@ export default {
       try {
         this.isClaimingWorldTicket = true;
 
-        await this.contractLandPrivateSale.claimWorldTicket(
-          this.account
-        );
+        await this.contractLandPrivateSale.claimWorldTicket(this.account);
 
         this.isClaimingWorldTicket = false;
         ToastSnackbar.success("World Ticket claimed successfully!");
       } catch (error) {
         this.isClaimingWorldTicket = false;
-        
+
         if (error.message) {
           return this.showError(error.message);
         }
-        return ToastSnackbar.error("An error has occurred while claiming world ticket");
+        return ToastSnackbar.error(
+          "An error has occurred while claiming world ticket"
+        );
       }
     },
 
@@ -919,19 +1113,19 @@ export default {
       try {
         this.isClaimingClanTicket = true;
 
-        await this.contractLandPrivateSale.claimClanTicket(
-          this.account
-        );
+        await this.contractLandPrivateSale.claimClanTicket(this.account);
 
         this.isClaimingClanTicket = false;
         ToastSnackbar.success("Clan Ticket claimed successfully!");
       } catch (error) {
         this.isClaimingClanTicket = false;
-        
+
         if (error.message) {
           return this.showError(error.message);
         }
-        return ToastSnackbar.error("An error has occurred while claiming clan ticket");
+        return ToastSnackbar.error(
+          "An error has occurred while claiming clan ticket"
+        );
       }
     },
 
@@ -939,19 +1133,19 @@ export default {
       try {
         this.isBuyingClanTicket = true;
 
-        await this.contractLandPrivateSale.buyClanTicket(
-          this.account
-        );
+        await this.contractLandPrivateSale.buyClanTicket(this.account);
 
         this.isBuyingClanTicket = false;
         ToastSnackbar.success("Clan Ticket secured successfully!");
       } catch (error) {
         this.isBuyingClanTicket = false;
-        
+
         if (error.message) {
           return this.showError(error.message);
         }
-        return ToastSnackbar.error("An error has occurred while buying clan ticket");
+        return ToastSnackbar.error(
+          "An error has occurred while buying clan ticket"
+        );
       }
     },
 
@@ -967,13 +1161,25 @@ export default {
         ToastSnackbar.success("World Ticket secured successfully!");
       } catch (error) {
         this.isBuyingWorldTicket = false;
-        
+
         if (error.message) {
           return this.showError(error.message);
         }
-        return ToastSnackbar.error("An error has occurred while buying world ticket");
+        return ToastSnackbar.error(
+          "An error has occurred while buying world ticket"
+        );
       }
-    }
+    },
+
+    colorProgress(percentage) {
+      if (percentage < 30) {
+        return "#11D300";
+      } else if (percentage > 30 && percentage < 60) {
+        return "#ffa500";
+      } else {
+        return "#ff0000";
+      }
+    },
   },
 };
 </script>
@@ -1028,5 +1234,9 @@ export default {
   border-width: 1px;
   border-color: #bb7248;
   border-style: solid;
+}
+.price-disabled {
+  opacity: 0.6;
+  filter: grayscale(1);
 }
 </style>
