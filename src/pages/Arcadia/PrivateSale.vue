@@ -784,7 +784,7 @@ export default {
   data() {
     return {
       checkbox: false,
-      openModalBuy: true,
+      openModalBuy: false,
       slides: [
         "/images/project/0.png",
         "/images/project/1.png",
