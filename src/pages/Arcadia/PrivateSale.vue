@@ -242,7 +242,22 @@
                   for more {{ priorityEndBlock - currentBlockNumber }} blocks.
                 </v-alert>
               </div>
+              <v-checkbox
+                v-model="checkbox"
+                class="checkbox-modal-input ma-0 pa-0"
+                color="secondary"
+              >
+                <template v-slot:label>
+                  <div>
+                    You understand that wLAND is an utility token used to buy
+                    clans, worlds and lands that you will receive during 9
+                    months after a one month of “cliff” that will start after
+                    the end of this private sale.
+                  </div>
+                </template>
+              </v-checkbox>
               <v-img
+                v-bind:class="{ 'price-disabled': !checkbox }"
                 :src="
                   $vuetify.breakpoint.mdAndUp
                     ? '/images/project/rectangle.png'
@@ -258,7 +273,7 @@
                       v-bind="currencyConfig"
                       v-model="amountwLAND"
                       @input="calcAmountBUSD"
-                      :disabled="isInPriorityPeriod"
+                      :disabled="isInPriorityPeriod || !checkbox"
                     >
                       <template v-slot:append>
                         <div class="d-flex">
@@ -325,7 +340,8 @@
                       size="large"
                       @click="buywLAND"
                       :disabled="
-                        amountBUSD == 0 ||
+                        !checkbox ||
+                          amountBUSD == 0 ||
                           isBuyingwLAND ||
                           (hasBoughtInPriotiryLevel && isInPriorityPeriod)
                       "
@@ -350,7 +366,7 @@
                       "
                       size="large"
                       @click="approveBUSD"
-                      :disabled="isLoadingApprove"
+                      :disabled="isLoadingApprove || !checkbox"
                     >
                       <div class="d-flex justify-center">
                         <span class="align-self-center">
@@ -361,9 +377,9 @@
                   </v-col>
                   <p class="mt-n4">
                     You will receive
-                    <span class="h3Y"
-                      ><amount :amount="wWISDOM" formatted decimals="4"
-                    /></span>
+                    <span class="h3Y">
+                      <amount :amount="wWISDOM" formatted decimals="4" />
+                    </span>
                     wWISDOM
                   </p>
                 </v-row>
@@ -391,11 +407,19 @@
                 /></span>
                 <span>wWISDOM</span>
               </h3>
-              <wButton @click="claimwWISDOW()" width="170px" class="mx-10 mt-2">
+              <wButton
+                @click="claimwWISDOW()"
+                width="170px"
+                class="mx-10 mt-2"
+                :disabled="wLANDSoldAmount < 200000"
+              >
                 <div class="d-flex justify-center">
                   <div class="align-self-center">CLAIM</div>
                 </div>
               </wButton>
+              <p v-if="wLANDSoldAmount < 200000">
+                The claim will be available after reaching the soft cap amount
+              </p>
             </div>
           </v-col>
         </v-row>
@@ -473,6 +497,9 @@
                     <span v-else class="align-self-center">WAITING...</span>
                   </div>
                 </wButton>
+                <p v-if="cliffEndBlock > currentBlockNumber">
+                  The claim will be available after the cliff close
+                </p>
               </div>
             </v-col>
             <v-col
@@ -541,12 +568,14 @@
                     <span v-else class="align-self-center">WAITING...</span>
                   </div>
                 </wButton>
+                <p v-if="cliffEndBlock > currentBlockNumber">
+                  The claim will be available after the cliff close
+                </p>
               </div>
             </v-col>
           </v-row>
         </v-container>
         <!-- Distribution Timeline -->
-
         <v-img
           :src="
             $vuetify.breakpoint.mdAndUp ? '/images/project/bg-fire.png' : ''
@@ -611,7 +640,7 @@
                 lg="3"
                 :class="$vuetify.breakpoint.mdAndUp ? '' : 'mt-n8'"
               >
-                <h6>NEXT AMOUNT TO CLAIM:</h6>
+                <h6>NEXT AMOUNT TO CLAIM MONTHLY:</h6>
                 <v-currency-field
                   disabled
                   outlined
@@ -702,6 +731,32 @@
         </v-container>
       </div>
     </v-container>
+
+    <modal-wood
+      :open="openModalBuy"
+      title="wLAND secured successfully!"
+      @confirm="closeModalBuy"
+      textConfirm="Ok"
+      width="500px"
+      height="166px"
+      hideClose
+    >
+      <v-row dense>
+        <v-col cols="12">
+          <h3 class="my-2">
+            You paid <amount :amount="amountBUSD" formatted decimals="4" /> BUSD
+          </h3>
+          <h3 class="my-2">
+            You will be able to claim
+            <amount :amount="amountwLAND" formatted decimals="4" /> wLAND
+          </h3>
+          <h3 class="my-2">
+            You will be able to claim
+            <amount :amount="wWISDOM" formatted decimals="4" /> wWISDOM
+          </h3>
+        </v-col>
+      </v-row>
+    </modal-wood>
   </v-sheet>
 </template>
 
@@ -709,6 +764,7 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
+import ModalWood from "@/lib/components/ui/Modals/Templates/Wood";
 
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
@@ -723,9 +779,12 @@ export default {
     wButton,
     Countdown,
     Amount,
+    ModalWood,
   },
   data() {
     return {
+      checkbox: false,
+      openModalBuy: true,
       slides: [
         "/images/project/0.png",
         "/images/project/1.png",
@@ -743,9 +802,9 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
-      wLAND: "0x6BeCEf3E9E54eC3F93C90EDdE47bD97b5453D007",
-      addresslandPrivateSale: "0xcD04cb1955B812AC9647c34dFCfd6c77d9b1e58C",
-      addressBUSD: "0xd65C666735649749bCFBf3aD4eD775E653Cb8810",
+      wLAND: "0xae4Cc0A4e5BCB65E3E4A04091D40ef3273230995",
+      addresslandPrivateSale: "0xE1d6bB7CA643387dFEBBC1cE1528f44cf91DF281",
+      addressBUSD: "0xBa824e9E970Dda0fa7A0834225f4a2Ddb401Ee4f",
 
       nextClaim: 0,
       nextClaimTimer: 0,
@@ -1020,7 +1079,7 @@ export default {
         );
 
         this.isBuyingwLAND = false;
-        this.amountwLAND = 0;
+        this.openModalBuy = true;
         ToastSnackbar.success("wLAND secured successfully!");
       } catch (error) {
         this.isBuyingwLAND = false;
@@ -1030,6 +1089,11 @@ export default {
         }
         return ToastSnackbar.error("An error has occurred while buying wLAND");
       }
+    },
+
+    closeModalBuy() {
+      this.openModalBuy = false;
+      this.amountwLAND = 0;
     },
 
     openNewTab(obj) {
@@ -1045,7 +1109,6 @@ export default {
         this.isClaimingwLAND = false;
         ToastSnackbar.success("wLAND was claimed successfully!");
       } catch (error) {
-        console.log(error);
         this.isClaimingwLAND = false;
 
         if (error.message) {
@@ -1221,7 +1284,7 @@ export default {
 }
 .gradient {
   width: 100%;
-  height: 50px;
+  height: 30px;
   background: linear-gradient(180deg, rgb(49 45 35 / 0%) 0, rgb(0 0 0) 100%);
 }
 #background {
@@ -1238,5 +1301,46 @@ export default {
 .price-disabled {
   opacity: 0.6;
   filter: grayscale(1);
+}
+
+.checkbox-modal-input >>> .v-input__control > .v-input__slot fieldset {
+  color: #fff !important;
+  border-width: 3px !important;
+  border-radius: 18px !important;
+}
+
+.checkbox-modal-input >>> .v-label {
+  transform-origin: top left !important;
+  font-weight: bold !important;
+  color: #fff !important;
+}
+
+.checkbox-modal-input >>> .v-input__append-inner {
+  color: #fff !important;
+  font-weight: bold !important;
+  font-size: 13px;
+}
+
+.checkbox-modal-input >>> .v-icon {
+  color: #fff !important;
+}
+
+.checkbox-modal-input.v-input--is-disabled {
+  opacity: 0.2;
+}
+
+.checkbox-modal-input >>> input {
+  color: #fff;
+  font-weight: bold;
+}
+
+.checkbox-modal-input >>> .v-messages__message {
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold;
+}
+.bg-fire {
+  background-image: url("/images/project/bg-fire.png");
+  background-size: cover;
 }
 </style>

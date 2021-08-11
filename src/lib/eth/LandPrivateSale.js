@@ -61,10 +61,6 @@ export default class LandPrivateSale {
     const priorityEndBlock = parseInt(
       await this.smc.methods.priorityEndBlock().call()
     );
-    console.log({
-      _block,
-      priorityEndBlock
-    });
     return _block < priorityEndBlock;
   }
 
@@ -83,13 +79,11 @@ export default class LandPrivateSale {
 
   async buywLAND(amount, from) {
     const error = await this.smc.methods.buywLAND(amount).call({ from });
-    console.log(error);
     return this.smc.methods.buywLAND(amount).send({ from });
   }
 
   async claimwLAND(from) {
     const error = await this.smc.methods.claimwLAND().call({ from });
-    console.log(error);
     return this.smc.methods.claimwLAND().send({ from });
   }
 
@@ -115,31 +109,26 @@ export default class LandPrivateSale {
 
   async claimwWISDOW(from) {
     const error = await this.smc.methods.claimwWISDOW().call({ from });
-    console.log(error);
     return this.smc.methods.claimwWISDOW().send({ from });
   }
 
   async claimWorldTicket(from) {
     const error = await this.smc.methods.claimWorldTicket().call({ from });
-    console.log(error);
     return this.smc.methods.claimWorldTicket().send({ from });
   }
 
   async claimClanTicket(from) {
     const error = await this.smc.methods.claimClanTicket().call({ from });
-    console.log(error);
     return this.smc.methods.claimClanTicket().send({ from });
   }
 
   async buyWorldTicket(from) {
     const error = await this.smc.methods.buyWorldTicket().call({ from });
-    console.log(error);
     return this.smc.methods.buyWorldTicket().send({ from });
   }
 
   async buyClanTicket(from) {
     const error = await this.smc.methods.buyClanTicket().call({ from });
-    console.log(error);
     return this.smc.methods.buyClanTicket().send({ from });
   }
 }
