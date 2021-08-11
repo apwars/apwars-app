@@ -457,7 +457,7 @@
                 <p>{{ availableWorldTickets }} units to be sold</p>
                 <p class="h4B">Fee after private sale</p>
                 <p class="h4B mt-n3">(in the game)</p>
-                <div class="d-flex align-center justify-center mt-n2 mb-2">
+                <div class="d-flex align-center mt-n2 mb-2">
                   <h1 class="h3Y">
                     100,000
                   </h1>
@@ -468,7 +468,7 @@
                   v-if="privateSaleTimer > 0"
                   @click="buyWorldTicket()"
                   width="170px"
-                  class="mx-1 mt-n1"
+                  class="mt-n1"
                   size="large"
                 >
                   <div class="d-flex justify-center">
@@ -485,7 +485,7 @@
                   v-if="privateSaleTimer === 0 && worldTicketBalance > 0"
                   @click="claimWorldTicket()"
                   width="170px"
-                  class="mx-1 mt-n1"
+                  class="mt-n1"
                   size="large"
                 >
                   <div class="d-flex justify-center">
@@ -527,7 +527,7 @@
                 <p>{{ availableClanTickets }} units to be sold</p>
                 <p class="h4B">Fee after private sale</p>
                 <p class="h4B mt-n3">(in the game)</p>
-                <div class="d-flex align-center justify-center mt-n2 mb-2">
+                <div class="d-flex align-center mt-n2 mb-2">
                   <h1 class="h3Y">
                     10,000
                   </h1>
@@ -538,7 +538,7 @@
                   v-if="privateSaleTimer > 0"
                   @click="buyClanTicket()"
                   width="170px"
-                  class="mx-1 mt-n1"
+                  class="mt-n1"
                   size="large"
                 >
                   <div class="d-flex justify-center">
@@ -555,7 +555,7 @@
                   v-if="privateSaleTimer === 0 && clanTicketBalance > 0"
                   @click="claimClanTicket()"
                   width="170px"
-                  class="mx-1 mt-n1"
+                  class="mt-n1"
                   size="large"
                 >
                   <div class="d-flex justify-center">
