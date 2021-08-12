@@ -10,7 +10,8 @@
             alt="wGOLD"
             class="image-symbol"
           />
-          <span> {{ computedAmount }} </span>
+          <span v-if="size" :style="`font-size: ${size}px`"> {{ computedAmount }} </span>
+          <span v-else> {{ computedAmount }} </span>
           <span v-if="symbol"> {{ symbol }} </span>
         </span>
       </span>
@@ -23,7 +24,7 @@
 import Convert from '@/lib/helpers/Convert';
 
 export default {
-  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon'],
+  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size'],
 
   computed: {
     computedAmount() {
