@@ -1,4 +1,5 @@
 import war1FinalReport from "@/data/warsReport/war1FinalReport";
+import war2FinalReport from "@/data/warsReport/war2FinalReport";
 
 const wars = [
   {
@@ -21,6 +22,7 @@ const wars = [
     totalPrize: "4874364487632384826939128",
     test: false,
     showTest: false,
+    reportVersion: "1",
     report: war1FinalReport,
     showReedemPrize: false,
   },
@@ -165,25 +167,30 @@ const wars = [
     showReedemPrize: true,
   },
   {
-    id: 7,
-    name: "The second conflict #Test",
+    id: 8,
+    name: "The second conflict",
     description: `
-    For a long time all the attention in Decentraland was spent on the rising tensions between Humans and Orcs, after a golden period of bonanza an age of military preparation has begun. A lot of wGOLD was spent in recruiting Warriors and Archers across the Human empire, from the Capital to the extended countryside, men of all ages were being recruited, children and seniors capable of holding a sword were considered able to fight. At the same time at Orc pits, Grunts and Orc Archers were being raised and united to form a monstrous army. This animosity and arousement of forces shadowed the real threat to liberty of all races that was lurking into the shadows. Silently in an obscure form the Forces of Extreme Darkness were growing in power day by day, night by night in a subversive manner. This ultimate enemy has not yet been faced.`,
-    dateStart: "2021-07-26",
-    dateEnd: "2021-07-30",
+    Tales of sages describe the first war as thrilling, their old tomes comprise a story about a miraculous twist in the war that made the Corporation thrive even is disadvantageous circumstances. The Degenerate were brought home discouraged and fearful. But a foul scourge of cadaveric beings raised from the corpses of the fallen to join forces with the Degenerates. Known as the undead, this race of skeletons, witches and warlocks uses dark magic as vital force and means of destruction towards its enemies.
+    Both factions are preparing for an eminent conflict of unseen proportions, while some pray for protection, others seek vengeance.`,
+    dateStart: "2021-08-03",
+    dateEnd: "2021-08-08",
     contractAddress: {
-      "56": "0xe32b0f2456285e389e54e25f81064bef77b14e9d",
+      "5777": "0x027C51b5235CF7103a04D429cDa314B1ef1F5319",
+      "56": "0x3CE0594a8BA6163cE5e4A23E0a0741B2cae6312d",
+      "97": "0x7f1B535deb4e12dE9cF3EEd8ccb1B92833618E72",
     },
     countdown: {
-      enlistment: 1626963304000,
-      round1: 1626970504000,
-      round2: 1626974104000,
+      enlistment: 1627981200000,
+      round1: 1628337600000,
+      round2: 1628424000000,
     },
-    totalPrize: "1000000000000000000000",
+    totalPrize: "2730754994450959688131832",
     test: false,
-    showTest: true,
+    showTest: false,
     showReedemPrize: true,
-  }
+    reportVersion: "2",
+    report: war2FinalReport,
+  },
 ];
 
 export function getWars(isTest) {
