@@ -18,6 +18,16 @@
             building world in which players will manage domestic economies,
             handle attacks and defenses, join clans and much more!
           </h3>
+          <div v-if="isBlocked" class="mt-n3 ml-3 mr-3 mb-3 px-md-12 text-center">
+            <v-alert
+              color="primary"
+              dark
+              icon="mdi-alert"
+              prominent
+            >
+              This is not an error. You are seeing this message because you are accessing this application with an IP address from a prohibited jurisdiction or territory to participate in this sale. This private sale of game items is only related to utility tokens with objective use cases and bear no investment characteristics of promises of dividends, guarantees of appreciation, or gains of any form. Nevertheless, because regulatory blurriness we are preventing Americans, for example, to take part in this sale.
+            </v-alert>
+          </div>
           <v-img
             v-if="$vuetify.breakpoint.mdAndUp"
             src="/images/project/arcadia.png"
@@ -221,12 +231,13 @@
             </v-col>
             <v-col cols="12" lg="8">
               <div v-if="isInPriorityPeriod" class="mb-1">
-                <small
-                  >During the priority level you need to buy exactly the
-                  specified amount in your hard commit.</small
+                <small>
+                  Due to the high demand, we defined a priority period of 24h for those who meet the minimum requirement of 10k USD allocation. 
+                  After this period, every player will be able to buy any amount of wLAND.
+                </small
                 >
                 <br />
-                <small
+                <small v-if="hardCommit > 0"
                   >Your hard commit is:
                   <amount :amount="hardCommit" formatted decimals="2" />
                   wLAND</small
@@ -238,19 +249,19 @@
                   class="mt-1"
                   v-if="hasBoughtInPriotiryLevel"
                 >
-                  You already bought during the priority level. You need to wait
+                  You already bought during the priority period. You need to wait
                   for more {{ priorityEndBlock - currentBlockNumber }} blocks.
                 </v-alert>
               </div>
               <v-checkbox
                 v-model="checkbox"
-                class="checkbox-modal-input ma-0 pa-0"
+                class="checkbox-modal-input ma-0 pa-0 mt-2"
                 color="secondary"
               >
                 <template v-slot:label>
                   <div>
-                    You understand that wLAND is an utility token used to buy
-                    clans, worlds and lands that you will receive during 9
+                    I understand that wLAND is a utility token used to buy
+                    clans, worlds, and lands that I will receive it during 9
                     months after a one month of “cliff” that will start after
                     the end of this private sale.
                   </div>
@@ -772,6 +783,7 @@ import Convert from "@/lib/helpers/Convert";
 
 import LandPrivateSale from "@/lib/eth/LandPrivateSale";
 import ERC20 from "@/lib/eth/ERC20";
+import axios from "axios";
 
 export default {
   name: "Landing",
@@ -898,6 +910,8 @@ export default {
       isBuyingClanTicket: false,
       isBuyingWorldTicket: false,
       cliffEndBlock: 0,
+      location: {},
+      isLocationLoaded: false,
     };
   },
   computed: {
@@ -926,7 +940,14 @@ export default {
     wWISDOM() {
       return this.amountwLAND / 10000;
     },
+
+    isBlocked() {
+      const blocked = (process.env.VUE_APP_BLOCKED_CONTRY_CODES || "").toUpperCase();
+      const code = (this.location.country_code || "").toUpperCase();
+      return code && blocked.split(",").includes(code);
+    }
   },
+
   watch: {
     isConnected() {
       this.initData();
@@ -942,7 +963,7 @@ export default {
 
     amountwLAND() {
       this.calcAmountBUSD(this.amountwLAND);
-    },
+    }
   },
 
   mounted() {
@@ -950,8 +971,29 @@ export default {
   },
 
   methods: {
+    async getLocattion() {
+      try {
+        if (this.isLocationLoaded) {
+          return this.location;
+        }
+
+        const r = (await axios.get(process.env.VUE_APP_LOCATION_SERVICE)).data;
+        this.isLocationLoaded = true;
+        
+        return r;
+      } catch {
+        return {};
+      }
+    },
+
     async initData() {
       if (!this.isConnected) {
+        return;
+      }
+
+      this.location = await this.getLocattion();
+
+      if (this.isBlocked) {
         return;
       }
 
