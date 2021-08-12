@@ -17,6 +17,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <w-button
+          v-if="!isHideClose"
           class="mr-1"
           @click="$emit('close')"
           :disabled="disabledClose"
@@ -45,6 +46,7 @@ export default {
     "height",
     "textClose",
     "textConfirm",
+    "hideClose",
   ],
   components: {
     wButton,
@@ -81,6 +83,9 @@ export default {
         return "Confirm";
       }
       return this.textConfirm;
+    },
+    isHideClose() {
+      return this.hideClose !== undefined;
     },
   },
 };
