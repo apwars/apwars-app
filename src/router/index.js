@@ -14,7 +14,6 @@ import BlackMarket from "@/pages/BlackMarket.vue";
 import PrivateSale from "@/pages/Arcadia/PrivateSale.vue";
 import WeaponResearch from "@/pages/WeaponResearch.vue";
 import TrainingCenter from "@/pages/TrainingCenter.vue";
-import Inventory2 from "@/pages/Inventory2.vue";
 
 Vue.use(Router);
 
@@ -28,11 +27,6 @@ export const routes = [
         path: "/",
         name: "/",
         component: BlackMarket
-      },
-      {
-        path: "/inventory2",
-        name: "/inventory2",
-        component: Inventory2
       },
       {
         path: "/game-items/:nftId/:type-orders/new",

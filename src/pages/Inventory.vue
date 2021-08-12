@@ -58,8 +58,8 @@
         </v-row>
       </v-col>
       <v-col cols="12" md="3" class="mb-4">
-        <v-row class="mt-1 ml-4 justify-space-between">
-          <wButton width="180px" class="d-flex align-self-center mt-1" @click="goToItems()">
+        <v-row class="mt-1 ml-4 justify-space-between d-block">
+          <wButton width="180px" class="d-flex align-self-center mt-1" @click="openNewTab('https://exchange.apwars.farm')">
             <div class="d-flex justify-center">
               <img
                 src="/images/training-center/icon-training-center.png"
@@ -70,7 +70,7 @@
             </div>
           </wButton>
 
-          <wButton width="180px" class="d-flex align-self-center mt-1" @click="goToItems()">
+          <wButton width="180px" class="d-flex align-self-center mt-1" @click="goTo('/')">
             <div class="d-flex justify-center">
               <img
                 src="/images/black-market/black-market.png"
@@ -202,8 +202,12 @@ export default {
   },
 
   methods: {
-    goToStore() {
-      this.$router.push('/');
+    openNewTab(obj) {
+      window.open(obj);
+    },
+
+    goTo(rout) {
+      this.$router.push(rout);
     },
 
     async loadData() {
