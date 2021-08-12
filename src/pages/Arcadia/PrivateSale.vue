@@ -281,7 +281,7 @@
                     <h5>QTY:</h5>
                     <v-currency-field
                       outlined
-                      v-bind="currencyConfig"
+                      v-bind="currencyConfigBuywLAND"
                       v-model="amountwLAND"
                       @input="calcAmountBUSD"
                       :disabled="isInPriorityPeriod || !checkbox"
@@ -810,6 +810,14 @@ export default {
         autoDecimalMode: true,
         allowNegative: false,
       },
+      currencyConfigBuywLAND: {
+        locale: window.navigator.userLanguage || window.navigator.language,
+        prefix: "",
+        suffix: "",
+        decimalLength: 0,
+        autoDecimalMode: true,
+        allowNegative: false,
+      },
       amountwLAND: 0,
       amountBUSD: 0,
       amount: 0,
@@ -1116,7 +1124,7 @@ export default {
         this.isBuyingwLAND = true;
 
         await this.contractLandPrivateSale.buywLAND(
-          Convert.toWei(this.amountwLAND),
+          Convert.toWei(parseInt(this.amountwLAND)),
           this.account
         );
 
