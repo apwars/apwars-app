@@ -25,15 +25,7 @@
                 class="mt-n3 ml-3 mr-3 mb-3 px-md-12 text-center"
               >
                 <v-alert color="primary" dark icon="mdi-alert" prominent>
-                  This is not an error. You are seeing this message because you
-                  are accessing this application with an IP address from a
-                  prohibited jurisdiction or territory to participate in this
-                  sale. This private sale of game items is only related to
-                  utility tokens with objective use cases and bear no investment
-                  characteristics of promises of dividends, guarantees of
-                  appreciation, or gains of any form. Nevertheless, because
-                  regulatory blurriness we are preventing Americans, for
-                  example, to take part in this sale.
+                  This is not an error. You are seeing this message because you are accessing this application with an IP address from a prohibited jurisdiction or territory to participate in this sale. This private sale of game items is only related to utility tokens with objective use cases and bear no investment characteristics of promises of dividends, guarantees of appreciation, or gains of any form. Nevertheless, because regulatory blurriness we are preventing Americans, Chinese, North Korean, for example, to take part in this sale.
                 </v-alert>
               </div>
               <v-img
