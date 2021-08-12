@@ -691,7 +691,7 @@
               :style="$vuetify.breakpoint.mdAndUp ? '' : 'height: 300px'"
             >
               <wButton
-                :disabled="isClaimingwLAND"
+                :disabled="isClaimingwLAND || nextClaimTimer > 0"
                 @click="claimwLAND()"
                 width="170px"
                 class="mx-1 mt-n1"
@@ -822,9 +822,12 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
-      wLAND: "0x6018FbBb76BD8eafF81bf082888a6246112cF087",
-      addresslandPrivateSale: "0x134c478e64088047437f5d8905b68319e09c6059",
+      wLAND: "0x2C6107c27A15D2C7F397D88D76257Ea42c12f89F",
+      addresslandPrivateSale: "0x228a6390419Ec998f79339dd8Bdf33435D700413",
       addressBUSD: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+
+      // 0xe9e7cea3dedca5984780bafc599bd69add087d56
+
 
       nextClaim: 0,
       nextClaimTimer: 0,
@@ -1005,22 +1008,36 @@ export default {
         return;
       }
 
+      console.log("contractBUSD");
       this.contractBUSD = new ERC20(this.addressBUSD);
+
+      console.log("LandPrivateSale");
       this.contractLandPrivateSale = new LandPrivateSale(
         this.addresslandPrivateSale
       );
-
-      this.isApprovedBUSD = await this.contractBUSD.hasAllowance(
+      console.log("LandPrivateSaleEnd");
+      console.log(this.addresslandPrivateSale);
+      console.log(this.addressBUSD);
+      console.log(this.account); 
+      try {
+        this.isApprovedBUSD = await this.contractBUSD.hasAllowance(
         this.account,
         this.addresslandPrivateSale
       );
+      } catch(error) {
+        console.log(error.toString());
+      }
+
+      console.log("isApprovedBUSD");
 
       this.isWhitelisted = await this.contractLandPrivateSale.checkWhitelist(
         this.account
       );
+      console.log("isWhitelisted");
       this.claimInfo = await this.contractLandPrivateSale.getClaimInfo(
         this.account
       );
+      console.log("claimInfo");
       this.remainingAmount = Convert.fromWei(
         this.claimInfo.remainingAmount,
         true
@@ -1041,6 +1058,7 @@ export default {
         await this.contractLandPrivateSale.wLANDSoldAmount(),
         true
       );
+      console.log("wLANDSoldAmount");
       this.cliffEndBlock = await this.contractLandPrivateSale.getCliffEndBlock();
       this.priorityEndBlock = await this.contractLandPrivateSale.getPriorityEndBlock();
       this.privateSaleEndBlock = await this.contractLandPrivateSale.getPrivateSaleEndBlock();
@@ -1049,10 +1067,12 @@ export default {
       if (this.privateSaleTimer < 0) {
         this.privateSaleTimer = 0;
       }
+      console.log("hardCommit");
       this.hardCommit = Convert.fromWei(
         await this.contractLandPrivateSale.getHardCommit(this.account),
         true
       );
+            console.log("hardCommit");
       this.hasBoughtInPriotiryLevel = await this.contractLandPrivateSale.hasBoughtInPriotiryLevel(
         this.account
       );
