@@ -926,7 +926,7 @@ export default {
   },
   data() {
     return {
-      startBlock: 9994300,
+      startBlock: 999430,
       checkbox: false,
       openModalBuy: false,
       slides: [
