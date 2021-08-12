@@ -67,7 +67,10 @@
       </div>
 
       <v-slide-y-transition>
-        <div :class="{'message-box': playerName, 'player-box': !playerName}" v-if="showChatBox">
+        <div
+          :class="{ 'message-box': playerName, 'player-box': !playerName }"
+          v-if="showChatBox"
+        >
           <v-card
             class="d-flex flex-column space-between"
             width="350"
@@ -75,25 +78,18 @@
             :height="playerName ? `100%` : null"
           >
             <v-card-text>
-              <div
-                class="d-flex flex-row justify-space-between align-center"
-              >
+              <div class="d-flex flex-row justify-space-between align-center">
                 <div>
-                  Live Chat - APWars 
-                  <span v-if="playerName">({{playerName}})</span>
+                  Live Chat - APWars
+                  <span v-if="playerName">({{ playerName }})</span>
                 </div>
                 <v-menu
                   bottom
                   origin="center center"
                   transition="scale-transition"
-                  >
+                >
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      dark
-                      icon
-                      v-bind="attrs"
-                      v-on="on"
-                    >
+                    <v-btn dark icon v-bind="attrs" v-on="on">
                       <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                   </template>
@@ -110,7 +106,7 @@
                       </v-list-item-title>
                     </v-list-item>
                     <v-list-item>
-                       <v-list-item-title @click="clearPlayerName()">
+                      <v-list-item-title @click="clearPlayerName()">
                         <v-btn text>
                           <v-icon left>
                             mdi-account-arrow-right
@@ -122,72 +118,110 @@
                   </v-list>
                 </v-menu>
               </div>
-              <div v-if="playerName" id="messages-container" style="max-height: 260px; overflow-y: scroll; overflow-x: hide">
-                <v-list-item v-for="(message, index) in messages" :key="index" :id="`message-${index}`">
+              <div
+                v-if="playerName"
+                id="messages-container"
+                style="max-height: 260px; overflow-y: scroll; overflow-x: hide"
+              >
+                <v-list-item
+                  v-for="(message, index) in messages"
+                  :key="index"
+                  :id="`message-${index}`"
+                >
                   <v-list-item-avatar>
-                    <v-img :src="`https://avatar.apwars.farm?seed=${message.id}`"></v-img>
+                    <v-img
+                      :src="`https://avatar.apwars.farm?seed=${message.id}`"
+                    ></v-img>
                   </v-list-item-avatar>
 
                   <v-list-item-content>
                     <v-list-item-title>
-                      {{message.name}}
-                      <small class="date">({{parseDate(message.date)}})</small>
+                      {{ message.name }}
+                      <small class="date"
+                        >({{ parseDate(message.date) }})</small
+                      >
                     </v-list-item-title>
-                    <small>{{message.msg}}</small>
+                    <small>{{ message.msg }}</small>
                   </v-list-item-content>
                 </v-list-item>
               </div>
-              <div v-else class="d-flex justify-center align-center" style="max-height: 260px; overflow-y: scroll; overflow-x: hide">
-                <img src="/images/chat.png" class="mt-2" style="width: 260px; height: 260px" />
+              <div
+                v-else
+                class="d-flex justify-center align-center"
+                style="max-height: 260px; overflow-y: scroll; overflow-x: hide"
+              >
+                <img
+                  src="/images/chat.png"
+                  class="mt-2"
+                  style="width: 260px; height: 260px"
+                />
               </div>
             </v-card-text>
             <v-spacer v-if="playerName"></v-spacer>
-            <v-card-actions class="d-flex flex-row" style="height: 70px;" v-if="playerName">
-                <div style="width: 100%">
-                  <v-text-field
-                    @keydown.enter="sendMessage()"
-                    counter="150"
-                    v-model="message"
-                    label="Message"
-                  ></v-text-field>
-                </div>
-                <div style="width: 40px" class="ml-auto">
-                  <v-btn
-                    :disabled="message.length > 150"
-                    @click="sendMessage"
-                    icon
-                  >
-                    <v-icon>mdi-send</v-icon>
-                  </v-btn>
-                </div>
+            <v-card-actions
+              class="d-flex flex-row"
+              style="height: 70px;"
+              v-if="playerName"
+            >
+              <div style="width: 100%">
+                <v-text-field
+                  @keydown.enter="sendMessage()"
+                  counter="150"
+                  v-model="message"
+                  label="Message"
+                ></v-text-field>
+              </div>
+              <div style="width: 40px" class="ml-auto">
+                <v-btn
+                  :disabled="message.length > 150"
+                  @click="sendMessage"
+                  icon
+                >
+                  <v-icon>mdi-send</v-icon>
+                </v-btn>
+              </div>
             </v-card-actions>
-            <v-card-actions class="d-flex flex-row" style="height: 70px;" v-else>
-                <div style="width: 100%">
-                  <v-text-field
-                    @keydown.enter="updatePlayerName()"
-                    v-model="tmpPlayerName"
-                    label="Enter your name"
-                    counter="20"
-                  ></v-text-field>
-                </div>
-                <div style="width: 40px" class="ml-auto">
-                  <v-btn
-                    :disabled="tmpPlayerName.length > 20"
-                    @click="updatePlayerName()"
-                    icon
-                  >
-                    <v-icon>mdi-account-arrow-right</v-icon>
-                  </v-btn>
-                </div>
+            <v-card-actions
+              class="d-flex flex-row"
+              style="height: 70px;"
+              v-else
+            >
+              <div style="width: 100%">
+                <v-text-field
+                  @keydown.enter="updatePlayerName()"
+                  v-model="tmpPlayerName"
+                  label="Enter your name"
+                  counter="20"
+                ></v-text-field>
+              </div>
+              <div style="width: 40px" class="ml-auto">
+                <v-btn
+                  :disabled="tmpPlayerName.length > 20"
+                  @click="updatePlayerName()"
+                  icon
+                >
+                  <v-icon>mdi-account-arrow-right</v-icon>
+                </v-btn>
+              </div>
             </v-card-actions>
-        </v-card>
+          </v-card>
         </div>
       </v-slide-y-transition>
-      
+
       <v-fab-transition>
-        <v-btn v-show="!showChatBox" fab dark large color="primary" fixed right bottom @click="toggleChat()">
+        <v-btn
+          v-show="!showChatBox"
+          fab
+          dark
+          large
+          color="primary"
+          fixed
+          right
+          bottom
+          @click="toggleChat()"
+        >
           <v-icon>mdi-chat</v-icon>
-        </v-btn>  
+        </v-btn>
       </v-fab-transition>
     </v-main>
     <app-footer />
@@ -198,9 +232,9 @@
 import AppHeader from "@/lib/components/ui/App/AppHeader";
 import AppFooter from "@/lib/components/ui/App/AppFooter";
 
-import moment from 'moment';
-import { v4 as uuidv4 } from 'uuid';
-const sha256 = require('js-sha256');
+import moment from "moment";
+import { v4 as uuidv4 } from "uuid";
+const sha256 = require("js-sha256");
 
 export default {
   components: {
@@ -212,11 +246,11 @@ export default {
     return {
       showModal: true,
       showChatBox: false,
-      playerName: sessionStorage.getItem('playerName'),
-      tmpPlayerName: '',
-      message: '',
-      signature: sessionStorage.getItem('signature'),
-      guid: sessionStorage.getItem('guid'),
+      playerName: sessionStorage.getItem("playerName"),
+      tmpPlayerName: "",
+      message: "",
+      signature: sessionStorage.getItem("signature"),
+      guid: sessionStorage.getItem("guid"),
       messages: [],
       changeNetwork: false,
     };
@@ -264,11 +298,11 @@ export default {
   mounted() {
     this.watchBlockchain();
 
-    socket.on('messages', (items) => {
+    socket.on("messages", (items) => {
       this.messages = items;
     });
 
-    socket.on('message', (data) => {
+    socket.on("message", (data) => {
       this.messages.push(data);
     });
   },
@@ -309,22 +343,22 @@ export default {
       if (this.tmpPlayerName.length > 150) {
         return;
       }
-      
-      socket.emit('message', {
+
+      socket.emit("message", {
         msg: this.message,
         name: this.playerName,
         signature: this.signature,
         guid: this.guid,
       });
 
-      this.message = '';
+      this.message = "";
     },
 
     scrollMessageContainer() {
-      const el = document.getElementById(`message-${this.messages.length-1}`);
-      
+      const el = document.getElementById(`message-${this.messages.length - 1}`);
+
       if (el) {
-        el.scrollIntoView({behavior: 'smooth'});
+        el.scrollIntoView({ behavior: "smooth" });
       }
     },
 
@@ -334,27 +368,32 @@ export default {
       }
 
       this.guid = uuidv4();
-      this.signature = await window.web3.eth.personal.sign(sha256(this.tmpPlayerName + this.guid), this.account);
+      this.signature = await window.web3.eth.personal.sign(
+        sha256(this.tmpPlayerName + this.guid),
+        this.account
+      );
       this.playerName = this.tmpPlayerName;
 
-      sessionStorage.setItem('playerName', this.playerName);
-      sessionStorage.setItem('guid', this.guid);
-      sessionStorage.setItem('signature', this.signature);
+      sessionStorage.setItem("playerName", this.playerName);
+      sessionStorage.setItem("guid", this.guid);
+      sessionStorage.setItem("signature", this.signature);
     },
 
     async clearPlayerName() {
-      this.guid = '';
-      this.signature = ''
-      this.playerName = '';
+      this.guid = "";
+      this.signature = "";
+      this.playerName = "";
 
-      sessionStorage.setItem('playerName', '');
-      sessionStorage.setItem('guid', '');
-      sessionStorage.setItem('signature', '');
+      sessionStorage.setItem("playerName", "");
+      sessionStorage.setItem("guid", "");
+      sessionStorage.setItem("signature", "");
     },
 
     parseDate(date) {
-      return moment(date).startOf('minute').fromNow()
-    }
+      return moment(date)
+        .startOf("minute")
+        .fromNow();
+    },
   },
 };
 </script>
