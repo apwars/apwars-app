@@ -12,6 +12,7 @@
     "@chenfengyuan/vue-countdown": "^1.1.5",
     "@toast-ui/vue-editor": "^2.5.1",
     "apexcharts": "^3.24.0",
+    "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
     "decimal.js": "^10.2.1",
     "ethers": "^5.1.0",
