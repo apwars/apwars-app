@@ -8,98 +8,96 @@
         <h1 class="h3Y text-center mt-9 mb-4">Private sale begins</h1>
         <countdown class="mt-10 mb-4" :time="timeStartPrivateSale"></countdown>
         <div>
-
-            <div class="d-flex flex-column align-center mt-3">
-              <v-img
-                src="/images/project/ArcadiaExpansion.png"
-                max-height="400"
-                min-height="110"
-              ></v-img>
-              <h3 class="mt-4 mb-8 px-md-12 text-center">
-                Arcadia is the first expansion of APWars to a turn-based Village
-                building world in which players will manage domestic economies,
-                handle attacks and defenses, join clans and much more!
-              </h3>
-              <div
-                v-if="isBlocked"
-                class="mt-n3 ml-3 mr-3 mb-3 px-md-12 text-center"
-              >
-                <v-alert color="primary" dark icon="mdi-alert" prominent>
-                  This is not an error. You are seeing this message because you
-                  are accessing this application with an IP address from a
-                  prohibited jurisdiction or territory to participate in this
-                  sale. This private sale of game items is only related to
-                  utility tokens with objective use cases and bear no investment
-                  characteristics of promises of dividends, guarantees of
-                  appreciation, or gains of any form. Nevertheless, because
-                  regulatory blurriness we are preventing Americans, for
-                  example, to take part in this sale.
-                </v-alert>
-              </div>
-              <v-img
-                v-if="$vuetify.breakpoint.mdAndUp"
-                src="/images/project/arcadia.png"
-                max-height="1167"
-                min-height="261"
-              ></v-img>
-              <div v-else class="d-block">
-                <v-carousel
-                  cycle
-                  height="400"
-                  hide-delimiter-background
-                  show-arrows-on-hover
-                >
-                  <v-carousel-item v-for="(slide, i) in slides" :key="i">
-                    <v-sheet height="100%">
-                      <v-img
-                        :src="`/images/project/${i}.png`"
-                        max-height="100%"
-                        min-height="120"
-                      ></v-img>
-                    </v-sheet>
-                  </v-carousel-item>
-                </v-carousel>
-              </div>
+          <div class="d-flex flex-column align-center mt-3">
+            <v-img
+              src="/images/project/ArcadiaExpansion.png"
+              max-height="400"
+              min-height="110"
+            ></v-img>
+            <h3 class="mt-4 mb-8 px-md-12 text-center">
+              Arcadia is the first expansion of APWars to a turn-based Village
+              building world in which players will manage domestic economies,
+              handle attacks and defenses, join clans and much more!
+            </h3>
+            <div
+              v-if="isBlocked"
+              class="mt-n3 ml-3 mr-3 mb-3 px-md-12 text-center"
+            >
+              <v-alert color="primary" dark icon="mdi-alert" prominent>
+                This is not an error. You are seeing this message because you
+                are accessing this application with an IP address from a
+                prohibited jurisdiction or territory to participate in this
+                sale. This private sale of game items is only related to utility
+                tokens with objective use cases and bear no investment
+                characteristics of promises of dividends, guarantees of
+                appreciation, or gains of any form. Nevertheless, because
+                regulatory blurriness we are preventing Americans, for example,
+                to take part in this sale.
+              </v-alert>
             </div>
-
+            <v-img
+              v-if="$vuetify.breakpoint.mdAndUp"
+              src="/images/project/arcadia.png"
+              max-height="1167"
+              min-height="261"
+            ></v-img>
+            <div v-else class="d-block">
+              <v-carousel
+                cycle
+                height="400"
+                hide-delimiter-background
+                show-arrows-on-hover
+              >
+                <v-carousel-item v-for="(slide, i) in slides" :key="i">
+                  <v-sheet height="100%">
+                    <v-img
+                      :src="`/images/project/${i}.png`"
+                      max-height="100%"
+                      min-height="120"
+                    ></v-img>
+                  </v-sheet>
+                </v-carousel-item>
+              </v-carousel>
+            </div>
+          </div>
         </div>
         <!-- wLAND -->
         <v-container>
           <v-row class="justify-center">
-          <v-col cols="12" lg="8">
-            <h1 class="h3Y">wLAND Utility:</h1>
-            <h2>
-              wLand is game item resource with utility that enables the player
-              to buy World and Clan reservation tickets and lands.
-            </h2>
-            <ul>
-              <li>
-                wWorld and wClan tickets: These represent reservation tickets
-                that enable the bearer to establish a world and a clan when
-                these respective features are available.
-              </li>
-              <li>
-                Lands will be available to be bought only with wLAND. This is
-                necessary for a player that wishes to establish villages and
-                foundations.
-              </li>
-            </ul>
-          </v-col>
+            <v-col cols="12" lg="8">
+              <h1 class="h3Y">wLAND Utility:</h1>
+              <h2>
+                wLand is game item resource with utility that enables the player
+                to buy World and Clan reservation tickets and lands.
+              </h2>
+              <ul>
+                <li>
+                  wWorld and wClan tickets: These represent reservation tickets
+                  that enable the bearer to establish a world and a clan when
+                  these respective features are available.
+                </li>
+                <li>
+                  Lands will be available to be bought only with wLAND. This is
+                  necessary for a player that wishes to establish villages and
+                  foundations.
+                </li>
+              </ul>
+            </v-col>
 
-          <v-col cols="12" lg="4">
-            <div class="text-center">
-              <v-img
-                src="/images/project/wLAND.png"
-                max-width="80"
-                class="img"
-              ></v-img>
-              <h3 class="h3Y">wLAND</h3>
-            </div>
-            <h3 class="text-center">
-              wLAND is the main resource of the Arcadia Expansion.
-            </h3>
-          </v-col>
-        </v-row>
+            <v-col cols="12" lg="4">
+              <div class="text-center">
+                <v-img
+                  src="/images/project/wLAND.png"
+                  max-width="80"
+                  class="img"
+                ></v-img>
+                <h3 class="h3Y">wLAND</h3>
+              </div>
+              <h3 class="text-center">
+                wLAND is the main resource of the Arcadia Expansion.
+              </h3>
+            </v-col>
+          </v-row>
         </v-container>
         <!-- END wLAND -->
       </div>
@@ -597,10 +595,24 @@
                     <span class="span ml-1">wLAND</span>
                   </div>
                   <wButton
+                    v-if="privateSaleTimer > 0 && !isApprovedBUSD"
+                    width="170px"
+                    :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
+                    size="large"
+                    @click="approveBUSD"
+                    :disabled="isLoadingApprove"
+                  >
+                    <div class="d-flex justify-center">
+                      <span class="align-self-center">
+                        {{ isLoadingApprove ? "Waiting..." : "Approve BUSD" }}
+                      </span>
+                    </div>
+                  </wButton>
+                  <wButton
                     :disabled="
                       isBuyingWorldTicket || availableWorldTickets == 0
                     "
-                    v-if="privateSaleTimer > 0"
+                    v-if="privateSaleTimer > 0 & isApprovedBUSD"
                     @click="buyWorldTicket()"
                     width="170px"
                     class="mt-n1"
@@ -673,9 +685,25 @@
                     </h1>
                     <span class="span ml-1">wLAND</span>
                   </div>
+
+                  <wButton
+                    v-if="privateSaleTimer > 0 && !isApprovedBUSD"
+                    width="170px"
+                    :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
+                    size="large"
+                    @click="approveBUSD"
+                    :disabled="isLoadingApprove"
+                  >
+                    <div class="d-flex justify-center">
+                      <span class="align-self-center">
+                        {{ isLoadingApprove ? "Waiting..." : "Approve BUSD" }}
+                      </span>
+                    </div>
+                  </wButton>
+
                   <wButton
                     :disabled="isBuyingClanTicket || availableClanTickets == 0"
-                    v-if="privateSaleTimer > 0"
+                    v-if="privateSaleTimer > 0 && isApprovedBUSD"
                     @click="buyClanTicket()"
                     width="170px"
                     class="mt-n1"
@@ -1253,6 +1281,7 @@ export default {
         this.isApprovedBUSD = true;
         ToastSnackbar.success("BUSD smart contract approved successfully!");
       } catch (error) {
+        this.isLoadingApprove = false;
         if (error.message) {
           return this.showError(error.message);
         }
