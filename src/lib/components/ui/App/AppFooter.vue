@@ -1,126 +1,130 @@
 <template>
-  <v-footer app>
-    <div class="d-flex justify-space-between align-center menu-footer">
-      <div>
-        <div class="d-flex align-center">
-          <div>
-            <img
-              class="d-block mx-2"
-              src="/images/avatars/user-menu.png"
-              width="60px"
-              alt="avatar"
-            />
-          </div>
-          <div class="d-flex align-center">
-            <img
-              class="d-block mx-1"
-              src="/images/wgold.png"
-              width="50px"
-              alt="wgold"
-            />
-            <span class="balance-wGOLD">
-              <amount :amount="25693.69" decimals="2" formatted />
-            </span>
-          </div>
-          <div class="d-flex ml-2 align-center">
-            <img
-              class="d-block mx-1"
-              src="/images/icons/wLAND.png"
-              width="50px"
-              alt="wLAND"
-            />
-            <span class="balance-wGOLD">
-              <amount :amount="9532.09" decimals="2" formatted />
-            </span>
-          </div>
+  <v-footer app padless>
+    <div
+      class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
+    >
+      <div class="d-flex justify-start align-center">
+        <div class="d-flex">
+          <img
+            class="d-block mx-0 mr-2 mx-md-2 avatar"
+            src="/images/avatars/user-menu.png"
+            alt="avatar"
+          />
         </div>
-      </div>
-      <div>
-        <div class="d-flex menu-itens align-center">
-          <span v-for="(item, index) in menu" :key="index">
-            <v-tooltip bottom v-if="!item.submenu">
-              <template v-slot:activator="{ on, attrs }">
-                <div
-                  v-bind="attrs"
-                  v-on="on"
-                  class="d-flex justify-space-around menu-item"
-                  @click="goPage(item)"
-                >
-                  <img class="d-block" :src="item.image" alt="avatar" />
-                  <div v-if="index + 1 !== menu.length" class="divider"></div>
-                </div>
-              </template>
-              <span>{{ item.title }}</span>
-            </v-tooltip>
-
-            <v-menu
-              v-else
-              open-on-hover
-              content-class="submenu"
-              transition="scroll-y-reverse-transition"
-              :nudge-left="
-                item.submenu.length > 1 ? item.submenu.length * 30 : 20
-              "
-              origin="top center"
-              top
-              offset-y
-            >
-              <template v-slot:activator="{ on: onMenu, attrs: attrsMenu }">
-                <v-tooltip bottom>
-                  <template
-                    v-slot:activator="{ on: onTootip, attrs: attrsTooltip }"
-                  >
-                    <div
-                      v-bind="{ ...attrsTooltip, ...attrsMenu }"
-                      v-on="{ ...onTootip, ...onMenu }"
-                      class="d-flex justify-space-around menu-item"
-                    >
-                      <img class="d-block" :src="item.image" alt="avatar" />
-                      <div
-                        v-if="index + 1 !== menu.length"
-                        class="divider"
-                      ></div>
-                    </div>
-                  </template>
-                  <span>{{ item.title }}</span>
-                </v-tooltip>
-              </template>
-
-              <div class="d-flex submenu-itens align-center">
-                <v-tooltip
-                  v-for="(itemSubmenu, indexSubmenu) in item.submenu"
-                  :key="indexSubmenu"
-                  top
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <div
-                      v-bind="attrs"
-                      v-on="on"
-                      class="d-flex justify-space-around menu-item"
-                      @click="goPage(itemSubmenu)"
-                    >
-                      <img
-                        class="d-block"
-                        :src="itemSubmenu.image"
-                        alt="avatar"
-                      />
-                      <div
-                        v-if="indexSubmenu + 1 !== item.submenu.length"
-                        class="divider"
-                      ></div>
-                    </div>
-                  </template>
-                  <span>{{ itemSubmenu.title }}</span>
-                </v-tooltip>
-              </div>
-            </v-menu>
+        <div class="d-flex justify-start align-center">
+          <img
+            class="d-block mx-0 mx-md-1 i-coin"
+            src="/images/wgold.png"
+            alt="wgold"
+          />
+          <span class="balance-wGOLD">
+            <amount :amount="25693.69" decimals="2" formatted />
+          </span>
+        </div>
+        <div class="d-flex justify-start ml-2 align-center">
+          <img
+            class="d-block mx-0 mx-md-1 i-coin"
+            src="/images/icons/wLAND.png"
+            alt="wLAND"
+          />
+          <span class="balance-wGOLD">
+            <amount :amount="9532.09" decimals="2" formatted />
           </span>
         </div>
       </div>
-      <div></div>
+      <div class="d-flex">
+        <v-sheet class="mx-auto menu-itens align-center" max-width="100%">
+          <v-slide-group multiple show-arrows>
+            <v-slide-item
+              v-for="(item, index) in menu"
+              :key="index"
+              v-slot="{ toggle }"
+            >
+              <v-tooltip bottom v-if="!item.submenu" @click="toggle">
+                <template v-slot:activator="{ on, attrs }">
+                  <div
+                    v-bind="attrs"
+                    v-on="on"
+                    class="d-flex justify-space-around menu-item"
+                    @click="goPage(item)"
+                  >
+                    <img class="d-block" :src="item.image" alt="avatar" />
+                    <div v-if="index + 1 !== menu.length" class="divider"></div>
+                  </div>
+                </template>
+                <span>{{ item.title }}</span>
+              </v-tooltip>
+
+              <v-menu
+                v-else
+                @click="toggle"
+                open-on-hover
+                content-class="submenu"
+                transition="scroll-y-reverse-transition"
+                :nudge-left="
+                  item.submenu.length > 1 ? item.submenu.length * 30 : 20
+                "
+                origin="top center"
+                top
+                offset-y
+              >
+                <template v-slot:activator="{ on: onMenu, attrs: attrsMenu }">
+                  <v-tooltip bottom>
+                    <template
+                      v-slot:activator="{ on: onTootip, attrs: attrsTooltip }"
+                    >
+                      <div
+                        v-bind="{ ...attrsTooltip, ...attrsMenu }"
+                        v-on="{ ...onTootip, ...onMenu }"
+                        class="d-flex justify-space-around menu-item"
+                      >
+                        <img class="d-block" :src="item.image" alt="avatar" />
+                        <div
+                          v-if="index + 1 !== menu.length"
+                          class="divider"
+                        ></div>
+                      </div>
+                    </template>
+                    <span>{{ item.title }}</span>
+                  </v-tooltip>
+                </template>
+
+                <div class="d-flex submenu-itens align-center">
+                  <v-tooltip
+                    v-for="(itemSubmenu, indexSubmenu) in item.submenu"
+                    :key="indexSubmenu"
+                    top
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <div
+                        v-bind="attrs"
+                        v-on="on"
+                        class="d-flex justify-space-around menu-item"
+                        @click="goPage(itemSubmenu)"
+                      >
+                        <img
+                          class="d-block"
+                          :src="itemSubmenu.image"
+                          alt="avatar"
+                        />
+                        <div
+                          v-if="indexSubmenu + 1 !== item.submenu.length"
+                          class="divider"
+                        ></div>
+                      </div>
+                    </template>
+                    <span>{{ itemSubmenu.title }}</span>
+                  </v-tooltip>
+                </div>
+              </v-menu>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
+      </div>
+      <div class="d-flex"></div>
     </div>
 
-    <div class="d-flex justify-space-between">
+    <div class="d-flex justify-space-between copyright">
       <div class="overline">
         Copyright © 2021 <a href="#" target="_blank">APWars</a>, All rights
         Reserved
@@ -282,5 +286,43 @@ export default {
   border-width: 10px 10px 0 10px;
   border-color: #9a5e3c transparent transparent transparent;
   right: calc(50% - 10px);
+}
+.avatar {
+  width: 60px;
+}
+.i-coin {
+  width: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .copyright {
+    display: none !important;
+  }
+  .menu-footer {
+    height: auto;
+    padding: 9px 0px;
+  }
+  .avatar {
+    width: 40px;
+  }
+  .i-coin {
+    width: 35px;
+  }
+}
+</style>
+
+<style>
+@media only screen and (max-width: 600px) {
+  .v-sheet.v-footer {
+    padding: 10px 4px !important;
+    background: transparent !important;
+  }
+  .v-main {
+    padding-bottom: 135px !important;
+  }
+  .btn-chat {
+    bottom: 135px !important;
+    right: 4px !important;
+  }
 }
 </style>
