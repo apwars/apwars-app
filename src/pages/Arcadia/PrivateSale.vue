@@ -42,6 +42,25 @@
               min-height="261"
             ></v-img>
             <div v-else class="d-block">
+              <v-alert color="primary" dark icon="mdi-alert" prominent>
+                This is not an error. You are seeing this message because you
+                are accessing this application with an IP address from a
+                prohibited jurisdiction or territory to participate in this
+                sale. This private sale of game items is only related to utility
+                tokens with objective use cases and bear no investment
+                characteristics of promises of dividends, guarantees of
+                appreciation, or gains of any form. Nevertheless, because
+                regulatory blurriness we are preventing Americans, Chinese,
+                North Korean, for example, to take part in this sale.
+              </v-alert>
+            </div>
+            <v-img
+              v-if="$vuetify.breakpoint.mdAndUp"
+              src="/images/project/arcadia.png"
+              max-height="1167"
+              min-height="261"
+            ></v-img>
+            <div v-else class="d-block">
               <v-carousel
                 cycle
                 height="400"
@@ -612,7 +631,7 @@
                     :disabled="
                       isBuyingWorldTicket || availableWorldTickets == 0
                     "
-                    v-if="privateSaleTimer > 0 & isApprovedBUSD"
+                    v-if="(privateSaleTimer > 0) & isApprovedBUSD"
                     @click="buyWorldTicket()"
                     width="170px"
                     class="mt-n1"
