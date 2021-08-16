@@ -3,32 +3,25 @@
     <div
       class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
     >
-      <div class="d-flex justify-start align-center">
-        <div class="d-flex">
+      <div class="d-flex justify-center justify-md-start align-center">
+        <div class="d-inline-flex">
           <img
-            class="d-block mx-0 mr-2 mx-md-2 avatar"
-            src="/images/avatars/user-menu.png"
+            v-if="account"
+            class="d-block mx-1 mx-md-2 avatar"
+            :src="
+              `https://avatar.apwars.farm/?seed=${account}&avatar=${avatar}`
+            "
             alt="avatar"
           />
         </div>
-        <div class="d-flex justify-start align-center">
+        <div class="d-inline-flex align-center">
           <img
             class="d-block mx-0 mx-md-1 i-coin"
             src="/images/wgold.png"
             alt="wgold"
           />
           <span class="balance-wGOLD">
-            <amount :amount="25693.69" decimals="2" formatted />
-          </span>
-        </div>
-        <div class="d-flex justify-start ml-2 align-center">
-          <img
-            class="d-block mx-0 mx-md-1 i-coin"
-            src="/images/icons/wLAND.png"
-            alt="wLAND"
-          />
-          <span class="balance-wGOLD">
-            <amount :amount="9532.09" decimals="2" formatted />
+            <amount v-if="!isLoading" :amount="balance" decimals="2" symbol="wGOLD" />
           </span>
         </div>
       </div>
@@ -143,6 +136,7 @@
 </template>
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
+import wGOLD from "@/lib/eth/wGOLD";
 
 export default {
   data() {
@@ -152,16 +146,6 @@ export default {
           title: "Home",
           image: "/images/icons/home.png",
           href: "/",
-        },
-        {
-          title: "Exchange",
-          image: "/images/icons/exchange.png",
-          href: "/exchange",
-        },
-        {
-          title: "Farms",
-          image: "/images/icons/farm.png",
-          href: "/farms",
         },
         {
           title: "Library",
@@ -212,6 +196,8 @@ export default {
           href: "/inventory",
         },
       ],
+      balance: 0,
+      isLoading: true,
     };
   },
   components: {
@@ -221,8 +207,42 @@ export default {
     appVersion() {
       return this.$store.getters.appVersion;
     },
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
+    account() {
+      return this.$store.getters["user/account"];
+    },
+    addresses() {
+      return this.$store.getters["user/addresses"];
+    },
+    avatar() {
+      return this.$store.getters["user/avatar"];
+    },
+  },
+  watch: {
+    isConnected() {
+      this.loadData();
+    },
+  },
+  mounted() {
+    this.loadData();
   },
   methods: {
+    async loadData() {
+      if (!this.isConnected) {
+        return;
+      }
+
+      try {
+        const wgold = new wGOLD(this.addresses.wGOLD);
+        this.balance = await wgold.balanceOf(this.account);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
     goPage(menu) {
       if (this.$router.history.current.path !== menu.href) {
         this.$router.push(menu.href);
@@ -242,6 +262,7 @@ export default {
   border-radius: 6px;
   background-image: url("/images/battle/bg-wars.png");
   background-repeat: repeat;
+  margin: 0px 12px;
 }
 .menu-itens,
 .submenu-itens {
@@ -289,6 +310,8 @@ export default {
 }
 .avatar {
   width: 60px;
+  border: 3px solid #bb7248;
+  border-radius: 6px;
 }
 .i-coin {
   width: 50px;
@@ -319,10 +342,6 @@ export default {
   }
   .v-main {
     padding-bottom: 135px !important;
-  }
-  .btn-chat {
-    bottom: 135px !important;
-    right: 4px !important;
   }
 }
 </style>

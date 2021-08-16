@@ -105,6 +105,12 @@ export const routes = [
         beforeEnter() {
           redirectBlank("https://exchange.apwars.farm");
         }
+      },
+      {
+        path: "/docs",
+        beforeEnter() {
+          redirectBlank("https://apwars.farm/docs");
+        }
       }
     ]
   }
@@ -112,7 +118,6 @@ export const routes = [
 
 const redirectBlank = url => {
   var a = document.createElement("a");
-  a.target = "_blank";
   a.href = url;
   a.click();
 };
