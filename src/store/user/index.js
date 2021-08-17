@@ -7,7 +7,7 @@ const avatar = localStorage.getItem("avatar");
 const state = {
   isConnected: false,
   account: "",
-  avatar: avatar ? avatar : "degen",
+  avatar: avatar ? avatar : "corp",
   networkInfo: {},
   addresses: {},
   currentBlockNumber: 0
