@@ -125,52 +125,16 @@ export default {
       drawer: null,
       menu: [
         {
-          title: "Black Market",
-          href: "/",
-        },
-        {
-          title: "Game Items",
-          href: "/game-items",
-        },
-        {
-          title: "Army",
-          href: "",
-          submenu: [
-            {
-              title: "Available Units",
-              href: "/war-stats",
-            },
-            {
-              title: "Training Center",
-              href: "/training-center",
-            },
-          ],
-        },
-        {
-          title: "Wars",
-          href: "",
-          submenu: [
-            {
-              title: "War against FED",
-              href: "/wars",
-            },
-            // {
-            //   title: "Weapon Research",
-            //   href: "/weapon-research",
-            // },
-          ],
-        },
-        {
-          title: "Inventory",
-          href: "/inventory",
-        },
-        {
           title: "Buy wGOLD",
           href: "/exchange",
         },
         {
           title: "Farms",
           href: "/farms",
+        },
+        {
+          title: "Docs",
+          href: "/docs",
         },
       ],
     };

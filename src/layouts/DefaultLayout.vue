@@ -210,10 +210,11 @@
 
       <v-fab-transition>
         <v-btn
+          class="btn-chat"
           v-show="!showChatBox"
           fab
           dark
-          large
+          dense
           color="primary"
           fixed
           right
@@ -438,5 +439,16 @@ export default {
 
 .text-change-network {
   word-break: break-word;
+}
+
+.btn-chat {
+  bottom: 22px !important;
+  right: 19px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .btn-chat {
+    bottom: 135px !important;
+  }
 }
 </style>
