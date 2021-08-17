@@ -9,18 +9,17 @@
           v-bind:class="{ 'cursor-pointer': isLink }"
           @click="openAddress"
         >
-          <span class="align-self-center">{{ addressFormat }}</span>
-          <span class="align-self-center" v-if="isLink">
-            <img
-              width="16"
-              class="ml-1"
-              src="/images/icons/external-link.svg"
-              alt="external-link"
-            />
-          </span>
+          <img
+            v-if="account"
+            class="d-block mx-1 mx-md-2 avatar"
+            :src="
+              `https://avatar.apwars.farm/?seed=${getAccount}&avatar=${avatar}`
+            "
+            alt="avatar"
+          />
         </span>
       </template>
-      <span>{{ address }}</span>
+      <span>{{ account }}</span>
     </v-tooltip>
   </span>
 </template>
@@ -30,14 +29,23 @@ export default {
   props: ["address", "link", "tooltip"],
 
   computed: {
-    addressFormat() {
-      return `${this.address.slice(0, 6)}...${this.address.slice(-6)}`;
+    account() {
+      return this.$store.getters["user/account"];
+    },
+    avatar() {
+      return this.$store.getters["user/avatar"];
     },
     isTooltip() {
       return this.tooltip !== undefined;
     },
     isLink() {
       return this.link !== undefined;
+    },
+    getAccount() {
+      if (this.address) {
+        return this.address;
+      }
+      return this.account;
     },
   },
 
@@ -47,7 +55,7 @@ export default {
         return;
       }
       var a = document.createElement("a");
-      a.href = `https://bscscan.com/address/${this.address}`;
+      a.href = `https://bscscan.com/address/${this.getAccount}`;
       a.click();
     },
   },
