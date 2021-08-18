@@ -1,7 +1,9 @@
 <template>
   <div class="bg-home">
     <div v-if="isLoading">
-      <game-text header="h2" class="text-center d-block py-9">Loading...</game-text>
+      <game-text header="h2" class="text-center d-block py-9"
+        >Loading...</game-text
+      >
     </div>
     <div v-else>
       <v-container fluid>
@@ -12,7 +14,7 @@
           <v-col cols="12" md="4">
             <v-img
               class="mx-auto"
-              max-width="300"
+              max-width="350"
               src="/images/treasury/fed-treasury.png"
             />
             <wGOLD-button
@@ -23,14 +25,91 @@
             ></wGOLD-button>
           </v-col>
           <v-col cols="12" md="4">
-            <game-text header="h3" class="text-center"
-              >Last war winner</game-text
-            >
+            <game-text header="h3" class="text-center">
+              Last war winner
+            </game-text>
             <v-img
               class="mx-auto my-3"
               max-width="400"
               :src="`/images/battle/${imgWinnerLastWar}`"
             />
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <v-container fluid>
+        <v-row dense>
+          <v-col cols="12" md="7">
+            <game-text header="h3">
+              Coming soon - New Tecnlogy
+            </game-text>
+
+            <v-slide-group class="mt-3" show-arrows>
+              <v-slide-item
+                v-for="(item, index) in catapults"
+                :key="index"
+                v-slot="{ toggle }"
+              >
+                <div class="d-flex align-center" @click="toggle">
+                  <div>
+                    <img class="mx-3" width="150px" :src="item.image" />
+                  </div>
+                </div>
+              </v-slide-item>
+            </v-slide-group>
+          </v-col>
+          <v-col cols="12" md="5">
+            <v-badge
+              class="badge-large"
+              color="red"
+              bordered
+              offset-y="30px"
+              offset-x="5px"
+            >
+              <template v-slot:badge>
+                {{ listTasks.length }}
+              </template>
+
+              <game-text header="h3">
+                Tasks
+              </game-text>
+            </v-badge>
+
+            <v-slide-group class="mt-3" show-arrows>
+              <v-slide-item
+                v-for="(item, index) in listTasks"
+                :key="index"
+                v-slot="{ toggle }"
+              >
+                <div class="d-flex align-center" @click="toggle">
+                  <div>
+                    <img class="bg-img-task"
+                    :width="`${$vuetify.breakpoint.mobile ? '70px' : '100px' }
+                    `" :src="item.image" />
+                  </div>
+
+                  <div class="ml-2 ml-md-3 mr-2 mr-md-6">
+                    <span class="font-weight-bold">{{ item.name }}</span>
+
+                    <wButton
+                      v-if="item.combinatorInfo.isClaim"
+                      @click="$router.push(item.claimRouter)"
+                      class="mt-1"
+                      size="small"
+                    >
+                      Claim available
+                    </wButton>
+
+                    <countdown-block
+                      v-else
+                      :start-blocks="item.combinatorInfo.startBlock"
+                      :end-blocks="item.combinatorInfo.endBlock"
+                      show-progress
+                    />
+                  </div>
+                </div>
+              </v-slide-item>
+            </v-slide-group>
           </v-col>
         </v-row>
       </v-container>
@@ -43,11 +122,14 @@ import Countdown from "@/lib/components/ui/Utils/Countdown";
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import GameText from "@/lib/components/ui/Utils/GameText";
+import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
 
 import { getWars } from "@/data/Wars";
+import { getTroops } from "@/data/Troops";
 
 import WarMachine from "@/lib/eth/WarMachine";
 import wGOLD from "@/lib/eth/wGOLD";
+import Combinator from "@/lib/eth/Combinator";
 
 export default {
   components: {
@@ -55,6 +137,7 @@ export default {
     wGOLDButton,
     wButton,
     GameText,
+    CountdownBlock,
   },
 
   data() {
@@ -64,6 +147,12 @@ export default {
       balanceFED: 0,
       wars: [],
       warStats: {},
+      listTasks: [],
+      catapults: [
+        { image: "/images/weapons/catapult-humans.png" },
+        { image: "/images/weapons/catapult-orcs.png" },
+        { image: "/images/weapons/catapult-undead.png" },
+      ],
     };
   },
 
@@ -138,7 +227,50 @@ export default {
       }
 
       this.warStats = await warMachine.warStats();
+      await this.getTask();
       this.isLoading = false;
+    },
+
+    async getTask() {
+      const getListTasks = [];
+      getTroops().filter((trooper) => {
+        for (let combinator in trooper.combinators) {
+          const getCombinator = trooper.combinators[combinator];
+          if (getCombinator.idCombinator[this.networkInfo.id]) {
+            getListTasks.push(getCombinator);
+          }
+        }
+      });
+
+      for (let task of getListTasks) {
+        const combinatorContract = new Combinator(
+          task.combinatorAddress[this.networkInfo.id]
+        );
+        await combinatorContract.getContractManager();
+        const combinatorId = task.idCombinator[this.networkInfo.id];
+        const getGeneralConfig = await combinatorContract.getGeneralConfig(
+          this.account,
+          this.account,
+          combinatorId
+        );
+
+        task.combinatorInfo = await combinatorContract.combinators(
+          combinatorId,
+          this.account
+        );
+
+        task.combinatorInfo.endBlock =
+          parseInt(task.combinatorInfo.startBlock) +
+          parseInt(getGeneralConfig.blocks);
+
+        task.combinatorInfo.isClaim = false;
+
+        if (this.currentBlockNumber >= task.combinatorInfo.endBlock) {
+          task.combinatorInfo.isClaim = true;
+        }
+      }
+
+      this.listTasks = getListTasks;
     },
   },
 };
@@ -150,5 +282,19 @@ export default {
   background-size: cover;
   min-height: 100%;
   background-position: center;
+}
+.bg-img-task {
+  background-image: url("/images/bg-papyrus.png");
+  background-size: cover;
+  background-color: #d7b796;
+  border-radius: 6px;
+  border: 3px solid #bb7248;
+}
+
+.badge-large >>> span {
+  border-radius: 30px;
+  font-size: 21px;
+  height: 30px;
+  min-width: 30px;
 }
 </style>
