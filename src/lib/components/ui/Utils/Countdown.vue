@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3 class="text-wGOLD text-center text-h4 text-md-h3 ma-0 ma-md-3">{{ title }}</h3>
+    <h3 class="text-wGOLD text-center text-h4 text-md-h3 ma-0 ma-md-3">
+      {{ title }}
+    </h3>
     <div class="d-flex justify-center mt-6">
       <countdown
         :time="setTime"
@@ -70,10 +72,8 @@ export default {
 
 <style scoped>
 .countdown >>> .block-time {
-  width: 100px;
-  height: 100px;
   position: relative;
-  margin: 0px 20px;
+  margin: 0px 10px;
 }
 
 .countdown >>> .block-time .title {
@@ -84,8 +84,7 @@ export default {
 }
 
 .countdown >>> .block-time .img {
-  position: absolute;
-  width: 100px;
+  width: 80px;
 }
 
 .countdown >>> .block-time .timer {
@@ -97,17 +96,12 @@ export default {
   font-weight: bold;
 }
 
-@media only screen and (max-width: 760px) {
-  .countdown >>> .block-time .img {
-    display: none;
-  }
-}
-
 @media only screen and (max-width: 540px) {
   .countdown >>> .block-time {
+    margin: 0px 3px;
+  }
+  .countdown >>> .block-time .img {
     width: 70px;
-    height: 70px;
-    margin: 0px 2px;
   }
   .countdown >>> .block-time .title {
     font-size: 0.9rem !important;
