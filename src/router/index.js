@@ -27,12 +27,12 @@ export const routes = [
       {
         path: "/",
         name: "/",
-        component: BlackMarket
+        component: Home
       },
       {
-        path: "/home",
-        name: "/home",
-        component: Home
+        path: "/black-market",
+        name: "/black-market",
+        component: BlackMarket
       },
       {
         path: "/game-items/:nftId/:type-orders/new",

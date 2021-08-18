@@ -155,7 +155,7 @@ export default {
         {
           title: "Black Market",
           image: "/images/icons/black-market.png",
-          href: "/",
+          href: "/black-market",
         },
         {
           title: "Army",

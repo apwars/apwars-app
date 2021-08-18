@@ -2,69 +2,67 @@
   <v-layout class="fill-height">
     <app-header />
     <v-main>
-      <div class="mb-3">
-        <router-view :key="$route.fullPath"></router-view>
+      <router-view :key="$route.fullPath"></router-view>
 
-        <v-dialog v-model="showModal" persistent max-width="300">
-          <v-card>
-            <v-card-title class="headline">
-              Connect to Metamask
-            </v-card-title>
-            <v-card-text>
-              <v-container fill-height>
-                <v-row class="justify-center align-center">
-                  <v-col cols="12">
-                    <v-img class="text-center" src="/images/metamask.svg" />
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary darken-1" text @click="connectToMetaMask">
-                Connect
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+      <v-dialog v-model="showModal" persistent max-width="300">
+        <v-card>
+          <v-card-title class="headline">
+            Connect to Metamask
+          </v-card-title>
+          <v-card-text>
+            <v-container fill-height>
+              <v-row class="justify-center align-center">
+                <v-col cols="12">
+                  <v-img class="text-center" src="/images/metamask.svg" />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary darken-1" text @click="connectToMetaMask">
+              Connect
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
-        <v-dialog v-model="changeNetwork" persistent max-width="350">
-          <v-card>
-            <v-card-title class="headline">
-              <v-alert
-                dense
-                border="left"
-                type="warning"
-                outlined
-                class="text-change-network"
-              >
-                Change your network, you need to connect to BSC
-                {{ networkConnect }}
-                network
-              </v-alert>
-            </v-card-title>
-            <v-card-text>
-              <v-container fill-height>
-                <v-row class="d-flex justify-center align-center">
-                  <v-col cols="12">
-                    <div class="d-flex justify-center align-center">
-                      <div>Awaiting change...</div>
-                      <v-progress-circular
-                        class="mx-3"
-                        :size="26"
-                        :width="2"
-                        indeterminate
-                        color="orange"
-                      ></v-progress-circular>
-                    </div>
-                    <v-img class="text-center" src="/images/metamask.svg" />
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-          </v-card>
-        </v-dialog>
-      </div>
+      <v-dialog v-model="changeNetwork" persistent max-width="350">
+        <v-card>
+          <v-card-title class="headline">
+            <v-alert
+              dense
+              border="left"
+              type="warning"
+              outlined
+              class="text-change-network"
+            >
+              Change your network, you need to connect to BSC
+              {{ networkConnect }}
+              network
+            </v-alert>
+          </v-card-title>
+          <v-card-text>
+            <v-container fill-height>
+              <v-row class="d-flex justify-center align-center">
+                <v-col cols="12">
+                  <div class="d-flex justify-center align-center">
+                    <div>Awaiting change...</div>
+                    <v-progress-circular
+                      class="mx-3"
+                      :size="26"
+                      :width="2"
+                      indeterminate
+                      color="orange"
+                    ></v-progress-circular>
+                  </div>
+                  <v-img class="text-center" src="/images/metamask.svg" />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
 
       <v-slide-y-transition>
         <div
@@ -400,6 +398,10 @@ export default {
 </script>
 
 <style lang="scss">
+.v-main__wrap > div {
+  padding-bottom: 30px;
+}
+
 .app-bar-full {
   .v-toolbar__content,
   .v-toolbar__extension {
