@@ -52,7 +52,7 @@
         <v-row dense>
           <v-col cols="12" md="7">
             <game-text header="h3">
-              New Tecnlogies - Coming soon
+              New Technologies - Coming soon 
             </game-text>
 
             <v-slide-group class="mt-3" show-arrows>
@@ -63,7 +63,7 @@
               >
                 <div class="d-flex align-center" @click="toggle">
                   <div>
-                    <v-img class="mx-3" max-width="150px" :src="item.image" />
+                    <v-img class="mx-2" max-width="150px" :src="item.image" />
                   </div>
                 </div>
               </v-slide-item>
