@@ -7,9 +7,12 @@
         src="/images/buttons/btn-wgold.png"
       />
       <span class="amount-wGOLD">
-        <amount :amount="amount" decimals="2" compact           
+        <span class="text-body-2" v-if="amount==='0'">The fed is collecting fees</span>
+        <span v-else>
+          <amount :amount="amount" decimals="2" compact           
             tooltip />
         <span class="suffix">wGOLD</span>
+        </span>
       </span>
     </div>
   </div>

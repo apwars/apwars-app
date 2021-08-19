@@ -8,16 +8,14 @@
         </p>
       </v-col>
       <v-col cols="4" class="d-flex justify-end">
-        <v-img :class="!$vuetify.breakpoint.mdAndUp ? 'img-mobile' : 'img-full'" :src="image">
-          <div v-if="titleImg" class="mt-7 text-center">
+        <v-img
+          max-width="270px"
+          :class="!$vuetify.breakpoint.mdAndUp ? 'img-mobile' : 'img-full'"
+          :src="image"
+        >
+          <div v-if="titleImg" class="d-flex flex-column justify-center text-center mt-5">
             <h3>{{ titleImg }}</h3>
-            <div :class="!$vuetify.breakpoint.lgAndDown ? 'mx-16' : 'ml-11 mt-n3'">
-              <v-container :class="!$vuetify.breakpoint.lgAndDown ? 'ml-8' : ''">
-                <span style="font-size: 14px;"
-                  ><v-address :address="subtitleImg" link tooltip></v-address
-                ></span>
-              </v-container>
-            </div>
+            <v-address  class="mx-auto text-center text-caption" :address="subtitleImg" link tooltip> </v-address>
           </div>
         </v-img>
       </v-col>
@@ -27,7 +25,10 @@
         <game-text header="h4">{{ title }}</game-text>
       </v-col>
       <v-col cols="6" class="d-flex justify-end">
-        <v-img :class="!$vuetify.breakpoint.mdAndUp ? 'img-mobile' : 'img-full'" :src="image">
+        <v-img
+          :class="!$vuetify.breakpoint.mdAndUp ? 'img-mobile' : 'img-full'"
+          :src="image"
+        >
           <div v-if="titleImg" class="mt-3 text-center">
             <h6>{{ titleImg }}</h6>
             <div class="ml-5">
@@ -48,11 +49,11 @@
 </template>
 
 <script>
-import GameText from '@/lib/components/ui/Utils/GameText';
-import VAddress from '@/lib/components/ui/Utils/VAddress';
+import GameText from "@/lib/components/ui/Utils/GameText";
+import VAddress from "@/lib/components/ui/Utils/VAddress";
 
 export default {
-  props: ['title', 'description', 'image', 'titleImg', 'subtitleImg'],
+  props: ["title", "description", "image", "titleImg", "subtitleImg"],
 
   components: {
     GameText,

@@ -29,10 +29,16 @@
               Last war winner
             </game-text>
             <v-img
-              class="mx-auto my-3"
+              class="mx-auto mt-3"
               max-width="400"
               :src="`/images/battle/${imgWinnerLastWar}`"
             />
+            <div class="d-flex justify-center">
+            <wButton  @click="$router.push(`/wars/${lastWar.contractAddress[networkInfo.id]}/report`)">
+              War Report
+            </wButton>
+            </div>
+
           </v-col>
         </v-row>
       </v-container>
@@ -41,7 +47,7 @@
         <v-row dense>
           <v-col cols="12" md="7">
             <game-text header="h3">
-              Coming soon - New Tecnlogy
+              New Tecnlogies - Coming soon
             </game-text>
 
             <v-slide-group class="mt-3" show-arrows>
@@ -52,7 +58,7 @@
               >
                 <div class="d-flex align-center" @click="toggle">
                   <div>
-                    <img class="mx-3" width="150px" :src="item.image" />
+                    <v-img class="mx-3" max-width="150px" :src="item.image" />
                   </div>
                 </div>
               </v-slide-item>
@@ -83,9 +89,14 @@
               >
                 <div class="d-flex align-center" @click="toggle">
                   <div>
-                    <img class="bg-img-task"
-                    :width="`${$vuetify.breakpoint.mobile ? '70px' : '100px' }
-                    `" :src="item.image" />
+                    <img
+                      class="bg-img-task"
+                      :width="
+                        `${$vuetify.breakpoint.mobile ? '70px' : '100px'}
+                    `
+                      "
+                      :src="item.image"
+                    />
                   </div>
 
                   <div class="ml-2 ml-md-3 mr-2 mr-md-6">
@@ -146,12 +157,14 @@ export default {
       nextWar: 1631491200000,
       balanceFED: 0,
       wars: [],
+      lastWar: {},
       warStats: {},
       listTasks: [],
       catapults: [
         { image: "/images/weapons/catapult-humans.png" },
         { image: "/images/weapons/catapult-orcs.png" },
         { image: "/images/weapons/catapult-undead.png" },
+        { image: "/images/weapons/catapult-elves.png" },
       ],
     };
   },
@@ -218,8 +231,10 @@ export default {
         this.wars[0].contractAddress[this.networkInfo.id],
         this.networkInfo.id
       );
+      this.lastWar = this.wars[0];
       const warStage = parseInt(await warMachine.warStage());
       if (!warStage) {
+        this.lastWar = this.wars[1];
         warMachine = new WarMachine(
           this.wars[1].contractAddress[this.networkInfo.id],
           this.networkInfo.id
@@ -270,7 +285,9 @@ export default {
         }
       }
 
-      this.listTasks = getListTasks;
+      this.listTasks = getListTasks.filter(
+        (task) => task.combinatorInfo.combinatorId !== "0"
+      );
     },
   },
 };
