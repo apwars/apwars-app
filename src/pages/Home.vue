@@ -34,11 +34,16 @@
               :src="`/images/battle/${imgWinnerLastWar}`"
             />
             <div class="d-flex justify-center">
-            <wButton  @click="$router.push(`/wars/${lastWar.contractAddress[networkInfo.id]}/report`)">
-              War Report
-            </wButton>
+              <wButton
+                @click="
+                  $router.push(
+                    `/wars/${lastWar.contractAddress[networkInfo.id]}/report`
+                  )
+                "
+              >
+                War Report
+              </wButton>
             </div>
-
           </v-col>
         </v-row>
       </v-container>
@@ -81,7 +86,7 @@
               </game-text>
             </v-badge>
 
-            <v-slide-group class="mt-3" show-arrows>
+            <v-slide-group v-if="listTasks.length" class="mt-3" show-arrows>
               <v-slide-item
                 v-for="(item, index) in listTasks"
                 :key="index"
@@ -121,6 +126,14 @@
                 </div>
               </v-slide-item>
             </v-slide-group>
+
+            <div v-else>
+              Hey, looks like you don't have any tasks right now. How about
+              training units, researching weapons and evolving your troop?
+              <wButton class="mt-3" @click="$router.push('/training-center')">
+                Training center
+              </wButton>
+            </div>
           </v-col>
         </v-row>
       </v-container>

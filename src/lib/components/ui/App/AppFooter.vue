@@ -3,7 +3,7 @@
     <div
       class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
     >
-      <div class="d-flex justify-center justify-md-start align-center">
+      <div class="d-flex side-menu justify-center justify-md-start align-center">
         <div class="d-inline-flex">
           <img
             v-if="account"
@@ -114,7 +114,7 @@
           </v-slide-group>
         </v-sheet>
       </div>
-      <div class="d-flex"></div>
+      <div class="d-flex side-menu"></div>
     </div>
 
     <div class="d-flex justify-space-between copyright">
@@ -255,6 +255,9 @@ export default {
 <style scoped>
 .menu-main {
   width: 60%;
+}
+.side-menu {
+  width: 20%;
 }
 .menu-footer {
   width: 100%;
