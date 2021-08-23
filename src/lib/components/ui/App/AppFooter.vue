@@ -3,7 +3,7 @@
     <div
       class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
     >
-      <div class="d-flex justify-center justify-md-start align-center">
+      <div class="d-flex side-menu justify-center justify-md-start align-center">
         <div class="d-inline-flex">
           <img
             v-if="account"
@@ -25,7 +25,7 @@
           </span>
         </div>
       </div>
-      <div class="d-flex">
+      <div class="d-flex menu-main">
         <v-sheet class="mx-auto menu-itens align-center" max-width="100%">
           <v-slide-group multiple show-arrows>
             <v-slide-item
@@ -114,7 +114,7 @@
           </v-slide-group>
         </v-sheet>
       </div>
-      <div class="d-flex"></div>
+      <div class="d-flex side-menu"></div>
     </div>
 
     <div class="d-flex justify-space-between copyright">
@@ -155,7 +155,7 @@ export default {
         {
           title: "Black Market",
           image: "/images/icons/black-market.png",
-          href: "/",
+          href: "/black-market",
         },
         {
           title: "Army",
@@ -181,7 +181,7 @@ export default {
           submenu: [
             {
               title: "War against FED",
-              image: "/images/icons/wars.png",
+              image: "/images/icons/fed.png",
               href: "/wars",
             },
             // {
@@ -253,10 +253,14 @@ export default {
 </script>
 
 <style scoped>
-.d-flex {
-  width: 100%;
+.menu-main {
+  width: 60%;
+}
+.side-menu {
+  width: 20%;
 }
 .menu-footer {
+  width: 100%;
   height: 70px;
   border: 2px solid #bb7248;
   border-radius: 6px;
@@ -331,6 +335,9 @@ export default {
   .i-coin {
     width: 35px;
   }
+  .menu-main {
+  width: 98%;
+}
 }
 </style>
 

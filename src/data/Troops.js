@@ -103,6 +103,10 @@ export function getTroops() {
           image: '/images/icons/simple-spear.png'
         },
         trainingCenter: {
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+          },
+          claimRouter: "/training-center",
           idCombinator: {
             "5777": 0,
             "56": 3,
@@ -242,6 +246,10 @@ export function getTroops() {
           image: '/images/icons/simple-spear.png'
         },
         trainingCenter: {
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+          },
+          claimRouter: "/training-center",
           idCombinator: {
             "5777": 0,
             "56": 2,
@@ -381,6 +389,10 @@ export function getTroops() {
           image: '/images/icons/simple-spear.png'
         },
         trainingCenter: {
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+          },
+          claimRouter: "/training-center",
           idCombinator: {
             "5777": 0,
             "56": 1,
