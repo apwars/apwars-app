@@ -13,12 +13,12 @@
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty">
-          <v-img class="mr-1" max-width="26px" src="/images/wGOLD.png" />
+          <v-img class="mr-1" max-width="26px" src="/images/wCOURAGE1.png" />
           <amount
             :amount="getTokenAConfig.amount"
             decimals="2"
             compact
-            symbol="wGOLD"
+            symbol="wCOURAGE"
           />
         </div>
         <div class="d-flex mt-1 qty">

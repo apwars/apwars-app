@@ -13,12 +13,12 @@
           v-if="$vuetify.breakpoint.mobile"
           class="mx-auto"
           max-width="90%"
-          src="/images/war-preparation/create-weapon.png"
+          src="/images/war-preparation/weapon-research.png"
         />
         <v-img
           v-else
           max-width="610px"
-          src="/images/war-preparation/create-weapon.png"
+          src="/images/war-preparation/weapon-research.png"
         />
       </div>
       <div class="gradient"></div>
