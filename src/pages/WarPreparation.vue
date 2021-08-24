@@ -4,7 +4,7 @@
       <v-container class="pb-0">
         <page-title
           title="War Preparation"
-          description="Welcome to my laboratory. Let 's gear you up."
+          description="Welcome to my laboratory. Let's gear you up."
           image="/images/war-preparation/icon-war-preparation.png"
         />
       </v-container>
