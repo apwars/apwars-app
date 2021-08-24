@@ -114,8 +114,8 @@
             :trooper="trooper"
             :contract-war="contractWar"
           />
-          <unit-weapon-research
-            v-else-if="getType === 'weapon-research'"
+          <unit-war-preparation
+            v-else-if="getType === 'war-preparation'"
             :unit="trooper"
           />
           <unit-training-center
@@ -148,7 +148,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import Trooper from "@/lib/components/ui/Utils/Trooper";
 import StakeTrooper from "@/lib/components/ui/Utils/StakeTrooper";
 import ReportTrooper from "@/lib/components/ui/Utils/ReportTrooper";
-import UnitWeaponResearch from "@/lib/components/ui/Units/UnitWeaponResearch";
+import UnitWarPreparation from "@/lib/components/ui/Units/UnitWarPreparation";
 import UnitTrainingCenter from "@/lib/components/ui/Units/UnitTrainingCenter";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
@@ -164,7 +164,7 @@ export default {
     Trooper,
     StakeTrooper,
     ReportTrooper,
-    UnitWeaponResearch,
+    UnitWarPreparation,
     UnitTrainingCenter,
   },
 
@@ -225,7 +225,7 @@ export default {
           return this.type;
         case "report-trooper":
           return this.type;
-        case "weapon-research":
+        case "war-preparation":
           return this.type;
         case "training-center":
           return this.type;
@@ -251,7 +251,7 @@ export default {
   },
 
   mounted() {
-    if (this.showOnlyMyUnits !== undefined) {
+    if (this.showOnlyMyUnits !== undefined && this.showOnlyMyUnits !== '') {
       this.showMyUnits = true;
     }
     this.loadData();

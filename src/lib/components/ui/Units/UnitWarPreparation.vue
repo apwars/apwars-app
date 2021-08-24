@@ -173,6 +173,7 @@ const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
   "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your weapon.";
 
 export default {
+  name: "unit-war-preparation",
   props: ["unit"],
   components: {
     Amount,
