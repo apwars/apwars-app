@@ -276,13 +276,13 @@ export default {
   },
 
   methods: {
-    initData() {
+    async initData() {
       this.tokenA = this.addresses.wGOLD;
       this.tokenB = this.unit.contractAddress[this.networkInfo.id];
       this.combinatorContract = new Combinator(
-        this.addresses.combinator,
-        this.addresses.combinatorManager
+        this.addresses.combinator
       );
+      await this.combinatorContract.getContractManager();
       this.tokenAContract = new wGOLD(this.tokenA);
       this.tokenBContract = new Troops(this.tokenB);
     },
