@@ -516,7 +516,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wPIKE-ELF",
-      lpAddresses: "0x65ede43524c68c5b7d14bc9d8792a46dda7f50ac",
+      lpAddresses: "0x302eF0De472FA31aff1b52af943C425B6695d0F4",
       contractAddress: {
         "5777": "",
         "56": "0xa248284fB4E3E58400644dc4Cd37410F8AB31266",
@@ -542,7 +542,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wELVEN-ARCHER",
-      lpAddresses: "0x65ede43524c68c5b7d14bc9d8792a46dda7f50ac",
+      lpAddresses: "0x39F18435FfAc6d5bdE24551EfE166620DCc315B0",
       contractAddress: {
         "5777": "",
         "56": "0x804e7030F932CA06DEe7bC08051f1123898ceF5d",
