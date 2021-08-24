@@ -116,7 +116,7 @@
           />
           <unit-war-preparation
             v-else-if="getType === 'war-preparation'"
-            :unit="trooper"
+            :unit="trooper "
           />
           <unit-training-center
             v-else-if="getType === 'training-center'"

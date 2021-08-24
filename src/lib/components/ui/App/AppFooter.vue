@@ -191,6 +191,11 @@ export default {
           ],
         },
         {
+          title: "War Preparation",
+          image: "/images/war-preparation/icon-war-preparation.png",
+          href: "/war-preparation",
+        },
+        {
           title: "Inventory",
           image: "/images/icons/inventory.png",
           href: "/inventory",
