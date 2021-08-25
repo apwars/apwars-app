@@ -13,12 +13,12 @@
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty">
-          <v-img class="mr-1" max-width="26px" src="/images/wGOLD.png" />
+          <v-img class="mr-1" max-width="26px" src="/images/wCOURAGE1.png" />
           <amount
             :amount="getTokenAConfig.amount"
             decimals="2"
             compact
-            symbol="wGOLD"
+            symbol="wCOURAGE"
           />
         </div>
         <div class="d-flex mt-1 qty">
@@ -173,6 +173,7 @@ const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
   "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your weapon.";
 
 export default {
+  name: "unit-war-preparation",
   props: ["unit"],
   components: {
     Amount,
@@ -276,13 +277,13 @@ export default {
   },
 
   methods: {
-    initData() {
+    async initData() {
       this.tokenA = this.addresses.wGOLD;
       this.tokenB = this.unit.contractAddress[this.networkInfo.id];
       this.combinatorContract = new Combinator(
-        this.addresses.combinator,
-        this.addresses.combinatorManager
+        this.addresses.combinator
       );
+      await this.combinatorContract.getContractManager();
       this.tokenAContract = new wGOLD(this.tokenA);
       this.tokenBContract = new Troops(this.tokenB);
     },

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="bg-weapon-research">
+    <div class="bg-war-preparation">
       <v-container class="pb-0">
         <page-title
-          title="Weapon Research"
-          description="It is essential to strengthen your troops in combat by researching weapons and magical portions, use your time to improve your strategy!"
-          image="/images/weapon-research/icon-weapon-research.png"
+          title="War Preparation"
+          description="Welcome to my laboratory. Let's gear you up."
+          image="/images/war-preparation/icon-war-preparation.png"
         />
       </v-container>
       <div class="d-flex text-center justify-center">
@@ -13,12 +13,12 @@
           v-if="$vuetify.breakpoint.mobile"
           class="mx-auto"
           max-width="90%"
-          src="/images/weapon-research/create-weapon.png"
+          src="/images/war-preparation/weapon-research.png"
         />
         <v-img
           v-else
           max-width="610px"
-          src="/images/weapon-research/create-weapon.png"
+          src="/images/war-preparation/weapon-research.png"
         />
       </div>
       <div class="gradient"></div>
@@ -26,7 +26,7 @@
 
     <list-units
       class="mt-n6"
-      type="weapon-research"
+      type="war-preparation"
       show-only-my-units
     ></list-units>
   </div>
@@ -38,6 +38,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 export default {
+  name: 'war-preparation',
   components: {
     PageTitle,
     wButton,
@@ -79,8 +80,8 @@ export default {
 </script>
 
 <style scoped>
-.bg-weapon-research {
-  background-image: url("/images/weapon-research/bg-weapon-research.png");
+.bg-war-preparation {
+  background-image: url("/images/war-preparation/bg-war-preparation.png");
   background-size: cover;
   background-position: center;
 }
@@ -92,7 +93,7 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-  .bg-weapon-research {
+  .bg-war-preparation {
     background-size: contain;
     background-position: top;
   }
