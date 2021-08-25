@@ -254,8 +254,6 @@ export default {
       this.showMyUnits = true;
     }
     this.loadData();
-
-    this.filterTierDescToWarPreparation();
   },
 
   methods: {
@@ -348,6 +346,10 @@ export default {
         }
         return ToastSnackbar.error(error);
       }
+      /* Aplying tier filter to War Preparation page
+        call it here for dont generate a infinite loop on troops rendering 
+      */
+      this.filterTierDescToWarPreparation();
     },
 
     updateSelectFilters() {
