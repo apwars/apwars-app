@@ -250,6 +250,8 @@ export default {
   },
 
   mounted() {
+    this.filterTierDescToWarPreparation();
+    
     if (this.showOnlyMyUnits !== undefined && this.showOnlyMyUnits !== '') {
       this.showMyUnits = true;
     }
