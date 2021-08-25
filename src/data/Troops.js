@@ -21,8 +21,8 @@ export function getTroops() {
       combinators: {
         warPreparation: {
           idCombinator: 1,
-          name: 'Simple sword',
-          image: '/images/icons/simple-sword.png'
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
         },
       }
     },
@@ -47,8 +47,8 @@ export function getTroops() {
       combinators: {
         warPreparation: {
           idCombinator: 2,
-          name: 'Simple sword',
-          image: '/images/icons/simple-sword.png'
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
         },
       }
     },
@@ -164,8 +164,8 @@ export function getTroops() {
       combinators: {
         warPreparation: {
           idCombinator: 6,
-          name: 'Simple sword',
-          image: '/images/icons/simple-sword.png'
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
         },
       }
     },
@@ -190,8 +190,8 @@ export function getTroops() {
       combinators: {
         warPreparation: {
           idCombinator: 7,
-          name: 'Simple sword',
-          image: '/images/icons/simple-sword.png'
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
         },
       }
     },
@@ -307,8 +307,8 @@ export function getTroops() {
       combinators: {
         warPreparation: {
           idCombinator: 11,
-          name: 'Simple sword',
-          image: '/images/icons/simple-sword.png'
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
         },
       }
     },
@@ -333,8 +333,8 @@ export function getTroops() {
       combinators: {
         warPreparation: {
           idCombinator: 12,
-          name: 'Simple sword',
-          image: '/images/icons/simple-sword.png'
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
         },
       }
     },

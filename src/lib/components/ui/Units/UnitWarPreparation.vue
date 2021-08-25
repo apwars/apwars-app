@@ -68,7 +68,7 @@
         <wButton
           v-if="!isApproved"
           class="mt-1"
-          :disabled="!getGeneralConfig.isEnabled"
+          :disabled="!getGeneralConfig.isEnabled || unit.tier !== 1"
           @click="openModalArimedesApproval()"
         >
           Approve Research
