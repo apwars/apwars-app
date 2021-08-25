@@ -27,6 +27,7 @@
     <list-units
       class="mt-n6"
       type="war-preparation"
+      :filter-rules="filters"
       show-only-my-units
     ></list-units>
   </div>
@@ -48,6 +49,9 @@ export default {
   data() {
     return {
       isLoading: true,
+      filters: {
+        name: ["wWARRIOR", "wARCHER", "wGRUNT", "wORC-ARCHER", "wSKELETON-WARRIOR", "wHOUND"],
+      }
     };
   },
 

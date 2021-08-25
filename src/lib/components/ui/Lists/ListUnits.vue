@@ -225,6 +225,7 @@ export default {
         case "report-trooper":
           return this.type;
         case "war-preparation":
+          this.select.tiers = "Barracks"
           return this.type;
         case "training-center":
           return this.type;
@@ -250,8 +251,6 @@ export default {
   },
 
   mounted() {
-    this.filterTierDescToWarPreparation();
-    
     if (this.showOnlyMyUnits !== undefined && this.showOnlyMyUnits !== '') {
       this.showMyUnits = true;
     }
@@ -348,10 +347,6 @@ export default {
         }
         return ToastSnackbar.error(error);
       }
-      /* Aplying tier filter to War Preparation page
-        call it here for dont generate a infinite loop on troops rendering 
-      */
-      this.filterTierDescToWarPreparation();
     },
 
     updateSelectFilters() {
@@ -454,7 +449,7 @@ export default {
       this.updateTroopsFilters();
     },
 
-    filterTierDescToWarPreparation() {
+    /* filterTierDescToWarPreparation() {
       if (this.$route.name === "/war-preparation") {
         this.filter.tierDesc = []
         this.filter.tierDesc.push("Barracks")
@@ -462,7 +457,7 @@ export default {
       }
 
       return this.filter.tierDesc
-    }
+    } */
   },
 };
 </script>
