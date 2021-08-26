@@ -35,12 +35,4 @@ export default {
     "56": process.env.VUE_APP_TRANSPORTER_CONTRACT_56,
     "97": process.env.VUE_APP_TRANSPORTER_CONTRACT_97,
   },
-  combinator: {
-    "56": process.env.VUE_APP_COMBINATOR_56,
-    "97": process.env.VUE_APP_COMBINATOR_97,
-  },
-  combinatorManager: {
-    "56": process.env.VUE_APP_COMBINATOR_MANAGER_56,
-    "97": process.env.VUE_APP_COMBINATOR_MANAGER_97,
-  },
 };
