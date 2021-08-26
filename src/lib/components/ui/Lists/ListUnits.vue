@@ -184,7 +184,6 @@ export default {
       },
       filter: {
         teamDesc: [],
-        tierDesc: [],
         raceDesc: [],
         name: [],
       },
@@ -226,6 +225,7 @@ export default {
         case "report-trooper":
           return this.type;
         case "war-preparation":
+          this.select.tiers = "Barracks"
           return this.type;
         case "training-center":
           return this.type;
@@ -448,6 +448,16 @@ export default {
       };
       this.updateTroopsFilters();
     },
+
+    /* filterTierDescToWarPreparation() {
+      if (this.$route.name === "/war-preparation") {
+        this.filter.tierDesc = []
+        this.filter.tierDesc.push("Barracks")
+        this.select.tiers = "Barracks"
+      }
+
+      return this.filter.tierDesc
+    } */
   },
 };
 </script>
