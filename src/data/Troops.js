@@ -507,6 +507,57 @@ export function getTroops() {
         },
       }
     },
-
+    {
+      id: 18,
+      team: 1,
+      teamDesc: 'The Degenerate',
+      race: 1,
+      raceDesc: 'Elves',
+      tier: 1,
+      tierDesc: 'Barracks',
+      name: "wPIKE-ELF",
+      lpAddresses: "0x302eF0De472FA31aff1b52af943C425B6695d0F4",
+      contractAddress: {
+        "5777": "",
+        "56": "0xa248284fB4E3E58400644dc4Cd37410F8AB31266",
+        "97": "0x677E1df390B30e9795A7fCf56908f529DB024C75",
+      },
+      image: "/images/troops/wPIKE-ELF.png",
+      strength: 6,
+      defense: 10,
+      combinators: {
+        warPreparation: {
+          idCombinator: 0,
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
+        },
+      }
+    },
+    {
+      id: 19,
+      team: 1,
+      teamDesc: 'The Degenerate',
+      race: 1,
+      raceDesc: 'Elves',
+      tier: 1,
+      tierDesc: 'Barracks',
+      name: "wELVEN-ARCHER",
+      lpAddresses: "0x39F18435FfAc6d5bdE24551EfE166620DCc315B0",
+      contractAddress: {
+        "5777": "",
+        "56": "0x804e7030F932CA06DEe7bC08051f1123898ceF5d",
+        "97": "0x677E1df390B30e9795A7fCf56908f529DB024C75",
+      },
+      image: "/images/troops/wELVEN-ARCHER.png",
+      strength: 12,
+      defense: 6,
+      combinators: {
+        warPreparation: {
+          idCombinator: 0,
+          name: 'Simple shield',
+          image: '/images/icons/simple-shield.png'
+        },
+      }
+    },
   ];
 }
