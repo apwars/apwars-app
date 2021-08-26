@@ -558,10 +558,32 @@ export default {
       this.loadData(this.page, true);
     },
 
-    executeOrder() {
+    showError(message) {
+      if (message.indexOf("Internal JSON-RPC error.") >= 0) {
+        const obj = JSON.parse(message.replace("Internal JSON-RPC error.", ""));
+        if (
+          obj.message ===
+          "execution reverted: APWarsMarketNFTSwapEscrow:INVALID_ORDER_STATUS"
+        ) {
+          return ToastSnackbar.error("Order canceled or executed");
+        }
+
+        return ToastSnackbar.error(obj.message);
+      }
+
+      return ToastSnackbar.error(message);
+    },
+
+    async executeOrder() {
       try {
         this.isLoadingConfirm = true;
         this.confirmOrderWaitingStage = 1;
+
+        await this.marketNFTS.executeOrderCall(
+          this.nftCollectible.orderId,
+          this.quantity,
+          this.account
+        );
 
         const confirmTransaction = this.marketNFTS.executeOrder(
           this.nftCollectible.orderId,
@@ -590,8 +612,14 @@ export default {
           this.loadData(this.page, true);
           ToastSnackbar.success(`The order has been executed successful!`);
         });
-      } catch (e) {
+      } catch (error) {
         this.setInitialStateConfirmOrder();
+        if (error.message) {
+          return this.showError(error.message);
+        }
+        return ToastSnackbar.error(
+          "Raskel - The traveler, an error has occurred, please try again!"
+        );
       }
     },
 
@@ -688,10 +716,15 @@ export default {
       return this.$router.push("/game-items");
     },
 
-    cancelOrder() {
+    async cancelOrder() {
       try {
         this.isLoadingCancel = true;
         this.raskelCancelText = RASKEL_WAITING_WALLET_APPROVAL;
+
+        await this.marketNFTS.cancelOrderCall(
+          this.nftCollectible.orderId,
+          this.account
+        );
 
         const confirmTransaction = this.marketNFTS.cancelOrder(
           this.nftCollectible.orderId,
@@ -719,8 +752,14 @@ export default {
           this.loadData(this.page, true);
           ToastSnackbar.success(`Order canceled!`);
         });
-      } catch (e) {
+      } catch (error) {
         this.setInitialStateCancelOrder();
+        if (error.message) {
+          return this.showError(error.message);
+        }
+        return ToastSnackbar.error(
+          "Raskel - The traveler, an error has occurred, please try again!"
+        );
       }
     },
 
