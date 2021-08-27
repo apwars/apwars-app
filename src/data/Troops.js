@@ -559,5 +559,43 @@ export function getTroops() {
         },
       }
     },
+    {
+      id: 20,
+      team: 1,
+      teamDesc: 'The Degenerate',
+      race: 1,
+      raceDesc: 'Elves',
+      tier: 2,
+      tierDesc: 'Armory',
+      name: "wARMORED-ELF",
+      lpAddresses: "0xaf08fe199dd8abb88cb62526955956ee8784b3f7",
+      contractAddress: {
+        "5777": "",
+        "56": "0xF35e1Bd15E49651ad76aB0A4B9ce93F6e9850f7F",
+        "97": "",
+      },
+      image: "/images/troops/wARMORED-ELF.png",
+      strength: 25,
+      defense: 25,
+    },
+    {
+      id: 20,
+      team: 1,
+      teamDesc: 'The Degenerate',
+      race: 1,
+      raceDesc: 'Elves',
+      tier: 2,
+      tierDesc: 'Armory',
+      name: "wBLADEMASTER",
+      lpAddresses: "0x15548700a20ab8437a916b9e2c5f550c0fa645fd",
+      contractAddress: {
+        "5777": "",
+        "56": "0xE7Cb07032a9b9150a25249709C50b9BD923E445e",
+        "97": "",
+      },
+      image: "/images/troops/wBLADEMASTER.png",
+      strength: 25,
+      defense: 25,
+    },
   ];
 }
