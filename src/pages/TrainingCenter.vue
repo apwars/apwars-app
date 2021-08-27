@@ -13,12 +13,12 @@
           v-if="$vuetify.breakpoint.mobile"
           class="mx-auto"
           max-width="90%"
-          src="/images/training-center/create-stables.png"
+          src="/images/training-center/training-process.png"
         />
         <v-img
           v-else
           max-width="610px"
-          src="/images/training-center/create-stables.png"
+          src="/images/training-center/training-process.png"
         />
       </div>
       <div class="gradient"></div>
