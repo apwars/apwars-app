@@ -218,7 +218,7 @@ export default {
       try {
         this.isLoading = true;
         const wgold = new wGOLD(this.addresses.wGOLD);
-        const wcourage = new wCOURAGE('0x5f51a3ce7f2233777328866f477e86a91ca9ddec');
+        const wcourage = new wCOURAGE(this.addresses.wCOURAGE);
 
         this.balance = await wgold.balanceOf(this.account);
 
