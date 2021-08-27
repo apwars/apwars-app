@@ -151,7 +151,7 @@ import NewResearchModal from "@/lib/components/ui/Modals/NewResearchModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import Combinator from "@/lib/eth/Combinator";
-import wGOLD from "@/lib/eth/wGOLD";
+import wCOURAGE from "@/lib/eth/wCOURAGE";
 import Troops from "@/lib/eth/Troops";
 
 const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT =
@@ -219,6 +219,12 @@ export default {
         feeRate: "0",
         tokenAddress: "",
       },
+      getGameItemCConfig: {
+        amount: "0",
+        burningRate: "0",
+        feeRate: "0",
+        tokenAddress: "",
+      },
       claimPercentage: 0,
       isClaim: false,
     };
@@ -248,9 +254,18 @@ export default {
       }
       return {};
     },
+    combinatorAddress() {
+      return this.unit.combinators.warPreparation.combinatorAddress[
+        this.networkInfo.id
+      ];
+    },
     combinatorId() {
-      if (this.unit.combinators && this.unit.combinators.warPreparation) {
-        return this.unit.combinators.warPreparation.idCombinator || 0;
+      if (this.infoWeapon.idCombinator) {
+        return (
+          this.unit.combinators.warPreparation.idCombinator[
+            this.networkInfo.id
+          ] || 0
+        );
       }
       return 0;
     },
@@ -278,13 +293,11 @@ export default {
 
   methods: {
     async initData() {
-      this.tokenA = this.addresses.wGOLD;
+      this.tokenA = this.addresses.wCOURAGE;
       this.tokenB = this.unit.contractAddress[this.networkInfo.id];
-      this.combinatorContract = new Combinator(
-        this.addresses.combinator
-      );
+      this.combinatorContract = new Combinator(this.combinatorAddress);
       await this.combinatorContract.getContractManager();
-      this.tokenAContract = new wGOLD(this.tokenA);
+      this.tokenAContract = new wCOURAGE(this.tokenA);
       this.tokenBContract = new Troops(this.tokenB);
     },
     async loadData() {
@@ -297,11 +310,11 @@ export default {
 
       this.isApprovedTokenA = await this.tokenAContract.hasAllowance(
         this.account,
-        this.addresses.combinator
+        this.combinatorAddress
       );
       this.isApprovedTokenB = await this.tokenBContract.hasAllowance(
         this.account,
-        this.addresses.combinator
+        this.combinatorAddress
       );
       this.getGeneralConfig = await this.combinatorContract.getGeneralConfig(
         this.account,
@@ -309,16 +322,30 @@ export default {
         this.combinatorId
       );
       if (this.getGeneralConfig.isEnabled) {
-        this.getTokenAConfig = await this.combinatorContract.getTokenAConfig(
-          this.account,
-          this.tokenA,
-          this.combinatorId
-        );
-        this.getTokenBConfig = await this.combinatorContract.getTokenBConfig(
-          this.account,
-          this.tokenB,
-          this.combinatorId
-        );
+        this.getTokenAConfig = {
+          ...this.getTokenAConfig,
+          ...(await this.combinatorContract.getTokenAConfig(
+            this.account,
+            this.tokenA,
+            this.combinatorId
+          )),
+        };
+        this.getTokenBConfig = {
+          ...this.getTokenBConfig,
+          ...(await this.combinatorContract.getTokenBConfig(
+            this.account,
+            this.tokenB,
+            this.combinatorId
+          )),
+        };
+        this.getGameItemCConfig = {
+          ...this.getGameItemCConfig,
+          ...(await this.combinatorContract.getGameItemCConfig(
+            this.account,
+            this.account,
+            this.combinatorId
+          )),
+        };
 
         await this.loadCombinators();
       }
@@ -368,7 +395,7 @@ export default {
         this.textArimedesModal = ARIMEDES_WAITING_WALLET_APPROVAL;
         const confirmTransaction = this.approveOnlyOneContract.approve(
           this.account,
-          this.addresses.combinator
+          this.combinatorAddress
         );
 
         confirmTransaction.on("error", (error) => {
@@ -414,7 +441,7 @@ export default {
         this.textArimedesModal = ARIMEDES_WAITING_WALLET_APPROVAL;
         const confirmTransaction = this.tokenAContract.approve(
           this.account,
-          this.addresses.combinator
+          this.combinatorAddress
         );
 
         confirmTransaction.on("error", (error) => {
@@ -444,7 +471,7 @@ export default {
         this.textArimedesModal = ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT;
         const confirmTransaction = this.tokenBContract.approve(
           this.account,
-          this.addresses.combinator
+          this.combinatorAddress
         );
 
         confirmTransaction.on("error", (error) => {
@@ -550,8 +577,8 @@ export default {
       }
     },
   },
-  mounted() {
-    this.initData();
+  async mounted() {
+    await this.initData();
     this.loadData();
   },
 };

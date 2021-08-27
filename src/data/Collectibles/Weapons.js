@@ -38,15 +38,15 @@ export function getWeapons() {
     //     'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     //   image: "/images/nfts/weapon-simple-potion.png",
     // },
-    // {
-    //   id: 7,
-    //   type: "weapons",
-    //   typeDesc: "Weapons",
-    //   contractAddress: addresses.collectibles,
-    //   title: "Simple Shield",
-    //   description:
-    //     'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    //   image: "/images/nfts/weapon-simple-shield.png",
-    // },
+    {
+      id: 0,
+      type: "weapons",
+      typeDesc: "Weapons",
+      contractAddress: addresses.collectibles,
+      title: "Simple Shield",
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      image: "/images/nfts/weapon-simple-shield.png",
+    },
   ];
 }

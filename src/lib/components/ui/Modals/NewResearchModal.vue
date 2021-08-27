@@ -35,7 +35,7 @@
         >
           <div class="d-flex align-center">
             <div class="box-token mr-2">
-              <v-img src="/images/wGOLD.png" />
+              <v-img src="/images/wCOURAGE1.png" />
             </div>
             <number-field
               no-icons

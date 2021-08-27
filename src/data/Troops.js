@@ -20,7 +20,16 @@ export function getTroops() {
       defense: 4,
       combinators: {
         warPreparation: {
-          idCombinator: 1,
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 1,
+            "97": 1,
+          },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
@@ -46,7 +55,16 @@ export function getTroops() {
       defense: 1,
       combinators: {
         warPreparation: {
-          idCombinator: 2,
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 1,
+            "97": 2,
+          },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
@@ -164,7 +182,16 @@ export function getTroops() {
       defense: 4,
       combinators: {
         warPreparation: {
-          idCombinator: 6,
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 1,
+            "97": 3,
+          },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
@@ -190,7 +217,16 @@ export function getTroops() {
       defense: 1,
       combinators: {
         warPreparation: {
-          idCombinator: 7,
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 1,
+            "97": 4,
+          },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
@@ -308,7 +344,16 @@ export function getTroops() {
       defense: 2,
       combinators: {
         warPreparation: {
-          idCombinator: 11,
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 1,
+            "97": 5,
+          },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
@@ -334,7 +379,16 @@ export function getTroops() {
       defense: 2,
       combinators: {
         warPreparation: {
-          idCombinator: 12,
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 1,
+            "97": 6,
+          },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
