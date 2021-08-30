@@ -22,13 +22,13 @@ export function getTroops() {
         warPreparation: {
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
             "5777": 0,
-            "56": 1,
-            "97": 1,
+            "56": 4,
+            "97": 4,
           },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
@@ -57,13 +57,13 @@ export function getTroops() {
         warPreparation: {
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
             "5777": 0,
-            "56": 1,
-            "97": 2,
+            "56": 5,
+            "97": 5,
           },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
@@ -88,13 +88,6 @@ export function getTroops() {
       image: "/images/troops/wARMOURED-WARRIOR.png",
       strength: 0,
       defense: 0,
-      combinators: {
-        warPreparation: {
-          idCombinator: 3,
-          name: 'Simple spear',
-          image: '/images/icons/simple-spear.png'
-        },
-      }
     },
     {
       id: 3,
@@ -115,11 +108,6 @@ export function getTroops() {
       strength: 0,
       defense: 0,
       combinators: {
-        warPreparation: {
-          idCombinator: 4,
-          name: 'Simple spear',
-          image: '/images/icons/simple-spear.png'
-        },
         trainingCenter: {
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
@@ -154,13 +142,6 @@ export function getTroops() {
       image: "/images/troops/wWIZARD.png",
       strength: 0,
       defense: 0,
-      combinators: {
-        warPreparation: {
-          idCombinator: 5,
-          name: 'Simple potion',
-          image: '/images/icons/simple-potion.png'
-        },
-      }
     },
     {
       id: 5,
@@ -184,13 +165,13 @@ export function getTroops() {
         warPreparation: {
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
             "5777": 0,
-            "56": 1,
-            "97": 3,
+            "56": 6,
+            "97": 6,
           },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
@@ -219,13 +200,13 @@ export function getTroops() {
         warPreparation: {
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
             "5777": 0,
-            "56": 1,
-            "97": 4,
+            "56": 7,
+            "97": 7,
           },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
@@ -250,13 +231,6 @@ export function getTroops() {
       image: "/images/troops/wARMOURED-GRUNT.png",
       strength: 0,
       defense: 0,
-      combinators: {
-        warPreparation: {
-          idCombinator: 8,
-          name: 'Simple spear',
-          image: '/images/icons/simple-spear.png'
-        },
-      }
     },
     {
       id: 8,
@@ -277,11 +251,6 @@ export function getTroops() {
       strength: 0,
       defense: 0,
       combinators: {
-        warPreparation: {
-          idCombinator: 9,
-          name: 'Simple spear',
-          image: '/images/icons/simple-spear.png'
-        },
         trainingCenter: {
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
@@ -316,13 +285,6 @@ export function getTroops() {
       image: "/images/troops/wSHAMAN.png",
       strength: 0,
       defense: 0,
-      combinators: {
-        warPreparation: {
-          idCombinator: 10,
-          name: 'Simple potion',
-          image: '/images/icons/simple-potion.png'
-        },
-      }
     },
     {
       id: 10,
@@ -346,13 +308,13 @@ export function getTroops() {
         warPreparation: {
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
             "5777": 0,
-            "56": 1,
-            "97": 5,
+            "56": 8,
+            "97": 8,
           },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
@@ -381,13 +343,13 @@ export function getTroops() {
         warPreparation: {
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x73620bbBee5Acea99e8e0fd18320dC8D050ef080",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
             "5777": 0,
-            "56": 1,
-            "97": 6,
+            "56": 9,
+            "97": 9,
           },
           name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
@@ -412,13 +374,6 @@ export function getTroops() {
       image: "/images/troops/wUNDEAD-ARCHER.png",
       strength: 35,
       defense: 8,
-      combinators: {
-        warPreparation: {
-          idCombinator: 13,
-          name: 'Simple spear',
-          image: '/images/icons/simple-spear.png'
-        },
-      }
     },
     {
       id: 13,
@@ -439,11 +394,6 @@ export function getTroops() {
       strength: 22,
       defense: 22,
       combinators: {
-        warPreparation: {
-          idCombinator: 14,
-          name: 'Simple spear',
-          image: '/images/icons/simple-spear.png'
-        },
         trainingCenter: {
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
@@ -478,13 +428,6 @@ export function getTroops() {
       image: "/images/troops/wWITCH.png",
       strength: 70,
       defense: 20,
-      combinators: {
-        warPreparation: {
-          idCombinator: 15,
-          name: 'Simple potion',
-          image: '/images/icons/simple-potion.png'
-        },
-      }
     },
     {
       id: 15,
@@ -504,13 +447,6 @@ export function getTroops() {
       image: "/images/troops/wHORSEMAN.png",
       strength: 150,
       defense: 50,
-      combinators: {
-        warPreparation: {
-          idCombinator: 0,
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
-        },
-      }
     },
     {
       id: 16,
@@ -530,13 +466,6 @@ export function getTroops() {
       image: "/images/troops/wWARG.png",
       strength: 150,
       defense: 50,
-      combinators: {
-        warPreparation: {
-          idCombinator: 0,
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
-        },
-      }
     },
     {
       id: 17,
@@ -556,13 +485,6 @@ export function getTroops() {
       image: "/images/troops/wDEATH-KNIGHT.png",
       strength: 150,
       defense: 50,
-      combinators: {
-        warPreparation: {
-          idCombinator: 0,
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
-        },
-      }
     },
     {
       id: 18,
@@ -582,13 +504,6 @@ export function getTroops() {
       image: "/images/troops/wPIKE-ELF.png",
       strength: 6,
       defense: 10,
-      combinators: {
-        warPreparation: {
-          idCombinator: 0,
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
-        },
-      }
     },
     {
       id: 19,
@@ -608,13 +523,6 @@ export function getTroops() {
       image: "/images/troops/wELVEN-ARCHER.png",
       strength: 12,
       defense: 6,
-      combinators: {
-        warPreparation: {
-          idCombinator: 0,
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
-        },
-      }
     },
     {
       id: 20,

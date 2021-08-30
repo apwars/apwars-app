@@ -24,7 +24,7 @@ export default {
       if (hours > 0 && hours < 2) {
         time = `${hours} hour`;
       } else if (hours > 0) {
-        time = `${minutes} hours`;
+        time = `${hours} hours`;
       } else if (minutes > 0 && minutes < 2) {
         time = `${minutes} minute`;
       } else if (minutes > 0) {

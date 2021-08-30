@@ -39,7 +39,7 @@ export function getWeapons() {
     //   image: "/images/nfts/weapon-simple-potion.png",
     // },
     {
-      id: 0,
+      id: 39,
       type: "weapons",
       typeDesc: "Weapons",
       contractAddress: addresses.collectibles,

@@ -17,7 +17,6 @@
           <amount
             :amount="getTokenAConfig.amount"
             decimals="2"
-            compact
             symbol="wCOURAGE"
           />
         </div>
@@ -30,7 +29,6 @@
           <amount
             :amount="getTokenBConfig.amount"
             decimals="2"
-            compact
             :symbol="unit.name"
           />
         </div>
@@ -44,7 +42,6 @@
                 :amount="getGeneralConfig.blocks"
                 decimals="0"
                 formatted
-                compact
               />
               blocks</span
             >
@@ -54,14 +51,16 @@
         <hr />
         <div class="d-flex mt-1 qty" v-if="infoWeapon.image">
           <img
-            class="mr-1"
-            width="45px"
-            height="45px"
+            :class="`mr-1 bg-img-tier-${unit.tier}`"
+            width="80px"
+            height="80px"
             :src="infoWeapon.image"
           />
           <span>
-            Weapon conquered: <br />
-            {{ infoWeapon.name }}
+            Produced weapon: <br />
+            <amount :amount="getGameItemCConfig.amount" formatted decimals="0" />{{
+              infoWeapon.name
+            }}
           </span>
         </div>
 
@@ -155,19 +154,19 @@ import wCOURAGE from "@/lib/eth/wCOURAGE";
 import Troops from "@/lib/eth/Troops";
 
 const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT =
-  "Keep pressing over here on this second page.";
+  "Please sign over here...";
 const ARIMEDES_APPROVE_FIRST_PAGE_CONTRACT =
-  "I can put your troops to work to create weapons if I get paid enought. If you want this I will need your blood print from your two best fingers. Hurry up, you are wasting our time!";
+  "I need some wCOURAGE and a wUNIT to research weapons for you.";
 const ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT =
-  "To work for you and start your research you need to sign an employment contract, there are only 1 page to sign. Hurry up, you're wasting your time!";
+  "I need some wCOURAGE and a wUNIT to research weapons for you.";
 const ARIMEDES_WAITING_WALLET_APPROVAL =
-  "Keep pressing over here on this first page.";
+  "Please sign over here...";
 const ARIMEDES_WAITING_FIRST_CONFIRMATION =
-  "I am checking if is everything right...";
+  "I’m checking if everything is fine...";
 const ARIMEDES_WAITING_SECOND_CONFIRMATION =
-  "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation, so you can start your research...";
+  "And now sign over here..";
 const ARIMEDES_CLAIM =
-  "Your research has been completed, and your item is available.";
+  "Your research is complete, and your weapon is available.";
 const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
   "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your weapon.";
