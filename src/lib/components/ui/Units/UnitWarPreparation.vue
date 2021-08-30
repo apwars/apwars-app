@@ -17,7 +17,6 @@
           <amount
             :amount="getTokenAConfig.amount"
             decimals="2"
-            compact
             symbol="wCOURAGE"
           />
         </div>
@@ -30,7 +29,6 @@
           <amount
             :amount="getTokenBConfig.amount"
             decimals="2"
-            compact
             :symbol="unit.name"
           />
         </div>
@@ -44,7 +42,6 @@
                 :amount="getGeneralConfig.blocks"
                 decimals="0"
                 formatted
-                compact
               />
               blocks</span
             >
@@ -54,14 +51,16 @@
         <hr />
         <div class="d-flex mt-1 qty" v-if="infoWeapon.image">
           <img
-            class="mr-1"
-            width="45px"
-            height="45px"
+            :class="`mr-1 bg-img-tier-${unit.tier}`"
+            width="80px"
+            height="80px"
             :src="infoWeapon.image"
           />
           <span>
-            Weapon conquered: <br />
-            {{ infoWeapon.name }}
+            Produced weapon: <br />
+            <amount :amount="getGameItemCConfig.amount" formatted decimals="0" />{{
+              infoWeapon.name
+            }}
           </span>
         </div>
 
@@ -151,23 +150,23 @@ import NewResearchModal from "@/lib/components/ui/Modals/NewResearchModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import Combinator from "@/lib/eth/Combinator";
-import wGOLD from "@/lib/eth/wGOLD";
+import wCOURAGE from "@/lib/eth/wCOURAGE";
 import Troops from "@/lib/eth/Troops";
 
 const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT =
-  "Keep pressing over here on this second page.";
+  "Please sign over here...";
 const ARIMEDES_APPROVE_FIRST_PAGE_CONTRACT =
-  "I can put your troops to work to create weapons if I get paid enought. If you want this I will need your blood print from your two best fingers. Hurry up, you are wasting our time!";
+  "I need some wCOURAGE and a wUNIT to research weapons for you.";
 const ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT =
-  "To work for you and start your research you need to sign an employment contract, there are only 1 page to sign. Hurry up, you're wasting your time!";
+  "I need some wCOURAGE and a wUNIT to research weapons for you.";
 const ARIMEDES_WAITING_WALLET_APPROVAL =
-  "Keep pressing over here on this first page.";
+  "Please sign over here...";
 const ARIMEDES_WAITING_FIRST_CONFIRMATION =
-  "I am checking if is everything right...";
+  "I’m checking if everything is fine...";
 const ARIMEDES_WAITING_SECOND_CONFIRMATION =
-  "Thank you for trust me my fellow, I am waiting for the first blockchain confirmation, so you can start your research...";
+  "And now sign over here..";
 const ARIMEDES_CLAIM =
-  "Your research has been completed, and your item is available.";
+  "Your research is complete, and your weapon is available.";
 const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
   "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your weapon.";
@@ -219,6 +218,12 @@ export default {
         feeRate: "0",
         tokenAddress: "",
       },
+      getGameItemCConfig: {
+        amount: "0",
+        burningRate: "0",
+        feeRate: "0",
+        tokenAddress: "",
+      },
       claimPercentage: 0,
       isClaim: false,
     };
@@ -248,9 +253,18 @@ export default {
       }
       return {};
     },
+    combinatorAddress() {
+      return this.unit.combinators.warPreparation.combinatorAddress[
+        this.networkInfo.id
+      ];
+    },
     combinatorId() {
-      if (this.unit.combinators && this.unit.combinators.warPreparation) {
-        return this.unit.combinators.warPreparation.idCombinator || 0;
+      if (this.infoWeapon.idCombinator) {
+        return (
+          this.unit.combinators.warPreparation.idCombinator[
+            this.networkInfo.id
+          ] || 0
+        );
       }
       return 0;
     },
@@ -278,13 +292,11 @@ export default {
 
   methods: {
     async initData() {
-      this.tokenA = this.addresses.wGOLD;
+      this.tokenA = this.addresses.wCOURAGE;
       this.tokenB = this.unit.contractAddress[this.networkInfo.id];
-      this.combinatorContract = new Combinator(
-        this.addresses.combinator
-      );
+      this.combinatorContract = new Combinator(this.combinatorAddress);
       await this.combinatorContract.getContractManager();
-      this.tokenAContract = new wGOLD(this.tokenA);
+      this.tokenAContract = new wCOURAGE(this.tokenA);
       this.tokenBContract = new Troops(this.tokenB);
     },
     async loadData() {
@@ -297,11 +309,11 @@ export default {
 
       this.isApprovedTokenA = await this.tokenAContract.hasAllowance(
         this.account,
-        this.addresses.combinator
+        this.combinatorAddress
       );
       this.isApprovedTokenB = await this.tokenBContract.hasAllowance(
         this.account,
-        this.addresses.combinator
+        this.combinatorAddress
       );
       this.getGeneralConfig = await this.combinatorContract.getGeneralConfig(
         this.account,
@@ -309,16 +321,30 @@ export default {
         this.combinatorId
       );
       if (this.getGeneralConfig.isEnabled) {
-        this.getTokenAConfig = await this.combinatorContract.getTokenAConfig(
-          this.account,
-          this.tokenA,
-          this.combinatorId
-        );
-        this.getTokenBConfig = await this.combinatorContract.getTokenBConfig(
-          this.account,
-          this.tokenB,
-          this.combinatorId
-        );
+        this.getTokenAConfig = {
+          ...this.getTokenAConfig,
+          ...(await this.combinatorContract.getTokenAConfig(
+            this.account,
+            this.tokenA,
+            this.combinatorId
+          )),
+        };
+        this.getTokenBConfig = {
+          ...this.getTokenBConfig,
+          ...(await this.combinatorContract.getTokenBConfig(
+            this.account,
+            this.tokenB,
+            this.combinatorId
+          )),
+        };
+        this.getGameItemCConfig = {
+          ...this.getGameItemCConfig,
+          ...(await this.combinatorContract.getGameItemCConfig(
+            this.account,
+            this.account,
+            this.combinatorId
+          )),
+        };
 
         await this.loadCombinators();
       }
@@ -368,7 +394,7 @@ export default {
         this.textArimedesModal = ARIMEDES_WAITING_WALLET_APPROVAL;
         const confirmTransaction = this.approveOnlyOneContract.approve(
           this.account,
-          this.addresses.combinator
+          this.combinatorAddress
         );
 
         confirmTransaction.on("error", (error) => {
@@ -414,7 +440,7 @@ export default {
         this.textArimedesModal = ARIMEDES_WAITING_WALLET_APPROVAL;
         const confirmTransaction = this.tokenAContract.approve(
           this.account,
-          this.addresses.combinator
+          this.combinatorAddress
         );
 
         confirmTransaction.on("error", (error) => {
@@ -444,7 +470,7 @@ export default {
         this.textArimedesModal = ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT;
         const confirmTransaction = this.tokenBContract.approve(
           this.account,
-          this.addresses.combinator
+          this.combinatorAddress
         );
 
         confirmTransaction.on("error", (error) => {
@@ -550,8 +576,8 @@ export default {
       }
     },
   },
-  mounted() {
-    this.initData();
+  async mounted() {
+    await this.initData();
     this.loadData();
   },
 };

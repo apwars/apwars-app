@@ -21,8 +21,7 @@
           </div>
 
           <div class="d-flex align-center px-1 font-weight-black">
-            Let's sign a research agreement. You will pay me wGOLD to work with
-            your army, and they will return with newly created weapons.
+            You'll pay me in wCOURAGE to work with your army, and they'll come back armed.
           </div>
 
           <div>
@@ -35,7 +34,7 @@
         >
           <div class="d-flex align-center">
             <div class="box-token mr-2">
-              <v-img src="/images/wGOLD.png" />
+              <v-img src="/images/wCOURAGE1.png" />
             </div>
             <number-field
               no-icons
@@ -103,7 +102,7 @@
                   :amount="getInfo.getTokenAConfig.amount"
                   decimals="2"
                   compact
-                  symbol="wGOLD"
+                  symbol="wCOURAGE"
                 />
                 to this research.
               </div>
