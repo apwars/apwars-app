@@ -544,14 +544,18 @@ export default {
         return (this.modalArimedesNoBalance = true);
       }
 
-      this.modalArimedesNewResearch = true;
       this.combinatorInfo = {
-        getGeneralConfig: this.getGeneralConfig,
-        getTokenAConfig: this.getTokenAConfig,
-        getTokenBConfig: this.getTokenBConfig,
-        unit: this.unit,
-        infoWeapon: this.infoWeapon,
+        ...this.combinatorInfo,
+        ...{
+          getGeneralConfig: this.getGeneralConfig,
+          getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
+          getTokenBConfig: { ...this.unit, ...this.getTokenBConfig },
+          getTokenCConfig: this.getTokenCConfig,
+          infoWeapon: this.infoWeapon,
+        },
       };
+      this.modalArimedesNewResearch = true;
+
     },
     async combineTokens() {
       try {

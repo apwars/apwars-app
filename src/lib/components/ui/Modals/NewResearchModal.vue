@@ -54,7 +54,7 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/icons/${info.unit.name}.png`" />
+              <v-img :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
             </div>
             <number-field
               no-icons
