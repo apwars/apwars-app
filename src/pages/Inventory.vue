@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="d-flex ml-4">
-            <img src="/images/wCOURAGE1.png" class="resources" />
+            <img src="/images/wcourage.png" class="resources" />
             <div class="text-center">
               <amount
                 v-if="isConnected"
