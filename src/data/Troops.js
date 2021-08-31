@@ -489,7 +489,7 @@ export function getTroops() {
     {
       id: 18,
       team: 1,
-      teamDesc: 'The Degenerate',
+      teamDesc: 'The Corporation',
       race: 1,
       raceDesc: 'Elves',
       tier: 1,
@@ -508,7 +508,7 @@ export function getTroops() {
     {
       id: 19,
       team: 1,
-      teamDesc: 'The Degenerate',
+      teamDesc: 'The Corporation',
       race: 1,
       raceDesc: 'Elves',
       tier: 1,
@@ -527,7 +527,7 @@ export function getTroops() {
     {
       id: 20,
       team: 1,
-      teamDesc: 'The Degenerate',
+      teamDesc: 'The Corporation',
       race: 1,
       raceDesc: 'Elves',
       tier: 2,
@@ -546,7 +546,7 @@ export function getTroops() {
     {
       id: 20,
       team: 1,
-      teamDesc: 'The Degenerate',
+      teamDesc: 'The Corporation',
       race: 1,
       raceDesc: 'Elves',
       tier: 2,
