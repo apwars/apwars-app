@@ -13,7 +13,7 @@
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty">
-          <v-img class="mr-1" max-width="26px" src="/images/wCOURAGE1.png" />
+          <v-img class="mr-1" max-width="26px" src="/images/wcourage.png" />
           <amount
             :amount="getTokenAConfig.amount"
             decimals="2"
@@ -169,7 +169,7 @@ const ARIMEDES_CLAIM =
   "Your research is complete, and your weapon is available.";
 const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
-  "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your weapon.";
+  "Your research is complete, and your weapons are available.";
 
 export default {
   name: "unit-war-preparation",
