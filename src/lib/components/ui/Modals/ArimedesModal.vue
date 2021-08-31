@@ -9,6 +9,7 @@
       :isLoading="isLoading"
       :disabledConfirm="isLoading"
       :disabledClose="isLoading"
+      v-bind:hideConfirm="hideConfirm"
     >
       <v-row dense class="d-flex">
         <v-col cols="12" md="3" class="align-self-center">
@@ -40,7 +41,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
 
 export default {
-  props: ["open", "isLoading", "text", "textConfirm", "weaponIcon"],
+  props: ["open", "isLoading", "text", "textConfirm", "weaponIcon", "hideConfirm"],
 
   components: {
     wButton,
