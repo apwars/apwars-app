@@ -611,7 +611,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           ToastSnackbar.success(
-            "Weapon send successfully Arimedes - War Engineer"
+            "Weapon sent successfully Arimedes - War Engineer"
           );
           this.isLoadingClaim = false;
           this.modalArimedesClaim = false;

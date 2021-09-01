@@ -622,7 +622,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           ToastSnackbar.success(
-            "wUNIT send successfully Dora Noble - The Horse Trainer"
+            "wUNIT sent successfully Dora Noble - The Horse Trainer"
           );
           this.isLoadingClaim = false;
           this.modalDoraNobleClaim = false;
