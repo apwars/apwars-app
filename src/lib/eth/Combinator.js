@@ -28,6 +28,7 @@ export default class Combinator {
   }
 
   claimGameItemFromTokens(combinatorId, from) {
+    this.smc.methods.claimGameItemFromTokens(combinatorId).call({ from });
     return this.smc.methods.claimGameItemFromTokens(combinatorId).send({ from });
   }
 
@@ -50,6 +51,10 @@ export default class Combinator {
 
   getTokenCConfig(player, source, combinatorId) {
     return this.smcManager.methods.getTokenCConfig(player, source, combinatorId).call();
+  }
+
+  getGameItemCConfig(player, source, combinatorId) {
+    return this.smcManager.methods.getGameItemCConfig(player, source, combinatorId).call();
   }
 
 }
