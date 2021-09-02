@@ -59,15 +59,15 @@
       </v-col>
       <v-col cols="12" md="3" class="mb-4">
         <v-row class="mt-1 ml-4 justify-space-between d-block">
-          <a class="router-link" href="https://exchange.apwars.farm/#/swap">
-            <wButton width="180px" class="d-flex align-self-center mt-1" >
+          <a class="router-link" href="https://exchange.apwars.farm/">
+            <wButton width="180px" class="d-flex align-self-center mt-1">
               <div class="d-flex justify-center">
                 <img
-                  src="/images/black-market/black-market.png"
-                  class="align-self-center"
+                  src="/images/training-center/icon-training-center.png"
+                  class="align-self-center mr-3"
                   height="24"
                 />
-                <small class="align-self-center ml-1">Black Market</small>
+                <small class="align-self-center mr-1 ml-n1">Buy troops</small>
               </div>
             </wButton>
           </a>
@@ -87,7 +87,11 @@
     </v-row>
     <v-container>
       <v-row class="d-flex">
-        <v-col cols="12" md="12" lg="6" class="d-flex">
+        <v-col
+          cols="12"
+          lg="6"
+          xl="4"
+          class="d-flex">
           <v-tabs v-model="tab">
             <v-tab>Game Items</v-tab>
             <v-tab>My Troops</v-tab>
@@ -97,7 +101,7 @@
     </v-container>
     <v-container fluid v-if="collection.length > 0 && tab === 0">
       <v-row dense>
-        <v-col v-for="collectible in collection" :key="collectible.id" cols="12" md="3">
+        <v-col v-for="collectible in collection" :key="collectible.id" cols="12" md="6">
           <nft-card :collectible="collectible" :myCollection="true" />
         </v-col>
       </v-row>
