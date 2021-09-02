@@ -59,18 +59,20 @@
       </v-col>
       <v-col cols="12" md="3" class="mb-4">
         <v-row class="mt-1 ml-4 justify-space-between d-block">
-          <wButton width="180px" class="d-flex align-self-center mt-1" @click="openNewTab('https://exchange.apwars.farm')">
-            <div class="d-flex justify-center">
-              <img
-                src="/images/training-center/icon-training-center.png"
-                class="align-self-center mr-3"
-                height="24"
-              />
-              <small class="align-self-center mr-1 ml-n1">Buy troops</small>
-            </div>
-          </wButton>
+          <a class="router-link" href="https://exchange.apwars.farm/#/swap">
+            <wButton width="180px" class="d-flex align-self-center mt-1" >
+              <div class="d-flex justify-center">
+                <img
+                  src="/images/black-market/black-market.png"
+                  class="align-self-center"
+                  height="24"
+                />
+                <small class="align-self-center ml-1">Black Market</small>
+              </div>
+            </wButton>
+          </a>
 
-          <wButton width="180px" class="d-flex align-self-center mt-1" @click="goTo('/')">
+          <wButton width="180px" class="d-flex align-self-center mt-1" @click="goTo('/black-market')">
             <div class="d-flex justify-center">
               <img
                 src="/images/black-market/black-market.png"
@@ -202,9 +204,9 @@ export default {
   },
 
   methods: {
-    openNewTab(obj) {
+    /* openNewTab(obj) {
       window.open(obj);
-    },
+    }, */
 
     goTo(rout) {
       this.$router.push(rout);
@@ -314,4 +316,10 @@ export default {
     background: none;
   }
 }
+
+.router-link {
+  text-decoration: none;
+  color: #fff;
+}
+
 </style>
