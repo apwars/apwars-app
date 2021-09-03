@@ -13,13 +13,13 @@
       </v-container>
     </div>
 
-    <v-row v-if="$vuetify.breakpoint.mobile" class="war-info mb-4 ">
+    <v-row v-if="$vuetify.breakpoint.mobile" class="war-info mb-4 text-center">
       <v-col cols="12" md="6" xm="12" class="px-0">
         <h2>Resources</h2>
         <v-row class="mt-1">
           <v-col class="d-flex py-0 justify-begin" >
-            <img src="/images/wgold.png" class="resources ml-0 mr-2" />
-            <div class="text-center">
+            <img src="/images/wgold.png" class="resources ml-0 mr-1" />
+            <div class="text-left">
               <amount
                 v-if="isConnected"
                 :amount="balance"
@@ -37,8 +37,8 @@
       <v-col cols="12" md="6" xm="12">
         <v-row>
           <v-col class="d-flex justify-begin px-0">
-            <img src="/images/wcourage.png" class="resources mx-0" />
-            <div class="text-center">
+            <img src="/images/wcourage.png" class="resources mx-0 mr-1" />
+            <div class="text-left">
               <amount
                 v-if="isConnected"
                 :amount="balanceCOURAGE"
@@ -58,13 +58,14 @@
         <v-row class="mt-1 justify-space-between">
           <v-col class="d-flex justify-begin" cols="12" md="3" xm="12">
             <img src="/images/black-market/book.png" class="resources mx-0" />
-            <div class="text-center ml-2">
+            <div class="text-left ml-2">
               <h2>{{ totalItems }} / {{ collectibles.length }}</h2>
               <h4>Collectibles</h4>
             </div>
           </v-col>
         </v-row>
       </v-col>
+      
       <v-col cols="12" md="3" xm="12" class="mb-4 d-flex justify-center">
         <v-row class="mt-1 justify-space-between d-block">
           <a class="router-link" href="https://exchange.apwars.farm/">
@@ -128,12 +129,13 @@
           </div>
         </v-row>
       </v-col>
+
       <v-col cols="12" md="3" sm="12">
         <h2>Game Items</h2>
         <v-row class="mt-1 ml-4 justify-space-between">
           <div class="d-flex">
             <img src="/images/black-market/book.png" class="resources" />
-            <div class="text-center ml-2">
+            <div class="text-center ml-1">
               <h2>{{ totalItems }} / {{ collectibles.length }}</h2>
               <h4>Collectibles</h4>
             </div>
