@@ -109,41 +109,41 @@
         ></v-skeleton-loader>
       </div> 
       
-      <dora-noble-modal
-        v-if="modalDoraNobleApproval"
-        :open="modalDoraNobleApproval"
+      <arimedes-modal
+        v-if="modalArimedesApproval"
+        :open="modalArimedesApproval"
         @confirm="approveContract"
-        @close="modalDoraNobleApproval = false"
+        @close="modalArimedesApproval = false"
         :isLoading="isLoadingApprove"
-        :text="textDoraNobleModal"
+        :text="textArimedesModal"
         :textConfirm="textConfirmArimdesModal">
-      </dora-noble-modal>
+      </arimedes-modal>
 
-      <dora-noble-modal
-        v-if="modalDoraNobleClaim"
-        :open="modalDoraNobleClaim"
+      <arimedes-modal
+        v-if="modalArimedesClaim"
+        :open="modalArimedesClaim"
         @confirm="claim"
-        @close="modalDoraNobleClaim = false"
+        @close="modalArimedesClaim = false"
         :isLoading="isLoadingClaim"
         :text="textClaim"
         :textConfirm="textConfirmClaim"
         :training-icon="infoTraining.image"
-      ></dora-noble-modal>
+      ></arimedes-modal>
 
-      <dora-noble-modal
-        v-if="modalDoraNobleNoBalance"
-        :open="modalDoraNobleNoBalance"
-        @close="modalDoraNobleNoBalance = false"
+      <arimedes-modal
+        v-if="modalArimedesNoBalance"
+        :open="modalArimedesNoBalance"
+        @close="modalArimedesNoBalance = false"
         :text="textNoBalance"
         :training-icon="infoTraining.image"
         hideConfirm
-      ></dora-noble-modal>
+      ></arimedes-modal>
 
       <combinator-modal
-        v-if="modalDoraNobleNewTraining"
-        :open="modalDoraNobleNewTraining"
+        v-if="modalArimedesNewResearch"
+        :open="modalArimedesNewResearch"
         @confirm="combineTokens"
-        @close="modalDoraNobleNewTraining = false"
+        @close="modalArimedesNewResearch = false"
         :isLoading="isLoadingNewTraining"
         :info="combinatorInfo"
         textConfirm="Training"
@@ -162,7 +162,6 @@ import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ArimedesModal from "@/lib/components/ui/Modals/ArimedesModal";
 import NewResearchModal from "@/lib/components/ui/Modals/NewResearchModal";
-import DoraNobleModal from "@/lib/components/ui/Modals/DoraNobleModal";
 import CombinatorModal from "@/lib/components/ui/Modals/CombinatorModal";
 /* import ToastSnackbar from "@/plugins/ToastSnackbar"; */
 
@@ -171,22 +170,22 @@ import Combinator from "@/lib/eth/Combinator";
 import wCOURAGE from "@/lib/eth/wCOURAGE";
 import Collectibles from "@/lib/eth/Collectibles";
 
-const DORANOBLE_APPROVE_SECOND_PAGE_CONTRACT =
+const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT =
   "I need some wCOURAGE and a wUNIT and I can transform a walker into a rider.";
-const DORANOBLE_APPROVE_FIRST_PAGE_CONTRACT =
+const ARIMEDES_APPROVE_FIRST_PAGE_CONTRACT =
   "I need some wCOURAGE and a wUNIT and I can transform a walker into a rider.";
-const DORANOBLE_APPROVE_ONLY_ONE_PAGE_CONTRACT =
+const ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT =
   "I need some wUNIT and I can transform a walker into a rider.";
-const DORANOBLE_WAITING_WALLET_APPROVAL =
-  "I need you to brand horses with your mark. Here, pick up this cattle marker.";
-const DORANOBLE_WAITING_FIRST_CONFIRMATION =
-  "I am checking if is everything right...";
-const DORANOBLE_WAITING_SECOND_CONFIRMATION =
-  "Please, now go mark those horses with your own signature.";
-const DORANOBLE_CLAIM =
-  "Your training is complete, and your Stables Unit is available.";
-const DORANOBLE_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
-const DORANOBLE_WAITING_CLAIM_CONFIRMATION =
+const ARIMEDES_WAITING_WALLET_APPROVAL =
+  "Please sign over here...";
+const ARIMEDES_WAITING_FIRST_CONFIRMATION =
+  "I am checking if everything is fine...";
+const ARIMEDES_WAITING_SECOND_CONFIRMATION =
+  "And now sign over here..";
+const ARIMEDES_CLAIM =
+  "Your research has been completed, and your weapons are available.";
+const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
+const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
   "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your wUNIT.";
 
 export default {
@@ -200,20 +199,20 @@ export default {
     NewResearchModal,
     TimeBlock,
     CountdownBlock,
-    DoraNobleModal,
     CombinatorModal,
   },
 
   data() {
     return {
-      modalDoraNobleNoBalance: false,
-      modalDoraNobleClaim: false,
-      modalDoraNobleNewTraining: false,
-      modalDoraNobleApproval: false,
+      modalArimedesNoBalance: false,
+      modalArimedesClaim: false,
+      modalArimedesNewResearch: false,
+      modalArimedesApproval: false,
       isApprovedTokenA: false,
       isApprovedTokenB: false,
       tokenA: "",
       tokenB: "",
+      textConfirmArimdesModal: "Confirm",
       combinators: {
         combinatorId: "0",
       },
@@ -435,23 +434,29 @@ export default {
       }
     },
     setInitialStateApproveOnlyPage() {
-      this.textDoraNobleModal = DORANOBLE_APPROVE_ONLY_ONE_PAGE_CONTRACT;
+      this.textArimedesModal = ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT;
       this.isLoadingApprove = false;
     },
 
     setInitialStateApproveFirstPage() {
-      this.textDoraNobleModal = DORANOBLE_APPROVE_FIRST_PAGE_CONTRACT;
+      this.textArimedesModal = ARIMEDES_APPROVE_FIRST_PAGE_CONTRACT;
       this.isLoadingApprove = false;
       this.signPage = 1;
     },
 
-    openModalDoraNobleApproval() {
+    setInitialStateApproveSecondPage() {
+      this.textDoraNobleModal = ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT;
+      this.isLoadingApprove = false;
+      this.signPage = 2;
+    },
+
+    openModalArimedesApproval() {
       if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
         this.setInitialStateApproveFirstPage();
       } else {
         this.setInitialStateApproveOnlyPage();
       }
-      this.modalDoraNobleApproval = true;
+      this.modalArimedesApproval = true;
     },
     async approveContract() {
       if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
@@ -479,7 +484,7 @@ export default {
       this.combinatorInfo = {
         getGeneralConfig: this.getGeneralConfig,
         getTokenAConfig: this.getTokenAConfig,
-        getTokenBConfig: this.getTokenBConfig,
+        getTokenBConfig: this.getGameItemBConfig,
         gameitem: this.gameitem,
         infoItem: this.infoItem,
       };
