@@ -77,8 +77,8 @@ export function getGameItems() {
             "56": 1,
             "97": 1,
           },
-          name: 'The Elixir 10%',
-          image: '/images/icons/simple-shield.png'
+          title: 'The Elixir (10%)',
+          image: '/images/nfts/elixir10.png',
         },
       },
       tokenGameItemA: {
@@ -120,8 +120,8 @@ export function getGameItems() {
             "56": 1,
             "97": 2,
           },
-          name: 'Simple Shield',
-          image: '/images/icons/simple-shield.png'
+          name: 'The Elixir (15%)',
+          image: "/images/nfts/elixir15.png",
         },
       },
       tokenGameItemA: {
@@ -163,8 +163,8 @@ export function getGameItems() {
             "56": 1,
             "97": 3,
           },
-          name: 'Simple Shield',
-          image: '/images/icons/simple-shield.png'
+          title: "The Elixir (20%)",
+          image: "/images/nfts/elixir20.png",
         },
       },
       tokenGameItemA: {
@@ -206,8 +206,8 @@ export function getGameItems() {
             "56": 1,
             "97": 4,
           },
-          name: 'Simple Shield',
-          image: '/images/icons/simple-shield.png'
+          name: "The Arcane's Book",
+          image: "/images/nfts/arcane.png"
         },
       },
       tokenGameItemA: {

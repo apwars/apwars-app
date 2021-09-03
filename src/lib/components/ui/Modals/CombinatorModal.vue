@@ -92,17 +92,17 @@
           />
           <div class="primary--text font-weight-black text-h6">
             <div class="d-flex flex-column">
-              <div>
-                Time required:
+              <span class="d-flex align-items-center justify-content-justify">
+                <span class="mr-working-time">Time required:</span>
                 <amount
                   :amount="getInfo.getGeneralConfig.blocks"
-                  formatted
                   decimals="0"
-                />blocks
-              </div>
-              <div>
-                <time-block :blocks="getInfo.getGeneralConfig.blocks" />
-              </div>
+                  formatted
+                  compact
+                />
+                <span class="ml-blocks"> blocks </span>
+              </span>
+              <span><time-block :blocks="getInfo.getGeneralConfig.blocks"/></span>
             </div>
           </div>
         </div>

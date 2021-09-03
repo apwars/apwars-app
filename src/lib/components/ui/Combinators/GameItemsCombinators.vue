@@ -127,7 +127,7 @@
         :isLoading="isLoadingClaim"
         :text="textClaim"
         :textConfirm="textConfirmClaim"
-        :weapon-icon="gameItems.image"
+        :weaponIcon="gameItems.image"
       ></arimedes-modal>
 
       <arimedes-modal
@@ -135,7 +135,7 @@
         :open="modalArimedesNoBalance"
         @close="modalArimedesNoBalance = false"
         :text="textNoBalance"
-        :weapon-icon="gameItems.image"
+        :weaponIcon="gameItems.image"
         hideConfirm
       ></arimedes-modal>
 
@@ -146,8 +146,8 @@
         @close="modalArimedesNewResearch = false"
         :isLoading="isLoadingNewResearch"
         :info="combinatorInfo"
-        textConfirm="Training"
-        title="Horse Riding Center"
+        textConfirm="Forge"
+        title="War Preparation"
         width="800px"
         height="360px"
       ></combinator-modal>
@@ -551,16 +551,19 @@ export default {
       this.modalArimedesNewResearch = true;
       this.combinatorInfo = {
         ...this.combinatorInfo,
-        getGeneralConfig: this.getGeneralConfig,
-        getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
-        getTokenBConfig: { ...this.gameItems, ...this.getTokenBConfig },
-        getTokenCConfig: this.getTokenCConfig,
-        infoTraining: this.infoTraining,
-        textCheckbox: `I understand that I will pay ${Convert.fromWei(
+        ...{
+          getGeneralConfig: this.getGeneralConfig,
+          getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
+          getTokenBConfig: { ...this.gameItems, ...this.getTokenBConfig },
+          getTokenCConfig: this.getTokenCConfig,
+          infoTraining: this.infoTraining,
+        },
+      };
+      console.log(this.combinatorInfo)
+      this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
         this.getTokenAConfig.amount,
         true
-      )} and burn Y wUNITS for this research.`
-      };
+      )} and burn Y wUNITS for this research.`;
     },
 
     async combineTokens() {
@@ -599,7 +602,7 @@ export default {
           this.account
         );
 
-        this.textClaim = DORANOBLE_WAITING_CLAIM_WALLET_APPROVAL;
+        this.textClaim = ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL;
 
         confirmTransaction.on("error", (error) => {
           this.openModalClaim();
@@ -607,7 +610,7 @@ export default {
             return ToastSnackbar.error(error.message);
           }
           return ToastSnackbar.error(
-            "An error has occurred while to signing contract to Dora Noble - The Horse Trainer"
+            "An error has occurred while to signing contract to Arimedes - War Engineer"
           );
         });
 
@@ -617,7 +620,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           ToastSnackbar.success(
-            "wUNIT send successfully Dora Noble - The Horse Trainer"
+            "wUNIT send successfully Arimedes - War Engineer"
           );
           this.isLoadingClaim = false;
           this.modalArimedesClaim = false;
