@@ -127,7 +127,7 @@
         :isLoading="isLoadingClaim"
         :text="textClaim"
         :textConfirm="textConfirmClaim"
-        :training-icon="infoTraining.image"
+        :weapon-icon="gameItems.image"
       ></arimedes-modal>
 
       <arimedes-modal
@@ -135,7 +135,7 @@
         :open="modalArimedesNoBalance"
         @close="modalArimedesNoBalance = false"
         :text="textNoBalance"
-        :training-icon="infoTraining.image"
+        :weapon-icon="gameItems.image"
         hideConfirm
       ></arimedes-modal>
 
@@ -144,7 +144,7 @@
         :open="modalArimedesNewResearch"
         @confirm="combineTokens"
         @close="modalArimedesNewResearch = false"
-        :isLoading="isLoadingNewTraining"
+        :isLoading="isLoadingNewResearch"
         :info="combinatorInfo"
         textConfirm="Training"
         title="Horse Riding Center"
@@ -163,7 +163,8 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import ArimedesModal from "@/lib/components/ui/Modals/ArimedesModal";
 import NewResearchModal from "@/lib/components/ui/Modals/NewResearchModal";
 import CombinatorModal from "@/lib/components/ui/Modals/CombinatorModal";
-/* import ToastSnackbar from "@/plugins/ToastSnackbar"; */
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+import Convert from "@/lib/helpers/Convert";
 
 
 import Combinator from "@/lib/eth/Combinator";
@@ -171,22 +172,22 @@ import wCOURAGE from "@/lib/eth/wCOURAGE";
 import Collectibles from "@/lib/eth/Collectibles";
 
 const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT =
-  "I need some wCOURAGE and a wUNIT and I can transform a walker into a rider.";
+  "And now sign over here..";
 const ARIMEDES_APPROVE_FIRST_PAGE_CONTRACT =
-  "I need some wCOURAGE and a wUNIT and I can transform a walker into a rider.";
+  "I will need two signatures from you to begin the research... This is the first";
 const ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT =
-  "I need some wUNIT and I can transform a walker into a rider.";
+  "Please sign over here...";
 const ARIMEDES_WAITING_WALLET_APPROVAL =
   "Please sign over here...";
 const ARIMEDES_WAITING_FIRST_CONFIRMATION =
-  "I am checking if everything is fine...";
+  "I am checking if everything is fine..";
 const ARIMEDES_WAITING_SECOND_CONFIRMATION =
-  "And now sign over here..";
+  "I am checking if everything is fine..";
 const ARIMEDES_CLAIM =
   "Your research has been completed, and your weapons are available.";
 const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
-  "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your wUNIT.";
+  "Your research has been completed, and your weapons are available.";
 
 export default {
 
@@ -207,17 +208,24 @@ export default {
       modalArimedesNoBalance: false,
       modalArimedesClaim: false,
       modalArimedesNewResearch: false,
+      isLoadingNewResearch: false,
       modalArimedesApproval: false,
       isApprovedTokenA: false,
       isApprovedTokenB: false,
       tokenA: "",
       tokenB: "",
-      textConfirmArimdesModal: "Confirm",
+      textConfirmArimdesModal: "SIGN CONTRACT",
       combinators: {
         combinatorId: "0",
       },
       combinatorContract: {},
-      
+      combinatorInfo: {
+        personage: {
+          image: "/images/weapon-research/arimedes.png",
+          description:
+            "Let's sign a research agreement. You will pay me wCOURAGE and burn some wUnits, and they I will return with newly created weapons.",
+        },
+      },
       tokenAContract: {},
       tokenBContract: {},
       getGeneralConfig: {},
@@ -429,13 +437,7 @@ export default {
         } else {
           await this.approveSecondPage();
         }
-      } else {
-        await this.approveOnlyPage();
       }
-    },
-    setInitialStateApproveOnlyPage() {
-      this.textArimedesModal = ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT;
-      this.isLoadingApprove = false;
     },
 
     setInitialStateApproveFirstPage() {
@@ -445,50 +447,187 @@ export default {
     },
 
     setInitialStateApproveSecondPage() {
-      this.textDoraNobleModal = ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT;
+      this.textArimedesModal = ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT;
       this.isLoadingApprove = false;
       this.signPage = 2;
     },
 
     openModalArimedesApproval() {
-      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
+      if (!this.isApprovedTokenA) {
         this.setInitialStateApproveFirstPage();
-      } else {
-        this.setInitialStateApproveOnlyPage();
+      }
+      if (!this.isApprovedTokenB) {
+        this.setInitialStateApproveSecondPage();
       }
       this.modalArimedesApproval = true;
     },
     async approveContract() {
-      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
-        if (this.signPage === 1) {
-          await this.approveFirstPage();
-        } else {
-          await this.approveSecondPage();
-        }
-      } else {
-        await this.approveOnlyPage();
+      if (!this.isApprovedTokenA) {
+        await this.approveFirstPage();
+      } 
+      if (!this.isApprovedTokenB) {
+        await this.approveSecondPage();
       }
     },
 
     openModalArimedesApproval() {
-      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
+      if (!this.isApprovedTokenA) {
         this.setInitialStateApproveFirstPage();
-      } else {
-        this.setInitialStateApproveOnlyPage();
+      }
+      if (!this.isApprovedTokenB) {
+        this.setInitialStateApproveSecondPage();
       }
       this.modalArimedesApproval = true;
+    },
+
+    async approveFirstPage() {
+      try {
+        this.isLoadingApprove = true;
+        this.textArimedesModal = ARIMEDES_WAITING_WALLET_APPROVAL;
+        const confirmTransaction = this.tokenAContract.approve(
+          this.account,
+         this.combinatorAddress
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.setInitialStateApproveFirstPage();
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error(
+            "An error has occurred while to signing contract to Arimedes - War Engineer"
+          );
+        });
+
+        confirmTransaction.on("transactionHash", () => {
+          this.textArimedesModal = ARIMEDES_WAITING_FIRST_CONFIRMATION;
+        });
+
+        confirmTransaction.on("receipt", () => {
+          this.approveSecondPage();
+        });
+      } catch (error) {
+        this.setInitialStateApproveFirstPage();
+        return ToastSnackbar.error(error.toString());
+      }
+    },
+    async approveSecondPage() {
+      try {
+        this.textArimedesModal = ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT;
+        const confirmTransaction = this.tokenBContract.setApprovalForAll(
+          this.combinatorAddress,
+          this.account
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.setInitialStateApproveSecondPage();
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error(
+            "An error has occurred while to signing contract to Arimedes - War Engineer"
+          );
+        });
+
+        confirmTransaction.on("transactionHash", () => {
+          this.textArimedesModal = ARIMEDES_WAITING_SECOND_CONFIRMATION;
+        });
+
+        confirmTransaction.on("receipt", () => {
+          this.setInitialStateApproveFirstPage();
+          this.modalArimedesApproval = false;
+          this.isLoadingApprove = false;
+          ToastSnackbar.success(
+            "Contract successfully signed to Arimedes - War Engineer"
+          );
+        });
+      } catch (error) {
+        this.setInitialStateApproveFirstPage();
+        return ToastSnackbar.error(error.toString());
+      }
     },
 
     openModalArimedesNewResearch() {
       this.modalArimedesNewResearch = true;
       this.combinatorInfo = {
+        ...this.combinatorInfo,
         getGeneralConfig: this.getGeneralConfig,
-        getTokenAConfig: this.getTokenAConfig,
-        getTokenBConfig: this.getGameItemBConfig,
-        gameitem: this.gameitem,
-        infoItem: this.infoItem,
+        getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
+        getTokenBConfig: { ...this.gameItems, ...this.getTokenBConfig },
+        getTokenCConfig: this.getTokenCConfig,
+        infoTraining: this.infoTraining,
+        textCheckbox: `I understand that I will pay ${Convert.fromWei(
+        this.getTokenAConfig.amount,
+        true
+      )} and burn Y wUNITS for this research.`
       };
-    }
+    },
+
+    async combineTokens() {
+      try {
+        this.isLoadingNewResearch = true;
+        await this.combinatorContract.combineTokens(
+          this.combinatorId,
+          1,
+          this.account
+        );
+        ToastSnackbar.success(
+          "New training successfully sent Arimedes - War Engineer"
+        );
+        this.modalArimedesNewResearch = false;
+        this.loadCombinators();
+      } catch (error) {
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(error);
+      } finally {
+        this.isLoadingNewResearch = false;
+      }
+    },
+    openModalClaim() {
+      this.textClaim = ARIMEDES_CLAIM;
+      this.textConfirmClaim = "Claim";
+      this.modalArimedesClaim = true;
+      this.isLoadingClaim = false;
+    },
+    async claim() {
+      try {
+        this.isLoadingClaim = true;
+        const confirmTransaction = this.combinatorContract.claimTokenFromTokens(
+          this.combinatorId,
+          this.account
+        );
+
+        this.textClaim = DORANOBLE_WAITING_CLAIM_WALLET_APPROVAL;
+
+        confirmTransaction.on("error", (error) => {
+          this.openModalClaim();
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error(
+            "An error has occurred while to signing contract to Dora Noble - The Horse Trainer"
+          );
+        });
+
+        confirmTransaction.on("transactionHash", () => {
+          this.textClaim = ARIMEDES_WAITING_CLAIM_CONFIRMATION;
+        });
+
+        confirmTransaction.on("receipt", () => {
+          ToastSnackbar.success(
+            "wUNIT send successfully Dora Noble - The Horse Trainer"
+          );
+          this.isLoadingClaim = false;
+          this.modalArimedesClaim = false;
+          this.loadCombinators();
+        });
+      } catch (error) {
+        this.isLoadingClaim = true;
+        return ToastSnackbar.error(error);
+      }
+    },
   }
 };
 </script>
