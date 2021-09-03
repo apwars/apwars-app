@@ -65,6 +65,7 @@
           </v-col>
         </v-row>
       </v-col>
+      
       <v-col cols="12" md="3" xm="12" class="mb-4 d-flex justify-center">
         <v-row class="mt-1 justify-space-between d-block">
           <a class="router-link" href="https://exchange.apwars.farm/">
