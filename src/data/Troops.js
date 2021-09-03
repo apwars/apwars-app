@@ -30,7 +30,7 @@ export function getTroops() {
             "56": 4,
             "97": 4,
           },
-          name: 'Simple shield',
+          name: 'Simple Shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -65,7 +65,7 @@ export function getTroops() {
             "56": 5,
             "97": 5,
           },
-          name: 'Simple shield',
+          name: 'Simple Shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -173,7 +173,7 @@ export function getTroops() {
             "56": 6,
             "97": 6,
           },
-          name: 'Simple shield',
+          name: 'Simple Shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -208,7 +208,7 @@ export function getTroops() {
             "56": 7,
             "97": 7,
           },
-          name: 'Simple shield',
+          name: 'Simple Shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -316,7 +316,7 @@ export function getTroops() {
             "56": 8,
             "97": 8,
           },
-          name: 'Simple shield',
+          name: 'Simple Shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -351,7 +351,7 @@ export function getTroops() {
             "56": 9,
             "97": 9,
           },
-          name: 'Simple shield',
+          name: 'Simple Shield',
           image: '/images/icons/simple-shield.png'
         },
       }

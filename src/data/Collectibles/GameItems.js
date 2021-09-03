@@ -48,6 +48,7 @@ export function getGameItems() {
     },
     {
       id: 2,
+      name: "elixir10",
       type: "gameItem",
       typeDesc: "Game Item",
       contractAddress: addresses.collectibles,
@@ -64,9 +65,33 @@ export function getGameItems() {
         "56":
           "0x1366bd6450f28b5c6005ecbf2e32e970438de817d380ddae6e730060309fe2005f660c755aa9a383504e6aad85afd5778260925dda3c9a7ec9ca84cac77c793c01",
       },
+      combinators: {
+        warPreparation: {
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: { 
+            "5777": 0,
+            "56": 1,
+            "97": 1,
+          },
+          name: 'The Elixir 10%',
+          image: '/images/icons/simple-shield.png'
+        },
+      },
+      tokenGameItemA: {
+        name: "wCOURAGE",
+        necessaryAmount: "1000",
+        burningRate: "0",
+        feeRate: "0",
+        tokenAddress: "",
+      }
     },
     {
       id: 3,
+      name: "elixir15",
       type: "gameItem",
       typeDesc: "Game Item",
       contractAddress: addresses.collectibles,
@@ -83,9 +108,33 @@ export function getGameItems() {
         "56":
           "0x4cc257cb09cbffd97271ae0ea2a9f22c93c5d1b0f66b1d3f7b9de21a919a54584edab933b3b5006dbfecf604ca12d5216383acdb0ca880f322857f9f6393d44300",
       },
+      combinators: {
+        warPreparation: {
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 1,
+            "97": 2,
+          },
+          name: 'Simple Shield',
+          image: '/images/icons/simple-shield.png'
+        },
+      },
+      tokenGameItemA: {
+        name: "wCOURAGE",
+        necessaryAmount: "100000",
+        burningRate: "0",
+        feeRate: "0",
+        tokenAddress: "",
+      }
     },
     {
       id: 4,
+      name: "elixir20",
       type: "gameItem",
       typeDesc: "Game Item",
       contractAddress: addresses.collectibles,
@@ -102,9 +151,33 @@ export function getGameItems() {
         "56":
           "0x9e8cf796a6c72e56933aa344bd9c9223428fa2fd2c3d58972be2fe8d37b24c422530dcf7890370e1dc4e3eb87df14efc01726b0d3d432dfa44021b663504c94b01",
       },
+      combinators: {
+        warPreparation: {
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 1,
+            "97": 3,
+          },
+          name: 'Simple Shield',
+          image: '/images/icons/simple-shield.png'
+        },
+      },
+      tokenGameItemA: {
+        name: "wCOURAGE",
+        necessaryAmount: "200000",
+        burningRate: "0",
+        feeRate: "0",
+        tokenAddress: "",
+      }
     },
     {
       id: 5,
+      name: "arcane's-book",
       type: "gameItem",
       typeDesc: "Game Item",
       contractAddress: addresses.collectibles,
@@ -121,6 +194,29 @@ export function getGameItems() {
         "56":
           "0x13a77abf8c26731ff352621f450db6901b218735322e2d99fd58b69103477e531aef21cd73ece1ecfe21e58fe560bdde666328c736be5a2aa69ad692a85b2e6201",
       },
+      combinators: {
+        warPreparation: {
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 1,
+            "97": 4,
+          },
+          name: 'Simple Shield',
+          image: '/images/icons/simple-shield.png'
+        },
+      },
+      tokenGameItemA: {
+        name: "wCOURAGE",
+        necessaryAmount: "10000",
+        burningRate: "0",
+        feeRate: "0",
+        tokenAddress: "",
+      }
     },
     {
       id: 6,
