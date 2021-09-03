@@ -13,7 +13,7 @@
       </v-container>
     </div>
 
-    <v-row v-if="$vuetify.breakpoint.mobile" class="war-info mb-4 ">
+    <v-row v-if="$vuetify.breakpoint.mobile" class="war-info mb-4 text-center">
       <v-col cols="12" md="6" xm="12" class="px-0">
         <h2>Resources</h2>
         <v-row class="mt-1">
@@ -128,6 +128,7 @@
           </div>
         </v-row>
       </v-col>
+
       <v-col cols="12" md="3" sm="12">
         <h2>Game Items</h2>
         <v-row class="mt-1 ml-4 justify-space-between">
