@@ -27,7 +27,7 @@ export default {
   background: #32211B !important;
 }
 
-.mr-working-time{
+.mr-working-time {
   margin-right: 5px;
 }
 .ml-blocks {

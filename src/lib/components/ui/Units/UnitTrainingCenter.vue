@@ -13,7 +13,7 @@
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty">
-          <v-img class="mr-1" max-width="26px" src="/images/wcourage.png" />
+          <v-img class="mr-1" max-width="26px" src="/images/wCOURAGE1.png" />
           <amount
             :amount="getTokenAConfig.amount"
             decimals="0"
@@ -36,14 +36,15 @@
           <img class="mr-1" height="32px" src="/images/icons/hourglass.png" />
 
           <div class="d-flex flex-column">
-            <span>
-              Working time:
+            <span class="d-flex align-items-center justify-content-justify">
+              <span class="mr-working-time"> Working time:</span>
               <amount
                 :amount="getGeneralConfig.blocks"
                 decimals="0"
                 formatted
+                compact
               />
-              blocks
+              <span class="ml-blocks"> blocks </span>
             </span>
             <span><time-block :blocks="getGeneralConfig.blocks"/></span>
           </div>
@@ -622,7 +623,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           ToastSnackbar.success(
-            "wUNIT sent successfully Dora Noble - The Horse Trainer"
+            "wUNIT send successfully Dora Noble - The Horse Trainer"
           );
           this.isLoadingClaim = false;
           this.modalDoraNobleClaim = false;

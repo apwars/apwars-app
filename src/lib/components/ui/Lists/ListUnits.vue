@@ -116,7 +116,7 @@
           />
           <unit-war-preparation
             v-else-if="getType === 'war-preparation'"
-            :unit="trooper "
+            :unit="trooper"
           />
           <unit-training-center
             v-else-if="getType === 'training-center'"
@@ -189,7 +189,7 @@ export default {
       },
       teams: [],
       globalTroops: [],
-      filterTroops: [],
+      filterTroops: []
     };
   },
 
@@ -225,10 +225,13 @@ export default {
         case "report-trooper":
           return this.type;
         case "war-preparation":
-          this.select.tiers = "Barracks"
+          this.select.tiers = "Barracks";
           return this.type;
         case "training-center":
+          this.select.tiers = "Armory"
           return this.type;
+        case "war-preparation-game-items":
+          return this.type
 
         default:
           return "trooper";
