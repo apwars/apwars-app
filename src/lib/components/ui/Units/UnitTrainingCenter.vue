@@ -13,7 +13,7 @@
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty">
-          <v-img class="mr-1" max-width="26px" src="/images/wCOURAGE1.png" />
+          <v-img class="mr-1" max-width="26px" src="/images/wcourage.png" />
           <amount
             :amount="getTokenAConfig.amount"
             decimals="0"
@@ -622,7 +622,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           ToastSnackbar.success(
-            "wUNIT send successfully Dora Noble - The Horse Trainer"
+            "wUNIT sent successfully Dora Noble - The Horse Trainer"
           );
           this.isLoadingClaim = false;
           this.modalDoraNobleClaim = false;
