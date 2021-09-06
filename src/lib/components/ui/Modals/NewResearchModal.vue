@@ -21,8 +21,7 @@
           </div>
 
           <div class="d-flex align-center px-1 font-weight-black">
-            You'll pay me in wCOURAGE to work with a small group of brave soldiers, and
-            unfortunately they'll all perish in the process.
+            You'll pay me in wCOURAGE to work with your army, and they'll come back armed.
           </div>
 
           <div>
@@ -35,7 +34,7 @@
         >
           <div class="d-flex align-center">
             <div class="box-token mr-2">
-              <v-img src="/images/wcourage.png" />
+              <v-img src="/images/wCOURAGE1.png" />
             </div>
             <number-field
               no-icons
@@ -54,7 +53,7 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
+              <v-img :src="`/images/icons/${info.unit.name}.png`" />
             </div>
             <number-field
               no-icons
@@ -102,13 +101,8 @@
                 <amount
                   :amount="getInfo.getTokenAConfig.amount"
                   decimals="2"
+                  compact
                   symbol="wCOURAGE"
-                />
-                and
-                <amount
-                  :amount="getInfo.getTokenBConfig.amount"
-                  decimals="2"
-                  :symbol="getInfo.getTokenBConfig.name"
                 />
                 to this research.
               </div>

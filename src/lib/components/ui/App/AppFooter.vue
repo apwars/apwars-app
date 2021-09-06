@@ -3,9 +3,7 @@
     <div
       class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
     >
-      <div
-        class="d-flex side-menu justify-center justify-md-start align-center"
-      >
+      <div class="d-flex side-menu justify-center justify-md-start align-center">
         <div class="d-inline-flex">
           <img
             v-if="account"
@@ -23,12 +21,7 @@
             alt="wgold"
           />
           <span class="balance-wGOLD">
-            <amount
-              v-if="!isLoading"
-              :amount="balance"
-              decimals="2"
-              symbol="wGOLD"
-            />
+            <amount v-if="!isLoading" :amount="balance" decimals="2" symbol="wGOLD" />
           </span>
         </div>
       </div>
@@ -155,7 +148,7 @@ export default {
           href: "/",
         },
         {
-          title: "Game Items",
+          title: "Library",
           image: "/images/icons/library.png",
           href: "/game-items",
         },
@@ -191,12 +184,16 @@ export default {
               image: "/images/icons/fed.png",
               href: "/wars",
             },
-            {
-              title: "War Preparation",
-              image: "/images/war-preparation/icon-war-preparation.png",
-              href: "/war-preparation",
-            },
+            // {
+            //   title: "Weapon Research",
+            //   href: "/weapon-research",
+            // },
           ],
+        },
+        {
+          title: "War Preparation",
+          image: "/images/war-preparation/icon-war-preparation.png",
+          href: "/war-preparation",
         },
         {
           title: "Inventory",
@@ -344,8 +341,8 @@ export default {
     width: 35px;
   }
   .menu-main {
-    width: 98%;
-  }
+  width: 98%;
+}
 }
 </style>
 
