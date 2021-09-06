@@ -35,15 +35,16 @@
         <div class="d-flex align-center my-1 qty">
           <img class="mr-1" height="32px" src="/images/icons/hourglass.png" />
 
-          <div class="d-flex d-flex align-items-center justify-content-justify">
-            <span class="mr-working-time">
-              Working time:
+          <div class="d-flex flex-column">
+            <span class="d-flex align-items-center justify-content-justify">
+              <span class="mr-working-time"> Working time:</span>
               <amount
                 :amount="getGeneralConfig.blocks"
                 decimals="0"
                 formatted
+                compact
               />
-              <span class="ml-blocks">blocks</span>
+              <span class="ml-blocks"> blocks </span>
             </span>
             <span><time-block :blocks="getGeneralConfig.blocks"/></span>
           </div>
