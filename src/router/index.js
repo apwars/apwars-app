@@ -14,6 +14,7 @@ import BlackMarket from "@/pages/BlackMarket.vue";
 import PrivateSale from "@/pages/Arcadia/PrivateSale.vue";
 import WeaponResearch from "@/pages/WeaponResearch.vue";
 import TrainingCenter from "@/pages/TrainingCenter.vue";
+import FarmWorker from "@/pages/FarmWorker.vue";
 import Home from "@/pages/Home.vue";
 
 Vue.use(Router);
@@ -93,6 +94,11 @@ export const routes = [
         path: "/private-sale",
         name: "/private-sale",
         component: PrivateSale
+      },
+      {
+        path: "/farm-worker",
+        name: "/farm-worker",
+        component: FarmWorker
       },
       {
         path: "/farms",

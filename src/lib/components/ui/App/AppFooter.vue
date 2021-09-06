@@ -3,7 +3,9 @@
     <div
       class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
     >
-      <div class="d-flex side-menu justify-center justify-md-start align-center">
+      <div
+        class="d-flex side-menu justify-center justify-md-start align-center"
+      >
         <div class="d-inline-flex">
           <img
             v-if="account"
@@ -21,7 +23,12 @@
             alt="wgold"
           />
           <span class="balance-wGOLD">
-            <amount v-if="!isLoading" :amount="balance" decimals="2" symbol="wGOLD" />
+            <amount
+              v-if="!isLoading"
+              :amount="balance"
+              decimals="2"
+              symbol="wGOLD"
+            />
           </span>
         </div>
       </div>
@@ -170,6 +177,11 @@ export default {
             {
               title: "Training Center",
               href: "/training-center",
+              image: "/images/icons/battle-shield.png",
+            },
+            {
+              title: "Farm Worker",
+              href: "/farm-worker",
               image: "/images/icons/battle-shield.png",
             },
           ],
@@ -336,8 +348,8 @@ export default {
     width: 35px;
   }
   .menu-main {
-  width: 98%;
-}
+    width: 98%;
+  }
 }
 </style>
 
