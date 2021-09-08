@@ -431,12 +431,13 @@ export default {
     },
 
     async approveContract() {
-      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
-        if (this.signPage === 1) {
-          await this.approveFirstPage();
-        } else {
-          await this.approveSecondPage();
-        }
+      console.log(this.isApprovedTokenA, this.isApprovedTokenB)
+      if (!this.isApprovedTokenA) {
+        this.setInitialStateApproveFirstPage();
+        return
+      }
+      if (!this.isApprovedTokenB) {
+        this.setInitialStateApproveSecondPage();
       }
     },
 
@@ -453,17 +454,22 @@ export default {
     },
 
     openModalArimedesApproval() {
+      console.log(this.isApprovedTokenA, this.isApprovedTokenB)
+      this.modalArimedesApproval = true;
       if (!this.isApprovedTokenA) {
         this.setInitialStateApproveFirstPage();
+        return
       }
       if (!this.isApprovedTokenB) {
         this.setInitialStateApproveSecondPage();
       }
-      this.modalArimedesApproval = true;
+      
     },
     async approveContract() {
+      console.log(this.isApprovedTokenA, this.isApprovedTokenB)
       if (!this.isApprovedTokenA) {
         await this.approveFirstPage();
+        return
       } 
       if (!this.isApprovedTokenB) {
         await this.approveSecondPage();
@@ -471,13 +477,16 @@ export default {
     },
 
     openModalArimedesApproval() {
+      console.log(this.isApprovedTokenA, this.isApprovedTokenB)
+      this.modalArimedesApproval = true;
       if (!this.isApprovedTokenA) {
         this.setInitialStateApproveFirstPage();
+        return
       }
       if (!this.isApprovedTokenB) {
         this.setInitialStateApproveSecondPage();
       }
-      this.modalArimedesApproval = true;
+      
     },
 
     async approveFirstPage() {
@@ -559,7 +568,6 @@ export default {
           infoTraining: this.infoTraining,
         },
       };
-      console.log(this.combinatorInfo)
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
         this.getTokenAConfig.amount,
         true
@@ -615,7 +623,7 @@ export default {
         });
 
         confirmTransaction.on("transactionHash", () => {
-          this.textClaim = ARIMEDES_WAITING_CLAIM_CONFIRMATION;
+          this.textClaim = ARIMEDES_WAITING_CLAIM_CONFIRMATION + 'combId' + this.combinatorId;
         });
 
         confirmTransaction.on("receipt", () => {
