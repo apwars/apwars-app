@@ -13,7 +13,7 @@
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty">
-          <v-img class="mr-1" max-width="26px" src="/images/wcourage.png" />
+          <v-img class="mr-1" max-width="26px" src="/images/wCOURAGE1.png" />
           <amount
             :amount="getTokenAConfig.amount"
             decimals="2"
@@ -58,11 +58,9 @@
           />
           <span>
             Produced weapon: <br />
-            <amount
-              :amount="getGameItemCConfig.amount"
-              formatted
-              decimals="0"
-            />{{ infoWeapon.name }}
+            <amount :amount="getGameItemCConfig.amount" formatted decimals="0" />{{
+              infoWeapon.name
+            }}
           </span>
         </div>
 
@@ -129,15 +127,6 @@
       :weapon-icon="infoWeapon.image"
     ></arimedes-modal>
 
-    <arimedes-modal
-      v-if="modalArimedesNoBalance"
-      :open="modalArimedesNoBalance"
-      @close="modalArimedesNoBalance = false"
-      :text="textNoBalance"
-      :weapon-icon="infoWeapon.image"
-      hideConfirm
-    ></arimedes-modal>
-
     <new-research-modal
       v-if="modalArimedesNewResearch"
       :open="modalArimedesNewResearch"
@@ -159,27 +148,28 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import ArimedesModal from "@/lib/components/ui/Modals/ArimedesModal";
 import NewResearchModal from "@/lib/components/ui/Modals/NewResearchModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
-import Convert from "@/lib/helpers/Convert";
 
 import Combinator from "@/lib/eth/Combinator";
 import wCOURAGE from "@/lib/eth/wCOURAGE";
 import Troops from "@/lib/eth/Troops";
 
-const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT = "And now sign over here...";
+const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT =
+  "Please sign over here...";
 const ARIMEDES_APPROVE_FIRST_PAGE_CONTRACT =
   "I need some wCOURAGE and a wUNIT to research weapons for you.";
 const ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT =
   "I need some wCOURAGE and a wUNIT to research weapons for you.";
-const ARIMEDES_WAITING_WALLET_APPROVAL = "Please sign over here...";
+const ARIMEDES_WAITING_WALLET_APPROVAL =
+  "Please sign over here...";
 const ARIMEDES_WAITING_FIRST_CONFIRMATION =
   "I’m checking if everything is fine...";
 const ARIMEDES_WAITING_SECOND_CONFIRMATION =
-  "I’m checking if everything is fine...";
+  "And now sign over here..";
 const ARIMEDES_CLAIM =
   "Your research is complete, and your weapon is available.";
 const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
-  "Your research is complete, and your weapons are available.";
+  "Thank you for trusting me my friend, I'm waiting for the first blockchain to send your weapon.";
 
 export default {
   name: "unit-war-preparation",
@@ -195,7 +185,6 @@ export default {
   data() {
     return {
       isLoadingUnit: false,
-      modalArimedesNoBalance: false,
       modalArimedesClaim: false,
       modalArimedesNewResearch: false,
       modalArimedesApproval: false,
@@ -204,7 +193,6 @@ export default {
       isLoadingNewResearch: false,
       signPage: 0,
       textArimedesModal: "",
-      textNoBalance: "",
       textConfirmArimdesModal: "Sign contract",
       combinatorContract: {},
       isApprovedTokenA: false,
@@ -286,20 +274,6 @@ export default {
       }
       return {};
     },
-    isBalanceCombinator() {
-      if (!this.getTokenAConfig.balance || !this.getTokenBConfig.balance) {
-        return false;
-      }
-      const amountTokenA = Convert.fromWei(this.getTokenAConfig.amount, true);
-      const balanceTokenA = Convert.fromWei(this.getTokenAConfig.balance, true);
-      const amountTokenB = Convert.fromWei(this.getTokenBConfig.amount, true);
-      const balanceTokenB = Convert.fromWei(this.getTokenBConfig.balance, true);
-      if (balanceTokenA >= amountTokenA && balanceTokenB >= amountTokenB) {
-        return true;
-      }
-
-      return false;
-    },
   },
   watch: {
     isConnected() {
@@ -373,7 +347,6 @@ export default {
         };
 
         await this.loadCombinators();
-        await this.getBalance();
       }
       this.isLoadingUnit = true;
     },
@@ -391,14 +364,6 @@ export default {
       if (this.currentBlockNumber >= this.combinators.endBlock) {
         this.isClaim = true;
       }
-    },
-    async getBalance() {
-      this.getTokenAConfig.balance = await this.tokenAContract.balanceOf(
-        this.account
-      );
-      this.getTokenBConfig.balance = await this.tokenBContract.balanceOf(
-        this.account
-      );
     },
     openModalArimedesApproval() {
       if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
@@ -536,26 +501,14 @@ export default {
       }
     },
     openModalArimedesNewResearch() {
-      if (!this.isBalanceCombinator) {
-        const amountTokenA = Convert.fromWei(this.getTokenAConfig.amount, true);
-        const amountTokenB = Convert.fromWei(this.getTokenBConfig.amount, true);
-
-        this.textNoBalance = `I see that you do not have the necessary requirements for your training. You must have ${amountTokenA} wCOURAGE and ${amountTokenB} ${this.unit.name}.`;
-        return (this.modalArimedesNoBalance = true);
-      }
-
-      this.combinatorInfo = {
-        ...this.combinatorInfo,
-        ...{
-          getGeneralConfig: this.getGeneralConfig,
-          getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
-          getTokenBConfig: { ...this.unit, ...this.getTokenBConfig },
-          getTokenCConfig: this.getTokenCConfig,
-          infoWeapon: this.infoWeapon,
-        },
-      };
       this.modalArimedesNewResearch = true;
-
+      this.combinatorInfo = {
+        getGeneralConfig: this.getGeneralConfig,
+        getTokenAConfig: this.getTokenAConfig,
+        getTokenBConfig: this.getTokenBConfig,
+        unit: this.unit,
+        infoWeapon: this.infoWeapon,
+      };
     },
     async combineTokens() {
       try {
@@ -611,7 +564,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           ToastSnackbar.success(
-            "Weapon sent successfully Arimedes - War Engineer"
+            "Weapon send successfully Arimedes - War Engineer"
           );
           this.isLoadingClaim = false;
           this.modalArimedesClaim = false;

@@ -14,7 +14,8 @@ export function getWeapons() {
     //   typeDesc: "Weapons",
     //   contractAddress: addresses.collectibles,
     //   title: "Simple sword",
-    //   description: 'The Simples Sword can be used by your troops in direct conflict with enemies. And it will give you the initial strength to conquer your path to victory.',
+    //   description:
+    //     'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     //   image: "/images/nfts/weapon-simple-sword.png",
     // },
     // {
@@ -23,7 +24,8 @@ export function getWeapons() {
     //   typeDesc: "Weapons",
     //   contractAddress: addresses.collectibles,
     //   title: "Simple spear",
-    //   description: 'The Simple Spear is sharp and can be used from a distance causing great damage to the enemy team.',
+    //   description:
+    //     'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     //   image: "/images/nfts/weapon-simple-spear.png",
     // },
     // {
@@ -32,7 +34,8 @@ export function getWeapons() {
     //   typeDesc: "Weapons",
     //   contractAddress: addresses.collectibles,
     //   title: "Simple potion",
-    //   description: 'The Simple Potion has magical elements that give power to your troops. Once used, it causes irreversible damage to opponents.',
+    //   description:
+    //     'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     //   image: "/images/nfts/weapon-simple-potion.png",
     // },
     {
@@ -41,7 +44,8 @@ export function getWeapons() {
       typeDesc: "Weapons",
       contractAddress: addresses.collectibles,
       title: "Simple Shield",
-      description: 'The Simple Shield is strong and resistant, who wield it will be much safer in a direct confrontation.',
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
       image: "/images/nfts/weapon-simple-shield.png",
     },
   ];
