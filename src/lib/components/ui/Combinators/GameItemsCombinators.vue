@@ -241,7 +241,7 @@ export default {
         feeRate: "0",
         tokenAddress: "",
       },
-      getTokenCConfig: {
+      getGameItemCConfig: {
         amount: "0",
         burningRate: "0",
         feeRate: "0",
@@ -353,7 +353,7 @@ export default {
       }
 
       if (this.getGeneralConfig.isEnabled !== undefined &&
-        !this.getGeneralConfig.isEnabled) {;
+        !this.getGeneralConfig.isEnabled) {
         return;
       }
       
@@ -431,13 +431,14 @@ export default {
     },
 
     async approveContract() {
-      console.log(this.isApprovedTokenA, this.isApprovedTokenB)
-      if (!this.isApprovedTokenA) {
-        this.setInitialStateApproveFirstPage();
-        return
-      }
-      if (!this.isApprovedTokenB) {
-        this.setInitialStateApproveSecondPage();
+      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
+        if (this.signPage === 1) {
+          await this.approveFirstPage();
+        } else {
+          await this.approveSecondPage();
+        }
+      } else {
+        await this.approveOnlyPage();
       }
     },
 
@@ -454,39 +455,73 @@ export default {
     },
 
     openModalArimedesApproval() {
-      console.log(this.isApprovedTokenA, this.isApprovedTokenB)
-      this.modalArimedesApproval = true;
-      if (!this.isApprovedTokenA) {
+      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
         this.setInitialStateApproveFirstPage();
-        return
+      } else {
+        this.setInitialStateApproveOnlyPage();
       }
-      if (!this.isApprovedTokenB) {
-        this.setInitialStateApproveSecondPage();
-      }
-      
+      this.modalArimedesApproval = true;
     },
     async approveContract() {
-      console.log(this.isApprovedTokenA, this.isApprovedTokenB)
-      if (!this.isApprovedTokenA) {
-        await this.approveFirstPage();
-        return
-      } 
-      if (!this.isApprovedTokenB) {
-        await this.approveSecondPage();
+      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
+        if (this.signPage === 1) {
+          await this.approveFirstPage();
+        } else {
+          await this.approveSecondPage();
+        }
+      } else {
+        await this.approveOnlyPage();
+      }
+    },
+
+    setInitialStateApproveOnlyPage() {
+      this.textArimedesModal = ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT;
+      this.isLoadingApprove = false;
+    },
+    async approveOnlyPage() {
+      try {
+        this.isLoadingApprove = true;
+        this.textArimedesModal = DORANOBLE_WAITING_WALLET_APPROVAL;
+        const confirmTransaction = this.approveOnlyOneContract.approve(
+          this.account,
+         this.combinatorAddress
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.setInitialStateApproveOnlyPage();
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error(
+            "An error has occurred while to signing contract to Arimedes - War Engineer"
+          );
+        });
+
+        confirmTransaction.on("transactionHash", () => {
+          this.textArimedesModal = ARIMEDES_WAITING_SECOND_CONFIRMATION;
+        });
+
+        confirmTransaction.on("receipt", () => {
+          this.setInitialStateApproveOnlyPage();
+          this.modalArimedesApproval = false;
+          this.isLoadingApprove = false;
+          ToastSnackbar.success(
+            "Contract successfully signed to Arimedes - War Engineer"
+          );
+        });
+      } catch (error) {
+        this.setInitialStateApproveOnlyPage();
+        return ToastSnackbar.error(error.toString());
       }
     },
 
     openModalArimedesApproval() {
-      console.log(this.isApprovedTokenA, this.isApprovedTokenB)
-      this.modalArimedesApproval = true;
-      if (!this.isApprovedTokenA) {
+      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
         this.setInitialStateApproveFirstPage();
-        return
+      } else {
+        this.setInitialStateApproveOnlyPage();
       }
-      if (!this.isApprovedTokenB) {
-        this.setInitialStateApproveSecondPage();
-      }
-      
+      this.modalArimedesApproval = true;
     },
 
     async approveFirstPage() {
@@ -564,7 +599,7 @@ export default {
           getGeneralConfig: this.getGeneralConfig,
           getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
           getTokenBConfig: { ...this.gameItems, ...this.getTokenBConfig },
-          getTokenCConfig: this.getTokenCConfig,
+          getTokenCConfig: this.getGameItemCConfig,
           infoTraining: this.infoTraining,
         },
       };
@@ -605,7 +640,7 @@ export default {
     async claim() {
       try {
         this.isLoadingClaim = true;
-        const confirmTransaction = this.combinatorContract.claimTokenFromTokens(
+        const confirmTransaction = this.combinatorContract.claimGameItemFromTokens(
           this.combinatorId,
           this.account
         );
@@ -623,7 +658,7 @@ export default {
         });
 
         confirmTransaction.on("transactionHash", () => {
-          this.textClaim = ARIMEDES_WAITING_CLAIM_CONFIRMATION + 'combId' + this.combinatorId;
+          this.textClaim = ARIMEDES_WAITING_CLAIM_CONFIRMATION;
         });
 
         confirmTransaction.on("receipt", () => {
