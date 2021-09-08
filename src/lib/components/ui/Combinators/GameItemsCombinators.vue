@@ -236,7 +236,7 @@ export default {
         tokenAddress: "",
       },
       getTokenBConfig: {
-        amount: "1000",
+        amount: "0",
         burningRate: "0",
         feeRate: "0",
         tokenAddress: "",
@@ -559,7 +559,6 @@ export default {
           infoTraining: this.infoTraining,
         },
       };
-      console.log(this.combinatorInfo)
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
         this.getTokenAConfig.amount,
         true
