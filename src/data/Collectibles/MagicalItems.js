@@ -31,7 +31,7 @@ export function getMagicalItems() {
               "97": 1,
             },
             title: 'The Elixir (10%)',
-            image: '/images/nfts/elixir10.png',
+            image: '/images/icons/elixir10.png',
           },
         },
         tokenGameItemA: {
@@ -65,7 +65,7 @@ export function getMagicalItems() {
               "97": 2,
             },
             name: 'The Elixir (15%)',
-            image: "/images/nfts/elixir15.png",
+            image: "/images/icons/elixir15.png",
           },
         },
         tokenGameItemA: {
@@ -99,7 +99,7 @@ export function getMagicalItems() {
               "97": 3,
             },
             title: "The Elixir (20%)",
-            image: "/images/nfts/elixir20.png",
+            image: "/images/icons/elixir20.png",
           },
         },
         tokenGameItemA: {
@@ -112,7 +112,7 @@ export function getMagicalItems() {
       },
       {
         id: 5,
-        name: "arcane's-book",
+        name: "arcanes-book",
         type: "magicalItem",
         typeDesc: "Magical Item",
         contractAddress: addresses.collectibles,
@@ -133,7 +133,7 @@ export function getMagicalItems() {
               "97": 4,
             },
             name: "The Arcane's Book",
-            image: "/images/nfts/arcane.png"
+            image: "/images/icons/arcanes-book.png"
           },
         },
         tokenGameItemA: {

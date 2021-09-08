@@ -59,11 +59,11 @@
               class="mr-1"
               width="45px"
               height="45px"
-              :src="`/images/war-preparation/game-items/conquered/arcane's-book.png`"
+              :src="`/images/icons/${gameItems.name}.png`"
             />
             <!-- :src="gameItem.image" -->
             <span>
-              Weapon conquered: <br />
+              Item conquered: <br />
               {{ gameItems.title }}
             </span>
           </div>
@@ -212,6 +212,7 @@ export default {
       modalArimedesApproval: false,
       isApprovedTokenA: false,
       isApprovedTokenB: false,
+      isLoadingClaim: false,
       tokenA: "",
       tokenB: "",
       textConfirmArimdesModal: "SIGN CONTRACT",
