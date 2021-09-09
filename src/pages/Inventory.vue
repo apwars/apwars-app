@@ -95,7 +95,7 @@
     </v-container>
     <v-container fluid v-if="collection.length > 0 && tab === 0">
       <v-row dense>
-        <v-col v-for="collectible in collection" :key="collectible.id" cols="12" md="6" sm="6">
+        <v-col v-for="collectible in collection" :key="collectible.id" cols="12" offset-lg="2" lg="3" md="6" sm="6">
           <nft-card :collectible="collectible" :myCollection="true" />
         </v-col>
       </v-row>

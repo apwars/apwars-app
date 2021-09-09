@@ -32,8 +32,8 @@
           </v-row>
         </div>
         <v-row class="d-flex">
-          <v-col cols="12" md="12" lg="12" xs="8" class="d-flex">
-            <v-tabs v-model="tab">
+          <v-col cols="12" md="12" lg="12" class="d-flex">
+            <v-tabs v-model="tab" show-arrows>
               <v-tab v-for="itemType in itemTypes" :key="itemType">{{ itemType }}</v-tab>
             </v-tabs>
           </v-col>
