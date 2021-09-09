@@ -617,7 +617,7 @@ export default {
           this.openConfirmOrderGameItem = false;
           this.isLoadingMarket = false;
 
-          this.$router.push("/");
+          this.$router.push("/black-market");
         });
       } catch (e) {
         this.waitingStage = 0;
