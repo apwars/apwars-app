@@ -146,7 +146,7 @@
         @close="modalArimedesNewResearch = false"
         :isLoading="isLoadingNewResearch"
         :info="combinatorInfo"
-        textConfirm="Forge"
+        textConfirm="Research"
         title="War Preparation"
         width="800px"
         height="360px"
@@ -184,10 +184,10 @@ const ARIMEDES_WAITING_FIRST_CONFIRMATION =
 const ARIMEDES_WAITING_SECOND_CONFIRMATION =
   "I am checking if everything is fine..";
 const ARIMEDES_CLAIM =
-  "Your research has been completed, and your magical items available.";
+  "Your research has been completed, and your Magical Items are available.";
 const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
-  "Your research has been completed, and your weapons are available.";
+  "Your research has been completed, and your Magical Items are available.";
 
 export default {
 
@@ -224,7 +224,7 @@ export default {
         personage: {
           image: "/images/weapon-research/arimedes.png",
           description:
-            "Let's sign a research agreement. You will pay me wCOURAGE and burn 1 Magical Item, and they I will return with newly created Magical Items.",
+            "Let's sign a research agreement. You will pay me wCOURAGE and provide 1 Game Item, and i will retrieve your Game Item plus the spendables result.",
         },
       },
       tokenAContract: {},
@@ -609,7 +609,7 @@ export default {
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
         this.getTokenAConfig.amount,
         true
-      )} and burn 1 Magical Item for this research.`;
+      )} and provide 1 Game Item for this research.`;
     },
 
     async combineTokens() {
