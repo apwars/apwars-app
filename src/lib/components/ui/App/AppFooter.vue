@@ -17,7 +17,7 @@
         <div class="d-inline-flex align-center">
           <img
             class="d-block mx-0 mx-md-1 i-coin"
-            src="/images/wgold.png"
+            src="/images/wGOLD.png"
             alt="wgold"
           />
           <span class="balance-wGOLD">

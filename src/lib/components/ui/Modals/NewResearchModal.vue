@@ -34,7 +34,7 @@
         >
           <div class="d-flex align-center">
             <div class="box-token mr-2">
-              <v-img src="/images/wCOURAGE1.png" />
+              <v-img src="/images/wCOURAGE.png" />
             </div>
             <number-field
               no-icons
@@ -73,16 +73,17 @@
           />
           <div class="primary--text font-weight-black text-h6">
             <div class="d-flex flex-column">
-              <div>
-                Time required:
+              <span class="d-flex align-items-center justify-content-justify">
+                <span class="mr-working-time">Time required:</span>
                 <amount
                   :amount="getInfo.getGeneralConfig.blocks"
                   formatted
                   fo
                   decimals="0"
                   compact
-                />blocks
-              </div>
+                />
+                <span class="ml-blocks">blocks</span>
+              </span>
               <div>
                 <time-block :blocks="getInfo.getGeneralConfig.blocks" />
               </div>

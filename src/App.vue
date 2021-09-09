@@ -26,4 +26,11 @@ export default {
 .v-app-bar .theme--dark.v-card {
   background: #32211B !important;
 }
+
+.mr-working-time {
+  margin-right: 5px;
+}
+.ml-blocks {
+  margin-left: 5px;
+}
 </style>

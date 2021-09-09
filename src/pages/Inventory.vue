@@ -16,7 +16,7 @@
         <h2>Resources</h2>
         <v-row class="mt-1 ml-4">
           <div class="d-flex">
-            <img src="/images/wgold.png" class="resources" />
+            <img src="/images/wGOLD.png" class="resources" />
             <div class="text-center">
               <amount
                 v-if="isConnected"
@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="d-flex ml-4">
-            <img src="/images/wCOURAGE1.png" class="resources" />
+            <img src="/images/wCOURAGE.png" class="resources" />
             <div class="text-center">
               <amount
                 v-if="isConnected"
@@ -95,7 +95,7 @@
     </v-container>
     <v-container fluid v-if="collection.length > 0 && tab === 0">
       <v-row dense>
-        <v-col v-for="collectible in collection" :key="collectible.id" cols="12" md="3">
+        <v-col v-for="collectible in collection" :key="collectible.id" cols="12" offset-lg="2" lg="3" md="6" sm="6">
           <nft-card :collectible="collectible" :myCollection="true" />
         </v-col>
       </v-row>

@@ -45,7 +45,7 @@
         <v-layout justify-center align-center>
           <v-flex shrink class="text-center">
             <div class="d-flex title justify-center">
-              <img src="/images/wgold.png" height="30px" alt="wGOLD" />
+              <img src="/images/wGOLD.png" height="30px" alt="wGOLD" />
               wGOLD
             </div>
             <div class="value">

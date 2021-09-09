@@ -24,19 +24,42 @@
       <div class="gradient"></div>
     </div>
 
-    <list-units
-      class="mt-n6"
-      type="war-preparation"
-      :filter-rules="filterTiers"
-      show-only-my-units
-    ></list-units>
+    <v-container class="bg-tabs px-0">
+      <v-row class="d-flex mb-3">
+        <v-col cols="12" md="12" lg="12" class="d-flex">
+          <v-tabs v-model="tab">
+            <v-tab>Weapons</v-tab>
+            <v-tab>Magical Items</v-tab>
+          </v-tabs>
+        </v-col>
+      </v-row>
+
+      <list-units
+        v-if="tab === 0"
+        class="mt-n6"
+        type="war-preparation"
+        :filter-rules="filterTiers"
+        show-only-my-units
+      ></list-units>
+
+      <list-combinators
+        v-else-if="tab === 1"
+        type="game-items-combinator"
+        class="mt-n6">
+      </list-combinators>
+    </v-container>
   </div>
 </template>
 
 <script>
+import NftItem from '@/lib/components/ui/NFTItem';
+import GameText from '@/lib/components/ui/Utils/GameText';
+
 import PageTitle from "@/lib/components/ui/Utils/PageTitle.vue";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
+
+import ListCombinators from "@/lib/components/ui/Lists/ListCombinators";
 
 export default {
   name: 'war-preparation',
@@ -44,6 +67,9 @@ export default {
     PageTitle,
     wButton,
     ListUnits,
+    NftItem,
+    GameText,
+    ListCombinators,
   },
 
   data() {
@@ -51,7 +77,8 @@ export default {
       isLoading: true,
       filterTiers: {
         name: ["wWARRIOR", "wARCHER", "wGRUNT", "wORC-ARCHER", "wSKELETON-WARRIOR", "wHOUND"],
-      }
+      },
+      tab: 0
     };
   },
 
@@ -77,9 +104,30 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() {
+    this.loadData();
+  },
 
-  methods: {},
+  watch: {
+    isConnected() {
+      this.loadData();
+    },
+  },
+
+  methods: {
+    async loadData() {
+      if (!this.isConnected) {
+        return;
+      }
+      this.isLoading = true;
+      try {
+      } catch (e) {
+        console.log(e);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+  },
 };
 </script>
 
@@ -101,5 +149,9 @@ export default {
     background-size: contain;
     background-position: top;
   }
+}
+
+.bg-tabs {
+  background-color: #000;
 }
 </style>
