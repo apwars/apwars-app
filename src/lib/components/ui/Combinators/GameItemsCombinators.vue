@@ -10,13 +10,13 @@
         <div class="align-self-center">
           <v-img
             :width="$vuetify.breakpoint.mobile ? 100 : 160"
-            :src="`/images/war-preparation/game-items/${gameItems.name}.png`"
+            :src="`/images/nfts/${gameItems.id}.png`"
           />
         </div>
         <div v-if="gameItems" class="ml-1 align-self-start">
           <div class="title">Necessary Resources</div>
           <div class="d-flex qty">
-            <v-img class="mr-1" max-width="26px" src="/images/wCOURAGE.png" />
+            <v-img class="mr-1" max-width="26px" :src="gameItems.combinators.warPreparation.necessaryResources.tokenA" />
             <amount
               :amount="getTokenAConfig.amount"
               decimals="2"
@@ -27,7 +27,7 @@
             <v-img
               class="mr-1"
               max-width="26px"
-              :src="`/images/war-preparation/game-items/non-expendables/${gameItems.name}.png`"
+              :src="gameItems.combinators.warPreparation.necessaryResources.tokenB"
             />
             <amount
               :amount="getTokenBConfig.amount"
@@ -59,7 +59,7 @@
               class="mr-1"
               width="45px"
               height="45px"
-              :src="`/images/icons/${gameItems.name}.png`"
+              :src="gameItems.combinators.rewardIcon"
             />
             <!-- :src="gameItem.image" -->
             <span>
@@ -598,10 +598,12 @@ export default {
         ...this.combinatorInfo,
         ...{
           getGeneralConfig: this.getGeneralConfig,
-          getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
+          getTokenAConfig: { ...this.getTokenAConfig },
           getTokenBConfig: { ...this.gameItems, ...this.getTokenBConfig },
           getTokenCConfig: this.getGameItemCConfig,
           infoTraining: this.infoTraining,
+          rewardIcon: this.gameItems.combinators.rewardIcon,
+          combinatorData: this.gameItems.combinators.warPreparation.necessaryResources
         },
       };
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
