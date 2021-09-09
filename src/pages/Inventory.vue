@@ -16,7 +16,7 @@
         <h2>Resources</h2>
         <v-row class="mt-1 ml-4">
           <div class="d-flex">
-            <img src="/images/wgold.png" class="resources" />
+            <img src="/images/wGOLD.png" class="resources" />
             <div class="text-center">
               <amount
                 v-if="isConnected"
@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="d-flex ml-4">
-            <img src="/images/wCOURAGE1.png" class="resources" />
+            <img src="/images/wCOURAGE.png" class="resources" />
             <div class="text-center">
               <amount
                 v-if="isConnected"

@@ -5,84 +5,6 @@
       class="pa-3 pd-md-0"
       v-if="isConnected && !isLoading"
     >
-      <!-- <v-row :no-gutters="$vuetify.breakpoint.mobile">
-        <v-col cols="12" lg="3">
-          <v-select
-            v-model="select.teams"
-            :items="filter.teamDesc"
-            label="Select Factions"
-            multiple
-            chips
-            solo
-            @change="updateTroopsFilters()"
-          >
-          </v-select>
-        </v-col>
-        <v-col cols="12" lg="3">
-          <v-select
-            v-model="select.tiers"
-            :items="filter.tierDesc"
-            label="Select Tier"
-            multiple
-            chips
-            solo
-            @change="updateTroopsFilters()"
-          >
-          </v-select>
-        </v-col>
-        <v-col cols="12" lg="3">
-          <v-select
-            v-model="select.races"
-            :items="filter.raceDesc"
-            label="Select Races"
-            multiple
-            chips
-            solo
-            @change="updateTroopsFilters()"
-          >
-          </v-select>
-        </v-col>
-        <v-col cols="12" lg="3">
-          <v-select
-            v-model="select.names"
-            :items="filter.name"
-            label="Select Units"
-            multiple
-            chips
-            solo
-            @change="updateTroopsFilters()"
-          >
-            <template v-slot:selection="{ item, index }">
-              <v-chip v-if="index === 0">
-                <span>{{ item }}</span>
-              </v-chip>
-              <span v-if="index === 1" class="grey--text text-caption">
-                (+{{ select.names.length - 1 }} others)
-              </span>
-            </template>
-          </v-select>
-        </v-col>
-      </v-row>
-      <v-row class="mt-0 mt-lg-n5 mb-3">
-        <v-col class="py-0 my-0" cols="12">
-          <div class="d-flex flex-column flex-md-row align-center">
-            <wButton @click="clearFilters()" class=" mr-3">
-              <div class="d-flex justify-center">
-                <v-icon class="mx-1">
-                  mdi-minus-circle
-                </v-icon>
-                <small class="align-self-center">Clear filter</small>
-              </div>
-            </wButton>
-            <v-checkbox
-              v-model="showMyUnits"
-              @change="updateTroopsFilters()"
-              label="Show only my units"
-              color="primary"
-            ></v-checkbox>
-          </div>
-        </v-col>
-      </v-row>-->
     </v-container>
     
     <v-container
@@ -97,35 +19,8 @@
           v-for="gameItem in gameItemsFiltered"
           v-bind:key="gameItem.name"
         >
-          <trooper v-if="getType === 'trooper'" :info="trooper" />
-          <stake-trooper
-            v-else-if="getType === 'enlistment'"
-            :trooper="gameItem"
-            :contract-war="contractWar"
-          />
-          <stake-trooper
-            v-else-if="getType === 'bring-home'"
-            :trooper="gameItem"
-            :contract-war="contractWar"
-            bring-home
-          />
-          <report-trooper
-            v-else-if="getType === 'report-trooper'"
-            :trooper="gameItem"
-            :contract-war="contractWar"
-          />
-          <unit-training-center
-            v-else-if="getType === 'training-center'"
-            :unit="gameItem"
-          />
-          <unit-war-preparation
-            v-else-if="getType === 'war-preparation'"
-            :unit="gameItem"
-          />
-
           <game-items-combinators
-           v-else-if="getType === 'game-items-combinator'"
-          :gameItems="gameItem"
+            :gameItems="gameItem"
           />
         </v-col>
       </v-row>
@@ -158,13 +53,8 @@ import UnitWarPreparation from "@/lib/components/ui/Units/UnitWarPreparation";
 import GameItemsCombinators from "@/lib/components/ui/Combinators/GameItemsCombinators";
 
 import UnitTrainingCenter from "@/lib/components/ui/Units/UnitTrainingCenter";
-/* import ToastSnackbar from "@/plugins/ToastSnackbar";
 
-import { getTroops } from "@/data/Troops";
-import Troops from "@/lib/eth/Troops";
-import wGOLD from "@/lib/eth/wGOLD"; */
-
-import { getGameItems } from "@/data/Collectibles/GameItems";
+import { getMagicalItems } from "@/data/Collectibles/MagicalItems";
 
 export default {
   components: {
@@ -183,20 +73,15 @@ export default {
 
   data() {
     return {
-      showMyUnits: false,
       balance: 0,
       pricewGOLD: 0,
       isLoading: true,
-    
       gameItemsFiltered: [],
     };
   },
 
   
   mounted() {
-    if (this.showOnlyMyUnits !== undefined && this.showOnlyMyUnits !== '') {
-      this.showMyUnits = true;
-    }
     this.loadData();
   },
 
@@ -220,30 +105,6 @@ export default {
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
-
-    getType() {
-      switch (this.type) {
-        case "trooper":
-          return this.type;
-        case "enlistment":
-          return this.type;
-        case "bring-home":
-          return this.type;
-        case "report-trooper":
-          return this.type;
-        case "war-preparation":
-          this.select.tiers = "Barracks";
-          return this.type;
-        case "game-items-combinator":
-          return this.type;
-        case "training-center":
-          this.select.tiers = "Armory"
-          return this.type;
-
-        default:
-          return "trooper";
-      }
-    },
   },
 
   watch: {
@@ -266,13 +127,7 @@ export default {
       }
 
       try {
-        const gameItems = getGameItems();
-
-        for (const item in gameItems) {
-          if(item > 1 && item < 6) {
-            this.gameItemsFiltered.push(gameItems[item])
-          }
-        }
+        this.gameItemsFiltered = getMagicalItems().filter(i => i.combinators);
         this.isLoading = false;
       } catch (e) {
         console.error(e)

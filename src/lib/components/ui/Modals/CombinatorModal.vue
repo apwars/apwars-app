@@ -34,7 +34,7 @@
         >
           <div class="d-flex align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/${info.getTokenAConfig.name}.png`" />
+              <v-img :src="info.combinatorData.tokenA" />
             </div>
             <number-field
               no-icons
@@ -53,12 +53,12 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
+              <v-img :src="info.combinatorData.tokenB" />
             </div>
             <number-field
               no-icons
               class="mt-3"
-              v-model="getInfo.getTokenBConfig.amountFormatted"
+              v-model="getInfo.getTokenBConfig.amount"
               dense
               disabled
             ></number-field>
@@ -72,12 +72,12 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="getInfo.infoTraining.image" />
+              <v-img :src="info.rewardIcon" />
             </div>
             <number-field
               no-icons
               class="mt-3"
-              v-model="getInfo.getTokenCConfig.amountFormatted"
+              v-model="getInfo.getTokenCConfig.amount"
               dense
               disabled
             ></number-field>
@@ -102,7 +102,7 @@
                 />
                 <span class="ml-blocks"> blocks </span>
               </span>
-              <span><time-block :blocks="getInfo.getGeneralConfig.blocks"/></span>
+              <div><time-block :blocks="getInfo.getGeneralConfig.blocks"/></div>
             </div>
           </div>
         </div>

@@ -10,13 +10,13 @@
         <div class="align-self-center">
           <v-img
             :width="$vuetify.breakpoint.mobile ? 100 : 160"
-            :src="`/images/war-preparation/game-items/${gameItems.name}.png`"
+            :src="`/images/nfts/${gameItems.id}.png`"
           />
         </div>
         <div v-if="gameItems" class="ml-1 align-self-start">
           <div class="title">Necessary Resources</div>
           <div class="d-flex qty">
-            <v-img class="mr-1" max-width="26px" src="/images/wCOURAGE.png" />
+            <v-img class="mr-1" max-width="26px" :src="gameItems.combinators.warPreparation.necessaryResources.tokenA" />
             <amount
               :amount="getTokenAConfig.amount"
               decimals="2"
@@ -27,7 +27,7 @@
             <v-img
               class="mr-1"
               max-width="26px"
-              :src="`/images/war-preparation/game-items/non-expendables/${gameItems.name}.png`"
+              :src="gameItems.combinators.warPreparation.necessaryResources.tokenB"
             />
             <amount
               :amount="getTokenBConfig.amount"
@@ -59,11 +59,11 @@
               class="mr-1"
               width="45px"
               height="45px"
-              :src="`/images/war-preparation/game-items/conquered/arcane's-book.png`"
+              :src="gameItems.combinators.rewardIcon"
             />
             <!-- :src="gameItem.image" -->
             <span>
-              Weapon conquered: <br />
+              Item conquered: <br />
               {{ gameItems.title }}
             </span>
           </div>
@@ -212,6 +212,7 @@ export default {
       modalArimedesApproval: false,
       isApprovedTokenA: false,
       isApprovedTokenB: false,
+      isLoadingClaim: false,
       tokenA: "",
       tokenB: "",
       textConfirmArimdesModal: "SIGN CONTRACT",
@@ -241,7 +242,7 @@ export default {
         feeRate: "0",
         tokenAddress: "",
       },
-      getTokenCConfig: {
+      getGameItemCConfig: {
         amount: "0",
         burningRate: "0",
         feeRate: "0",
@@ -353,7 +354,7 @@ export default {
       }
 
       if (this.getGeneralConfig.isEnabled !== undefined &&
-        !this.getGeneralConfig.isEnabled) {;
+        !this.getGeneralConfig.isEnabled) {
         return;
       }
       
@@ -437,6 +438,8 @@ export default {
         } else {
           await this.approveSecondPage();
         }
+      } else {
+        await this.approveOnlyPage();
       }
     },
 
@@ -453,29 +456,71 @@ export default {
     },
 
     openModalArimedesApproval() {
-      if (!this.isApprovedTokenA) {
+      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
         this.setInitialStateApproveFirstPage();
-      }
-      if (!this.isApprovedTokenB) {
-        this.setInitialStateApproveSecondPage();
+      } else {
+        this.setInitialStateApproveOnlyPage();
       }
       this.modalArimedesApproval = true;
     },
     async approveContract() {
-      if (!this.isApprovedTokenA) {
-        await this.approveFirstPage();
-      } 
-      if (!this.isApprovedTokenB) {
-        await this.approveSecondPage();
+      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
+        if (this.signPage === 1) {
+          await this.approveFirstPage();
+        } else {
+          await this.approveSecondPage();
+        }
+      } else {
+        await this.approveOnlyPage();
+      }
+    },
+
+    setInitialStateApproveOnlyPage() {
+      this.textArimedesModal = ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT;
+      this.isLoadingApprove = false;
+    },
+    async approveOnlyPage() {
+      try {
+        this.isLoadingApprove = true;
+        this.textArimedesModal = DORANOBLE_WAITING_WALLET_APPROVAL;
+        const confirmTransaction = this.approveOnlyOneContract.approve(
+          this.account,
+         this.combinatorAddress
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.setInitialStateApproveOnlyPage();
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error(
+            "An error has occurred while to signing contract to Arimedes - War Engineer"
+          );
+        });
+
+        confirmTransaction.on("transactionHash", () => {
+          this.textArimedesModal = ARIMEDES_WAITING_SECOND_CONFIRMATION;
+        });
+
+        confirmTransaction.on("receipt", () => {
+          this.setInitialStateApproveOnlyPage();
+          this.modalArimedesApproval = false;
+          this.isLoadingApprove = false;
+          ToastSnackbar.success(
+            "Contract successfully signed to Arimedes - War Engineer"
+          );
+        });
+      } catch (error) {
+        this.setInitialStateApproveOnlyPage();
+        return ToastSnackbar.error(error.toString());
       }
     },
 
     openModalArimedesApproval() {
-      if (!this.isApprovedTokenA) {
+      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
         this.setInitialStateApproveFirstPage();
-      }
-      if (!this.isApprovedTokenB) {
-        this.setInitialStateApproveSecondPage();
+      } else {
+        this.setInitialStateApproveOnlyPage();
       }
       this.modalArimedesApproval = true;
     },
@@ -553,10 +598,12 @@ export default {
         ...this.combinatorInfo,
         ...{
           getGeneralConfig: this.getGeneralConfig,
-          getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
+          getTokenAConfig: { ...this.getTokenAConfig },
           getTokenBConfig: { ...this.gameItems, ...this.getTokenBConfig },
-          getTokenCConfig: this.getTokenCConfig,
+          getTokenCConfig: this.getGameItemCConfig,
           infoTraining: this.infoTraining,
+          rewardIcon: this.gameItems.combinators.rewardIcon,
+          combinatorData: this.gameItems.combinators.warPreparation.necessaryResources
         },
       };
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
@@ -596,7 +643,7 @@ export default {
     async claim() {
       try {
         this.isLoadingClaim = true;
-        const confirmTransaction = this.combinatorContract.claimTokenFromTokens(
+        const confirmTransaction = this.combinatorContract.claimGameItemFromTokens(
           this.combinatorId,
           this.account
         );
