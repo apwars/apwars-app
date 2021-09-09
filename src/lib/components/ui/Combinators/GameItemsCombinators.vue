@@ -184,7 +184,7 @@ const ARIMEDES_WAITING_FIRST_CONFIRMATION =
 const ARIMEDES_WAITING_SECOND_CONFIRMATION =
   "I am checking if everything is fine..";
 const ARIMEDES_CLAIM =
-  "Your research has been completed, and your weapons are available.";
+  "Your research has been completed, and your magical items available.";
 const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
   "Your research has been completed, and your weapons are available.";
@@ -224,7 +224,7 @@ export default {
         personage: {
           image: "/images/weapon-research/arimedes.png",
           description:
-            "Let's sign a research agreement. You will pay me wCOURAGE and burn some wUnits, and they I will return with newly created weapons.",
+            "Let's sign a research agreement. You will pay me wCOURAGE and burn 1 Magical Item, and they I will return with newly created Magical Items.",
         },
       },
       tokenAContract: {},
@@ -609,7 +609,7 @@ export default {
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
         this.getTokenAConfig.amount,
         true
-      )} and burn Y wUNITS for this research.`;
+      )} and burn 1 Magical Item for this research.`;
     },
 
     async combineTokens() {
@@ -621,7 +621,7 @@ export default {
           this.account
         );
         ToastSnackbar.success(
-          "New training successfully sent Arimedes - War Engineer"
+          "New combinator successfully sent Arimedes - War Engineer"
         );
         this.modalArimedesNewResearch = false;
         this.loadCombinators();
@@ -666,7 +666,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           ToastSnackbar.success(
-            "wUNIT send successfully Arimedes - War Engineer"
+            "Magical Items send successfully Arimedes - War Engineer"
           );
           this.isLoadingClaim = false;
           this.modalArimedesClaim = false;
