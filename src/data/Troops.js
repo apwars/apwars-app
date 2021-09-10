@@ -575,7 +575,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0xA7439A291251F4Dd250fE3B3f65FbE537fE633bb",
-        "97": "",
+        "97": "0x9E19cc4Ff587489d561b7Fd09Fe8Ef339faCfB9A",
       },
       image: "/images/troops/wFERAL-SPIRIT.png",
       strength: 25,
