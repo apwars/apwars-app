@@ -81,7 +81,7 @@
             <div class="d-flex justify-center justify-md-end mx-0 mx-md-6">
               <v-img
                 class="btn mr-1 align-self-center"
-                src="/images/wgold.png"
+                src="/images/wGOLD.png"
                 max-width="100"
                 width="100"
                 height="100"
@@ -97,7 +97,7 @@
             <div class="d-flex justify-start mx-0 mx-md-6">
               <v-img
                 class="btn mr-1 align-self-center"
-                src="/images/wgold.png"
+                src="/images/wGOLD.png"
                 max-width="100"
                 width="100"
                 height="100"

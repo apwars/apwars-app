@@ -18,7 +18,7 @@
         <div class="d-flex justify-start">
           <img
             class="btn mr-1 align-self-center"
-            src="/images/wgold.png"
+            src="/images/wGOLD.png"
             width="38"
             height="38"
           />
