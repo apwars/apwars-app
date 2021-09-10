@@ -53,14 +53,6 @@ export default class Combinator {
     return this.smcManager.methods.getTokenCConfig(player, source, combinatorId).call();
   }
 
-  getGameItemAConfig(player, source, combinatorId) {
-    return this.smcManager.methods.getGameItemAConfig(player, source, combinatorId).call();
-  }
-
-  getGameItemBConfig(player, source, combinatorId) {
-    return this.smcManager.methods.getGameItemBConfig(player, source, combinatorId).call();
-  }
-
   getGameItemCConfig(player, source, combinatorId) {
     return this.smcManager.methods.getGameItemCConfig(player, source, combinatorId).call();
   }

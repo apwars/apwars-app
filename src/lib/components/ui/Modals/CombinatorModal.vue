@@ -34,7 +34,7 @@
         >
           <div class="d-flex align-center">
             <div class="box-token mr-2">
-              <v-img :src="info.combinatorData.tokenA" />
+              <v-img :src="`/images/${info.getTokenAConfig.name}.png`" />
             </div>
             <number-field
               no-icons
@@ -53,12 +53,12 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="info.combinatorData.tokenB" />
+              <v-img :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
             </div>
             <number-field
               no-icons
               class="mt-3"
-              v-model="getInfo.getTokenBConfig.amount"
+              v-model="getInfo.getTokenBConfig.amountFormatted"
               dense
               disabled
             ></number-field>
@@ -72,12 +72,12 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="info.rewardIcon" />
+              <v-img :src="getInfo.infoTraining.image" />
             </div>
             <number-field
               no-icons
               class="mt-3"
-              v-model="getInfo.getTokenCConfig.amount"
+              v-model="getInfo.getTokenCConfig.amountFormatted"
               dense
               disabled
             ></number-field>
@@ -92,17 +92,17 @@
           />
           <div class="primary--text font-weight-black text-h6">
             <div class="d-flex flex-column">
-              <span class="d-flex align-items-center justify-content-justify">
-                <span class="mr-working-time">Time required:</span>
+              <div>
+                Time required:
                 <amount
                   :amount="getInfo.getGeneralConfig.blocks"
-                  decimals="0"
                   formatted
-                  compact
-                />
-                <span class="ml-blocks"> blocks </span>
-              </span>
-              <div><time-block :blocks="getInfo.getGeneralConfig.blocks"/></div>
+                  decimals="0"
+                />blocks
+              </div>
+              <div>
+                <time-block :blocks="getInfo.getGeneralConfig.blocks" />
+              </div>
             </div>
           </div>
         </div>

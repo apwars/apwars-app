@@ -30,7 +30,7 @@ export function getTroops() {
             "56": 4,
             "97": 4,
           },
-          name: 'Simple Shield',
+          name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -65,7 +65,7 @@ export function getTroops() {
             "56": 5,
             "97": 5,
           },
-          name: 'Simple Shield',
+          name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -173,7 +173,7 @@ export function getTroops() {
             "56": 6,
             "97": 6,
           },
-          name: 'Simple Shield',
+          name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -208,7 +208,7 @@ export function getTroops() {
             "56": 7,
             "97": 7,
           },
-          name: 'Simple Shield',
+          name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -316,7 +316,7 @@ export function getTroops() {
             "56": 8,
             "97": 8,
           },
-          name: 'Simple Shield',
+          name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -351,7 +351,7 @@ export function getTroops() {
             "56": 9,
             "97": 9,
           },
-          name: 'Simple Shield',
+          name: 'Simple shield',
           image: '/images/icons/simple-shield.png'
         },
       }
@@ -471,7 +471,7 @@ export function getTroops() {
       id: 17,
       team: 2,
       teamDesc: 'The Degenerate',
-      race: 2,
+      race: 3,
       raceDesc: 'Undead',
       tier: 4,
       tierDesc: 'Stables',
@@ -489,8 +489,8 @@ export function getTroops() {
     {
       id: 18,
       team: 1,
-      teamDesc: 'The Degenerate',
-      race: 1,
+      teamDesc: 'The Corporation',
+      race: 4,
       raceDesc: 'Elves',
       tier: 1,
       tierDesc: 'Barracks',
@@ -508,8 +508,8 @@ export function getTroops() {
     {
       id: 19,
       team: 1,
-      teamDesc: 'The Degenerate',
-      race: 1,
+      teamDesc: 'The Corporation',
+      race: 4,
       raceDesc: 'Elves',
       tier: 1,
       tierDesc: 'Barracks',
@@ -527,8 +527,8 @@ export function getTroops() {
     {
       id: 20,
       team: 1,
-      teamDesc: 'The Degenerate',
-      race: 1,
+      teamDesc: 'The Corporation',
+      race: 4,
       raceDesc: 'Elves',
       tier: 2,
       tierDesc: 'Armory',
@@ -546,8 +546,8 @@ export function getTroops() {
     {
       id: 20,
       team: 1,
-      teamDesc: 'The Degenerate',
-      race: 1,
+      teamDesc: 'The Corporation',
+      race: 4,
       raceDesc: 'Elves',
       tier: 2,
       tierDesc: 'Armory',
@@ -559,6 +559,25 @@ export function getTroops() {
         "97": "",
       },
       image: "/images/troops/wBLADEMASTER.png",
+      strength: 25,
+      defense: 25,
+    },
+    {
+      id: 21,
+      team: 1,
+      teamDesc: 'The Corporation',
+      race: 4,
+      raceDesc: 'Elves',
+      tier: 3,
+      tierDesc: 'Arcane Library',
+      name: "wFERAL-SPIRIT",
+      lpAddresses: "0x9bE00135880c4db3D3759d370758bDc87443af36",
+      contractAddress: {
+        "5777": "",
+        "56": "0xA7439A291251F4Dd250fE3B3f65FbE537fE633bb",
+        "97": "",
+      },
+      image: "/images/troops/wFERAL-SPIRIT.png",
       strength: 25,
       defense: 25,
     },
