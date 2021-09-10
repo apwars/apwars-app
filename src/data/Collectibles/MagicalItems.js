@@ -12,7 +12,7 @@ export function getMagicalItems() {
         id: 2,
         name: "elixir10",
         type: "magicalItem",
-        typeDesc: "Magical Item",
+        typeDesc: "Magical Items",
         contractAddress: addresses.collectibles,
         title: "The Elixir (10%)",
         description:
@@ -30,7 +30,7 @@ export function getMagicalItems() {
         id: 3,
         name: "elixir15",
         type: "magicalItem",
-        typeDesc: "Magical Item",
+        typeDesc: "Magical Items",
         contractAddress: addresses.collectibles,
         title: "The Elixir (15%)",
         description:
@@ -48,7 +48,7 @@ export function getMagicalItems() {
         id: 4,
         name: "elixir20",
         type: "magicalItem",
-        typeDesc: "Magical Item",
+        typeDesc: "Magical Items",
         contractAddress: addresses.collectibles,
         title: "The Elixir (20%)",
         description:
@@ -66,7 +66,7 @@ export function getMagicalItems() {
         id: 5,
         name: "arcanes-book",
         type: "magicalItem",
-        typeDesc: "Magical Item",
+        typeDesc: "Magical Items",
         contractAddress: addresses.collectibles,
         title: "The Arcane's Book",
         description:
@@ -83,7 +83,7 @@ export function getMagicalItems() {
     {
       id: 40,
       type: "magicalItem",
-      typeDesc: "Magical Item",
+      typeDesc: "Magical Items",
       contractAddress: addresses.collectibles,
       title: "The Elixir (10%)",
       description:
@@ -112,7 +112,7 @@ export function getMagicalItems() {
     {
         id: 41,
         type: "magicalItem",
-        typeDesc: "Magical Item",
+        typeDesc: "Magical Items",
         contractAddress: addresses.collectibles,
         title: "The Elixir (15%)",
         description:
@@ -141,7 +141,7 @@ export function getMagicalItems() {
     {
         id: 42,
         type: "magicalItem",
-        typeDesc: "Magical Item",
+        typeDesc: "Magical Items",
         contractAddress: addresses.collectibles,
         title: "The Elixir (20%)",
         description:
@@ -170,7 +170,7 @@ export function getMagicalItems() {
     {
         id: 43,
         type: "magicalItem",
-        typeDesc: "Magical Item",
+        typeDesc: "Magical Items",
         contractAddress: addresses.collectibles,
         title: "The Arcane's Book",
         description:

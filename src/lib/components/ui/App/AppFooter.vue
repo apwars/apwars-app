@@ -148,7 +148,7 @@ export default {
           href: "/",
         },
         {
-          title: "Library",
+          title: "Game Items",
           image: "/images/icons/library.png",
           href: "/game-items",
         },
