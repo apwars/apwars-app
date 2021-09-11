@@ -293,10 +293,9 @@ const wars = [
   },
   {
     id: 14,
-    name: "The third conflict",
+    name: "The Elven War",
     description: `
-    Tales of sages describe the first war as thrilling, their old tomes comprise a story about a miraculous twist in the war that made the Corporation thrive even is disadvantageous circumstances. The Degenerate were brought home discouraged and fearful. But a foul scourge of cadaveric beings raised from the corpses of the fallen to join forces with the Degenerates. Known as the undead, this race of skeletons, witches and warlocks uses dark magic as vital force and means of destruction towards its enemies.
-    Both factions are preparing for an eminent conflict of unseen proportions, while some pray for protection, others seek vengeance.`,
+    The last great war was a calamity to the Corporation, Humans tried to hold their flanks against foul beasts of the Degenerate but the semi living magical creatures used their dark powers against the human hearts, hope vanished. Messages reached the high elves that promptly felt recruited to assist the Humans. Now it is time for a war with savage proportions.`,
     dateStart: "2021-09-12",
     dateEnd: "2021-09-17",
     contractAddress: {
