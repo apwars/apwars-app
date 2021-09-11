@@ -191,6 +191,132 @@ const wars = [
     reportVersion: "2",
     report: war2FinalReport,
   },
+  {
+    id: 9,
+    name: "The third conflict [1]",
+    description: `
+    For a long time all the attention in Decentraland was spent on the rising tensions between Humans and Orcs, after a golden period of bonanza an age of military preparation has begun. A lot of wGOLD was spent in recruiting Warriors and Archers across the Human empire, from the Capital to the extended countryside, men of all ages were being recruited, children and seniors capable of holding a sword were considered able to fight. At the same time at Orc pits, Grunts and Orc Archers were being raised and united to form a monstrous army. This animosity and arousement of forces shadowed the real threat to liberty of all races that was lurking into the shadows. Silently in an obscure form the Forces of Extreme Darkness were growing in power day by day, night by night in a subversive manner. This ultimate enemy has not yet been faced.`,
+    dateStart: "2021-09-12",
+    dateEnd: "2021-09-17",
+    contractAddress: {
+      "97": "0xaAdD56d484Ed701D547ea56b4B917107Cb9C5311",
+    },
+    countdown: {
+      enlistment: 1626361220000,
+      round1: 1626429080000,
+      round2: 1626443480000,
+    },
+    totalPrize: "1000000000000000000000",
+    test: true,
+    showTest: true,
+    showReedemPrize: true,
+  },
+  {
+    id: 10,
+    name: "The third conflict [2]",
+    description: `
+    For a long time all the attention in Decentraland was spent on the rising tensions between Humans and Orcs, after a golden period of bonanza an age of military preparation has begun. A lot of wGOLD was spent in recruiting Warriors and Archers across the Human empire, from the Capital to the extended countryside, men of all ages were being recruited, children and seniors capable of holding a sword were considered able to fight. At the same time at Orc pits, Grunts and Orc Archers were being raised and united to form a monstrous army. This animosity and arousement of forces shadowed the real threat to liberty of all races that was lurking into the shadows. Silently in an obscure form the Forces of Extreme Darkness were growing in power day by day, night by night in a subversive manner. This ultimate enemy has not yet been faced.`,
+    dateStart: "2021-09-12",
+    dateEnd: "2021-09-17",
+    contractAddress: {
+      "97": "0xC577E2e9081705555A64A7d18Eda3ac8BcF2Fb12",
+    },
+    countdown: {
+      enlistment: 1626361220000,
+      round1: 1626429080000,
+      round2: 1626443480000,
+    },
+    totalPrize: "10000000000000000000000",
+    test: true,
+    showTest: true,
+    showReedemPrize: true,
+  },
+  {
+    id: 11,
+    name: "The third conflict [3]",
+    description: `
+    For a long time all the attention in Decentraland was spent on the rising tensions between Humans and Orcs, after a golden period of bonanza an age of military preparation has begun. A lot of wGOLD was spent in recruiting Warriors and Archers across the Human empire, from the Capital to the extended countryside, men of all ages were being recruited, children and seniors capable of holding a sword were considered able to fight. At the same time at Orc pits, Grunts and Orc Archers were being raised and united to form a monstrous army. This animosity and arousement of forces shadowed the real threat to liberty of all races that was lurking into the shadows. Silently in an obscure form the Forces of Extreme Darkness were growing in power day by day, night by night in a subversive manner. This ultimate enemy has not yet been faced.`,
+    dateStart: "2021-09-12",
+    dateEnd: "2021-09-17",
+    contractAddress: {
+      "97": "0xBc6a7401E86A73EeEEA7bd3b9a90E3eF204df4eA",
+    },
+    countdown: {
+      enlistment: 1626361220000,
+      round1: 1626429080000,
+      round2: 1626443480000,
+    },
+    totalPrize: "10000000000000000000000",
+    test: true,
+    showTest: true,
+    showReedemPrize: true,
+  },
+  {
+    id: 12,
+    name: "The third conflict [4]",
+    description: `
+    For a long time all the attention in Decentraland was spent on the rising tensions between Humans and Orcs, after a golden period of bonanza an age of military preparation has begun. A lot of wGOLD was spent in recruiting Warriors and Archers across the Human empire, from the Capital to the extended countryside, men of all ages were being recruited, children and seniors capable of holding a sword were considered able to fight. At the same time at Orc pits, Grunts and Orc Archers were being raised and united to form a monstrous army. This animosity and arousement of forces shadowed the real threat to liberty of all races that was lurking into the shadows. Silently in an obscure form the Forces of Extreme Darkness were growing in power day by day, night by night in a subversive manner. This ultimate enemy has not yet been faced.`,
+    dateStart: "2021-09-12",
+    dateEnd: "2021-09-17",
+    contractAddress: {
+      "97": "0xA6DaC405Bd517a4cFc17a1DE10c5f5c11caD7266",
+    },
+    countdown: {
+      enlistment: 1626361220000,
+      round1: 1626429080000,
+      round2: 1626443480000,
+    },
+    totalPrize: "20000000000000000000000000",
+    test: true,
+    showTest: true,
+    showReedemPrize: true,
+  }, 
+  {
+    id: 13,
+    name: "The third conflict [5]",
+    description: `
+    For a long time all the attention in Decentraland was spent on the rising tensions between Humans and Orcs, after a golden period of bonanza an age of military preparation has begun. A lot of wGOLD was spent in recruiting Warriors and Archers across the Human empire, from the Capital to the extended countryside, men of all ages were being recruited, children and seniors capable of holding a sword were considered able to fight. At the same time at Orc pits, Grunts and Orc Archers were being raised and united to form a monstrous army. This animosity and arousement of forces shadowed the real threat to liberty of all races that was lurking into the shadows. Silently in an obscure form the Forces of Extreme Darkness were growing in power day by day, night by night in a subversive manner. This ultimate enemy has not yet been faced.`,
+    dateStart: "2021-09-12",
+    dateEnd: "2021-09-17",
+    contractAddress: {
+      "97": "0x4544C8efb214830027306D68B29f0B5E37501D78",
+    },
+    countdown: {
+      enlistment: 1626361220000,
+      round1: 1626429080000,
+      round2: 1626443480000,
+    },
+    totalPrize: "2000000000000000000000000",
+    test: true,
+    showTest: true,
+    showReedemPrize: true,
+  },
+  {
+    id: 14,
+    name: "The third conflict",
+    description: `
+    Tales of sages describe the first war as thrilling, their old tomes comprise a story about a miraculous twist in the war that made the Corporation thrive even is disadvantageous circumstances. The Degenerate were brought home discouraged and fearful. But a foul scourge of cadaveric beings raised from the corpses of the fallen to join forces with the Degenerates. Known as the undead, this race of skeletons, witches and warlocks uses dark magic as vital force and means of destruction towards its enemies.
+    Both factions are preparing for an eminent conflict of unseen proportions, while some pray for protection, others seek vengeance.`,
+    dateStart: "2021-09-12",
+    dateEnd: "2021-09-17",
+    contractAddress: {
+      "5777": "",
+      "56": "0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681",
+      "97": "",
+    },
+    countdown: {
+      // enlistment: 1631491200000,
+      enlistment: 0,
+      round1: 1631751480000,
+      round2: 1631837880000,
+    },
+    totalPrize: "800000000000000000000000",
+    test: false,
+    showTest: false,
+    showReedemPrize: true,
+    reportVersion: "2",
+    report: war2FinalReport,
+  },
 ];
 
 export function getWars(isTest) {
