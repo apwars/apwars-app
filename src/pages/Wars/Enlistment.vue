@@ -120,7 +120,7 @@
               <countdown
                 :time="countdownTime"
                 title="Countdown"
-                @end="loadData"
+                @end="initData"
               ></countdown>
             </v-col>
           </v-row>
