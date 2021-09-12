@@ -304,10 +304,9 @@ const wars = [
       "97": "",
     },
     countdown: {
-      // enlistment: 1631491200000,
-      enlistment: 0,
-      round1: 1631751480000,
-      round2: 1631837880000,
+      enlistment: 1631491200000,
+      round1: 1631815200000,
+      round2: 1631901600000,
     },
     totalPrize: "800000000000000000000000",
     test: false,
