@@ -107,6 +107,11 @@
                   <div class="ml-2 ml-md-3 mr-2 mr-md-6">
                     <span class="font-weight-bold">{{ item.name }}</span>
 
+                    <div class="claim-inputs">
+                      {{ item }}
+                      <img :src="item.combinatorInfo.necessaryResources.tokenA" />
+                    </div>
+
                     <wButton
                       v-if="item.combinatorInfo.isClaim"
                       @click="$router.push(item.claimRouter)"
@@ -149,7 +154,7 @@ import GameText from "@/lib/components/ui/Utils/GameText";
 import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
 
 import { getWars } from "@/data/Wars";
-import { getCollectibles } from "@/data/Troops";
+import { getCollectibles } from "@/data/Collectibles";
 
 import WarMachine from "@/lib/eth/WarMachine";
 import wGOLD from "@/lib/eth/wGOLD";
@@ -262,6 +267,9 @@ export default {
     async getTask() {
       const getListTasks = [];
       getCollectibles().filter((trooper) => {
+        if (!trooper.combinators) {
+          return false
+        }
         for (let combinator in trooper.combinators) {
           const getCombinator = trooper.combinators[combinator];
           if (getCombinator.idCombinator[this.networkInfo.id]) {
