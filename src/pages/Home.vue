@@ -107,11 +107,6 @@
                   <div class="ml-2 ml-md-3 mr-2 mr-md-6">
                     <span class="font-weight-bold">{{ item.name }}</span>
 
-                    <div class="claim-inputs">
-                      {{ item }}
-                      <img :src="item.combinatorInfo.necessaryResources.tokenA" />
-                    </div>
-
                     <wButton
                       v-if="item.combinatorInfo.isClaim"
                       @click="$router.push(item.claimRouter)"
@@ -267,9 +262,6 @@ export default {
     async getTask() {
       const getListTasks = [];
       getTroops().filter((trooper) => {
-        if (!trooper.combinators) {
-          return false
-        }
         for (let combinator in trooper.combinators) {
           const getCombinator = trooper.combinators[combinator];
           if (getCombinator.idCombinator[this.networkInfo.id]) {
