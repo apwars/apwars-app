@@ -74,4 +74,16 @@ export default {
 .lg {
   background-color: green;
 }
+
+@media only screen and (max-width: 380px) {
+  .col-6 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .col-6 {
+    position: relative;
+    left: 0.9rem;
+  }
+}
 </style>
