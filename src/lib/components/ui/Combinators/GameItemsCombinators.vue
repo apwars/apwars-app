@@ -62,7 +62,7 @@
               class="mr-1"
               max-width="35px"
               height="45px"
-              :src="gameItems.combinators.rewardIcon"
+              :src="gameItems.combinators.warPreparation.image"
             />
             <span>
               Item conquered: <br />
