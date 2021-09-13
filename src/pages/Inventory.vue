@@ -135,7 +135,7 @@
         <v-row class="mt-1 ml-4 justify-space-between">
           <div class="d-flex">
             <img src="/images/black-market/book.png" class="resources" />
-            <div class="text-center ml-1">
+            <div class="text-center ml-2">
               <h2>{{ itemsCount }} / {{ collectibles.length }}</h2>
               <h4>Collectibles</h4>
             </div>
