@@ -28,7 +28,7 @@ export function getMagicalItems() {
         combinators: {
           warPreparation: {
             name: 'The Elixir (10%) (Spendable)',
-            image: '/images/nfts/rewards/40.png',
+            image: '/images/icons/elixir10.png',
             necessaryResources: {
               tokenA: '/images/wCOURAGE.png',
               tokenB: '/images/icons/2.png'
@@ -67,7 +67,7 @@ export function getMagicalItems() {
         combinators: {
           warPreparation: {
             name: 'The Elixir (15%) (Spendable)',
-            image: '/images/nfts/rewards/41.png',
+            image: '/images/icons/elixir15.png',
             necessaryResources: {
               tokenA: '/images/wCOURAGE.png',
               tokenB: '/images/icons/3.png'
@@ -106,7 +106,7 @@ export function getMagicalItems() {
         combinators: {
           warPreparation: {
             name: 'The Elixir (20%) (Spendable)',
-            image: '/images/nfts/rewards/42.png',
+            image: '/images/icons/elixir20.png',
             necessaryResources: {
               tokenA: '/images/wCOURAGE.png',
               tokenB: '/images/icons/4.png'
@@ -145,7 +145,7 @@ export function getMagicalItems() {
         combinators: {
           warPreparation: {
             name: `The Arcane's Book (Spendable)`,
-            image: '/images/nfts/rewards/spendable/43.png',
+            image: '/images/icons/arcanes-book.png',
             necessaryResources: {
               tokenA: '/images/wCOURAGE.png',
               tokenB: '/images/icons/5.png'
