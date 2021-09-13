@@ -499,7 +499,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0xa248284fB4E3E58400644dc4Cd37410F8AB31266",
-        "97": "0x677E1df390B30e9795A7fCf56908f529DB024C75",
+        "97": "0xf2ed33A19453f30CAA9a548D2f3c2F38133469A9",
       },
       image: "/images/troops/wPIKE-ELF.png",
       strength: 6,
@@ -518,7 +518,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0x804e7030F932CA06DEe7bC08051f1123898ceF5d",
-        "97": "0x677E1df390B30e9795A7fCf56908f529DB024C75",
+        "97": "0xDa11E338567eb633E17Ad8C9544B00A54B6862ce",
       },
       image: "/images/troops/wELVEN-ARCHER.png",
       strength: 12,
@@ -537,7 +537,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0xF35e1Bd15E49651ad76aB0A4B9ce93F6e9850f7F",
-        "97": "",
+        "97": "0xeab81a541Dc97222894c16c8DA7DA301b464dd2E",
       },
       image: "/images/troops/wARMORED-ELF.png",
       strength: 25,
@@ -556,7 +556,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0xE7Cb07032a9b9150a25249709C50b9BD923E445e",
-        "97": "",
+        "97": "0x30201b70c98479370b38903682eB39A4570644Ed",
       },
       image: "/images/troops/wBLADEMASTER.png",
       strength: 25,
@@ -575,7 +575,7 @@ export function getTroops() {
       contractAddress: {
         "5777": "",
         "56": "0xA7439A291251F4Dd250fE3B3f65FbE537fE633bb",
-        "97": "",
+        "97": "0x9E19cc4Ff587489d561b7Fd09Fe8Ef339faCfB9A",
       },
       image: "/images/troops/wFERAL-SPIRIT.png",
       strength: 25,
