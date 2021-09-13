@@ -59,7 +59,7 @@
           <v-col class="d-flex justify-begin" cols="12" md="3" xm="12">
             <img src="/images/black-market/book.png" class="resources mx-0" />
             <div class="text-left ml-2">
-              <h2>{{ totalItems }} / {{ collectibles.length }}</h2>
+              <h2>{{ itemsCount }} / {{ collectibles.length }}</h2>
               <h4>Collectibles</h4>
             </div>
           </v-col>
@@ -73,7 +73,7 @@
               <div class="d-flex justify-center">
                 <img
                   src="/images/training-center/icon-training-center.png"
-                  class="align-self-center mr-3"
+                  class="align-self-center  mr-3"
                   height="24"
                 />
                 <small class="align-self-center mr-1 ml-n1">Buy troops</small>
@@ -100,7 +100,7 @@
         <h2>Resources</h2>
         <v-row class="mt-1 ml-4">
           <div class="d-flex">
-            <img src="/images/wgold.png" class="resources" />
+            <img src="/images/wGOLD.png" class="resources" />
             <div class="text-center">
               <amount
                 v-if="isConnected"
@@ -114,7 +114,7 @@
             </div>
           </div>
           <div class="d-flex ml-4">
-            <img src="/images/wcourage.png" class="resources" />
+            <img src="/images/wCOURAGE.png" class="resources" />
             <div class="text-center">
               <amount
                 v-if="isConnected"
@@ -135,7 +135,7 @@
         <v-row class="mt-1 ml-4 justify-space-between">
           <div class="d-flex">
             <img src="/images/black-market/book.png" class="resources" />
-            <div class="text-center ml-2">
+            <div class="text-center ml-1">
               <h2>{{ itemsCount }} / {{ collectibles.length }}</h2>
               <h4>Collectibles</h4>
             </div>
@@ -186,7 +186,7 @@
     </v-container>
     <v-container fluid v-if="collection.length > 0 && tab === 0">
       <v-row dense>
-        <v-col v-for="collectible in collection" :key="collectible.id" cols="12" md="6">
+        <v-col v-for="collectible in collection" :key="collectible.id" cols="12" offset-lg="2" lg="3" md="6" sm="6">
           <nft-card :collectible="collectible" :myCollection="true" />
         </v-col>
       </v-row>
@@ -209,14 +209,11 @@ import ProfileCard from '@/lib/components/ui/ProfileCard';
 import wButton from '@/lib/components/ui/Buttons/wButton';
 import Amount from '@/lib/components/ui/Utils/Amount';
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
-
 import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
-
 import { getCollectibles } from '@/data/Collectibles';
 import Collectibles from '@/lib/eth/Collectibles';
 import wGOLD from '@/lib/eth/wGOLD';
 import wCOURAGE from '@/lib/eth/wCOURAGE';
-
 export default {
   components: {
     GameText,
@@ -229,7 +226,6 @@ export default {
     Amount,
     ListUnits,
   },
-
   data() {
     return {
       balance: '0',
@@ -242,28 +238,22 @@ export default {
       tab: 0,
     };
   },
-
   computed: {
     isConnected() {
       return this.$store.getters['user/isConnected'];
     },
-
     account() {
       return this.$store.getters['user/account'];
     },
-
     addresses() {
       return this.$store.getters['user/addresses'];
     },
-
     networkInfo() {
       return this.$store.getters['user/networkInfo'];
     },
-
     currentBlockNumber() {
       return this.$store.getters['user/currentBlockNumber'];
     },
-
     collection() {
       return this.collectibles
         .filter((item, i) => this.balances[i] > 0)
@@ -273,57 +263,41 @@ export default {
         });
     },
   },
-
   watch: {
     isConnected() {
       this.loadData();
     },
-
     account() {
       this.loadData();
     },
-
     currentBlockNumber() {
       this.loadData();
     },
   },
-
   mounted() {
     this.loadData();
   },
-
   methods: {
-    /* openNewTab(obj) {
-      window.open(obj);
-    }, */
-
     goTo(rout) {
       this.$router.push(rout);
     },
-
     async loadData() {
       if (!this.isConnected) {
         return;
       }
-
       try {
         this.isLoading = true;
         const wgold = new wGOLD(this.addresses.wGOLD);
         const wcourage = new wCOURAGE(this.addresses.wCOURAGE);
-
         this.balance = await wgold.balanceOf(this.account);
-
         this.balanceCOURAGE = await wcourage.balanceOf(this.account);
-
         this.collectibles = getCollectibles();
-
         this.balances = await Promise.all(
           this.collectibles.map(item => {
             const collectibles = new Collectibles(item.contractAddress);
             return collectibles.balanceOf(this.account, item.id);
           })
         );
-
         this.itemsCount = this.balances.filter(balance => balance > 0).length;
         this.totalItems = this.balances.reduce((acc, item) => acc + item, 0);
       } catch (e) {
@@ -363,16 +337,13 @@ export default {
   background-size: cover;
   background-position: top;
 }
-
 .img-black-market {
   width: 100%;
 }
-
 .h1-black-market {
   background: linear-gradient(180deg, #f6ff00 0%, #ffb800 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
   font-family: PT Serif;
   font-style: normal;
   font-weight: bold;
@@ -386,7 +357,6 @@ export default {
   font-size: 18px;
   line-height: 23px;
 }
-
 @media only screen and (max-width: 600px) {
   .description-black-market {
     font-size: 13px;
@@ -412,3 +382,4 @@ export default {
 }
 
 </style>
+
