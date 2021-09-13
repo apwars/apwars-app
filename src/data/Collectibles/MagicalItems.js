@@ -44,6 +44,7 @@ export function getMagicalItems() {
               "97": 1,
             },
           },
+          rewardIcon: "/images/nfts/rewards/spendable/40.png"
         },
       },
       {
@@ -82,6 +83,7 @@ export function getMagicalItems() {
               "97": 2,
             },
           },
+          rewardIcon: "/images/nfts/rewards/spendable/41.png"
         },
       },
       {
@@ -120,6 +122,7 @@ export function getMagicalItems() {
               "97": 3,
             },
           },
+          rewardIcon: "/images/nfts/rewards/spendable/42.png"
         },
       },
       {
@@ -142,7 +145,7 @@ export function getMagicalItems() {
         combinators: {
           warPreparation: {
             name: `The Arcane's Book (Spendable)`,
-            image: '/images/nfts/rewards/43.png',
+            image: '/images/nfts/rewards/spendable/43.png',
             necessaryResources: {
               tokenA: '/images/wCOURAGE.png',
               tokenB: '/images/icons/5.png'
@@ -158,6 +161,7 @@ export function getMagicalItems() {
               "97": 4,
             },
           },
+          rewardIcon: "/images/nfts/rewards/spendable/43.png"
         },
       },
     {

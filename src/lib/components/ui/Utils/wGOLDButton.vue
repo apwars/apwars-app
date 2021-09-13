@@ -10,7 +10,8 @@
         <span class="text-body-2" v-if="amount==='0'">The FED is collecting fees</span>
         <span v-else class="d-flex align-items-center justify-content-center">
           <amount :amount="amount" decimals="2"          
-            tooltip />
+            tooltip>
+          </amount>
           <span class="suffix ml-1">wGOLD</span>
         </span>
       </span>

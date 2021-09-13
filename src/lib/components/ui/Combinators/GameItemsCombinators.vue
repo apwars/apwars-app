@@ -16,7 +16,8 @@
         <div v-if="gameItems" class="ml-1 align-self-start">
           <div class="title">Necessary Resources</div>
           <div class="d-flex qty">
-            <v-img class="mr-1" max-width="26px" :src="gameItems.combinators.warPreparation.necessaryResources.tokenA" />
+            <v-img class="mr-1" max-width="32px" :src="gameItems.combinators.warPreparation.necessaryResources.tokenA" 
+              style="margin-left: -3px;"/>
             <amount
               :amount="getTokenAConfig.amount"
               decimals="2"
@@ -27,6 +28,7 @@
             <v-img
               class="mr-1"
               max-width="26px"
+              height="52px"
               :src="gameItems.combinators.warPreparation.necessaryResources.tokenB"
             />
             <amount
@@ -37,7 +39,8 @@
             />
           </div>
           <div class="d-flex align-center my-1 qty">
-            <img class="mr-1" height="32px" src="/images/icons/hourglass.png" />
+            <img class="mr-1" max-width="26px" height="40px" src="/images/icons/hourglass.png"
+              style="margin-left: -6px;"/>
 
             <div class="d-flex flex-column">
               <span class="d-flex align-items-center justify-content-justify">
@@ -57,11 +60,10 @@
           <div class="d-flex mt-1 qty" v-if="gameItems.image">
             <img
               class="mr-1"
-              width="45px"
+              max-width="35px"
               height="45px"
               :src="gameItems.combinators.rewardIcon"
             />
-            <!-- :src="gameItem.image" -->
             <span>
               Item conquered: <br />
               {{ gameItems.title }}

@@ -111,13 +111,13 @@ export default {
     isConnected() {
       this.loadData();
     },
-   /*  account() {
+    account() {
       this.loadData();
     },
 
     currentBlockNumber() {
       this.loadData();
-    }, */
+    },
   },
 
   methods: {

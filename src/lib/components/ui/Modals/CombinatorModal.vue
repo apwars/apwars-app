@@ -53,7 +53,7 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="info.combinatorData.tokenB" />
+              <v-img :src="info.getTokenBConfig.combinators.warPreparation.image" />
             </div>
             <number-field
               no-icons
