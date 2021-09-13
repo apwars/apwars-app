@@ -154,7 +154,7 @@ import GameText from "@/lib/components/ui/Utils/GameText";
 import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
 
 import { getWars } from "@/data/Wars";
-import { getCollectibles } from "@/data/Collectibles";
+import { getTroops } from "@/data/Troops";
 
 import WarMachine from "@/lib/eth/WarMachine";
 import wGOLD from "@/lib/eth/wGOLD";
@@ -266,7 +266,7 @@ export default {
 
     async getTask() {
       const getListTasks = [];
-      getCollectibles().filter((trooper) => {
+      getTroops().filter((trooper) => {
         if (!trooper.combinators) {
           return false
         }
