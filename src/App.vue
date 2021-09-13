@@ -7,6 +7,7 @@
 <script>
 import config from './configs'
 
+
 /*
 |---------------------------------------------------------------------
 | Main Application Component
