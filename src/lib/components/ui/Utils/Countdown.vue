@@ -72,7 +72,6 @@ export default {
 
   computed: {
     setTime() {
-      console.log(this.hideEnd && this.time)
       return this.time ?? 60 * 1000;
     },
   },
