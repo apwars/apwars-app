@@ -600,7 +600,7 @@ export default {
         ...this.combinatorInfo,
         ...{
           getGeneralConfig: this.getGeneralConfig,
-          getTokenAConfig: { ...this.getTokenAConfig },
+          getTokenAConfig: { ...this.getTokenAConfig, name: "wCOURAGE" },
           getTokenBConfig: { ...this.gameItems, ...this.getTokenBConfig },
           getTokenCConfig: this.getGameItemCConfig,
           infoTraining: this.infoTraining,
