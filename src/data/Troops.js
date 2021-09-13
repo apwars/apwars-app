@@ -578,8 +578,8 @@ export function getTroops() {
         "97": "0x9E19cc4Ff587489d561b7Fd09Fe8Ef339faCfB9A",
       },
       image: "/images/troops/wFERAL-SPIRIT.png",
-      strength: 25,
-      defense: 25,
+      strength: 70,
+      defense: 20,
     },
   ];
 }
