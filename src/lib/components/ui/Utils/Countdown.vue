@@ -5,6 +5,7 @@
     </h3>
     <div class="d-flex justify-center mt-6">
       <countdown
+        v-if="!hideEnd || (hideEnd && time)"
         :time="setTime"
         class="countdown d-flex"
         @end="$emit('end')"
@@ -60,7 +61,14 @@
 
 <script>
 export default {
-  props: ["time", "title"],
+  props: {
+    time: Number,
+    title: String,
+    hideEnd: {
+      type: Boolean,
+      default: false
+    }
+  },
 
   computed: {
     setTime() {

@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-row class="d-flex" v-if="$vuetify.breakpoint.mdAndUp">
-      <v-col cols="8" class="align-self-center">
+      <v-col cols="8" class="align-self-center title-description">
         <game-text header="h1">{{ title }}</game-text>
-        <p>
+        <p >
           {{ description }}
         </p>
       </v-col>
-      <v-col cols="4" class="d-flex justify-end">
+      <v-col cols="4" class="d-flex justify-end title-description">
         <v-img
           max-width="270px"
           :class="!$vuetify.breakpoint.mdAndUp ? 'img-mobile' : 'img-full'"
@@ -28,6 +28,8 @@
         <v-img
           :class="!$vuetify.breakpoint.mdAndUp ? 'img-mobile' : 'img-full'"
           :src="image"
+          max-height="120"
+          max-width="140" 
         >
           <div v-if="titleImg" class="mt-3 text-center">
             <h6>{{ titleImg }}</h6>
@@ -73,5 +75,17 @@ export default {
 }
 .lg {
   background-color: green;
+}
+
+@media only screen and (max-width: 380px) {
+  .col-6 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .col-6 {
+    position: relative;
+    left: 0.9rem;
+  }
 }
 </style>

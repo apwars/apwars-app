@@ -7,6 +7,7 @@
 <script>
 import config from './configs'
 
+
 /*
 |---------------------------------------------------------------------
 | Main Application Component
@@ -25,12 +26,5 @@ export default {
 <style>
 .v-app-bar .theme--dark.v-card {
   background: #32211B !important;
-}
-
-.mr-working-time {
-  margin-right: 5px;
-}
-.ml-blocks {
-  margin-left: 5px;
 }
 </style>

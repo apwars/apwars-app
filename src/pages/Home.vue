@@ -9,7 +9,7 @@
       <v-container fluid>
         <v-row>
           <v-col cols="12" md="4">
-            <countdown :time="nextWarCountdown" title="Next War"></countdown>
+            <countdown v-if="nextWarPhase" :time="nextWarPhase.endAt" :title="nextWarPhase.title" @end="getNextWarPhase" hideEnd />
           </v-col>
           <v-col cols="12" md="4">
             <v-img
@@ -167,7 +167,6 @@ export default {
   data() {
     return {
       isLoading: true,
-      nextWar: 1631491200000,
       balanceFED: 0,
       wars: [],
       lastWar: {},
@@ -179,6 +178,7 @@ export default {
         { image: "/images/weapons/catapult-undead.png" },
         { image: "/images/weapons/catapult-elves.png" },
       ],
+      nextWarPhase: null
     };
   },
 
@@ -201,10 +201,6 @@ export default {
 
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
-    },
-
-    nextWarCountdown() {
-      return this.nextWar - new Date().getTime();
     },
 
     imgWinnerLastWar() {
@@ -239,6 +235,8 @@ export default {
 
       this.wars = getWars(this.networkInfo.id !== "56");
       this.wars = this.wars.reverse();
+
+      this.getNextWarPhase();
 
       let warMachine = new WarMachine(
         this.wars[0].contractAddress[this.networkInfo.id],
@@ -302,6 +300,20 @@ export default {
         (task) => task.combinatorInfo.combinatorId !== "0"
       );
     },
+
+    getNextWarPhase() {
+      const nW = this.wars[0];
+      const currentTime = new Date().getTime();
+      let currentPhase = nW.phases.find(p => (p.endAt - currentTime) > 0);
+
+      if (currentPhase) {
+        currentPhase = {...currentPhase, endAt: currentPhase.endAt - currentTime};
+        this.nextWarPhase = currentPhase;
+        return
+      }
+
+      this.nextWarPhase = nW.phases[nW.phases.length - 1];
+    }
   },
 };
 </script>

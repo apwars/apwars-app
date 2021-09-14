@@ -1,7 +1,6 @@
 import store from "@/store";
 import { getGameItems } from "./Collectibles/GameItems";
 import { getLegendaryRelics } from "./Collectibles/LegendaryRelics";
-import { getMagicalItems } from "./Collectibles/MagicalItems";
 import { getWeapons } from "./Collectibles/Weapons";
 
 export function getCollectibles() {
@@ -11,5 +10,5 @@ export function getCollectibles() {
     return [];
   }
 
-  return [].concat(getGameItems(), getLegendaryRelics(), getWeapons(), getMagicalItems());
+  return [].concat(getGameItems(), getLegendaryRelics(), getWeapons());
 }
