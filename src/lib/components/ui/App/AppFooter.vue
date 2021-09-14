@@ -182,7 +182,7 @@ export default {
             {
               title: "Farm Worker",
               href: "/farm-worker",
-              image: "/images/icons/battle-shield.png",
+              image: "/Map/farm-worker/map/assets/worker.png",
             },
           ],
         },
