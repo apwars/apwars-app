@@ -611,7 +611,7 @@ export default {
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
         this.getTokenAConfig.amount,
         true
-      )} and provide 1 Game Item for this research.`;
+      )},00 wCOURAGE.`;
     },
 
     async combineTokens() {
