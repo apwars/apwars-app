@@ -185,6 +185,20 @@
       </v-row>
     </v-container>
     <v-container fluid v-if="collection.length > 0 && tab === 0">
+      <v-row :no-gutters="$vuetify.breakpoint.mobile">
+        <v-col cols="12" lg="3">
+          <v-select
+            v-model="gameItemTypeFilter"
+            :items="gameItemTypeOptions"
+            label="Game Item Type"
+            multiple
+            chips
+            solo
+            @change="updateTroopsFilters()"
+          >
+          </v-select>
+        </v-col>
+      </v-row>
       <v-row dense>
         <v-col v-for="collectible in collection" :key="collectible.id" cols="12" offset-lg="2" lg="3" md="6" sm="6">
           <nft-card :collectible="collectible" :myCollection="true" />
