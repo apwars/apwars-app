@@ -10,6 +10,17 @@
         <v-row>
           <v-col cols="12" md="4">
             <countdown v-if="nextWarPhase" :time="nextWarPhase.endAt" :title="nextWarPhase.title" @end="getNextWarPhase" hideEnd />
+            <div class="d-flex justify-center mt-1" v-if="nextWarPhase.redirect">
+              <wButton
+                @click="
+                  $router.push(
+                    nextWarPhase.redirect
+                  )
+                "
+              >
+                {{ nextWarPhase.button_label }}
+              </wButton>
+            </div>
           </v-col>
           <v-col cols="12" md="4">
             <v-img
