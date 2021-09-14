@@ -53,12 +53,14 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
+              <v-img
+                :src="this.$route.name === '/war-preparation' ? `/images/nfts/${info.getTokenBConfig.id}.png` :`/images/icons/${info.getTokenBConfig.name}.png`"
+                height="75px" width="65px"/>
             </div>
             <number-field
               no-icons
               class="mt-3"
-              v-model="getInfo.getTokenBConfig.amountFormatted"
+              v-model="getInfo.getTokenBConfig.amount"
               dense
               disabled
             ></number-field>
@@ -77,7 +79,7 @@
             <number-field
               no-icons
               class="mt-3"
-              v-model="getInfo.getTokenCConfig.amountFormatted"
+              v-model="getInfo.getTokenCConfig.amount"
               dense
               disabled
             ></number-field>
@@ -141,6 +143,7 @@ export default {
     "title",
     "textConfirm",
     "info",
+    "dontFormat"
   ],
 
   data() {
@@ -163,14 +166,22 @@ export default {
         data.getTokenAConfig.amount,
         true
       );
-      data.getTokenBConfig.amountFormatted = Convert.fromWei(
-        data.getTokenBConfig.amount,
-        true
-      );
-      data.getTokenCConfig.amountFormatted = Convert.fromWei(
-        data.getTokenCConfig.amount,
-        true
-      );
+
+      if (this.dontFormat) {
+        data.getTokenBConfig.amountFormatted = data.getTokenBConfig.amount
+        data.getTokenCConfig.amountFormatted = data.getTokenCConfig.amount
+      } else {
+        data.getTokenBConfig.amountFormatted = Convert.fromWei(
+          data.getTokenBConfig.amount,
+          true
+        );
+
+        data.getTokenCConfig.amountFormatted = Convert.fromWei(
+          data.getTokenCConfig.amount,
+          true
+        );
+      }
+
       return data;
     },
     getTextConfirm() {

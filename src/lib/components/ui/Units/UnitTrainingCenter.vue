@@ -144,6 +144,7 @@
       :isLoading="isLoadingNewTraining"
       :info="combinatorInfo"
       textConfirm="Training"
+      :dontFormat="false"
       title="Horse Riding Center"
       width="800px"
       height="360px"

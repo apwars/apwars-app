@@ -150,6 +150,7 @@
         :info="combinatorInfo"
         textConfirm="Research"
         title="War Preparation"
+        :dontFormat="true"
         width="800px"
         height="360px"
       ></combinator-modal>
