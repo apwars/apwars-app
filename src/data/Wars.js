@@ -286,6 +286,19 @@ const wars = [
       round1: 1626429080000,
       round2: 1626443480000,
     },
+    phases: [{
+      title: 'Enlistments ends in',
+      endAt: 1626429080000,
+      button_label: 'Enlist',
+      redirect: '/wars/0x4544C8efb214830027306D68B29f0B5E37501D78/enlistment'
+    },
+    {
+      title: 'War ends in',
+      endAt: 1626443480000,
+    },
+    {
+      title: 'The third conflict [5] is over',
+    }],
     totalPrize: "2000000000000000000000000",
     test: true,
     showTest: true,
@@ -308,6 +321,19 @@ const wars = [
       round1: 1631815200000,
       round2: 1631901600000,
     },
+    phases: [{
+      title: 'Enlistments ends in',
+      endAt: 1631815200000,
+      button_label: 'Enlist',
+      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/enlistment'
+    },
+    {
+      title: 'War ends in',
+      endAt: 1631901600000,
+    },
+    {
+      title: 'The Elven War is over',
+    }],
     totalPrize: "800000000000000000000000",
     test: false,
     showTest: false,

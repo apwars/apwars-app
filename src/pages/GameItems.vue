@@ -32,10 +32,9 @@
           </v-row>
         </div>
         <v-row class="d-flex">
-          <v-col cols="12" md="12" lg="6" class="d-flex">
-            <v-tabs v-model="tab">
-              <v-tab>Game Items</v-tab>
-              <v-tab>Legendary Relics</v-tab>
+          <v-col class="d-flex">
+            <v-tabs v-model="tab" show-arrows>
+              <v-tab v-for="itemType in itemTypes" :key="itemType">{{ itemType }}</v-tab>
             </v-tabs>
           </v-col>
         </v-row>
@@ -43,43 +42,25 @@
     </div>
     <v-container class="mt-n6"> 
       <v-tabs-items v-model="tab">
-        <v-tab-item>
+        <v-tab-item v-for="itemType in itemTypes" :key="itemType">
           <v-card flat>
-            <v-row>
-              <v-col
-                v-for="collectible in collectibles"
-                :key="collectible.id"
-                sm="12"
-                md="6"
-                :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
-              >
-                <nft-item :collectible="collectible" />
-                <div>
-                  <game-text>{{ collectible.title }}</game-text>
-                  <p style="font-size: 12px" v-html="collectible.description" />
-                </div>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-tab-item>
-
-        <v-tab-item>
-          <v-card flat>
-            <v-row>
-              <v-col
-                v-for="gameItem in gameItems"
-                :key="gameItem.id"
-                cols="12"
-                md="4"
-                :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
-              >
-                <nft-item :collectible="gameItem" />
-                <div>
-                  <game-text>{{ gameItem.title }}</game-text>
-                  <p style="font-size: 12px" v-html="gameItem.description" />
-                </div>
-              </v-col>
-            </v-row>
+            <v-container>
+              <v-row>
+                <v-col
+                  v-for="item in itemsList"
+                  :key="item.id"
+                  sm="12"
+                  md="6"
+                  :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
+                >
+                  <nft-item :collectible="item" />
+                  <div class="description">
+                    <game-text>{{ item.title }}</game-text>
+                    <p style="font-size: 12px" v-html="item.description" />
+                  </div>
+                </v-col>
+              </v-row>
+            </v-container>
           </v-card>
         </v-tab-item>
       </v-tabs-items>
@@ -92,8 +73,7 @@ import NftItem from '@/lib/components/ui/NFTItem';
 import GameTitle from '@/lib/components/ui/Utils/GameTitle';
 import wButton from '@/lib/components/ui/Buttons/wButton';
 
-import { getLegendaryRelics } from '@/data/Collectibles/LegendaryRelics';
-import { getCollectibles } from '@/data/Collectibles';
+import { getCollectibles, getGameItemTypesOptions } from '@/data/Collectibles';
 import GameText from '@/lib/components/ui/Utils/GameText';
 import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
 
@@ -109,7 +89,7 @@ export default {
   data() {
     return {
       loading: true,
-      gameItems: [],
+      itemTypes: [],
       collectibles: [],
       tab: 0,
     };
@@ -123,6 +103,10 @@ export default {
     account() {
       return this.$store.getters['user/account'];
     },
+
+    itemsList() {
+      return this.collectibles.filter(c => c.typeDesc === this.itemTypes[this.tab])
+    }
   },
 
   watch: {
@@ -156,8 +140,9 @@ export default {
       this.loading = true;
 
       try {
-        this.collectibles = getCollectibles().filter(collectible => !collectible.isGift);
-        this.gameItems = getLegendaryRelics();
+        const itemsData = getCollectibles();
+        this.collectibles = itemsData;
+        this.itemTypes = getGameItemTypesOptions();
       } catch (e) {
         console.log(e);
       } finally {
@@ -167,9 +152,12 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .bg-library {
   background-image: url('/images/black-market/Library.png');
   background-size: cover;
+}
+.description {
+  padding-right: 48px;
 }
 </style>
