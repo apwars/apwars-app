@@ -73,7 +73,7 @@ import NftItem from '@/lib/components/ui/NFTItem';
 import GameTitle from '@/lib/components/ui/Utils/GameTitle';
 import wButton from '@/lib/components/ui/Buttons/wButton';
 
-import { getCollectibles } from '@/data/Collectibles';
+import { getCollectibles, getGameItemTypesOptions } from '@/data/Collectibles';
 import GameText from '@/lib/components/ui/Utils/GameText';
 import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
 
@@ -141,9 +141,8 @@ export default {
 
       try {
         const itemsData = getCollectibles();
-        const itemTypes = itemsData.map(i => i.typeDesc);
         this.collectibles = itemsData;
-        this.itemTypes = Array.from(new Set(itemTypes));
+        this.itemTypes = getGameItemTypesOptions();
       } catch (e) {
         console.log(e);
       } finally {

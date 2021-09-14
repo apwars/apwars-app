@@ -13,3 +13,9 @@ export function getCollectibles() {
 
   return [].concat(getGameItems(), getLegendaryRelics(), getWeapons(), getMagicalItems());
 }
+
+export function getGameItemTypesOptions() {
+  const itemsData = getCollectibles();
+  const itemTypes = itemsData.map(i => i.typeDesc);
+  return Array.from(new Set(itemTypes));
+}
