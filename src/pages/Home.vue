@@ -3,7 +3,7 @@
     <div v-if="isLoading">
       <game-text header="h2" class="text-center d-block py-9"
         >Loading...</game-text
-      >
+      > 
     </div>
     <div v-else>
       <v-container fluid>
@@ -106,6 +106,12 @@
 
                   <div class="ml-2 ml-md-3 mr-2 mr-md-6">
                     <span class="font-weight-bold">{{ item.name }}</span>
+
+                    <div class="input-info" v-if="item.inputs">
+                      <div class="claim-info" v-for="(input, index) in item.inputs" :key="index">
+                        <div>x{{ input.amount }} {{ input.name }} </div> <img height="16px" width="16px" :src="input.image" />
+                      </div> 
+                    </div>
 
                     <wButton
                       v-if="item.combinatorInfo.isClaim"
@@ -326,5 +332,10 @@ export default {
   font-size: 21px;
   height: 30px;
   min-width: 30px;
+}
+
+.claim-info {
+  display: flex;
+  font-size: 12px;
 }
 </style>

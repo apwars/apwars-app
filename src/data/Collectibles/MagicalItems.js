@@ -106,6 +106,16 @@ export function getMagicalItems() {
             "56": 1,
             "97": 1,
           },
+          inputs: [{
+            name: 'wCOURAGE',
+            amount: 1000,
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'The Elixir (10%)',
+            amount: 1,
+            image: '/images/icons/elixir10.png'
+          }]
         },
       },
     },
@@ -135,6 +145,16 @@ export function getMagicalItems() {
               "56": 1,
               "97": 2,
             },
+            inputs: [{
+              name: 'wCOURAGE',
+              amount: 1000,
+              image: '/images/wCOURAGE.png'
+            },
+            {
+              name: 'The Elixir (15%)',
+              amount: 1,
+              image: '/images/icons/elixir15.png'
+            }]
           },
         },
     },
@@ -164,6 +184,16 @@ export function getMagicalItems() {
               "56": 1,
               "97": 3,
             },
+            inputs: [{
+              name: 'wCOURAGE',
+              amount: 1000,
+              image: '/images/wCOURAGE.png'
+            },
+            {
+              name: 'The Elixir (20%)',
+              amount: 1,
+              image: '/images/icons/elixir20.png'
+            }]
           },
         },
     },
@@ -193,6 +223,16 @@ export function getMagicalItems() {
               "56": 1,
               "97": 4,
             },
+            inputs: [{
+              name: 'wCOURAGE',
+              amount: 1000,
+              image: '/images/wCOURAGE.png'
+            },
+            {
+              name: `The Arcane's Book`,
+              amount: 1,
+              image: '/images/icons/arcanes-book.png'
+            }]
           },
         },
     },
