@@ -60,7 +60,7 @@
             <number-field
               no-icons
               class="mt-3"
-              v-model="getInfo.getTokenBConfig.amount"
+              v-model="getInfo.getTokenBConfig.amountFormatted"
               dense
               disabled
             ></number-field>
@@ -79,7 +79,7 @@
             <number-field
               no-icons
               class="mt-3"
-              v-model="getInfo.getTokenCConfig.amount"
+              v-model="getInfo.getTokenCConfig.amountFormatted"
               dense
               disabled
             ></number-field>
