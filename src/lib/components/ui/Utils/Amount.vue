@@ -10,11 +10,9 @@
             alt="wGOLD"
             class="image-symbol"
           />
-          <div class="symbol">
-            <span v-if="size" :style="`font-size: ${size}px`"> {{ computedAmount }} </span>
-            <span v-else> {{ computedAmount }} </span>
-            <span v-if="symbol"> {{ symbol }} </span>
-          </div>
+          <span v-if="size" :style="`font-size: ${size}px`"> {{ computedAmount }} </span>
+          <span v-else> {{ computedAmount }} </span>
+          <span v-if="symbol"> {{ symbol }} </span>
         </span>
       </span>
     </template>
@@ -71,8 +69,5 @@ export default {
 }
 .amount {
   white-space: nowrap;
-  display: flex;
-  align-items: center;
-  justify-content: justify;
 }
 </style>

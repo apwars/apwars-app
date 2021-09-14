@@ -21,7 +21,8 @@
           </div>
 
           <div class="d-flex align-center px-1 font-weight-black">
-            You'll pay me in wCOURAGE to work with your army, and they'll come back armed.
+            You'll pay me in wCOURAGE to work with a small group of brave soldiers, and
+            unfortunately they'll all perish in the process.
           </div>
 
           <div>
@@ -34,7 +35,7 @@
         >
           <div class="d-flex align-center">
             <div class="box-token mr-2">
-              <v-img src="/images/wCOURAGE.png" />
+              <v-img src="/images/wcourage.png" />
             </div>
             <number-field
               no-icons
@@ -53,7 +54,7 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/icons/${info.unit.name}.png`" />
+              <v-img :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
             </div>
             <number-field
               no-icons
@@ -73,17 +74,16 @@
           />
           <div class="primary--text font-weight-black text-h6">
             <div class="d-flex flex-column">
-              <span class="d-flex align-items-center justify-content-justify">
-                <span class="mr-working-time">Time required:</span>
+              <div>
+                Time required:
                 <amount
                   :amount="getInfo.getGeneralConfig.blocks"
                   formatted
                   fo
                   decimals="0"
                   compact
-                />
-                <span class="ml-blocks">blocks</span>
-              </span>
+                />blocks
+              </div>
               <div>
                 <time-block :blocks="getInfo.getGeneralConfig.blocks" />
               </div>
@@ -102,8 +102,13 @@
                 <amount
                   :amount="getInfo.getTokenAConfig.amount"
                   decimals="2"
-                  compact
                   symbol="wCOURAGE"
+                />
+                and
+                <amount
+                  :amount="getInfo.getTokenBConfig.amount"
+                  decimals="2"
+                  :symbol="getInfo.getTokenBConfig.name"
                 />
                 to this research.
               </div>

@@ -53,8 +53,7 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img v-if="this.$route.name === '/war-preparation'" :src="`/images/nfts/${info.getTokenBConfig.id}.png`" height="78px" width="65px"/>
-              <v-img v-else :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
+              <v-img :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
             </div>
             <number-field
               no-icons
@@ -93,17 +92,17 @@
           />
           <div class="primary--text font-weight-black text-h6">
             <div class="d-flex flex-column">
-              <span class="d-flex align-items-center justify-content-justify">
-                <span class="mr-working-time">Time required:</span>
+              <div>
+                Time required:
                 <amount
                   :amount="getInfo.getGeneralConfig.blocks"
-                  decimals="0"
                   formatted
-                  compact
-                />
-                <span class="ml-blocks"> blocks </span>
-              </span>
-              <div><time-block :blocks="getInfo.getGeneralConfig.blocks"/></div>
+                  decimals="0"
+                />blocks
+              </div>
+              <div>
+                <time-block :blocks="getInfo.getGeneralConfig.blocks" />
+              </div>
             </div>
           </div>
         </div>

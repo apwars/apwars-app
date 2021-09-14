@@ -32,30 +32,51 @@
           </v-row>
         </div>
         <v-row class="d-flex">
-          <v-col cols="12" md="12" lg="12" class="d-flex">
-            <v-tabs v-model="tab" show-arrows>
-              <v-tab v-for="itemType in itemTypes" :key="itemType">{{ itemType }}</v-tab>
+          <v-col cols="12" md="12" lg="6" class="d-flex">
+            <v-tabs v-model="tab">
+              <v-tab>Game Items</v-tab>
+              <v-tab>Legendary Relics</v-tab>
             </v-tabs>
           </v-col>
         </v-row>
       </v-container>
     </div>
     <v-container class="mt-n6"> 
-      <v-tabs-items v-model="tab" class="mt-2">
-        <v-tab-item v-for="itemType in itemTypes" :key="itemType">
+      <v-tabs-items v-model="tab">
+        <v-tab-item>
           <v-card flat>
             <v-row>
               <v-col
-                v-for="item in itemsList"
-                :key="item.id"
+                v-for="collectible in collectibles"
+                :key="collectible.id"
                 sm="12"
                 md="6"
                 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
               >
-                <nft-item :collectible="item" />
+                <nft-item :collectible="collectible" />
                 <div>
-                  <game-text>{{ item.title }}</game-text>
-                  <p style="font-size: 12px" v-html="item.description" />
+                  <game-text>{{ collectible.title }}</game-text>
+                  <p style="font-size: 12px" v-html="collectible.description" />
+                </div>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-tab-item>
+
+        <v-tab-item>
+          <v-card flat>
+            <v-row>
+              <v-col
+                v-for="gameItem in gameItems"
+                :key="gameItem.id"
+                cols="12"
+                md="4"
+                :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
+              >
+                <nft-item :collectible="gameItem" />
+                <div>
+                  <game-text>{{ gameItem.title }}</game-text>
+                  <p style="font-size: 12px" v-html="gameItem.description" />
                 </div>
               </v-col>
             </v-row>
@@ -71,6 +92,7 @@ import NftItem from '@/lib/components/ui/NFTItem';
 import GameTitle from '@/lib/components/ui/Utils/GameTitle';
 import wButton from '@/lib/components/ui/Buttons/wButton';
 
+import { getLegendaryRelics } from '@/data/Collectibles/LegendaryRelics';
 import { getCollectibles } from '@/data/Collectibles';
 import GameText from '@/lib/components/ui/Utils/GameText';
 import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
@@ -87,8 +109,8 @@ export default {
   data() {
     return {
       loading: true,
+      gameItems: [],
       collectibles: [],
-      itemTypes: [],
       tab: 0,
     };
   },
@@ -101,9 +123,6 @@ export default {
     account() {
       return this.$store.getters['user/account'];
     },
-    itemsList() {
-      return this.collectibles.filter(c => c.typeDesc === this.itemTypes[this.tab])
-    }
   },
 
   watch: {
@@ -137,10 +156,8 @@ export default {
       this.loading = true;
 
       try {
-        const itemsData = getCollectibles();
-        const itemTypes = itemsData.map(i => i.typeDesc);
-        this.collectibles = itemsData;
-        this.itemTypes = Array.from(new Set(itemTypes));
+        this.collectibles = getCollectibles().filter(collectible => !collectible.isGift);
+        this.gameItems = getLegendaryRelics();
       } catch (e) {
         console.log(e);
       } finally {
