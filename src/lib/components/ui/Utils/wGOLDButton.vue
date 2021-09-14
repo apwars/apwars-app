@@ -7,10 +7,11 @@
         src="/images/buttons/btn-wgold.png"
       />
       <span class="amount-wGOLD">
-        <span class="text-body-2" v-if="amount==='0'">The FED is collecting fees</span>
+        <span class="text-body-2" v-if="amount === '0'">
+          The FED is collecting fees
+        </span>
         <span v-else>
-          <amount :amount="amount" decimals="2"          
-            tooltip />
+          <amount :amount="amount" decimals="2" compact tooltip />
           <span class="suffix">wGOLD</span>
         </span>
       </span>
