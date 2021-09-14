@@ -1,12 +1,5 @@
 <template>
-  <div class="list-units">
-    <v-container
-      :fluid="$vuetify.breakpoint.mobile"
-      class="pa-3 pd-md-0"
-      v-if="isConnected && !isLoading"
-    >
-    </v-container>
-    
+  <div class="list-units">    
     <v-container
       :fluid="$vuetify.breakpoint.md || $vuetify.breakpoint.mobile"
       v-if="isConnected && !isLoading"

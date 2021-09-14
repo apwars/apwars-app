@@ -24,12 +24,33 @@
       <div class="gradient"></div>
     </div>
 
-    <list-units
-      class="mt-n6"
-      type="war-preparation"
-      :filter-rules="filterTiers"
-      show-only-my-units
-    ></list-units>
+    <v-container class="bg-tabs px-0">
+      <v-row class="d-flex">
+        <v-col cols="12" md="12" lg="12" class="d-flex">
+          <v-tabs v-model="tab">
+            <v-tab>Weapons</v-tab>
+            <v-tab>Magical Items</v-tab>
+          </v-tabs>
+        </v-col>
+      </v-row>
+      
+      <v-tabs-items v-model="tab">
+        <v-tab-item>
+          <v-card flat>
+            <list-units
+              type="war-preparation"
+              :filter-rules="filterTiers"
+              show-only-my-units
+            />
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <list-combinators type="game-items-combinator" />
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
+    </v-container>
   </div>
 </template>
 
@@ -37,6 +58,7 @@
 import PageTitle from "@/lib/components/ui/Utils/PageTitle.vue";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
+import ListCombinators from "@/lib/components/ui/Lists/ListCombinators";
 
 export default {
   name: 'war-preparation',
@@ -44,6 +66,7 @@ export default {
     PageTitle,
     wButton,
     ListUnits,
+    ListCombinators
   },
 
   data() {
@@ -51,7 +74,8 @@ export default {
       isLoading: true,
       filterTiers: {
         name: ["wWARRIOR", "wGRUNT", "wSKELETON-WARRIOR"],
-      }
+      },
+      tab: 0,
     };
   },
 
