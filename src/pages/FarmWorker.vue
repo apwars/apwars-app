@@ -15,13 +15,6 @@
             {{ infoAccount.amount == 1 ? 'worker' : 'workers'}}
             </div>
         </div>
-        <div v-if="infoAccount.amount > 0" class="d-flex mt-1">
-          <div class="withdraw-worker">
-            <wButton size="small" @click="withdraw()">
-              Withdraw
-            </wButton>
-          </div>
-        </div>
       </div>
       <div class="menuWorker">
         <div v-if="isProgressWorker" class="d-flex align-center progressWorker">
@@ -90,12 +83,12 @@ export default {
         nextClaim: 0,
       },
       textFirstWorker: `
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-      text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+      Workers are essential to clean the world, and you can increase your worker pool whenever you complete an activity on your farm. 
+      Click "Confirm" to get your first worker for free!
       `,
       textWorker: `
-      Lorem Ipsum has been the industry's standard dummy.
-      It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+      Congratulations! You have completed another activity on your farm. 
+      Click "Confirm" to get another worker for free!
       `,
       textModalWorker: "",
     };
@@ -193,7 +186,7 @@ export default {
       this.pixiRoot = new PIXI.Application({
         width: document.body.clientWidth,
         height: document.querySelector(".v-main__wrap").clientHeight,
-        backgroundColor: 0x6bacde,
+        backgroundColor: 0x88a146,
       });
 
       this.$el.querySelector("#farmWorker").appendChild(this.pixiRoot.view);
