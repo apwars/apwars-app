@@ -53,7 +53,8 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
+              <v-img v-if="this.$route.name === '/war-preparation'" :src="`/images/nfts/${info.getTokenBConfig.id}.png`" height="78px" width="65px"/>
+              <v-img v-else :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
             </div>
             <number-field
               no-icons
@@ -72,7 +73,7 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="getInfo.infoTraining.image" />
+              <v-img  :src="getInfo.infoTraining.image" height="75px"/>
             </div>
             <number-field
               no-icons

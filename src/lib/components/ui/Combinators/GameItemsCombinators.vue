@@ -7,17 +7,17 @@
         lg="6"
         xl="4"
         class="d-flex justify-center">
-        <div class="align-self-center">
+        <div class="align-self-center">  
           <v-img
             :width="$vuetify.breakpoint.mobile ? 100 : 160"
-            :src="`/images/nfts/${gameItems.id}.png`"
+            :src="`/images/nfts/${gameItems.name}.png`"
           />
         </div>
         <div v-if="gameItems" class="ml-1 align-self-start">
           <div class="title">Necessary Resources</div>
           <div class="d-flex qty">
-            <v-img class="mr-1" max-width="32px" :src="gameItems.combinators.warPreparation.necessaryResources.tokenA" 
-              style="margin-left: -3px;"/>
+            <v-img class="mr-1" max-width="30px" :src="gameItems.combinators.warPreparation.necessaryResources.tokenA" 
+              style="margin-left: -2px;"/>
             <amount
               :amount="getTokenAConfig.amount"
               decimals="2"
@@ -28,8 +28,8 @@
             <v-img
               class="mr-1"
               max-width="26px"
-              height="52px"
-              :src="gameItems.combinators.warPreparation.necessaryResources.tokenB"
+              height="40px"
+              :src="`/images/nfts/${gameItems.id}.png`"
             />
             <amount
               :amount="getTokenBConfig.amount"
@@ -39,8 +39,8 @@
             />
           </div>
           <div class="d-flex align-center my-1 qty">
-            <img class="mr-1" max-width="26px" height="40px" src="/images/icons/hourglass.png"
-              style="margin-left: -6px;"/>
+            <img class="mr-1" max-width="26px" height="35px" src="/images/icons/hourglass.png"
+              style="margin-left: -4px;"/>
 
             <div class="d-flex flex-column">
               <span class="d-flex align-items-center justify-content-justify">
@@ -60,11 +60,11 @@
           <div class="d-flex mt-1 qty" v-if="gameItems.image">
             <img
               class="mr-1"
-              max-width="35px"
-              height="45px"
+              max-width="30px"
+              height="40px"
               :src="gameItems.combinators.warPreparation.image"
             />
-            <span>
+            <span style="margin-top: -5px">
               Item conquered: <br />
               {{ gameItems.title }}
             </span>
