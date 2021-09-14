@@ -73,7 +73,7 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img  :src="getInfo.infoTraining.image" height="75px"/>
+              <v-img :src="getInfo.infoTraining.image" height="75px"/>
             </div>
             <number-field
               no-icons
