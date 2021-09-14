@@ -308,6 +308,18 @@ const wars = [
       round1: 1631815200000,
       round2: 1631901600000,
     },
+    phases: [
+    {
+      title: 'Enlistments ends in',
+      endAt: 1631815200000,
+    },
+    {
+      title: 'War ends in',
+      endAt: 1631901600000,
+    },
+    {
+      title: 'The Elven War is over',
+    }],
     totalPrize: "800000000000000000000000",
     test: false,
     showTest: false,
