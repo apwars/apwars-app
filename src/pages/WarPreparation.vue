@@ -8,7 +8,7 @@
           image="/images/war-preparation/icon-war-preparation.png"
         />
       </v-container>
-      <div class="d-flex text-center justify-center">
+      <div v-if="tab === 0" class="d-flex text-center justify-center">
         <v-img
           v-if="$vuetify.breakpoint.mobile"
           class="mx-auto"
@@ -19,6 +19,20 @@
           v-else
           max-width="610px"
           src="/images/war-preparation/weapon-research.png"
+        />
+      </div>
+
+      <div v-else class="d-flex text-center justify-center">
+        <v-img
+          v-if="$vuetify.breakpoint.mobile"
+          class="mx-auto"
+          max-width="90%"
+          src="/images/war-preparation/spendables-research.png"
+        />
+        <v-img
+          v-else
+          max-width="610px"
+          src="/images/war-preparation/spendables-research.png"
         />
       </div>
       <div class="gradient"></div>
