@@ -120,9 +120,9 @@
                 class="ml-1 align-self-center"
                 :actived="false"
                 @click="redeemPrize"
-                :disabled="isReedemPrize || !myEarnings"
+                :disabled="isReedemPrize || !myEarnings || isReedemPrizeLoading"
               >
-                {{ isReedemPrize ? "Already withdrawn" : "Redeem prize" }}
+                {{ isReedemPrize ? "Already withdrawn" : isReedemPrizeLoading ? "Waiting..." :"Redeem prize" }}
               </wButton>
             </div>
           </v-col>
@@ -276,6 +276,7 @@ export default {
       warStage: 0,
       myEarnings: "0",
       isWar: { test: false },
+      isReedemPrizeLoading: false,
     };
   },
 
@@ -355,6 +356,7 @@ export default {
 
     redeemPrize() {
       const withdrawPrize = this.warMachine.withdrawPrize(this.account);
+      this.isReedemPrizeLoading = true;
       withdrawPrize.on("error", (error) => {
         if (error.message) {
           return ToastSnackbar.error(error.message);
@@ -362,6 +364,7 @@ export default {
         return ToastSnackbar.error("Troop sending failed");
       });
       withdrawPrize.on("receipt", (receipt) => {
+        this.isReedemPrizeLoading = false;
         ToastSnackbar.successTransaction(
           `Transaction successfully`,
           receipt.transactionHash

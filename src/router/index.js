@@ -12,7 +12,7 @@ import Round2 from "@/pages/Wars/Round2.vue";
 import WarReport from "@/pages/Wars/WarReport.vue";
 import BlackMarket from "@/pages/BlackMarket.vue";
 import PrivateSale from "@/pages/Arcadia/PrivateSale.vue";
-import WeaponResearch from "@/pages/WeaponResearch.vue";
+import WarPreparation from "@/pages/WarPreparation.vue";
 import TrainingCenter from "@/pages/TrainingCenter.vue";
 import FarmWorker from "@/pages/FarmWorker.vue";
 import Home from "@/pages/Home.vue";
@@ -61,9 +61,9 @@ export const routes = [
         component: Wars
       },
       {
-        path: "/weapon-research",
-        name: "/weapon-research",
-        component: WeaponResearch
+        path: "/war-preparation",
+        name: "/war-preparation",
+        component: WarPreparation
       },
       {
         path: "/training-center",

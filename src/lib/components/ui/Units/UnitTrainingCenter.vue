@@ -272,6 +272,9 @@ export default {
       }
       return {};
     },
+    combinatorAddress() {
+      return this.unit.combinators.trainingCenter.combinatorAddress[this.networkInfo.id];
+    },
     combinatorId() {
       if (this.infoTraining.idCombinator) {
         return (
@@ -325,7 +328,7 @@ export default {
     async initData() {
       this.tokenA = this.addresses.wCOURAGE;
       this.tokenB = this.unit.contractAddress[this.networkInfo.id];
-      this.combinatorContract = new Combinator(this.addresses.combinator);
+      this.combinatorContract = new Combinator(this.combinatorAddress);
       await this.combinatorContract.getContractManager();
       this.tokenAContract = new wCOURAGE(this.tokenA);
       this.tokenBContract = new Troops(this.tokenB);
@@ -340,11 +343,11 @@ export default {
 
       this.isApprovedTokenA = await this.tokenAContract.hasAllowance(
         this.account,
-        this.addresses.combinator
+       this.combinatorAddress
       );
       this.isApprovedTokenB = await this.tokenBContract.hasAllowance(
         this.account,
-        this.addresses.combinator
+       this.combinatorAddress
       );
       this.getGeneralConfig = await this.combinatorContract.getGeneralConfig(
         this.account,
@@ -435,7 +438,7 @@ export default {
         this.textDoraNobleModal = DORANOBLE_WAITING_WALLET_APPROVAL;
         const confirmTransaction = this.approveOnlyOneContract.approve(
           this.account,
-          this.addresses.combinator
+         this.combinatorAddress
         );
 
         confirmTransaction.on("error", (error) => {
@@ -481,7 +484,7 @@ export default {
         this.textDoraNobleModal = DORANOBLE_WAITING_WALLET_APPROVAL;
         const confirmTransaction = this.tokenAContract.approve(
           this.account,
-          this.addresses.combinator
+         this.combinatorAddress
         );
 
         confirmTransaction.on("error", (error) => {
@@ -511,7 +514,7 @@ export default {
         this.textDoraNobleModal = DORANOBLE_APPROVE_SECOND_PAGE_CONTRACT;
         const confirmTransaction = this.tokenBContract.approve(
           this.account,
-          this.addresses.combinator
+         this.combinatorAddress
         );
 
         confirmTransaction.on("error", (error) => {
@@ -619,7 +622,7 @@ export default {
 
         confirmTransaction.on("receipt", () => {
           ToastSnackbar.success(
-            "wUNIT send successfully Dora Noble - The Horse Trainer"
+            "wUNIT sent successfully Dora Noble - The Horse Trainer"
           );
           this.isLoadingClaim = false;
           this.modalDoraNobleClaim = false;

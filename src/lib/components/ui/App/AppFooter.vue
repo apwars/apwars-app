@@ -155,7 +155,7 @@ export default {
           href: "/",
         },
         {
-          title: "Library",
+          title: "Game Items",
           image: "/images/icons/library.png",
           href: "/game-items",
         },
@@ -196,10 +196,11 @@ export default {
               image: "/images/icons/fed.png",
               href: "/wars",
             },
-            // {
-            //   title: "Weapon Research",
-            //   href: "/weapon-research",
-            // },
+            {
+              title: "War Preparation",
+              image: "/images/war-preparation/icon-war-preparation.png",
+              href: "/war-preparation",
+            },
           ],
         },
         {
