@@ -55,7 +55,7 @@ export function getGameItems() {
       title: "The Elixir (10%)",
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
-      image: "/images/nfts/elixir10.png",
+      image: "/images/nfts/2.png",
       parameters: {
         id: 2,
         price: "1000000000000000000000",
@@ -74,7 +74,7 @@ export function getGameItems() {
       title: "The Elixir (15%)",
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
-      image: "/images/nfts/elixir15.png",
+      image: "/images/nfts/3.png",
       parameters: {
         id: 3,
         price: "100000000000000000000000",
@@ -93,7 +93,7 @@ export function getGameItems() {
       title: "The Elixir (20%)",
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
-      image: "/images/nfts/elixir20.png",
+      image: "/images/nfts/4.png",
       parameters: {
         id: 4,
         price: "200000000000000000000000",
@@ -112,7 +112,7 @@ export function getGameItems() {
       title: "The Arcane's Book",
       description:
         '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both planes and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b></small>',
-      image: "/images/nfts/arcane.png",
+      image: "/images/nfts/5.png",
       parameters: {
         id: 5,
         price: "10000000000000000000000",
