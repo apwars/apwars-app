@@ -12,8 +12,8 @@
           </div>
           <div class="amount-worker">
             {{ infoAccount.amount }}
-            {{ infoAccount.amount == 1 ? 'worker' : 'workers'}}
-            </div>
+            {{ infoAccount.amount == 1 ? "worker" : "workers" }}
+          </div>
         </div>
       </div>
       <div class="menuWorker">
@@ -74,8 +74,10 @@ export default {
       isProgressWorker: false,
       modalWorker: false,
       isLoadingWorker: false,
-      contractWorker: "0xa7431e4e0EC80FaC8F7393775a451aE7Be363bF1",
-      defaultBlocks: 40,
+      contractWorker: {
+        "56": "0xc8CB5b953DC8783bF3dA09B8E783b383e2e90091",
+        "97": "0x47991549D3475aCbB46e58ebC1d8769B7f6E14d1",
+      },
       startBlocks: 0,
       smcWorker: {},
       infoAccount: {
@@ -118,6 +120,10 @@ export default {
     progressPercentagemBlock() {
       return 100 - parseInt((this.getRemainingBlocks / this.getBlocks) * 100);
     },
+
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
+    },
   },
 
   watch: {
@@ -151,18 +157,19 @@ export default {
       if (!this.isConnected) {
         return;
       }
-      this.smcWorker = new Worker(this.contractWorker);
+      this.smcWorker = new Worker(this.contractWorker[this.networkInfo.id]);
     },
     async loadData() {
-      if (!this.isConnected) {
+      if (!this.isConnected || this.modalWorker) {
         return;
       }
 
       this.infoAccount = await this.smcWorker.infoAccount(this.account);
       this.infoAccount.nextClaim = parseInt(this.infoAccount.nextClaim);
+      this.infoAccount.previousClaim = parseInt(this.infoAccount.previousClaim);
 
       if (this.infoAccount.nextClaim > this.currentBlockNumber) {
-        this.startBlocks = this.infoAccount.nextClaim - this.defaultBlocks;
+        this.startBlocks = this.infoAccount.previousClaim;
         this.isProgressWorker = true;
         if (!this.isLoopWork) {
           this.isLoopWork = true;
@@ -290,10 +297,7 @@ export default {
     },
     openModalWorker() {
       this.textModalWorker = this.textWorker;
-      if (
-        this.infoAccount.amount === "0" &&
-        this.infoAccount.nextClaim === "0"
-      ) {
+      if (this.infoAccount.amount === "0" && this.infoAccount.nextClaim === 0) {
         this.textModalWorker = this.textFirstWorker;
       }
       this.modalWorker = true;
@@ -321,7 +325,9 @@ export default {
         this.modalWorker = false;
         this.isLoadingWorker = false;
         ToastSnackbar.success("Worker successfully conquered");
-        this.loadData();
+        this.$nextTick(() => {
+          this.loadData();
+        });
       });
     },
     async withdraw() {
