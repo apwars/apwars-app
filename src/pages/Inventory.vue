@@ -191,14 +191,16 @@
           <v-card flat>
             <v-container v-if="!isLoading && collection.length">
               <v-row :no-gutters="$vuetify.breakpoint.mobile">
-                <v-col cols="12" lg="3">
+                <v-col cols="12" lg="4">
                   <v-select
                     v-model="gameItemTypeFilter"
                     :items="gameItemTypesOptions"
-                      label="Game Item Type"
+                    label="Game Item Type"
                     multiple
                     chips
                     solo
+                    outlined
+                    class="filter-input"
                   >
                   </v-select>
                 </v-col>
