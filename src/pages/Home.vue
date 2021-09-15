@@ -153,6 +153,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import GameText from "@/lib/components/ui/Utils/GameText";
 import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
+import Convert from "@/lib/helpers/Convert"
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -301,6 +302,24 @@ export default {
 
         if (this.currentBlockNumber >= task.combinatorInfo.endBlock) {
           task.combinatorInfo.isClaim = true;
+
+          if (task.inputs) {
+            const tokenAConfig = await combinatorContract.getTokenAConfig(
+              this.account,
+              this.account,
+              combinatorId
+            );
+
+            task.inputs[0].amount = Convert.fromWei(tokenAConfig.amount)
+
+            const tokenBConfig = await combinatorContract.getTokenBConfig(
+              this.account,
+              this.account,
+              combinatorId
+            );
+
+            task.inputs[1].amount = Convert.fromWei(tokenBConfig.amount)
+          }
         }
       }
 
