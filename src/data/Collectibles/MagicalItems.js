@@ -18,13 +18,6 @@ export function getMagicalItems() {
         description:
           '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
         image: "/images/nfts/2.png",
-        tokenGameItemA: {
-          name: "wCOURAGE",
-          necessaryAmount: "1000",
-          burningRate: "0",
-          feeRate: "0",
-          tokenAddress: "",
-        },
         combinators: {
           warPreparation: {
             name: 'The Elixir (10%) (Spendable)',
@@ -34,7 +27,7 @@ export function getMagicalItems() {
               tokenB: '/images/icons/2.png'
             },
             combinatorAddress: {
-              "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+              "56": "",
               "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
             },
             claimRouter: "/war-preparation",
@@ -57,13 +50,6 @@ export function getMagicalItems() {
         description:
           '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
         image: "/images/nfts/3.png",
-        tokenGameItemA: {
-          name: "wCOURAGE",
-          necessaryAmount: "100000",
-          burningRate: "0",
-          feeRate: "0",
-          tokenAddress: "",
-        },
         combinators: {
           warPreparation: {
             name: 'The Elixir (15%) (Spendable)',
@@ -73,7 +59,7 @@ export function getMagicalItems() {
               tokenB: '/images/icons/3.png'
             },
             combinatorAddress: {
-              "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+              "56": "",
               "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
             },
             claimRouter: "/war-preparation",
@@ -96,13 +82,6 @@ export function getMagicalItems() {
         description:
           '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
         image: "/images/nfts/4.png",
-        tokenGameItemA: {
-          name: "wCOURAGE",
-          necessaryAmount: "200000",
-          burningRate: "0",
-          feeRate: "0",
-          tokenAddress: "",
-        },
         combinators: {
           warPreparation: {
             name: 'The Elixir (20%) (Spendable)',
@@ -112,7 +91,7 @@ export function getMagicalItems() {
               tokenB: '/images/icons/4.png'
             },
             combinatorAddress: {
-              "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+              "56": "",
               "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
             },
             claimRouter: "/war-preparation",
@@ -135,13 +114,6 @@ export function getMagicalItems() {
         description:
           '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both planes and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b></small>',
         image: "/images/nfts/5.png",
-        tokenGameItemA: {
-          name: "wCOURAGE",
-          necessaryAmount: "10000",
-          burningRate: "0",
-          feeRate: "0",
-          tokenAddress: "",
-        },
         combinators: {
           warPreparation: {
             name: `The Arcane's Book (Spendable)`,
@@ -151,7 +123,7 @@ export function getMagicalItems() {
               tokenB: '/images/icons/5.png'
             },
             combinatorAddress: {
-              "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+              "56": "",
               "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
             },
             claimRouter: "/war-preparation",
