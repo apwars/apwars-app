@@ -27,8 +27,8 @@
         <div class="d-flex mt-1 qty">
           <v-img
             class="mr-1"
-            max-width="38px"
-            :src="`/images/icons/coins/${unit.name}.png`"
+            max-width="35px"
+            :src="`/images/icons/coins/smallers/${unit.name}.png`"
             style="margin-left: -2px"
           />
           <div class="mt-token-text">
@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="d-flex align-center my-1 qty">
-          <img height="38px" src="/images/icons/hourglass.png"
+          <img max-width="40px" height="38px" src="/images/icons/hourglass.png"
             style="margin-left: -2px; margin-right: 0.5rem;"/>
 
           <div class="d-flex flex-column">
@@ -59,9 +59,9 @@
         <hr />
         <div class="d-flex mt-1 qty" v-if="infoTraining.image">
           <img
-            :class="`mr-1 bg-img-tier-${unit.tier}`"
-            width="50px"
-            height="50px"
+            class="mr-1 "
+            max-width="40px"
+            height="40px"
             :src="`/images/icons/coins/smallers/${infoTraining.name}.png`"
           />
           <span>
