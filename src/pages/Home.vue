@@ -3,7 +3,7 @@
     <div v-if="isLoading">
       <game-text header="h2" class="text-center d-block py-9"
         >Loading...</game-text
-      >
+      > 
     </div>
     <div v-else>
       <v-container fluid>
@@ -118,6 +118,12 @@
                   <div class="ml-2 ml-md-3 mr-2 mr-md-6">
                     <span class="font-weight-bold">{{ item.name }}</span>
 
+                    <div class="input-info" v-if="item.inputs">
+                      <div class="claim-info" v-for="(input, index) in item.inputs" :key="index">
+                        <div v-if="input.amount">{{ input.amount }} {{ input.name }} </div> <img height="16px" width="16px" :src="input.image" />
+                      </div> 
+                    </div>
+
                     <wButton
                       v-if="item.combinatorInfo.isClaim"
                       @click="$router.push(item.claimRouter)"
@@ -158,6 +164,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import GameText from "@/lib/components/ui/Utils/GameText";
 import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
+import Convert from "@/lib/helpers/Convert"
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -302,6 +309,24 @@ export default {
 
         task.combinatorInfo.isClaim = false;
 
+        if (task.inputs) {
+          const tokenAConfig = await combinatorContract.getTokenAConfig(
+            this.account,
+            this.addresses.wCOURAGE,
+            combinatorId
+          );
+
+          task.inputs[0].amount = Convert.fromWei(tokenAConfig.amount)
+
+          const tokenBConfig = await combinatorContract.getTokenBConfig(
+            this.account,
+            this.account,
+            combinatorId
+          );
+
+          task.inputs[1].amount = Convert.fromWei(tokenBConfig.amount)
+        }
+
         if (this.currentBlockNumber >= task.combinatorInfo.endBlock) {
           task.combinatorInfo.isClaim = true;
         }
@@ -349,5 +374,10 @@ export default {
   font-size: 21px;
   height: 30px;
   min-width: 30px;
+}
+
+.claim-info {
+  display: flex;
+  font-size: 12px;
 }
 </style>
