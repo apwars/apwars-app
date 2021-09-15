@@ -77,12 +77,10 @@ export function getTroops() {
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
-            amount: 450,
             image: '/images/wCOURAGE.png'
           },
           {
             name: 'wARCHER',
-            amount: 1000,
             image: '/images/icons/wARCHER.png'
           }]
         },
@@ -203,12 +201,10 @@ export function getTroops() {
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
-            amount: 450,
             image: '/images/wCOURAGE.png'
           },
           {
             name: 'wGRUNT',
-            amount: 1000,
             image: '/images/icons/wGRUNT.png'
           }]
         },
@@ -417,12 +413,10 @@ export function getTroops() {
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
-            amount: 450,
             image: '/images/wCOURAGE.png'
           },
           {
             name: 'wHOUND',
-            amount: 1000,
             image: '/images/icons/wHOUND.png'
           }]
         },

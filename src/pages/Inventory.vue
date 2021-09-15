@@ -184,19 +184,59 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-container fluid v-if="collection.length > 0 && tab === 0">
-      <v-row dense>
-        <v-col v-for="collectible in collection" :key="collectible.id" cols="12" offset-lg="2" lg="3" md="6" sm="6">
-          <nft-card :collectible="collectible" :myCollection="true" />
-        </v-col>
-      </v-row>
+
+    <v-container class="mt-n6"> 
+      <v-tabs-items v-model="tab">
+        <v-tab-item>
+          <v-card flat>
+            <v-container v-if="!isLoading && collection.length">
+              <v-row :no-gutters="$vuetify.breakpoint.mobile">
+                <v-col cols="12" lg="3">
+                  <v-select
+                    v-model="gameItemTypeFilter"
+                    :items="gameItemTypesOptions"
+                      label="Game Item Type"
+                    multiple
+                    chips
+                    solo
+                  >
+                  </v-select>
+                </v-col>
+              </v-row>
+            </v-container>
+            <v-container v-if="filteredCollection.length">
+              <v-row>
+                <v-col
+                  v-for="collectible in filteredCollection"
+                  :key="`${collectible.id}-${collectible.type}`"
+                  sm="12"
+                  md="6"
+                  :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
+                >
+                  <nft-card :collectible="collectible" :myCollection="true" />
+                </v-col>
+              </v-row>
+            </v-container>
+            <v-container v-else>
+              <v-row dense>
+                Your collection is empty
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <v-container>
+              <v-row>
+                <v-col>
+                  <list-units />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
     </v-container>
-    <v-container v-if="collection.length === 0 && !isLoading">
-      <v-row dense>
-        Your collection is empty
-      </v-row>
-    </v-container>
-    <list-units v-if="tab === 1"></list-units>
   </div>
 </template>
 
@@ -210,7 +250,7 @@ import wButton from '@/lib/components/ui/Buttons/wButton';
 import Amount from '@/lib/components/ui/Utils/Amount';
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
-import { getCollectibles } from '@/data/Collectibles';
+import { getCollectibles, getGameItemTypesOptions } from '@/data/Collectibles';
 import Collectibles from '@/lib/eth/Collectibles';
 import wGOLD from '@/lib/eth/wGOLD';
 import wCOURAGE from '@/lib/eth/wCOURAGE';
@@ -236,6 +276,8 @@ export default {
       totalItems: 0,
       isLoading: true,
       tab: 0,
+      gameItemTypeFilter: null,
+      gameItemTypesOptions: [],
     };
   },
   computed: {
@@ -262,6 +304,12 @@ export default {
           return item;
         });
     },
+    filteredCollection() {
+      if (this.gameItemTypeFilter?.length > 0) {
+        return this.collection.filter(c => this.gameItemTypeFilter.includes(c.typeDesc));
+      }
+      return this.collection;
+    },
   },
   watch: {
     isConnected() {
@@ -276,6 +324,7 @@ export default {
   },
   mounted() {
     this.loadData();
+    this.gameItemTypesOptions = getGameItemTypesOptions().map((o) => ({ text: o, value: o }));
   },
   methods: {
     goTo(rout) {
