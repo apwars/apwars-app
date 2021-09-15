@@ -120,7 +120,7 @@
 
                     <div class="input-info" v-if="item.inputs">
                       <div class="claim-info" v-for="(input, index) in item.inputs" :key="index">
-                        <div>x{{ input.amount }} {{ input.name }} </div> <img height="16px" width="16px" :src="input.image" />
+                        <div v-if="input.amount">{{ input.amount }} {{ input.name }} </div> <img height="16px" width="16px" :src="input.image" />
                       </div> 
                     </div>
 
@@ -309,26 +309,26 @@ export default {
 
         task.combinatorInfo.isClaim = false;
 
+        if (task.inputs) {
+          const tokenAConfig = await combinatorContract.getTokenAConfig(
+            this.account,
+            this.addresses.wCOURAGE,
+            combinatorId
+          );
+
+          task.inputs[0].amount = Convert.fromWei(tokenAConfig.amount)
+
+          const tokenBConfig = await combinatorContract.getTokenBConfig(
+            this.account,
+            this.account,
+            combinatorId
+          );
+
+          task.inputs[1].amount = Convert.fromWei(tokenBConfig.amount)
+        }
+
         if (this.currentBlockNumber >= task.combinatorInfo.endBlock) {
           task.combinatorInfo.isClaim = true;
-
-          if (task.inputs) {
-            const tokenAConfig = await combinatorContract.getTokenAConfig(
-              this.account,
-              this.account,
-              combinatorId
-            );
-
-            task.inputs[0].amount = Convert.fromWei(tokenAConfig.amount)
-
-            const tokenBConfig = await combinatorContract.getTokenBConfig(
-              this.account,
-              this.account,
-              combinatorId
-            );
-
-            task.inputs[1].amount = Convert.fromWei(tokenBConfig.amount)
-          }
         }
       }
 
