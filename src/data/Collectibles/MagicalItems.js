@@ -14,7 +14,7 @@ export function getMagicalItems() {
       type: "magicalItem",
       typeDesc: "Magical Item",
       contractAddress: addresses.collectibles,
-      title: "The Elixir (10%) (Spendable)",
+      title: "The Elixir (10%)",
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
       image: "/images/nfts/2.png",
