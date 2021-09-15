@@ -91,6 +91,7 @@
     >
       <v-row v-if="filterTroops.length > 0">
         <v-col
+          :class="$vuetify.breakpoint.mobile ? 'remove-padding' : ''"
           cols="12"
           lg="6"
           xl="4"
@@ -491,5 +492,10 @@ export default {
   .amount-fed {
     margin-top: -65px !important;
   }
+}
+
+.remove-padding {
+  padding-left: 0.1rem !important;
+  padding-right: 0.1rem !important;
 }
 </style>

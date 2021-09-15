@@ -6,7 +6,8 @@
     >
       <div class="align-self-center">
         <v-img
-          :width="$vuetify.breakpoint.mobile ? 100 : 160"
+          :width="$vuetify.breakpoint.mobile ? 130 : 160"
+          :height="$vuetify.breakpoint.mobile ? 250 : 307.47"
           :src="`/images/troops/${unit.combinators.trainingCenter.name}.png`"
         />
       </div>
@@ -14,7 +15,9 @@
       <div v-if="isLoadingUnit" class="ml-1 mt-1 align-self-start">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty">
-          <v-img class="mr-1" max-width="38px" src="/images/wcourage.png"
+          <v-img class="mr-1"
+            :max-width="$vuetify.breakpoint.mobile ? 28 : 38"
+            src="/images/wcourage.png"
             style="margin-left: -4px"/>
           <div class="mt-token-text">
             <amount
@@ -27,7 +30,7 @@
         <div class="d-flex mt-1 qty">
           <v-img
             class="mr-1"
-            max-width="35px"
+            :max-width="$vuetify.breakpoint.mobile ? 24.5 : 35"
             :src="`/images/icons/coins/smallers/${unit.name}.png`"
             style="margin-left: -2px"
           />
@@ -40,9 +43,10 @@
           </div>
         </div>
         <div class="d-flex align-center my-1 qty">
-          <img max-width="40px" height="38px" src="/images/icons/hourglass.png"
-            style="margin-left: -2px; margin-right: 0.5rem;"/>
-
+          <v-img
+            :max-width="$vuetify.breakpoint.mobile ? 32 : 40"
+            src="/images/icons/hourglass.png"
+            :style="$vuetify.breakpoint.mobile ? 'margin-left: -4.5px; margin-right: 0.2rem;' : 'margin-left: -2px; margin-right: 0.5rem;'"/>
           <div class="d-flex flex-column">
             <span>
               Working time:
@@ -58,10 +62,10 @@
         </div>
         <hr />
         <div class="d-flex mt-1 qty" v-if="infoTraining.image">
-          <img
+          <v-img
             class="mr-1 "
-            max-width="40px"
-            height="40px"
+            :max-width="$vuetify.breakpoint.mobile ? 35 : 40"
+            :height="$vuetify.breakpoint.mobile ? 35 : 40"
             :src="`/images/icons/coins/smallers/${infoTraining.name}.png`"
           />
           <span>
