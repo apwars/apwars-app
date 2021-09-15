@@ -7,7 +7,7 @@
             v-if="isIcon"
             :src="`/images/${symbol.toLowerCase()}.png`"
             height="22px"
-            alt="wGOLD"
+            :alt="symbol"
             class="image-symbol"
           />
           <span v-if="size" :style="`font-size: ${size}px`"> {{ computedAmount }} </span>

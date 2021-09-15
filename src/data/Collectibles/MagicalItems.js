@@ -86,7 +86,7 @@ export function getMagicalItems() {
     //   type: "magicalItem",
     //   typeDesc: "Magical Item",
     //   contractAddress: addresses.collectibles,
-    //   title: "The Elixir (10%)",
+    //   title: "The Elixir (10%) (Spendable)",
     //   description:
     //     '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
     //   image: "/images/nfts/40.png",
@@ -115,7 +115,7 @@ export function getMagicalItems() {
     //   type: "magicalItem",
     //   typeDesc: "Magical Item",
     //   contractAddress: addresses.collectibles,
-    //   title: "The Elixir (15%)",
+    //   title: "The Elixir (15%) (Spendable)",
     //   description:
     //     '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
     //   image: "/images/nfts/41.png",
@@ -144,7 +144,7 @@ export function getMagicalItems() {
     //   type: "magicalItem",
     //   typeDesc: "Magical Item",
     //   contractAddress: addresses.collectibles,
-    //   title: "The Elixir (20%)",
+    //   title: "The Elixir (20%) (Spendable)",
     //   description:
     //     '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
     //   image: "/images/nfts/42.png",
@@ -173,7 +173,7 @@ export function getMagicalItems() {
     //   type: "magicalItem",
     //   typeDesc: "Magical Item",
     //   contractAddress: addresses.collectibles,
-    //   title: "The Arcane's Book",
+    //   title: "The Arcane's Book (Spendable)",
     //   description:
     //     '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both planes and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b> WARNING: This is a spendable item.</small>',
     //   image: "/images/nfts/43.png",
