@@ -185,7 +185,7 @@
       </v-row>
     </v-container>
 
-    <v-container class="mt-n6"> 
+    <v-container class="mt-n6">
       <v-tabs-items v-model="tab">
         <v-tab-item>
           <v-card flat>
@@ -202,9 +202,26 @@
                   >
                   </v-select>
                 </v-col>
+                <v-col cols="12" lg="3" v-if="gameItemTypeFilter.length">
+                  <wButton @click="clearFilter" class=" mr-3">
+                    <div class="d-flex justify-center">
+                      <v-icon class="mx-1">
+                        mdi-minus-circle
+                      </v-icon>
+                      <small class="align-self-center">Clear filter</small>
+                    </div>
+                  </wButton>
+                </v-col>
               </v-row>
             </v-container>
-            <v-container v-if="filteredCollection.length">
+            <v-container :fluid="$vuetify.breakpoint.mobile" v-if="isLoading">
+              <v-row>
+                <v-col cols="12" class="text-center ma-6 ma-sm-0">
+                  <h3 class="text-h3">Loading...</h3>
+                </v-col>
+              </v-row>
+            </v-container>
+            <v-container v-else-if="filteredCollection.length">
               <v-row>
                 <v-col
                   v-for="collectible in filteredCollection"
@@ -219,7 +236,7 @@
             </v-container>
             <v-container v-else>
               <v-row dense>
-                Your collection is empty
+                {{ hasItems ? 'No items found on this filter, try to change it.' : 'Your collection is empty' }}
               </v-row>
             </v-container>
           </v-card>
@@ -276,7 +293,7 @@ export default {
       totalItems: 0,
       isLoading: true,
       tab: 0,
-      gameItemTypeFilter: null,
+      gameItemTypeFilter: [],
       gameItemTypesOptions: [],
     };
   },
@@ -305,11 +322,14 @@ export default {
         });
     },
     filteredCollection() {
-      if (this.gameItemTypeFilter?.length > 0) {
+      if (this.gameItemTypeFilter.length > 0) {
         return this.collection.filter(c => this.gameItemTypeFilter.includes(c.typeDesc));
       }
       return this.collection;
     },
+    hasItems() {
+      return this.collection.length > 0;
+    }
   },
   watch: {
     isConnected() {
@@ -335,7 +355,6 @@ export default {
         return;
       }
       try {
-        this.isLoading = true;
         const wgold = new wGOLD(this.addresses.wGOLD);
         const wcourage = new wCOURAGE(this.addresses.wCOURAGE);
         this.balance = await wgold.balanceOf(this.account);
@@ -355,6 +374,9 @@ export default {
         this.isLoading = false;
       }
     },
+    clearFilter() {
+      this.gameItemTypeFilter = [];
+    }
   },
 };
 </script>
