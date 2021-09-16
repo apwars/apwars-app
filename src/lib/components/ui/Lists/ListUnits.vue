@@ -341,12 +341,13 @@ export default {
 
         this.updateTroopsFilters();
 
-        this.isLoading = false;
       } catch (error) {
         if (error.message) {
           return ToastSnackbar.error(error.message);
         }
         return ToastSnackbar.error(error);
+      } finally {
+        this.isLoading = false
       }
     },
 
