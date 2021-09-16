@@ -12,6 +12,7 @@ import Round2 from "@/pages/Wars/Round2.vue";
 import WarReport from "@/pages/Wars/WarReport.vue";
 import BlackMarket from "@/pages/BlackMarket.vue";
 import PrivateSale from "@/pages/Arcadia/PrivateSale.vue";
+import ArcadiaExpansion from "@/pages/Arcadia/Landing.vue";
 import WarPreparation from "@/pages/WarPreparation.vue";
 import TrainingCenter from "@/pages/TrainingCenter.vue";
 import Home from "@/pages/Home.vue";
@@ -93,6 +94,11 @@ export const routes = [
         path: "/private-sale",
         name: "/private-sale",
         component: PrivateSale
+      },
+      {
+        path: "/arcadia-expansion",
+        name: "/arcadia-expansion",
+        component: ArcadiaExpansion
       },
       {
         path: "/farms",
