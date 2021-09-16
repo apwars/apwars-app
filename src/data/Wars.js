@@ -325,14 +325,18 @@ const wars = [
       title: 'Enlistments ends in',
       endAt: 1631815200000,
       button_label: 'Enlist',
-      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/enlistment'
+      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/enlistment',
     },
     {
       title: 'War ends in',
       endAt: 1631901600000,
+      button_label: 'Round 1 Results',
+      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/round-1'
     },
     {
       title: 'The Elven War is over',
+      button_label: 'War Report',
+      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/enlistment'
     }],
     totalPrize: "800000000000000000000000",
     test: false,
