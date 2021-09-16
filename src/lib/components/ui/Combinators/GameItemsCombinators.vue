@@ -10,13 +10,13 @@
         <div class="align-self-center">  
           <v-img
             :width="$vuetify.breakpoint.mobile ? 100 : 160"
-            :src="`/images/nfts/${gameItems.name}.png`"
+            :src="gameItems.image"
           />
         </div>
         <div v-if="gameItems" class="ml-1 align-self-start">
           <div class="title">Necessary Resources</div>
           <div class="d-flex qty">
-            <v-img class="mr-1" max-width="30px" :src="gameItems.combinators.warPreparation.necessaryResources.tokenA" 
+            <v-img class="mr-1" max-width="30px" :src="gameItems.combinators.warPreparation.inputs[0].image" 
               style="margin-left: -2px;"/>
             <amount
               :amount="getTokenAConfig.amount"
@@ -29,13 +29,13 @@
               class="mr-1"
               max-width="26px"
               height="40px"
-              :src="`/images/nfts/${gameItems.id}.png`"
+              :src="gameItems.combinators.warPreparation.inputs[1].image"
             />
             <amount
               :amount="getTokenBConfig.amount"
               decimals="0"
               formatted
-              :symbol="gameItems.title"
+              :symbol="gameItems.combinators.warPreparation.inputs[1].title"
             />
           </div>
           <div class="d-flex align-center my-1 qty">
@@ -44,14 +44,15 @@
 
             <div class="d-flex flex-column">
               <span class="d-flex align-items-center justify-content-justify">
-                <span class="mr-working-time"> Working time:</span>
-                <amount
-                  :amount="getGeneralConfig.blocks"
-                  decimals="0"
-                  formatted
-                  compact
-                />
-                <span class="ml-blocks"> blocks </span>
+                <span>
+                  Working time:
+                  <amount
+                    :amount="getGeneralConfig.blocks"
+                    decimals="0"
+                    formatted
+                  />
+                  blocks
+                </span>
               </span>
               <span><time-block :blocks="getGeneralConfig.blocks"/></span>
             </div>
@@ -190,10 +191,9 @@ const ARIMEDES_CLAIM =
   "Your research has been completed, and your Magical Items are available.";
 const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
-  "Your research has been completed, and your Magical Items are available.";
+  "Waiting confirmation from blockchain...";
 
 export default {
-
   name: "game-items-combinators",
   props: ["gameItems"],
   components: {
@@ -216,6 +216,7 @@ export default {
       isApprovedTokenA: false,
       isApprovedTokenB: false,
       isLoadingClaim: false,
+      textNoBalance: "",
       tokenA: "",
       tokenB: "",
       textConfirmArimdesModal: "SIGN CONTRACT",
@@ -596,19 +597,28 @@ export default {
     },
 
     openModalArimedesNewResearch() {
+      if (!this.isBalanceCombinator) {
+        const amountTokenA = Convert.fromWei(this.getTokenAConfig.amount, true);
+        const amountTokenB = Convert.fromWei(this.getTokenBConfig.amount, true);
+
+        const tokenBName = this.gameItems.combinators.warPreparation.inputs[1].name;
+
+        this.textNoBalance = `I see that you do not have the necessary requirements for research. You must have ${amountTokenA} wCOURAGE and ${amountTokenB} ${tokenBName}.`;
+        return (this.modalArimedesNoBalance = true);
+      }
       this.modalArimedesNewResearch = true;
       this.combinatorInfo = {
         ...this.combinatorInfo,
         ...{
           getGeneralConfig: this.getGeneralConfig,
-          getTokenAConfig: { ...this.getTokenAConfig, name: "wCOURAGE" },
-          getTokenBConfig: { ...this.gameItems, ...this.getTokenBConfig },
+          getTokenAConfig: { ...this.getTokenAConfig, name: "wcourage" },
+          getTokenBConfig: { ...this.gameItems.combinators.warPreparation.inputs[1], ...this.getTokenBConfig },
           getTokenCConfig: this.getGameItemCConfig,
           infoTraining: this.infoTraining,
-          rewardIcon: this.gameItems.combinators.rewardIcon,
           combinatorData: this.gameItems.combinators.warPreparation.necessaryResources
         },
       };
+
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
         this.getTokenAConfig.amount,
         true

@@ -28,7 +28,7 @@
             <span v-html="text"></span>
           </p>
           <div v-if="weaponIcon!==undefined" class="align-self-center">
-            <img width="60px" height="60px" :src="weaponIcon" />
+            <img height="80px" :src="weaponIcon" />
           </div>
         </v-col>
       </v-row>
