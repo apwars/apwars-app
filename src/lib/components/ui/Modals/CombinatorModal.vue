@@ -100,7 +100,7 @@
                   :amount="getInfo.getGeneralConfig.blocks"
                   formatted
                   decimals="0"
-                />blocks
+                /> blocks
               </div>
               <div>
                 <time-block :blocks="getInfo.getGeneralConfig.blocks" />

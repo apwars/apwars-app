@@ -82,7 +82,7 @@
                   fo
                   decimals="0"
                   compact
-                />blocks
+                /> blocks
               </div>
               <div>
                 <time-block :blocks="getInfo.getGeneralConfig.blocks" />
