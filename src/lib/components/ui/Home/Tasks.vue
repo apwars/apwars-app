@@ -197,7 +197,7 @@ export default {
             );
           }
 
-          task.inputs[1].amount = Convert.fromWei(tokenBConfig.amount, true);
+          task.inputs[1].amount = is1155 ? tokenBConfig.amount : Convert.fromWei(tokenBConfig.amount, true);
         }
 
         if (this.currentBlockNumber >= task.combinatorInfo.endBlock) {
