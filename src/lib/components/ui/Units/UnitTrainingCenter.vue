@@ -570,8 +570,8 @@ export default {
         ...this.combinatorInfo,
         ...{
           getGeneralConfig: this.getGeneralConfig,
-          getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
-          getTokenBConfig: { ...this.unit, ...this.getTokenBConfig },
+          getTokenAConfig: { name: "wCOURAGE", ...this.getTokenAConfig },
+          getTokenBConfig: { ...this.unit, ...this.getTokenBConfig, name: `${this.unit.name}-coin`  },
           getTokenCConfig: this.getTokenCConfig,
           infoTraining: this.infoTraining,
         },
