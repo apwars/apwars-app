@@ -91,6 +91,7 @@ export function getMagicalItems() {
       image: "/images/nfts/elixir10-spendable.png",
       combinators: {
         warPreparation: {
+          name: "The Elixir (10%) (Spendable)",
           image: "/images/icons/elixir10-spendable.png",
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
@@ -111,6 +112,7 @@ export function getMagicalItems() {
             name: 'elixir10',
             title: 'The Elixir (10%)',
             image: '/images/nfts/elixir10.png',
+            type: 'magicalItem',
           }],
         },
       },
@@ -126,6 +128,7 @@ export function getMagicalItems() {
       image: "/images/nfts/elixir15-spendable.png",
       combinators: {
         warPreparation: {
+          name: "The Elixir (15%) (Spendable)",
           image: "/images/icons/elixir15-spendable.png",
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
@@ -145,6 +148,7 @@ export function getMagicalItems() {
             name: 'elixir15',
             title: 'The Elixir (15%)',
             image: '/images/nfts/elixir15.png',
+            type: 'magicalItem',
           }],
         },
       },
@@ -160,6 +164,7 @@ export function getMagicalItems() {
       image: "/images/nfts/elixir20-spendable.png",
       combinators: {
         warPreparation: {
+          name: "The Elixir (20%) (Spendable)",
           image: "/images/icons/elixir20-spendable.png",
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
@@ -180,6 +185,7 @@ export function getMagicalItems() {
             name: 'elixir20',
             title: 'The Elixir (20%)',
             image: '/images/nfts/elixir20.png',
+            type: 'magicalItem',
           }],
         },
       },
@@ -195,6 +201,7 @@ export function getMagicalItems() {
       image: "/images/nfts/arcanes-book-spendable.png",
       combinators: {
         warPreparation: {
+          name: "The Arcane's Book (Spendable)",
           image: "/images/icons/arcanes-book-spendable.png",
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
@@ -215,6 +222,7 @@ export function getMagicalItems() {
             name: 'arcanes-book',
             title: `The Arcane's Book`,
             image: '/images/nfts/arcanes-book.png',
+            type: 'magicalItem',
           }],
         },
       },
