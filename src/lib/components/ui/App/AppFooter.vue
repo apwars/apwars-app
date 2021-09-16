@@ -180,8 +180,8 @@ export default {
               image: "/images/icons/battle-shield.png",
             },
             {
-              title: "Farm Worker",
-              href: "/farm-worker",
+              title: "Worker",
+              href: "/worker",
               image: "/Map/farm-worker/map/assets/worker.png",
             },
           ],

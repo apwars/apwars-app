@@ -30,8 +30,16 @@ export function getTroops() {
             "56": 4,
             "97": 4,
           },
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
+          name: 'Simple Shield',
+          image: '/images/icons/simple-shield.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'wWARRIOR',
+            image: '/images/icons/wWARRIOR.png'
+          }]
         },
       }
     },
@@ -65,8 +73,16 @@ export function getTroops() {
             "56": 5,
             "97": 5,
           },
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
+          name: 'Simple Shield',
+          image: '/images/icons/simple-shield.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'wARCHER',
+            image: '/images/icons/wARCHER.png'
+          }]
         },
       }
     },
@@ -120,7 +136,16 @@ export function getTroops() {
             "97": 3,
           },
           name: 'wHORSEMAN',
-          image: '/images/icons/wHORSEMAN.png'
+          image: '/images/icons/wHORSEMAN.png',
+          tokenImage: '/images/icons/coins/wHORSEMAN.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'wCROSSBOWMAN',
+            image: '/images/icons/wCROSSBOWMAN.png'
+          }]
         },
       }
     },
@@ -173,8 +198,16 @@ export function getTroops() {
             "56": 6,
             "97": 6,
           },
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
+          name: 'Simple Shield',
+          image: '/images/icons/simple-shield.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'wGRUNT',
+            image: '/images/icons/wGRUNT.png'
+          }]
         },
       }
     },
@@ -208,8 +241,16 @@ export function getTroops() {
             "56": 7,
             "97": 7,
           },
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
+          name: 'Simple Shield',
+          image: '/images/icons/simple-shield.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'wORC-ARCHER',
+            image: '/images/icons/wORC-ARCHER.png'
+          }]
         },
       }
     },
@@ -263,7 +304,18 @@ export function getTroops() {
             "97": 2,
           },
           name: 'wWARG',
-          image: '/images/icons/wWARG.png'
+          image: '/images/icons/wWARG.png',
+          tokenImage: '/images/icons/coins/wWARG.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            amount: 2200,
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'wPIKE-ORC',
+            amount: 100,
+            image: '/images/icons/wPIKE-ORC.png'
+          }]
         },
       }
     },
@@ -316,8 +368,16 @@ export function getTroops() {
             "56": 8,
             "97": 8,
           },
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
+          name: 'Simple Shield',
+          image: '/images/icons/simple-shield.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'wSKELETONWARRIOR',
+            image: '/images/icons/wSKELETONWARRIOR.png'
+          }]
         },
       }
     },
@@ -351,8 +411,16 @@ export function getTroops() {
             "56": 9,
             "97": 9,
           },
-          name: 'Simple shield',
-          image: '/images/icons/simple-shield.png'
+          name: 'Simple Shield',
+          image: '/images/icons/simple-shield.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'wHOUND',
+            image: '/images/icons/wHOUND.png'
+          }]
         },
       }
     },
@@ -406,7 +474,16 @@ export function getTroops() {
             "97": 1,
           },
           name: 'wDEATH-KNIGHT',
-          image: '/images/icons/wDEATH-KNIGHT.png'
+          image: '/images/icons/wDEATH-KNIGHT.png',
+          tokenImage: '/images/icons/coins/wDEATH-KNIGHT.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'wUNDEAD-PIKEMAN',
+            image: '/images/icons/wUNDEAD-PIKEMAN.png'
+          }]
         },
       }
     },

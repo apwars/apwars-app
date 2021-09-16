@@ -2,7 +2,7 @@
   <modal-wood
     :open="open"
     :isLoading="isLoading"
-    :disabledConfirm="isLoading || disabledConfirm || !checkbox"
+    :disabledConfirm="isLoading || disabledConfirm || !checkbox || !amount"
     :disabledClose="isLoading"
     title="Workers - Withdraw"
     @close="$emit('close')"

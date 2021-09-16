@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="farmWorker">
+    <div id="worker">
       <div class="amountWorker">
         <div class="d-flex align-center">
           <div class="img-worker">
@@ -61,6 +61,8 @@
       :open="modalWorderWithdraw"
       @close="modalWorderWithdraw = false"
       @confirm="withdraw"
+      :max="infoAccount.amount"
+      :isLoading="isLoadingWithdraw"
     ></worker-withdraw-modal>
   </div>
 </template>
@@ -97,6 +99,7 @@ export default {
       modalWorker: false,
       modalWorderWithdraw: false,
       isLoadingWorker: false,
+      isLoadingWithdraw: false,
       reductionRate: 0,
       minimumBlocks: 0,
       defaultBlocks: 0,
@@ -248,7 +251,7 @@ export default {
         backgroundColor: 0x88a146,
       });
 
-      this.$el.querySelector("#farmWorker").appendChild(this.pixiRoot.view);
+      this.$el.querySelector("#worker").appendChild(this.pixiRoot.view);
 
       var instanceConfig = {
         mapDataPath: "./Map/farm-worker/mapData.json",
@@ -383,9 +386,15 @@ export default {
       });
     },
     async withdraw(amount) {
-      console.log(amount);
-      // this.infoAccount = await this.smcWorker.infoAccount(this.account);
-      // return this.smcWorker.withdraw(this.infoAccount.amount, this.account);
+      try {
+        this.isLoadingWithdraw = true;
+        await this.smcWorker.withdraw(amount, this.account);
+        this.isLoadingWithdraw = false;
+        this.modalWorderWithdraw = false;
+        ToastSnackbar.success("Successful withdrawal");
+      } catch (error) {
+        this.isLoadingWithdraw = false;
+      }
     },
   },
 };
