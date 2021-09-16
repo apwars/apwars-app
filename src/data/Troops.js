@@ -137,6 +137,7 @@ export function getTroops() {
           },
           name: 'wHORSEMAN',
           image: '/images/icons/wHORSEMAN.png',
+          tokenImage: '/images/icons/coins/wHORSEMAN.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
@@ -304,6 +305,7 @@ export function getTroops() {
           },
           name: 'wWARG',
           image: '/images/icons/wWARG.png',
+          tokenImage: '/images/icons/coins/wWARG.png',
           inputs: [{
             name: 'wCOURAGE',
             amount: 2200,
@@ -473,6 +475,7 @@ export function getTroops() {
           },
           name: 'wDEATH-KNIGHT',
           image: '/images/icons/wDEATH-KNIGHT.png',
+          tokenImage: '/images/icons/coins/wDEATH-KNIGHT.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'

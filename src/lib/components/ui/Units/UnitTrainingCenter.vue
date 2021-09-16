@@ -6,35 +6,47 @@
     >
       <div class="align-self-center">
         <v-img
-          :width="$vuetify.breakpoint.mobile ? 100 : 160"
-          :src="`/images/troops/${unit.name}.png`"
+          :width="$vuetify.breakpoint.mobile ? 130 : 160"
+          :height="$vuetify.breakpoint.mobile ? 250 : 307.47"
+          :src="`/images/troops/${unit.combinators.trainingCenter.name}.png`"
         />
       </div>
-      <div v-if="isLoadingUnit" class="ml-1 align-self-start">
+
+      <div v-if="isLoadingUnit" class="ml-1 mt-1 align-self-start">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty">
-          <v-img class="mr-1" max-width="26px" src="/images/wcourage.png" />
-          <amount
+          <v-img class="mr-1"
+            :max-width="$vuetify.breakpoint.mobile ? 28 : 38"
+            src="/images/wcourage.png"
+            style="margin-left: -4px"/>
+          <div class="mt-token-text">
+            <amount
             :amount="getTokenAConfig.amount"
             decimals="0"
             symbol="wCOURAGE"
           />
+          </div>
         </div>
         <div class="d-flex mt-1 qty">
           <v-img
             class="mr-1"
-            max-width="26px"
-            :src="`/images/icons/${unit.name}.png`"
+            :max-width="$vuetify.breakpoint.mobile ? 24.5 : 35"
+            :src="`/images/icons/coins/smallers/${unit.name}.png`"
+            style="margin-left: -2px"
           />
-          <amount
+          <div class="mt-token-text">
+            <amount
             :amount="getTokenBConfig.amount"
             decimals="0"
             :symbol="unit.name"
           />
+          </div>
         </div>
         <div class="d-flex align-center my-1 qty">
-          <img class="mr-1" height="32px" src="/images/icons/hourglass.png" />
-
+          <v-img
+            :max-width="$vuetify.breakpoint.mobile ? 32 : 40"
+            src="/images/icons/hourglass.png"
+            :style="$vuetify.breakpoint.mobile ? 'margin-left: -4.5px; margin-right: 0.2rem;' : 'margin-left: -2px; margin-right: 0.5rem;'"/>
           <div class="d-flex flex-column">
             <span>
               Working time:
@@ -50,11 +62,11 @@
         </div>
         <hr />
         <div class="d-flex mt-1 qty" v-if="infoTraining.image">
-          <img
-            :class="`mr-1 bg-img-tier-${unit.tier}`"
-            width="80px"
-            height="80px"
-            :src="infoTraining.image"
+          <v-img
+            class="mr-1 "
+            :max-width="$vuetify.breakpoint.mobile ? 35 : 40"
+            :height="$vuetify.breakpoint.mobile ? 35 : 40"
+            :src="`/images/icons/coins/smallers/${infoTraining.name}.png`"
           />
           <span>
             Produced unit: <br />
@@ -683,5 +695,9 @@ export default {
   .current-price {
     font-size: 14px;
   }
+}
+
+.mt-token-text {
+  margin-top: 0.3rem;
 }
 </style>
