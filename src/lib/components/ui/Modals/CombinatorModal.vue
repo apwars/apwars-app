@@ -53,7 +53,8 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
+              <v-img
+              :src="this.$route.name === '/war-preparation' ? `/images/nfts/${info.getTokenBConfig.id}.png` :`/images/icons/coins/${info.getTokenBConfig.name}.png`"/>
             </div>
             <number-field
               no-icons
@@ -72,7 +73,8 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="getInfo.infoTraining.image" />
+              <v-img
+                :src="this.$route.name === '/war-preparation' ? getInfo.infoTraining.image : getInfo.infoTraining.tokenImage"/>
             </div>
             <number-field
               no-icons
