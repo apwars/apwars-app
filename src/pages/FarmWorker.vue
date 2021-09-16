@@ -12,9 +12,13 @@
           </div>
           <div class="amount-worker">
             {{ infoAccount.amount }}
-            {{ infoAccount.amount == 1 ? "worker" : "workers" }}
+            {{ infoAccount.amount === 1 ? "worker" : "workers" }}
+            / ~{{ timeReduction }}% time reduction
           </div>
         </div>
+        <wButton class="mt-1" size="small" @click="modalWorderWithdraw = true">
+          withdraw
+        </wButton>
       </div>
       <div class="menuWorker">
         <div v-if="isProgressWorker" class="d-flex align-center progressWorker">
@@ -27,7 +31,14 @@
             background-color="#3A2720"
             :value="progressPercentagemBlock"
             height="30"
-          ></v-progress-linear>
+          >
+            <countdown :time="timeCountDown" @end="loadData()">
+              <template slot-scope="props">
+                ~{{ props.hours }} hours, {{ props.minutes }} minutes,
+                {{ props.seconds }} seconds.
+              </template>
+            </countdown>
+          </v-progress-linear>
         </div>
         <div v-else class="d-flex align-center justify-center">
           <wButton @click="openModalWorker()">
@@ -44,6 +55,13 @@
       :isLoading="isLoadingWorker"
       :text="textModalWorker"
     ></worker-modal>
+
+    <worker-withdraw-modal
+      v-if="modalWorderWithdraw"
+      :open="modalWorderWithdraw"
+      @close="modalWorderWithdraw = false"
+      @confirm="withdraw"
+    ></worker-withdraw-modal>
   </div>
 </template>
 
@@ -52,6 +70,8 @@ import * as PIXI from "pixi.js";
 import * as TRAVISO from "traviso.js";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import WorkerModal from "@/lib/components/ui/Modals/WorkerModal";
+import WorkerWithdrawModal from "@/lib/components/ui/Modals/WorkerWithdrawModal";
+import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 import Worker from "@/lib/eth/Worker.js";
 
@@ -59,6 +79,8 @@ export default {
   components: {
     wButton,
     WorkerModal,
+    CountdownBlock,
+    WorkerWithdrawModal,
   },
 
   data() {
@@ -73,7 +95,13 @@ export default {
       worker: null,
       isProgressWorker: false,
       modalWorker: false,
+      modalWorderWithdraw: false,
       isLoadingWorker: false,
+      reductionRate: 0,
+      minimumBlocks: 0,
+      defaultBlocks: 0,
+      timeReduction: 0,
+      timeCountDown: 0,
       contractWorker: {
         "56": "0xc8CB5b953DC8783bF3dA09B8E783b383e2e90091",
         "97": "0x47991549D3475aCbB46e58ebC1d8769B7f6E14d1",
@@ -124,6 +152,8 @@ export default {
     networkInfo() {
       return this.$store.getters["user/networkInfo"];
     },
+
+    timeBlock() {},
   },
 
   watch: {
@@ -164,11 +194,33 @@ export default {
         return;
       }
 
+      await this.smcWorker.getContractManager();
+
       this.infoAccount = await this.smcWorker.infoAccount(this.account);
       this.infoAccount.nextClaim = parseInt(this.infoAccount.nextClaim);
       this.infoAccount.previousClaim = parseInt(this.infoAccount.previousClaim);
+      this.infoAccount.amount = parseInt(this.infoAccount.amount);
+
+      this.reductionRate =
+        parseInt(await this.smcWorker.reductionRate()) / 10000;
+      this.minimumBlocks = parseInt(await this.smcWorker.minimumBlocks());
+      this.defaultBlocks = parseInt(await this.smcWorker.defaultBlocks());
+
+      let reduction =
+        this.defaultBlocks * (1 - this.reductionRate * this.infoAccount.amount);
+
+      this.timeReduction = this.reductionRate * this.infoAccount.amount * 100;
+      if (this.minimumBlocks > reduction) {
+        reduction = this.minimumBlocks;
+        this.timeReduction =
+          100 - (this.minimumBlocks / this.defaultBlocks) * 100;
+      }
+
+      this.timeReduction = this.timeReduction.toFixed(0);
 
       if (this.infoAccount.nextClaim > this.currentBlockNumber) {
+        const timeDiff = this.infoAccount.nextClaim - this.currentBlockNumber;
+        this.timeCountDown = (timeDiff / 3) * 10000;
         this.startBlocks = this.infoAccount.previousClaim;
         this.isProgressWorker = true;
         if (!this.isLoopWork) {
@@ -330,9 +382,10 @@ export default {
         });
       });
     },
-    async withdraw() {
-      this.infoAccount = await this.smcWorker.infoAccount(this.account);
-      return this.smcWorker.withdraw(this.infoAccount.amount, this.account);
+    async withdraw(amount) {
+      console.log(amount);
+      // this.infoAccount = await this.smcWorker.infoAccount(this.account);
+      // return this.smcWorker.withdraw(this.infoAccount.amount, this.account);
     },
   },
 };
@@ -377,5 +430,8 @@ export default {
   padding: 0px 6px;
   border: 2px #bb7248 solid;
   border-radius: 6px;
+}
+.menuWorker >>> .v-progress-linear__content {
+  font-size: 12px;
 }
 </style>
