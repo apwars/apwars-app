@@ -31,12 +31,14 @@
               height="40px"
               :src="gameItems.combinators.warPreparation.inputs[1].image"
             />
-            <amount
+            <div style="margin-top: 0.4rem;">
+              <amount
               :amount="getTokenBConfig.amount"
               decimals="0"
               formatted
               :symbol="gameItems.combinators.warPreparation.inputs[1].title"
             />
+            </div>
           </div>
           <div class="d-flex align-center my-1 qty">
             <img class="mr-1" max-width="26px" height="35px" src="/images/icons/hourglass.png"

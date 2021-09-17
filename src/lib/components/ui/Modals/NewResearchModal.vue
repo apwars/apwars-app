@@ -26,7 +26,7 @@
           </div>
 
           <div>
-            <img width="50px" :src="getInfo.infoWeapon.image" />
+            <img width="45px" :src="getInfo.infoWeapon.imageNft" />
           </div>
         </div>
 
@@ -54,7 +54,7 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/icons/${info.getTokenBConfig.name}.png`" />
+              <v-img :src="info.getTokenBConfig.image" />
             </div>
             <number-field
               no-icons

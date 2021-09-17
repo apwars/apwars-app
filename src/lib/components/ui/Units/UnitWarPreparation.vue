@@ -6,8 +6,8 @@
     >
       <div class="align-self-center">
         <v-img
-          :width="$vuetify.breakpoint.mobile ? 130   : 165"
-          :src="infoWeapon.image"
+          :width="$vuetify.breakpoint.mobile ? 130 : 165"
+          :src="infoWeapon.imageNft"
         />
       </div>
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
@@ -25,9 +25,10 @@
         </div>
         <div class="d-flex qty">
           <v-img
-            class="mr-1"
-            :max-width="$vuetify.breakpoint.mobile ? 24.5 : 40"
-            :src="`/images/icons/${unit.name}.png`"
+            style="margin-left: 0.2rem;"
+            class="mr-1 mt-1"
+            :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
+            :src="`/images/icons/coins/smallers/${unit.name}.png`"
           />
           <div class="mt-1">
             <amount
@@ -133,7 +134,7 @@
       :isLoading="isLoadingClaim"
       :text="textClaim"
       :textConfirm="textConfirmClaim"
-      :weapon-icon="infoWeapon.image"
+      :weapon-icon="infoWeapon.imageNft"
     ></arimedes-modal>
 
     <arimedes-modal

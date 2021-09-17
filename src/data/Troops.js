@@ -15,7 +15,7 @@ export function getTroops() {
         "56": "0x54f653f539a78d3db0e0d3b166cf32c4f6cc5fb6",
         "97": "0x0447072Aa3E3b448d77cD9B322cDfe7Ea990A1F8",
       },
-      image: "/images/troops/wWARRIOR.png",
+      image: "/images/icons/wWARRIOR-coin.png",
       strength: 2,
       defense: 4,
       combinators: {
@@ -31,7 +31,7 @@ export function getTroops() {
             "97": 4,
           },
           name: 'Simple Shield',
-          image: '/images/nfts/weapon-simple-shield.png',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
@@ -60,7 +60,7 @@ export function getTroops() {
         "56": "0xAA2E03E7838148ce9FAd6Ce4C00275D89127A03e",
         "97": "0x159FF39cf0fFca109b123dc81890Cf37D157eBE7",
       },
-      image: "/images/troops/wARCHER.png",
+      image: "/images/icons/wARCHER-coin.png",
       strength: 5,
       defense: 1,
       combinators: {
@@ -76,7 +76,7 @@ export function getTroops() {
             "97": 5,
           },
           name: 'Simple Shield',
-          image: '/images/nfts/weapon-simple-shield.png',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
@@ -186,7 +186,7 @@ export function getTroops() {
         "56": "0xd7544Fe7668f3dfb7AD21F9E02D7A51e116b6D75",
         "97": "0x9FA4946089CBE11a5Bfda9C397e29cd093626F37",
       },
-      image: "/images/troops/wGRUNT.png",
+      image: '/images/icons/wGRUNT-coin.png',
       strength: 2,
       defense: 4,
       combinators: {
@@ -202,7 +202,7 @@ export function getTroops() {
             "97": 6,
           },
           name: 'Simple Shield',
-          image: '/images/nfts/weapon-simple-shield.png',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
@@ -231,7 +231,7 @@ export function getTroops() {
         "56": "0x934e11a44b2e817fe9bd6f337ef21bd35e46080e",
         "97": "0x3Bd57F3209a88016f7645bbD6FacacAf50d631d4",
       },
-      image: "/images/troops/wORC-ARCHER.png",
+      image: "/images/icons/wORC-ARCHER-coin.png",
       strength: 5,
       defense: 1,
       combinators: {
@@ -247,7 +247,7 @@ export function getTroops() {
             "97": 7,
           },
           name: 'Simple Shield',
-          image: '/images/nfts/weapon-simple-shield.png',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
@@ -359,7 +359,7 @@ export function getTroops() {
         "56": "0xb5d488dc4DE64A6a968D8f317DB8DE2cDBF52828",
         "97": "0x7a355C7633d3d097F6ed009faC66727E7C4E0Dee",
       },
-      image: "/images/troops/wSKELETONWARRIOR.png",
+      image: "/images/icons/wSKELETON-WARRIOR-coin.png",
       strength: 8,
       defense: 2,
       combinators: {
@@ -375,7 +375,7 @@ export function getTroops() {
             "97": 8,
           },
           name: 'Simple Shield',
-          image: '/images/nfts/weapon-simple-shield.png',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
@@ -404,7 +404,7 @@ export function getTroops() {
         "56": "0x4D21177Bf8a0F9cfAca6d0f568Ff3e79a121B106",
         "97": "0x7DC031d20cc8DB621A9aaD99D834CfBCF1DCA8bf",
       },
-      image: "/images/troops/wHOUND.png",
+      image: "/images/icons/wHOUND-coin.png",
       strength: 8,
       defense: 2,
       combinators: {
@@ -420,7 +420,7 @@ export function getTroops() {
             "97": 9,
           },
           name: 'Simple Shield',
-          image: '/images/nfts/weapon-simple-shield.png',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
