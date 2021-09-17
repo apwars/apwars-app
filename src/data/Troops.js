@@ -31,10 +31,8 @@ export function getTroops() {
             "97": 4,
           },
           name: 'Simple Shield',
-<<<<<<< HEAD
           image: '/images/nfts/weapon-simple-shield.png',
-          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png'
-=======
+          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -44,7 +42,6 @@ export function getTroops() {
             name: 'wWARRIOR',
             image: '/images/icons/wWARRIOR.png'
           }]
->>>>>>> 778b4734b43db35c075047e1eddc4121a8afdc58
         },
       }
     },
@@ -79,10 +76,8 @@ export function getTroops() {
             "97": 5,
           },
           name: 'Simple Shield',
-<<<<<<< HEAD
           image: '/images/nfts/weapon-simple-shield.png',
-          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png'
-=======
+          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -92,7 +87,6 @@ export function getTroops() {
             name: 'wARCHER',
             image: '/images/icons/wARCHER.png'
           }]
->>>>>>> 778b4734b43db35c075047e1eddc4121a8afdc58
         },
       }
     },
