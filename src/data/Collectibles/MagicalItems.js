@@ -95,7 +95,7 @@ export function getMagicalItems() {
           image: "/images/icons/elixir10-spendable.png",
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
+            "97": "0x56644b3E8D4C6F03Bd2f2d8667Baae528d0d3ffC",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
@@ -132,7 +132,7 @@ export function getMagicalItems() {
           image: "/images/icons/elixir15-spendable.png",
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
+            "97": "0x56644b3E8D4C6F03Bd2f2d8667Baae528d0d3ffC",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
@@ -168,7 +168,7 @@ export function getMagicalItems() {
           image: "/images/icons/elixir20-spendable.png",
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
+            "97": "0x56644b3E8D4C6F03Bd2f2d8667Baae528d0d3ffC",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
@@ -205,7 +205,7 @@ export function getMagicalItems() {
           image: "/images/icons/arcanes-book-spendable.png",
           combinatorAddress: {
             "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x0F8D81Cf5E87f813e779040Ff51Dd7C54b389B71",
+            "97": "0x56644b3E8D4C6F03Bd2f2d8667Baae528d0d3ffC",
           },
           claimRouter: "/war-preparation",
           idCombinator: {

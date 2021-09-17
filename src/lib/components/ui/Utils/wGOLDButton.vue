@@ -13,8 +13,7 @@
         <span v-else>
           <amount
             :amount="amount"
-            decimals="2" 
-            compact         
+            decimals="2"        
             tooltip
           />
           <span class="suffix">wGOLD</span>
