@@ -448,16 +448,6 @@ export default {
       };
       this.updateTroopsFilters();
     },
-
-    /* filterTierDescToWarPreparation() {
-      if (this.$route.name === "/war-preparation") {
-        this.filter.tierDesc = []
-        this.filter.tierDesc.push("Barracks")
-        this.select.tiers = "Barracks"
-      }
-
-      return this.filter.tierDesc
-    } */
   },
 };
 </script>
