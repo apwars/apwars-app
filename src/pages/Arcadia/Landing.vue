@@ -108,42 +108,10 @@
       </v-row>
     </v-container>
     <v-divider class="color: secondary" style="max-height: 8px; height: 8px; flex: 10 10 10px" />
+    <h1 class="h3Y text-center mt-6 mb-6">BUY wLAND NOW</h1>
+
     <v-container>
-      <h1 class="h3Y mt-6 text-center">Own Foundations:</h1>
-      <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mt-6' : 'mt-6'">
-        <div
-          style="width: 100%"
-          class="d-flex justify-space-around"
-          v-for="item in foundations"
-          :key="item.name"
-        >
-          <div class="justify-center text-center">
-            <h1 class="mt-1 mb-1 text-center">{{ item.name }}</h1>
-            <v-img :src="item.img" max-height="361" max-width="256" class="img mb-1"></v-img>
-            <h2 class="h3Y">{{ item.price }} wLAND</h2>
-            <h6 class="h3Y mb-1">per {{ item.name }}</h6>
-            <wButton
-              width="170px"
-              :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
-              size="medium"
-            >
-              <div class="d-flex justify-center">
-                <span class="align-self-center">
-                  BUY NOW
-                </span>
-              </div>
-            </wButton>
-            <span class="h3Y"> Remaining: {{ item.remaining }} </span>
-          </div>
-        </div>
-      </div>
-      <h3 class="text-center mt-6">
-        By building foundations you can earn fees for owning these resources. Everyone needs and
-        wants to enjoy the benefits of increasing courage, doing business, and maintaining
-        protection.
-      </h3>
-      <h1 class="h3Y text-center mt-6 mb-6">BUY wLAND NOW</h1>
-      <v-row class="bg-wood mt-3 align-center justify-center">
+      <v-row class="bg-wood mt-3 mb-6 align-center justify-center">
         <v-col cols="12" lg="4">
           <div class="d-flex justify-start ml-2">
             <v-img
@@ -238,6 +206,40 @@
           </wButton>
         </v-col>
       </v-row>
+      <h1 class="h3Y mt-6 text-center">Own Foundations:</h1>
+      <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mt-6' : 'mt-6'">
+        <div
+          style="width: 100%"
+          class="d-flex justify-space-around"
+          v-for="item in foundations"
+          :key="item.name"
+        >
+          <div class="justify-center text-center">
+            <h1 class="mt-1 mb-1 text-center">{{ item.name }}</h1>
+            <v-img :src="item.img" max-height="361" max-width="256" class="img mb-1"></v-img>
+            <h2 class="h3Y">{{ item.price }} wLAND</h2>
+            <h6 class="h3Y mb-1">per {{ item.name }}</h6>
+            <wButton
+              width="170px"
+              :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
+              size="medium"
+              @click="openModal(item.name, item.img, item.price)"
+            >
+              <div class="d-flex justify-center">
+                <span class="align-self-center">
+                  BUY NOW
+                </span>
+              </div>
+            </wButton>
+            <span class="h3Y"> Remaining: {{ item.remaining }} </span>
+          </div>
+        </div>
+      </div>
+      <h3 class="text-center mt-6">
+        By building foundations you can earn fees for owning these resources. Everyone needs and
+        wants to enjoy the benefits of increasing courage, doing business, and maintaining
+        protection.
+      </h3>
     </v-container>
     <v-divider
       class="color: secondary mt-6"
@@ -255,6 +257,49 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
+      <!-- :isLoading="isLoadingConfirm" -->
+      <game-item-wood-modal
+        :open="isConfirmOrderModalOpen"
+        :imageUrl="modalImg"
+        :gameItemTitle="modalName"
+        @confirm="executeOrder"
+        @close="isConfirmOrderModalOpen = false"
+        title="Are you sure you want to buy this item?"
+        :amount="balanceItem"
+      >
+        <p>How many items do you want to buy?</p>
+        <v-row>
+          <v-col cols="12" md="6">
+            <number-field class="mt-n1" v-model="quantity" :max="25"></number-field>
+          </v-col>
+        </v-row>
+        <div class="mt-n6">
+          <h4 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
+            <span>You will pay per item:</span>
+            <amount
+              :amount="modalPrice"
+              formatted
+              decimals="2"
+              tooltip
+              title="wGOLD"
+              symbol="wGOLD"
+              icon
+            />
+          </h4>
+          <h4 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'">
+            You will pay for {{ quantity }} items:
+            <amount
+              :amount="modalPrice * quantity"
+              formatted
+              decimals="2"
+              tooltip
+              title="wGOLD"
+              symbol="wGOLD"
+              icon
+            />
+          </h4>
+        </div>
+      </game-item-wood-modal>
     </v-container>
   </div>
 </template>
@@ -262,6 +307,11 @@
 <script>
 import wButton from '@/lib/components/ui/Buttons/wButton';
 import Amount from '@/lib/components/ui/Utils/Amount';
+import GameItemWoodModal from '@/lib/components/ui/Modals/GameItemWoodModal';
+import NumberField from '@/lib/components/ui/Utils/NumberField';
+
+import ERC20 from '@/lib/eth/ERC20';
+import Convert from '@/lib/helpers/Convert';
 
 export default {
   data() {
@@ -269,6 +319,16 @@ export default {
       amountwLAND: 0,
       amountBUSD: 0,
       amount: 0,
+
+      isConfirmOrderModalOpen: false,
+      balanceItem: 0,
+      quantity: 0,
+      modalPrice: 0,
+      modalImg: '',
+      modalName: '',
+      totalPrice: 0,
+
+      wLANDAvailableAmountStage: 0,
 
       isBuyingwLAND: false,
       isApprovedBUSD: false,
@@ -330,25 +390,25 @@ export default {
         {
           name: 'Temples',
           img: '/images/project/temples.png',
-          price: '10,000',
+          price: 10000,
           remaining: 1,
         },
         {
           name: 'Watchtowers',
           img: '/images/project/watchtowers.png',
-          price: '15,000',
+          price: 15000,
           remaining: 1,
         },
         {
           name: 'Markets',
           img: '/images/project/markets.png',
-          price: '10,000',
+          price: 10000,
           remaining: 1,
         },
         {
           name: 'Hidings place',
           img: '/images/project/hidings-place.png',
-          price: '5,000',
+          price: 5000,
           remaining: 1,
         },
       ],
@@ -357,6 +417,8 @@ export default {
   components: {
     wButton,
     Amount,
+    GameItemWoodModal,
+    NumberField,
   },
 
   computed: {
@@ -378,6 +440,11 @@ export default {
 
     percentageUnitsSoldStage() {
       return parseInt((1 - this.wLANDAvailableAmountStage / this.soldPerStage) * 100);
+    },
+    calcAmountFee() {
+      this.totalPrice = this.modalPrice * this.quantity;
+      console.log(this.totalPrice);
+      return this.totalPrice;
     },
   },
 
@@ -452,6 +519,15 @@ export default {
       } else {
         return '#ff0000';
       }
+    },
+    executeOrder() {
+      console.log('execute order');
+    },
+    openModal(name, img, price) {
+      this.modalImg = img;
+      this.modalName = name;
+      this.modalPrice = price;
+      this.isConfirmOrderModalOpen = true;
     },
   },
   watch: {
