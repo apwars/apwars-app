@@ -46,6 +46,7 @@
             />
             <div class="d-flex justify-center">
               <wButton
+                v-if="(nextWar && lastWar) && nextWar.id !== lastWar.id"
                 @click="
                   $router.push(
                     `/wars/${lastWar.contractAddress[networkInfo.id]}/report`
@@ -125,6 +126,7 @@ export default {
         { image: "/images/weapons/catapult-undead.png" },
         { image: "/images/weapons/catapult-elves.png" },
       ],
+      nextWar: {},
       nextWarPhase: null
     };
   },
@@ -183,6 +185,7 @@ export default {
       this.wars = getWars(this.networkInfo.id !== "56");
       this.wars = this.wars.reverse();
 
+      this.nextWar = { ...this.wars[0] };
       this.getNextWarPhase();
 
       let warMachine = new WarMachine(

@@ -295,9 +295,13 @@ const wars = [
     {
       title: 'War ends in',
       endAt: 1626443480000,
+      button_label: 'Round 1 Result',
+      redirect: '/wars/0x4544C8efb214830027306D68B29f0B5E37501D78/round-1'
     },
     {
       title: 'The third conflict [5] is over',
+      button_label: 'War Report',
+      redirect: '/wars/0x4544C8efb214830027306D68B29f0B5E37501D78/report'
     }],
     totalPrize: "2000000000000000000000000",
     test: true,
@@ -325,14 +329,18 @@ const wars = [
       title: 'Enlistments ends in',
       endAt: 1631815200000,
       button_label: 'Enlist',
-      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/enlistment'
+      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/enlistment',
     },
     {
       title: 'War ends in',
       endAt: 1631901600000,
+      button_label: 'Round 1 Results',
+      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/round-1'
     },
     {
       title: 'The Elven War is over',
+      button_label: 'War Report',
+      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/enlistment'
     }],
     totalPrize: "800000000000000000000000",
     test: false,
