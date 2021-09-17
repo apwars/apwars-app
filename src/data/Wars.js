@@ -347,7 +347,7 @@ const wars = [
     showTest: false,
     showReedemPrize: true,
     reportVersion: "2",
-    report: war2FinalReport,
+    report: false,
   },
 ];
 
