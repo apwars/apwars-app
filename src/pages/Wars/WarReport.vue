@@ -122,7 +122,13 @@
                 @click="redeemPrize"
                 :disabled="isReedemPrize || !myEarnings || isReedemPrizeLoading"
               >
-                {{ isReedemPrize ? "Already withdrawn" : isReedemPrizeLoading ? "Waiting..." :"Redeem prize" }}
+                {{
+                  isReedemPrize
+                    ? "Already withdrawn"
+                    : isReedemPrizeLoading
+                    ? "Waiting..."
+                    : "Redeem prize"
+                }}
               </wButton>
             </div>
           </v-col>
@@ -171,12 +177,26 @@
             <h3 class="text-h3 text-wGOLD">Players</h3>
           </v-col>
           <v-col cols="12" class="d-flex justify-center pa-0">
-            <table-war-report v-if="isWar.reportVersion==='1'" :war="isWar"></table-war-report>
-            <table-war-report-v2 v-if="isWar.reportVersion==='2'" :war="isWar"></table-war-report-v2>
+            <table-war-report
+              v-if="isWar.reportVersion === '1'"
+              :war="isWar"
+            ></table-war-report>
+            <table-war-report-v2
+              v-if="isWar.reportVersion === '2'"
+              :war="isWar"
+            ></table-war-report-v2>
           </v-col>
 
           <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3 text-wGOLD">Legendary Relics (NFTs)</h3>
+            <div>
+              <h3 class="text-h3 text-wGOLD">Legendary Relics (NFTs)</h3>
+              <h5
+                v-if="!isWar.report.nfts.humanLegend"
+                class="text-h5 text-center text-wGOLD"
+              >
+                Coming soon...
+              </h5>
+            </div>
           </v-col>
           <v-col
             cols="12"
@@ -402,7 +422,7 @@ export default {
           this.addresses.wGOLD
         );
 
-        if (this.isWar.report) {
+        if (this.isWar.report && this.isReedemPrize.reportVersion === "1") {
           let prizeWon = web3.utils.fromWei(this.prize.won.toString());
           prizeWon = parseFloat(prizeWon);
           const reportUser = this.isWar.report.players.find(
@@ -417,7 +437,10 @@ export default {
             this.myEarnings = prizeWon * wGOLDShare;
           }
         } else {
-          this.myEarnings = Convert.fromWei(await this.warMachine.myAmountPrize(this.account), true);
+          this.myEarnings = Convert.fromWei(
+            await this.warMachine.myAmountPrize(this.account),
+            true
+          );
         }
       } catch (e) {
         console.log(e);

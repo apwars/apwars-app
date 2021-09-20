@@ -1,5 +1,6 @@
 import war1FinalReport from "@/data/warsReport/war1FinalReport";
 import war2FinalReport from "@/data/warsReport/war2FinalReport";
+import war3FinalReport from "@/data/warsReport/war3FinalReport";
 
 const wars = [
   {
@@ -347,7 +348,7 @@ const wars = [
     showTest: false,
     showReedemPrize: true,
     reportVersion: "2",
-    report: false,
+    report: war3FinalReport,
   },
 ];
 
