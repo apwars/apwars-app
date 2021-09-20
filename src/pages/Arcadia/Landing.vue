@@ -55,7 +55,7 @@
         </v-col>
       </v-row>
       <v-row class="mt-6 d-flex flex-column align-center text-center">
-        <h1 class="h3Y mb-5">
+        <h1 class="h3Y text-center mt-6 mb-6">
           How to buy wLAND and effectively participate in the Arcadia Expansion:
         </h1>
         <v-img
@@ -111,7 +111,9 @@
     <h1 class="h3Y text-center mt-6 mb-6">BUY wLAND NOW</h1>
 
     <v-container>
-      <v-row :class="$vuetify.breakpoint.mdAndUp ? 'bg-wood mt-3 mb-6 align-center justify-center' : ''">
+      <v-row
+        :class="$vuetify.breakpoint.mdAndUp ? 'bg-wood align-center justify-center' : ''"
+      >
         <v-col cols="12" lg="4">
           <div class="d-flex justify-start ml-2">
             <v-img
@@ -206,9 +208,11 @@
           </wButton>
         </v-col>
       </v-row>
-      <h1 class="h3Y mt-6 text-center">Own Foundations:</h1>
-      <div :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mt-6' : 'mt-6'">
-        <div
+      <h1 class="h3Y text-center mt-9">Own Foundations:</h1>
+      <v-row class="mt-2 justify-center">
+        <v-col
+          cols="12"
+          lg="4"
           style="width: 100%"
           class="d-flex justify-space-around"
           v-for="item in foundations"
@@ -233,8 +237,8 @@
             </wButton>
             <span class="h3Y"> Remaining: {{ item.remaining }} </span>
           </div>
-        </div>
-      </div>
+        </v-col>
+      </v-row>
       <h3 class="text-center mt-6">
         By building foundations you can earn fees for owning these resources. Everyone needs and
         wants to enjoy the benefits of increasing courage, doing business, and maintaining
@@ -401,6 +405,12 @@ export default {
           name: 'Markets',
           img: '/images/project/markets.png',
           price: 10000,
+          remaining: 1,
+        },
+        {
+          name: 'Hidings place',
+          img: '/images/project/hidings-place.png',
+          price: 5000,
           remaining: 1,
         },
         {
