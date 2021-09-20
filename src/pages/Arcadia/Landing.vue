@@ -24,7 +24,7 @@
         <wButton
           width="170px"
           :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
-          size="medium"
+          :size="$vuetify.breakpoint.mdAndUp ? 'medium' : 'small'"
         >
           <div class="d-flex justify-center">
             <span class="align-self-center">
@@ -62,12 +62,12 @@
           :src="
             $vuetify.breakpoint.mdAndUp
               ? '/images/project/how-to-buy.png'
-              : '/images/project/how-to-buy-v2.png'
+              : '/images/project/how-to-buy-v.png'
           "
-          :max-width="$vuetify.breakpoint.mdAndUp ? '1200' : '250'"
-          :min-height="$vuetify.breakpoint.mdAndUp ? '40' : '1500'"
+          :max-width="$vuetify.breakpoint.mdAndUp ? '1200' : '100%'"
+          :min-height="$vuetify.breakpoint.mdAndUp ? '40' : '1100'"
         ></v-img>
-        <wButton
+        <!-- <wButton
           width="170px"
           :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2 mt-6' : 'mx-12 mt-6'"
           size="medium"
@@ -77,7 +77,7 @@
               BUY NOW
             </span>
           </div>
-        </wButton>
+        </wButton> -->
       </v-row>
       <v-row class="justify-center align-center">
         <v-col cols="12" lg="8">
@@ -95,7 +95,7 @@
         </v-col>
         <v-col cols="12" lg="4">
           <iframe
-            class="ma-4"
+            :class="$vuetify.breakpoint.mdAndUp ? 'ma-4' : ''"
             :width="$vuetify.breakpoint.mdAndUp ? '436' : '300'"
             :height="$vuetify.breakpoint.mdAndUp ? '246' : '170'"
             src="https://www.youtube-nocookie.com/embed/NrJmddH_wCY"
@@ -111,7 +111,7 @@
     <h1 class="h3Y text-center mt-6 mb-6">BUY wLAND NOW</h1>
 
     <v-container>
-      <v-row class="bg-wood mt-3 mb-6 align-center justify-center">
+      <v-row :class="$vuetify.breakpoint.mdAndUp ? 'bg-wood mt-3 mb-6 align-center justify-center' : ''">
         <v-col cols="12" lg="4">
           <div class="d-flex justify-start ml-2">
             <v-img
@@ -281,8 +281,8 @@
               formatted
               decimals="2"
               tooltip
-              title="wGOLD"
-              symbol="wGOLD"
+              title="wLAND"
+              symbol="wLAND"
               icon
             />
           </h4>
@@ -293,8 +293,8 @@
               formatted
               decimals="2"
               tooltip
-              title="wGOLD"
-              symbol="wGOLD"
+              title="wLAND"
+              symbol="wLAND"
               icon
             />
           </h4>
@@ -326,8 +326,6 @@ export default {
       modalPrice: 0,
       modalImg: '',
       modalName: '',
-      totalPrice: 0,
-
       wLANDAvailableAmountStage: 0,
 
       isBuyingwLAND: false,
@@ -440,11 +438,6 @@ export default {
 
     percentageUnitsSoldStage() {
       return parseInt((1 - this.wLANDAvailableAmountStage / this.soldPerStage) * 100);
-    },
-    calcAmountFee() {
-      this.totalPrice = this.modalPrice * this.quantity;
-      console.log(this.totalPrice);
-      return this.totalPrice;
     },
   },
 
