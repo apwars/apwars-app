@@ -43,7 +43,7 @@
         <v-col cols="12" md="12" lg="12" class="d-flex">
           <v-tabs v-model="tab">
             <v-tab>Weapons</v-tab>
-            <v-tab>Magical Items</v-tab>
+            <!-- <v-tab>Magical Items</v-tab> -->
           </v-tabs>
         </v-col>
       </v-row>
@@ -58,11 +58,11 @@
             />
           </v-card>
         </v-tab-item>
-        <v-tab-item>
+        <!-- <v-tab-item>
           <v-card flat>
             <list-combinators type="game-items-combinator" />
           </v-card>
-        </v-tab-item>
+        </v-tab-item> -->
       </v-tabs-items>
     </v-container>
   </div>
