@@ -5,7 +5,7 @@
       :max-height="$vuetify.breakpoint.mdAndUp ? '720' : '1250'"
       min-height="400"
     >
-      <div class="d-flex flex-column align-center mt-6">
+      <div class="container d-flex flex-column align-center mt-6">
         <v-img
           src="/images/project/arcadia-expansion.png"
           :max-width="$vuetify.breakpoint.mdAndUp ? '523' : '300'"
@@ -25,6 +25,7 @@
           width="170px"
           :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
           :size="$vuetify.breakpoint.mdAndUp ? 'medium' : 'small'"
+          @click="$vuetify.goTo(1800, 0)"
         >
           <div class="d-flex justify-center">
             <span class="align-self-center">
@@ -35,7 +36,7 @@
       </div>
     </v-img>
     <v-divider class="color: secondary" style="max-height: 8px; height: 8px; flex: 10 10 10px" />
-    <v-container class="mt-6">
+    <v-container class="container mt-6">
       <v-row class="justify-center align-center">
         <v-col cols="12" lg="8">
           <h1 class="h3Y">What is Arcadia Expansion?</h1>
@@ -67,19 +68,20 @@
           :max-width="$vuetify.breakpoint.mdAndUp ? '1200' : '100%'"
           :min-height="$vuetify.breakpoint.mdAndUp ? '40' : '1100'"
         ></v-img>
-        <!-- <wButton
+        <wButton
           width="170px"
           :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2 mt-6' : 'mx-12 mt-6'"
           size="medium"
+          @click="$vuetify.goTo(1800, 0)"
         >
           <div class="d-flex justify-center">
             <span class="align-self-center">
               BUY NOW
             </span>
           </div>
-        </wButton> -->
+        </wButton>
       </v-row>
-      <v-row class="justify-center align-center">
+      <v-row class="container justify-center align-center">
         <v-col cols="12" lg="8">
           <h1 class="h3Y">What to expect from wLAND?</h1>
           <h4>
@@ -89,15 +91,14 @@
           </h4>
           <br />
           <h4>
-            You can expect a decentralized ecosystem on your lands and can keep control of the
+            You can expect a decentralized ecosystem on your lands and keep control of the
             economy in your hands. Buying wLAND is a smart and shrewd move!
           </h4>
         </v-col>
         <v-col cols="12" lg="4">
           <iframe
-            :class="$vuetify.breakpoint.mdAndUp ? 'ma-4' : ''"
-            :width="$vuetify.breakpoint.mdAndUp ? '436' : '300'"
-            :height="$vuetify.breakpoint.mdAndUp ? '246' : '170'"
+            :width="$vuetify.breakpoint.mdAndUp ? '380' : '300'"
+            :height="$vuetify.breakpoint.mdAndUp ? '211' : '170'"
             src="https://www.youtube-nocookie.com/embed/NrJmddH_wCY"
             title="YouTube video player"
             frameborder="0"
@@ -108,14 +109,14 @@
       </v-row>
     </v-container>
     <v-divider class="color: secondary" style="max-height: 8px; height: 8px; flex: 10 10 10px" />
-    <h1 class="h3Y text-center mt-6 mb-6">BUY wLAND NOW</h1>
+    <h1 class="go h3Y text-center mt-6 mb-6">BUY wLAND NOW</h1>
 
-    <v-container>
+    <v-container class="container">
       <v-row
         :class="$vuetify.breakpoint.mdAndUp ? 'bg-wood align-center justify-center' : ''"
       >
         <v-col cols="12" lg="4">
-          <div class="d-flex justify-start ml-2">
+          <div class="d-flex justify-start">
             <v-img
               src="/images/project/wLAND.png"
               max-width="80"
@@ -240,7 +241,7 @@
         </v-col>
       </v-row>
       <h3 class="text-center mt-6">
-        By building foundations you can earn fees for owning these resources. Everyone needs and
+        By building foundations, you can earn fees for owning these resources. Everyone needs and
         wants to enjoy the benefits of increasing courage, doing business, and maintaining
         protection.
       </h3>
@@ -249,7 +250,7 @@
       class="color: secondary mt-6"
       style="max-height: 8px; height: 8px; flex: 10 10 10px"
     />
-    <v-container>
+    <v-container class="container">
       <h1 class="h3Y mt-6 text-center">FAQ</h1>
       <v-expansion-panels v-model="panel" multiple class="mt-8 expansion">
         <v-expansion-panel v-for="(item, i) in faq" :key="i">
@@ -370,7 +371,7 @@ export default {
         {
           question: 'Why buying lands now will help me in the game?',
           answer:
-            "Well, what did landowners gain by buying lands earlier and escaping real estate speculation? That's right, the valorization of their land! Buying lands now you can pay little to build foundations, collect resources and receive fees.",
+            "Well, what did landowners gain by buying lands earlier and escaping real estate speculation? That's right, the valorization of their land! By buying lands now, you can pay little to build foundations, collect resources, and receive fees.",
         },
         {
           question: 'What is Arcadia?',
@@ -385,7 +386,7 @@ export default {
         {
           question: 'What are the strategies for buying good lands?',
           answer:
-            'Initially, you can check how much land each foundation needs to consolidate. For example, watchtowers need nine lands and a good move is to buy nine to build this foundation to receive fees or buy lands in multiple locations, so someone who wants to build foundations needs to buy (for a good price) lands from you. You can join the APWars group on Telegram and discuss more strategies with other players too!',
+            'Initially, you can check how much land each foundation needs to consolidate. For example, watchtowers need nine lands and a good move is to buy nine to build this foundation to receive fees or buy lands in multiple locations, so someone who wants to build foundations needs to buy (for a great price) lands from you. You can join the APWars group on Telegram and discuss more strategies with other players too!',
         },
       ],
       foundations: [
@@ -578,5 +579,8 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+.container{
+  max-width: 1100px;
 }
 </style>
