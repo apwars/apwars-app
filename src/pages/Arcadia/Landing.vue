@@ -39,7 +39,7 @@
           width="170px"
           class="mx-12"
           size="x-small"
-          @click="$vuetify.goTo(3200, 0)"
+          @click="$vuetify.goTo(2800, 0)"
         >
           <div class="d-flex justify-center">
             <span class="align-self-center">
@@ -79,8 +79,8 @@
               ? '/images/project/how-to-buy.png'
               : '/images/project/how-to-buy-v.png'
           "
-          :max-width="$vuetify.breakpoint.mdAndUp ? '1200' : '400'"
-          :min-height="$vuetify.breakpoint.mdAndUp ? '40' : '100%'"
+          :max-width="$vuetify.breakpoint.mdAndUp ? '1200' : '129'"
+          :min-height="$vuetify.breakpoint.mdAndUp ? '40' : '394'"
         ></v-img>
         <wButton
           v-if="$vuetify.breakpoint.mdAndUp"
@@ -99,8 +99,8 @@
           v-else
           width="170px"
           class="mx-12 mt-6"
-          size="medium"
-          @click="$vuetify.goTo(3200, 0)"
+          size="small"
+          @click="$vuetify.goTo(2800, 0)"
         >
           <div class="d-flex justify-center">
             <span class="align-self-center">
@@ -125,8 +125,8 @@
         </v-col>
         <v-col cols="12" lg="4">
           <iframe
-            :width="$vuetify.breakpoint.mdAndUp ? '380' : '300'"
-            :height="$vuetify.breakpoint.mdAndUp ? '211' : '170'"
+            :width="$vuetify.breakpoint.mdAndUp ? '380' : '250'"
+            :height="$vuetify.breakpoint.mdAndUp ? '211' : '150'"
             src="https://www.youtube-nocookie.com/embed/NrJmddH_wCY"
             title="YouTube video player"
             frameborder="0"
