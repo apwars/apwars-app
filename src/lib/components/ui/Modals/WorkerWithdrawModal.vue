@@ -17,7 +17,7 @@
         >
 
           <div class="d-flex align-center px-1 font-weight-black">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Withdrawing workers will give you an opportunity to trade them later!
           </div>
 
         </div>
@@ -61,7 +61,6 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import TimeBlock from "@/lib/components/ui/Utils/TimeBlock";
 import ModalWood from "@/lib/components/ui/Modals/Templates/Wood";
 import NumberField from "@/lib/components/ui/Utils/NumberField";
-import Convert from "@/lib/helpers/Convert";
 
 export default {
   props: [

@@ -263,10 +263,16 @@ export default {
         highlightTargetTile: false,
         followCharacter: false,
         checkPathOnEachTile: false,
-        minScale: 0.1,
-        initialZoomLevel: 0.1,
+        minScale: this.$vuetify.breakpoint.sm ? 0.01 : 0.1,
+        initialZoomLevel: this.$vuetify.breakpoint.sm ? 0.01 : 0.1,
         engineInstanceReadyCallback: () => {
-          this.engine.centralizeToLocation(2, 3, true);
+          if (this.$vuetify.breakpoint.sm) {
+            this.engine.centralizeToPoint(210, 170, true);
+          }
+          {
+            this.engine.centralizeToLocation(2, 3, true);
+          }
+
           this.engine.disableInteraction();
           this.worker = this.engine.createAndAddObjectToLocation("9", {
             c: 3,
