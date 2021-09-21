@@ -56,7 +56,7 @@
               :src="nftCollectible.image"
             />
             <div class="text-center">
-              <p class="remaining">You have: {{ userAmount }} units</p>
+              <p class="remaining" @click="getQuantity()">You have: {{ userAmount }} units</p>
             </div>
           </v-col>
           <v-col class="mt-n6 mt-md-0" cols="12" lg="9" md="9">
@@ -69,6 +69,8 @@
               <v-row>
                 <v-col cols="12" md="3">
                   <number-field
+                    :fillItems="fillItemsQuantity"
+                    :countClicks="countClicks"
                     class="mt-n1"
                     v-model="quantity"
                     :max="maxAmount"
@@ -339,6 +341,8 @@ export default {
       amountInfo: { amount: 0, feeAmount: 0, totalAmount: 0, calcAmount: 0 },
       waitingStage: 0,
       alert: false,
+      fillItemsQuantity: 0,
+      countClicks: 0
     };
   },
 
@@ -637,6 +641,12 @@ export default {
       this.$emit("change", this.quantity);
       this.calcFee();
     },
+
+    getQuantity() {
+      this.quantity = this.userAmount;
+      this.fillItemsQuantity = this.userAmount;
+      this.countClicks ++;
+    }
   },
 };
 </script>
@@ -647,6 +657,7 @@ export default {
 
 .remaining {
   color: #f6ff00;
+  cursor: pointer;
 }
 
 .btn {

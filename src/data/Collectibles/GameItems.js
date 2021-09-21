@@ -11,7 +11,7 @@ export function getGameItems() {
     {
       id: 0,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "The Pioneer",
@@ -30,7 +30,7 @@ export function getGameItems() {
     {
       id: 1,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       description:
@@ -49,7 +49,7 @@ export function getGameItems() {
     {
       id: 6,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Our first beloved hater",
@@ -68,7 +68,7 @@ export function getGameItems() {
     {
       id: 7,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (10%)",
@@ -87,7 +87,7 @@ export function getGameItems() {
     {
       id: 8,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (15%)",
@@ -106,7 +106,7 @@ export function getGameItems() {
     {
       id: 9,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (20%)",
@@ -125,7 +125,7 @@ export function getGameItems() {
     {
       id: 10,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       isGift: true,
       tokenAddress: addresses.wGOLD,
@@ -138,7 +138,7 @@ export function getGameItems() {
       id: 11,
       isGift: true,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "The Society 48h-Gold Saver (20%)",
@@ -151,7 +151,7 @@ export function getGameItems() {
     {
       id: 12,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (10%)",
@@ -170,7 +170,7 @@ export function getGameItems() {
     {
       id: 13,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (30%)",
@@ -189,7 +189,7 @@ export function getGameItems() {
     {
       id: 14,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (60%)",
@@ -208,7 +208,7 @@ export function getGameItems() {
     {
       id: 15,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (10%)",
@@ -227,7 +227,7 @@ export function getGameItems() {
     {
       id: 16,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (30%)",
@@ -246,7 +246,7 @@ export function getGameItems() {
     {
       id: 17,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (60%)",
@@ -265,7 +265,7 @@ export function getGameItems() {
     {
       id: 27,
       type: 'spendable',
-      typeDesc: 'Spendable',
+      typeDesc: 'Spendables',
       contractAddress: addresses.collectibles,
       isGift: false,
       title: "Free Transport",
@@ -275,7 +275,7 @@ export function getGameItems() {
     {
       id: 28,
       type: 'gameItem',
-      typeDesc: 'Game Item',
+      typeDesc: 'Game Items',
       contractAddress: addresses.collectibles,
       isGift: false,
       title: "Experience Ring",
