@@ -22,10 +22,24 @@
           allowfullscreen
         ></iframe>
         <wButton
+          v-if="$vuetify.breakpoint.mdAndUp"
           width="170px"
-          :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
-          :size="$vuetify.breakpoint.mdAndUp ? 'medium' : 'small'"
+          class="mx-1 ml-2"
+          size="medium"
           @click="$vuetify.goTo(1800, 0)"
+        >
+          <div class="d-flex justify-center">
+            <span class="align-self-center">
+              Own lands now
+            </span>
+          </div>
+        </wButton>
+        <wButton
+          v-else
+          width="170px"
+          class="mx-12"
+          size="x-small"
+          @click="$vuetify.goTo(3200, 0)"
         >
           <div class="d-flex justify-center">
             <span class="align-self-center">
@@ -65,14 +79,28 @@
               ? '/images/project/how-to-buy.png'
               : '/images/project/how-to-buy-v.png'
           "
-          :max-width="$vuetify.breakpoint.mdAndUp ? '1200' : '100%'"
-          :min-height="$vuetify.breakpoint.mdAndUp ? '40' : '1100'"
+          :max-width="$vuetify.breakpoint.mdAndUp ? '1200' : '400'"
+          :min-height="$vuetify.breakpoint.mdAndUp ? '40' : '100%'"
         ></v-img>
         <wButton
+          v-if="$vuetify.breakpoint.mdAndUp"
           width="170px"
-          :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2 mt-6' : 'mx-12 mt-6'"
+          class="mx-1 ml-2 mt-6"
           size="medium"
           @click="$vuetify.goTo(1800, 0)"
+        >
+          <div class="d-flex justify-center">
+            <span class="align-self-center">
+              BUY NOW
+            </span>
+          </div>
+        </wButton>
+        <wButton
+          v-else
+          width="170px"
+          class="mx-12 mt-6"
+          size="medium"
+          @click="$vuetify.goTo(3200, 0)"
         >
           <div class="d-flex justify-center">
             <span class="align-self-center">
@@ -91,8 +119,8 @@
           </h4>
           <br />
           <h4>
-            You can expect a decentralized ecosystem on your lands and keep control of the
-            economy in your hands. Buying wLAND is a smart and shrewd move!
+            You can expect a decentralized ecosystem on your lands and keep control of the economy
+            in your hands. Buying wLAND is a smart and shrewd move!
           </h4>
         </v-col>
         <v-col cols="12" lg="4">
@@ -112,9 +140,7 @@
     <h1 class="go h3Y text-center mt-6 mb-6">BUY wLAND NOW</h1>
 
     <v-container class="container">
-      <v-row
-        :class="$vuetify.breakpoint.mdAndUp ? 'bg-wood align-center justify-center' : ''"
-      >
+      <v-row :class="$vuetify.breakpoint.mdAndUp ? 'bg-wood align-center justify-center' : ''">
         <v-col cols="12" lg="4">
           <div class="d-flex justify-start">
             <v-img
@@ -580,7 +606,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-.container{
+.container {
   max-width: 1100px;
 }
 </style>
