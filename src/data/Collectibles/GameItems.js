@@ -290,7 +290,7 @@ export function getGameItems() {
       contractAddress: addresses.collectibles,
       isGift: false,
       title: "Worker",
-      description: "Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content",
+      description: "Workers are essential in Arcadia. They will carry on working effortlessly and effectively for as long as necessary in order to clean up the lands and build up strong foundations for generations to come.",
       image: "/images/nfts/worker.png",
     }
 

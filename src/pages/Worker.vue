@@ -116,11 +116,14 @@ export default {
         nextClaim: 0,
       },
       textFirstWorker: `
-      Workers are essential to clean the world, and you can increase your worker pool whenever you complete an activity on your farm. 
-      Click "Confirm" to get your first worker for free!
+        We need Workers in Arcadia! Come and join. <br />
+        <b>WARNING! It can be addictive!</b><br />
+        In Arcadia, workers are very useful, they will be needed to build foundations and to clean the lands.<br />
+        What are you waiting for?<br />
+        Click "Confirm" to get your first worker for free!<br />
       `,
       textWorker: `
-      Congratulations! You have completed another activity on your farm. 
+      Congratulations! You have completed another activity on your farm.<br />
       Click "Confirm" to get another worker for free!
       `,
       textModalWorker: "",
@@ -235,7 +238,7 @@ export default {
         this.isLoopWork = false;
       }
 
-      if (this.infoAccount.amount === "0" && this.infoAccount.nextClaim === 0) {
+      if (this.infoAccount.amount === 0 && this.infoAccount.nextClaim === 0) {
         this.openModalWorker();
       }
 
@@ -358,7 +361,7 @@ export default {
     },
     openModalWorker() {
       this.textModalWorker = this.textWorker;
-      if (this.infoAccount.amount === "0" && this.infoAccount.nextClaim === 0) {
+      if (this.infoAccount.amount === 0 && this.infoAccount.nextClaim === 0) {
         this.textModalWorker = this.textFirstWorker;
       }
       this.modalWorker = true;
