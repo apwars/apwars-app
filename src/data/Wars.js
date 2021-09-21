@@ -341,7 +341,7 @@ const wars = [
     {
       title: 'The Elven War is over',
       button_label: 'War Report',
-      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/enlistment'
+      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/report'
     }],
     totalPrize: "800000000000000000000000",
     test: false,
