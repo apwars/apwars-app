@@ -6,34 +6,41 @@
     >
       <div class="align-self-center">
         <v-img
-          :width="$vuetify.breakpoint.mobile ? 100 : 160"
-          :src="`/images/troops/${unit.name}.png`"
+          :width="$vuetify.breakpoint.mobile ? 130 : 165"
+          :src="infoWeapon.imageNft"
         />
       </div>
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty">
-          <v-img class="mr-1" max-width="26px" src="/images/wcourage.png" />
-          <amount
+          <v-img class="mr-1"
+            :max-width="$vuetify.breakpoint.mobile ? 28 : 36"
+            src="/images/wcourage.png" />
+          <div class="mt-token-text">
+            <amount
             :amount="getTokenAConfig.amount"
             decimals="2"
-            symbol="wCOURAGE"
-          />
+            symbol="wCOURAGE"/>
+          </div>
         </div>
         <div class="d-flex mt-1 qty">
           <v-img
-            class="mr-1"
-            max-width="26px"
-            :src="`/images/icons/${unit.name}.png`"
+            style="margin-left: 0.2rem;"
+            class="mr-1 mt-1"
+            :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
+            :src="`/images/icons/coins/smallers/${unit.name}.png`"
           />
-          <amount
-            :amount="getTokenBConfig.amount"
-            decimals="2"
-            :symbol="unit.name"
-          />
+          <div class="mt-1">
+            <amount
+              :amount="getTokenBConfig.amount"
+              decimals="2"
+              :symbol="unit.name"/>
+          </div>
         </div>
         <div class="d-flex align-center my-1 qty">
-          <img class="mr-1" height="32px" src="/images/icons/hourglass.png" />
+          <v-img class="mr-1" 
+            :max-width="$vuetify.breakpoint.mobile ? 32 : 40"
+            src="/images/icons/hourglass.png" />
 
           <div class="d-flex flex-column">
             <span>
@@ -49,14 +56,15 @@
           </div>
         </div>
         <hr />
-        <div class="d-flex mt-1 qty" v-if="infoWeapon.image">
-          <img
-            :class="`mr-1 bg-img-tier-${unit.tier}`"
-            width="80px"
-            height="80px"
-            :src="infoWeapon.image"
+        <div class="d-flex mt-1 qty" v-if="infoWeapon.imageIcon">
+          <v-img
+            style="margin-left: 0.4rem;"
+            class="mr-1"
+            :max-width="$vuetify.breakpoint.mobile ? 29 : 29"
+            :height="$vuetify.breakpoint.mobile ? 48 : 48"
+            :src="infoWeapon.imageIcon"
           />
-          <span>
+          <span style="margin-left: 0.3rem;">
             Produced weapon: <br />
             <amount
               :amount="getGameItemCConfig.amount"
@@ -126,7 +134,7 @@
       :isLoading="isLoadingClaim"
       :text="textClaim"
       :textConfirm="textConfirmClaim"
-      :weapon-icon="infoWeapon.image"
+      :weapon-icon="infoWeapon.imageNft"
     ></arimedes-modal>
 
     <arimedes-modal
@@ -671,5 +679,9 @@ export default {
   .current-price {
     font-size: 14px;
   }
+}
+
+.mt-token-text {
+  margin-top: 0.3rem;
 }
 </style>
