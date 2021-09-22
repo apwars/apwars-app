@@ -117,10 +117,8 @@ export default {
       },
       textFirstWorker: `
         We need Workers in Arcadia! Come and join. <br />
-        <b>WARNING! It can be addictive!</b><br />
-        In Arcadia, workers are very useful, they will be needed to build foundations and to clean the lands.<br />
-        What are you waiting for?<br />
-        Click "Confirm" to get your first worker for free!<br />
+        <b>WARNING! It can be addictive!</b> <br />
+        Click "Confirm" to get your first worker for free! <br />
       `,
       textWorker: `
       Congratulations! You have completed another activity on your farm.<br />

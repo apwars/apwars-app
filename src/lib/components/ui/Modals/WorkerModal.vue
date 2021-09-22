@@ -12,7 +12,10 @@
     >
       <v-row dense class="d-flex">
         <v-col cols="12" md="3" class="align-self-center">
-          <img class="worker-img" src="/Map/farm-worker/map/assets/worker.png" />
+          <img
+            class="worker-img"
+            src="/Map/farm-worker/map/assets/worker.png"
+          />
         </v-col>
         <v-col cols="12" md="9" class="d-flex align-self-center">
           <p class="ml-2 mt-1 align-self-center content">
@@ -24,6 +27,25 @@
               indeterminate
               color="secondary"
             ></v-progress-circular>
+            <v-tooltip bottom max-width="400px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon color="black" dark v-bind="attrs" v-on="on">
+                  mdi-information-outline
+                </v-icon>
+              </template>
+              <span>
+                In Arcadia, workers are very useful, they will be needed to
+                build foundations and to clean the lands. Here, you will get
+                your FREE workers and prepare them to be sent to Arcadia or you
+                could even sell them in the Black Market. Earning some wGOLD or
+                using them in your lands is your choice to make. You can spend
+                time producing Workers by overseeing the tasks they have to
+                perform. When a worker finishes his job, you withdraw him, one
+                more will appear and your next withdrawal time will be
+                decreased. If you stop your production, the time will increase.
+                What are you waiting for?
+              </span>
+            </v-tooltip>
             <span v-html="text"></span>
           </p>
         </v-col>
