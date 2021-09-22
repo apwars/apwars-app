@@ -1,5 +1,6 @@
 import war1FinalReport from "@/data/warsReport/war1FinalReport";
 import war2FinalReport from "@/data/warsReport/war2FinalReport";
+import war3FinalReport from "@/data/warsReport/war3FinalReport";
 
 const wars = [
   {
@@ -340,14 +341,14 @@ const wars = [
     {
       title: 'The Elven War is over',
       button_label: 'War Report',
-      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/enlistment'
+      redirect: '/wars/0x92B2898267eDc65e8915e7c47ab2BeaDB19dc681/report'
     }],
     totalPrize: "800000000000000000000000",
     test: false,
     showTest: false,
     showReedemPrize: true,
     reportVersion: "2",
-    report: war2FinalReport,
+    report: war3FinalReport,
   },
 ];
 

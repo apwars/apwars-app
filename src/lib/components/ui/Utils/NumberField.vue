@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  props: ["label", "min", "max", "dense", "disabled", "value", "no-icons"],
+  props: ["label", "min", "max", "dense", "disabled", "value", "no-icons", "setQuantity", "fillItems", "countClicks"],
   data() {
     return {
       quantity: null,
@@ -66,6 +66,17 @@ export default {
       }
       return false;
     },
+  },
+  watch: {
+    countClicks() {
+      if (!this.fillItems ) {
+        this.quantity = this.fillItems
+      }
+
+      if (this.quantity > this.fillItems || this.quantity < this.fillItems) {
+        this.quantity = this.fillItems
+      }
+    }
   },
   methods: {
     update() {
