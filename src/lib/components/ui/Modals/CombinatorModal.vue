@@ -54,7 +54,7 @@
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
               <v-img
-                :src="this.$route.name === '/war-preparation' ? `/images/nfts/${info.getTokenBConfig.id}.png` :`/images/icons/${info.getTokenBConfig.name}.png`"
+                :src="`/images/icons/${info.getTokenBConfig.name}.png`"
                 height="75px" width="65px"/>
             </div>
             <number-field
@@ -100,7 +100,7 @@
                   :amount="getInfo.getGeneralConfig.blocks"
                   formatted
                   decimals="0"
-                />blocks
+                /> blocks
               </div>
               <div>
                 <time-block :blocks="getInfo.getGeneralConfig.blocks" />

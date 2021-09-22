@@ -91,6 +91,7 @@
     >
       <v-row v-if="filterTroops.length > 0">
         <v-col
+          :class="$vuetify.breakpoint.mobile ? 'remove-padding' : ''"
           cols="12"
           lg="6"
           xl="4"
@@ -340,12 +341,13 @@ export default {
 
         this.updateTroopsFilters();
 
-        this.isLoading = false;
       } catch (error) {
         if (error.message) {
           return ToastSnackbar.error(error.message);
         }
         return ToastSnackbar.error(error);
+      } finally {
+        this.isLoading = false
       }
     },
 
@@ -448,16 +450,6 @@ export default {
       };
       this.updateTroopsFilters();
     },
-
-    /* filterTierDescToWarPreparation() {
-      if (this.$route.name === "/war-preparation") {
-        this.filter.tierDesc = []
-        this.filter.tierDesc.push("Barracks")
-        this.select.tiers = "Barracks"
-      }
-
-      return this.filter.tierDesc
-    } */
   },
 };
 </script>
@@ -491,5 +483,10 @@ export default {
   .amount-fed {
     margin-top: -65px !important;
   }
+}
+
+.remove-padding {
+  padding-left: 0.1rem !important;
+  padding-right: 0.1rem !important;
 }
 </style>
