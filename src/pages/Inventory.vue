@@ -178,7 +178,7 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row v-if="isApproved === false">
+    <v-row v-if="isInventoryManagerApproved === false">
       <v-container>
         <v-col offset-md="2" md="8" offset-lg="4" lg="4" class="npc-box d-flex">
           <img
@@ -322,6 +322,7 @@ import { getCollectibles, getGameItemTypesOptions } from "@/data/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
 import wCOURAGE from "@/lib/eth/wCOURAGE";
 import NPCModal from "@/lib/components/ui/Modals/NPCModal";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 const DEFAULT_APPROVE_TEXT =
   "To work with your inventory, i need to receive approval ";
@@ -361,7 +362,7 @@ export default {
       approveText: DEFAULT_APPROVE_TEXT,
       cancelText: DEFAULT_CANCEL_TEXT,
       collectibleContract: null,
-      isApproved: null,
+      isInventoryManagerApproved: null,
     };
   },
   computed: {
@@ -408,6 +409,7 @@ export default {
       this.loadData();
     },
     account() {
+      this.isInventoryManagerApproved = null;
       this.loadData();
     },
     currentBlockNumber() {
@@ -455,12 +457,12 @@ export default {
       this.gameItemTypeFilter = [];
     },
     async checkContractApproval() {
-      if (this.isApproved === null) {
+      if (this.isInventoryManagerApproved === null) {
         const isApproved = await this.collectibleContract.isApprovedForAll(
           this.account,
-          this.addresses.marketNFTS
+          this.addresses.inventoryManager
         );
-        this.isApproved = isApproved;
+        this.isInventoryManagerApproved = isApproved;
         if (!isApproved) {
           this.openApproveModal();
         }
@@ -477,7 +479,7 @@ export default {
       this.approveText = DEFAULT_WAITING_APPROVE;
   
       const confirmTransaction = this.collectibleContract.setApprovalForAll(
-        this.addresses.marketNFTS,
+        this.addresses.inventoryManager,
         this.account
       );
 
@@ -501,7 +503,7 @@ export default {
         this.isLoadingApprove = false;
         this.approveText = DEFAULT_APPROVE_TEXT;
         this.isApproveModalOpen = false;
-        this.isApproved = true;
+        this.isInventoryManagerApproved = true;
       });
 
       return;
