@@ -23,7 +23,7 @@
             symbol="wCOURAGE"/>
           </div>
         </div>
-        <div class="d-flex mt-1 qty ml-at-mobile">
+        <div class="d-flex qty ml-at-mobile">
           <v-img
             style="margin-left: 0.2rem;"
             class="mr-1 mt-1"
