@@ -16,7 +16,7 @@
         <div v-if="gameItems" class="ml-1 align-self-start">
           <div class="title">Necessary Resources</div>
           <div class="d-flex qty">
-            <v-img class="mr-1" max-width="30px" :src="gameItems.combinators.warPreparation.inputs[0].image" 
+            <v-img class="mr-1" max-width="30px" :src="gameItems.combinators.magicalItem.inputs[0].image" 
               style="margin-left: -2px;"/>
             <amount
               :amount="getTokenAConfig.amount"
@@ -29,13 +29,13 @@
               class="mr-1"
               max-width="26px"
               height="40px"
-              :src="gameItems.combinators.warPreparation.inputs[1].image"
+              :src="gameItems.combinators.magicalItem.inputs[1].image"
             />
             <amount
-              :amount="getTokenBConfig.amount"
+              :amount="getGameItemBConfig.amount"
               decimals="0"
               formatted
-              :symbol="gameItems.combinators.warPreparation.inputs[1].title"
+              :symbol="gameItems.combinators.magicalItem.inputs[1].title"
             />
           </div>
           <div class="d-flex align-center my-1 qty">
@@ -63,7 +63,7 @@
               class="mr-1"
               max-width="30px"
               height="40px"
-              :src="gameItems.combinators.warPreparation.image"
+              :src="gameItems.combinators.magicalItem.image"
             />
             <span style="margin-top: -5px">
               Item conquered: <br />
@@ -214,11 +214,11 @@ export default {
       isLoadingNewResearch: false,
       modalArimedesApproval: false,
       isApprovedTokenA: false,
-      isApprovedTokenB: false,
+      isApprovedGameItemB: false,
       isLoadingClaim: false,
       textNoBalance: "",
       tokenA: "",
-      tokenB: "",
+      GameItemB: "",
       textConfirmArimdesModal: "SIGN CONTRACT",
       combinators: {
         combinatorId: "0",
@@ -232,7 +232,7 @@ export default {
         },
       },
       tokenAContract: {},
-      tokenBContract: {},
+      GameItemBContract: {},
       getGeneralConfig: {},
       getTokenAConfig: {
         amount: "0",
@@ -240,7 +240,7 @@ export default {
         feeRate: "0",
         tokenAddress: "",
       },
-      getTokenBConfig: {
+      getGameItemBConfig: {
         amount: "0",
         burningRate: "0",
         feeRate: "0",
@@ -272,26 +272,26 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
     isApproved() {
-      return this.isApprovedTokenA && this.isApprovedTokenB;
+      return this.isApprovedTokenA && this.isApprovedGameItemB;
     },
     approveOnlyOneContract() {
-      if (this.isApprovedTokenA && !this.isApprovedTokenB) {
-        return this.tokenBContract;
+      if (this.isApprovedTokenA && !this.isApprovedGameItemB) {
+        return this.GameItemBContract;
       }
-      if (!this.isApprovedTokenA && this.isApprovedTokenB) {
+      if (!this.isApprovedTokenA && this.isApprovedGameItemB) {
         return this.tokenAContract;
       }
       return {};
     },
 
     combinatorAddress() {
-      return this.gameItems.combinators.warPreparation.combinatorAddress[this.networkInfo.id];
+      return this.gameItems.combinators.magicalItem.combinatorAddress[this.networkInfo.id];
     },
 
     combinatorId() {
       if (this.infoTraining.idCombinator) {
         return (
-          this.gameItems.combinators.warPreparation.idCombinator[
+          this.gameItems.combinators.magicalItem.idCombinator[
             this.networkInfo.id
           ] || 0
         );
@@ -300,21 +300,22 @@ export default {
     },
 
     infoTraining() {
-      if (this.gameItems.combinators && this.gameItems.combinators.warPreparation) {
-        return this.gameItems.combinators.warPreparation;
+      if (this.gameItems.combinators && this.gameItems.combinators.magicalItem) {
+        return this.gameItems.combinators.magicalItem;
       }
       return {};
     },
 
     isBalanceCombinator() {
-      if (!this.getTokenAConfig.balance || !this.getTokenBConfig.balance) {
+      if (!this.getTokenAConfig.balance || !this.getGameItemBConfig.balance) {
         return false;
       }
       const amountTokenA = Convert.fromWei(this.getTokenAConfig.amount, true);
       const balanceTokenA = Convert.fromWei(this.getTokenAConfig.balance, true);
-      const amountTokenB = Convert.fromWei(this.getTokenBConfig.amount, true);
-      const balanceTokenB = Convert.fromWei(this.getTokenBConfig.balance, true);
-      if (balanceTokenA >= amountTokenA && balanceTokenB >= amountTokenB) {
+      const amountGameItemB = this.getGameItemBConfig.amount;
+      const balanceGameItemB = this.getGameItemBConfig.balance;
+
+      if (balanceTokenA >= amountTokenA && balanceGameItemB >= amountGameItemB) {
         return true;
       }
 
@@ -345,11 +346,11 @@ export default {
   methods: {
     async initData() {
       this.tokenA = this.addresses.wCOURAGE;
-      this.tokenB = this.addresses.collectibles
+      this.GameItemB = this.addresses.collectibles
       this.combinatorContract = new Combinator(this.combinatorAddress);
       await this.combinatorContract.getContractManager();
       this.tokenAContract = new wCOURAGE(this.tokenA);
-      this.tokenBContract = new Collectibles(this.tokenB);
+      this.GameItemBContract = new Collectibles(this.GameItemB);
     },
     
     async loadData() {
@@ -367,7 +368,7 @@ export default {
         this.combinatorAddress
       );
       
-      this.isApprovedTokenB = await this.tokenBContract.isApprovedForAll(
+      this.isApprovedGameItemB = await this.GameItemBContract.isApprovedForAll(
         this.account,
         this.combinatorAddress
       );
@@ -387,11 +388,11 @@ export default {
             this.combinatorId
           )),
         };
-        this.getTokenBConfig = {
-          ...this.getTokenBConfig,
+        this.getGameItemBConfig = {
+          ...this.getGameItemBConfig,
           ...(await this.combinatorContract.getGameItemBConfig(
             this.account,
-            this.tokenB,
+            this.GameItemB,
             this.combinatorId
           )),
         };
@@ -429,14 +430,14 @@ export default {
       this.getTokenAConfig.balance = await this.tokenAContract.balanceOf(
         this.account
       );
-      this.getTokenBConfig.balance = await this.tokenBContract.balanceOf(
+      this.getGameItemBConfig.balance = await this.GameItemBContract.balanceOf(
         this.account,
-        this.gameItems.id
+        this.gameItems.combinators.magicalItem.inputs[1].id
       );
     },
 
     async approveContract() {
-      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
+      if (!this.isApprovedTokenA && !this.isApprovedGameItemB) {
         if (this.signPage === 1) {
           await this.approveFirstPage();
         } else {
@@ -460,7 +461,7 @@ export default {
     },
 
     openModalArimedesApproval() {
-      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
+      if (!this.isApprovedTokenA && !this.isApprovedGameItemB) {
         this.setInitialStateApproveFirstPage();
       } else {
         this.setInitialStateApproveOnlyPage();
@@ -468,7 +469,7 @@ export default {
       this.modalArimedesApproval = true;
     },
     async approveContract() {
-      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
+      if (!this.isApprovedTokenA && !this.isApprovedGameItemB) {
         if (this.signPage === 1) {
           await this.approveFirstPage();
         } else {
@@ -521,7 +522,7 @@ export default {
     },
 
     openModalArimedesApproval() {
-      if (!this.isApprovedTokenA && !this.isApprovedTokenB) {
+      if (!this.isApprovedTokenA && !this.isApprovedGameItemB) {
         this.setInitialStateApproveFirstPage();
       } else {
         this.setInitialStateApproveOnlyPage();
@@ -563,7 +564,7 @@ export default {
     async approveSecondPage() {
       try {
         this.textArimedesModal = ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT;
-        const confirmTransaction = this.tokenBContract.setApprovalForAll(
+        const confirmTransaction = this.GameItemBContract.setApprovalForAll(
           this.combinatorAddress,
           this.account
         );
@@ -599,11 +600,11 @@ export default {
     openModalArimedesNewResearch() {
       if (!this.isBalanceCombinator) {
         const amountTokenA = Convert.fromWei(this.getTokenAConfig.amount, true);
-        const amountTokenB = Convert.fromWei(this.getTokenBConfig.amount, true);
+        const amountGameItemB = this.getGameItemBConfig.amount;
 
-        const tokenBName = this.gameItems.combinators.warPreparation.inputs[1].name;
+        const GameItemBName = this.gameItems.combinators.magicalItem.inputs[1].title;
 
-        this.textNoBalance = `I see that you do not have the necessary requirements for research. You must have ${amountTokenA} wCOURAGE and ${amountTokenB} ${tokenBName}.`;
+        this.textNoBalance = `I see that you do not have the necessary requirements for research. You must have ${amountTokenA} wCOURAGE and ${amountGameItemB} ${GameItemBName}.`;
         return (this.modalArimedesNoBalance = true);
       }
       this.modalArimedesNewResearch = true;
@@ -612,10 +613,10 @@ export default {
         ...{
           getGeneralConfig: this.getGeneralConfig,
           getTokenAConfig: { ...this.getTokenAConfig, name: "wcourage" },
-          getTokenBConfig: { ...this.gameItems.combinators.warPreparation.inputs[1], ...this.getTokenBConfig },
+          getGameItemBConfig: { ...this.gameItems.combinators.magicalItem.inputs[1], ...this.getGameItemBConfig },
           getTokenCConfig: this.getGameItemCConfig,
           infoTraining: this.infoTraining,
-          combinatorData: this.gameItems.combinators.warPreparation.necessaryResources
+          combinatorData: this.gameItems.combinators.magicalItem.necessaryResources
         },
       };
 

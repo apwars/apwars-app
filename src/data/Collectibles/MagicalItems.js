@@ -90,7 +90,7 @@ export function getMagicalItems() {
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/elixir10-spendable.png",
       combinators: {
-        warPreparation: {
+        magicalItem: {
           name: "The Elixir (10%) (Spendable)",
           image: "/images/icons/elixir10-spendable.png",
           combinatorAddress: {
@@ -113,6 +113,7 @@ export function getMagicalItems() {
             title: 'The Elixir (10%)',
             image: '/images/nfts/elixir10.png',
             type: 'magicalItem',
+            id: 2,
           }],
         },
       },
@@ -127,7 +128,7 @@ export function getMagicalItems() {
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/elixir15-spendable.png",
       combinators: {
-        warPreparation: {
+        magicalItem: {
           name: "The Elixir (15%) (Spendable)",
           image: "/images/icons/elixir15-spendable.png",
           combinatorAddress: {
@@ -149,6 +150,7 @@ export function getMagicalItems() {
             title: 'The Elixir (15%)',
             image: '/images/nfts/elixir15.png',
             type: 'magicalItem',
+            id: 3,
           }],
         },
       },
@@ -163,7 +165,7 @@ export function getMagicalItems() {
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/elixir20-spendable.png",
       combinators: {
-        warPreparation: {
+        magicalItem: {
           name: "The Elixir (20%) (Spendable)",
           image: "/images/icons/elixir20-spendable.png",
           combinatorAddress: {
@@ -186,6 +188,7 @@ export function getMagicalItems() {
             title: 'The Elixir (20%)',
             image: '/images/nfts/elixir20.png',
             type: 'magicalItem',
+            id: 4,
           }],
         },
       },
@@ -200,7 +203,7 @@ export function getMagicalItems() {
         '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both planes and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/arcanes-book-spendable.png",
       combinators: {
-        warPreparation: {
+        magicalItem: {
           name: "The Arcane's Book (Spendable)",
           image: "/images/icons/arcanes-book-spendable.png",
           combinatorAddress: {
@@ -223,6 +226,7 @@ export function getMagicalItems() {
             title: `The Arcane's Book`,
             image: '/images/nfts/arcanes-book.png',
             type: 'magicalItem',
+            id: 5,
           }],
         },
       },

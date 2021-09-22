@@ -54,13 +54,13 @@
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
               <v-img
-                :src="`/images/icons/${info.getTokenBConfig.name}.png`"
+                :src="`/images/icons/${info.getGameItemBConfig.name}.png`"
                 height="75px" width="65px"/>
             </div>
             <number-field
               no-icons
               class="mt-3"
-              v-model="getInfo.getTokenBConfig.amountFormatted"
+              v-model="getInfo.getGameItemBConfig.amountFormatted"
               dense
               disabled
             ></number-field>
@@ -168,11 +168,11 @@ export default {
       );
 
       if (this.dontFormat) {
-        data.getTokenBConfig.amountFormatted = data.getTokenBConfig.amount
+        data.getGameItemBConfig.amountFormatted = data.getGameItemBConfig.amount
         data.getTokenCConfig.amountFormatted = data.getTokenCConfig.amount
       } else {
-        data.getTokenBConfig.amountFormatted = Convert.fromWei(
-          data.getTokenBConfig.amount,
+        data.getGameItemBConfig.amountFormatted = Convert.fromWei(
+          data.getGameItemBConfig.amount,
           true
         );
 
