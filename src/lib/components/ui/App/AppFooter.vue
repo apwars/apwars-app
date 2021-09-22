@@ -179,6 +179,11 @@ export default {
               href: "/training-center",
               image: "/images/icons/battle-shield.png",
             },
+            {
+              title: "Worker",
+              href: "/worker",
+              image: "/Map/farm-worker/map/assets/worker.png",
+            },
           ],
         },
         {

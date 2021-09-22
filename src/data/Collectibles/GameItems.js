@@ -11,7 +11,7 @@ export function getGameItems() {
     {
       id: 0,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "The Pioneer",
@@ -30,7 +30,7 @@ export function getGameItems() {
     {
       id: 1,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       description:
@@ -49,7 +49,7 @@ export function getGameItems() {
     {
       id: 6,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Our first beloved hater",
@@ -68,7 +68,7 @@ export function getGameItems() {
     {
       id: 7,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (10%)",
@@ -87,7 +87,7 @@ export function getGameItems() {
     {
       id: 8,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (15%)",
@@ -106,7 +106,7 @@ export function getGameItems() {
     {
       id: 9,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (20%)",
@@ -125,7 +125,7 @@ export function getGameItems() {
     {
       id: 10,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       isGift: true,
       tokenAddress: addresses.wGOLD,
@@ -138,7 +138,7 @@ export function getGameItems() {
       id: 11,
       isGift: true,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "The Society 48h-Gold Saver (20%)",
@@ -151,7 +151,7 @@ export function getGameItems() {
     {
       id: 12,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (10%)",
@@ -170,7 +170,7 @@ export function getGameItems() {
     {
       id: 13,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (30%)",
@@ -189,7 +189,7 @@ export function getGameItems() {
     {
       id: 14,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (60%)",
@@ -208,7 +208,7 @@ export function getGameItems() {
     {
       id: 15,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (10%)",
@@ -227,7 +227,7 @@ export function getGameItems() {
     {
       id: 16,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (30%)",
@@ -246,7 +246,7 @@ export function getGameItems() {
     {
       id: 17,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (60%)",
@@ -265,7 +265,7 @@ export function getGameItems() {
     {
       id: 27,
       type: 'spendable',
-      typeDesc: 'Spendable',
+      typeDesc: 'Spendables',
       contractAddress: addresses.collectibles,
       isGift: false,
       title: "Free Transport",
@@ -275,13 +275,23 @@ export function getGameItems() {
     {
       id: 28,
       type: 'gameItem',
-      typeDesc: 'Game Item',
+      typeDesc: 'Game Items',
       contractAddress: addresses.collectibles,
       isGift: false,
       title: "Experience Ring",
       description: `And to you my youngest son I leave you this. This ring is for you to measure how much you already learned from life. As you get older it will change its appearance, in the moment you wear it its stone will turn to white, as you learn from difficulties it will get green, yellow, red, blue and eventually purple. I desire you were destined to a simpler life but with the responsibilities you heir I think your purple will be more intense than mine.
       - "King Leonidas of the first human empire at his deathbed"`,
       image: "/images/nfts/experience-ring.png",
+    },
+    {
+      id: 49,
+      type: 'gameItem',
+      typeDesc: 'Game Item',
+      contractAddress: addresses.collectibles,
+      isGift: false,
+      title: "Worker",
+      description: "Workers are essential in Arcadia. They will carry on working effortlessly and effectively for as long as necessary in order to clean up the lands and build up strong foundations for generations to come.",
+      image: "/images/nfts/worker.png",
     }
 
   ];
