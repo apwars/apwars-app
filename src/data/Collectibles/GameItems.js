@@ -286,7 +286,7 @@ export function getGameItems() {
     {
       id: 49,
       type: 'gameItem',
-      typeDesc: 'Game Item',
+      typeDesc: 'Game Items',
       contractAddress: addresses.collectibles,
       isGift: false,
       title: "Worker",
