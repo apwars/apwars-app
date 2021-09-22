@@ -94,8 +94,8 @@ export function getMagicalItems() {
           name: "The Elixir (10%) (Spendable)",
           image: "/images/icons/elixir10-spendable.png",
           combinatorAddress: {
-            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x56644b3E8D4C6F03Bd2f2d8667Baae528d0d3ffC",
+            "56": "",
+            "97": "0xc8B03C384435Ef49094E727473A6e086F600840c",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
@@ -132,8 +132,8 @@ export function getMagicalItems() {
           name: "The Elixir (15%) (Spendable)",
           image: "/images/icons/elixir15-spendable.png",
           combinatorAddress: {
-            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x56644b3E8D4C6F03Bd2f2d8667Baae528d0d3ffC",
+            "56": "",
+            "97": "0xc8B03C384435Ef49094E727473A6e086F600840c",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
@@ -169,8 +169,8 @@ export function getMagicalItems() {
           name: "The Elixir (20%) (Spendable)",
           image: "/images/icons/elixir20-spendable.png",
           combinatorAddress: {
-            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x56644b3E8D4C6F03Bd2f2d8667Baae528d0d3ffC",
+            "56": "",
+            "97": "0xc8B03C384435Ef49094E727473A6e086F600840c",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
@@ -207,8 +207,8 @@ export function getMagicalItems() {
           name: "The Arcane's Book (Spendable)",
           image: "/images/icons/arcanes-book-spendable.png",
           combinatorAddress: {
-            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-            "97": "0x56644b3E8D4C6F03Bd2f2d8667Baae528d0d3ffC",
+            "56": "",
+            "97": "0xc8B03C384435Ef49094E727473A6e086F600840c",
           },
           claimRouter: "/war-preparation",
           idCombinator: {
