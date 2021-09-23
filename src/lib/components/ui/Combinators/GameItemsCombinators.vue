@@ -13,7 +13,7 @@
             :src="gameItems.image"
           />
         </div>
-        <div v-if="gameItems" class="ml-1 align-self-start">
+        <div v-if="isLoadingUnit" class="ml-1 align-self-start">
           <div class="title">Necessary Resources</div>
           <div class="d-flex qty">
             <v-img class="mr-1" max-width="30px" :src="gameItems.combinators.magicalItem.inputs[0].image" 
@@ -67,6 +67,11 @@
             />
             <span style="margin-top: -5px">
               Item conquered: <br />
+              <amount
+              :amount="getGameItemCConfig.amount"
+              formatted
+              decimals="0"
+            />
               {{ gameItems.title }}
             </span>
           </div>
@@ -208,6 +213,7 @@ export default {
 
   data() {
     return {
+      isLoadingUnit: false,
       modalArimedesNoBalance: false,
       modalArimedesClaim: false,
       modalArimedesNewResearch: false,
