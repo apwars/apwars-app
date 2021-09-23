@@ -24,7 +24,7 @@ export default {
   props: ["label", "min", "max", "dense", "disabled", "value", "no-icons", "setQuantity", "fillItems", "countClicks"],
   data() {
     return {
-      quantity: null,
+      quantity: 1,
       currencyConfig: {
         locale: window.navigator.userLanguage || window.navigator.language,
         prefix: "",
