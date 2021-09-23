@@ -1,5 +1,45 @@
 {
   "nfts": {
+    "humanLegend": {
+      "image": "war3-the-legend-corp.png",
+      "name": "The legend Corp",
+      "address": "0x696ac7FddCA3A86c3325c639C55D16226c231811"
+    },
+    "orcLegend": {
+      "image": "war3-the-legend-degen.png",
+      "name": "The legend Degen",
+      "address": "0x341faA39771f63d8ADD5d9be43A1fc80fe1Fb8e7"
+    },
+    "greatReinforcement": {
+      "image": "war3-great-reinforcement.png",
+      "name": "Great Reinforcement",
+      "address": "0x5429155107B1B300393bD872f079132B3C6046b4"
+    },
+    "warHero": {
+      "image": "war3-war-hero.png",
+      "name": "War Hero",
+      "address": "0x04754A54Dc0aBDB42DC98E3b7907A9B4283DbD34"
+    },
+    "conquer": {
+      "image": "war3-the-conqueror.png",
+      "name": "The Conqueror",
+      "address": "0xF2CdC58cb7607d5DCa99d7e4E85c8591726B1D55"
+    },
+    "memorableVictory": {
+      "image": "war3-memorable-victory.png",
+      "name": "Memorable Victory",
+      "winner": "The Degenerate"
+    },
+    "bloodyBattle": {
+      "image": "war3-bloody-battle.png",
+      "name": "Bloody Battle",
+      "winner": "The Corporation"
+    },
+    "memorableDeath": {
+      "image": "war3-memorable-death.png",
+      "name": "Memorable Death",
+      "winner": "The Corporation"
+    }
   },
   "players": [
     {
