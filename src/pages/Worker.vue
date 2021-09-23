@@ -162,13 +162,16 @@ export default {
 
   watch: {
     isConnected() {
+      this.initData();
       this.$nextTick(() => {
-        this.initData();
         this.loadData();
       });
     },
 
     account() {
+      if (!this.isConnected) {
+        return;
+      }
       this.loadData();
     },
 
@@ -180,10 +183,10 @@ export default {
     },
   },
 
-  mounted() {
-    this.initData();
-    this.loadData();
+  async mounted() {
     window.addEventListener("resize", this.resizePIXE);
+    this.initData();
+    await this.loadData();
   },
 
   methods: {
@@ -210,6 +213,7 @@ export default {
       this.minimumBlocks = parseInt(await this.smcWorker.minimumBlocks());
       this.defaultBlocks = parseInt(await this.smcWorker.defaultBlocks());
 
+
       let reduction =
         this.defaultBlocks * (1 - this.reductionRate * this.infoAccount.amount);
 
@@ -224,7 +228,8 @@ export default {
 
       if (this.infoAccount.nextClaim > this.currentBlockNumber) {
         const timeDiff = this.infoAccount.nextClaim - this.currentBlockNumber;
-        this.timeCountDown = (timeDiff / 3) * 10000;
+        this.timeCountDown = (timeDiff * 3) * 1000;
+        
         this.startBlocks = this.infoAccount.previousClaim;
         this.isProgressWorker = true;
         if (!this.isLoopWork) {

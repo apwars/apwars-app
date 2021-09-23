@@ -6,13 +6,13 @@
     >
       <div class="align-self-center">
         <v-img
-          :width="$vuetify.breakpoint.mobile ? 130   : 165"
-          :src="infoWeapon.image"
+          :width="$vuetify.breakpoint.mobile ? 130 : 165"
+          :src="infoWeapon.imageNft"
         />
       </div>
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
-        <div class="d-flex qty">
+        <div class="d-flex qty ml-at-mobile">
           <v-img class="mr-1"
             :max-width="$vuetify.breakpoint.mobile ? 28 : 36"
             src="/images/wcourage.png" />
@@ -23,11 +23,12 @@
             symbol="wCOURAGE"/>
           </div>
         </div>
-        <div class="d-flex qty">
+        <div class="d-flex qty ml-at-mobile">
           <v-img
-            class="mr-1"
-            :max-width="$vuetify.breakpoint.mobile ? 24.5 : 40"
-            :src="`/images/icons/${unit.name}.png`"
+            style="margin-left: 0.2rem;"
+            class="mr-1 mt-1"
+            :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
+            :src="`/images/icons/coins/smallers/${unit.name}.png`"
           />
           <div class="mt-1">
             <amount
@@ -36,7 +37,7 @@
               :symbol="unit.name"/>
           </div>
         </div>
-        <div class="d-flex align-center my-1 qty">
+        <div class="d-flex align-center my-1 qty ml-at-mobile">
           <v-img class="mr-1" 
             :max-width="$vuetify.breakpoint.mobile ? 32 : 40"
             src="/images/icons/hourglass.png" />
@@ -55,10 +56,10 @@
           </div>
         </div>
         <hr />
-        <div class="d-flex mt-1 qty" v-if="infoWeapon.imageIcon">
+        <div class="d-flex mt-1 qty ml-at-mobile" v-if="infoWeapon.imageIcon">
           <v-img
             style="margin-left: 0.4rem;"
-            class="mr-1"
+            class="mr-"
             :max-width="$vuetify.breakpoint.mobile ? 29 : 29"
             :height="$vuetify.breakpoint.mobile ? 48 : 48"
             :src="infoWeapon.imageIcon"
@@ -133,7 +134,7 @@
       :isLoading="isLoadingClaim"
       :text="textClaim"
       :textConfirm="textConfirmClaim"
-      :weapon-icon="infoWeapon.image"
+      :weapon-icon="infoWeapon.imageNft"
     ></arimedes-modal>
 
     <arimedes-modal
@@ -682,5 +683,12 @@ export default {
 
 .mt-token-text {
   margin-top: 0.3rem;
+}
+
+@media only screen and (max-width: 380px) {
+  .ml-at-mobile {
+    margin-left: -0.3rem;
+    font-size: 0.8rem;
+  }
 }
 </style>

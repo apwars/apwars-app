@@ -319,7 +319,7 @@ export default {
       buyOrSell: this.$route.params.type,
       fee: 0,
       amount: 0,
-      quantity: 0,
+      quantity: 1,
       nftId: this.$route.params.nftId,
       loading: true,
       currencyConfig: {
@@ -643,9 +643,13 @@ export default {
     },
 
     getQuantity() {
-      this.quantity = this.userAmount;
-      this.fillItemsQuantity = this.userAmount;
-      this.countClicks ++;
+      if (this.userAmount === 0) {
+        return
+      } else {
+        this.quantity = this.userAmount;
+        this.fillItemsQuantity = this.userAmount;
+        this.countClicks ++;
+      }
     }
   },
 };
