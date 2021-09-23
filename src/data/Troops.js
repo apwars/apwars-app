@@ -33,14 +33,14 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/icons/simple-shield.png',
+          image: '/images/nfts/weapon-simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
           },
           {
             name: 'wWARRIOR',
-            image: '/images/icons/wWARRIOR.png'
+            image: '/images/icons/coins/wWARRIOR.png'
           }]
         },
       }
@@ -78,14 +78,14 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/icons/simple-shield.png',
+          image: '/images/nfts/weapon-simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
           },
           {
             name: 'wARCHER',
-            image: '/images/icons/wARCHER.png'
+            image: '/images/icons/coins/wARCHER.png'
           }]
         },
       }
@@ -140,7 +140,7 @@ export function getTroops() {
             "97": 3,
           },
           name: 'wHORSEMAN',
-          image: '/images/icons/wHORSEMAN.png',
+          image: '/images/icons/coins/wHORSEMAN.png',
           tokenImage: '/images/icons/coins/wHORSEMAN.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -148,7 +148,7 @@ export function getTroops() {
           },
           {
             name: 'wCROSSBOWMAN',
-            image: '/images/icons/wCROSSBOWMAN.png'
+            image: '/images/icons/coins/wCROSSBOWMAN.png'
           }]
         },
       }
@@ -187,7 +187,7 @@ export function getTroops() {
         "56": "0xd7544Fe7668f3dfb7AD21F9E02D7A51e116b6D75",
         "97": "0x9FA4946089CBE11a5Bfda9C397e29cd093626F37",
       },
-      image: "/images/troops/wGRUNT.png",
+      image: "/images/icons/coins/wGRUNT.png",
       strength: 2,
       defense: 4,
       combinators: {
@@ -205,14 +205,14 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/icons/simple-shield.png',
+          image: '/images/nfts/weapon-simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
           },
           {
             name: 'wGRUNT',
-            image: '/images/icons/wGRUNT.png'
+            image: '/images/icons/coins/wGRUNT.png'
           }]
         },
       }
@@ -250,14 +250,14 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/icons/simple-shield.png',
+          image: '/images/nfts/weapon-simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
           },
           {
             name: 'wORC-ARCHER',
-            image: '/images/icons/wORC-ARCHER.png'
+            image: '/images/icons/coins/wORC-ARCHER.png'
           }]
         },
       }
@@ -312,7 +312,7 @@ export function getTroops() {
             "97": 2,
           },
           name: 'wWARG',
-          image: '/images/icons/wWARG.png',
+          image: '/images/icons/coins/wWARG.png',
           tokenImage: '/images/icons/coins/wWARG.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -322,7 +322,7 @@ export function getTroops() {
           {
             name: 'wPIKE-ORC',
             amount: 100,
-            image: '/images/icons/wPIKE-ORC.png'
+            image: '/images/icons/coins/wPIKE-ORC.png'
           }]
         },
       }
@@ -361,7 +361,7 @@ export function getTroops() {
         "56": "0xb5d488dc4DE64A6a968D8f317DB8DE2cDBF52828",
         "97": "0x7a355C7633d3d097F6ed009faC66727E7C4E0Dee",
       },
-      image: "/images/troops/wSKELETONWARRIOR.png",
+      image: "/images/icons/coins/wSKELETON-WARRIOR.png",
       strength: 8,
       defense: 2,
       combinators: {
@@ -379,14 +379,14 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/icons/simple-shield.png',
+          image: '/images/nfts/weapon-simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
           },
           {
-            name: 'wSKELETONWARRIOR',
-            image: '/images/icons/wSKELETONWARRIOR.png'
+            name: 'wSKELETON-WARRIOR',
+            image: '/images/icons/coins/wSKELETON-WARRIOR.png'
           }]
         },
       }
@@ -424,14 +424,14 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/icons/simple-shield.png',
+          image: '/images/nfts/weapon-simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
           },
           {
             name: 'wHOUND',
-            image: '/images/icons/wHOUND.png'
+            image: '/images/icons/coins/wHOUND.png'
           }]
         },
       }
@@ -486,7 +486,7 @@ export function getTroops() {
             "97": 1,
           },
           name: 'wDEATH-KNIGHT',
-          image: '/images/icons/wDEATH-KNIGHT.png',
+          image: '/images/icons/coins/wDEATH-KNIGHT.png',
           tokenImage: '/images/icons/coins/wDEATH-KNIGHT.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -494,7 +494,7 @@ export function getTroops() {
           },
           {
             name: 'wUNDEAD-PIKEMAN',
-            image: '/images/icons/wUNDEAD-PIKEMAN.png'
+            image: '/images/icons/coins/wUNDEAD-PIKEMAN.png'
           }]
         },
       }
@@ -552,7 +552,7 @@ export function getTroops() {
         "56": "0xc15bE042471eBAC1908d7bD93648161A1B82Ee3d",
         "97": "0x1E3d19Eb941B20eC6Ee5BD81Ff089529CB9563F4",
       },
-      image: "/images/troops/wWARG.png",
+      image: "/images/icons/coins/wWARG.png",
       strength: 150,
       defense: 50,
     },
