@@ -31,6 +31,8 @@ export function getTroops() {
             "97": 4,
           },
           name: 'Simple Shield',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
+          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -74,6 +76,8 @@ export function getTroops() {
             "97": 5,
           },
           name: 'Simple Shield',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
+          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -199,6 +203,8 @@ export function getTroops() {
             "97": 6,
           },
           name: 'Simple Shield',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
+          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -242,6 +248,8 @@ export function getTroops() {
             "97": 7,
           },
           name: 'Simple Shield',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
+          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -369,6 +377,8 @@ export function getTroops() {
             "97": 8,
           },
           name: 'Simple Shield',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
+          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -412,6 +422,8 @@ export function getTroops() {
             "97": 9,
           },
           name: 'Simple Shield',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
+          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
