@@ -229,7 +229,7 @@
         </v-row>
         <!-- END wLAND -->
 
-        <div v-if="isWhitelisted">
+        <div v-if="networkInfo.id != '56' || isWhitelisted">
           <v-row class="justify-center align-center mt-4">
             <v-col cols="12" md="4" lg="4" class="d-flex">
               <div class="text-center">
@@ -619,6 +619,10 @@ export default {
       ).toUpperCase();
       const code = (this.location.country_code || "").toUpperCase();
       return code && blocked.split(",").includes(code);
+    },
+
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
     },
   },
 
