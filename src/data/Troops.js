@@ -638,6 +638,31 @@ export function getTroops() {
       image: "/images/troops/wBLADEMASTER.png",
       strength: 25,
       defense: 25,
+      combinators: {
+        trainingCenter: {
+          combinatorAddress: {
+            "56": "",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/training-center",
+          idCombinator: {
+            "5777": 0,
+            "56": 0,
+            "97": 10,
+          },
+          name: 'wELK-RIDER',
+          image: '/images/icons/wHORSEMAN.png',
+          tokenImage: '/images/icons/coins/wHORSEMAN.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wCOURAGE.png'
+          },
+          {
+            name: 'wBLADEMASTER',
+            image: '/images/icons/wBLADEMASTER.png'
+          }]
+        },
+      }
     },
     {
       id: 21,
