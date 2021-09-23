@@ -4,6 +4,7 @@ import APWarsWorkerManager from "./APWarsWorkerManager.json";
 export default class Worker {
   constructor(contract) {
     this.contractAddress = contract;
+    this.contractManagerAddress = "";
     this.smc = new window.web3.eth.Contract(APWarsWorker, this.contractAddress);
     this.smcManager = {};
   }
