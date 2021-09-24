@@ -26,12 +26,27 @@
             <amount :amount="info.pricewGOLD" decimals="2" compact /> wGOLD
           </div>
         </div>
-        <div class="d-flex justify-start">
+        <div class="d-flex justify-center mt-3">
           <v-img
-            class="mt-3"
+            class=" mr-1"
             max-width="80"
+            max-height="40"
             :src="`/images/tier-${info.tier}.png`"
           />
+          <a :href="`${redirectTo}=${info.contractAddress[this.networkInfo.id]}`">
+            <wButton
+              style="margin-top: -2px; color: #fff"
+              width="50px" height="40">
+              <div class="d-flex justify-center">
+                <img
+                  src="/images/buttons/btn-icon-buy.svg"
+                  class="mx-1  align-self-center"
+                  height="12"
+                />
+                <div class="align-self-center">Buy</div>
+              </div>
+            </wButton>
+          </a>
         </div>
       </div>
     </div>
@@ -48,6 +63,18 @@ export default {
     Amount,
     wButton,
   },
+
+  data() {
+    return {
+      redirectTo: "https://exchange.apwars.farm/#/swap?showFarms=true&outputCurrency",
+    }
+  },
+
+  computed: {
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
+    },
+  }
 };
 </script>
 
@@ -91,5 +118,9 @@ export default {
   .current-price {
     font-size: 14px;
   }
+}
+
+a {
+  text-decoration: none;
 }
 </style>
