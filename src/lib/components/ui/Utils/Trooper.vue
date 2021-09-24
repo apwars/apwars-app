@@ -40,7 +40,7 @@
               <div class="d-flex justify-center">
                 <img
                   src="/images/buttons/btn-icon-buy.svg"
-                  class="mx-1  align-self-center"
+                  class="mr-1  align-self-center"
                   height="12"
                 />
                 <div class="align-self-center">Buy</div>
