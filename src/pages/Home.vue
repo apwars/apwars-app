@@ -105,7 +105,7 @@
                 v-slot="{ toggle }"
               >
                 <div class="d-flex align-center" @click="toggle">
-                  <div>
+                  <div class="bg-img-task">
                     <v-img
                       :max-width="`${$vuetify.breakpoint.mobile ? '50px' : '80px'}`"
                       :src="item.image"
@@ -117,7 +117,7 @@
 
                     <div class="input-info" v-if="item.inputs">
                       <div class="claim-info" v-for="(input, index) in item.inputs" :key="index">
-                        <img height="18px" width="18px" :src="input.image" /> <div v-if="input.amount">{{ input.amount }} {{ input.name }} </div>
+                        <div v-if="input.amount">{{ input.amount }} {{ input.name }} </div> <img height="18px" width="18px" :src="input.image" />
                       </div> 
                     </div>
 
@@ -144,9 +144,6 @@
             <div v-else>
               Hey, looks like you don't have any tasks right now. How about
               training units, researching weapons and evolving your troop?
-              <wButton class="mt-3" @click="$router.push('/training-center')">
-                Training center
-              </wButton>
             </div>
           </v-col>
         </v-row>
@@ -360,13 +357,13 @@ export default {
   min-height: 100%;
   background-position: center;
 }
-/* .bg-img-task {
+.bg-img-task {
   background-image: url("/images/bg-papyrus.png");
   background-size: cover;
   background-color: #d7b796;
   border-radius: 6px;
   border: 3px solid #bb7248;
-} */
+}
 
 .badge-large >>> span {
   border-radius: 30px;

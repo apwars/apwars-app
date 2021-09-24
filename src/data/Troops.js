@@ -33,7 +33,7 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/nfts/weapon-simple-shield.png',
+          image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
@@ -78,7 +78,7 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/nfts/weapon-simple-shield.png',
+          image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
@@ -140,7 +140,7 @@ export function getTroops() {
             "97": 3,
           },
           name: 'wHORSEMAN',
-          image: '/images/icons/coins/wHORSEMAN.png',
+          image: '/images/icons/wHORSEMAN.png',
           tokenImage: '/images/icons/coins/wHORSEMAN.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -205,7 +205,7 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/nfts/weapon-simple-shield.png',
+          image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
@@ -250,7 +250,7 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/nfts/weapon-simple-shield.png',
+          image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
@@ -312,7 +312,7 @@ export function getTroops() {
             "97": 2,
           },
           name: 'wWARG',
-          image: '/images/icons/coins/wWARG.png',
+          image: '/images/icons/wWARG.png',
           tokenImage: '/images/icons/coins/wWARG.png',
           inputs: [{
             name: 'wCOURAGE',
@@ -379,7 +379,7 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/nfts/weapon-simple-shield.png',
+          image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
@@ -424,7 +424,7 @@ export function getTroops() {
           name: 'Simple Shield',
           imageNft: '/images/nfts/weapon-simple-shield.png',
           imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
-          image: '/images/nfts/weapon-simple-shield.png',
+          image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
@@ -486,7 +486,7 @@ export function getTroops() {
             "97": 1,
           },
           name: 'wDEATH-KNIGHT',
-          image: '/images/icons/coins/wDEATH-KNIGHT.png',
+          image: '/images/icons/wDEATH-KNIGHT.png',
           tokenImage: '/images/icons/coins/wDEATH-KNIGHT.png',
           inputs: [{
             name: 'wCOURAGE',
