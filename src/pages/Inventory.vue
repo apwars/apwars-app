@@ -212,6 +212,7 @@
           <v-tabs v-model="tab">
             <v-tab>Game Items</v-tab>
             <v-tab>My Troops</v-tab>
+            <v-tab>Guardians</v-tab>
           </v-tabs>
         </v-col>
       </v-row>
@@ -290,6 +291,17 @@
             </v-container>
           </v-card>
         </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <v-container>
+              <v-row>
+                <v-col class="mt-6">
+                  <guardians-approved :guardian="npcInfo" />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-tab-item>
       </v-tabs-items>
     </v-container>
     <npc-modal
@@ -323,6 +335,7 @@ import wGOLD from "@/lib/eth/wGOLD";
 import wCOURAGE from "@/lib/eth/wCOURAGE";
 import NPCModal from "@/lib/components/ui/Modals/NPCModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
+import GuardiansApproved from "@/lib/components/ui/Guardians/GuardiansApproved";
 
 const DEFAULT_APPROVE_TEXT =
   "To work with your inventory, i need to receive approval ";
@@ -344,6 +357,7 @@ export default {
     Amount,
     ListUnits,
     "npc-modal": NPCModal,
+    GuardiansApproved,
   },
   data() {
     return {
@@ -401,7 +415,7 @@ export default {
       return this.collection.length > 0;
     },
     npcInfo() {
-      return NPC_INFO[NPCS.OTTO_DALGOR];
+      return NPC_INFO()[NPCS.OTTO_DALGOR];
     },
   },
   watch: {
@@ -432,8 +446,10 @@ export default {
         return;
       }
       try {
-        this.collectibleContract = new Collectibles(this.addresses.collectibles);
-        this.checkContractApproval();
+        this.collectibleContract = new Collectibles(
+          this.addresses.collectibles
+        );
+        // this.checkContractApproval();
         const wgold = new wGOLD(this.addresses.wGOLD);
         const wcourage = new wCOURAGE(this.addresses.wCOURAGE);
         this.balance = await wgold.balanceOf(this.account);
@@ -466,7 +482,7 @@ export default {
         if (!isApproved) {
           this.openApproveModal();
         }
-      };
+      }
     },
     openApproveModal() {
       this.isApproveModalOpen = true;
@@ -477,7 +493,7 @@ export default {
     async approve() {
       this.isLoadingApprove = true;
       this.approveText = DEFAULT_WAITING_APPROVE;
-  
+
       const confirmTransaction = this.collectibleContract.setApprovalForAll(
         this.addresses.inventoryManager,
         this.account
