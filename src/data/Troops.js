@@ -651,7 +651,7 @@ export function getTroops() {
             "97": 10,
           },
           name: 'wELK-RIDER',
-          image: '/images/icons/coins/wELK-RIDER.png',
+          image: '/images/icons/wELK-RIDER.png',
           tokenImage: '/images/icons/coins/wELK-RIDER.png',
           inputs: [{
             name: 'wCOURAGE',
