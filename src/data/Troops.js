@@ -651,15 +651,15 @@ export function getTroops() {
             "97": 10,
           },
           name: 'wELK-RIDER',
-          image: '/images/icons/wHORSEMAN.png',
-          tokenImage: '/images/icons/coins/wHORSEMAN.png',
+          image: '/images/icons/coins/wELK-RIDER.png',
+          tokenImage: '/images/icons/coins/wELK-RIDER.png',
           inputs: [{
             name: 'wCOURAGE',
             image: '/images/wCOURAGE.png'
           },
           {
             name: 'wBLADEMASTER',
-            image: '/images/icons/wBLADEMASTER.png'
+            image: '/images/icons/coins/wBLADEMASTER.png'
           }]
         },
       }
@@ -682,6 +682,25 @@ export function getTroops() {
       image: "/images/troops/wFERAL-SPIRIT.png",
       strength: 70,
       defense: 20,
+    },
+    {
+      id: 22,
+      team: 1,
+      teamDesc: 'The Corporation',
+      race: 4,
+      raceDesc: 'Elves',
+      tier: 4,
+      tierDesc: 'Stables',
+      name: "wELK-RIDER",
+      lpAddresses: "0x9bE00135880c4db3D3759d370758bDc87443af36",
+      contractAddress: {
+        "5777": "",
+        "56": "",
+        "97": "0xE575aA96B86128d9Ae7Cf30C540E56A47F2e3D5C",
+      },
+      image: "/images/troops/wELK-RIDER.png",
+      strength: 250,
+      defense: 90,
     },
   ];
 }
