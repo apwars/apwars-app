@@ -248,7 +248,6 @@ export default {
     },
 
     currentBlockNumber() {
-      console.log("test")
       this.loadData();
     },
   },
