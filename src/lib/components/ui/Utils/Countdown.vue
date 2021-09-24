@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h3 class="text-wGOLD text-center text-h4 text-md-h3 ma-0 ma-md-3">
+    <h4 class="text-wGOLD text-center text-h4 text-md-h4 ma-0 mt-1">
       {{ title }}
-    </h3>
-    <div class="d-flex justify-center mt-6">
+    </h4>
+    <div class="d-flex justify-center mt-2">
       <countdown
         v-if="!hideEnd || (hideEnd && time)"
         :time="setTime"

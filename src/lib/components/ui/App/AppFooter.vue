@@ -19,7 +19,7 @@
         <div class="d-inline-flex align-center">
           <img
             class="d-block mx-0 mx-md-1 i-coin"
-            src="/images/wgold.png"
+            src="/images/wgold.png  "
             alt="wgold"
           />
           <span class="balance-wGOLD">
@@ -226,6 +226,11 @@ export default {
     account() {
       return this.$store.getters["user/account"];
     },
+
+    currentBlockNumber() {
+      return this.$store.getters["user/currentBlockNumber"];
+    },
+
     addresses() {
       return this.$store.getters["user/addresses"];
     },
@@ -235,6 +240,15 @@ export default {
   },
   watch: {
     isConnected() {
+      this.loadData();
+    },
+
+    account() {
+      this.loadData();
+    },
+
+    currentBlockNumber() {
+      console.log("test")
       this.loadData();
     },
   },

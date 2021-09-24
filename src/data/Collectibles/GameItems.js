@@ -265,7 +265,7 @@ export function getGameItems() {
     {
       id: 27,
       type: 'spendable',
-      typeDesc: 'Spendables',
+      typeDesc: 'Transport',
       contractAddress: addresses.collectibles,
       isGift: false,
       title: "Free Transport",
