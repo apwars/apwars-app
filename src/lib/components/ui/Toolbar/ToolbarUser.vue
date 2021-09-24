@@ -10,7 +10,7 @@
           offset-y="10"
         >
           <v-avatar size="40">
-            <v-img src="/images/metamask.svg"></v-img>
+            <v-img :src="account ? `https://avatar.apwars.farm/?seed=${account}&avatar=corp` : '/images/metamask.svg'"></v-img>
           </v-avatar>
         </v-badge>
       </v-btn>
