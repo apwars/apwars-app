@@ -234,7 +234,7 @@ export default {
         personage: {
           image: "/images/weapon-research/arimedes.png",
           description:
-            "Let's sign a research agreement. You will pay me wCOURAGE and provide 1 Magical Item, and i will retrieve your Magical Item plus the spendables result.",
+            "Let's sign a research agreement. You will pay me wCOURAGE plus provide 1 Magical item but don't worry I'll return your Magical item and provide you with spendable items.",
         },
       },
       tokenAContract: {},
