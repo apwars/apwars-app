@@ -83,7 +83,7 @@ export function getMagicalItems() {
     {
       id: 40,
       type: "magicalItem",
-      typeDesc: "Magical Item",
+      typeDesc: "Magical Items",
       contractAddress: addresses.collectibles,
       title: "The Elixir (10%) (Spendable)",
       description:
@@ -121,7 +121,7 @@ export function getMagicalItems() {
     {
       id: 41,
       type: "magicalItem",
-      typeDesc: "Magical Item",
+      typeDesc: "Magical Items",
       contractAddress: addresses.collectibles,
       title: "The Elixir (15%) (Spendable)",
       description:
@@ -158,7 +158,7 @@ export function getMagicalItems() {
     {
       id: 42,
       type: "magicalItem",
-      typeDesc: "Magical Item",
+      typeDesc: "Magical Items",
       contractAddress: addresses.collectibles,
       title: "The Elixir (20%) (Spendable)",
       description:
@@ -196,7 +196,7 @@ export function getMagicalItems() {
     {
       id: 43,
       type: "magicalItem",
-      typeDesc: "Magical Item",
+      typeDesc: "Magical Items",
       contractAddress: addresses.collectibles,
       title: "The Arcane's Book (Spendable)",
       description:
