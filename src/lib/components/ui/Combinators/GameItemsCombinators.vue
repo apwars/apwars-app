@@ -196,7 +196,7 @@ const ARIMEDES_CLAIM =
   "Your research has been completed, and your Magical Items are available.";
 const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
-  "Waiting confirmation from blockchain...";
+  "Waiting confirmation from the blockchain...";
 
 export default {
   name: "game-items-combinators",

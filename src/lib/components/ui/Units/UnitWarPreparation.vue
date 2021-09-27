@@ -175,9 +175,9 @@ import Troops from "@/lib/eth/Troops";
 
 const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT = "And now sign over here...";
 const ARIMEDES_APPROVE_FIRST_PAGE_CONTRACT =
-  "I need some wCOURAGE and a wUNIT to research weapons for you.";
+  "I need some wCOURAGE and some wUNIT to research weapons for you.";
 const ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT =
-  "I need some wCOURAGE and a wUNIT to research weapons for you.";
+  "I need some wCOURAGE and some wUNIT to research weapons for you.";
 const ARIMEDES_WAITING_WALLET_APPROVAL = "Please sign over here...";
 const ARIMEDES_WAITING_FIRST_CONFIRMATION =
   "I’m checking if everything is fine...";
