@@ -42,9 +42,10 @@ export function NPC_INFO() {
       portrait: "/images/npcs/otto-dalgor.png",
       address: addresses.inventoryManager,
       description:
-        `Otto Dalgor is a dwarf. Despite being very surly and annoying, he is the one who manages the inventory. 
-      Careful when doing your movements, Otto Dalgor is a complainer and knows the inventory completely. 
-      He is the one who owns all the files and notes.`,
+        `Otto Dalgor is a dwarf. Despite being very crabby and annoying, he is the one who manages the inventory. Be careful with your game moves because Otto Dalgor is a complainer and knows the inventory thoroughly.He is the one who owns all the files and notes.
+        Treat Otto well, and despite being 132cm, he also knows how to honor his duties very well!
+        Otto Dalgor is a widower (that is what everyone thinks). His wife Frigg Dalgor was thrown off a cliff by the undead in an ancient war. Since his wife's disappearance or death, he's been in stock complaining and keeping everything in order.
+        You need to approve your contracts with Otto Dalgor, the Inventory Guardian. Once the contract for a (specific) token is approved, you no longer need to approve it for each move.`,
       addressApprove: [
         {
           name: "Game Items",
