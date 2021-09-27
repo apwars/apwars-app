@@ -178,34 +178,6 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row v-if="isInventoryManagerApproved === false">
-      <v-container>
-        <v-col offset-md="2" md="8" offset-lg="4" lg="4" class="npc-box d-flex">
-          <img
-            :src="npcInfo.portrait"
-            :alt="npcInfo.name"
-            class="npc-portrait"
-          />
-          <div class="npc-dialog ml-2">
-            <div class="npc-name mb-1">
-              {{ npcInfo.name }}
-            </div>
-            <div class="npc-text">
-              Hello fellow, i see that you didn't approved me to work with your
-              inventory yet. I may inform you that you can not operate your
-              inventory without my help.
-            </div>
-            <div class="npc-box-action mt-1 d-flex justify-end">
-              <wButton @click="openApproveModal" class=" mr-3">
-                <div class="d-flex justify-center">
-                  <small class="align-self-center">Approve</small>
-                </div>
-              </wButton>
-            </div>
-          </div>
-        </v-col>
-      </v-container>
-    </v-row>
     <v-container>
       <v-row class="d-flex">
         <v-col cols="12" lg="6" xl="4" class="d-flex">
@@ -296,7 +268,11 @@
             <v-container>
               <v-row>
                 <v-col class="mt-6">
-                  <guardians-approved :guardian="npcInfo" />
+                  <guardians-approved
+                    v-for="npcInfo in npcsInfo"
+                    v-bind:key="npcInfo.name"
+                    :guardian="npcInfo"
+                  />
                 </v-col>
               </v-row>
             </v-container>
@@ -304,15 +280,6 @@
         </v-tab-item>
       </v-tabs-items>
     </v-container>
-    <npc-modal
-      :title="npcInfo.name"
-      :portrait="npcInfo.portrait"
-      :open="isApproveModalOpen"
-      :isLoading="isLoadingApprove"
-      :text="approveText"
-      @confirm="approve()"
-      @close="closeApprovalModal"
-    />
   </div>
 </template>
 
@@ -334,16 +301,7 @@ import { getCollectibles, getGameItemTypesOptions } from "@/data/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
 import wCOURAGE from "@/lib/eth/wCOURAGE";
 import NPCModal from "@/lib/components/ui/Modals/NPCModal";
-import ToastSnackbar from "@/plugins/ToastSnackbar";
 import GuardiansApproved from "@/lib/components/ui/Guardians/GuardiansApproved";
-
-const DEFAULT_APPROVE_TEXT =
-  "To work with your inventory, i need to receive approval ";
-const DEFAULT_WAITING_APPROVE =
-  "I am waiting for your approval to work with your inventory.";
-const DEFAULT_CANCEL_TEXT =
-  "If you cancel this approval, i can't work for you.";
-const WAITING_FIRST_CONFIRMATION = "Waiting for blockchain confirmation...";
 
 export default {
   components: {
@@ -373,10 +331,8 @@ export default {
       gameItemTypesOptions: [],
       isApproveModalOpen: false,
       isLoadingApprove: false,
-      approveText: DEFAULT_APPROVE_TEXT,
-      cancelText: DEFAULT_CANCEL_TEXT,
       collectibleContract: null,
-      isInventoryManagerApproved: null,
+      npcsShow: [NPCS.OTTO_DALGOR],
     };
   },
   computed: {
@@ -414,8 +370,10 @@ export default {
     hasItems() {
       return this.collection.length > 0;
     },
-    npcInfo() {
-      return NPC_INFO()[NPCS.OTTO_DALGOR];
+    npcsInfo() {
+      return this.npcsShow.map((npc) => {
+        return NPC_INFO()[npc];
+      });
     },
   },
   watch: {
@@ -423,7 +381,6 @@ export default {
       this.loadData();
     },
     account() {
-      this.isInventoryManagerApproved = null;
       this.loadData();
     },
     currentBlockNumber() {
@@ -449,7 +406,6 @@ export default {
         this.collectibleContract = new Collectibles(
           this.addresses.collectibles
         );
-        // this.checkContractApproval();
         const wgold = new wGOLD(this.addresses.wGOLD);
         const wcourage = new wCOURAGE(this.addresses.wCOURAGE);
         this.balance = await wgold.balanceOf(this.account);
@@ -471,58 +427,6 @@ export default {
     },
     clearFilter() {
       this.gameItemTypeFilter = [];
-    },
-    async checkContractApproval() {
-      if (this.isInventoryManagerApproved === null) {
-        const isApproved = await this.collectibleContract.isApprovedForAll(
-          this.account,
-          this.addresses.inventoryManager
-        );
-        this.isInventoryManagerApproved = isApproved;
-        if (!isApproved) {
-          this.openApproveModal();
-        }
-      }
-    },
-    openApproveModal() {
-      this.isApproveModalOpen = true;
-    },
-    closeApprovalModal() {
-      this.isApproveModalOpen = false;
-    },
-    async approve() {
-      this.isLoadingApprove = true;
-      this.approveText = DEFAULT_WAITING_APPROVE;
-
-      const confirmTransaction = this.collectibleContract.setApprovalForAll(
-        this.addresses.inventoryManager,
-        this.account
-      );
-
-      confirmTransaction.on("error", (error) => {
-        this.isLoadingApprove = false;
-
-        this.approveText = DEFAULT_APPROVE_TEXT;
-
-        if (error.message) {
-          return ToastSnackbar.error(error.message);
-        }
-
-        return ToastSnackbar.error("An error has occurred");
-      });
-
-      confirmTransaction.on("transactionHash", () => {
-        this.approveText = WAITING_FIRST_CONFIRMATION;
-      });
-
-      confirmTransaction.on("receipt", () => {
-        this.isLoadingApprove = false;
-        this.approveText = DEFAULT_APPROVE_TEXT;
-        this.isApproveModalOpen = false;
-        this.isInventoryManagerApproved = true;
-      });
-
-      return;
     },
   },
 };
