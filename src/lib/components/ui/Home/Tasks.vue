@@ -99,9 +99,10 @@ import Convert from "@/lib/helpers/Convert";
 import Combinator from "@/lib/eth/Combinator";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import GameText from "@/lib/components/ui/Utils/GameText";
+import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
 
 export default {
-  components: { wButton, GameText },
+  components: { wButton, GameText, CountdownBlock },
   data() {
     return {
       isLoading: false,
