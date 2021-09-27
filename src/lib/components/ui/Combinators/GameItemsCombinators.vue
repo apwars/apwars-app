@@ -196,7 +196,7 @@ const ARIMEDES_CLAIM =
   "Your research has been completed, and your Magical Items are available.";
 const ARIMEDES_WAITING_CLAIM_WALLET_APPROVAL = "I need your signature...";
 const ARIMEDES_WAITING_CLAIM_CONFIRMATION =
-  "Waiting confirmation from blockchain...";
+  "Waiting confirmation from the blockchain...";
 
 export default {
   name: "game-items-combinators",
@@ -234,7 +234,7 @@ export default {
         personage: {
           image: "/images/weapon-research/arimedes.png",
           description:
-            "Let's sign a research agreement. You will pay me wCOURAGE and provide 1 Magical Item, and i will retrieve your Magical Item plus the spendables result.",
+            "Let's sign a research agreement. You will pay me wCOURAGE plus provide 1 Magical item but, don't worry, I'll return your Magical item and provide you with spendable items",
         },
       },
       tokenAContract: {},

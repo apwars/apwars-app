@@ -385,7 +385,7 @@ export default {
       });
 
       confirmTransaction.on("transactionHash", () => {
-        this.textModalWorker = "waiting confirmation from blockchain...";
+        this.textModalWorker = "waiting confirmation from the blockchain...";
       });
 
       confirmTransaction.on("receipt", () => {
