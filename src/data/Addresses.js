@@ -36,7 +36,7 @@ export default {
     "97": process.env.VUE_APP_TRANSPORTER_CONTRACT_97,
   },
   inventoryManager: {
-    "56": "",
+    "56": "0x778c9fBD752D507235Fe2e13b359D329276C928c",
     "97": "0xCcbbEe5Db734B37864AC966Cbf6e3064B9197e11",
   }
 };
