@@ -8,7 +8,7 @@
     <div v-else>
       <v-container fluid>
         <v-row>
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="4" class="pr-0 pl-1   ">
             <countdown v-if="nextWarPhase" :time="nextWarPhase.endAt" :title="nextWarPhase.title" @end="getNextWarPhase" hideEnd />
             <div class="d-flex justify-center mt-1" v-if="nextWarPhase.redirect">
               <wButton
@@ -105,13 +105,9 @@
                 v-slot="{ toggle }"
               >
                 <div class="d-flex align-center" @click="toggle">
-                  <div>
-                    <img
-                      class="bg-img-task"
-                      :width="
-                        `${$vuetify.breakpoint.mobile ? '70px' : '100px'}
-                    `
-                      "
+                  <div class="bg-img-task">
+                    <v-img
+                      :max-width="`${$vuetify.breakpoint.mobile ? '50px' : '80px'}`"
                       :src="item.image"
                     />
                   </div>
@@ -121,7 +117,7 @@
 
                     <div class="input-info" v-if="item.inputs">
                       <div class="claim-info" v-for="(input, index) in item.inputs" :key="index">
-                        <div v-if="input.amount">{{ input.amount }} {{ input.name }} </div> <img height="16px" width="16px" :src="input.image" />
+                        <div v-if="input.amount">{{ input.amount }} {{ input.name }} </div> <img height="18px" width="18px" :src="input.image" />
                       </div> 
                     </div>
 
@@ -148,9 +144,6 @@
             <div v-else>
               Hey, looks like you don't have any tasks right now. How about
               training units, researching weapons and evolving your troop?
-              <wButton class="mt-3" @click="$router.push('/training-center')">
-                Training center
-              </wButton>
             </div>
           </v-col>
         </v-row>
