@@ -265,6 +265,105 @@
             </v-col>
           </v-row>
           <!-- END WHITELIST -->
+          <v-container>
+            <h1 v-if="$vuetify.breakpoint.mdAndUp" class="h1Y text-center">
+              Reservation Tickets
+            </h1>
+            <h1 v-else class="h3Y text-center mt-4 mb-4">
+              Reservation Tickets
+            </h1>
+            <v-row>
+              <v-col
+                cols="12"
+                offset-md="2"
+                md="4"
+                :class="
+                  $vuetify.breakpoint.mdAndUp
+                    ? 'd-flex align-center justify-center'
+                    : 'align-center justify-center text-center'
+                "
+              >
+                <div class="text-center">
+                  <h1 class="h1W">World</h1>
+                  <v-img
+                    src="/images/project/world.png"
+                    max-width="300"
+                    min-height="100"
+                    class="img"
+                  >
+                  </v-img>
+                  <div class="span"
+                    >Your balance: {{ worldTicketBalance }}
+                  </div>
+                  <wButton
+                    :disabled="
+                      isClaimingWorldTicket ||
+                        cliffEndBlock > currentBlockNumber
+                    "
+                    v-if="privateSaleTimer === 0 && worldTicketBalance > 0"
+                    @click="claimWorldTicket()"
+                    width="170px"
+                  >
+                    <div class="d-flex justify-center">
+                      <span
+                        v-if="!isClaimingWorldTicket"
+                        class="align-self-center"
+                        >CLAIM</span
+                      >
+                      <span v-else class="align-self-center">WAITING...</span>
+                    </div>
+                  </wButton>
+                  <p v-if="cliffEndBlock > currentBlockNumber">
+                    The claim will be available after the cliff close
+                  </p>
+                </div>
+              </v-col>
+              <v-col
+                cols="12"
+                md="4"
+                :class="
+                  $vuetify.breakpoint.mdAndUp
+                    ? 'd-flex align-center justify-center'
+                    : 'align-center justify-center text-center'
+                "
+              >
+                <div class="text-center">
+                  <h1 class="h1W">Clans</h1>
+                  <v-img
+                    src="/images/project/clans.png"
+                    max-width="300"
+                    min-height="100"
+                    class="img"
+                  >
+                  </v-img>
+                  <div class="span"
+                    >Your balance: {{ clanTicketBalance }}
+                  </div>
+                  <wButton
+                    :disabled="
+                      isClaimingClanTicket || cliffEndBlock > currentBlockNumber
+                    "
+                    v-if="privateSaleTimer === 0 && clanTicketBalance > 0"
+                    @click="claimClanTicket()"
+                    width="170px"
+                  >
+                    <div class="d-flex justify-center">
+                      <span
+                        v-if="!isClaimingClanTicket"
+                        class="align-self-center"
+                      >
+                        CLAIM
+                      </span>
+                      <span v-else class="align-self-center">WAITING...</span>
+                    </div>
+                    <p v-if="cliffEndBlock > currentBlockNumber">
+                      The claim will be available after the cliff close
+                    </p>
+                  </wButton>
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
           <!-- Distribution Timeline -->
           <v-img
             :src="
