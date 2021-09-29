@@ -59,7 +59,7 @@ export function NPC_INFO() {
         },
         {
           name: "wLAND",
-          description: "wLAND is a game item resource with utility that enables the player to buy worlds and clans, foundations and lands.",
+          description: "wLAND is a game item resource with utility that enables the player to buy worlds, clans, foundations and lands.",
           address: addresses.wLAND,
           type: "erc20",
           image: "/images/icons/wLAND.png",
