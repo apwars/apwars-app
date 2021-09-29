@@ -27,6 +27,12 @@ export default class wGOLD {
       .send({ from });
   }
 
+  decreaseAllowance(from, spender, allowance) {
+    return this.smc.methods
+      .decreaseAllowance(spender, allowance)
+      .send({ from });
+  }
+
   async hasAllowance(owner, spender) {
     const allowance = await this.allowance(owner, spender);
     const bn = new BigNumber(allowance);
