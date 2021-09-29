@@ -58,11 +58,11 @@ export function NPC_INFO() {
           image: "/images/icons/library.png",
         },
         {
-          name: "wGOLD",
-          description: "The wGOLD is the core token of APWars. Through it liquidity is channeled to all other tokens. With wGOLD you can foster loyal troops or hire mercenaries.",
-          address: addresses.wGOLD,
+          name: "wLAND",
+          description: "wLAND is a game item resource with utility that enables the player to buy worlds and clans, foundations and lands.",
+          address: addresses.wLAND,
           type: "erc20",
-          image: "/images/wgold.png",
+          image: "/images/icons/wLAND.png",
         }
       ]
     },
