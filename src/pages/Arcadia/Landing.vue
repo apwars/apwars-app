@@ -49,24 +49,33 @@
         </wButton>
       </div>
     </v-img>
-    <v-divider class="color: secondary" style="max-height: 8px; height: 8px; flex: 10 10 10px" />
+    <v-divider
+      class="color: secondary"
+      style="max-height: 8px; height: 8px; flex: 10 10 10px"
+    />
     <v-container class="container mt-6">
       <v-row class="justify-center align-center">
         <v-col cols="12" lg="8">
           <h1 class="h3Y">What is Arcadia Expansion?</h1>
           <h4>
-            Arcadia is an expansion to a turn-based village system world where you can manage your
-            own system economies, deal with attacks and defenses, join clans, and much more!
+            Arcadia is an expansion to a turn-based village system world where
+            you can manage your own system economies, deal with attacks and
+            defenses, join clans, and much more!
           </h4>
           <br />
           <h4>
-            In a decentralized model, you will be able to create your world, farm tokens rules,
-            collect resources and fees, build foundations and keep players within your system. It's
-            the best move to conquer your enemy's riches and escape real estate speculation!
+            In a decentralized model, you will be able to create your world,
+            farm tokens rules, collect resources and fees, build foundations and
+            keep players within your system. It's the best move to conquer your
+            enemy's riches and escape real estate speculation!
           </h4>
         </v-col>
         <v-col cols="12" lg="4">
-          <v-img src="/images/project/world-1.png" max-width="339" min-height="164"></v-img>
+          <v-img
+            src="/images/project/world-1.png"
+            max-width="339"
+            min-height="164"
+          ></v-img>
         </v-col>
       </v-row>
       <v-row class="mt-6 d-flex flex-column align-center text-center">
@@ -113,14 +122,15 @@
         <v-col cols="12" lg="8">
           <h1 class="h3Y">What to expect from wLAND?</h1>
           <h4>
-            wLAND is an incredible utility token because through it you can own land and
-            foundations. And this is an efficient way to raise resources, receive fees and escape
-            from real estate speculation.
+            wLAND is an incredible utility token because through it you can own
+            land and foundations. And this is an efficient way to raise
+            resources, receive fees and escape from real estate speculation.
           </h4>
           <br />
           <h4>
-            You can expect a decentralized ecosystem on your lands and keep control of the economy
-            in your hands. Buying wLAND is a smart and shrewd move!
+            You can expect a decentralized ecosystem on your lands and keep
+            control of the economy in your hands. Buying wLAND is a smart and
+            shrewd move!
           </h4>
         </v-col>
         <v-col cols="12" lg="4">
@@ -136,11 +146,20 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-divider class="color: secondary" style="max-height: 8px; height: 8px; flex: 10 10 10px" />
+    <v-divider
+      class="color: secondary"
+      style="max-height: 8px; height: 8px; flex: 10 10 10px"
+    />
     <h1 class="go h3Y text-center mt-6 mb-6">BUY wLAND NOW</h1>
 
     <v-container class="container">
-      <v-row :class="$vuetify.breakpoint.mdAndUp ? 'bg-wood align-center justify-center' : ''">
+      <v-row
+        :class="
+          $vuetify.breakpoint.mdAndUp
+            ? 'bg-wood align-center justify-center'
+            : ''
+        "
+      >
         <v-col cols="12" lg="4">
           <div class="d-flex justify-start">
             <v-img
@@ -169,7 +188,11 @@
             </v-progress-linear>
             <p class="mt-1">
               AVAILABLE UNITS:
-              <amount :amount="wLANDAvailableAmountStage" formatted decimals="2" />
+              <amount
+                :amount="wLANDAvailableAmountStage"
+                formatted
+                decimals="2"
+              />
             </p>
           </div>
         </v-col>
@@ -202,7 +225,12 @@
           <v-row class="d-flex mt-n5">
             <v-col cols="12" lg="10">
               <h5>BUSD PRICE:</h5>
-              <v-currency-field outlined v-bind="currencyConfig" v-model="amountBUSD" disabled>
+              <v-currency-field
+                outlined
+                v-bind="currencyConfig"
+                v-model="amountBUSD"
+                disabled
+              >
                 <template v-slot:append>
                   <div class="d-flex">
                     <span class="mr-1 align-self-center">BUSD</span>
@@ -221,15 +249,31 @@
           </v-row>
 
           <wButton
+            v-if="isApprovedBUSD"
+            width="170px"
+            size="medium"
+            @click="buywLAND"
+            :disabled="amountBUSD == 0"
+          >
+            <div class="d-flex justify-center">
+              <span class="align-self-center">
+                {{ isBuyingwLAND ? "Waiting..." : "Buy" }}
+              </span>
+            </div>
+          </wButton>
+          <wButton
+            v-else
             width="170px"
             :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
             size="medium"
             @click="approveBUSD"
-            :disabled="isLoadingApprove"
+            :disabled="isLoadingApprove || isApprovedBUSD === undefined"
           >
             <div class="d-flex justify-center">
               <span class="align-self-center">
-                {{ isLoadingApprove ? 'Waiting...' : 'Approve' }}
+                {{
+                  isLoadingApprove || isApprovedBUSD ? "Waiting..." : "Approve"
+                }}
               </span>
             </div>
           </wButton>
@@ -237,17 +281,20 @@
       </v-row>
       <h1 class="h3Y text-center mt-9">Own Foundations:</h1>
       <v-row class="mt-2 justify-center">
+        <v-col v-if="loadingFoundations" cols="12" class="ma-3">
+          <h1 class="text-center">Loading...</h1>
+        </v-col>
         <v-col
+          v-else
           cols="12"
           lg="4"
-          style="width: 100%"
           class="d-flex justify-space-around"
           v-for="item in foundations"
           :key="item.name"
         >
           <div class="justify-center text-center">
             <h1 class="mt-1 mb-1 text-center">{{ item.name }}</h1>
-            <v-img :src="item.img" max-height="361" max-width="256" class="img mb-1"></v-img>
+            <v-img :src="item.img" max-width="250" class="img mb-1"></v-img>
             <h2 class="h3Y">{{ item.price }} wLAND</h2>
             <h6 class="h3Y mb-1">per {{ item.name }}</h6>
             <wButton
@@ -267,9 +314,9 @@
         </v-col>
       </v-row>
       <h3 class="text-center mt-6">
-        By building foundations, you can earn fees for owning these resources. Everyone needs and
-        wants to enjoy the benefits of increasing courage, doing business, and maintaining
-        protection.
+        By building foundations, you can earn fees for owning these resources.
+        Everyone needs and wants to enjoy the benefits of increasing courage,
+        doing business, and maintaining protection.
       </h3>
     </v-container>
     <v-divider
@@ -293,7 +340,7 @@
         :open="isConfirmOrderModalOpen"
         :imageUrl="modalImg"
         :gameItemTitle="modalName"
-        @confirm="executeOrder"
+        @confirm="buyTicket"
         @close="isConfirmOrderModalOpen = false"
         title="Are you sure you want to buy this item?"
         :amount="balanceItem"
@@ -301,7 +348,11 @@
         <p>How many items do you want to buy?</p>
         <v-row>
           <v-col cols="12" md="6">
-            <number-field class="mt-n1" v-model="quantity" :max="25"></number-field>
+            <number-field
+              class="mt-n1"
+              v-model="quantity"
+              :max="25"
+            ></number-field>
           </v-col>
         </v-row>
         <div class="mt-n6">
@@ -310,14 +361,16 @@
             <amount
               :amount="modalPrice"
               formatted
-              decimals="2"
+              decimals="0"
               tooltip
               title="wLAND"
               symbol="wLAND"
               icon
             />
           </h4>
-          <h4 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'">
+          <h4
+            :class="$vuetify.breakpoint.mdAndUp ? 'd-flex mr-1 mb-1' : 'mt-1'"
+          >
             You will pay for {{ quantity }} items:
             <amount
               :amount="modalPrice * quantity"
@@ -336,13 +389,16 @@
 </template>
 
 <script>
-import wButton from '@/lib/components/ui/Buttons/wButton';
-import Amount from '@/lib/components/ui/Utils/Amount';
-import GameItemWoodModal from '@/lib/components/ui/Modals/GameItemWoodModal';
-import NumberField from '@/lib/components/ui/Utils/NumberField';
+import wButton from "@/lib/components/ui/Buttons/wButton";
+import Amount from "@/lib/components/ui/Utils/Amount";
+import GameItemWoodModal from "@/lib/components/ui/Modals/GameItemWoodModal";
+import NumberField from "@/lib/components/ui/Utils/NumberField";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+import LandSale from "@/lib/eth/LandSale";
 
-import ERC20 from '@/lib/eth/ERC20';
-import Convert from '@/lib/helpers/Convert';
+import ERC20 from "@/lib/eth/ERC20";
+import Collectibles from "@/lib/eth/Collectibles";
+import Convert from "@/lib/helpers/Convert";
 
 export default {
   data() {
@@ -355,23 +411,28 @@ export default {
       balanceItem: 0,
       quantity: 0,
       modalPrice: 0,
-      modalImg: '',
-      modalName: '',
+      modalImg: "",
+      modalName: "",
       wLANDAvailableAmountStage: 0,
 
       isBuyingwLAND: false,
-      isApprovedBUSD: false,
+      isApprovedBUSD: undefined,
 
       isLoadingApprove: false,
+      loadingFoundations: true,
 
-      wLAND: '0x2C6107c27A15D2C7F397D88D76257Ea42c12f89F',
-      addresslandPrivateSale: '0x228a6390419Ec998f79339dd8Bdf33435D700413',
-      addressBUSD: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+      ref: "0x681afa780d17da29203322b473d3f210a7d621259a4e6ce9e403f5a266ff719a",
+
+      pricewLAND: 1.5,
+
+      wLAND: "0x3301078Bf06c2B5632170d4A4742372cEcb2748e",
+      addresslandSale: "0x29688cA746ba4E6809370ca7bdb29D53bDE9A9ec",
+      addressBUSD: "0xFa1d2186CEbFe49F3e053d4751C2d6680775a70F",
 
       currencyConfigBuywLAND: {
         locale: window.navigator.userLanguage || window.navigator.language,
-        prefix: '',
-        suffix: '',
+        prefix: "",
+        suffix: "",
         decimalLength: 0,
         autoDecimalMode: true,
         allowNegative: false,
@@ -379,8 +440,8 @@ export default {
 
       currencyConfig: {
         locale: window.navigator.userLanguage || window.navigator.language,
-        prefix: '',
-        suffix: '',
+        prefix: "",
+        suffix: "",
         decimalLength: 2,
         autoDecimalMode: true,
         allowNegative: false,
@@ -390,61 +451,66 @@ export default {
 
       faq: [
         {
-          question: 'What to do with wLAND?',
+          question: "What to do with wLAND?",
           answer:
-            'You can buy lands to build foundations, collect resources and receive fees with all these features.',
+            "You can buy lands to build foundations, collect resources and receive fees with all these features.",
         },
         {
-          question: 'Why buying lands now will help me in the game?',
+          question: "Why buying lands now will help me in the game?",
           answer:
             "Well, what did landowners gain by buying lands earlier and escaping real estate speculation? That's right, the valorization of their land! By buying lands now, you can pay little to build foundations, collect resources, and receive fees.",
         },
         {
-          question: 'What is Arcadia?',
+          question: "What is Arcadia?",
           answer:
-            'Arcadia is the name given to the expansion of the APWars game and it consists of providing a world with land that can be purchased to collect resources, build foundations and create an economic ecosystem.',
+            "Arcadia is the name given to the expansion of the APWars game and it consists of providing a world with land that can be purchased to collect resources, build foundations and create an economic ecosystem.",
         },
         {
-          question: 'What are foundations?',
+          question: "What are foundations?",
           answer:
-            'Foundations are a kind of property that offers a benefit to those who pay the fees. Temples offer more courage, markets make negotiations possible, and watchtowers maintain security and offer news of troops that may be approaching.',
+            "Foundations are a kind of property that offers a benefit to those who pay the fees. Temples offer more courage, markets make negotiations possible, and watchtowers maintain security and offer news of troops that may be approaching.",
         },
         {
-          question: 'What are the strategies for buying good lands?',
+          question: "What are the strategies for buying good lands?",
           answer:
-            'Initially, you can check how much land each foundation needs to consolidate. For example, watchtowers need nine lands and a good move is to buy nine to build this foundation to receive fees or buy lands in multiple locations, so someone who wants to build foundations needs to buy (for a great price) lands from you. You can join the APWars group on Telegram and discuss more strategies with other players too!',
+            "Initially, you can check how much land each foundation needs to consolidate. For example, watchtowers need nine lands and a good move is to buy nine to build this foundation to receive fees or buy lands in multiple locations, so someone who wants to build foundations needs to buy (for a great price) lands from you. You can join the APWars group on Telegram and discuss more strategies with other players too!",
         },
       ],
       foundations: [
         {
-          name: 'Temples',
-          img: '/images/project/temples.png',
-          price: 10000,
-          remaining: 1,
-        },
-        {
-          name: 'Watchtowers',
-          img: '/images/project/watchtowers.png',
+          id: 58,
+          name: "Temples",
+          img: "/images/project/temples.png",
           price: 15000,
-          remaining: 1,
+          remaining: 0,
         },
         {
-          name: 'Markets',
-          img: '/images/project/markets.png',
+          id: 59,
+          name: "Watchtowers",
+          img: "/images/project/watchtowers.png",
           price: 10000,
-          remaining: 1,
+          remaining: 0,
         },
         {
-          name: 'Hidings place',
-          img: '/images/project/hidings-place.png',
-          price: 5000,
-          remaining: 1,
+          id: 60,
+          name: "Markets",
+          img: "/images/project/markets.png",
+          price: 10000,
+          remaining: 0,
         },
         {
-          name: 'Hidings place',
-          img: '/images/project/hidings-place.png',
+          id: 61,
+          name: "Hidout",
+          img: "/images/project/hidings-place.png",
           price: 5000,
-          remaining: 1,
+          remaining: 0,
+        },
+        {
+          id: 61,
+          name: "Village",
+          img: "/images/project/village.png",
+          price: 5000,
+          remaining: 0,
         },
       ],
     };
@@ -458,15 +524,19 @@ export default {
 
   computed: {
     isConnected() {
-      return this.$store.getters['user/isConnected'];
+      return this.$store.getters["user/isConnected"];
     },
 
     account() {
-      return this.$store.getters['user/account'];
+      return this.$store.getters["user/account"];
     },
 
     currentBlockNumber() {
-      return this.$store.getters['user/currentBlockNumber'];
+      return this.$store.getters["user/currentBlockNumber"];
+    },
+
+    addresses() {
+      return this.$store.getters["user/addresses"];
     },
 
     percentageUnitsSold() {
@@ -474,7 +544,9 @@ export default {
     },
 
     percentageUnitsSoldStage() {
-      return parseInt((1 - this.wLANDAvailableAmountStage / this.soldPerStage) * 100);
+      return parseInt(
+        (1 - this.wLANDAvailableAmountStage / this.soldPerStage) * 100
+      );
     },
   },
 
@@ -484,38 +556,49 @@ export default {
         return;
       }
       this.contractBUSD = new ERC20(this.addressBUSD);
+      this.contractLandSale = new LandSale(this.addresslandSale);
+      this.contractCollectibles = new Collectibles(this.addresses.collectibles);
+
       try {
         this.isApprovedBUSD = await this.contractBUSD.hasAllowance(
           this.account,
-          this.addresslandPrivateSale
+          this.addresslandSale
         );
+        this.foundationsRemaining();
       } catch (error) {
         console.log(error.toString());
       }
     },
 
+    async foundationsRemaining() {
+      for (let item of this.foundations) {
+        item.remaining = await this.contractCollectibles.balanceOf(
+          this.addresslandSale,
+          item.id
+        );
+      }
+      this.loadingFoundations = false;
+    },
+
     async calcAmountBUSD(amount) {
-      this.amountBUSD = Convert.fromWei(
-        await this.contractLandPrivateSale.pricewLAND(this.wLANDSoldAmount, amount),
-        true
-      );
+      this.amountBUSD = amount * this.pricewLAND;
     },
 
     async approveBUSD() {
       try {
         this.isLoadingApprove = true;
 
-        await this.contractBUSD.approve(this.account, this.addresslandPrivateSale);
+        await this.contractBUSD.approve(this.account, this.addresslandSale);
 
         this.isLoadingApprove = false;
         this.isApprovedBUSD = true;
-        ToastSnackbar.success('BUSD smart contract approved successfully!');
+        ToastSnackbar.success("BUSD smart contract approved successfully!");
       } catch (error) {
         this.isLoadingApprove = false;
         if (error.message) {
           return this.showError(error.message);
         }
-        return ToastSnackbar.error('An error has occurred while to approve');
+        return ToastSnackbar.error("An error has occurred while to approve");
       }
     },
 
@@ -523,35 +606,47 @@ export default {
       try {
         this.isBuyingwLAND = true;
 
-        await this.contractLandPrivateSale.buywLAND(
-          Convert.toWei(parseInt(this.amountwLAND)),
+        await this.contractLandSale.buywLAND(
+          parseInt(this.amountwLAND),
+          this.ref,
           this.account
         );
 
         this.isBuyingwLAND = false;
         this.openModalBuy = true;
-        ToastSnackbar.success('wLAND secured successfully!');
+        this.amountwLAND = 0;
+        ToastSnackbar.success("wLAND secured successfully!");
       } catch (error) {
+        console.log(error);
         this.isBuyingwLAND = false;
 
         if (error.message) {
           return this.showError(error.message);
         }
-        return ToastSnackbar.error('An error has occurred while buying wLAND');
+        return ToastSnackbar.error("An error has occurred while buying wLAND");
       }
+    },
+
+    showError(message) {
+      if (message.indexOf("Internal JSON-RPC error.") >= 0) {
+        const obj = JSON.parse(message.replace("Internal JSON-RPC error.", ""));
+        return ToastSnackbar.error(obj.message);
+      }
+
+      return ToastSnackbar.error(message);
     },
 
     colorProgress(percentage) {
       if (percentage < 30) {
-        return '#11D300';
+        return "#11D300";
       } else if (percentage > 30 && percentage < 60) {
-        return '#ffa500';
+        return "#ffa500";
       } else {
-        return '#ff0000';
+        return "#ff0000";
       }
     },
     executeOrder() {
-      console.log('execute order');
+      console.log("execute order");
     },
     openModal(name, img, price) {
       this.modalImg = img;
@@ -588,14 +683,14 @@ export default {
   font-weight: bold;
 }
 .bg-castle {
-  background-image: url('/images/project/bg-castle.png');
+  background-image: url("/images/project/bg-castle.png");
   background-size: cover;
 }
 #background {
   background-color: black;
 }
 .bg-wood {
-  background-image: url('/images/battle/bg-wars.png');
+  background-image: url("/images/battle/bg-wars.png");
   background-repeat: repeat;
   border: 3px solid #966a3c;
   border-radius: 20px;
