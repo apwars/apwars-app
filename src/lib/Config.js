@@ -8,6 +8,6 @@ export function getSmartContractAddresses(networkId) {
     FED: Addresses.FED[networkId],
     marketNFTS: Addresses.marketNFTS[networkId],
     transporter: Addresses.transporter[networkId],
-    inventoryManager: Addresses.inventoryManager[networkId],
+    inventoryManagerCollectibles: Addresses.inventoryManagerCollectibles[networkId],
   };
 }

@@ -35,8 +35,12 @@ export default {
     "56": process.env.VUE_APP_TRANSPORTER_CONTRACT_56,
     "97": process.env.VUE_APP_TRANSPORTER_CONTRACT_97,
   },
-  inventoryManager: {
+  inventoryManagerCollectibles: {
     "56": "0x778c9fBD752D507235Fe2e13b359D329276C928c",
-    "97": "0xCcbbEe5Db734B37864AC966Cbf6e3064B9197e11",
-  }
+    "97": "0x2f5690Fa681ba67840eBd723F014f376b14C0779",
+  },
+  inventoryManagerTokens: {
+    "56": "",
+    "97": "0x2A6eaAADac4B671F3D6643272564520EaC037997",
+  },
 };

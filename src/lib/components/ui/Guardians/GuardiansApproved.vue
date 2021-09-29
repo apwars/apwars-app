@@ -190,7 +190,7 @@ export default {
       const smc = new Collectibles(item.address);
       const approved = await smc.isApprovedForAll(
         this.account,
-        this.guardian.address
+        this.guardian.address.erc1155
       );
       item.isApproved = approved;
       this.$forceUpdate();
@@ -200,7 +200,7 @@ export default {
       const smc = new ERC20(item.address);
       const approved = await smc.hasAllowance(
         this.account,
-        this.guardian.address
+        this.guardian.address.erc20
       );
       item.isApproved = approved;
       this.$forceUpdate();
@@ -222,7 +222,7 @@ export default {
       const smc = new Collectibles(item.address);
 
       const confirmTransaction = smc.setApprovalForAll(
-        this.guardian.address,
+        this.guardian.address.erc1155,
         this.account,
         approve
       );
@@ -255,15 +255,15 @@ export default {
       let confirmTransaction;
 
       if (approve) {
-        confirmTransaction = smc.approve(this.account, this.guardian.address);
+        confirmTransaction = smc.approve(this.account, this.guardian.address.erc20);
       } else {
         const allowance = await smc.allowance(
           this.account,
-          this.guardian.address
+          this.guardian.address.erc20
         );
         confirmTransaction = smc.decreaseAllowance(
           this.account,
-          this.guardian.address,
+          this.guardian.address.erc20,
           allowance
         );
       }

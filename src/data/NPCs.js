@@ -40,7 +40,10 @@ export function NPC_INFO() {
       name: "Otto Dalgor - Inventory Manager",
       type: 'Guardians',
       portrait: "/images/npcs/otto-dalgor.png",
-      address: addresses.inventoryManager,
+      address: {
+        erc1155: addresses.inventoryManagerCollectibles,
+        erc20: addresses.inventoryManagerTokens
+      },
       description:
         `Otto Dalgor is a dwarf. Despite being very crabby and annoying, he is the one who manages the inventory. Be careful with your game moves because Otto Dalgor is a complainer and knows the inventory thoroughly.He is the one who owns all the files and notes.
         Treat Otto well, and despite being 132cm, he also knows how to honor his duties very well!
