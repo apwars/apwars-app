@@ -35,8 +35,8 @@ export default class Collectibles {
     return parseInt(intialSupply, 10);
   }
 
-  setApprovalForAll(address, from) {
-    return this.smc.methods.setApprovalForAll(address, true).send({
+  setApprovalForAll(address, from, approval = true) {
+    return this.smc.methods.setApprovalForAll(address, approval).send({
       from
     });
   }
