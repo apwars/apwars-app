@@ -3,7 +3,7 @@ import { getGameItems } from "./Collectibles/GameItems";
 import { getLegendaryRelics } from "./Collectibles/LegendaryRelics";
 import { getWeapons } from "./Collectibles/Weapons";
 import { getMagicalItems } from "./Collectibles/MagicalItems";
-import { getFoundations } from "./Foundations";
+import { getFoundations } from "./Collectibles/Foundations";
 
 export function getCollectibles() {
   const addresses = store.getters["user/addresses"];

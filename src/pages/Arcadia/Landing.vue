@@ -537,7 +537,7 @@ export default {
         {
           id: 58,
           name: "Temples",
-          img: "/images/project/temples.png",
+          img: "/images/foundations/temples.png",
           price: 150,
           remaining: 0,
           balanceAccount: 0,
@@ -545,7 +545,7 @@ export default {
         {
           id: 59,
           name: "Watchtowers",
-          img: "/images/project/watchtowers.png",
+          img: "/images/foundations/watchtowers.png",
           price: 100,
           remaining: 0,
           balanceAccount: 0,
@@ -553,7 +553,7 @@ export default {
         {
           id: 60,
           name: "Markets",
-          img: "/images/project/markets.png",
+          img: "/images/foundations/markets.png",
           price: 100,
           remaining: 0,
           balanceAccount: 0,
@@ -561,7 +561,7 @@ export default {
         {
           id: 61,
           name: "Hidout",
-          img: "/images/project/hidings-place.png",
+          img: "/images/foundations/hidings-place.png",
           price: 50,
           remaining: 0,
           balanceAccount: 0,
@@ -569,7 +569,7 @@ export default {
         {
           id: 62,
           name: "Village",
-          img: "/images/project/village.png",
+          img: "/images/foundations/village.png",
           price: 50,
           remaining: 0,
           balanceAccount: 0,
