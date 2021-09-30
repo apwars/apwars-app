@@ -161,24 +161,39 @@
         "
       >
         <v-col cols="12" lg="4">
+          <div v-if="$route.query.ref" class="text-center my-2">
+            <div v-if="isRef === undefined">
+              <h3 class="h3Y">Checking coupon...</h3>
+            </div>
+            <div v-else-if="isRef === true">
+              <h3 class="green--text">Coupon activated</h3>
+              <span>Coupon gives 5% off</span>
+            </div>
+            <div v-else>
+              <h3 class="yellow--text">Invalid coupon</h3>
+            </div>
+          </div>
           <div class="d-flex justify-start">
             <v-img
               src="/images/project/wLAND.png"
-              max-width="80"
-              max-height="80"
+              max-width="60"
+              max-height="60"
               class="img"
             ></v-img>
             <div class="mr-5">
-              <h1 class="h3Y">1.50 BUSD</h1>
+              <h1 class="h3Y">
+                <amount :amount="pricewLAND" formatted :decimals="$route.query.ref ? 3 : 2" />
+                BUSD
+              </h1>
               <h3 class="h3Y">per wLAND</h3>
             </div>
           </div>
-          <div class="text-center">
+          <div class="text-center mt-2">
             <v-progress-linear
               class="ml-1 mr-1"
-              :color="colorProgress(percentageUnitsSoldStage)"
+              :color="colorProgress(percentageUnitsSold)"
               buffer-value="100"
-              :value="percentageUnitsSoldStage"
+              :value="percentageUnitsSold"
               stream
               height="30"
             >
@@ -189,7 +204,7 @@
             <p class="mt-1">
               AVAILABLE UNITS:
               <amount
-                :amount="wLANDAvailableAmountStage"
+                :amount="wLANDSold"
                 formatted
                 decimals="2"
               />
@@ -205,6 +220,9 @@
                 v-bind="currencyConfigBuywLAND"
                 v-model="amountwLAND"
                 @input="calcAmountBUSD"
+                :hint="`Balance: ${myBalanceFormatted.wLAND} wLAND`"
+                persistent-hint
+                :disabled="!isApprovedBUSD"
               >
                 <template v-slot:append>
                   <div class="d-flex">
@@ -230,6 +248,8 @@
                 v-bind="currencyConfig"
                 v-model="amountBUSD"
                 disabled
+                :hint="`Balance: ${myBalanceFormatted.busd} BUSD`"
+                persistent-hint
               >
                 <template v-slot:append>
                   <div class="d-flex">
@@ -329,7 +349,18 @@
               </div>
             </wButton>
 
-            <span class="h3Y"> Remaining: {{ item.remaining }} </span>
+            <span class="text-caption">
+              Remaining: {{ item.remaining }} {{ item.name }}</span
+            >
+            <br />
+            <span
+              class="text-caption font-weight-bold"
+              :class="
+                isBalanceTicket(item.price) ? 'green--text' : 'primary--text'
+              "
+            >
+              You have: {{ myBalanceFormatted.wLAND }} wLAND
+            </span>
           </div>
         </v-col>
       </v-row>
@@ -355,7 +386,6 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-      <!-- :isLoading="isLoadingConfirm" -->
       <game-item-wood-modal
         v-if="isConfirmOrderModalOpen"
         :open="isConfirmOrderModalOpen"
@@ -364,7 +394,7 @@
         @confirm="buyTicket"
         @close="isConfirmOrderModalOpen = false"
         title="Are you sure you want to buy this item?"
-        :amount="balanceItem"
+        :amount="ticketSelect.balanceAccount"
         :isLoading="loadingTicket"
       >
         <p>How many items do you want to buy?</p>
@@ -373,7 +403,7 @@
             <number-field
               class="mt-n1"
               v-model="quantity"
-              :max="25"
+              :max="ticketSelect.remaining"
             ></number-field>
           </v-col>
         </v-row>
@@ -418,6 +448,8 @@ import NumberField from "@/lib/components/ui/Utils/NumberField";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 import LandSale from "@/lib/eth/LandSale";
 
+import Convert from "@/lib/helpers/Convert";
+
 import ERC20 from "@/lib/eth/ERC20";
 import Collectibles from "@/lib/eth/Collectibles";
 
@@ -428,10 +460,13 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
+      supplywLAND: 896682,
+
       isConfirmOrderModalOpen: false,
-      balanceItem: 0,
+      balancewLAND: undefined,
+      balanceBUSD: undefined,
       quantity: 0,
-      wLANDAvailableAmountStage: 0,
+      wLANDSoldAmount: 0,
       ticketSelect: {},
 
       isBuyingwLAND: false,
@@ -443,11 +478,12 @@ export default {
       loadingTicket: false,
 
       ref: "0x681afa780d17da29203322b473d3f210a7d621259a4e6ce9e403f5a266ff719a",
+      isRef: undefined,
 
       pricewLAND: 1.5,
 
       wLAND: "0x3301078Bf06c2B5632170d4A4742372cEcb2748e",
-      addresslandSale: "0x29688cA746ba4E6809370ca7bdb29D53bDE9A9ec",
+      addresslandSale: "0x175EeA83C23d0aD3B4323ede5FC5572A7b848619",
       addressBUSD: "0xFa1d2186CEbFe49F3e053d4751C2d6680775a70F",
 
       currencyConfigBuywLAND: {
@@ -502,36 +538,41 @@ export default {
           id: 58,
           name: "Temples",
           img: "/images/project/temples.png",
-          price: 1500,
+          price: 150,
           remaining: 0,
+          balanceAccount: 0,
         },
         {
           id: 59,
           name: "Watchtowers",
           img: "/images/project/watchtowers.png",
-          price: 1000,
+          price: 100,
           remaining: 0,
+          balanceAccount: 0,
         },
         {
           id: 60,
           name: "Markets",
           img: "/images/project/markets.png",
-          price: 1000,
+          price: 100,
           remaining: 0,
+          balanceAccount: 0,
         },
         {
           id: 61,
           name: "Hidout",
           img: "/images/project/hidings-place.png",
-          price: 500,
+          price: 50,
           remaining: 0,
+          balanceAccount: 0,
         },
         {
           id: 62,
           name: "Village",
           img: "/images/project/village.png",
-          price: 500,
+          price: 50,
           remaining: 0,
+          balanceAccount: 0,
         },
       ],
     };
@@ -540,7 +581,7 @@ export default {
     wButton,
     Amount,
     GameItemWoodModal,
-    NumberField,
+    NumberField
   },
 
   computed: {
@@ -561,13 +602,28 @@ export default {
     },
 
     percentageUnitsSold() {
-      return parseInt((this.wLANDSoldAmount / this.maxSupply) * 100);
+      return parseInt((this.wLANDSoldAmount / this.supplywLAND) * 100);
     },
 
-    percentageUnitsSoldStage() {
-      return parseInt(
-        (1 - this.wLANDAvailableAmountStage / this.soldPerStage) * 100
-      );
+    wLANDSold() {
+      return this.supplywLAND - this.wLANDSoldAmount;
+    },
+
+    myBalanceFormatted() {
+      if (this.balancewLAND === undefined || this.balanceBUSD === undefined) {
+        return {
+          wLAND: "loading...",
+          busd: "loading...",
+        };
+      }
+
+      return {
+        wLAND: Convert.formatString(
+          Convert.fromWei(this.balancewLAND, true),
+          2
+        ),
+        busd: Convert.formatString(Convert.fromWei(this.balanceBUSD, true), 2),
+      };
     },
   },
 
@@ -576,16 +632,27 @@ export default {
       if (!this.isConnected) {
         return;
       }
+
       this.contractBUSD = new ERC20(this.addressBUSD);
       this.contractwLAND = new ERC20(this.wLAND);
       this.contractLandSale = new LandSale(this.addresslandSale);
       this.contractCollectibles = new Collectibles(this.addresses.collectibles);
 
       try {
-        this.isApprovedBUSD = await this.contractBUSD.hasAllowance(
-          this.account,
-          this.addresslandSale
-        );
+        if (this.$route.query.ref) {
+          this.ref = window.web3.utils.fromAscii(this.$route.query.ref);
+          const referral = await this.contractLandSale.referral(
+            this.ref,
+            this.account
+          );
+          this.isRef = false;
+          if (referral !== "0x0000000000000000000000000000000000000000") {
+            this.isRef = true;
+            this.pricewLAND = 1.425;
+          }
+        }
+
+        this.wLANDSoldAmount = Convert.fromWei(await this.contractLandSale.wLANDSoldAmount(this.account), true);
 
         this.isApprovedBUSD = await this.contractBUSD.hasAllowance(
           this.account,
@@ -596,6 +663,9 @@ export default {
           this.account,
           this.addresslandSale
         );
+
+        this.balancewLAND = await this.contractwLAND.balanceOf(this.account);
+        this.balanceBUSD = await this.contractBUSD.balanceOf(this.account);
 
         this.foundationsRemaining();
       } catch (error) {
@@ -609,12 +679,20 @@ export default {
           this.addresslandSale,
           item.id
         );
+        item.balanceAccount = await this.contractCollectibles.balanceOf(
+          this.account,
+          item.id
+        );
       }
       this.loadingFoundations = false;
     },
 
     async calcAmountBUSD(amount) {
       this.amountBUSD = amount * this.pricewLAND;
+    },
+
+    isBalanceTicket(ticketPrice) {
+      return Convert.fromWei(this.balancewLAND, true) > ticketPrice;
     },
 
     async approveBUSD() {
@@ -721,6 +799,7 @@ export default {
       }
     },
     openModal(ticket) {
+      this.quantity = 0;
       this.ticketSelect = ticket;
       this.isConfirmOrderModalOpen = true;
     },

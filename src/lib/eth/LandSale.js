@@ -19,4 +19,13 @@ export default class LandPrivateSale {
     const error = await this.smc.methods.buyTicket(ticketId, amount, ref).call({ from });
     return this.smc.methods.buyTicket(ticketId, amount, ref).send({ from });
   }
+
+  referral(ref, from) {
+    return this.smc.methods.referral(ref).call({ from });
+  }
+
+  wLANDSoldAmount(from) {
+    return this.smc.methods.wLANDSoldAmount().call({ from });
+  }
+
 }
