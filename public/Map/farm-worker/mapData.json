@@ -1,0 +1,232 @@
+{
+    "tiles": {
+        "1":  { "movable": true,  "path": "./Map/farm-worker/map/tiles/floor.png" },
+        "2":  { "movable": true,  "path": "./Map/farm-worker/map/tiles/floor_plantation.png" },
+        "3":  { "movable": true,  "path": "./Map/farm-worker/map/tiles/floor_water.png" },
+        "4":  { "movable": true,  "path": "./Map/farm-worker/map/tiles/t_1.png" }
+    },
+    "objects": {
+        "1": {
+            "movable": false, "interactive": false, "rowSpan": 1, "columnSpan": 1, "noTransparency": false, "floor": false,
+            "visuals": { "idle": { "frames": [ { "path": "./Map/farm-worker/map/objects/animals.png" } ] } }
+        },
+        "2": {
+            "movable": false, "interactive": false, "rowSpan": 1, "columnSpan": 1, "noTransparency": false, "floor": false,
+            "visuals": { "idle": { "frames": [ { "path": "./Map/farm-worker/map/objects/house.png" } ] } }
+        },
+        "3": {
+            "movable": false, "interactive": false, "rowSpan": 1, "columnSpan": 1, "noTransparency": false, "floor": false,
+            "visuals": { "idle": { "frames": [ { "path": "./Map/farm-worker/map/objects/mountain.png" } ] } }
+        },
+        "4": {
+            "movable": false, "interactive": false, "rowSpan": 1, "columnSpan": 1, "noTransparency": false, "floor": false,
+            "visuals": { "idle": { "frames": [ { "path": "./Map/farm-worker/map/objects/trees.png" } ] } }
+        },
+        "5": {
+            "movable": false, "interactive": false, "rowSpan": 1, "columnSpan": 1, "noTransparency": false, "floor": false,
+            "visuals": { "idle": { "frames": [ { "path":  "./Map/farm-worker/map/objects/water.png" } ] } }
+        },
+        "6": {
+            "movable": false, "interactive": false, "rowSpan": 1, "columnSpan": 1, "noTransparency": false, "floor": false,
+            "visuals": { "idle": { "frames": [ { "path": "./Map/farm-worker/map/objects/plantation.png" } ] } }
+        },
+        "7": {
+            "movable": false, "interactive": false, "rowSpan": 1, "columnSpan": 1, "noTransparency": false, "floor": false,
+            "visuals": { "idle": { "frames": [ { "path": "./Map/farm-worker/map/objects/mountain_1.png" } ] } }
+        },
+        "8": {
+            "movable": true, "interactive": false, "rowSpan": 1, "columnSpan": 1, "noTransparency": false, "floor": false,
+            "visuals": { "idle": { "frames": [ { "path": "./Map/farm-worker/map/objects/trees.png" } ] } }
+        },
+        "9": {
+            "movable": true,  "interactive": false, "rowSpan": 1, "columnSpan": 1, "noTransparency": true,  "floor": false,
+            "visuals": {
+                "idle": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/tiles/floor.png" }
+                    ]
+                },
+                "idle_s": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1.png" }
+                    ]
+                },
+                "idle_sw": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/objects/worker_water1.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water1.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water1.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water1.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water1.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water2.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water2.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water2.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water2.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water2.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water3.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water3.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water3.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water3.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water3.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water3.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker_water3.png" }
+                    ]
+                },
+                "idle_w": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1.png" }
+                    ]
+                },
+                "idle_nw": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/tiles/floor.png" }
+                    ]
+                },
+                "idle_n": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/tiles/floor.png" }
+                    ]
+                },
+                "idle_ne": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/objects/watercollector1_back.png" }
+                    ]
+                },
+                "idle_e": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1.png" }
+                    ]
+                },
+                "idle_se": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/objects/worker1.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker1.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker1.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker2.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker2.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker2.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker3.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker3.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker3.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker3.png" },
+                        { "path": "./Map/farm-worker/map/objects/worker3.png" }
+                    ]
+                },
+                "move_ne": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/objects/watercollector1_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector1_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector1_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector1_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector2_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector2_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector2_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector2_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector3_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector3_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector3_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector3_back.png" }
+                    ]
+                },
+                "move_nw": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking2_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking2_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking2_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking2_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking3_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking3_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking3_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking3_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking4_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking4_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking4_back.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking4_back.png" }
+                    ]
+                },
+                "move_se": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking2.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking2.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking2.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking2.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking3.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking3.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking3.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking3.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking4.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking4.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking4.png" },
+                        { "path": "./Map/farm-worker/map/objects/workerwalking4.png" }
+                    ]
+                },
+                "move_sw": {
+                    "frames": [
+                        { "path": "./Map/farm-worker/map/objects/watercollector1.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector1.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector1.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector1.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector2.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector2.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector2.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector2.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector3.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector3.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector3.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector3.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector4.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector4.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector4.png" },
+                        { "path": "./Map/farm-worker/map/objects/watercollector4.png" }
+                    ]
+                },
+                "flip": {
+                    "frames": [
+                        { "path":  "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path":  "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path":  "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path":  "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path":  "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path":  "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path":  "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path":  "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path":  "./Map/farm-worker/map/objects/workerwalking1.png" },
+                        { "path":  "./Map/farm-worker/map/objects/workerwalking1.png" }
+                    ]
+                }
+            }
+        },
+        "10": {
+            "movable": true, "interactive": false, "rowSpan": 1, "columnSpan": 1, "noTransparency": false, "floor": false,
+            "visuals": { "idle": { "frames": [ { "path": "./Map/farm-worker/map/objects/orchard.png" } ] } }
+        }
+    },
+    "groundMap": [
+        { "row": "1, 1, 1, 1, 1, 1, 1, 1, 1" },
+        { "row": "1, 1, 1, 1, 1, 1, 1, 1, 1" },
+        { "row": "1, 1, 1, 1, 1, 1, 1, 1, 1" },
+        { "row": "1, 1, 1, 1, 1, 1, 1, 1, 1" },
+        { "row": "1, 3, 1, 1, 1, 1, 1, 1, 1" },
+        { "row": "1, 3, 1, 1, 1, 1, 1, 1, 1" },
+        { "row": "1, 3, 1, 2, 2, 1, 1, 1, 1" },
+        { "row": "1, 1, 1, 1, 1, 1, 1, 1, 1" }
+    ],
+    "objectsMap": [
+        { "row": "4, 4, 4, 4, 4, 0, 3, 7, 7" },
+        { "row": "4, 4, 4, 4, 4, 0, 3, 7, 7" },
+        { "row": "4, 4, 4, 4, 0, 0, 3, 7, 7" },
+        { "row": "0, 0, 10, 10, 0, 1, 3, 7, 7" },
+        { "row": "5, 0, 0, 2, 0, 0, 7, 3, 3" },
+        { "row": "5, 0, 0, 0, 0, 0, 7, 3, 3" },
+        { "row": "5, 0, 0, 0, 0, 0, 3, 7, 7" },
+        { "row": "0, 0, 0, 0, 0, 0, 3, 7, 7" }        
+    ]
+}

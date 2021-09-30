@@ -298,10 +298,11 @@
             <h2 class="h3Y">{{ item.price }} wLAND</h2>
             <h6 class="h3Y mb-1">per {{ item.name }}</h6>
             <wButton
+              v-if="isApprovedwLAND"
               width="170px"
               :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
               size="medium"
-              @click="openModal(item.name, item.img, item.price)"
+              @click="openModal(item)"
             >
               <div class="d-flex justify-center">
                 <span class="align-self-center">
@@ -309,6 +310,25 @@
                 </span>
               </div>
             </wButton>
+            <wButton
+              v-else
+              width="170px"
+              :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
+              size="medium"
+              @click="approvewLAND"
+              :disabled="isLoadingApprove || isApprovedwLAND === undefined"
+            >
+              <div class="d-flex justify-center">
+                <span class="align-self-center">
+                  {{
+                    isLoadingApprove || isApprovedwLAND
+                      ? "Waiting..."
+                      : "Approve"
+                  }}
+                </span>
+              </div>
+            </wButton>
+
             <span class="h3Y"> Remaining: {{ item.remaining }} </span>
           </div>
         </v-col>
@@ -337,13 +357,15 @@
       </v-expansion-panels>
       <!-- :isLoading="isLoadingConfirm" -->
       <game-item-wood-modal
+        v-if="isConfirmOrderModalOpen"
         :open="isConfirmOrderModalOpen"
-        :imageUrl="modalImg"
-        :gameItemTitle="modalName"
+        :imageUrl="ticketSelect.img"
+        :gameItemTitle="ticketSelect.name"
         @confirm="buyTicket"
         @close="isConfirmOrderModalOpen = false"
         title="Are you sure you want to buy this item?"
         :amount="balanceItem"
+        :isLoading="loadingTicket"
       >
         <p>How many items do you want to buy?</p>
         <v-row>
@@ -359,9 +381,9 @@
           <h4 :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''">
             <span>You will pay per item:</span>
             <amount
-              :amount="modalPrice"
+              :amount="ticketSelect.price"
               formatted
-              decimals="0"
+              decimals="2"
               tooltip
               title="wLAND"
               symbol="wLAND"
@@ -373,7 +395,7 @@
           >
             You will pay for {{ quantity }} items:
             <amount
-              :amount="modalPrice * quantity"
+              :amount="ticketSelect.price * quantity"
               formatted
               decimals="2"
               tooltip
@@ -398,7 +420,6 @@ import LandSale from "@/lib/eth/LandSale";
 
 import ERC20 from "@/lib/eth/ERC20";
 import Collectibles from "@/lib/eth/Collectibles";
-import Convert from "@/lib/helpers/Convert";
 
 export default {
   data() {
@@ -410,16 +431,16 @@ export default {
       isConfirmOrderModalOpen: false,
       balanceItem: 0,
       quantity: 0,
-      modalPrice: 0,
-      modalImg: "",
-      modalName: "",
       wLANDAvailableAmountStage: 0,
+      ticketSelect: {},
 
       isBuyingwLAND: false,
       isApprovedBUSD: undefined,
+      isApprovedwLAND: undefined,
 
       isLoadingApprove: false,
       loadingFoundations: true,
+      loadingTicket: false,
 
       ref: "0x681afa780d17da29203322b473d3f210a7d621259a4e6ce9e403f5a266ff719a",
 
@@ -481,35 +502,35 @@ export default {
           id: 58,
           name: "Temples",
           img: "/images/project/temples.png",
-          price: 15000,
+          price: 1500,
           remaining: 0,
         },
         {
           id: 59,
           name: "Watchtowers",
           img: "/images/project/watchtowers.png",
-          price: 10000,
+          price: 1000,
           remaining: 0,
         },
         {
           id: 60,
           name: "Markets",
           img: "/images/project/markets.png",
-          price: 10000,
+          price: 1000,
           remaining: 0,
         },
         {
           id: 61,
           name: "Hidout",
           img: "/images/project/hidings-place.png",
-          price: 5000,
+          price: 500,
           remaining: 0,
         },
         {
-          id: 61,
+          id: 62,
           name: "Village",
           img: "/images/project/village.png",
-          price: 5000,
+          price: 500,
           remaining: 0,
         },
       ],
@@ -556,6 +577,7 @@ export default {
         return;
       }
       this.contractBUSD = new ERC20(this.addressBUSD);
+      this.contractwLAND = new ERC20(this.wLAND);
       this.contractLandSale = new LandSale(this.addresslandSale);
       this.contractCollectibles = new Collectibles(this.addresses.collectibles);
 
@@ -564,6 +586,17 @@ export default {
           this.account,
           this.addresslandSale
         );
+
+        this.isApprovedBUSD = await this.contractBUSD.hasAllowance(
+          this.account,
+          this.addresslandSale
+        );
+
+        this.isApprovedwLAND = await this.contractwLAND.hasAllowance(
+          this.account,
+          this.addresslandSale
+        );
+
         this.foundationsRemaining();
       } catch (error) {
         console.log(error.toString());
@@ -602,6 +635,24 @@ export default {
       }
     },
 
+    async approvewLAND() {
+      try {
+        this.isLoadingApprove = true;
+
+        await this.contractwLAND.approve(this.account, this.addresslandSale);
+
+        this.isLoadingApprove = false;
+        this.isApprovedwLAND = true;
+        ToastSnackbar.success("wLAND smart contract approved successfully!");
+      } catch (error) {
+        this.isLoadingApprove = false;
+        if (error.message) {
+          return this.showError(error.message);
+        }
+        return ToastSnackbar.error("An error has occurred while to approve");
+      }
+    },
+
     async buywLAND() {
       try {
         this.isBuyingwLAND = true;
@@ -617,9 +668,33 @@ export default {
         this.amountwLAND = 0;
         ToastSnackbar.success("wLAND secured successfully!");
       } catch (error) {
-        console.log(error);
         this.isBuyingwLAND = false;
 
+        if (error.message) {
+          return this.showError(error.message);
+        }
+        return ToastSnackbar.error("An error has occurred while buying wLAND");
+      }
+    },
+
+    async buyTicket() {
+      try {
+        this.loadingTicket = true;
+
+        await this.contractLandSale.buyTicket(
+          this.ticketSelect.id,
+          this.quantity,
+          this.ref,
+          this.account
+        );
+
+        this.loadingTicket = false;
+        this.isConfirmOrderModalOpen = false;
+        this.quantity = 0;
+        this.ticketSelect = {};
+        ToastSnackbar.success("Ticket successfully purchased!");
+      } catch (error) {
+        this.loadingTicket = false;
         if (error.message) {
           return this.showError(error.message);
         }
@@ -645,13 +720,8 @@ export default {
         return "#ff0000";
       }
     },
-    executeOrder() {
-      console.log("execute order");
-    },
-    openModal(name, img, price) {
-      this.modalImg = img;
-      this.modalName = name;
-      this.modalPrice = price;
+    openModal(ticket) {
+      this.ticketSelect = ticket;
       this.isConfirmOrderModalOpen = true;
     },
   },

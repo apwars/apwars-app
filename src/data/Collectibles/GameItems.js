@@ -11,7 +11,7 @@ export function getGameItems() {
     {
       id: 0,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "The Pioneer",
@@ -30,7 +30,7 @@ export function getGameItems() {
     {
       id: 1,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       description:
@@ -47,85 +47,9 @@ export function getGameItems() {
       },
     },
     {
-      id: 2,
-      type: "gameItem",
-      typeDesc: "Game Item",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
-      title: "The Elixir (10%)",
-      description:
-        '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
-      image: "/images/nfts/elixir10.png",
-      parameters: {
-        id: 2,
-        price: "1000000000000000000000",
-      },
-      signatures: {
-        "56":
-          "0x1366bd6450f28b5c6005ecbf2e32e970438de817d380ddae6e730060309fe2005f660c755aa9a383504e6aad85afd5778260925dda3c9a7ec9ca84cac77c793c01",
-      },
-    },
-    {
-      id: 3,
-      type: "gameItem",
-      typeDesc: "Game Item",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
-      title: "The Elixir (15%)",
-      description:
-        '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
-      image: "/images/nfts/elixir15.png",
-      parameters: {
-        id: 3,
-        price: "100000000000000000000000",
-      },
-      signatures: {
-        "56":
-          "0x4cc257cb09cbffd97271ae0ea2a9f22c93c5d1b0f66b1d3f7b9de21a919a54584edab933b3b5006dbfecf604ca12d5216383acdb0ca880f322857f9f6393d44300",
-      },
-    },
-    {
-      id: 4,
-      type: "gameItem",
-      typeDesc: "Game Item",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
-      title: "The Elixir (20%)",
-      description:
-        '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
-      image: "/images/nfts/elixir20.png",
-      parameters: {
-        id: 4,
-        price: "200000000000000000000000",
-      },
-      signatures: {
-        "56":
-          "0x9e8cf796a6c72e56933aa344bd9c9223428fa2fd2c3d58972be2fe8d37b24c422530dcf7890370e1dc4e3eb87df14efc01726b0d3d432dfa44021b663504c94b01",
-      },
-    },
-    {
-      id: 5,
-      type: "gameItem",
-      typeDesc: "Game Item",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
-      title: "The Arcane's Book",
-      description:
-        '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both planes and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b></small>',
-      image: "/images/nfts/arcane.png",
-      parameters: {
-        id: 5,
-        price: "10000000000000000000000",
-      },
-      signatures: {
-        "56":
-          "0x13a77abf8c26731ff352621f450db6901b218735322e2d99fd58b69103477e531aef21cd73ece1ecfe21e58fe560bdde666328c736be5a2aa69ad692a85b2e6201",
-      },
-    },
-    {
       id: 6,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Our first beloved hater",
@@ -144,7 +68,7 @@ export function getGameItems() {
     {
       id: 7,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (10%)",
@@ -163,7 +87,7 @@ export function getGameItems() {
     {
       id: 8,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (15%)",
@@ -182,7 +106,7 @@ export function getGameItems() {
     {
       id: 9,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (20%)",
@@ -201,7 +125,7 @@ export function getGameItems() {
     {
       id: 10,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       isGift: true,
       tokenAddress: addresses.wGOLD,
@@ -214,7 +138,7 @@ export function getGameItems() {
       id: 11,
       isGift: true,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "The Society 48h-Gold Saver (20%)",
@@ -227,7 +151,7 @@ export function getGameItems() {
     {
       id: 12,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (10%)",
@@ -246,7 +170,7 @@ export function getGameItems() {
     {
       id: 13,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (30%)",
@@ -265,7 +189,7 @@ export function getGameItems() {
     {
       id: 14,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Corp Troop Saver (60%)",
@@ -284,7 +208,7 @@ export function getGameItems() {
     {
       id: 15,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (10%)",
@@ -303,7 +227,7 @@ export function getGameItems() {
     {
       id: 16,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (30%)",
@@ -322,7 +246,7 @@ export function getGameItems() {
     {
       id: 17,
       type: "gameItem",
-      typeDesc: "Game Item",
+      typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
       title: "Degen Troop Saver (60%)",
@@ -341,7 +265,7 @@ export function getGameItems() {
     {
       id: 27,
       type: 'spendable',
-      typeDesc: 'Spendable',
+      typeDesc: 'Transport',
       contractAddress: addresses.collectibles,
       isGift: false,
       title: "Free Transport",
@@ -351,13 +275,23 @@ export function getGameItems() {
     {
       id: 28,
       type: 'gameItem',
-      typeDesc: 'Game Item',
+      typeDesc: 'Game Items',
       contractAddress: addresses.collectibles,
       isGift: false,
       title: "Experience Ring",
       description: `And to you my youngest son I leave you this. This ring is for you to measure how much you already learned from life. As you get older it will change its appearance, in the moment you wear it its stone will turn to white, as you learn from difficulties it will get green, yellow, red, blue and eventually purple. I desire you were destined to a simpler life but with the responsibilities you heir I think your purple will be more intense than mine.
       - "King Leonidas of the first human empire at his deathbed"`,
       image: "/images/nfts/experience-ring.png",
+    },
+    {
+      id: 49,
+      type: 'gameItem',
+      typeDesc: 'Game Items',
+      contractAddress: addresses.collectibles,
+      isGift: false,
+      title: "Worker",
+      description: "Workers are essential in Arcadia. They will carry on working effortlessly and effectively for as long as necessary in order to clean up the lands and build up strong foundations for generations to come.",
+      image: "/images/nfts/worker.png",
     }
 
   ];

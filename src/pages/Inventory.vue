@@ -184,19 +184,78 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-container fluid v-if="collection.length > 0 && tab === 0">
-      <v-row dense>
-        <v-col v-for="collectible in collection" :key="collectible.id" cols="12" offset-lg="2" lg="3" md="6" sm="6">
-          <nft-card :collectible="collectible" :myCollection="true" />
-        </v-col>
-      </v-row>
+
+    <v-container class="mt-n6">
+      <v-tabs-items v-model="tab">
+        <v-tab-item>
+          <v-card flat>
+            <v-container v-if="!isLoading && collection.length">
+              <v-row :no-gutters="$vuetify.breakpoint.mobile">
+                <v-col cols="12" lg="4">
+                  <v-select
+                    v-model="gameItemTypeFilter"
+                    :items="gameItemTypesOptions"
+                    label="Game Item Type"
+                    multiple
+                    chips
+                    solo
+                    outlined
+                    class="filter-input"
+                  >
+                  </v-select>
+                </v-col>
+                <v-col cols="12" lg="3" v-if="gameItemTypeFilter.length">
+                  <wButton @click="clearFilter" class=" mr-3">
+                    <div class="d-flex justify-center">
+                      <v-icon class="mx-1">
+                        mdi-minus-circle
+                      </v-icon>
+                      <small class="align-self-center">Clear filter</small>
+                    </div>
+                  </wButton>
+                </v-col>
+              </v-row>
+            </v-container>
+            <v-container :fluid="$vuetify.breakpoint.mobile" v-if="isLoading">
+              <v-row>
+                <v-col cols="12" class="text-center ma-6 ma-sm-0">
+                  <h3 class="text-h3">Loading...</h3>
+                </v-col>
+              </v-row>
+            </v-container>
+            <v-container v-else-if="filteredCollection.length">
+              <v-row>
+                <v-col
+                  v-for="collectible in filteredCollection"
+                  :key="`${collectible.id}-${collectible.type}`"
+                  sm="12"
+                  md="6"
+                  :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
+                >
+                  <nft-card :collectible="collectible" :myCollection="true" />
+                </v-col>
+              </v-row>
+            </v-container>
+            <v-container v-else>
+              <v-row dense>
+                {{ hasItems ? 'No items found on this filter, try to change it.' : 'Your collection is empty' }}
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <v-container>
+              <v-row>
+                <v-col>
+                  <list-units />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
     </v-container>
-    <v-container v-if="collection.length === 0 && !isLoading">
-      <v-row dense>
-        Your collection is empty
-      </v-row>
-    </v-container>
-    <list-units v-if="tab === 1"></list-units>
   </div>
 </template>
 
@@ -210,7 +269,7 @@ import wButton from '@/lib/components/ui/Buttons/wButton';
 import Amount from '@/lib/components/ui/Utils/Amount';
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
-import { getCollectibles } from '@/data/Collectibles';
+import { getCollectibles, getGameItemTypesOptions } from '@/data/Collectibles';
 import Collectibles from '@/lib/eth/Collectibles';
 import wGOLD from '@/lib/eth/wGOLD';
 import wCOURAGE from '@/lib/eth/wCOURAGE';
@@ -236,6 +295,8 @@ export default {
       totalItems: 0,
       isLoading: true,
       tab: 0,
+      gameItemTypeFilter: [],
+      gameItemTypesOptions: [],
     };
   },
   computed: {
@@ -262,6 +323,15 @@ export default {
           return item;
         });
     },
+    filteredCollection() {
+      if (this.gameItemTypeFilter.length > 0) {
+        return this.collection.filter(c => this.gameItemTypeFilter.includes(c.typeDesc));
+      }
+      return this.collection;
+    },
+    hasItems() {
+      return this.collection.length > 0;
+    }
   },
   watch: {
     isConnected() {
@@ -276,6 +346,7 @@ export default {
   },
   mounted() {
     this.loadData();
+    this.gameItemTypesOptions = getGameItemTypesOptions().map((o) => ({ text: o, value: o }));
   },
   methods: {
     goTo(rout) {
@@ -286,7 +357,6 @@ export default {
         return;
       }
       try {
-        this.isLoading = true;
         const wgold = new wGOLD(this.addresses.wGOLD);
         const wcourage = new wCOURAGE(this.addresses.wCOURAGE);
         this.balance = await wgold.balanceOf(this.account);
@@ -306,6 +376,9 @@ export default {
         this.isLoading = false;
       }
     },
+    clearFilter() {
+      this.gameItemTypeFilter = [];
+    }
   },
 };
 </script>

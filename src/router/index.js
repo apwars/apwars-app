@@ -15,6 +15,7 @@ import PrivateSale from "@/pages/Arcadia/PrivateSale.vue";
 import ArcadiaExpansion from "@/pages/Arcadia/Landing.vue";
 import WarPreparation from "@/pages/WarPreparation.vue";
 import TrainingCenter from "@/pages/TrainingCenter.vue";
+import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
 
 Vue.use(Router);
@@ -94,6 +95,11 @@ export const routes = [
         path: "/private-sale",
         name: "/private-sale",
         component: PrivateSale
+      },
+      {
+        path: "/worker",
+        name: "/worker",
+        component: Worker
       },
       {
         path: "/arcadia-expansion",

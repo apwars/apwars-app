@@ -3,13 +3,24 @@
     <div v-if="isLoading">
       <game-text header="h2" class="text-center d-block py-9"
         >Loading...</game-text
-      >
+      > 
     </div>
     <div v-else>
       <v-container fluid>
         <v-row>
-          <v-col cols="12" md="4">
-            <countdown :time="nextWarCountdown" title="Next War"></countdown>
+          <v-col cols="12" md="4" class="pr-0 pl-1   ">
+            <countdown v-if="nextWarPhase" :time="nextWarPhase.endAt" :title="nextWarPhase.title" @end="getNextWarPhase" hideEnd />
+            <div class="d-flex justify-center mt-1" v-if="nextWarPhase.redirect">
+              <wButton
+                @click="
+                  $router.push(
+                    nextWarPhase.redirect
+                  )
+                "
+              >
+                {{ nextWarPhase.button_label }}
+              </wButton>
+            </div>
           </v-col>
           <v-col cols="12" md="4">
             <v-img
@@ -35,6 +46,7 @@
             />
             <div class="d-flex justify-center">
               <wButton
+                v-if="(nextWar && lastWar) && nextWar.id !== lastWar.id"
                 @click="
                   $router.push(
                     `/wars/${lastWar.contractAddress[networkInfo.id]}/report`
@@ -93,19 +105,21 @@
                 v-slot="{ toggle }"
               >
                 <div class="d-flex align-center" @click="toggle">
-                  <div>
-                    <img
-                      class="bg-img-task"
-                      :width="
-                        `${$vuetify.breakpoint.mobile ? '70px' : '100px'}
-                    `
-                      "
+                  <div class="bg-img-task">
+                    <v-img
+                      :max-width="`${$vuetify.breakpoint.mobile ? '50px' : '80px'}`"
                       :src="item.image"
                     />
                   </div>
 
                   <div class="ml-2 ml-md-3 mr-2 mr-md-6">
                     <span class="font-weight-bold">{{ item.name }}</span>
+
+                    <div class="input-info" v-if="item.inputs">
+                      <div class="claim-info" v-for="(input, index) in item.inputs" :key="index">
+                        <div v-if="input.amount">{{ input.amount }} {{ input.name }} </div> <img height="18px" width="18px" :src="input.image" />
+                      </div> 
+                    </div>
 
                     <wButton
                       v-if="item.combinatorInfo.isClaim"
@@ -130,9 +144,6 @@
             <div v-else>
               Hey, looks like you don't have any tasks right now. How about
               training units, researching weapons and evolving your troop?
-              <wButton class="mt-3" @click="$router.push('/training-center')">
-                Training center
-              </wButton>
             </div>
           </v-col>
         </v-row>
@@ -147,6 +158,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import GameText from "@/lib/components/ui/Utils/GameText";
 import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
+import Convert from "@/lib/helpers/Convert"
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -167,7 +179,6 @@ export default {
   data() {
     return {
       isLoading: true,
-      nextWar: 1631491200000,
       balanceFED: 0,
       wars: [],
       lastWar: {},
@@ -179,6 +190,8 @@ export default {
         { image: "/images/weapons/catapult-undead.png" },
         { image: "/images/weapons/catapult-elves.png" },
       ],
+      nextWar: {},
+      nextWarPhase: null
     };
   },
 
@@ -201,10 +214,6 @@ export default {
 
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
-    },
-
-    nextWarCountdown() {
-      return this.nextWar - new Date().getTime();
     },
 
     imgWinnerLastWar() {
@@ -239,6 +248,9 @@ export default {
 
       this.wars = getWars(this.networkInfo.id !== "56");
       this.wars = this.wars.reverse();
+
+      this.nextWar = { ...this.wars[0] };
+      this.getNextWarPhase();
 
       let warMachine = new WarMachine(
         this.wars[0].contractAddress[this.networkInfo.id],
@@ -293,6 +305,24 @@ export default {
 
         task.combinatorInfo.isClaim = false;
 
+        if (task.inputs) {
+          const tokenAConfig = await combinatorContract.getTokenAConfig(
+            this.account,
+            this.addresses.wCOURAGE,
+            combinatorId
+          );
+
+          task.inputs[0].amount = Convert.fromWei(tokenAConfig.amount)
+
+          const tokenBConfig = await combinatorContract.getTokenBConfig(
+            this.account,
+            this.account,
+            combinatorId
+          );
+
+          task.inputs[1].amount = Convert.fromWei(tokenBConfig.amount)
+        }
+
         if (this.currentBlockNumber >= task.combinatorInfo.endBlock) {
           task.combinatorInfo.isClaim = true;
         }
@@ -302,6 +332,20 @@ export default {
         (task) => task.combinatorInfo.combinatorId !== "0"
       );
     },
+
+    getNextWarPhase() {
+      const nW = this.wars[0];
+      const currentTime = new Date().getTime();
+      let currentPhase = nW.phases.find(p => (p.endAt - currentTime) > 0);
+
+      if (currentPhase) {
+        currentPhase = {...currentPhase, endAt: currentPhase.endAt - currentTime};
+        this.nextWarPhase = currentPhase;
+        return
+      }
+
+      this.nextWarPhase = nW.phases[nW.phases.length - 1];
+    }
   },
 };
 </script>
@@ -326,5 +370,10 @@ export default {
   font-size: 21px;
   height: 30px;
   min-width: 30px;
+}
+
+.claim-info {
+  display: flex;
+  font-size: 12px;
 }
 </style>
