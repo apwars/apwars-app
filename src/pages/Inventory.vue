@@ -17,7 +17,7 @@
       <v-col cols="12" md="6" xm="12" class="px-0">
         <h2>Resources</h2>
         <v-row class="mt-1">
-          <v-col class="d-flex py-0 justify-begin" >
+          <v-col class="d-flex py-0 justify-begin">
             <img src="/images/wgold.png" class="resources ml-0 mr-1" />
             <div class="text-left">
               <amount
@@ -65,7 +65,7 @@
           </v-col>
         </v-row>
       </v-col>
-      
+
       <v-col cols="12" md="3" xm="12" class="mb-4 d-flex justify-center">
         <v-row class="mt-1 justify-space-between d-block">
           <a class="router-link" href="https://exchange.apwars.farm/">
@@ -81,7 +81,11 @@
             </wButton>
           </a>
 
-          <wButton width="250px" class="d-flex  justify-center mt-1" @click="goTo('/black-market')">
+          <wButton
+            width="250px"
+            class="d-flex  justify-center mt-1"
+            @click="goTo('/black-market')"
+          >
             <div class="d-flex justify-center">
               <img
                 src="/images/black-market/black-market.png"
@@ -157,7 +161,11 @@
             </wButton>
           </a>
 
-          <wButton width="180px" class="d-flex align-self-center mt-1" @click="goTo('/black-market')">
+          <wButton
+            width="180px"
+            class="d-flex align-self-center mt-1"
+            @click="goTo('/black-market')"
+          >
             <div class="d-flex justify-center">
               <img
                 src="/images/black-market/black-market.png"
@@ -172,14 +180,11 @@
     </v-row>
     <v-container>
       <v-row class="d-flex">
-        <v-col
-          cols="12"
-          lg="6"
-          xl="4"
-          class="d-flex">
+        <v-col cols="12" lg="6" xl="4" class="d-flex">
           <v-tabs v-model="tab">
             <v-tab>Game Items</v-tab>
             <v-tab>My Troops</v-tab>
+            <v-tab>Guardians</v-tab>
           </v-tabs>
         </v-col>
       </v-row>
@@ -238,7 +243,11 @@
             </v-container>
             <v-container v-else>
               <v-row dense>
-                {{ hasItems ? 'No items found on this filter, try to change it.' : 'Your collection is empty' }}
+                {{
+                  hasItems
+                    ? "No items found on this filter, try to change it."
+                    : "Your collection is empty"
+                }}
               </v-row>
             </v-container>
           </v-card>
@@ -254,25 +263,46 @@
             </v-container>
           </v-card>
         </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <v-container>
+              <v-row>
+                <v-col class="mt-6">
+                  <guardians-approved
+                    v-for="npcInfo in npcsInfo"
+                    v-bind:key="npcInfo.name"
+                    :guardian="npcInfo"
+                  />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-tab-item>
       </v-tabs-items>
     </v-container>
   </div>
 </template>
 
 <script>
-import SquareButton from '@/lib/components/ui/Utils/SquareButton';
-import GameText from '@/lib/components/ui/Utils/GameText';
-import NftCard from '@/lib/components/ui/NFTCard';
-import GameTitle from '@/lib/components/ui/Utils/GameTitle';
-import ProfileCard from '@/lib/components/ui/ProfileCard';
-import wButton from '@/lib/components/ui/Buttons/wButton';
-import Amount from '@/lib/components/ui/Utils/Amount';
+import Collectibles from "@/lib/eth/Collectibles";
+
+import { NPCS, NPC_INFO } from "@/data/NPCs";
+
+import SquareButton from "@/lib/components/ui/Utils/SquareButton";
+import GameText from "@/lib/components/ui/Utils/GameText";
+import NftCard from "@/lib/components/ui/NFTCard";
+import GameTitle from "@/lib/components/ui/Utils/GameTitle";
+import ProfileCard from "@/lib/components/ui/ProfileCard";
+import wButton from "@/lib/components/ui/Buttons/wButton";
+import Amount from "@/lib/components/ui/Utils/Amount";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
-import PageTitle from '@/lib/components/ui/Utils/PageTitle.vue';
-import { getCollectibles, getGameItemTypesOptions } from '@/data/Collectibles';
-import Collectibles from '@/lib/eth/Collectibles';
-import wGOLD from '@/lib/eth/wGOLD';
-import wCOURAGE from '@/lib/eth/wCOURAGE';
+import PageTitle from "@/lib/components/ui/Utils/PageTitle.vue";
+import { getCollectibles, getGameItemTypesOptions } from "@/data/Collectibles";
+import wGOLD from "@/lib/eth/wGOLD";
+import wCOURAGE from "@/lib/eth/wCOURAGE";
+import NPCModal from "@/lib/components/ui/Modals/NPCModal";
+import GuardiansApproved from "@/lib/components/ui/Guardians/GuardiansApproved";
+
 export default {
   components: {
     GameText,
@@ -284,11 +314,13 @@ export default {
     wButton,
     Amount,
     ListUnits,
+    "npc-modal": NPCModal,
+    GuardiansApproved,
   },
   data() {
     return {
-      balance: '0',
-      balanceCOURAGE: '0',
+      balance: "0",
+      balanceCOURAGE: "0",
       collectibles: [],
       balances: [],
       itemsCount: 0,
@@ -297,23 +329,27 @@ export default {
       tab: 0,
       gameItemTypeFilter: [],
       gameItemTypesOptions: [],
+      isApproveModalOpen: false,
+      isLoadingApprove: false,
+      collectibleContract: null,
+      npcsShow: [NPCS.OTTO_DALGOR],
     };
   },
   computed: {
     isConnected() {
-      return this.$store.getters['user/isConnected'];
+      return this.$store.getters["user/isConnected"];
     },
     account() {
-      return this.$store.getters['user/account'];
+      return this.$store.getters["user/account"];
     },
     addresses() {
-      return this.$store.getters['user/addresses'];
+      return this.$store.getters["user/addresses"];
     },
     networkInfo() {
-      return this.$store.getters['user/networkInfo'];
+      return this.$store.getters["user/networkInfo"];
     },
     currentBlockNumber() {
-      return this.$store.getters['user/currentBlockNumber'];
+      return this.$store.getters["user/currentBlockNumber"];
     },
     collection() {
       return this.collectibles
@@ -325,13 +361,20 @@ export default {
     },
     filteredCollection() {
       if (this.gameItemTypeFilter.length > 0) {
-        return this.collection.filter(c => this.gameItemTypeFilter.includes(c.typeDesc));
+        return this.collection.filter((c) =>
+          this.gameItemTypeFilter.includes(c.typeDesc)
+        );
       }
       return this.collection;
     },
     hasItems() {
       return this.collection.length > 0;
-    }
+    },
+    npcsInfo() {
+      return this.npcsShow.map((npc) => {
+        return NPC_INFO()[npc];
+      });
+    },
   },
   watch: {
     isConnected() {
@@ -346,7 +389,10 @@ export default {
   },
   mounted() {
     this.loadData();
-    this.gameItemTypesOptions = getGameItemTypesOptions().map((o) => ({ text: o, value: o }));
+    this.gameItemTypesOptions = getGameItemTypesOptions().map((o) => ({
+      text: o,
+      value: o,
+    }));
   },
   methods: {
     goTo(rout) {
@@ -357,18 +403,21 @@ export default {
         return;
       }
       try {
+        this.collectibleContract = new Collectibles(
+          this.addresses.collectibles
+        );
         const wgold = new wGOLD(this.addresses.wGOLD);
         const wcourage = new wCOURAGE(this.addresses.wCOURAGE);
         this.balance = await wgold.balanceOf(this.account);
         this.balanceCOURAGE = await wcourage.balanceOf(this.account);
         this.collectibles = getCollectibles();
         this.balances = await Promise.all(
-          this.collectibles.map(item => {
+          this.collectibles.map((item) => {
             const collectibles = new Collectibles(item.contractAddress);
             return collectibles.balanceOf(this.account, item.id);
           })
         );
-        this.itemsCount = this.balances.filter(balance => balance > 0).length;
+        this.itemsCount = this.balances.filter((balance) => balance > 0).length;
         this.totalItems = this.balances.reduce((acc, item) => acc + item, 0);
       } catch (e) {
         console.log(e);
@@ -378,7 +427,7 @@ export default {
     },
     clearFilter() {
       this.gameItemTypeFilter = [];
-    }
+    },
   },
 };
 </script>
@@ -393,7 +442,7 @@ export default {
   font-size: 100px;
 }
 .war-info {
-  background-image: url('/images/battle/bg-wars.png');
+  background-image: url("/images/battle/bg-wars.png");
   background-repeat: repeat;
   border: 3px solid #966a3c;
   border-radius: 20px;
@@ -402,11 +451,11 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-.bg{
+.bg {
   background-color: black;
 }
 .bg-inventory {
-  background-image: url('/images/inventory/inventory-bg.jpg');
+  background-image: url("/images/inventory/inventory-bg.jpg");
   background-size: cover;
   background-position: top;
 }
@@ -454,5 +503,21 @@ export default {
   color: #fff;
 }
 
+.npc-name {
+  font-weight: bold;
+}
+.npc-text {
+  font-size: 12px;
+}
+.npc-box {
+  user-select: none;
+  border-radius: 8px;
+  border: 1px solid #ffb800;
+}
+.npc-portrait {
+  width: 98px;
+  height: 98px;
+  border-radius: 8px;
+  border: 1px solid #ffb800;
+}
 </style>
-
