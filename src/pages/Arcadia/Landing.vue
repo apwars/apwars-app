@@ -78,7 +78,7 @@
           ></v-img>
         </v-col>
       </v-row>
-      <v-row class="mt-6 d-flex flex-column align-center text-center">
+      <v-row class="mt-6 align-center text-center justify-center">
         <h1 class="h3Y text-center mt-6 mb-6">
           How to buy wLAND and effectively participate in the Arcadia Expansion:
         </h1>
@@ -372,7 +372,7 @@
       <h2 class="text-justify mt-6">
         Of course, you want to maintain your lands very well! So don't forget that land has a maintenance cost.
       </h2>
-      <h2 class="text-justify mt-6">
+      <h2 class="text-justify">
         To build foundations, you will need to acquire villages. They promote a wide range of gameplay possibilities, building construction, and effective participation in the Arcadia Expansion. That's why they're easier to acquire.
       </h2>
     </v-container>
@@ -542,7 +542,7 @@ export default {
       foundations: [
         {
           id: 58,
-          name: "Temples",
+          name: "Temple",
           img: "/images/foundations/temples.png",
           price: 150,
           remaining: 0,
@@ -550,7 +550,7 @@ export default {
         },
         {
           id: 59,
-          name: "Watchtowers",
+          name: "Watchtower",
           img: "/images/foundations/watchtowers.png",
           price: 100,
           remaining: 0,
@@ -558,7 +558,7 @@ export default {
         },
         {
           id: 60,
-          name: "Markets",
+          name: "Market",
           img: "/images/foundations/markets.png",
           price: 100,
           remaining: 0,
