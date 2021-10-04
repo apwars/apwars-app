@@ -138,7 +138,7 @@ export function getMagicalItems() {
           claimRouter: "/war-preparation",
           idCombinator: {
             "5777": 0,
-            "56": 1,
+            "56": 2,
             "97": 2,
           },
           inputs: [{
@@ -175,7 +175,7 @@ export function getMagicalItems() {
           claimRouter: "/war-preparation",
           idCombinator: {
             "5777": 0,
-            "56": 1,
+            "56": 3,
             "97": 3,
           },
           inputs: [{
@@ -213,7 +213,7 @@ export function getMagicalItems() {
           claimRouter: "/war-preparation",
           idCombinator: {
             "5777": 0,
-            "56": 1,
+            "56": 4,
             "97": 4,
           },
           inputs: [{
