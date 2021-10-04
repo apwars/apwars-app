@@ -364,11 +364,17 @@
           </div>
         </v-col>
       </v-row>
-      <h3 class="text-center mt-6">
+      <h2 class="text-justify mt-6">
         By building foundations, you can earn fees for owning these resources.
         Everyone needs and wants to enjoy the benefits of increasing courage,
         doing business, and maintaining protection.
-      </h3>
+      </h2>
+      <h2 class="text-justify mt-6">
+        Of course, you want to maintain your lands very well! So don't forget that land has a maintenance cost.
+      </h2>
+      <h2 class="text-justify mt-6">
+        To build foundations, you will need to acquire villages. They promote a wide range of gameplay possibilities, building construction, and effective participation in the Arcadia Expansion. That's why they're easier to acquire.
+      </h2>
     </v-container>
     <v-divider
       class="color: secondary mt-6"
