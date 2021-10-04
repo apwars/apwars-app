@@ -641,13 +641,13 @@ export function getTroops() {
       combinators: {
         trainingCenter: {
           combinatorAddress: {
-            "56": "",
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
             "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
           },
           claimRouter: "/training-center",
           idCombinator: {
             "5777": 0,
-            "56": 0,
+            "56": 10,
             "97": 10,
           },
           name: 'wELK-RIDER',
@@ -692,10 +692,10 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wELK-RIDER",
-      lpAddresses: "0x9bE00135880c4db3D3759d370758bDc87443af36",
+      lpAddresses: "0xd6a89d10659895487e24d4a5f46baefdff4a7ea2",
       contractAddress: {
         "5777": "",
-        "56": "",
+        "56": "0x2e67BD04a28faD0d243d7f7Cd436027D41a68A25",
         "97": "0xE575aA96B86128d9Ae7Cf30C540E56A47F2e3D5C",
       },
       image: "/images/troops/wELK-RIDER.png",
