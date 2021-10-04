@@ -8,7 +8,7 @@
     <div v-else>
       <v-container fluid>
         <v-row>
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="4" class="pr-0 pl-1   ">
             <countdown v-if="nextWarPhase" :time="nextWarPhase.endAt" :title="nextWarPhase.title" @end="getNextWarPhase" hideEnd />
             <div class="d-flex justify-center mt-1" v-if="nextWarPhase.redirect">
               <wButton
