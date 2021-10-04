@@ -70,7 +70,7 @@ export function getMagicalItems() {
       contractAddress: addresses.collectibles,
       title: "The Arcane's Book",
       description:
-        '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both planes and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b></small>',
+        '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both places and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b></small>',
       image: "/images/nfts/arcanes-book.png",
       tokenGameItemA: {
         name: "wCOURAGE",
@@ -83,7 +83,7 @@ export function getMagicalItems() {
     {
       id: 40,
       type: "magicalItem",
-      typeDesc: "Magical Item",
+      typeDesc: "Magical Items",
       contractAddress: addresses.collectibles,
       title: "The Elixir (10%) (Spendable)",
       description:
@@ -121,7 +121,7 @@ export function getMagicalItems() {
     {
       id: 41,
       type: "magicalItem",
-      typeDesc: "Magical Item",
+      typeDesc: "Magical Items",
       contractAddress: addresses.collectibles,
       title: "The Elixir (15%) (Spendable)",
       description:
@@ -158,7 +158,7 @@ export function getMagicalItems() {
     {
       id: 42,
       type: "magicalItem",
-      typeDesc: "Magical Item",
+      typeDesc: "Magical Items",
       contractAddress: addresses.collectibles,
       title: "The Elixir (20%) (Spendable)",
       description:
@@ -196,11 +196,11 @@ export function getMagicalItems() {
     {
       id: 43,
       type: "magicalItem",
-      typeDesc: "Magical Item",
+      typeDesc: "Magical Items",
       contractAddress: addresses.collectibles,
       title: "The Arcane's Book (Spendable)",
       description:
-        '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both planes and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b> WARNING: This is a spendable item.</small>',
+        '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both places and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/arcanes-book-spendable.png",
       combinators: {
         magicalItem: {

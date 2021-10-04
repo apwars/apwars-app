@@ -73,7 +73,7 @@ export function getGameItems() {
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (10%)",
       description:
-        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
+        '"In the old ages the guilds were used to employ mercenaries to amass power, nowadays they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
       image: "/images/nfts/goldsaver10.png",
       parameters: {
         id: 7,
@@ -92,7 +92,7 @@ export function getGameItems() {
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (15%)",
       description:
-        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
+        '"In the old ages the guilds were used to employ mercenaries to amass power, nowadays they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
       image: "/images/nfts/goldsaver15.png",
       parameters: {
         id: 8,
@@ -111,7 +111,7 @@ export function getGameItems() {
       tokenAddress: addresses.wGOLD,
       title: "Gold Saver (20%)",
       description:
-        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
+        '"In the old ages the guilds were used to employ mercenaries to amass power, nowadays they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
       image: "/images/nfts/goldsaver20.png",
       parameters: {
         id: 9,
@@ -131,7 +131,7 @@ export function getGameItems() {
       tokenAddress: addresses.wGOLD,
       title: "The Pionner 48h-Gold Saver (10%)",
       description:
-        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 10% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
+        '"In the old ages the guilds were used to employ mercenaries to amass power, nowadays they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 10% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
       image: "/images/nfts/goldsaver1048h-pioneer.png",
     },
     {
@@ -143,7 +143,7 @@ export function getGameItems() {
       tokenAddress: addresses.wGOLD,
       title: "The Society 48h-Gold Saver (20%)",
       description:
-        '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 20% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
+        '"In the old ages the guilds were used to employ mercenaries to amass power, nowadays they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 20% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
       image: "/images/nfts/goldsaver2048h-thesociety.png",
     },
 

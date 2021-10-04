@@ -179,9 +179,9 @@ import wCOURAGE from "@/lib/eth/wCOURAGE";
 import Troops from "@/lib/eth/Troops";
 
 const DORANOBLE_APPROVE_SECOND_PAGE_CONTRACT =
-  "I need some wCOURAGE and a wUNIT and I can transform a walker into a rider.";
+  "I need some wCOURAGE and some wUNIT and I can transform a walker into a rider.";
 const DORANOBLE_APPROVE_FIRST_PAGE_CONTRACT =
-  "I need some wCOURAGE and a wUNIT and I can transform a walker into a rider.";
+  "I need some wCOURAGE and some wUNIT and I can transform a walker into a rider.";
 const DORANOBLE_APPROVE_ONLY_ONE_PAGE_CONTRACT =
   "I need some wUNIT and I can transform a walker into a rider.";
 const DORANOBLE_WAITING_WALLET_APPROVAL =
