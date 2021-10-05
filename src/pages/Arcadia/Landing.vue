@@ -2,9 +2,23 @@
   <div>
     <v-img
       src="/images/project/bg-castle.png"
-      :max-height="$vuetify.breakpoint.mdAndUp ? '720' : '1250'"
+      :max-height="$vuetify.breakpoint.mdAndUp ? '920' : '1450'"
       min-height="400"
     >
+
+    <div v-if="isBlocked" class="mt-1 mx-1 mt-md-6 mx-md-16  text-center">
+      <v-alert color="primary" dark icon="mdi-alert" prominent>
+        This is not an error. You are seeing this message because you are
+        accessing this application with an IP address from a prohibited
+        jurisdiction or territory to participate in this sale. This sale
+        of game items is only related to utility tokens with objective use cases
+        and bear no investment characteristics of promises of dividends,
+        guarantees of appreciation, or gains of any form. Nevertheless, because
+        regulatory blurriness we are preventing Americans, for example, to take
+        part in this sale.
+      </v-alert>
+    </div>
+
       <div class="container d-flex flex-column align-center mt-6">
         <v-img
           src="/images/project/arcadia-expansion.png"
@@ -21,32 +35,49 @@
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
-        <wButton
-          v-if="$vuetify.breakpoint.mdAndUp"
-          width="170px"
-          class="mx-1 ml-2"
-          size="medium"
-          @click="$vuetify.goTo(1800, 0)"
-        >
-          <div class="d-flex justify-center">
-            <span class="align-self-center">
-              Own lands now
-            </span>
-          </div>
-        </wButton>
-        <wButton
-          v-else
-          width="170px"
-          class="mx-12"
-          size="x-small"
-          @click="$vuetify.goTo(2800, 0)"
-        >
-          <div class="d-flex justify-center">
-            <span class="align-self-center">
-              Own lands now
-            </span>
-          </div>
-        </wButton>
+
+        <div class="d-flex">
+          <wButton
+            v-if="$vuetify.breakpoint.mdAndUp"
+            width="170px"
+            class="mx-1 ml-2"
+            size="medium"
+            @click="$vuetify.goTo(1800, 0)"
+          >
+            <div class="d-flex justify-center">
+              <span class="align-self-center">
+                Own lands now
+              </span>
+            </div>
+          </wButton>
+          <wButton
+            v-else
+            width="170px"
+            class="mx-12"
+            size="x-small"
+            @click="$vuetify.goTo(2800, 0)"
+          >
+            <div class="d-flex justify-center">
+              <span class="align-self-center">
+                Own lands now
+              </span>
+            </div>
+          </wButton>
+
+          <wButton
+            v-if="$vuetify.breakpoint.mdAndUp"
+            width="170px"
+            class="mx-1 ml-2"
+            size="medium"
+            @click="goToHome()"
+          >
+            <div class="d-flex justify-center">
+              <span class="align-self-center">
+                Go to home
+              </span>
+            </div>
+          </wButton>
+        </div>
       </div>
     </v-img>
     <v-divider
@@ -150,9 +181,9 @@
       class="color: secondary"
       style="max-height: 8px; height: 8px; flex: 10 10 10px"
     />
-    <h1 class="go h3Y text-center mt-6 mb-6">BUY wLAND NOW</h1>
+    <h1 class="go h3Y text-center mt-6 mb-6"  v-if="isBlocked===false">BUY wLAND NOW</h1>
 
-    <v-container class="container">
+    <v-container class="container" v-if="isBlocked===false">
       <v-row
         :class="
           $vuetify.breakpoint.mdAndUp
@@ -166,8 +197,8 @@
               <h3 class="h3Y">Checking coupon...</h3>
             </div>
             <div v-else-if="isRef === true">
-              <h3 class="green--text">Coupon activated</h3>
-              <span>Coupon gives 5% off</span>
+              <h3 class="green--text">Discount coupon</h3>
+              <span>5% off</span>
             </div>
             <div v-else>
               <h3 class="yellow--text">Invalid coupon</h3>
@@ -182,7 +213,11 @@
             ></v-img>
             <div class="mr-5">
               <h1 class="h3Y">
-                <amount :amount="pricewLAND" formatted :decimals="$route.query.ref ? 3 : 2" />
+                <amount
+                  :amount="pricewLAND"
+                  formatted
+                  :decimals="$route.query.ref ? 3 : 2"
+                />
                 BUSD
               </h1>
               <h3 class="h3Y">per wLAND</h3>
@@ -203,11 +238,7 @@
             </v-progress-linear>
             <p class="mt-1">
               AVAILABLE UNITS:
-              <amount
-                :amount="wLANDSold"
-                formatted
-                decimals="2"
-              />
+              <amount :amount="wLANDSold" formatted decimals="2" />
             </p>
           </div>
         </v-col>
@@ -309,13 +340,21 @@
           cols="12"
           lg="4"
           class="d-flex justify-space-around"
-          v-for="item in foundations"
+          v-for="item in getFoundations"
           :key="item.name"
         >
           <div class="justify-center text-center">
             <h1 class="mt-1 mb-1 text-center">{{ item.name }}</h1>
             <v-img :src="item.img" max-width="250" class="img mb-1"></v-img>
-            <h2 class="h3Y">{{ item.price }} wLAND</h2>
+            <h2 class="h3Y">
+              <amount
+                :amount="item.price"
+                formatted
+                decimals="2"
+                tooltip
+                title="wLAND"
+              />
+            </h2>
             <h6 class="h3Y mb-1">per {{ item.name }}</h6>
             <wButton
               v-if="isApprovedwLAND"
@@ -369,8 +408,15 @@
         Everyone needs and wants to enjoy the benefits of increasing courage,
         doing business, and maintaining protection.
       </h3>
+      <h3 class="text-center mt-6">
+        <a href="https://apwars.farm/docs/arcadia/foundations">
+          Click here to learn more about fees and maintenance cost of each
+          foundation.
+        </a>
+      </h3>
     </v-container>
     <v-divider
+      v-if="isBlocked===false"
       class="color: secondary mt-6"
       style="max-height: 8px; height: 8px; flex: 10 10 10px"
     />
@@ -452,6 +498,7 @@ import Convert from "@/lib/helpers/Convert";
 
 import ERC20 from "@/lib/eth/ERC20";
 import Collectibles from "@/lib/eth/Collectibles";
+import axios from "axios";
 
 export default {
   data() {
@@ -538,7 +585,7 @@ export default {
           id: 58,
           name: "Temples",
           img: "/images/foundations/temples.png",
-          price: 150,
+          price: 125,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -546,7 +593,7 @@ export default {
           id: 59,
           name: "Watchtowers",
           img: "/images/foundations/watchtowers.png",
-          price: 100,
+          price: 125,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -554,7 +601,7 @@ export default {
           id: 60,
           name: "Markets",
           img: "/images/foundations/markets.png",
-          price: 100,
+          price: 400,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -562,7 +609,7 @@ export default {
           id: 61,
           name: "Hidout",
           img: "/images/foundations/hidings-place.png",
-          price: 50,
+          price: 75,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -570,18 +617,22 @@ export default {
           id: 62,
           name: "Village",
           img: "/images/foundations/village.png",
-          price: 50,
+          price: 10,
           remaining: 0,
           balanceAccount: 0,
         },
       ],
+
+      location: {},
+      isLocationLoaded: false,
     };
   },
+
   components: {
     wButton,
     Amount,
     GameItemWoodModal,
-    NumberField
+    NumberField,
   },
 
   computed: {
@@ -625,11 +676,33 @@ export default {
         busd: Convert.formatString(Convert.fromWei(this.balanceBUSD, true), 2),
       };
     },
+
+    getFoundations() {
+      if (this.isRef === true) {
+        return this.foundations.map((foundation) => {
+          foundation.price = foundation.price * 0.95;
+          return foundation;
+        });
+      }
+      return this.foundations;
+    },
+
+    isBlocked() {
+      const blocked = (
+        process.env.VUE_APP_BLOCKED_CONTRY_CODES || ""
+      ).toUpperCase();
+      const code = (this.location.country_code || "").toUpperCase();
+      return code && blocked.split(",").includes(code);
+    },
   },
 
   methods: {
     async initData() {
       if (!this.isConnected) {
+        return;
+      }
+
+      if (this.isBlocked) {
         return;
       }
 
@@ -639,20 +712,12 @@ export default {
       this.contractCollectibles = new Collectibles(this.addresses.collectibles);
 
       try {
-        if (this.$route.query.ref) {
-          this.ref = window.web3.utils.fromAscii(this.$route.query.ref);
-          const referral = await this.contractLandSale.referral(
-            this.ref,
-            this.account
-          );
-          this.isRef = false;
-          if (referral !== "0x0000000000000000000000000000000000000000") {
-            this.isRef = true;
-            this.pricewLAND = 1.425;
-          }
-        }
+        this.location = await this.getLocattion();
 
-        this.wLANDSoldAmount = Convert.fromWei(await this.contractLandSale.wLANDSoldAmount(this.account), true);
+        this.wLANDSoldAmount = Convert.fromWei(
+          await this.contractLandSale.wLANDSoldAmount(this.account),
+          true
+        );
 
         this.isApprovedBUSD = await this.contractBUSD.hasAllowance(
           this.account,
@@ -668,8 +733,28 @@ export default {
         this.balanceBUSD = await this.contractBUSD.balanceOf(this.account);
 
         this.foundationsRemaining();
+        this.checkRef();
       } catch (error) {
         console.log(error.toString());
+      }
+    },
+
+    async checkRef() {
+      if (this.isRef !== undefined) {
+        return;
+      }
+
+      if (this.$route.query.ref) {
+        this.ref = window.web3.utils.fromAscii(this.$route.query.ref);
+        const referral = await this.contractLandSale.referral(
+          this.ref,
+          this.account
+        );
+        this.isRef = false;
+        if (referral !== "0x0000000000000000000000000000000000000000") {
+          this.isRef = true;
+          this.pricewLAND = 1.425;
+        }
       }
     },
 
@@ -798,22 +883,49 @@ export default {
         return "#ff0000";
       }
     },
+
     openModal(ticket) {
       this.quantity = 0;
       this.ticketSelect = ticket;
       this.isConfirmOrderModalOpen = true;
     },
+
+    goToHome() {
+      window.location.href = "https://apwars.farm/home";
+    },
+
+    async getLocattion() {
+      try {
+        if (this.isLocationLoaded) {
+          return this.location;
+        }
+
+        const r = (await axios.get(process.env.VUE_APP_LOCATION_SERVICE)).data;
+        this.isLocationLoaded = true;
+
+        return r;
+      } catch {
+        return {};
+      }
+    },
   },
+
   watch: {
     isConnected() {
       this.initData();
     },
 
     currentBlockNumber() {
+      if (!this.isConnected) {
+        return;
+      }
       this.initData();
     },
 
     account() {
+      if (!this.isConnected) {
+        return;
+      }
       this.initData();
     },
 
