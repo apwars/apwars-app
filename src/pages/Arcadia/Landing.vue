@@ -5,19 +5,18 @@
       :max-height="$vuetify.breakpoint.mdAndUp ? '920' : '1450'"
       min-height="400"
     >
-
-    <div v-if="isBlocked" class="mt-1 mx-1 mt-md-6 mx-md-16  text-center">
-      <v-alert color="primary" dark icon="mdi-alert" prominent>
-        This is not an error. You are seeing this message because you are
-        accessing this application with an IP address from a prohibited
-        jurisdiction or territory to participate in this sale. This sale
-        of game items is only related to utility tokens with objective use cases
-        and bear no investment characteristics of promises of dividends,
-        guarantees of appreciation, or gains of any form. Nevertheless, because
-        regulatory blurriness we are preventing Americans, for example, to take
-        part in this sale.
-      </v-alert>
-    </div>
+      <div v-if="isBlocked" class="mt-1 mx-1 mt-md-6 mx-md-16  text-center">
+        <v-alert color="primary" dark icon="mdi-alert" prominent>
+          This is not an error. You are seeing this message because you are
+          accessing this application with an IP address from a prohibited
+          jurisdiction or territory to participate in this sale. This sale of
+          game items is only related to utility tokens with objective use cases
+          and bear no investment characteristics of promises of dividends,
+          guarantees of appreciation, or gains of any form. Nevertheless,
+          because regulatory blurriness we are preventing Americans, for
+          example, to take part in this sale.
+        </v-alert>
+      </div>
 
       <div class="container d-flex flex-column align-center mt-6">
         <v-img
@@ -109,7 +108,7 @@
           ></v-img>
         </v-col>
       </v-row>
-      <v-row class="mt-6 d-flex flex-column align-center text-center">
+      <v-row class="mt-6 align-center text-center justify-center">
         <h1 class="h3Y text-center mt-6 mb-6">
           How to buy wLAND and effectively participate in the Arcadia Expansion:
         </h1>
@@ -181,9 +180,11 @@
       class="color: secondary"
       style="max-height: 8px; height: 8px; flex: 10 10 10px"
     />
-    <h1 class="go h3Y text-center mt-6 mb-6"  v-if="isBlocked===false">BUY wLAND NOW</h1>
+    <h1 class="go h3Y text-center mt-6 mb-6" v-if="isBlocked === false">
+      BUY wLAND NOW
+    </h1>
 
-    <v-container class="container" v-if="isBlocked===false">
+    <v-container class="container" v-if="isBlocked === false">
       <v-row
         :class="
           $vuetify.breakpoint.mdAndUp
@@ -403,20 +404,32 @@
           </div>
         </v-col>
       </v-row>
-      <h3 class="text-center mt-6">
+
+      <h2 class="text-justify mt-6">
         By building foundations, you can earn fees for owning these resources.
         Everyone needs and wants to enjoy the benefits of increasing courage,
         doing business, and maintaining protection.
-      </h3>
-      <h3 class="text-center mt-6">
+      </h2>
+      <h2 class="text-justify mt-6">
+        Of course, you want to maintain your lands very well! So don't forget
+        that land has a maintenance cost.
+      </h2>
+      <h2 class="text-justify">
+        To build foundations, you will need to acquire villages. They promote a
+        wide range of gameplay possibilities, building construction, and
+        effective participation in the Arcadia Expansion. That's why they're
+        easier to acquire.
+      </h2>
+
+      <h2 class="text-center mt-6">
         <a href="https://apwars.farm/docs/arcadia/foundations">
           Click here to learn more about fees and maintenance cost of each
           foundation.
         </a>
-      </h3>
+      </h2>
     </v-container>
     <v-divider
-      v-if="isBlocked===false"
+      v-if="isBlocked === false"
       class="color: secondary mt-6"
       style="max-height: 8px; height: 8px; flex: 10 10 10px"
     />
@@ -583,7 +596,7 @@ export default {
       foundations: [
         {
           id: 58,
-          name: "Temples",
+          name: "Temple",
           img: "/images/foundations/temples.png",
           price: 125,
           remaining: 0,
@@ -591,7 +604,7 @@ export default {
         },
         {
           id: 59,
-          name: "Watchtowers",
+          name: "Watchtower",
           img: "/images/foundations/watchtowers.png",
           price: 125,
           remaining: 0,
@@ -599,7 +612,7 @@ export default {
         },
         {
           id: 60,
-          name: "Markets",
+          name: "Market",
           img: "/images/foundations/markets.png",
           price: 400,
           remaining: 0,
