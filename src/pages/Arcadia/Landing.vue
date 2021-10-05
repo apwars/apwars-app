@@ -579,15 +579,7 @@ export default {
           price: 50,
           remaining: 0,
           balanceAccount: 0,
-        },
-        {
-          id: 63,
-          name: "Clan",
-          img: "/images/foundations/clan.png",
-          price: 50,
-          remaining: 0,
-          balanceAccount: 0,
-        },
+        }
       ],
     };
   },
