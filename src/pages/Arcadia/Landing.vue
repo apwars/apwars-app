@@ -28,7 +28,7 @@
           class="mt-6 mb-6"
           :width="$vuetify.breakpoint.mdAndUp ? '728' : '350'"
           :height="$vuetify.breakpoint.mdAndUp ? '410' : '200'"
-          src="https://www.youtube-nocookie.com/embed/NrJmddH_wCY"
+          src="https://www.youtube-nocookie.com/embed/p54QleQT7sY"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -167,7 +167,7 @@
           <iframe
             :width="$vuetify.breakpoint.mdAndUp ? '380' : '250'"
             :height="$vuetify.breakpoint.mdAndUp ? '211' : '150'"
-            src="https://www.youtube-nocookie.com/embed/NrJmddH_wCY"
+            src="https://www.youtube-nocookie.com/embed/p54QleQT7sY"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
