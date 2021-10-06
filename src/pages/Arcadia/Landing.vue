@@ -354,6 +354,7 @@
                 decimals="2"
                 tooltip
                 title="wLAND"
+                symbol="wLAND"
               />
             </h2>
             <h6 class="h3Y mb-1">per {{ item.name }}</h6>
@@ -620,7 +621,7 @@ export default {
         },
         {
           id: 61,
-          name: "Hidout",
+          name: "Hideout",
           img: "/images/foundations/hidings-place.png",
           price: 75,
           remaining: 0,
