@@ -10,7 +10,6 @@
       <v-col cols="4" class="d-flex justify-end title-description">
         <v-img
           max-width="270px"
-          :class="!$vuetify.breakpoint.mdAndUp ? 'img-mobile' : 'img-full'"
           :src="image"
         >
           <div v-if="titleImg" class="d-flex flex-column justify-center text-center mt-5">
@@ -24,12 +23,12 @@
       <v-col cols="6" class="align-self-center">
         <game-text header="h4">{{ title }}</game-text>
       </v-col>
-      <v-col cols="6" class="d-flex justify-end">
+      <v-col cols="6" class="d-flex justify-end p-0">
         <v-img
-          :class="!$vuetify.breakpoint.mdAndUp ? 'img-mobile' : 'img-full'"
           :src="image"
           max-height="120"
-          max-width="140" 
+          :max-width="refact ? '110' : '140'"
+          :class="refact ? 'mr-3' : ''"
         >
           <div v-if="titleImg" class="mt-3 text-center">
             <h6>{{ titleImg }}</h6>
@@ -55,7 +54,7 @@ import GameText from "@/lib/components/ui/Utils/GameText";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 
 export default {
-  props: ["title", "description", "image", "titleImg", "subtitleImg"],
+  props: ["title", "description", "image", "titleImg", "subtitleImg", "refact"],
 
   components: {
     GameText,
@@ -65,14 +64,6 @@ export default {
 </script>
 
 <style scoped>
-.img-full {
-  width: 251px !important;
-}
-
-.img-mobile {
-  width: 160px !important;
-  height: 160px !important;
-}
 .lg {
   background-color: green;
 }

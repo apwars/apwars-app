@@ -3,6 +3,7 @@
     <div class="bg-training-center">
       <v-container class="pb-0">
         <page-title
+          :refact="true"
           title="Training Center"
           description="It is essential to strengthen your troops in combat whether with training or magical portions, use your time to improve your strategy!"
           image="/images/training-center/icon-training-center.png"
