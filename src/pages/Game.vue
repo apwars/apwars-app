@@ -26,6 +26,10 @@ export default {
     document.getElementsByTagName("html")[0].style.overflow = 'hidden';
   },
 
+  beforeDestroy() {
+    document.getElementsByTagName("html")[0].style.overflow = 'auto';
+  },
+
   methods: {
     resizeIframe() {
       const footer = document.querySelector(".v-footer").clientHeight;
