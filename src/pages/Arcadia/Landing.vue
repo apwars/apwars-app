@@ -702,7 +702,7 @@ export default {
 
     isBlocked() {
       if(process.env.VUE_APP_BLOCKED_CONTRY_CODES === undefined) {
-        false;
+        return false;
       }
 
       const blocked = (
