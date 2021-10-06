@@ -108,7 +108,7 @@
           ></v-img>
         </v-col>
       </v-row>
-      <v-row class="mt-6 align-center text-center justify-center">
+      <v-row v-if="isBlocked === false" class="mt-6 align-center text-center justify-center">
         <h1 class="h3Y text-center mt-6 mb-6">
           How to buy wLAND and effectively participate in the Arcadia Expansion:
         </h1>
@@ -148,7 +148,7 @@
           </div>
         </wButton>
       </v-row>
-      <v-row class="container justify-center align-center">
+      <v-row class="justify-center align-center">
         <v-col cols="12" lg="8">
           <h1 class="h3Y">What to expect from wLAND?</h1>
           <h4>
