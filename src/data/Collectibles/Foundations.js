@@ -10,6 +10,16 @@ export function getFoundations() {
 
   return [
     {
+      id: 38,
+      type: "foundations",
+      typeDesc: "Foundations",
+      contractAddress: addresses.collectibles,
+      image: '/images/foundations/clan.png',
+      name: "clan",
+      title: 'Clan',
+      description: "A Clan is a collective organization that play a role at a world domination scheme. It serves to organize attacks, protect Villages and synchronize resource trading between players.",
+    },
+    {
       id: 58,
       type: "foundations",
       typeDesc: "Foundations",

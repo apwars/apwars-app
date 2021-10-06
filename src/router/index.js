@@ -17,6 +17,7 @@ import WarPreparation from "@/pages/WarPreparation.vue";
 import TrainingCenter from "@/pages/TrainingCenter.vue";
 import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
+import Game from "@/pages/Game.vue";
 
 Vue.use(Router);
 
@@ -105,6 +106,11 @@ export const routes = [
         path: "/arcadia-expansion",
         name: "/arcadia-expansion",
         component: ArcadiaExpansion
+      },
+      {
+        path: "/game",
+        name: "/game",
+        component: Game
       },
       {
         path: "/farms",
