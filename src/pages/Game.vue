@@ -3,7 +3,7 @@
     <iframe
       id="gameArcadia"
       width="100%"
-      src="/Game/Arcadia/?worldManager=0x27CCd4E02EEf311277e416746CeA01C14E18a348"
+      src="/Game/Arcadia/?worldManager=0x41Ff6D79cfD224C854dd47A6e876c893FF623AFd"
       frameborder="0"
       scrolling="no"
     ></iframe>
