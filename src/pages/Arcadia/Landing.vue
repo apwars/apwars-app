@@ -305,7 +305,7 @@
             width="170px"
             size="medium"
             @click="buywLAND"
-            :disabled="amountBUSD == 0"
+            :disabled="amountBUSD == 0 || isBuyingwLAND"
           >
             <div class="d-flex justify-center">
               <span class="align-self-center">
