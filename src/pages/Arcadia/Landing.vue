@@ -2,7 +2,7 @@
   <div>
     <v-img
       src="/images/project/bg-castle.png"
-      :max-height="$vuetify.breakpoint.mdAndUp ? '920' : '1450'"
+      :max-height="$vuetify.breakpoint.mdAndUp ? '920' : '1250'"
       min-height="400"
     >
       <div v-if="isBlocked" class="mt-1 mx-1 mt-md-6 mx-md-16  text-center">
@@ -28,7 +28,7 @@
           class="mt-6 mb-6"
           :width="$vuetify.breakpoint.mdAndUp ? '728' : '350'"
           :height="$vuetify.breakpoint.mdAndUp ? '410' : '200'"
-          src="https://www.youtube-nocookie.com/embed/p54QleQT7sY"
+          src="https://www.youtube-nocookie.com/embed/Y65Gg1lOZFM"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -86,18 +86,16 @@
     <v-container class="container mt-6">
       <v-row class="justify-center align-center">
         <v-col cols="12" lg="8">
-          <h1 class="h3Y">What is Arcadia Expansion?</h1>
+          <h1 class="h3Y">What is the Arcadia Expansion?</h1>
           <h4>
-            Arcadia is an expansion to a turn-based village system world where
-            you can manage your own system economies, deal with attacks and
-            defenses, join clans, and much more!
-          </h4>
-          <br />
-          <h4>
-            In a decentralized model, you will be able to create your world,
-            farm tokens rules, collect resources and fees, build foundations and
-            keep players within your system. It's the best move to conquer your
-            enemy's riches and escape real estate speculation!
+            The Arcadia expansion emerged as a sequel based on a village
+            construction turn based game, on which you can own your piece of
+            land and build villages. Players can regulate their domestic
+            militarily and economical strategy. Lands can be acquired with
+            wLAND, a game token designed for this and other uses. By acquiring
+            land near foundations and structures (temples, markets, villages,
+            watchtowers and hideouts) nearby players will harness benefits such
+            as increased courage and therefore those regions are more wanted.
           </h4>
         </v-col>
         <v-col cols="12" lg="4">
@@ -108,7 +106,10 @@
           ></v-img>
         </v-col>
       </v-row>
-      <v-row v-if="isBlocked === false" class="mt-6 align-center text-center justify-center">
+      <v-row
+        v-if="isBlocked === false"
+        class="mt-6 align-center text-center justify-center"
+      >
         <h1 class="h3Y text-center mt-6 mb-6">
           How to buy wLAND and effectively participate in the Arcadia Expansion:
         </h1>
@@ -158,16 +159,16 @@
           </h4>
           <br />
           <h4>
-            You can expect a decentralized ecosystem on your lands and keep
-            control of the economy in your hands. Buying wLAND is a smart and
-            shrewd move!
+            You can expect a decentralized ecosystem on your lands and can keep
+            the control of the economy in your hands. Buying wLAND is a smart
+            and shrewd move!
           </h4>
         </v-col>
         <v-col cols="12" lg="4">
           <iframe
             :width="$vuetify.breakpoint.mdAndUp ? '380' : '250'"
             :height="$vuetify.breakpoint.mdAndUp ? '211' : '150'"
-            src="https://www.youtube-nocookie.com/embed/p54QleQT7sY"
+            src="https://www.youtube-nocookie.com/embed/Y65Gg1lOZFM"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -300,12 +301,33 @@
             </v-col>
           </v-row>
 
+          <v-row class="pa-0 ma-0">
+            <v-col cols="12" class="pa-0 ma-0">
+              <a target="_blank" href="/disclaimer.pdf">
+                Click here to open and download the wLAND sale responsibility
+                term.
+              </a>
+              <v-checkbox
+                v-model="checkbox"
+                class="checkbox-modal-input ma-0 pa-0"
+                color="secondary"
+              >
+                <template v-slot:label>
+                  <div>
+                    I have read carefully and understood the terms regarding the
+                    wLAND sale.
+                  </div>
+                </template>
+              </v-checkbox>
+            </v-col>
+          </v-row>
+
           <wButton
             v-if="isApprovedBUSD"
             width="170px"
             size="medium"
             @click="buywLAND"
-            :disabled="amountBUSD == 0 || isBuyingwLAND"
+            :disabled="amountBUSD == 0 || isBuyingwLAND || !checkbox"
           >
             <div class="d-flex justify-center">
               <span class="align-self-center">
@@ -456,12 +478,15 @@
         title="Are you sure you want to buy this item?"
         :amount="ticketSelect.balanceAccount"
         :isLoading="loadingTicket"
-        :disabledConfirm="quantity===0"
+        :disabledConfirm="quantity === 0 || !checkboxTicket"
+        width="700px"
+        height="288px"
       >
         <p>How many items do you want to buy?</p>
         <v-row>
           <v-col cols="12" md="6">
             <number-field
+              dense
               class="mt-n1"
               v-model="quantity"
               :max="ticketSelect.remaining"
@@ -496,6 +521,26 @@
             />
           </h4>
         </div>
+        <v-row class="pa-0 ma-0">
+          <v-col cols="12" class="pa-0 ma-0">
+            <a target="_blank" class="text-caption" href="/disclaimer.pdf">
+              Click here to open and download the wLAND sale responsibility
+              term.
+            </a>
+            <v-checkbox
+              v-model="checkboxTicket"
+              class="checkbox-modal-input ma-0 pa-0"
+              color="secondary"
+            >
+              <template v-slot:label>
+                <div>
+                  I have read carefully and understood the terms regarding the
+                  wLAND sale.
+                </div>
+              </template>
+            </v-checkbox>
+          </v-col>
+        </v-row>
       </game-item-wood-modal>
     </v-container>
   </div>
@@ -518,6 +563,9 @@ import axios from "axios";
 export default {
   data() {
     return {
+      checkbox: false,
+      checkboxTicket: false,
+
       amountwLAND: 0,
       amountBUSD: 0,
       amount: 0,
@@ -571,29 +619,24 @@ export default {
 
       faq: [
         {
-          question: "What to do with wLAND?",
+          question: "How can I use wLAND?",
           answer:
             "You can buy lands to build foundations, collect resources and receive fees with all these features.",
         },
         {
           question: "Why buying lands now will help me in the game?",
           answer:
-            "Well, what did landowners gain by buying lands earlier and escaping real estate speculation? That's right, the valorization of their land! By buying lands now, you can pay little to build foundations, collect resources, and receive fees.",
+            "Players that buy lands now can build on the best neighborhoods and harness the benefits of early adopters.",
         },
         {
           question: "What is Arcadia?",
           answer:
-            "Arcadia is the name given to the expansion of the APWars game and it consists of providing a world with land that can be purchased to collect resources, build foundations and create an economic ecosystem.",
+            "Arcadia is the name given to the expansion of the APWars game and it consists of providing a world with land that can be purchased to collect resources, build foundations and create an economic and military game system.",
         },
         {
-          question: "What are foundations?",
+          question: "What is wLAND for and what can I use it for?",
           answer:
-            "Foundations are a kind of property that offers a benefit to those who pay the fees. Temples offer more courage, markets make negotiations possible, and watchtowers maintain security and offer news of troops that may be approaching.",
-        },
-        {
-          question: "What are the strategies for buying good lands?",
-          answer:
-            "Initially, you can check how much land each foundation needs to consolidate. For example, watchtowers need nine lands and a good move is to buy nine to build this foundation to receive fees or buy lands in multiple locations, so someone who wants to build foundations needs to buy (for a great price) lands from you. You can join the APWars group on Telegram and discuss more strategies with other players too!",
+            "wLAND is a game token with immediate utility as it can be used to buy a land space in Arcadia to build foundations and to be paid as maintenance recurring fees of the respective foundations.",
         },
       ],
       foundations: [
@@ -704,7 +747,7 @@ export default {
     },
 
     isBlocked() {
-      if(process.env.VUE_APP_BLOCKED_CONTRY_CODES === undefined) {
+      if (process.env.VUE_APP_BLOCKED_CONTRY_CODES === undefined) {
         return false;
       }
 
@@ -849,6 +892,7 @@ export default {
         this.isBuyingwLAND = false;
         this.openModalBuy = true;
         this.amountwLAND = 0;
+        this.checkbox = false;
         ToastSnackbar.success("wLAND secured successfully!");
       } catch (error) {
         this.isBuyingwLAND = false;
@@ -875,6 +919,7 @@ export default {
         this.isConfirmOrderModalOpen = false;
         this.quantity = 0;
         this.ticketSelect = {};
+        this.checkboxTicket = false;
         ToastSnackbar.success("Ticket successfully purchased!");
       } catch (error) {
         this.loadingTicket = false;
@@ -984,5 +1029,41 @@ export default {
 }
 .container {
   max-width: 1100px;
+}
+.checkbox-modal-input >>> .v-input__control > .v-input__slot fieldset {
+  color: #fff !important;
+  border-width: 3px !important;
+  border-radius: 18px !important;
+}
+
+.checkbox-modal-input >>> .v-label {
+  transform-origin: top left !important;
+  font-weight: bold !important;
+  color: #fff !important;
+}
+
+.checkbox-modal-input >>> .v-input__append-inner {
+  color: #fff !important;
+  font-weight: bold !important;
+  font-size: 13px;
+}
+
+.checkbox-modal-input >>> .v-icon {
+  color: #fff !important;
+}
+
+.checkbox-modal-input.v-input--is-disabled {
+  opacity: 0.2;
+}
+
+.checkbox-modal-input >>> input {
+  color: #fff;
+  font-weight: bold;
+}
+
+.checkbox-modal-input >>> .v-messages__message {
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold;
 }
 </style>

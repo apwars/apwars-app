@@ -208,6 +208,11 @@ export default {
           image: "/images/icons/inventory.png",
           href: "/inventory",
         },
+        {
+          title: "Arcadia",
+          image: "/images/icons/world.png",
+          href: "/arcadia",
+        },
       ],
       balance: 0,
       isLoading: true,
