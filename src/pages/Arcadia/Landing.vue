@@ -377,12 +377,12 @@
               :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
               size="medium"
               @click="approvewLAND"
-              :disabled="isLoadingApprove || isApprovedwLAND === undefined"
+              :disabled="isLoadingApprovewLAND || isApprovedwLAND === undefined"
             >
               <div class="d-flex justify-center">
                 <span class="align-self-center">
                   {{
-                    isLoadingApprove || isApprovedwLAND
+                    isLoadingApprovewLAND || isApprovedwLAND
                       ? "Waiting..."
                       : "Approve"
                   }}
@@ -456,6 +456,7 @@
         title="Are you sure you want to buy this item?"
         :amount="ticketSelect.balanceAccount"
         :isLoading="loadingTicket"
+        :disabledConfirm="quantity===0"
       >
         <p>How many items do you want to buy?</p>
         <v-row>
@@ -535,6 +536,7 @@ export default {
       isApprovedwLAND: undefined,
 
       isLoadingApprove: false,
+      isLoadingApprovewLAND: false,
       loadingFoundations: true,
       loadingTicket: false,
 
@@ -818,15 +820,15 @@ export default {
 
     async approvewLAND() {
       try {
-        this.isLoadingApprove = true;
+        this.isLoadingApprovewLAND = true;
 
         await this.contractwLAND.approve(this.account, this.addresslandSale);
 
-        this.isLoadingApprove = false;
+        this.isLoadingApprovewLAND = false;
         this.isApprovedwLAND = true;
         ToastSnackbar.success("wLAND smart contract approved successfully!");
       } catch (error) {
-        this.isLoadingApprove = false;
+        this.isLoadingApprovewLAND = false;
         if (error.message) {
           return this.showError(error.message);
         }
