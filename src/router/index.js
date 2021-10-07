@@ -12,10 +12,12 @@ import Round2 from "@/pages/Wars/Round2.vue";
 import WarReport from "@/pages/Wars/WarReport.vue";
 import BlackMarket from "@/pages/BlackMarket.vue";
 import PrivateSale from "@/pages/Arcadia/PrivateSale.vue";
+import ArcadiaExpansion from "@/pages/Arcadia/Landing.vue";
 import WarPreparation from "@/pages/WarPreparation.vue";
 import TrainingCenter from "@/pages/TrainingCenter.vue";
 import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
+import Arcadia from "@/pages/Arcadia/Arcadia.vue";
 
 Vue.use(Router);
 
@@ -99,6 +101,16 @@ export const routes = [
         path: "/worker",
         name: "/worker",
         component: Worker
+      },
+      {
+        path: "/arcadia-expansion",
+        name: "/arcadia-expansion",
+        component: ArcadiaExpansion
+      },
+      {
+        path: "/arcadia",
+        name: "/arcadia",
+        component: Arcadia
       },
       {
         path: "/farms",
