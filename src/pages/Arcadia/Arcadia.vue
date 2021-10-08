@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       worldManager: {
-        "56": "0xfe40EEf0594664334847508901c802058B99215D",
+        "56": "0xF32396A265CdF21F3485b2803F80c7EDE086899E",
         "97": "0xDBe11E0663A23e2444e12Ee8677f72039b21890A",
       },
     };
