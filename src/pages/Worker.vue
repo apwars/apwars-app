@@ -16,12 +16,15 @@
             / ~{{ timeReduction }}% time reduction
           </div>
         </div>
-        <wButton class="mt-1" size="small" @click="modalWorderWithdraw = true">
+        <wButton v-if="!isProgressWorker" class="mt-1" size="small" @click="modalWorderWithdraw = true">
           withdraw
         </wButton>
       </div>
       <div class="menuWorker">
-        <div v-if="isProgressWorker" class="d-flex align-center progressWorker">
+        <div v-if="isProgressWorker"
+          :class="$vuetify.breakpoint.mdAndUp ?
+            'd-flex align-center progressWorker' :
+            'd-flex align-center progressWorker mt-7 ml-1'">
           <img
             src="Map/farm-worker/map/assets/food_supplement.png"
             alt="food supplement"
@@ -40,7 +43,10 @@
             </countdown>
           </v-progress-linear>
         </div>
-        <div v-else class="d-flex align-center justify-center">
+        <div v-else
+          :class="$vuetify.breakpoint.mdAndUp ?
+            'd-flex align-center justify-center' :
+            'd-flex align-center justify-center mt-6'">
           <wButton @click="openModalWorker()">
             Get Worker
           </wButton>

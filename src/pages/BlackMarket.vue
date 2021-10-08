@@ -4,6 +4,7 @@
       <div class="bg-market">
         <v-container class="pb-0">
           <page-title
+            :refact="true"
             title="Black Market"
             description="The Black Market is an interesting place for those who want to strengthen their army or collect rare items that can only be found here."
             image="/images/black-market/black-market.png"
