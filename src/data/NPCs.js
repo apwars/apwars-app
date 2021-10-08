@@ -10,11 +10,11 @@ export const NPCS = {
 
 export function NPC_INFO() {
   const addresses = store.getters["user/addresses"];
-
+  
   if (!addresses) {
     return [];
   }
-
+  
   return {
     [NPCS.ARIMEDES]: {
       name: "Arimedes - War Engineer",
@@ -63,6 +63,13 @@ export function NPC_INFO() {
           address: addresses.wLAND,
           type: "erc20",
           image: "/images/icons/wLAND.png",
+        },
+        {
+          name: "wGOLD",
+          description: "wGOLD is the core token of APWars. Through it liquidity is channeled to all other tokens. With wGOLD you can foster loyal troops or hire mercenaries.",
+          address: addresses.wGOLD,
+          type: "erc20",
+          image: "/images/wgold.png",
         }
       ]
     },
