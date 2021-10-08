@@ -121,7 +121,7 @@ export default {
         Click "Confirm" to get your first worker for free! <br />
       `,
       textWorker: `
-      Congratulations! You have completed another activity on your farm.<br />
+      Congratulations! You have completed another activity on the farm.<br />
       Click "Confirm" to get another worker for free!
       `,
       textModalWorker: "",
@@ -385,7 +385,7 @@ export default {
       });
 
       confirmTransaction.on("transactionHash", () => {
-        this.textModalWorker = "waiting confirmation from blockchain...";
+        this.textModalWorker = "waiting confirmation from the blockchain...";
       });
 
       confirmTransaction.on("receipt", () => {
