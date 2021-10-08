@@ -380,37 +380,59 @@
               />
             </h2>
             <h6 class="h3Y mb-1">per {{ item.name }}</h6>
-            <wButton
-              v-if="isApprovedwLAND"
-              width="170px"
-              :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
-              size="medium"
-              @click="openModal(item)"
-            >
-              <div class="d-flex justify-center">
-                <span class="align-self-center">
-                  BUY NOW
-                </span>
-              </div>
-            </wButton>
-            <wButton
-              v-else
-              width="170px"
-              :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
-              size="medium"
-              @click="approvewLAND"
-              :disabled="isLoadingApprovewLAND || isApprovedwLAND === undefined"
-            >
-              <div class="d-flex justify-center">
-                <span class="align-self-center">
-                  {{
-                    isLoadingApprovewLAND || isApprovedwLAND
-                      ? "Waiting..."
-                      : "Approve"
-                  }}
-                </span>
-              </div>
-            </wButton>
+            <div v-if="item.remaining !== 0">
+              <wButton
+                v-if="isApprovedwLAND"
+                width="170px"
+                :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
+                size="medium"
+                @click="openModal(item)"
+              >
+                <div class="d-flex justify-center">
+                  <span class="align-self-center">
+                    BUY NOW
+                  </span>
+                </div>
+              </wButton>
+              <wButton
+                v-else
+                width="170px"
+                :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
+                size="medium"
+                @click="approvewLAND"
+                :disabled="
+                  isLoadingApprovewLAND || isApprovedwLAND === undefined
+                "
+              >
+                <div class="d-flex justify-center">
+                  <span class="align-self-center">
+                    {{
+                      isLoadingApprovewLAND || isApprovedwLAND
+                        ? "Waiting..."
+                        : "Approve"
+                    }}
+                  </span>
+                </div>
+              </wButton>
+            </div>
+            <div v-else>
+              <wButton
+                width="170px"
+                :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
+                size="medium"
+                @click="approvewLAND"
+                :disabled="true"
+              >
+                <div class="d-flex justify-center">
+                  <span class="align-self-center">
+                    Sold out
+                  </span>
+                </div>
+              </wButton>
+              <span class="red--text">
+                Wait for the next package
+              </span>
+            </div>
 
             <span class="text-caption">
               Remaining: {{ item.remaining }} {{ item.name }}</span
