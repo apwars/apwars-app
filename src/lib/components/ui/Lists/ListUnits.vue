@@ -96,32 +96,36 @@
           lg="6"
           xl="4"
           v-for="trooper in filterTroops"
-          v-bind:key="trooper.name"
+          v-bind:key="trooper.name || trooper.title"
         >
-          <trooper v-if="getType === 'trooper'" :info="trooper" />
+          <trooper v-if="getType(trooper) === 'trooper'" :info="trooper" />
           <stake-trooper
-            v-else-if="getType === 'enlistment'"
+            v-else-if="getType(trooper) === 'enlistment'"
             :trooper="trooper"
             :contract-war="contractWar"
           />
           <stake-trooper
-            v-else-if="getType === 'bring-home'"
+            v-else-if="getType(trooper) === 'bring-home'"
             :trooper="trooper"
             :contract-war="contractWar"
             bring-home
           />
           <report-trooper
-            v-else-if="getType === 'report-trooper'"
+            v-else-if="getType(trooper) === 'report-trooper'"
             :trooper="trooper"
             :contract-war="contractWar"
           />
           <unit-war-preparation
-            v-else-if="getType === 'war-preparation'"
+            v-else-if="getType(trooper) === 'war-preparation'"
             :unit="trooper "
           />
           <unit-training-center
-            v-else-if="getType === 'training-center'"
+            v-else-if="getType(trooper) === 'training-center'"
             :unit="trooper"
+          />
+          <game-items-combinators
+            v-else-if="getType(trooper) === 'game-item'"
+            :gameItems="trooper"
           />
         </v-col>
       </v-row>
@@ -154,8 +158,10 @@ import UnitTrainingCenter from "@/lib/components/ui/Units/UnitTrainingCenter";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import { getTroops } from "@/data/Troops";
+import { getGameItems } from "@/data/Collectibles/GameItems";
 import Troops from "@/lib/eth/Troops";
 import wGOLD from "@/lib/eth/wGOLD";
+import GameItemsCombinators from '../Combinators/GameItemsCombinators.vue';
 
 export default {
   components: {
@@ -167,6 +173,7 @@ export default {
     ReportTrooper,
     UnitWarPreparation,
     UnitTrainingCenter,
+    GameItemsCombinators,
   },
 
   props: ["type", "contractWar", "filterRules", "showOnlyMyUnits"],
@@ -213,27 +220,6 @@ export default {
 
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
-    },
-
-    getType() {
-      switch (this.type) {
-        case "trooper":
-          return this.type;
-        case "enlistment":
-          return this.type;
-        case "bring-home":
-          return this.type;
-        case "report-trooper":
-          return this.type;
-        case "war-preparation":
-          this.select.tiers = "Barracks"
-          return this.type;
-        case "training-center":
-          return this.type;
-
-        default:
-          return "trooper";
-      }
     },
   },
 
@@ -337,9 +323,13 @@ export default {
           };
         });
 
+        const gameItems = getGameItems().filter(g => g.combinators).map(g => ({...g, myQty: 0, teamDesc: '', raceDesc: '', tierDesc: '', name: g.title }));
+
+        this.globalTroops = this.globalTroops.concat(gameItems)
+
         this.filterTroops = this.globalTroops;
 
-        this.updateTroopsFilters();
+        //this.updateTroopsFilters();
 
       } catch (error) {
         if (error.message) {
@@ -449,6 +439,28 @@ export default {
         names: [],
       };
       this.updateTroopsFilters();
+    },
+
+    getType(unit) {
+      if (unit.type === 'gameItem') {
+        return "game-item"
+      }
+      switch (this.type) {
+        case "trooper":
+          return this.type;
+        case "enlistment":
+          return this.type;
+        case "bring-home":
+          return this.type;
+        case "report-trooper":
+          return this.type;
+        case "war-preparation":
+          return this.type;
+        case "training-center":
+          return this.type;
+        default:
+          return "trooper";
+      }
     },
   },
 };

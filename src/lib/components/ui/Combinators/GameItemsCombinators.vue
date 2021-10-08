@@ -16,12 +16,12 @@
         <div v-if="isLoadingUnit" class="ml-1 align-self-start">
           <div class="title">Necessary Resources</div>
           <div class="d-flex qty">
-            <v-img class="mr-1" max-width="30px" :src="gameItems.combinators.magicalItem.inputs[0].image" 
+            <v-img class="mr-1" max-width="30px" :src="gameItems.combinators.warPreparation.necessaryResources.tokenA.image" 
               style="margin-left: -2px;"/>
             <amount
               :amount="getTokenAConfig.amount"
               decimals="2"
-              symbol="wCOURAGE"
+              :symbol="tokenAName"
             />
           </div>
           <div class="d-flex mt-1 qty">
@@ -29,13 +29,13 @@
               class="mr-1"
               max-width="26px"
               height="40px"
-              :src="gameItems.combinators.magicalItem.inputs[1].image"
+              :src="gameItems.combinators.warPreparation.necessaryResources.tokenB.image"
             />
             <amount
               :amount="getGameItemBConfig.amount"
               decimals="0"
               formatted
-              :symbol="gameItems.combinators.magicalItem.inputs[1].title"
+              :symbol="gameItems.combinators.warPreparation.necessaryResources.tokenB.title"
             />
           </div>
           <div class="d-flex align-center my-1 qty">
@@ -63,7 +63,7 @@
               class="mr-1"
               max-width="30px"
               height="40px"
-              :src="gameItems.combinators.magicalItem.image"
+              :src="gameItems.combinators.warPreparation.image"
             />
             <span style="margin-top: -5px">
               Item conquered: <br />
@@ -179,6 +179,7 @@ import Convert from "@/lib/helpers/Convert";
 import Combinator from "@/lib/eth/Combinator";
 import wCOURAGE from "@/lib/eth/wCOURAGE";
 import Collectibles from "@/lib/eth/Collectibles";
+import ContractFactory from "@/data/ContractFactory";
 
 const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT =
   "And now sign over here..";
@@ -224,6 +225,7 @@ export default {
       isLoadingClaim: false,
       textNoBalance: "",
       tokenA: "",
+      tokenAName: "",
       GameItemB: "",
       textConfirmArimdesModal: "SIGN CONTRACT",
       combinators: {
@@ -291,13 +293,13 @@ export default {
     },
 
     combinatorAddress() {
-      return this.gameItems.combinators.magicalItem.combinatorAddress[this.networkInfo.id];
+      return this.gameItems.combinators.warPreparation.combinatorAddress[this.networkInfo.id];
     },
 
     combinatorId() {
       if (this.infoTraining.idCombinator) {
         return (
-          this.gameItems.combinators.magicalItem.idCombinator[
+          this.gameItems.combinators.warPreparation.idCombinator[
             this.networkInfo.id
           ] || 0
         );
@@ -306,8 +308,8 @@ export default {
     },
 
     infoTraining() {
-      if (this.gameItems.combinators && this.gameItems.combinators.magicalItem) {
-        return this.gameItems.combinators.magicalItem;
+      if (this.gameItems.combinators && this.gameItems.combinators.warPreparation) {
+        return this.gameItems.combinators.warPreparation;
       }
       return {};
     },
@@ -351,11 +353,17 @@ export default {
 
   methods: {
     async initData() {
-      this.tokenA = this.addresses.wCOURAGE;
-      this.GameItemB = this.addresses.collectibles
       this.combinatorContract = new Combinator(this.combinatorAddress);
       await this.combinatorContract.getContractManager();
-      this.tokenAContract = new wCOURAGE(this.tokenA);
+      const tokenAConfig = await this.combinatorContract.getTokenAConfig(
+        this.account,
+        this.account,
+        this.combinatorId
+      );
+      this.tokenA = tokenAConfig.tokenAddress;
+      this.GameItemB = this.addresses.collectibles
+      this.tokenAContract = ContractFactory(this.tokenA).getContract();
+      this.tokenAName = ContractFactory(tokenAConfig.tokenAddress).getName();
       this.GameItemBContract = new Collectibles(this.GameItemB);
     },
     
@@ -438,7 +446,7 @@ export default {
       );
       this.getGameItemBConfig.balance = await this.GameItemBContract.balanceOf(
         this.account,
-        this.gameItems.combinators.magicalItem.inputs[1].id
+        this.gameItems.combinators.warPreparation.necessaryResources.tokenB.id
       );
     },
 
@@ -493,7 +501,7 @@ export default {
     async approveOnlyPage() {
       try {
         this.isLoadingApprove = true;
-        this.textArimedesModal = DORANOBLE_WAITING_WALLET_APPROVAL;
+        this.textArimedesModal = ARIMEDES_WAITING_WALLET_APPROVAL;
         const confirmTransaction = this.approveOnlyOneContract.approve(
           this.account,
          this.combinatorAddress
@@ -608,28 +616,33 @@ export default {
         const amountTokenA = Convert.fromWei(this.getTokenAConfig.amount, true);
         const amountGameItemB = this.getGameItemBConfig.amount;
 
-        const GameItemBName = this.gameItems.combinators.magicalItem.inputs[1].title;
+        const GameItemBName = this.gameItems.combinators.warPreparation.necessaryResources.tokenB.title;
 
         this.textNoBalance = `I see that you do not have the necessary requirements for research. You must have ${amountTokenA} wCOURAGE and ${amountGameItemB} ${GameItemBName}.`;
         return (this.modalArimedesNoBalance = true);
       }
       this.modalArimedesNewResearch = true;
+
+
+      const { collectibles, id } = this.getGameItemBConfig;
+      const tokenBName = ContractFactory(collectibles).getCollectibleById(parseInt(id)).name;
+
       this.combinatorInfo = {
         ...this.combinatorInfo,
         ...{
           getGeneralConfig: this.getGeneralConfig,
-          getTokenAConfig: { ...this.getTokenAConfig, name: "wcourage" },
-          getGameItemBConfig: { ...this.gameItems.combinators.magicalItem.inputs[1], ...this.getGameItemBConfig },
+          getTokenAConfig: { ...this.getTokenAConfig, name: this.tokenAName },
+          getGameItemBConfig: { ...this.gameItems.combinators.warPreparation.necessaryResources.tokenB.image, ...this.getGameItemBConfig, name: tokenBName },
           getTokenCConfig: this.getGameItemCConfig,
           infoTraining: this.infoTraining,
-          combinatorData: this.gameItems.combinators.magicalItem.necessaryResources
+          combinatorData: this.gameItems.combinators.warPreparation.necessaryResources
         },
       };
 
       this.combinatorInfo.textCheckbox = `I understand that I will pay ${Convert.fromWei(
         this.getTokenAConfig.amount,
         true
-      )},00 wCOURAGE.`;
+      )},00 ${this.tokenAName}.`;
     },
 
     async combineTokens() {
