@@ -3,37 +3,36 @@
     <div v-if="isLoading">
       <game-text header="h2" class="text-center d-block py-9"
         >Loading...</game-text
-      > 
+      >
     </div>
     <div v-else>
       <v-container fluid>
         <v-row>
           <v-col cols="12" md="4" class="pr-0 pl-1   ">
-            <countdown v-if="nextWarPhase" :time="nextWarPhase.endAt" :title="nextWarPhase.title" @end="getNextWarPhase" hideEnd />
-            <div class="d-flex justify-center mt-1" v-if="nextWarPhase.redirect">
-              <wButton
-                @click="
-                  $router.push(
-                    nextWarPhase.redirect
-                  )
-                "
-              >
+            <countdown
+              v-if="nextWarPhase"
+              :time="nextWarPhase.endAt"
+              :title="nextWarPhase.title"
+              @end="getNextWarPhase"
+              hideEnd
+            />
+            <div
+              class="d-flex justify-center mt-1"
+              v-if="nextWarPhase.redirect"
+            >
+              <wButton @click="$router.push(nextWarPhase.redirect)">
                 {{ nextWarPhase.button_label }}
               </wButton>
             </div>
           </v-col>
           <v-col cols="12" md="4">
-            <v-img
-              class="mx-auto"
-              max-width="350"
-              src="/images/treasury/fed-treasury.png"
-            />
-            <wGOLD-button
-              v-if="isConnected"
-              class="mx-auto mt-n2"
-              :amount="balanceFED"
-              size="small"
-            ></wGOLD-button>
+            <v-img class="mx-auto" max-width="300" src="/images/wLANDs.png" />
+            <div class="d-flex justify-center mt-1">
+              <wButton @click="$router.push('/arcadia-expansion')" class="mt-1">
+              <v-img class="mx-auto" max-width="30" src="/images/wLAND.png" />
+                <span class="text-none text-center">BUY wLAND</span>
+              </wButton>
+            </div>
           </v-col>
           <v-col cols="12" md="4">
             <game-text header="h3" class="text-center">
@@ -46,7 +45,7 @@
             />
             <div class="d-flex justify-center">
               <wButton
-                v-if="(nextWar && lastWar) && nextWar.id !== lastWar.id"
+                v-if="nextWar && lastWar && nextWar.id !== lastWar.id"
                 @click="
                   $router.push(
                     `/wars/${lastWar.contractAddress[networkInfo.id]}/report`
@@ -64,7 +63,7 @@
         <v-row dense>
           <v-col cols="12" md="7">
             <game-text header="h3">
-              New Technologies - Coming soon 
+              New Technologies - Coming soon
             </game-text>
 
             <v-slide-group class="mt-3" show-arrows>
@@ -107,7 +106,9 @@
                 <div class="d-flex align-center" @click="toggle">
                   <div class="bg-img-task">
                     <v-img
-                      :max-width="`${$vuetify.breakpoint.mobile ? '50px' : '80px'}`"
+                      :max-width="
+                        `${$vuetify.breakpoint.mobile ? '50px' : '80px'}`
+                      "
                       :src="item.image"
                     />
                   </div>
@@ -116,9 +117,16 @@
                     <span class="font-weight-bold">{{ item.name }}</span>
 
                     <div class="input-info" v-if="item.inputs">
-                      <div class="claim-info" v-for="(input, index) in item.inputs" :key="index">
-                        <div v-if="input.amount">{{ input.amount }} {{ input.name }} </div> <img height="18px" width="18px" :src="input.image" />
-                      </div> 
+                      <div
+                        class="claim-info"
+                        v-for="(input, index) in item.inputs"
+                        :key="index"
+                      >
+                        <div v-if="input.amount">
+                          {{ input.amount }} {{ input.name }}
+                        </div>
+                        <img height="18px" width="18px" :src="input.image" />
+                      </div>
                     </div>
 
                     <wButton
@@ -158,7 +166,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import GameText from "@/lib/components/ui/Utils/GameText";
 import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
-import Convert from "@/lib/helpers/Convert"
+import Convert from "@/lib/helpers/Convert";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -191,7 +199,7 @@ export default {
         { image: "/images/weapons/catapult-elves.png" },
       ],
       nextWar: {},
-      nextWarPhase: null
+      nextWarPhase: null,
     };
   },
 
@@ -312,7 +320,7 @@ export default {
             combinatorId
           );
 
-          task.inputs[0].amount = Convert.fromWei(tokenAConfig.amount)
+          task.inputs[0].amount = Convert.fromWei(tokenAConfig.amount);
 
           const tokenBConfig = await combinatorContract.getTokenBConfig(
             this.account,
@@ -320,7 +328,7 @@ export default {
             combinatorId
           );
 
-          task.inputs[1].amount = Convert.fromWei(tokenBConfig.amount)
+          task.inputs[1].amount = Convert.fromWei(tokenBConfig.amount);
         }
 
         if (this.currentBlockNumber >= task.combinatorInfo.endBlock) {
@@ -336,16 +344,19 @@ export default {
     getNextWarPhase() {
       const nW = this.wars[0];
       const currentTime = new Date().getTime();
-      let currentPhase = nW.phases.find(p => (p.endAt - currentTime) > 0);
+      let currentPhase = nW.phases.find((p) => p.endAt - currentTime > 0);
 
       if (currentPhase) {
-        currentPhase = {...currentPhase, endAt: currentPhase.endAt - currentTime};
+        currentPhase = {
+          ...currentPhase,
+          endAt: currentPhase.endAt - currentTime,
+        };
         this.nextWarPhase = currentPhase;
-        return
+        return;
       }
 
       this.nextWarPhase = nW.phases[nW.phases.length - 1];
-    }
+    },
   },
 };
 </script>
