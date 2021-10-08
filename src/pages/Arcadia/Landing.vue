@@ -593,9 +593,18 @@ export default {
 
       pricewLAND: 1.5,
 
-      wLAND: "0x3301078Bf06c2B5632170d4A4742372cEcb2748e",
-      addresslandSale: "0x175EeA83C23d0aD3B4323ede5FC5572A7b848619",
-      addressBUSD: "0xFa1d2186CEbFe49F3e053d4751C2d6680775a70F",
+      wLAND: {
+        "56": "0x2C6107c27A15D2C7F397D88D76257Ea42c12f89F",
+        "97": "0x3301078Bf06c2B5632170d4A4742372cEcb2748e",
+      },
+      addresslandSale: {
+        "56": "0xba159010cDf6A83bB3f491e37dE264406dDeDDFD",
+        "97": "0x175EeA83C23d0aD3B4323ede5FC5572A7b848619",
+      },
+      addressBUSD: {
+        "56": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+        "97": "0xFa1d2186CEbFe49F3e053d4751C2d6680775a70F",
+      },
 
       currencyConfigBuywLAND: {
         locale: window.navigator.userLanguage || window.navigator.language,
@@ -757,6 +766,19 @@ export default {
       const code = (this.location.country_code || "").toUpperCase();
       return code && blocked.split(",").includes(code);
     },
+
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
+    },
+    getwLAND() {
+      return this.wLAND[this.networkInfo.id];
+    },
+    getAddresslandSale() {
+      return this.addresslandSale[this.networkInfo.id];
+    },
+    getAddressBUSD() {
+      return this.addressBUSD[this.networkInfo.id];
+    },
   },
 
   methods: {
@@ -769,9 +791,9 @@ export default {
         return;
       }
 
-      this.contractBUSD = new ERC20(this.addressBUSD);
-      this.contractwLAND = new ERC20(this.wLAND);
-      this.contractLandSale = new LandSale(this.addresslandSale);
+      this.contractBUSD = new ERC20(this.getAddressBUSD);
+      this.contractwLAND = new ERC20(this.getwLAND);
+      this.contractLandSale = new LandSale(this.getAddresslandSale);
       this.contractCollectibles = new Collectibles(this.addresses.collectibles);
 
       try {
@@ -784,12 +806,12 @@ export default {
 
         this.isApprovedBUSD = await this.contractBUSD.hasAllowance(
           this.account,
-          this.addresslandSale
+          this.getAddresslandSale
         );
 
         this.isApprovedwLAND = await this.contractwLAND.hasAllowance(
           this.account,
-          this.addresslandSale
+          this.getAddresslandSale
         );
 
         this.balancewLAND = await this.contractwLAND.balanceOf(this.account);
@@ -824,7 +846,7 @@ export default {
     async foundationsRemaining() {
       for (let item of this.foundations) {
         item.remaining = await this.contractCollectibles.balanceOf(
-          this.addresslandSale,
+          this.getAddresslandSale,
           item.id
         );
         item.balanceAccount = await this.contractCollectibles.balanceOf(
@@ -847,7 +869,7 @@ export default {
       try {
         this.isLoadingApprove = true;
 
-        await this.contractBUSD.approve(this.account, this.addresslandSale);
+        await this.contractBUSD.approve(this.account, this.getAddresslandSale);
 
         this.isLoadingApprove = false;
         this.isApprovedBUSD = true;
@@ -865,7 +887,7 @@ export default {
       try {
         this.isLoadingApprovewLAND = true;
 
-        await this.contractwLAND.approve(this.account, this.addresslandSale);
+        await this.contractwLAND.approve(this.account, this.getAddresslandSale);
 
         this.isLoadingApprovewLAND = false;
         this.isApprovedwLAND = true;
