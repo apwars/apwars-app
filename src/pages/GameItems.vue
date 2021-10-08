@@ -3,7 +3,8 @@
   <div>
     <div class="bg-library">
       <v-container>
-        <page-title 
+        <page-title
+          :refact="true"
           title="Game Items" 
           description="Here you will find all the items in the game, it is essential to know them all to assemble the best strategy!" 
           image="/images/black-market/book.png"
@@ -54,9 +55,12 @@
                   :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
                 >
                   <nft-item :collectible="item" />
-                  <div class="description">
+                  <div :class="$vuetify.breakpoint.mdAndUp ? 'description' : 'text-center'">
                     <game-text>{{ item.title }}</game-text>
-                    <p style="font-size: 12px" v-html="item.description" />
+                    <p
+                    :style="$vuetify.breakpoint.mdAndUp ?
+                      'font-size: 12px' : 'font-size: 13px; text-align: justify;'"
+                    v-html="item.description" />
                   </div>
                 </v-col>
               </v-row>
