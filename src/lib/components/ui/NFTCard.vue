@@ -2,8 +2,7 @@
   <v-card class="mx-auto" width="250" elevation="0">
     <v-card-text class="text-center d-flex flex-column justify-center">
       <v-img
-        width="230"
-        height="356"
+        width="230px"
         class="cursor-pointer"
         @click="openInfo()"
         :src="collectible.image"
@@ -13,7 +12,7 @@
             : ''
         "
       ></v-img>
-      <div style="height: 37px">
+      <div class="mt-1">
         <game-text>{{ collectible.title }}</game-text>
       </div>
       <div v-if="myCollection" class="d-block">
