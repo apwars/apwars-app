@@ -36,7 +36,7 @@ export function getFoundations() {
       contractAddress: addresses.collectibles,
       image: '/images/foundations/watchtowers.png',
       name: "watch-tower",
-      title: 'Watch Tower ',
+      title: 'Watch Tower',
       description: "Notification of attacks and troop movements.<br /><small><i>membership fee defined by owner</i></small>",
     },
     {
