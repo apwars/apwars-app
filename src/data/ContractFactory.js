@@ -29,7 +29,7 @@ export default (address) => {
       }
     },
     getCollectibleById(id) {
-      if (COLLECTIBLES_CONTRACTS.includes(address)) {
+      if (!COLLECTIBLES_CONTRACTS.includes(address)) {
         return null;
       }
       return getCollectibleById(id);
