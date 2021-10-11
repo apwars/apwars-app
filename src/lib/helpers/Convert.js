@@ -14,8 +14,7 @@ export default {
     return web3.utils.fromWei(amount.toString());
   },
 
-  formatString(amount, decimals) {
-    decimals = decimals || DEFAULT_DECIMALS;
+  formatString(amount, decimals = DEFAULT_DECIMALS) {
     const language = window.navigator.userLanguage || window.navigator.language;
     amount = this.roundDown(amount, decimals);
     return amount.toLocaleString(language, {

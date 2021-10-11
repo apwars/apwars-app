@@ -35,7 +35,7 @@
         >
           <div class="d-flex align-center">
             <div class="box-token mr-2">
-              <v-img src="/images/wGOLD.png" />
+              <v-img src="/images/wgold.png" />
             </div>
             <number-field
               no-icons
@@ -82,7 +82,7 @@
                   fo
                   decimals="0"
                   compact
-                />blocks
+                /> blocks
               </div>
               <div>
                 <time-block :blocks="getInfo.getGeneralConfig.blocks" />
