@@ -36,7 +36,7 @@ export function getTroops() {
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
-            image: '/images/wCOURAGE.png'
+            image: '/images/wcourage.png'
           },
           {
             name: 'wWARRIOR',
@@ -81,7 +81,7 @@ export function getTroops() {
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
-            image: '/images/wCOURAGE.png'
+            image: '/images/wcourage.png'
           },
           {
             name: 'wARCHER',
@@ -140,11 +140,10 @@ export function getTroops() {
             "97": 3,
           },
           name: 'wHORSEMAN',
-          image: '/images/icons/wHORSEMAN.png',
-          tokenImage: '/images/icons/coins/wHORSEMAN.png',
+          image: '/images/icons/wHORSEMAN-coin.png',
           inputs: [{
             name: 'wCOURAGE',
-            image: '/images/wCOURAGE.png'
+            image: '/images/wcourage.png'
           },
           {
             name: 'wCROSSBOWMAN',
@@ -208,7 +207,7 @@ export function getTroops() {
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
-            image: '/images/wCOURAGE.png'
+            image: '/images/wcourage.png'
           },
           {
             name: 'wGRUNT',
@@ -253,7 +252,7 @@ export function getTroops() {
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
-            image: '/images/wCOURAGE.png'
+            image: '/images/wcourage.png'
           },
           {
             name: 'wORC-ARCHER',
@@ -312,12 +311,11 @@ export function getTroops() {
             "97": 2,
           },
           name: 'wWARG',
-          image: '/images/icons/wWARG.png',
-          tokenImage: '/images/icons/coins/wWARG.png',
+          image: '/images/icons/wWARG-coin.png',
           inputs: [{
             name: 'wCOURAGE',
             amount: 2200,
-            image: '/images/wCOURAGE.png'
+            image: '/images/wcourage.png'
           },
           {
             name: 'wPIKE-ORC',
@@ -382,7 +380,7 @@ export function getTroops() {
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
-            image: '/images/wCOURAGE.png'
+            image: '/images/wcourage.png'
           },
           {
             name: 'wSKELETON-WARRIOR',
@@ -427,7 +425,7 @@ export function getTroops() {
           image: '/images/icons/simple-shield.png',
           inputs: [{
             name: 'wCOURAGE',
-            image: '/images/wCOURAGE.png'
+            image: '/images/wcourage.png'
           },
           {
             name: 'wHOUND',
@@ -486,11 +484,10 @@ export function getTroops() {
             "97": 1,
           },
           name: 'wDEATH-KNIGHT',
-          image: '/images/icons/wDEATH-KNIGHT.png',
-          tokenImage: '/images/icons/coins/wDEATH-KNIGHT.png',
+          image: '/images/icons/wDEATH-KNIGHT-coin.png',
           inputs: [{
             name: 'wCOURAGE',
-            image: '/images/wCOURAGE.png'
+            image: '/images/wcourage.png'
           },
           {
             name: 'wUNDEAD-PIKEMAN',

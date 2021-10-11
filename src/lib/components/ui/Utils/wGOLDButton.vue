@@ -11,7 +11,11 @@
           The FED is collecting fees
         </span>
         <span v-else>
-          <amount :amount="amount" decimals="2" compact tooltip />
+          <amount
+            :amount="amount"
+            decimals="2"        
+            tooltip
+          />
           <span class="suffix">wGOLD</span>
         </span>
       </span>
