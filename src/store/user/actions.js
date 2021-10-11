@@ -15,6 +15,10 @@ export default {
     commit("updateCurrentBlockNumber", blockNumber);
   },
 
+  openModalMetaMask({ commit }) {
+    commit("setOpenModalMetaMask", true);
+  },
+
   async connectToMetaMask({ commit }) {
     const configure = async ({ commit }) => {
       const accounts = await window.ethereum.enable();
