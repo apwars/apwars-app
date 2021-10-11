@@ -20,3 +20,7 @@ export function getGameItemTypesOptions() {
   const itemTypes = itemsData.map(i => i.typeDesc);
   return Array.from(new Set(itemTypes));
 }
+
+export function getCollectibleById(id) {
+  return getCollectibles().find(c => c.id === id);
+}

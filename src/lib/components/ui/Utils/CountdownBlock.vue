@@ -15,8 +15,10 @@
       @progress="progress"
     >
       <template slot-scope="props">
-        ~{{ props.hours }} hours, {{ props.minutes }} minutes,
-        {{ props.seconds }} seconds.
+        <span v-if="props.days > 0">~{{ props.days }} days, </span>
+        <span v-if="props.hours > 0">~{{ props.hours }} hours, </span>
+        <span>{{ props.minutes }} minutes, </span>
+        <span>{{ props.seconds }} seconds.</span>
       </template>
     </countdown>
   </div>

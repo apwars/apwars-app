@@ -156,6 +156,7 @@
       :isLoading="isLoadingNewTraining"
       :info="combinatorInfo"
       textConfirm="Training"
+      :dontFormat="false"
       title="Horse Riding Center"
       width="800px"
       height="360px"
@@ -178,9 +179,9 @@ import wCOURAGE from "@/lib/eth/wCOURAGE";
 import Troops from "@/lib/eth/Troops";
 
 const DORANOBLE_APPROVE_SECOND_PAGE_CONTRACT =
-  "I need some wCOURAGE and a wUNIT and I can transform a walker into a rider.";
+  "I need some wCOURAGE and some wUNIT and I can transform a walker into a rider.";
 const DORANOBLE_APPROVE_FIRST_PAGE_CONTRACT =
-  "I need some wCOURAGE and a wUNIT and I can transform a walker into a rider.";
+  "I need some wCOURAGE and some wUNIT and I can transform a walker into a rider.";
 const DORANOBLE_APPROVE_ONLY_ONE_PAGE_CONTRACT =
   "I need some wUNIT and I can transform a walker into a rider.";
 const DORANOBLE_WAITING_WALLET_APPROVAL =
@@ -569,8 +570,8 @@ export default {
         ...this.combinatorInfo,
         ...{
           getGeneralConfig: this.getGeneralConfig,
-          getTokenAConfig: { ...{ name: "wCOURAGE" }, ...this.getTokenAConfig },
-          getTokenBConfig: { ...this.unit, ...this.getTokenBConfig },
+          getTokenAConfig: { name: "wCOURAGE", ...this.getTokenAConfig },
+          getTokenBConfig: { ...this.unit, ...this.getTokenBConfig, name: `${this.unit.name}-coin`  },
           getTokenCConfig: this.getTokenCConfig,
           infoTraining: this.infoTraining,
         },
