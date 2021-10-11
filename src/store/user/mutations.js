@@ -9,6 +9,10 @@ export default {
     state.isConnected = isConnected;
   },
 
+  setOpenModalMetaMask: (state) => {
+    state.openModalMetaMask = true;
+  },
+
   setNetworkInfo: (state, networkInfo) => {
     state.networkInfo = networkInfo;
   },

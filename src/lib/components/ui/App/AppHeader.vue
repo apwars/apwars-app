@@ -136,6 +136,10 @@ export default {
           title: "Docs",
           href: "/docs",
         },
+        {
+          title: "Buy wLAND",
+          href: "/arcadia-expansion",
+        },
       ],
     };
   },

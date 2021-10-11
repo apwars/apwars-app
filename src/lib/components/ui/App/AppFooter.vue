@@ -8,7 +8,6 @@
       >
         <div class="d-inline-flex">
           <img
-            v-if="account"
             class="d-block mx-1 mx-md-2 avatar"
             :src="
               `https://avatar.apwars.farm/?seed=${account}&avatar=${avatar}`
@@ -29,6 +28,9 @@
               decimals="2"
               symbol="wGOLD"
             />
+            <span v-else>
+              0.00 wGOLD
+            </span>
           </span>
         </div>
       </div>
@@ -207,6 +209,11 @@ export default {
           title: "Inventory",
           image: "/images/icons/inventory.png",
           href: "/inventory",
+        },
+        {
+          title: "Arcadia",
+          image: "/images/icons/world.png",
+          href: "/arcadia",
         },
       ],
       balance: 0,

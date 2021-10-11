@@ -6,6 +6,7 @@ const avatar = localStorage.getItem("avatar");
 
 const state = {
   isConnected: false,
+  openModalMetaMask: false,
   account: "",
   avatar: avatar ? avatar : "corp",
   networkInfo: {},

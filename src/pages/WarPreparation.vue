@@ -3,6 +3,7 @@
     <div class="bg-war-preparation">
       <v-container class="pb-0">
         <page-title
+          :refact="true"
           title="War Preparation"
           description="Welcome to my laboratory. Let's gear you up."
           image="/images/war-preparation/icon-war-preparation.png"
