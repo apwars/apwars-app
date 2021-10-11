@@ -830,6 +830,7 @@ export default {
 
       if (!this.isConnected) {
         this.loadingFoundations = false;
+        this.location = await this.getLocattion();
         return;
       }
 
@@ -844,7 +845,7 @@ export default {
 
       try {
         this.location = await this.getLocattion();
-
+        
         this.wLANDSoldAmount = Convert.fromWei(
           await this.contractLandSale.wLANDSoldAmount(this.account),
           true
