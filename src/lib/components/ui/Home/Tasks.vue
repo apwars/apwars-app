@@ -48,10 +48,10 @@
           <div class="ml-2 ml-md-3 mr-2 mr-md-6">
             <span class="font-weight-bold">{{ item.name }}</span>
 
-            <div class="input-info" v-if="item.inputs">
+            <div class="input-info" v-if="item.necessaryResources">
               <div
                 class="claim-info"
-                v-for="(input, index) in item.inputs"
+                v-for="(input, index) in item.necessaryResources"
                 :key="index"
               >
                 <div class="image-viewport">
@@ -94,6 +94,7 @@
 <script>
 import { getTroops } from "@/data/Troops";
 import { getMagicalItems } from "@/data/Collectibles/MagicalItems";
+import { getGameItems } from "@/data/Collectibles/GameItems";
 
 import Convert from "@/lib/helpers/Convert";
 import Combinator from "@/lib/eth/Combinator";
@@ -134,7 +135,7 @@ export default {
     async getTasks() {
       this.isLoading = true;
       const getListTasks = [];
-      const assets = [].concat(getTroops()).concat(getMagicalItems());
+      const assets = [].concat(getTroops()).concat(getMagicalItems()).concat(getGameItems());
 
       assets.filter((a) => {
         if (!a.combinators) {
@@ -171,16 +172,16 @@ export default {
 
         task.combinatorInfo.isClaim = false;
 
-        if (task.inputs) {
+        if (task.necessaryResources) {
           const tokenAConfig = await combinatorContract.getTokenAConfig(
             this.account,
-            this.addresses.wCOURAGE,
+            this.account,
             combinatorId
           );
 
-          task.inputs[0].amount = Convert.fromWei(tokenAConfig.amount);
+          task.necessaryResources.tokenA.amount = Convert.fromWei(tokenAConfig.amount);
 
-          const is1155 = task.inputs[1].type === "magicalItem";
+          const is1155 = task.necessaryResources.tokenB.type === "magicalItem";
 
           let tokenBConfig = null;
 
@@ -198,7 +199,7 @@ export default {
             );
           }
 
-          task.inputs[1].amount = is1155 ? tokenBConfig.amount : Convert.fromWei(tokenBConfig.amount, true);
+          task.necessaryResources.tokenB.amount = is1155 ? tokenBConfig.amount : Convert.fromWei(tokenBConfig.amount, true);
         }
 
         if (this.currentBlockNumber >= task.combinatorInfo.endBlock) {

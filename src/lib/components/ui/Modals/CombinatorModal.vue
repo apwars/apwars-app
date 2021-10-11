@@ -34,7 +34,7 @@
         >
           <div class="d-flex align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/${info.getTokenAConfig.name}.png`" />
+              <v-img :src="`/images/${info.getTokenAConfig.name.toLowerCase()}.png`" />
             </div>
             <number-field
               no-icons
@@ -54,7 +54,7 @@
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
               <v-img
-                :src="`/images/icons/${info.getGameItemBConfig.name}.png`"
+                :src="`/images/icons/${info.getGameItemBConfig.name.toLowerCase()}.png`"
                 height="75px" width="65px"/>
             </div>
             <number-field

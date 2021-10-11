@@ -71,6 +71,7 @@ export function getGameItems() {
       typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
+      name: '7',
       title: "Gold Saver (10%)",
       description:
         '"In the old ages the guilds were used to employ mercenaries to amass power, nowadays they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
@@ -90,6 +91,7 @@ export function getGameItems() {
       typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
+      name: '8',
       title: "Gold Saver (15%)",
       description:
         '"In the old ages the guilds were used to employ mercenaries to amass power, nowadays they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
@@ -109,6 +111,7 @@ export function getGameItems() {
       typeDesc: "Game Items",
       contractAddress: addresses.collectibles,
       tokenAddress: addresses.wGOLD,
+      name: '9',
       title: "Gold Saver (20%)",
       description:
         '"In the old ages the guilds were used to employ mercenaries to amass power, nowadays they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
@@ -292,7 +295,6 @@ export function getGameItems() {
       title: "Worker",
       description: "Workers are essential in Arcadia. They will carry on working effortlessly and effectively for as long as necessary in order to clean up the lands and build up strong foundations for generations to come.",
       image: "/images/nfts/worker.png",
-    }
-
+    },
   ];
 }

@@ -90,7 +90,7 @@ export function getMagicalItems() {
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/elixir10-spendable.png",
       combinators: {
-        magicalItem: {
+        warPreparation: {
           name: "The Elixir (10%) (Spendable)",
           image: "/images/icons/elixir10-spendable.png",
           combinatorAddress: {
@@ -103,18 +103,20 @@ export function getMagicalItems() {
             "56": 1,
             "97": 1,
           },
-          inputs: [{
-            name: 'wcourage',
-            title: 'wCOURAGE',
-            image: '/images/wcourage.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'elixir10',
+              title: 'The Elixir (10%)',
+              image: '/images/nfts/elixir10.png',
+              type: 'magicalItem',
+              id: 2,
+            }
           },
-          {
-            name: 'elixir10',
-            title: 'The Elixir (10%)',
-            image: '/images/nfts/elixir10.png',
-            type: 'magicalItem',
-            id: 2,
-          }],
         },
       },
     },
@@ -128,7 +130,7 @@ export function getMagicalItems() {
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/elixir15-spendable.png",
       combinators: {
-        magicalItem: {
+        warPreparation: {
           name: "The Elixir (15%) (Spendable)",
           image: "/images/icons/elixir15-spendable.png",
           combinatorAddress: {
@@ -141,17 +143,20 @@ export function getMagicalItems() {
             "56": 2,
             "97": 2,
           },
-          inputs: [{
-            title: 'wCOURAGE',
-            image: '/images/wcourage.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'elixir15',
+              title: 'The Elixir (15%)',
+              image: '/images/nfts/elixir15.png',
+              type: 'magicalItem',
+              id: 3,
+            }
           },
-          {
-            name: 'elixir15',
-            title: 'The Elixir (15%)',
-            image: '/images/nfts/elixir15.png',
-            type: 'magicalItem',
-            id: 3,
-          }],
         },
       },
     },
@@ -165,7 +170,7 @@ export function getMagicalItems() {
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/elixir20-spendable.png",
       combinators: {
-        magicalItem: {
+        warPreparation: {
           name: "The Elixir (20%) (Spendable)",
           image: "/images/icons/elixir20-spendable.png",
           combinatorAddress: {
@@ -178,18 +183,20 @@ export function getMagicalItems() {
             "56": 3,
             "97": 3,
           },
-          inputs: [{
-            name: 'wcourage',
-            title: 'wCOURAGE',
-            image: '/images/wcourage.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'elixir20',
+              title: 'The Elixir (20%)',
+              image: '/images/nfts/elixir20.png',
+              type: 'magicalItem',
+              id: 4,
+            }
           },
-          {
-            name: 'elixir20',
-            title: 'The Elixir (20%)',
-            image: '/images/nfts/elixir20.png',
-            type: 'magicalItem',
-            id: 4,
-          }],
         },
       },
     },
@@ -203,7 +210,7 @@ export function getMagicalItems() {
         '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both places and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/arcanes-book-spendable.png",
       combinators: {
-        magicalItem: {
+        warPreparation: {
           name: "The Arcane's Book (Spendable)",
           image: "/images/icons/arcanes-book-spendable.png",
           combinatorAddress: {
@@ -216,18 +223,20 @@ export function getMagicalItems() {
             "56": 4,
             "97": 4,
           },
-          inputs: [{
-            name: 'wcourage',
-            title: 'wCOURAGE',
-            image: '/images/wcourage.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'arcanes-book',
+              title: `The Arcane's Book`,
+              image: '/images/nfts/arcanes-book.png',
+              type: 'magicalItem',
+              id: 5,
+            }
           },
-          {
-            name: 'arcanes-book',
-            title: `The Arcane's Book`,
-            image: '/images/nfts/arcanes-book.png',
-            type: 'magicalItem',
-            id: 5,
-          }],
         },
       },
     },
