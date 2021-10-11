@@ -378,7 +378,6 @@ export default {
         this.account,
         this.combinatorId
       );
-      console.log(tokenAConfig)
       this.tokenA = tokenAConfig.tokenAddress;
       this.GameItemB = this.addresses.collectibles;
       this.tokenAContract = ContractFactory(this.tokenA).getContract();
