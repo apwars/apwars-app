@@ -5,7 +5,7 @@
         <v-img width="160" :src="`/images/troops/${info.name}.png`" />
       </div>
       <div class="ml-1 align-self-center">
-        <div class="stats mt-6">Stats</div>
+        <div :class="$vuetify.breakpoint.mobile ? 'stats mt-2' : 'stats mt-6'">Stats</div>
         <div class="qty">
           Global qty:
           <amount :amount="info.globalQty" decimals="2" compact />
@@ -26,12 +26,54 @@
             <amount :amount="info.pricewGOLD" decimals="2" compact /> wGOLD
           </div>
         </div>
-        <div class="d-flex justify-start">
+
+        <div v-if="$vuetify.breakpoint.mobile"
+          class="d-flex flex-column justify-center mt-2">
           <v-img
-            class="mt-3"
-            max-width="80"
+            class="mb-1"
+            max-width="86"
+            max-height="50"
             :src="`/images/tier-${info.tier}.png`"
           />
+          <a
+            :href="`${redirectTo}=${info.contractAddress[this.networkInfo.id]}`">
+            <wButton
+              style="color: #fff"
+              width="70px" height="40">
+              <div class="d-flex justify-center">
+                <img
+                  src="/images/buttons/btn-icon-buy.svg"
+                  class="mr-1 align-self-center"
+                  height="12"
+                />
+                <div class="align-self-center">Buy</div>
+              </div>
+            </wButton>
+          </a>
+        </div>
+
+        <div v-else
+          class="d-flex justify-center mt-3">
+          <v-img
+            class="mr-1"
+            max-width="80"
+            max-height="40"
+            :src="`/images/tier-${info.tier}.png`"
+          />
+          <a :href="`${redirectTo}=${info.contractAddress[this.networkInfo.id]}`">
+            <wButton
+              style="margin-top: -2px; color: #fff"
+              width="50px" height="40">
+              <div class="d-flex justify-center">
+                <img
+                  src="/images/buttons/btn-icon-buy.svg"
+                  class="mr-1 align-self-center"
+                  height="12"
+                />
+                <div class="align-self-center">Buy</div>
+              </div>
+            </wButton>
+          </a>
         </div>
       </div>
     </div>
@@ -48,6 +90,18 @@ export default {
     Amount,
     wButton,
   },
+
+  data() {
+    return {
+      redirectTo: "https://exchange.apwars.farm/#/swap?showFarms=true&outputCurrency",
+    }
+  },
+
+  computed: {
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
+    },
+  }
 };
 </script>
 
@@ -91,5 +145,9 @@ export default {
   .current-price {
     font-size: 14px;
   }
+}
+
+a {
+  text-decoration: none;
 }
 </style>
