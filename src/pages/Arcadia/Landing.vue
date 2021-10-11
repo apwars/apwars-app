@@ -323,7 +323,7 @@
           </v-row>
 
           <wButton
-            v-if="isApprovedBUSD"
+            v-if="isApprovedBUSD && isConnected"
             width="170px"
             size="medium"
             @click="buywLAND"
@@ -336,7 +336,7 @@
             </div>
           </wButton>
           <wButton
-            v-else
+            v-else-if="isConnected"
             width="170px"
             :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
             size="medium"
@@ -348,6 +348,20 @@
                 {{
                   isLoadingApprove || isApprovedBUSD ? "Waiting..." : "Approve"
                 }}
+              </span>
+            </div>
+          </wButton>
+
+          <wButton
+            v-if="!isConnected"
+            width="170px"
+            :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
+            size="medium"
+            @click="$store.dispatch('user/openModalMetaMask')"
+          >
+            <div class="d-flex justify-center">
+              <span class="align-self-center">
+                CONNECT AND BUY
               </span>
             </div>
           </wButton>
@@ -369,83 +383,90 @@
           <div class="justify-center text-center">
             <h1 class="mt-1 mb-1 text-center">{{ item.name }}</h1>
             <v-img :src="item.img" max-width="250" class="img mb-1"></v-img>
-            <h2 class="h3Y">
-              <amount
-                :amount="item.price"
-                formatted
-                decimals="2"
-                tooltip
-                title="wLAND"
-                symbol="wLAND"
-              />
-            </h2>
-            <h6 class="h3Y mb-1">per {{ item.name }}</h6>
-            <div v-if="item.remaining !== 0">
+            <h2 class="h3Y">{{ item.price }} wLAND</h2>
+            <div v-if="!isConnected">
               <wButton
-                v-if="isApprovedwLAND"
                 width="170px"
                 :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
                 size="medium"
-                @click="openModal(item)"
+                @click="$store.dispatch('user/openModalMetaMask')"
               >
                 <div class="d-flex justify-center">
                   <span class="align-self-center">
-                    BUY NOW
-                  </span>
-                </div>
-              </wButton>
-              <wButton
-                v-else
-                width="170px"
-                :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
-                size="medium"
-                @click="approvewLAND"
-                :disabled="
-                  isLoadingApprovewLAND || isApprovedwLAND === undefined
-                "
-              >
-                <div class="d-flex justify-center">
-                  <span class="align-self-center">
-                    {{
-                      isLoadingApprovewLAND || isApprovedwLAND
-                        ? "Waiting..."
-                        : "Approve"
-                    }}
+                    CONNECT AND BUY
                   </span>
                 </div>
               </wButton>
             </div>
             <div v-else>
-              <wButton
-                width="170px"
-                :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
-                size="medium"
-                @click="approvewLAND"
-                :disabled="true"
+              <h6 class="h3Y mb-1">per {{ item.name }}</h6>
+              <div v-if="item.remaining !== 0">
+                <wButton
+                  v-if="isApprovedwLAND"
+                  width="170px"
+                  :class="$vuetify.breakpoint.mdAndUp ? 'mx-1 ml-2' : 'mx-12'"
+                  size="medium"
+                  @click="openModal(item)"
+                >
+                  <div class="d-flex justify-center">
+                    <span class="align-self-center">
+                      BUY NOW
+                    </span>
+                  </div>
+                </wButton>
+                <wButton
+                  v-else
+                  width="170px"
+                  :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
+                  size="medium"
+                  @click="approvewLAND"
+                  :disabled="
+                    isLoadingApprovewLAND || isApprovedwLAND === undefined
+                  "
+                >
+                  <div class="d-flex justify-center">
+                    <span class="align-self-center">
+                      {{
+                        isLoadingApprovewLAND || isApprovedwLAND
+                          ? "Waiting..."
+                          : "Approve"
+                      }}
+                    </span>
+                  </div>
+                </wButton>
+              </div>
+              <div v-else>
+                <wButton
+                  width="170px"
+                  :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
+                  size="medium"
+                  @click="approvewLAND"
+                  :disabled="true"
+                >
+                  <div class="d-flex justify-center">
+                    <span class="align-self-center">
+                      Sold out
+                    </span>
+                  </div>
+                </wButton>
+                <span class="red--text">
+                  Wait for the next package
+                </span>
+              </div>
+
+              <span class="text-caption">
+                Remaining: {{ item.remaining }} {{ item.name }}</span
               >
-                <div class="d-flex justify-center">
-                  <span class="align-self-center">
-                    Sold out
-                  </span>
-                </div>
-              </wButton>
-              <span class="red--text">
-                Wait for the next package
+              <br />
+              <span
+                class="text-caption font-weight-bold"
+                :class="
+                  isBalanceTicket(item.price) ? 'green--text' : 'primary--text'
+                "
+              >
+                You have: {{ myBalanceFormatted.wLAND }} wLAND
               </span>
             </div>
-
-            <span class="text-caption">
-              Remaining: {{ item.remaining }} {{ item.name }}</span
-            >
-            <br />
-            <span
-              class="text-caption font-weight-bold"
-              :class="
-                isBalanceTicket(item.price) ? 'green--text' : 'primary--text'
-              "
-            >
-              You have: {{ myBalanceFormatted.wLAND }} wLAND
-            </span>
           </div>
         </v-col>
       </v-row>
@@ -805,7 +826,10 @@ export default {
 
   methods: {
     async initData() {
+      this.loadingFoundations = true;
+
       if (!this.isConnected) {
+        this.loadingFoundations = false;
         return;
       }
 
@@ -1017,6 +1041,10 @@ export default {
         return {};
       }
     },
+  },
+
+  mounted() {
+    this.initData();
   },
 
   watch: {

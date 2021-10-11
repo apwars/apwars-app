@@ -2,8 +2,6 @@
   <v-layout class="fill-height">
     <app-header />
     <v-main>
-      <router-view :key="$route.fullPath"></router-view>
-
       <v-dialog v-model="showModal" persistent max-width="300">
         <v-card>
           <v-card-title class="headline">
@@ -63,6 +61,8 @@
           </v-card-text>
         </v-card>
       </v-dialog>
+
+      <router-view :key="$route.fullPath"></router-view>
 
       <v-slide-y-transition>
         <div
@@ -252,12 +252,16 @@ export default {
       guid: sessionStorage.getItem("guid"),
       messages: [],
       changeNetwork: false,
+      listRouterNoShowMetamask: ["/arcadia-expansion"],
     };
   },
 
   computed: {
     isConnected() {
       return this.$store.getters["user/isConnected"];
+    },
+    openModalMetaMask() {
+      return this.$store.getters["user/openModalMetaMask"];
     },
     account() {
       return this.$store.getters["user/account"];
@@ -292,10 +296,34 @@ export default {
         this.changeNetwork = true;
       }
     },
+    openModalMetaMask() {
+      if (this.isConnected) {
+        return;
+      }
+      this.showModal = true;
+    },
+    $route() {
+      if (this.isConnected) {
+        return;
+      }
+
+      this.showModal = !this.showModal;
+      this.listRouterNoShowMetamask.map((path) => {
+        if (path === this.$router.history.current.path) {
+          this.showModal = false;
+        }
+      });
+    },
   },
 
   mounted() {
     this.watchBlockchain();
+
+    this.listRouterNoShowMetamask.map((path) => {
+      if (path === this.$router.history.current.path) {
+        this.showModal = false;
+      }
+    });
 
     socket.on("messages", (items) => {
       this.messages = items;
