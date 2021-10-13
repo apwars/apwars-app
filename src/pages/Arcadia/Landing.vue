@@ -225,7 +225,7 @@
               <h3 class="h3Y">per wLAND</h3>
             </div>
           </div>
-          <div class="text-center mt-2">
+          <div v-if="isConnected" class="text-center mt-2">
             <v-progress-linear
               class="ml-1 mr-1"
               :color="colorProgress(percentageUnitsSold)"
@@ -613,7 +613,7 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
-      supplywLAND: 834131,
+      supplywLAND: 159182,
 
       isConfirmOrderModalOpen: false,
       balancewLAND: undefined,
