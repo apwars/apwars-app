@@ -34,7 +34,9 @@
         >
           <div class="d-flex align-center">
             <div class="box-token mr-2">
-              <v-img :src="`/images/${info.getTokenAConfig.name.toLowerCase()}.png`" />
+              <v-img
+                :src="`/images/${info.getTokenAConfig.name.toLowerCase()}.png`"
+              />
             </div>
             <number-field
               no-icons
@@ -54,8 +56,12 @@
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
               <v-img
-                :src="`/images/icons/${info.getGameItemBConfig.name.toLowerCase()}.png`"
-                height="75px" width="65px"/>
+                :src="
+                  `/images/icons/${info.getGameItemBConfig.name.toLowerCase()}.png`
+                "
+                height="75px"
+                width="65px"
+              />
             </div>
             <number-field
               no-icons
@@ -74,7 +80,7 @@
           </div>
           <div class="d-flex justify-center align-center">
             <div class="box-token mr-2">
-              <v-img :src="getInfo.infoTraining.image" height="75px"/>
+              <v-img :src="getInfo.infoTraining.image" height="75px" />
             </div>
             <number-field
               no-icons
@@ -100,7 +106,8 @@
                   :amount="getInfo.getGeneralConfig.blocks"
                   formatted
                   decimals="0"
-                /> blocks
+                />
+                blocks
               </div>
               <div>
                 <time-block :blocks="getInfo.getGeneralConfig.blocks" />
@@ -143,7 +150,7 @@ export default {
     "title",
     "textConfirm",
     "info",
-    "dontFormat"
+    "dontFormat",
   ],
 
   data() {
@@ -168,13 +175,23 @@ export default {
       );
 
       if (this.dontFormat) {
-        data.getGameItemBConfig.amountFormatted = data.getGameItemBConfig.amount
-        data.getTokenCConfig.amountFormatted = data.getTokenCConfig.amount
+        data.getGameItemBConfig.amountFormatted =
+          data.getGameItemBConfig.amount;
+        data.getTokenCConfig.amountFormatted = data.getTokenCConfig.amount;
       } else {
-        data.getGameItemBConfig.amountFormatted = Convert.fromWei(
-          data.getGameItemBConfig.amount,
-          true
-        );
+        if (data.getTokenBConfig) {
+          this.info.getGameItemBConfig = this.info.getTokenBConfig;
+          data.getGameItemBConfig = data.getTokenBConfig;
+          data.getGameItemBConfig.amountFormatted = Convert.fromWei(
+            data.getTokenBConfig.amount,
+            true
+          );
+        } else {
+          data.getGameItemBConfig.amountFormatted = Convert.fromWei(
+            data.getGameItemBConfig.amount,
+            true
+          );
+        }
 
         data.getTokenCConfig.amountFormatted = Convert.fromWei(
           data.getTokenCConfig.amount,
