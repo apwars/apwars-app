@@ -194,7 +194,7 @@
         "
       >
         <v-col cols="12" lg="4">
-          <div v-if="$route.query.ref" class="text-center my-2">
+          <div v-if="$route.query.ref && isConnected" class="text-center my-2">
             <div v-if="isRef === undefined">
               <h3 class="h3Y">Checking coupon...</h3>
             </div>
@@ -826,8 +826,10 @@ export default {
 
   methods: {
     async initData() {
-
       if (!this.isConnected) {
+        if (this.$route.query.ref) {
+          this.pricewLAND = 1.425;
+        }
         this.loadingFoundations = false;
         this.location = await this.getLocattion();
         return;
@@ -844,7 +846,7 @@ export default {
 
       try {
         this.location = await this.getLocattion();
-        
+
         this.wLANDSoldAmount = Convert.fromWei(
           await this.contractLandSale.wLANDSoldAmount(this.account),
           true
