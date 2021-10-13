@@ -696,7 +696,7 @@ export default {
           id: 58,
           name: "Temple",
           img: "/images/foundations/temples.png",
-          price: 125,
+          price: 375,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -704,7 +704,7 @@ export default {
           id: 59,
           name: "Watchtower",
           img: "/images/foundations/watchtowers.png",
-          price: 125,
+          price: 375,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -712,7 +712,7 @@ export default {
           id: 60,
           name: "Market",
           img: "/images/foundations/markets.png",
-          price: 400,
+          price: 1200,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -720,7 +720,7 @@ export default {
           id: 61,
           name: "Hideout",
           img: "/images/foundations/hidings-place.png",
-          price: 75,
+          price: 225,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -826,7 +826,6 @@ export default {
 
   methods: {
     async initData() {
-      this.loadingFoundations = true;
 
       if (!this.isConnected) {
         this.loadingFoundations = false;
@@ -1050,6 +1049,7 @@ export default {
 
   watch: {
     isConnected() {
+      this.loadingFoundations = true;
       this.initData();
     },
 
