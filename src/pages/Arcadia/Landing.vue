@@ -789,13 +789,14 @@ export default {
     },
 
     getFoundations() {
-      // if (this.isRef === true || !this.isConnected) {
-      //   const foundations = [].concat(this.foundations);
-      //   return foundations.map((foundation) => {
-      //     foundation.price = foundation.price * 0.95;
-      //     return foundation;
-      //   });
-      // }
+      if (this.isRef === true || !this.isConnected) {
+        return this.foundations.map((foundation) => {
+          return {
+            ...foundation,
+            ...{ price: foundation.price * 0.95 },
+          };
+        });
+      }
       return this.foundations;
     },
 
