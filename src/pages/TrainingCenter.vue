@@ -49,7 +49,7 @@ export default {
     return {
       isLoading: true,
       filters: {
-        name: ["wCROSSBOWMAN", "wPIKE-ORC", "wUNDEAD-PIKEMAN"],
+        name: ["wCROSSBOWMAN", "wPIKE-ORC", "wUNDEAD-PIKEMAN", "wBLADEMASTER"],
       },
     };
   },
