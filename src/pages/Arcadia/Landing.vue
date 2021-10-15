@@ -613,7 +613,7 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
-      supplywLAND: 159182,
+      supplywLAND: 246682,
 
       isConfirmOrderModalOpen: false,
       balancewLAND: undefined,
@@ -789,10 +789,12 @@ export default {
     },
 
     getFoundations() {
-      if (this.isRef === true) {
+      if (this.isRef === true || !this.isConnected) {
         return this.foundations.map((foundation) => {
-          foundation.price = foundation.price * 0.95;
-          return foundation;
+          return {
+            ...foundation,
+            ...{ price: foundation.price * 0.95 },
+          };
         });
       }
       return this.foundations;
