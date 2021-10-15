@@ -613,7 +613,7 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
-      supplywLAND: 246682,
+      supplywLAND: 221681,
 
       isConfirmOrderModalOpen: false,
       balancewLAND: undefined,
