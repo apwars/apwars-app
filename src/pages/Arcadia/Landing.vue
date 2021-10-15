@@ -187,12 +187,18 @@
 
     <v-container class="container" v-if="isBlocked === false">
       <v-row
+        style="position: relative;"
         :class="
           $vuetify.breakpoint.mdAndUp
             ? 'bg-wood align-center justify-center'
             : ''
         "
       >
+        <div class="d-flex align-center justify-center buyFinished">
+          <h1 class="white--text">
+            The wLAND sale has finished. Wait for the Liquidity Pool!
+          </h1>
+        </div>
         <v-col cols="12" lg="4">
           <div v-if="$route.query.ref && isConnected" class="text-center my-2">
             <div v-if="isRef === undefined">
@@ -1142,5 +1148,15 @@ export default {
   font-size: 14px;
   color: #fff;
   font-weight: bold;
+}
+
+.buyFinished {
+  width: 100%;
+  min-height: 100%;
+  background-color: rgb(150 106 60 / 92%);
+  display: block;
+  position: absolute;
+  z-index: 3;
+  border-radius: 18px;
 }
 </style>
