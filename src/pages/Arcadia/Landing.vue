@@ -194,11 +194,11 @@
             : ''
         "
       >
-        <div class="d-flex align-center justify-center buyFinished">
+        <!-- <div class="d-flex align-center justify-center buyFinished">
           <h1 class="white--text">
             The wLAND sale has finished. Wait for the Liquidity Pool!
           </h1>
-        </div>
+        </div> -->
         <v-col cols="12" lg="4">
           <div v-if="$route.query.ref && isConnected" class="text-center my-2">
             <div v-if="isRef === undefined">
