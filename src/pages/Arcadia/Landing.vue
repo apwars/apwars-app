@@ -795,7 +795,7 @@ export default {
     },
 
     getFoundations() {
-      if (this.isRef === true || !this.isConnected) {
+      if (this.isRef === true || this.$route.query.ref) {
         return this.foundations.map((foundation) => {
           return {
             ...foundation,
