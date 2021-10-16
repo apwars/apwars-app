@@ -195,7 +195,7 @@
         "
       >
         <!-- <div class="d-flex align-center justify-center buyFinished">
-          <h1 class="white--text">
+          <h1 class="white--text"> 
             The wLAND sale has finished. Wait for the Liquidity Pool!
           </h1>
         </div> -->
