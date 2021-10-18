@@ -187,14 +187,20 @@
 
     <v-container class="container" v-if="isBlocked === false">
       <v-row
+        style="position: relative;"
         :class="
           $vuetify.breakpoint.mdAndUp
             ? 'bg-wood align-center justify-center'
             : ''
         "
       >
+        <!-- <div class="d-flex align-center justify-center buyFinished">
+          <h1 class="white--text">
+            The wLAND sale has finished. Wait for the Liquidity Pool!
+          </h1>
+        </div> -->
         <v-col cols="12" lg="4">
-          <div v-if="$route.query.ref" class="text-center my-2">
+          <div v-if="$route.query.ref && isConnected" class="text-center my-2">
             <div v-if="isRef === undefined">
               <h3 class="h3Y">Checking coupon...</h3>
             </div>
@@ -613,7 +619,7 @@ export default {
       amountBUSD: 0,
       amount: 0,
 
-      supplywLAND: 159182,
+      supplywLAND: 246682,
 
       isConfirmOrderModalOpen: false,
       balancewLAND: undefined,
@@ -696,7 +702,7 @@ export default {
           id: 58,
           name: "Temple",
           img: "/images/foundations/temples.png",
-          price: 125,
+          price: 375,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -704,7 +710,7 @@ export default {
           id: 59,
           name: "Watchtower",
           img: "/images/foundations/watchtowers.png",
-          price: 125,
+          price: 375,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -712,7 +718,7 @@ export default {
           id: 60,
           name: "Market",
           img: "/images/foundations/markets.png",
-          price: 400,
+          price: 1200,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -720,7 +726,7 @@ export default {
           id: 61,
           name: "Hideout",
           img: "/images/foundations/hidings-place.png",
-          price: 75,
+          price: 225,
           remaining: 0,
           balanceAccount: 0,
         },
@@ -789,10 +795,12 @@ export default {
     },
 
     getFoundations() {
-      if (this.isRef === true) {
+      if (this.isRef === true || !this.isConnected) {
         return this.foundations.map((foundation) => {
-          foundation.price = foundation.price * 0.95;
-          return foundation;
+          return {
+            ...foundation,
+            ...{ price: foundation.price * 0.95 },
+          };
         });
       }
       return this.foundations;
@@ -826,9 +834,10 @@ export default {
 
   methods: {
     async initData() {
-      this.loadingFoundations = true;
-
       if (!this.isConnected) {
+        if (this.$route.query.ref) {
+          this.pricewLAND = 1.425;
+        }
         this.loadingFoundations = false;
         this.location = await this.getLocattion();
         return;
@@ -845,7 +854,7 @@ export default {
 
       try {
         this.location = await this.getLocattion();
-        
+
         this.wLANDSoldAmount = Convert.fromWei(
           await this.contractLandSale.wLANDSoldAmount(this.account),
           true
@@ -1050,6 +1059,7 @@ export default {
 
   watch: {
     isConnected() {
+      this.loadingFoundations = true;
       this.initData();
     },
 
@@ -1138,5 +1148,15 @@ export default {
   font-size: 14px;
   color: #fff;
   font-weight: bold;
+}
+
+.buyFinished {
+  width: 100%;
+  min-height: 100%;
+  background-color: rgb(150 106 60 / 92%);
+  display: block;
+  position: absolute;
+  z-index: 3;
+  border-radius: 18px;
 }
 </style>
