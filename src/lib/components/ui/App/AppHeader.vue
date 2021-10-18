@@ -137,7 +137,7 @@ export default {
           href: "/docs",
         },
         {
-          title: "Buy wLAND",
+          title: "Buy Arcadia Foundations",
           href: "/arcadia-expansion",
         },
       ],
