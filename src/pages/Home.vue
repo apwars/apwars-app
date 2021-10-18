@@ -26,11 +26,10 @@
             </div>
           </v-col>
           <v-col cols="12" md="4">
-            <v-img class="mx-auto" max-width="300" src="/images/wLANDs.png" />
+            <v-img class="mx-auto" max-width="300" src="/images/cards.png" />
             <div class="d-flex justify-center mt-1">
               <wButton @click="$router.push('/arcadia-expansion')" class="mt-1">
-              <v-img class="mx-auto" max-width="30" src="/images/wLAND.png" />
-                <span class="text-none text-center">BUY wLAND</span>
+                <span class="text-none text-center">Buy Arcadia Foundations</span>
               </wButton>
             </div>
           </v-col>
