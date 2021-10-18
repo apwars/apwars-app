@@ -2,7 +2,7 @@
   <div>
     <v-img
       src="/images/project/bg-castle.png"
-      :max-height="$vuetify.breakpoint.mdAndUp ? '920' : '1250'"
+      :max-height="$vuetify.breakpoint.mdAndUp ? '750' : '1090'"
       min-height="400"
     >
       <div v-if="isBlocked" class="mt-1 mx-1 mt-md-6 mx-md-16  text-center">
@@ -45,7 +45,7 @@
           >
             <div class="d-flex justify-center">
               <span class="align-self-center">
-                Own lands now
+                Own foundations now
               </span>
             </div>
           </wButton>
@@ -59,20 +59,6 @@
             <div class="d-flex justify-center">
               <span class="align-self-center">
                 Own lands now
-              </span>
-            </div>
-          </wButton>
-
-          <wButton
-            v-if="$vuetify.breakpoint.mdAndUp"
-            width="170px"
-            class="mx-1 ml-2"
-            size="medium"
-            @click="goToHome()"
-          >
-            <div class="d-flex justify-center">
-              <span class="align-self-center">
-                Go to home
               </span>
             </div>
           </wButton>
@@ -106,7 +92,7 @@
           ></v-img>
         </v-col>
       </v-row>
-      <v-row
+      <!-- <v-row
         v-if="isBlocked === false"
         class="mt-6 align-center text-center justify-center"
       >
@@ -148,8 +134,8 @@
             </span>
           </div>
         </wButton>
-      </v-row>
-      <v-row class="justify-center align-center">
+      </v-row> -->
+      <v-row class="mt-6 justify-center align-center">
         <v-col cols="12" lg="8">
           <h1 class="h3Y">What to expect from wLAND?</h1>
           <h4>
@@ -815,7 +801,7 @@ export default {
         process.env.VUE_APP_BLOCKED_CONTRY_CODES || ""
       ).toUpperCase();
       const code = (this.location.country_code || "").toUpperCase();
-      return code && blocked.split(",").includes(code);
+      return false;
     },
 
     networkInfo() {
@@ -839,7 +825,7 @@ export default {
           this.pricewLAND = 1.425;
         }
         this.loadingFoundations = false;
-        this.location = await this.getLocattion();
+        // this.location = await this.getLocattion();
         return;
       }
 
