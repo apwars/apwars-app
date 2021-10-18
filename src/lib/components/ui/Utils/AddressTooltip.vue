@@ -10,11 +10,9 @@
           @click="openAddress"
         >
           <span class="align-self-center span">{{ titleTicker }}</span>
-          <!-- <span class="align-self-center" v-if="isLink">
-            <v-img width="16" class="ml-1" :src="External" alt="external-link"></v-img>
-          </span> -->
         </span>
       </template>
+      <span style="color: #ffb800;">View on BSCscan</span><br>
       <span>{{ address }}</span>
     </v-tooltip>
   </span>
@@ -27,7 +25,6 @@ export default {
 
   data() {
     return {
-      External,
     };
   },
   computed: {

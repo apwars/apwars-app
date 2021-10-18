@@ -1,3 +1,4 @@
+
 export function getTroops() {
   return [
     {
@@ -106,8 +107,8 @@ export function getTroops() {
         "97": "0x84866c7C2c490242ae37C9d73de588203B93e0B2",
       },
       image: "/images/troops/wARMOURED-WARRIOR.png",
-      strength: 0,
-      defense: 0,
+      strength: 15,
+      defense: 15,
     },
     {
       id: 3,
@@ -125,8 +126,8 @@ export function getTroops() {
         "97": "0x9DB33bFDBCE63aC62717950ACea4cf030BDCFD92",
       },
       image: "/images/troops/wCROSSBOWMAN.png",
-      strength: 0,
-      defense: 0,
+      strength: 25,
+      defense: 5,
       combinators: {
         trainingCenter: {
           combinatorAddress: {
@@ -168,8 +169,8 @@ export function getTroops() {
         "97": "0x4F1580e353c16F05f234D2718Dd12d3f7B44a21d",
       },
       image: "/images/troops/wWIZARD.png",
-      strength: 0,
-      defense: 0,
+      strength: 70,
+      defense: 20,
     },
     {
       id: 5,
@@ -277,8 +278,8 @@ export function getTroops() {
         "97": "0xC2d75018Cd8c2e87794d5839B80c35a09EeeA1BB",
       },
       image: "/images/troops/wARMOURED-GRUNT.png",
-      strength: 0,
-      defense: 0,
+      strength: 25,
+      defense: 5,
     },
     {
       id: 8,
@@ -296,8 +297,8 @@ export function getTroops() {
         "97": "0x7b58Fc38F4EcD3f14F0189307881E63d79490A07",
       },
       image: "/images/troops/wPIKE-ORC.png",
-      strength: 0,
-      defense: 0,
+      strength: 15,
+      defense: 15,
       combinators: {
         trainingCenter: {
           combinatorAddress: {
@@ -341,8 +342,8 @@ export function getTroops() {
         "97": "0x433499f0c12E6aE0D1f2A90fB640AE1EBe1Df890",
       },
       image: "/images/troops/wSHAMAN.png",
-      strength: 0,
-      defense: 0,
+      strength: 70,
+      defense: 20,
     },
     {
       id: 10,
@@ -360,8 +361,8 @@ export function getTroops() {
         "97": "0x7a355C7633d3d097F6ed009faC66727E7C4E0Dee",
       },
       image: "/images/icons/coins/wSKELETON-WARRIOR.png",
-      strength: 8,
-      defense: 2,
+      strength: 3,
+      defense: 5,
       combinators: {
         warPreparation: {
           combinatorAddress: {
@@ -569,8 +570,8 @@ export function getTroops() {
         "97": "0x2BCEb0E99B9Eb54540aE32F3d5278e19829466ae",
       },
       image: "/images/troops/wDEATH-KNIGHT.png",
-      strength: 150,
-      defense: 50,
+      strength: 200,
+      defense: 60,
     },
     {
       id: 18,
@@ -645,8 +646,8 @@ export function getTroops() {
         "97": "0x30201b70c98479370b38903682eB39A4570644Ed",
       },
       image: "/images/troops/wBLADEMASTER.png",
-      strength: 25,
-      defense: 25,
+      strength: 40,
+      defense: 10,
     },
     {
       id: 21,

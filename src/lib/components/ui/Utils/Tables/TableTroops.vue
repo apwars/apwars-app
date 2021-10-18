@@ -49,26 +49,12 @@
                 <v-img :src="`/images/icons/coins/${info.name}.png`" max-width="80" class="img"></v-img>
               </td>
               <td>
-                <v-tooltip top>
-                  <template v-slot:activator="{ on, attrs }">
-                    <span
-                      class="cursor-pointer"
-                      dark
-                      v-bind="attrs"
-                      v-on="on">
-                      {{ info.name }}
-                    </span>
-                  </template>
-                  {{ info.contractAddress[networkInfo.id] }}
-                </v-tooltip>
-
-                <!-- <address
-                {{ info.contractAddress[networkInfo.id] }}
+                <address-tooltip
                   :address="info.contractAddress[networkInfo.id]"
                   :titleTicker="info.name"
                   link
                   tooltip
-                ></address> -->
+                ></address-tooltip>
               </td>
               <td>
                 {{ info.tierDesc }}
@@ -85,7 +71,7 @@
               </td>
           
               <td class="text-center">
-                <amount :amount="info.myQty" decimals="2" compact :attribute="info.strength" :name="info.name"/>
+                <amount :amount="info.myQty" decimals="2" compact :attribute="info.strength"/>
               </td>
 
               <td class="text-center">
@@ -119,7 +105,7 @@
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
 import wButton from "@/lib/components/ui/Buttons/wButton";
-import Address from "@/lib/components/ui/Utils/AddressTooltip";
+import AddressTooltip from "@/lib/components/ui/Utils/AddressTooltip";
 import { getTrooper } from "@/data/Trooper";
 
 export default {
@@ -127,7 +113,7 @@ export default {
   components: {
     Amount,
     wButton,
-    Address,
+    AddressTooltip,
   },
 
   data() {
@@ -174,6 +160,7 @@ export default {
       }
 
       this.filteredTroops = await getTrooper(this.networkInfo.id, this.account);
+      
       this.isLoading = false;
     },
 

@@ -359,7 +359,7 @@ export default {
 
     async updateCurrentBlock() {
       const blockNumber = await web3.eth.getBlockNumber();
-      dispatch("user/updateCurrentBlockNumber", { blockNumber });
+      this.$store.dispatch("user/updateCurrentBlockNumber", { blockNumber });
     },
 
     toggleChat() {

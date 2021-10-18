@@ -28,7 +28,6 @@ export async function getTrooper(networkId, account) {
             trooper.lpAddresses,
             networkId
           );
-
           resolve({
             ...trooper,
             ...{
@@ -37,6 +36,7 @@ export async function getTrooper(networkId, account) {
               pricewGOLD: pricewGOLD,
               disabled: false,
             },
+            
           });
         } catch (error) {
           resolve({

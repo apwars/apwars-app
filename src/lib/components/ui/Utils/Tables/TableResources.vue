@@ -39,11 +39,24 @@
                 decimals="3"
                 compact
                 tooltip
-                :size="28"
+                size="14"
               />
             </div>
           </td>
-          <td class="text-left">{{ resource.contract }}</td>
+          <td class="text-left">
+            <v-tooltip top>
+              <template v-slot:activator="{ on, attrs }">
+                <span
+                  @click="redirectToBSC(resource.contract)"
+                  class="cursor-pointer"
+                  v-bind="attrs" 
+                  v-on="on">
+                  {{ resource.contract }}
+                </span> 
+              </template>
+              <span>Vien on BSCscan</span>
+            </v-tooltip>
+          </td>
   
           <td class="text-center">
             <a :href="`${redirectTo}=${resource.contract}`">
@@ -126,7 +139,7 @@ export default {
         {
           img: '/images/wcourage.png',
           name: 'wCOURAGE',
-          supply: '',
+          supply: '87,418,318.81',
           myQty: this.balanceCourage,
           contract: this.addresses.wCOURAGE
         },
@@ -139,6 +152,10 @@ export default {
           contract: this.addresses.wLAND
         },
       ];
+    },
+
+    redirectToBSC(address) {
+      window.open(`https://bscscan.com/token/${address}`);
     }
   }
 };

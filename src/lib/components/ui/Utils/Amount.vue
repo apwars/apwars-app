@@ -24,7 +24,7 @@
 import Convert from '@/lib/helpers/Convert';
 
 export default {
-  props: ['name', 'amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'attribute'],
+  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'attribute'],
 
   computed: {
     computedAmount() {
@@ -32,9 +32,6 @@ export default {
       numberAmount = this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
 
       if (this.attribute) {
-        console.log(this.name)
-         console.log(numberAmount, this.attribute)
-        console.log(numberAmount * this.attribute)
         numberAmount = numberAmount * this.attribute
       }
 
