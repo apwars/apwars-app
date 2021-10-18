@@ -252,7 +252,7 @@ export default {
       guid: sessionStorage.getItem("guid"),
       messages: [],
       changeNetwork: false,
-      listRouterNoShowMetamask: ["/arcadia-expansion"],
+      listRouterNoShowMetamask: [],
     };
   },
 
