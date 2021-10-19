@@ -5,7 +5,7 @@
       id="gameArcadia"
       width="100%"
       :src="
-        `/Game/Arcadia/?worldManager=${getWorldManager}&expectedVersion=1.0.0.15`
+        `/Game/Arcadia/?worldManager=${getWorldManager}&expectedVersion=1.0.1.1`
       "
       frameborder="0"
       scrolling="no"
