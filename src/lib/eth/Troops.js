@@ -18,6 +18,14 @@ export default class Troops {
     return await this.smc.methods.totalSupply().call();
   }
 
+  async getAttackPower() {
+    return await this.smc.methods.getAttackPower().call();
+  }
+
+  async getDefensePower() {
+    return await this.smc.methods.getDefensePower().call();
+  }
+
   allowance(owner, spender) {
     return this.smc.methods.allowance(owner, spender).call();
   }

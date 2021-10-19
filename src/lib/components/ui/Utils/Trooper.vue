@@ -85,7 +85,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 
 export default {
-  props: ["info"],
+  props: ['info'],
   components: {
     Amount,
     wButton,

@@ -180,10 +180,11 @@
     </v-row>
     <v-container>
       <v-row class="d-flex">
-        <v-col cols="12" lg="6" xl="4" class="d-flex">
+        <v-col cols="12" lg="7" xl="4" class="d-flex">
           <v-tabs v-model="tab">
             <v-tab>Game Items</v-tab>
-            <v-tab>My Troops</v-tab>
+            <v-tab>Resources </v-tab>
+            <v-tab>Military Units</v-tab>
             <v-tab>Guardians</v-tab>
           </v-tabs>
         </v-col>
@@ -210,7 +211,7 @@
                   </v-select>
                 </v-col>
                 <v-col cols="12" lg="3" v-if="gameItemTypeFilter.length">
-                  <wButton @click="clearFilter" class=" mr-3">
+                  <wButton @click="clearFilter()" class=" mr-3">
                     <div class="d-flex justify-center">
                       <v-icon class="mx-1">
                         mdi-minus-circle
@@ -257,7 +258,21 @@
             <v-container>
               <v-row>
                 <v-col>
-                  <list-units />
+                  <table-resources
+                    :balanceGold="balance"
+                    :balanceCourage="balanceCOURAGE">
+                  </table-resources> 
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <v-container>
+              <v-row>
+                <v-col>
+                  <table-troops />  
                 </v-col>
               </v-row>
             </v-container>
@@ -295,13 +310,16 @@ import GameTitle from "@/lib/components/ui/Utils/GameTitle";
 import ProfileCard from "@/lib/components/ui/ProfileCard";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
-import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 import PageTitle from "@/lib/components/ui/Utils/PageTitle.vue";
 import { getCollectibles, getGameItemTypesOptions } from "@/data/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
 import wCOURAGE from "@/lib/eth/wCOURAGE";
 import NPCModal from "@/lib/components/ui/Modals/NPCModal";
 import GuardiansApproved from "@/lib/components/ui/Guardians/GuardiansApproved";
+
+import TableResources from "@/lib/components/ui/Utils/Tables/TableResources";
+import TableTroops from "@/lib/components/ui/Utils/Tables/TableTroops";
+import ListUnits from '../lib/components/ui/Lists/ListUnits.vue';
 
 export default {
   components: {
@@ -313,9 +331,11 @@ export default {
     PageTitle,
     wButton,
     Amount,
-    ListUnits,
     "npc-modal": NPCModal,
     GuardiansApproved,
+    TableResources,
+    TableTroops,
+    ListUnits
   },
   data() {
     return {
