@@ -8,7 +8,7 @@
     <div v-else>
       <v-container fluid>
         <v-row>
-          <v-col cols="12" md="4" class="pr-0 pl-1   ">
+          <!-- <v-col cols="12" md="4" class="pr-0 pl-1   ">
             <countdown
               v-if="nextWarPhase"
               :time="nextWarPhase.endAt"
@@ -24,22 +24,75 @@
                 {{ nextWarPhase.button_label }}
               </wButton>
             </div>
-          </v-col>
+          </v-col> -->
           <v-col cols="12" md="4">
-            <v-img class="mx-auto" max-width="300" src="/images/cards.png" />
-            <div class="d-flex justify-center mt-1">
-              <wButton @click="$router.push('/arcadia-expansion')" class="mt-1">
-                <span class="text-none text-center">Buy Arcadia Foundations</span>
-              </wButton>
-            </div>
+            <table-resources
+              renderOn="myResourcesHome"/>
           </v-col>
           <v-col cols="12" md="4">
             <game-text header="h3" class="text-center">
+              Play to Win now!
+            </game-text>
+            <div class="d-flex justify-center mt-2">
+              <v-img max-width="191" src="/images/worker.png" />
+              <v-img class="img-resources" max-width="70" max-height="35" src="/images/resources.png"></v-img>
+            </div>
+            <div class="d-flex justify-center">
+              <wButton @click="$router.push('/worker')">
+                <img
+                  src="/images/buttons/btn-icon-buy.svg"
+                  class="mr-1 align-self-center"
+                  height="12"
+                />
+                <span class="text-none text-center">Free to play</span>
+              </wButton>
+            </div>
+          </v-col>
+          <v-col cols="12" md="4" class="mt-2">
+            <game-text header="h4" class="text-center">
+              Arcadia Expansion
+            </game-text>
+            <v-img class="mx-auto" max-width="208" src="/images/cards.png" />
+            <div class="d-flex justify-center">
+              <wButton @click="$router.push('/arcadia-expansion')">
+                <span class="text-none text-center">Buy Foundations</span>
+              </wButton>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <v-container fluid>
+        <v-row dense>
+          <v-col cols="12" md="5">
+            <game-text header="h4"
+              :class="$vuetify.breakpoint.mobile ? 'text-center' : ''">
+              New Technologies - Coming soon
+            </game-text>
+
+            <v-slide-group
+              show-arrows
+              :class="$vuetify.breakpoint.mobile ? 'mt-3 mb-2' : 'mt-6'">
+              <v-slide-item
+                v-for="(item, index) in catapults"
+                :key="index"
+                v-slot="{ toggle }"
+              >
+                <div class="d-flex align-center" @click="toggle">
+                  <div>
+                    <v-img class="mx-2" max-width="105px" :src="item.image" />
+                  </div>
+                </div>
+              </v-slide-item>
+            </v-slide-group>
+          </v-col>
+          <v-col cols="12" md="3">
+            <game-text header="h4" class="text-center">
               Last war winner
             </game-text>
             <v-img
-              class="mx-auto mt-3"
-              max-width="400"
+              class="mx-auto mt-2"
+              max-width="300"
               :src="`/images/battle/${imgWinnerLastWar}`"
             />
             <div class="d-flex justify-center">
@@ -54,30 +107,6 @@
                 War Report
               </wButton>
             </div>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <v-container fluid>
-        <v-row dense>
-          <v-col cols="12" md="7">
-            <game-text header="h3">
-              New Technologies - Coming soon
-            </game-text>
-
-            <v-slide-group class="mt-3" show-arrows>
-              <v-slide-item
-                v-for="(item, index) in catapults"
-                :key="index"
-                v-slot="{ toggle }"
-              >
-                <div class="d-flex align-center" @click="toggle">
-                  <div>
-                    <v-img class="mx-2" max-width="150px" :src="item.image" />
-                  </div>
-                </div>
-              </v-slide-item>
-            </v-slide-group>
           </v-col>
           <tasks />
         </v-row>
@@ -99,6 +128,8 @@ import { getWars } from "@/data/Wars";
 import WarMachine from "@/lib/eth/WarMachine";
 import wGOLD from "@/lib/eth/wGOLD";
 
+import TableResources from "@/lib/components/ui/Utils/Tables/TableResources";
+
 
 export default {
   components: {
@@ -107,7 +138,8 @@ export default {
     wButton,
     GameText,
     CountdownBlock,
-    Tasks
+    Tasks,
+    TableResources
   },
 
   data() {
@@ -177,7 +209,10 @@ export default {
       if (!this.isConnected) {
         return;
       }
+
       const contractwGOLD = new wGOLD(this.addresses.wGOLD);
+      this.balanceGold = await contractwGOLD.balanceOf(this.account);
+
       this.balanceFED = await contractwGOLD.balanceOf(this.addresses.FED);
 
       this.wars = getWars(this.networkInfo.id !== "56");
@@ -230,5 +265,11 @@ export default {
   background-size: cover;
   min-height: 100%;
   background-position: center;
+}
+
+.img-resources {
+  position: relative;
+  top: 6.2rem;
+  right: 2.5rem;
 }
 </style>

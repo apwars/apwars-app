@@ -1,7 +1,7 @@
 <template>
-  <v-col cols="12" md="5">
+  <v-col cols="12" md="4">
     <v-badge
-      class="badge-large"
+      class="badge-larg "
       color="red"
       bordered
       offset-y="30px"
@@ -11,7 +11,7 @@
         {{ listTasks.length }}
       </template>
 
-      <game-text header="h3"> Tasks </game-text>
+      <game-text header="h4">Tasks</game-text>
     </v-badge>
 
     <div class="loading-container" v-if="isLoading">

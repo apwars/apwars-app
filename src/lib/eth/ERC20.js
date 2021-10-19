@@ -38,4 +38,8 @@ export default class wGOLD {
     const bn = new BigNumber(allowance);
     return bn.gt(0);
   }
+
+  totalSupply() {
+    return this.smc.methods.totalSupply().call();
+  }
 }

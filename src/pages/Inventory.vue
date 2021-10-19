@@ -260,7 +260,8 @@
                 <v-col>
                   <table-resources
                     :balanceGold="balance"
-                    :balanceCourage="balanceCOURAGE">
+                    :balanceCourage="balanceCOURAGE"
+                    renderOn="resourcesInventory">
                   </table-resources> 
                 </v-col>
               </v-row>
