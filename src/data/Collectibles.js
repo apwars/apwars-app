@@ -4,6 +4,7 @@ import { getLegendaryRelics } from "./Collectibles/LegendaryRelics";
 import { getWeapons } from "./Collectibles/Weapons";
 import { getMagicalItems } from "./Collectibles/MagicalItems";
 import { getFoundations } from "./Collectibles/Foundations";
+import { getGoldSavers } from "./Collectibles/GoldSavers";
 
 export function getCollectibles() {
   const addresses = store.getters["user/addresses"];
@@ -12,7 +13,7 @@ export function getCollectibles() {
     return [];
   }
 
-  return [].concat(getGameItems(), getLegendaryRelics(), getWeapons(), getMagicalItems(), getFoundations());
+  return [].concat(getGameItems(), getLegendaryRelics(), getWeapons(), getMagicalItems(), getFoundations(), getGoldSavers());
 }
 
 export function getGameItemTypesOptions() {
