@@ -48,6 +48,7 @@ import GameItemsCombinators from "@/lib/components/ui/Combinators/GameItemsCombi
 import UnitTrainingCenter from "@/lib/components/ui/Units/UnitTrainingCenter";
 
 import { getMagicalItems } from "@/data/Collectibles/MagicalItems";
+import { getGoldSavers } from "@/data/Collectibles/GoldSavers";
 
 export default {
   components: {
@@ -120,7 +121,11 @@ export default {
       }
 
       try {
-        this.gameItemsFiltered = getMagicalItems().filter(i => i.combinators);
+        if (this.type === 'gold-savers') {
+          this.gameItemsFiltered = getGoldSavers().filter(i => i.combinators);
+        } else {
+          this.gameItemsFiltered = getMagicalItems().filter(i => i.combinators);
+        }
         this.isLoading = false;
       } catch (e) {
         console.error(e)

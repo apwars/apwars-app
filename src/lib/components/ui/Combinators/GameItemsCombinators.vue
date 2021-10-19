@@ -132,36 +132,48 @@
       ></v-skeleton-loader>
     </div>
 
-    <arimedes-modal
+    <NPCModal
       v-if="modalArimedesApproval"
       :open="modalArimedesApproval"
       @confirm="approveContract"
       @close="modalArimedesApproval = false"
       :isLoading="isLoadingApprove"
+      :portrait="arimedesData.portrait"
       :text="textArimedesModal"
       :textConfirm="textConfirmArimdesModal"
-    >
-    </arimedes-modal>
+    />
 
-    <arimedes-modal
+    <NPCModal
       v-if="modalArimedesClaim"
       :open="modalArimedesClaim"
       @confirm="claim"
       @close="modalArimedesClaim = false"
       :isLoading="isLoadingClaim"
+      :portrait="arimedesData.portrait"
       :text="textClaim"
       :textConfirm="textConfirmClaim"
       :weaponIcon="gameItems.image"
-    ></arimedes-modal>
+    />
 
-    <arimedes-modal
+    <NPCModal
       v-if="modalArimedesNoBalance"
       :open="modalArimedesNoBalance"
       @close="modalArimedesNoBalance = false"
+      :portrait="arimedesData.portrait"
       :text="textNoBalance"
       :weaponIcon="gameItems.image"
       hideConfirm
-    ></arimedes-modal>
+    />
+
+    <NPCModal
+      v-if="modalOttoApproval"
+      :open="modalOttoApproval"
+      @close="modalOttoApproval = false"
+      :portrait="ottoData.portrait"
+      :text="textOttoModal"
+      textClose="Ok"
+      hideConfirm
+    />
 
     <combinator-modal
       v-if="modalArimedesNewResearch"
@@ -175,7 +187,7 @@
       :dontFormat="true"
       width="800px"
       height="360px"
-    ></combinator-modal>
+    />
   </div>
 </template>
 
@@ -184,7 +196,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import TimeBlock from "@/lib/components/ui/Utils/TimeBlock";
 import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
 import wButton from "@/lib/components/ui/Buttons/wButton";
-import ArimedesModal from "@/lib/components/ui/Modals/ArimedesModal";
+import NPCModal from "@/lib/components/ui/Modals/NPCModal";
 import NewResearchModal from "@/lib/components/ui/Modals/NewResearchModal";
 import CombinatorModal from "@/lib/components/ui/Modals/CombinatorModal";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
@@ -193,6 +205,8 @@ import Convert from "@/lib/helpers/Convert";
 import Combinator from "@/lib/eth/Combinator";
 import Collectibles from "@/lib/eth/Collectibles";
 import ContractFactory from "@/data/ContractFactory";
+
+import { NPCS, NPC_INFO } from "@/data/NPCs";
 
 const ARIMEDES_APPROVE_SECOND_PAGE_CONTRACT = "And now sign over here..";
 const ARIMEDES_APPROVE_FIRST_PAGE_CONTRACT =
@@ -215,7 +229,7 @@ export default {
   components: {
     Amount,
     wButton,
-    ArimedesModal,
+    NPCModal,
     NewResearchModal,
     TimeBlock,
     CountdownBlock,
@@ -270,6 +284,8 @@ export default {
         feeRate: "0",
         tokenAddress: "",
       },
+      modalOttoApproval: false,
+      textOttoModal: "You need to approve me to manage your Inventory! Go to app.apwars.farm/inventory  and approve the wGOLD token under 'Guardians / Otto' <br /><a href='/inventory?tab=guardians'>Go to Inventory</a>",
     };
   },
 
@@ -347,6 +363,14 @@ export default {
 
       return false;
     },
+
+    arimedesData() {
+      return NPC_INFO()[NPCS.ARIMEDES]
+    },
+
+    ottoData() {
+      return NPC_INFO()[NPCS.OTTO_DALGOR]
+    }
   },
 
   async mounted() {
@@ -494,26 +518,6 @@ export default {
       this.signPage = 2;
     },
 
-    openModalArimedesApproval() {
-      if (!this.isApprovedTokenA && !this.isApprovedGameItemB) {
-        this.setInitialStateApproveFirstPage();
-      } else {
-        this.setInitialStateApproveOnlyPage();
-      }
-      this.modalArimedesApproval = true;
-    },
-    async approveContract() {
-      if (!this.isApprovedTokenA && !this.isApprovedGameItemB) {
-        if (this.signPage === 1) {
-          await this.approveFirstPage();
-        } else {
-          await this.approveSecondPage();
-        }
-      } else {
-        await this.approveOnlyPage();
-      }
-    },
-
     setInitialStateApproveOnlyPage() {
       this.textArimedesModal = ARIMEDES_APPROVE_ONLY_ONE_PAGE_CONTRACT;
       this.isLoadingApprove = false;
@@ -557,7 +561,12 @@ export default {
 
     openModalArimedesApproval() {
       if (!this.isApprovedTokenA && !this.isApprovedGameItemB) {
-        this.setInitialStateApproveFirstPage();
+        if (ContractFactory(this.tokenA).getName() === 'wGOLD') {
+          this.modalOttoApproval = true;
+          return
+        } else {
+          this.setInitialStateApproveFirstPage();
+        }
       } else {
         this.setInitialStateApproveOnlyPage();
       }

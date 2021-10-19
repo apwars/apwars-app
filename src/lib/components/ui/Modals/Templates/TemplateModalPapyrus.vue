@@ -101,7 +101,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .theme--dark.v-card {
   background-color: transparent !important;
   background: url("/images/modal-background.png");
@@ -117,6 +117,12 @@ export default {
 
 .v-card__text {
   color: #201813 !important;
+  ::v-deep a {
+    color: #201813;
+    &:hover {
+      color: #500000;
+    }
+  }
 }
 
 .v-card__actions {

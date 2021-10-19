@@ -24,7 +24,7 @@ export function getMagicalItems() {
         burningRate: "0",
         feeRate: "0",
         tokenAddress: "",
-      }
+      },
     },
     {
       id: 3,
@@ -42,7 +42,7 @@ export function getMagicalItems() {
         burningRate: "0",
         feeRate: "0",
         tokenAddress: "",
-      }
+      },
     },
     {
       id: 4,
@@ -60,7 +60,7 @@ export function getMagicalItems() {
         burningRate: "0",
         feeRate: "0",
         tokenAddress: "",
-      }
+      },
     },
     {
       id: 5,
@@ -78,7 +78,7 @@ export function getMagicalItems() {
         burningRate: "0",
         feeRate: "0",
         tokenAddress: "",
-      }
+      },
     },
     {
       id: 40,
@@ -105,17 +105,17 @@ export function getMagicalItems() {
           },
           necessaryResources: {
             tokenA: {
-              name: 'wcourage',
-              title: 'wCOURAGE',
-              image: '/images/wcourage.png',
+              name: "wcourage",
+              title: "wCOURAGE",
+              image: "/images/wcourage.png",
             },
             tokenB: {
-              name: 'elixir10',
-              title: 'The Elixir (10%)',
-              image: '/images/nfts/elixir10.png',
-              type: 'magicalItem',
+              name: "elixir10",
+              title: "The Elixir (10%)",
+              image: "/images/nfts/elixir10.png",
+              type: "magicalItem",
               id: 2,
-            }
+            },
           },
         },
       },
@@ -145,17 +145,17 @@ export function getMagicalItems() {
           },
           necessaryResources: {
             tokenA: {
-              name: 'wcourage',
-              title: 'wCOURAGE',
-              image: '/images/wcourage.png',
+              name: "wcourage",
+              title: "wCOURAGE",
+              image: "/images/wcourage.png",
             },
             tokenB: {
-              name: 'elixir15',
-              title: 'The Elixir (15%)',
-              image: '/images/nfts/elixir15.png',
-              type: 'magicalItem',
+              name: "elixir15",
+              title: "The Elixir (15%)",
+              image: "/images/nfts/elixir15.png",
+              type: "magicalItem",
               id: 3,
-            }
+            },
           },
         },
       },
@@ -185,17 +185,17 @@ export function getMagicalItems() {
           },
           necessaryResources: {
             tokenA: {
-              name: 'wcourage',
-              title: 'wCOURAGE',
-              image: '/images/wcourage.png',
+              name: "wcourage",
+              title: "wCOURAGE",
+              image: "/images/wcourage.png",
             },
             tokenB: {
-              name: 'elixir20',
-              title: 'The Elixir (20%)',
-              image: '/images/nfts/elixir20.png',
-              type: 'magicalItem',
+              name: "elixir20",
+              title: "The Elixir (20%)",
+              image: "/images/nfts/elixir20.png",
+              type: "magicalItem",
               id: 4,
-            }
+            },
           },
         },
       },
@@ -225,17 +225,17 @@ export function getMagicalItems() {
           },
           necessaryResources: {
             tokenA: {
-              name: 'wcourage',
-              title: 'wCOURAGE',
-              image: '/images/wcourage.png',
+              name: "wcourage",
+              title: "wCOURAGE",
+              image: "/images/wcourage.png",
             },
             tokenB: {
-              name: 'arcanes-book',
+              name: "arcanes-book",
               title: `The Arcane's Book`,
-              image: '/images/nfts/arcanes-book.png',
-              type: 'magicalItem',
+              image: "/images/nfts/arcanes-book.png",
+              type: "magicalItem",
               id: 5,
-            }
+            },
           },
         },
       },

@@ -45,6 +45,7 @@
           <v-tabs v-model="tab">
             <v-tab>Weapons</v-tab>
             <v-tab>Magical Items</v-tab>
+            <v-tab>Gold Savers</v-tab>
           </v-tabs>
         </v-col>
       </v-row>
@@ -61,7 +62,12 @@
         </v-tab-item>
         <v-tab-item>
           <v-card flat>
-            <list-combinators type="game-items-combinator" />
+            <list-combinators type="game-items" />
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <list-combinators type="gold-savers" />
           </v-card>
         </v-tab-item>
       </v-tabs-items>

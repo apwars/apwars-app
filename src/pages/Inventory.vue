@@ -393,6 +393,9 @@ export default {
       text: o,
       value: o,
     }));
+    if (this.$route.query.tab === 'guardians') {
+      this.tab = 2;
+    }
   },
   methods: {
     goTo(rout) {
