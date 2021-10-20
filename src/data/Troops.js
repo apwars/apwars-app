@@ -590,6 +590,32 @@ export function getTroops() {
       image: "/images/troops/wPIKE-ELF.png",
       strength: 6,
       defense: 10,
+      combinators: {
+        warPreparation: {
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 9,
+            "97": 9,
+          },
+          name: 'Simple Shield',
+          imageNft: '/images/nfts/weapon-simple-shield.png',
+          imageIcon: '/images/nfts/weapon-simple-shield-28x48.png',
+          image: '/images/icons/simple-shield.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wcourage.png'
+          },
+          {
+            name: 'wPIKE-ELF',
+            image: '/images/icons/wPIKE-ELF-coin.png'
+          }]
+        },
+      }
     },
     {
       id: 19,

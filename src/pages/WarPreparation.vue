@@ -88,7 +88,7 @@ export default {
     return {
       isLoading: true,
       filterTiers: {
-        name: ["wWARRIOR", "wGRUNT", "wSKELETON-WARRIOR"],
+        name: ["wWARRIOR", "wGRUNT", "wSKELETON-WARRIOR", "wPIKE-ELF"],
       },
       tab: 0,
     };
