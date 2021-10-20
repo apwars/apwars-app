@@ -34,10 +34,10 @@
               Play to Win now!
             </game-text>
             <div class="d-flex justify-center mt-2">
-              <v-img max-width="191" src="/images/worker.png" />
-              <v-img class="img-resources" max-width="70" max-height="35" src="/images/resources.png"></v-img>
+              <v-img max-width="170" src="/images/worker.png" />
+              <v-img class="img-resources" max-width="60" max-height="30" src="/images/resources.png"></v-img>
             </div>
-            <div class="d-flex justify-center">
+            <div class="d-flex justify-center mt-2">
               <wButton @click="$router.push('/worker')">
                 <img
                   src="/images/buttons/btn-icon-buy.svg"
@@ -64,7 +64,7 @@
 
       <v-container fluid>
         <v-row dense>
-          <v-col cols="12" md="5">
+          <!-- <v-col cols="12" md="5">
             <game-text header="h4"
               :class="$vuetify.breakpoint.mobile ? 'text-center' : ''">
               New Technologies - Coming soon
@@ -85,14 +85,14 @@
                 </div>
               </v-slide-item>
             </v-slide-group>
-          </v-col>
-          <v-col cols="12" md="3">
-            <game-text header="h4" class="text-center">
+          </v-col> -->
+          <v-col cols="12" md="5">
+            <game-text header="h3" class="text-center">
               Last war winner
             </game-text>
             <v-img
               class="mx-auto mt-2"
-              max-width="300"
+              max-width="400"
               :src="`/images/battle/${imgWinnerLastWar}`"
             />
             <div class="d-flex justify-center">
@@ -269,7 +269,7 @@ export default {
 
 .img-resources {
   position: relative;
-  top: 6.2rem;
+  top: 5.5rem;
   right: 2.5rem;
 }
 </style>

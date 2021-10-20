@@ -97,10 +97,12 @@
       </game-text>
       <v-row class="mt-1">
         <v-col
-          cols="12" md="6"
-          :class="$vuetify.breakpoint.mobile ? 'd-flex justify-center py-1' : ''"
+          cols="7" md="6"
+          :class="$vuetify.breakpoint.mobile ? 'd-flex justify-left py-1 mx-auto' : ''"
           v-for="resource in getResources()" :key="resource.name">
-          <div :class="resource.myQty > 0 ? 'd-flex ' : 'd-flex ml-n3'">
+          <div
+            class="d-flex"
+            :class="resource.myQty == 0 ? 'mr-3' : ''">
             <v-img :src="resource.img" max-width="60" class="img"/>
             <div>
               <amount
@@ -112,7 +114,7 @@
                 size="20">
               </amount>
               <br>
-              <span :style="`color:${resource.textColor}`">
+              <span>
                 <b> {{ resource.name }} </b>
               </span>
             </div>
@@ -238,7 +240,6 @@ export default {
           supply: this.goldSupply,
           myQty: this.balanceGold,
           contract: this.addresses.wGOLD,
-          textColor: '#FFB800'
         },
 
         {
@@ -247,7 +248,6 @@ export default {
           supply: this.courageSupply,
           myQty: this.balanceCourage,
           contract: this.addresses.wCOURAGE,
-          textColor: '#292FBE'
         },
 
         {
@@ -256,7 +256,6 @@ export default {
           supply: this.landSupply,
           myQty: this.balanceLand,
           contract: this.addresses.wLAND,
-          textColor: '#B2ACA3'
         },
 
         /* {
