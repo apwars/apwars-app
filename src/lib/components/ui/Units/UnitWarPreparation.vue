@@ -14,6 +14,7 @@
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty ml-at-mobile">
           <v-img class="mr-1"
+            :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
             :max-width="$vuetify.breakpoint.mobile ? 28 : 36"
             src="/images/wcourage.png" />
           <div class="mt-token-text">
@@ -27,6 +28,7 @@
           <v-img
             style="margin-left: 0.2rem;"
             class="mr-1 mt-1"
+            :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
             :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
             :src="`/images/icons/coins/smallers/${unit.name}.png`"
           />
