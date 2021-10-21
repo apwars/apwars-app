@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="unit-container">
     <div
       class="d-flex justify-center"
       v-bind:class="{ disabled: unit.disabled }"
@@ -10,7 +10,7 @@
           :src="infoWeapon.imageNft"
         />
       </div>
-      <div v-if="isLoadingUnit" class="ml-1 align-self-start">
+      <div v-if="isLoadingUnit" class="ml-1 align-self-start info-container">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty ml-at-mobile">
           <v-img class="mr-1"
@@ -680,6 +680,14 @@ export default {
 .disabled {
   opacity: 0.5;
   filter: grayscale(100%);
+}
+
+
+
+@media screen and (min-width:1024px) {
+  .info-container {
+    width: 280px;
+  }
 }
 
 @media only screen and (max-width: 600px) {
