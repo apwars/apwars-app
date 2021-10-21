@@ -98,7 +98,7 @@
       <v-row class="mt-1">
         <v-col
           cols="7" md="6"
-          :class="$vuetify.breakpoint.mobile ? 'd-flex justify-left py-1 mx-auto' : ''"
+          :class="$vuetify.breakpoint.mobile ? 'd-flex justify-left py-1 mx-auto' : 'px-4'"
           v-for="resource in getResources()" :key="resource.name">
           <div
             class="d-flex"

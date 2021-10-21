@@ -33,11 +33,11 @@
             <game-text header="h3" class="text-center">
               Play to Win now!
             </game-text>
-            <div class="d-flex justify-center mt-2">
+            <div class="d-flex justify-center mt-4">
               <v-img max-width="170" src="/images/worker.png" />
               <v-img class="img-resources" max-width="60" max-height="30" src="/images/resources.png"></v-img>
             </div>
-            <div class="d-flex justify-center mt-2">
+            <div class="d-flex justify-center">
               <wButton @click="$router.push('/worker')">
                 <img
                   src="/images/buttons/btn-icon-buy.svg"
