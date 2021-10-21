@@ -221,8 +221,8 @@ export default {
       isApprovedTokenB: false,
       tokenA: "",
       tokenB: "",
-      tokenAContract: {},
-      tokenBContract: {},
+      tokenAContract: null,
+      tokenBContract: null,
       combinatorInfo: {},
       combinators: {
         combinatorId: "0",
@@ -248,6 +248,7 @@ export default {
       },
       claimPercentage: 0,
       isClaim: false,
+      isContractsLoaded: false,
     };
   },
   computed: {
@@ -333,13 +334,14 @@ export default {
     async initData() {
       this.tokenA = this.addresses.wCOURAGE;
       this.tokenB = this.unit.contractAddress[this.networkInfo.id];
-      this.combinatorContract = new Combinator(this.combinatorAddress);
-      await this.combinatorContract.getContractManager();
       this.tokenAContract = new wCOURAGE(this.tokenA);
       this.tokenBContract = new Troops(this.tokenB);
+      this.combinatorContract = new Combinator(this.combinatorAddress);
+      await this.combinatorContract.getContractManager();
+      this.isContractsLoaded = true
     },
     async loadData() {
-      if (!this.isConnected) {
+      if (!this.isConnected || !this.isContractsLoaded) {
         return;
       }
 
@@ -642,7 +644,7 @@ export default {
   },
   async mounted() {
     await this.initData();
-    this.loadData();
+    await this.loadData();
   },
 };
 </script>
