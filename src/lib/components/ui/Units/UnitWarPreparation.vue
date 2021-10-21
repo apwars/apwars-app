@@ -249,6 +249,9 @@ export default {
     };
   },
   computed: {
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
     addresses() {
       return this.$store.getters["user/addresses"];
     },
@@ -334,6 +337,10 @@ export default {
       this.tokenBContract = new Troops(this.tokenB);
     },
     async loadData() {
+      if (!this.isConnected) {
+        return;
+      }
+
       if (
         this.getGeneralConfig.isEnabled !== undefined &&
         !this.getGeneralConfig.isEnabled
