@@ -67,7 +67,4 @@ export default {
   vertical-align: bottom;
   margin-left: 2px !important;
 }
-.amount {
-  white-space: nowrap;
-}
 </style>

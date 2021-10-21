@@ -778,10 +778,10 @@ export default {
 @media only screen and (max-width: 600px) {
   .qty,
   .globalQty {
-    font-size: 14px;
+    font-size: 12px;
   }
   .current-price {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 </style>

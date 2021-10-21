@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="unit-container">
     <div
       class="d-flex justify-center"
       v-bind:class="{ disabled: unit.disabled }"
@@ -10,10 +10,11 @@
           :src="infoWeapon.imageNft"
         />
       </div>
-      <div v-if="isLoadingUnit" class="ml-1 align-self-start">
+      <div v-if="isLoadingUnit" class="ml-1 align-self-start info-container">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty ml-at-mobile">
           <v-img class="mr-1"
+            :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
             :max-width="$vuetify.breakpoint.mobile ? 28 : 36"
             src="/images/wcourage.png" />
           <div class="mt-token-text">
@@ -27,6 +28,7 @@
           <v-img
             style="margin-left: 0.2rem;"
             class="mr-1 mt-1"
+            :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
             :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
             :src="`/images/icons/coins/smallers/${unit.name}.png`"
           />
@@ -219,8 +221,8 @@ export default {
       isApprovedTokenB: false,
       tokenA: "",
       tokenB: "",
-      tokenAContract: {},
-      tokenBContract: {},
+      tokenAContract: null,
+      tokenBContract: null,
       combinatorInfo: {},
       combinators: {
         combinatorId: "0",
@@ -246,9 +248,13 @@ export default {
       },
       claimPercentage: 0,
       isClaim: false,
+      isContractsLoaded: false,
     };
   },
   computed: {
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
     addresses() {
       return this.$store.getters["user/addresses"];
     },
@@ -328,12 +334,17 @@ export default {
     async initData() {
       this.tokenA = this.addresses.wCOURAGE;
       this.tokenB = this.unit.contractAddress[this.networkInfo.id];
-      this.combinatorContract = new Combinator(this.combinatorAddress);
-      await this.combinatorContract.getContractManager();
       this.tokenAContract = new wCOURAGE(this.tokenA);
       this.tokenBContract = new Troops(this.tokenB);
+      this.combinatorContract = new Combinator(this.combinatorAddress);
+      await this.combinatorContract.getContractManager();
+      this.isContractsLoaded = true
     },
     async loadData() {
+      if (!this.isConnected || !this.isContractsLoaded) {
+        return;
+      }
+
       if (
         this.getGeneralConfig.isEnabled !== undefined &&
         !this.getGeneralConfig.isEnabled
@@ -633,7 +644,7 @@ export default {
   },
   async mounted() {
     await this.initData();
-    this.loadData();
+    await this.loadData();
   },
 };
 </script>
@@ -669,6 +680,14 @@ export default {
 .disabled {
   opacity: 0.5;
   filter: grayscale(100%);
+}
+
+
+
+@media screen and (min-width:1024px) {
+  .info-container {
+    width: 280px;
+  }
 }
 
 @media only screen and (max-width: 600px) {

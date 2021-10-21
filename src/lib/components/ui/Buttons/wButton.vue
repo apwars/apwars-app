@@ -56,7 +56,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .btn {
   cursor: pointer;
   display: inline-flex;
@@ -164,13 +164,18 @@ export default {
   width: 18px;
 }
 .btn.btn-default .btn-bg-c > .label {
-  font-size: 16px;
+  font-size: 12px;
   margin-top: 5px;
   margin-left: -6px;
   width: calc(100% + 12px);
   height: 33px;
   border-radius: 5px;
   padding: 6px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  @media screen and (min-width: 600px) {
+    font-size: 16px;
+  }
 }
 
 /* size [small] */

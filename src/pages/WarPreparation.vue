@@ -52,16 +52,12 @@
       <v-tabs-items v-model="tab">
         <v-tab-item>
           <v-card flat>
-            <list-units
-              type="war-preparation"
-              :filter-rules="filterTiers"
-              show-only-my-units
-            />
+            <list-combinators type="weapons" />
           </v-card>
         </v-tab-item>
         <v-tab-item>
           <v-card flat>
-            <list-combinators type="game-items-combinator" />
+            <list-combinators type="magical-items" />
           </v-card>
         </v-tab-item>
       </v-tabs-items>
@@ -88,7 +84,7 @@ export default {
     return {
       isLoading: true,
       filterTiers: {
-        name: ["wWARRIOR", "wGRUNT", "wSKELETON-WARRIOR"],
+        name: ["wWARRIOR", "wGRUNT", "wSKELETON-WARRIOR", "wPIKE-ELF"],
       },
       tab: 0,
     };
