@@ -541,7 +541,7 @@ export function getTroops() {
           claimRouter: "/war-preparation",
           idCombinator: {
             "5777": 0,
-            "56": 0,
+            "56": 11,
             "97": 11,
           },
           imageNft: '/images/nfts/weapon-simple-shield.png',
