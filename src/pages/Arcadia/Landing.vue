@@ -180,183 +180,18 @@
             : ''
         "
       >
-        <div class="d-flex align-center justify-center buyFinished">
-          <h1 class="white--text"> 
-            The wLAND sale has finished. Wait for the Liquidity Pool!
-          </h1>
-        </div>
-        <v-col cols="12" lg="4">
-          <div v-if="$route.query.ref && isConnected" class="text-center my-2">
-            <div v-if="isRef === undefined">
-              <h3 class="h3Y">Checking coupon...</h3>
-            </div>
-            <div v-else-if="isRef === true">
-              <h3 class="green--text">Discount coupon</h3>
-              <span>5% off</span>
-            </div>
-            <div v-else>
-              <h3 class="yellow--text">Invalid coupon</h3>
-            </div>
-          </div>
-          <div class="d-flex justify-start">
-            <v-img
-              src="/images/project/wLAND.png"
-              max-width="60"
-              max-height="60"
-              class="img"
-            ></v-img>
-            <div class="mr-5">
-              <h1 class="h3Y">
-                <amount
-                  :amount="pricewLAND"
-                  formatted
-                  :decimals="$route.query.ref ? 3 : 2"
-                />
-                BUSD
-              </h1>
-              <h3 class="h3Y">per wLAND</h3>
-            </div>
-          </div>
-          <div v-if="isConnected" class="text-center mt-2">
-            <v-progress-linear
-              class="ml-1 mr-1"
-              :color="colorProgress(percentageUnitsSold)"
-              buffer-value="100"
-              :value="percentageUnitsSold"
-              stream
-              height="30"
-            >
-              <template v-slot:default="{ value }">
-                <strong>{{ Math.ceil(value) }}%</strong>
-              </template>
-            </v-progress-linear>
-            <p class="mt-1">
-              AVAILABLE UNITS:
-              <amount :amount="wLANDSold" formatted decimals="2" />
-            </p>
-          </div>
+        <v-col cols="12" md="4">
+          <v-img class="mx-auto" max-width="300" src="/images/wLANDS.png" />
         </v-col>
-        <v-col cols="12" lg="8">
-          <v-row class="d-flex">
-            <v-col cols="12" lg="10">
-              <h5>QTY:</h5>
-              <v-currency-field
-                outlined
-                v-bind="currencyConfigBuywLAND"
-                v-model="amountwLAND"
-                @input="calcAmountBUSD"
-                :hint="`Balance: ${myBalanceFormatted.wLAND} wLAND`"
-                persistent-hint
-                :disabled="!isApprovedBUSD"
-              >
-                <template v-slot:append>
-                  <div class="d-flex">
-                    <span class="mr-1 align-self-center">wLAND</span>
-                  </div>
-                </template>
-              </v-currency-field>
-            </v-col>
-            <v-col cols="2" v-if="$vuetify.breakpoint.mdAndUp">
-              <v-img
-                class="img mt-2 ml-n4"
-                src="/images/project/wLAND.png"
-                max-height="50"
-                max-width="50"
-              ></v-img>
-            </v-col>
-          </v-row>
-          <v-row class="d-flex mt-n5">
-            <v-col cols="12" lg="10">
-              <h5>BUSD PRICE:</h5>
-              <v-currency-field
-                outlined
-                v-bind="currencyConfig"
-                v-model="amountBUSD"
-                disabled
-                :hint="`Balance: ${myBalanceFormatted.busd} BUSD`"
-                persistent-hint
-              >
-                <template v-slot:append>
-                  <div class="d-flex">
-                    <span class="mr-1 align-self-center">BUSD</span>
-                  </div>
-                </template>
-              </v-currency-field>
-            </v-col>
-            <v-col cols="2" v-if="$vuetify.breakpoint.mdAndUp">
-              <v-img
-                class="img mt-3 ml-n4"
-                src="/images/project/BUSD.png"
-                max-height="40"
-                max-width="40"
-              ></v-img>
-            </v-col>
-          </v-row>
 
-          <v-row class="pa-0 ma-0">
-            <v-col cols="12" class="pa-0 ma-0">
-              <a target="_blank" href="/disclaimer.pdf">
-                Click here to open and download the wLAND sale responsibility
-                term.
-              </a>
-              <v-checkbox
-                v-model="checkbox"
-                class="checkbox-modal-input ma-0 pa-0"
-                color="secondary"
-              >
-                <template v-slot:label>
-                  <div>
-                    I have read carefully and understood the terms regarding the
-                    wLAND sale.
-                  </div>
-                </template>
-              </v-checkbox>
-            </v-col>
-          </v-row>
-
-          <wButton
-            v-if="isApprovedBUSD && isConnected"
-            width="170px"
-            size="medium"
-            @click="buywLAND"
-            :disabled="amountBUSD == 0 || isBuyingwLAND || !checkbox"
-          >
-            <div class="d-flex justify-center">
-              <span class="align-self-center">
-                {{ isBuyingwLAND ? "Waiting..." : "Buy" }}
+        <v-col cols="12" md="4">
+          <div class="d-flex justify-center mt-1">
+            <wButton size="large" @click="buywLAND()" >
+              <span class="text-none text-center">
+                BUY wLAND
               </span>
-            </div>
-          </wButton>
-          <wButton
-            v-else-if="isConnected"
-            width="170px"
-            :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
-            size="medium"
-            @click="approveBUSD"
-            :disabled="isLoadingApprove || isApprovedBUSD === undefined"
-          >
-            <div class="d-flex justify-center">
-              <span class="align-self-center">
-                {{
-                  isLoadingApprove || isApprovedBUSD ? "Waiting..." : "Approve"
-                }}
-              </span>
-            </div>
-          </wButton>
-
-          <wButton
-            v-if="!isConnected"
-            width="170px"
-            :class="$vuetify.breakpoint.mdAndUp ? '' : 'mx-12'"
-            size="medium"
-            @click="$store.dispatch('user/openModalMetaMask')"
-          >
-            <div class="d-flex justify-center">
-              <span class="align-self-center">
-                CONNECT AND BUY
-              </span>
-            </div>
-          </wButton>
+            </wButton>
+          </div>
         </v-col>
       </v-row>
       <h1 class="h3Y text-center mt-9">Own Foundations:</h1>
@@ -781,7 +616,10 @@ export default {
     },
 
     getFoundations() {
-      if (this.isRef === true || (this.$route.query.ref && this.isRef === undefined)) {
+      if (
+        this.isRef === true ||
+        (this.$route.query.ref && this.isRef === undefined)
+      ) {
         return this.foundations.map((foundation) => {
           return {
             ...foundation,
@@ -943,29 +781,9 @@ export default {
       }
     },
 
-    async buywLAND() {
-      try {
-        this.isBuyingwLAND = true;
-
-        await this.contractLandSale.buywLAND(
-          parseInt(this.amountwLAND),
-          this.ref,
-          this.account
-        );
-
-        this.isBuyingwLAND = false;
-        this.openModalBuy = true;
-        this.amountwLAND = 0;
-        this.checkbox = false;
-        ToastSnackbar.success("wLAND secured successfully!");
-      } catch (error) {
-        this.isBuyingwLAND = false;
-
-        if (error.message) {
-          return this.showError(error.message);
-        }
-        return ToastSnackbar.error("An error has occurred while buying wLAND");
-      }
+    buywLAND() {
+      window.location.href =
+                    'https://pancakeswap.finance/swap?outputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56';
     },
 
     async buyTicket() {
