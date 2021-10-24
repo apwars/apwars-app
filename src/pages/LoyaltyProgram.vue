@@ -360,7 +360,7 @@ export default {
       console.log('tokenAmountA', tokenAmountA);
       console.log('tokenAmountB', tokenAmountB);
       const value = await LP.getLiquidityMinted(tokenAmountA, tokenAmountB);
-      console.log('value', value);
+      console.log('value', value.toString());
       this.modalProvideLiquidity = true;
 
 
