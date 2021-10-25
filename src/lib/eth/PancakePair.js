@@ -27,12 +27,12 @@ export default class PancakePair {
         ERC20ABI,
         this.tokenA
       );
-      this.tokenA = new BigNumber(await this.smcTokenA.methods.balanceOf(this.contractAddress));
+      this.tokenAmountA = new BigNumber(await this.smcTokenA.methods.balanceOf(this.contractAddress).call());
       this.smcTokenB = new window.web3.eth.Contract(
         ERC20ABI,
         this.tokenB
       );
-      this.tokenB = new BigNumber(await this.smcTokenB.methods.balanceOf(this.contractAddress));
+      this.tokenAmountB = new BigNumber(await this.smcTokenB.methods.balanceOf(this.contractAddress).call());
 
     } else {
       // update variables
@@ -41,12 +41,12 @@ export default class PancakePair {
           ERC20ABI,
           this.tokenA
         );
-        this.tokenA = new BigNumber(await this.smcTokenA.methods.balanceOf(this.contractAddress));
+        this.tokenAmountA = new BigNumber(await this.smcTokenA.methods.balanceOf(this.contractAddress).call());
         this.smcTokenB = new window.web3.eth.Contract(
           ERC20ABI,
           this.tokenB
         );
-        this.tokenB = new BigNumber(await this.smcTokenB.methods.balanceOf(this.contractAddress));
+        this.tokenAmountB = new BigNumber(await this.smcTokenB.methods.balanceOf(this.contractAddress).call());
         this.totalSupplyAmount = new BigNumber(await this.totalSupply());
       })();
     }
@@ -76,26 +76,27 @@ export default class PancakePair {
     return this.smc.methods.balanceOf(account).call();
   }
 
-  // async getCalculateToken(token) {
-  //   await this.setVariablesDefault();
+  async getCalculateToken(amountWei, token) {
+    await this.setVariablesDefault();
+    let tokenAmount;
+    amountWei = new BigNumber(amountWei);
 
-  //   if ()
+    if (token.toLowerCase() === this.tokenA.toLowerCase()) {
+      tokenAmount = amountWei.times(this.tokenAmountB).div(this.tokenAmountA);
+    } else if (token.toLowerCase() === this.tokenB.toLowerCase()) {
+      tokenAmount = amountWei.times(this.tokenAmountA).div(this.tokenAmountB);
+    }
 
-
-
-  //     await this.setVariablesDefault();
-  //   const amountA = new BigNumber.div(BigNumber.times(amountA, this.totalSupplyAmount), this.tokenAmountA)
-  //   const amountB = new BigNumber.div(BigNumber.times(amountB, this.totalSupplyAmount), this.tokenAmountB)
-  //   return new BigNumber.isLessThanOrEqualTo(amountA, amountB) ? amountA : amountB
-  // }
+    return tokenAmount.integerValue(BigNumber.ROUND_DOWN).toString();
+  }
 
   async getLiquidityMinted(amountA, amountB) {
     await this.setVariablesDefault();
     amountA = new BigNumber(amountA);
     amountB = new BigNumber(amountB);
-    amountA = amountA.div(amountA.times(this.totalSupplyAmount), this.tokenAmountA);
-    amountB = amountB.div(amountB.times(this.totalSupplyAmount), this.tokenAmountB);
-    return new amountA.isLessThanOrEqualTo(amountB) ? amountA : amountB;
+    amountA = amountA.times(this.totalSupplyAmount).div(this.tokenAmountA);
+    amountB = amountB.times(this.totalSupplyAmount).div(this.tokenAmountB);
+    return new amountA.isLessThanOrEqualTo(amountB) ? amountA.integerValue(BigNumber.ROUND_DOWN).toString() : amountB.integerValue(BigNumber.ROUND_DOWN).toString();
   }
 
 

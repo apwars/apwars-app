@@ -234,15 +234,16 @@ export default {
           requirement: "100 wLAND in wLAND/BUSD LP",
           time: "7 days",
           reward: 10,
-          tokenAmountA: 100,
-          tokenAmountB: 150,
+          tokenRequirement: '0x2c6107c27a15d2c7f397d88d76257ea42c12f89f',
+          tokenAmountA: 5,
+          tokenAmountB: 6.93173,
           rewardSymbol: "wLAND",
           totalRewardDistribute: 5000,
           totalRewardAvailable: 3000,
           loyaltyPoints: 1000,
           isBalance: true,
           isProgress: false,
-          lp: "0xdc8eeba7e6baa2742d0751944f9ff161b7c8f88f",
+          lp: "0x04eb5daf52ab295a12a665a02e5b80ecd2f347a3",
         },
         {
           title: "Be a great explorer",
@@ -251,15 +252,16 @@ export default {
           requirement: "5000 wGOLD in wGOLD/BUSD LP",
           time: "3 days",
           reward: 100,
-          tokenAmountA: 100,
-          tokenAmountB: 150,
+          tokenRequirement: '0x2c6107c27a15d2c7f397d88d76257ea42c12f89f',
+          tokenAmountA: 5,
+          tokenAmountB: 6.93173,
           rewardSymbol: "Workers",
           totalRewardDistribute: 20000,
           totalRewardAvailable: 17570,
           loyaltyPoints: 100,
           isBalance: true,
           isProgress: false,
-          lp: "0xdc8eeba7e6baa2742d0751944f9ff161b7c8f88f",
+          lp: "0x04eb5daf52ab295a12a665a02e5b80ecd2f347a3",
         },
         {
           title: "Battle strategy",
@@ -268,8 +270,9 @@ export default {
           requirement: "20000 wGRUNT in wGRUNT/wGOLD LP",
           time: "10 days",
           reward: 1,
-          tokenAmountA: 100,
-          tokenAmountB: 150,
+          tokenRequirement: '0x2c6107c27a15d2c7f397d88d76257ea42c12f89f',
+          tokenAmountA: 5,
+          tokenAmountB: 6.93173,
           rewardSymbol: "The Elixir (10%) (Spendable)",
           totalRewardDistribute: 100,
           totalRewardAvailable: 78,
@@ -277,7 +280,7 @@ export default {
           balance: 100,
           isBalance: true,
           isProgress: true,
-          lp: "0xdc8eeba7e6baa2742d0751944f9ff161b7c8f88f",
+          lp: "0x04eb5daf52ab295a12a665a02e5b80ecd2f347a3",
         },
         {
           title: "Conquer more lands",
@@ -286,15 +289,16 @@ export default {
           requirement: "10 wLAND in wLAND/BUSD LP",
           time: "7 days",
           reward: 10,
-          tokenAmountA: 100,
-          tokenAmountB: 150,
+          tokenRequirement: '0x2c6107c27a15d2c7f397d88d76257ea42c12f89f',
+          tokenAmountA: 5,
+          tokenAmountB: 6.93173,
           rewardSymbol: "wLAND",
           totalRewardDistribute: 5000,
           totalRewardAvailable: 3000,
           loyaltyPoints: 1000,
           isBalance: true,
           isProgress: false,
-          lp: "0xdc8eeba7e6baa2742d0751944f9ff161b7c8f88f",
+          lp: "0x04eb5daf52ab295a12a665a02e5b80ecd2f347a3",
           isDone: true,
         },
       ],
@@ -356,11 +360,13 @@ export default {
     async openModalProvider(liquidity) {
       const LP = new PancakePair(liquidity.lp);
       const tokenAmountA = Convert.toWei(liquidity.tokenAmountA);
-      const tokenAmountB = Convert.toWei(liquidity.tokenAmountB);
-      console.log('tokenAmountA', tokenAmountA);
+      const tokenAmountB = await LP.getCalculateToken(tokenAmountA, liquidity.tokenRequirement);
       console.log('tokenAmountB', tokenAmountB);
+
+
+      // const tokenAmountB = Convert.toWei(liquidity.tokenAmountB);
       const value = await LP.getLiquidityMinted(tokenAmountA, tokenAmountB);
-      console.log('value', value.toString());
+      console.log('value', value);
       this.modalProvideLiquidity = true;
 
 
