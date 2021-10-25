@@ -7,6 +7,7 @@ import Inventory from "@/pages/Inventory.vue";
 import Units from "@/pages/Units.vue";
 import Wars from "@/pages/Wars.vue";
 import Enlistment from "@/pages/Wars/Enlistment.vue";
+import UnitEnlistment from "@/pages/Wars/UnitEnlistment.vue";
 import Round1 from "@/pages/Wars/Round1.vue";
 import Round2 from "@/pages/Wars/Round2.vue";
 import WarReport from "@/pages/Wars/WarReport.vue";
@@ -76,6 +77,11 @@ export const routes = [
         path: "/wars/:contractWar/enlistment",
         name: "/wars-enlistment",
         component: Enlistment
+      },
+      {
+        path: "/wars/:contractWar/enlistment/:nameOrAddress",
+        name: "/unit-enlistment",
+        component: UnitEnlistment
       },
       {
         path: "/wars/:contractWar/round-1",

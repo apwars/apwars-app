@@ -13,11 +13,12 @@ export function getTroops() {
       contractAddress: {
         "5777": "0x0b0e318f0DD8a99e863d84841D0E7dcF07F8e5dE",
         "56": "0x54f653f539a78d3db0e0d3b166cf32c4f6cc5fb6",
-        "97": "0x0447072Aa3E3b448d77cD9B322cDfe7Ea990A1F8",
+        "97": "0x4544C8efb214830027306D68B29f0B5E37501D78",
       },
       image: "/images/troops/wWARRIOR.png",
       strength: 2,
       defense: 4,
+      availableWeapons: [39],
       combinators: {
         warPreparation: {
           name: 'Simple Shield',
@@ -171,6 +172,7 @@ export function getTroops() {
       image: "/images/icons/coins/wGRUNT.png",
       strength: 2,
       defense: 4,
+      availableWeapons: [39],
       combinators: {
         warPreparation: {
           name: 'Simple Shield',
@@ -324,6 +326,7 @@ export function getTroops() {
       image: "/images/icons/coins/wSKELETON-WARRIOR.png",
       strength: 8,
       defense: 2,
+      availableWeapons: [39],
       combinators: {
         warPreparation: {
           combinatorAddress: {
@@ -530,6 +533,7 @@ export function getTroops() {
       image: "/images/troops/wPIKE-ELF.png",
       strength: 6,
       defense: 10,
+      availableWeapons: [39],
       combinators: {
         warPreparation: {
           name: 'Simple Shield',
@@ -686,4 +690,12 @@ export function getTroops() {
       defense: 90,
     },
   ];
+}
+
+export function getTroop(nameOrContract, networkId) {
+  const troops = getTroops();
+
+  console.log(nameOrContract)
+
+  return troops.find(t => t.name.toLowerCase() === nameOrContract.toLowerCase() || t.contractAddress[networkId] === nameOrContract) || null;
 }

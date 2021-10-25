@@ -42,6 +42,7 @@ export function getWeapons() {
       contractAddress: addresses.collectibles,
       title: "Simple Shield",
       description: 'The Simple Shield is strong and resistant, who wield it will be much safer in a direct confrontation.',
+      effectDescription: "It improves defense points of units by 1",
       image: "/images/nfts/weapon-simple-shield.png",
     },
   ];
