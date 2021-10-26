@@ -4,16 +4,17 @@
       :fluid="$vuetify.breakpoint.md || $vuetify.breakpoint.mobile"
       v-if="isConnected && !isLoading"
     >
-      <v-row v-if="gameItemsFiltered.length > 0">
+      <v-row v-if="tokens.length > 0">
         <v-col
           cols="12"
           lg="6"
           xl="4"
-          v-for="gameItem in gameItemsFiltered"
-          v-bind:key="gameItem.name"
+          v-for="token in tokens"
+          v-bind:key="token.name"
         >
-          <game-items-combinators
-            :gameItems="gameItem"
+          <game-items-combinators :gameItems="token" v-if="type === 'magical-items'" />
+          <unit-war-preparation v-else
+            :unit="token"
           />
         </v-col>
       </v-row>
@@ -47,6 +48,7 @@ import GameItemsCombinators from "@/lib/components/ui/Combinators/GameItemsCombi
 
 import UnitTrainingCenter from "@/lib/components/ui/Units/UnitTrainingCenter";
 
+import { getTroops } from "@/data/Troops";
 import { getMagicalItems } from "@/data/Collectibles/MagicalItems";
 
 export default {
@@ -59,17 +61,26 @@ export default {
     ReportTrooper,
     UnitWarPreparation,
     UnitTrainingCenter,
-    GameItemsCombinators,
+    GameItemsCombinators
   },
 
-  props: ["type", "contractWar", "filterRules", "showOnlyMyUnits"],
+  props: {
+    type: {
+      type: String,
+      validator: function (value) {
+        const allowed = ['weapons', 'magical-items'];
+        return allowed.includes(value);
+      },
+      default: "weapons"
+    }
+  },
 
   data() {
     return {
       balance: 0,
       pricewGOLD: 0,
       isLoading: true,
-      gameItemsFiltered: [],
+      tokens: [],
     };
   },
 
@@ -119,8 +130,13 @@ export default {
         return;
       }
 
+      let units = getTroops();
+      if (this.type === 'magical-items') {
+        units = getMagicalItems();
+      }
+
       try {
-        this.gameItemsFiltered = getMagicalItems().filter(i => i.combinators);
+        this.tokens = units.filter(t => t.combinators?.warPreparation);
         this.isLoading = false;
       } catch (e) {
         console.error(e)

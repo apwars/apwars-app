@@ -135,7 +135,13 @@ export const routes = [
         beforeEnter() {
           redirectBlank("https://apwars.farm/docs");
         }
-      }
+      },
+      {
+        path: "/buy-wland",
+        beforeEnter() {
+          redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56");
+        }
+      },
     ]
   }
 ];

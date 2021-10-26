@@ -8,7 +8,7 @@
     <div v-else>
       <v-container fluid>
         <v-row>
-          <v-col cols="12" md="4" class="pr-0 pl-1   ">
+          <!-- <v-col cols="12" md="4" class="pr-0 pl-1">
             <countdown
               v-if="nextWarPhase"
               :time="nextWarPhase.endAt"
@@ -24,13 +24,27 @@
                 {{ nextWarPhase.button_label }}
               </wButton>
             </div>
+          </v-col> -->
+          <v-col cols="12" md="4">
+            <v-img class="mx-auto" max-width="300" src="/images/wLANDS.png" />
+            <div class="d-flex justify-center mt-1">
+              <wButton
+                @click="buywLAND()"
+                class="mt-1"
+              >
+                <span class="text-none text-center">
+                  Buy wLAND
+                </span>
+              </wButton>
+            </div>
           </v-col>
           <v-col cols="12" md="4">
-            <v-img class="mx-auto" max-width="300" src="/images/wLANDs.png" />
+            <v-img class="mx-auto" max-width="300" src="/images/cards.png" />
             <div class="d-flex justify-center mt-1">
               <wButton @click="$router.push('/arcadia-expansion')" class="mt-1">
-              <v-img class="mx-auto" max-width="30" src="/images/wLAND.png" />
-                <span class="text-none text-center">BUY wLAND</span>
+                <span class="text-none text-center"
+                  >Buy Arcadia Foundations</span
+                >
               </wButton>
             </div>
           </v-col>
@@ -100,7 +114,6 @@ import { getWars } from "@/data/Wars";
 import WarMachine from "@/lib/eth/WarMachine";
 import wGOLD from "@/lib/eth/wGOLD";
 
-
 export default {
   components: {
     Countdown,
@@ -108,7 +121,7 @@ export default {
     wButton,
     GameText,
     CountdownBlock,
-    Tasks
+    Tasks,
   },
 
   data() {
@@ -221,6 +234,11 @@ export default {
 
       this.nextWarPhase = nW.phases[nW.phases.length - 1];
     },
+
+    buywLAND() {
+      window.location.href =
+                    'https://pancakeswap.finance/swap?outputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56';
+    }
   },
 };
 </script>
