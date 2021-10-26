@@ -18,7 +18,28 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary darken-1" text @click="connectToMetaMask">
+            <div v-if="networkInfo.definedNetwork === 'ALL'">
+              <v-btn
+                color="primary darken-1"
+                text
+                @click="connectToMetaMask('97')"
+              >
+                Connect testnet
+              </v-btn>
+              <v-btn
+                color="primary darken-1"
+                text
+                @click="connectToMetaMask('56')"
+              >
+                Connect production
+              </v-btn>
+            </div>
+            <v-btn
+              v-else
+              color="primary darken-1"
+              text
+              @click="connectToMetaMask()"
+            >
               Connect
             </v-btn>
           </v-card-actions>
@@ -339,9 +360,9 @@ export default {
   },
 
   methods: {
-    connectToMetaMask() {
+    connectToMetaMask(definedNetwork) {
       if (!this.isConnected) {
-        this.$store.dispatch("user/connectToMetaMask");
+        this.$store.dispatch("user/connectToMetaMask", { definedNetwork });
       }
     },
 
