@@ -11,6 +11,7 @@ export function getWeapons() {
       title: "Simple sword",
       description: 'The Simples Sword can be used by your troops in direct conflict with enemies. And it will give you the initial strength to conquer your path to victory.',
       image: "/images/nfts/weapon-simple-sword.png",
+      icon: "simple-sword"
     },
     {
       id: 5,
@@ -20,6 +21,7 @@ export function getWeapons() {
       title: "Simple spear",
       description: 'The Simple Spear is sharp and can be used from a distance causing great damage to the enemy team.',
       image: "/images/nfts/weapon-simple-spear.png",
+      icon: "simple-spear"
     },
     {
       id: 6,
@@ -29,6 +31,7 @@ export function getWeapons() {
       title: "Simple potion",
       description: 'The Simple Potion has magical elements that give power to your troops. Once used, it causes irreversible damage to opponents.',
       image: "/images/nfts/weapon-simple-potion.png",
+      icon: "simple-potion",
     },
     {
       id: 39,

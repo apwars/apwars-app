@@ -136,6 +136,14 @@
                 :src="`/images/troops/${troop.name.toLowerCase()}.webp`"
                 :alt="troop.name"
               />
+              <img
+                v-if="weapon.amount"
+                class="weapon-image"
+                height="150"
+                width="150"
+                :src="`/images/icons/${weapon.icon}.png`"
+                :alt="weapon.title"
+              />
             </div>
           </v-col>
           <v-col>
@@ -511,5 +519,22 @@ export default {
   line-height: 29px;
   color: #FFFFFF;
 }
+.weapon-image {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  animation: weapon-fall .3s linear forwards;
+}
 
+@keyframes weapon-fall {
+    from {
+        opacity: 0;
+        transform: translateY(-1200px);
+}
+
+    to {
+        opacity: 1;
+        transform : translateY(0);
+    }
+}
 </style>
