@@ -5,8 +5,8 @@ export default {
     getByNameOrAddress: (state, getters, rootState) => (nameOrAddress) => {
         return state.troops.find(t => t.name.toLowerCase() === nameOrAddress.toLowerCase() || t.contractAddress[rootState.user.networkInfo.id] === nameOrAddress);
     },
-    getWeapon: state => (troopId, weaponId) => {
-        return state.troops.find(t => t.id === troopId).weapons.find(w => w.id === weaponId)
+    getWeapon: state => (weaponId) => {
+        return state.weapons.find(w => w.id === weaponId);
     },
     totalStakedForce: (state, getters) => (race) => {
         if (!race) {

@@ -1,4 +1,4 @@
-import { collectibles } from '../Addresses';
+import Addresses from '../Addresses';
 
 export function getMagicalItems() {
 
@@ -8,7 +8,7 @@ export function getMagicalItems() {
       name: "elixir10",
       type: "magicalItem",
       typeDesc: "Magical Items",
-      contractAddress: collectibles,
+      contractAddress: Addresses.collectibles,
       title: "The Elixir (10%)",
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
@@ -26,7 +26,7 @@ export function getMagicalItems() {
       name: "elixir15",
       type: "magicalItem",
       typeDesc: "Magical Items",
-      contractAddress: collectibles,
+      contractAddress: Addresses.collectibles,
       title: "The Elixir (15%)",
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
@@ -44,7 +44,7 @@ export function getMagicalItems() {
       name: "elixir20",
       type: "magicalItem",
       typeDesc: "Magical Items",
-      contractAddress: collectibles,
+      contractAddress: Addresses.collectibles,
       title: "The Elixir (20%)",
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b></small>',
@@ -62,7 +62,7 @@ export function getMagicalItems() {
       name: "arcanes-book",
       type: "magicalItem",
       typeDesc: "Magical Items",
-      contractAddress: collectibles,
+      contractAddress: Addresses.collectibles,
       title: "The Arcane's Book",
       description:
         '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both places and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b></small>',
@@ -79,7 +79,7 @@ export function getMagicalItems() {
       id: 40,
       type: "magicalItem",
       typeDesc: "Magical Items",
-      contractAddress: collectibles,
+      contractAddress: Addresses.collectibles,
       title: "The Elixir (10%) (Spendable)",
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
@@ -119,7 +119,7 @@ export function getMagicalItems() {
       id: 41,
       type: "magicalItem",
       typeDesc: "Magical Items",
-      contractAddress: collectibles,
+      contractAddress: Addresses.collectibles,
       title: "The Elixir (15%) (Spendable)",
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
@@ -159,7 +159,7 @@ export function getMagicalItems() {
       id: 42,
       type: "magicalItem",
       typeDesc: "Magical Items",
-      contractAddress: collectibles,
+      contractAddress: Addresses.collectibles,
       title: "The Elixir (20%) (Spendable)",
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
@@ -199,7 +199,7 @@ export function getMagicalItems() {
       id: 43,
       type: "magicalItem",
       typeDesc: "Magical Items",
-      contractAddress: collectibles,
+      contractAddress: Addresses.collectibles,
       title: "The Arcane's Book (Spendable)",
       description:
         '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both places and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b> WARNING: This is a spendable item.</small>',

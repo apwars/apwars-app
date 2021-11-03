@@ -55,16 +55,17 @@
                     </div>
                   </template>
                 </v-currency-field>
-                <!-- <div class="weapon-title">
-                  {{ currentWeapon.title }}
+                <div class="weapon-title">
+                  {{ weapon.title }}
                 </div>
                 <v-currency-field
                   color="#FFF"
                   outlined
-                  :hint="`Available: ${currentWeapon.balance}`"
+                  :hint="`Available: ${weapon.balance}`"
                   persistent-hint
                   v-bind="currencyConfig"
                   v-model="stakedWeapon"
+                  :disabled="!weapon.balance"
                 >
                   <template v-slot:append>
                     <div class="d-flex">
@@ -72,13 +73,13 @@
                         class="align-self-center"
                         rounded
                         small
-                        @click="stakeMax"
+                        @click="stakeMaxWeapon"
                       >
                         MAX
                       </v-btn>
                     </div>
                   </template>
-                </v-currency-field> -->
+                </v-currency-field>
               </div>
             </div>
             <div class="status-container">
@@ -132,7 +133,7 @@
                 />
               </div>
               <v-img
-                :src="`/images/troops/${troop.name.toLowerCase()}-model.png`"
+                :src="`/images/troops/${troop.name.toLowerCase()}.webp`"
                 :alt="troop.name"
               />
             </div>
@@ -174,6 +175,7 @@
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
+import { TIER_WEAPONS } from "@/data/Collectibles/Weapons";
 
 import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
@@ -223,11 +225,11 @@ export default {
       return this.unitsFromRace.findIndex((u) => u.name === this.troop.name);
     },
 
-    currentWeapon() {
-      if (!this.selectedWeapon) {
-        return null;
+    weapon() {
+      if (!this.troop) {
+        return null
       }
-      return this.getWeapon(this.troop.id, this.selectedWeapon);
+      return this.getWeapon(TIER_WEAPONS[this.troop.tier]);
     },
 
     stake: {
@@ -241,15 +243,14 @@ export default {
 
     stakedWeapon: {
       get() {
-        return this.currentWeapon.amount;
+        return this.weapon.amount;
       },
       set(value) {
-        if (!this.currentWeapon) {
+        if (!this.weapon) {
           return;
         }
         return this.stakeWeapon({
-          troopId: this.troop.id,
-          weaponId: this.currentWeapon.id,
+          weaponId: this.weapon.id,
           amount: value,
         });
       },
@@ -258,8 +259,6 @@ export default {
   data() {
     return {
       isLoading: false,
-      agreement: false,
-      selectedWeapon: null,
       currencyConfig: {
         locale: window.navigator.userLanguage || window.navigator.language,
         prefix: "",
@@ -276,6 +275,7 @@ export default {
       updatePrices: "enlistment/updatePrices",
       stakeTroop: "enlistment/stakeTroop",
       stakeWeapon: "enlistment/stakeWeapon",
+      updateWeaponsBalance: "enlistment/updateWeaponsBalance"
     }),
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
@@ -304,14 +304,15 @@ export default {
     stakeMax() {
       this.stakeTroop({ amount: this.troop.balance, troopId: this.troop.id });
     },
-    selectWeapon(value) {
-      this.selectedWeapon = value;
+    stakeMaxWeapon() {
+      this.stakeWeapon({ amount: this.weapon.balance, weaponId: this.weapon.id });
     },
   },
   watch: {
     isConnected() {
       this.updateBalances();
       this.updatePrices();
+      this.updateWeaponsBalance();
     },
   },
   async mounted() {

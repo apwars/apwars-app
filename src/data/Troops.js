@@ -18,7 +18,7 @@ export function getTroops() {
       image: "/images/troops/wWARRIOR.png",
       strength: 2,
       defense: 4,
-      availableWeapons: [39],
+      weaponId: 39,
       combinators: {
         warPreparation: {
           name: 'Simple Shield',
@@ -172,7 +172,7 @@ export function getTroops() {
       image: "/images/icons/coins/wGRUNT.png",
       strength: 2,
       defense: 4,
-      availableWeapons: [39],
+      weaponId: 39,
       combinators: {
         warPreparation: {
           name: 'Simple Shield',
@@ -326,7 +326,7 @@ export function getTroops() {
       image: "/images/icons/coins/wSKELETON-WARRIOR.png",
       strength: 8,
       defense: 2,
-      availableWeapons: [39],
+      weaponId: 39,
       combinators: {
         warPreparation: {
           combinatorAddress: {
@@ -533,7 +533,7 @@ export function getTroops() {
       image: "/images/troops/wPIKE-ELF.png",
       strength: 6,
       defense: 10,
-      availableWeapons: [39],
+      weaponId: 39,
       combinators: {
         warPreparation: {
           name: 'Simple Shield',

@@ -1,4 +1,6 @@
-import { wGOLD, collectibles } from '../Addresses';
+import Addresses from '../Addresses';
+
+const { wGOLD, collectibles } = Addresses;
 
 export function getLegendaryRelics() {
 
