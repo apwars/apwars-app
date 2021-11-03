@@ -6,6 +6,9 @@ export default {
         return state.troops.find(t => t.name.toLowerCase() === nameOrAddress.toLowerCase() || t.contractAddress[rootState.user.networkInfo.id] === nameOrAddress);
     },
     getWeapon: state => (weaponId) => {
+        if (!weaponId) {
+            return {}
+        }
         return state.weapons.find(w => w.id === weaponId);
     },
     totalStakedForce: (state, getters) => (race) => {

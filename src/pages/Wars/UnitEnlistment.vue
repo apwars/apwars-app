@@ -137,7 +137,7 @@
                 :alt="troop.name"
               />
               <img
-                v-if="weapon.amount"
+                v-show="weapon.amount"
                 class="weapon-image"
                 height="150"
                 width="150"
@@ -169,6 +169,14 @@
                   </div>
                   <div class="amount">
                     {{ unit.amount || "Not staked" }}
+                  </div>
+                </div>
+                <div class="unit-info ml-3" v-if="getWeapon(unit.weaponId).amount">
+                  <div class="unit-name">
+                    {{ getWeapon(unit.weaponId).title }}
+                  </div>
+                  <div class="amount">
+                    {{ getWeapon(unit.weaponId).amount || "Not staked" }}
                   </div>
                 </div>
               </div>
@@ -271,8 +279,8 @@ export default {
         locale: window.navigator.userLanguage || window.navigator.language,
         prefix: "",
         suffix: "",
-        decimalLength: 8,
-        autoDecimalMode: true,
+        decimalLength: 0,
+        autoDecimalMode: false,
         allowNegative: false,
       },
     };
@@ -439,6 +447,7 @@ export default {
   font-size: 14px;
   white-space: nowrap;
   font-weight: 700;
+  min-width: 120px;
 }
 .agreement-container {
   display: flex;

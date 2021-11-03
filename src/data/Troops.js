@@ -87,6 +87,7 @@ export function getTroops() {
       image: "/images/troops/wARMOURED-WARRIOR.png",
       strength: 0,
       defense: 0,
+      weaponId: 4,
     },
     {
       id: 3,
@@ -153,6 +154,7 @@ export function getTroops() {
       image: "/images/troops/wWIZARD.png",
       strength: 0,
       defense: 0,
+      weaponId: 6,
     },
     {
       id: 5,
