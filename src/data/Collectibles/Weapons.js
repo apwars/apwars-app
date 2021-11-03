@@ -1,11 +1,6 @@
-import store from "@/store";
+import { collectibles } from '../Addresses';
 
 export function getWeapons() {
-  const addresses = store.getters["user/addresses"];
-
-  if (!addresses) {
-    return [];
-  }
 
   return [
     // {
@@ -39,11 +34,12 @@ export function getWeapons() {
       id: 39,
       type: "weapons",
       typeDesc: "Weapons",
-      contractAddress: addresses.collectibles,
+      contractAddress: collectibles,
       title: "Simple Shield",
       description: 'The Simple Shield is strong and resistant, who wield it will be much safer in a direct confrontation.',
       effectDescription: "It improves defense points of units by 1",
       image: "/images/nfts/weapon-simple-shield.png",
+      icon: "simple-shield",
     },
   ];
 }

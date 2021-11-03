@@ -3,15 +3,16 @@ import Vuex from 'vuex'
 
 import AppModule from './app'
 import UserModule from './user'
+import EnlistmentModule from './enlistment'
 
 Vue.use(Vuex)
-
 
 export default new Vuex.Store({
 
   modules: {
     app: AppModule,
-    user: UserModule
+    user: UserModule,
+    enlistment: EnlistmentModule,
   },
 
   state: {
