@@ -9,6 +9,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wWARRIOR",
+      displayName: "Warrior",
       lpAddresses: "0x6CABE6C94DC8BC63F8b71BBA7B2ed3381B1fe6e9",
       contractAddress: {
         "5777": "0x0b0e318f0DD8a99e863d84841D0E7dcF07F8e5dE",
@@ -59,6 +60,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wARCHER",
+      displayName: "Archer",
       lpAddresses: "0x764A521590ebd2686cC629E47f3464E8fD53b0F0",
       contractAddress: {
         "5777": "0x4fC1251bBE24caEbe4a33956A32a11333f77fEBd",
@@ -78,6 +80,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wARMOURED-WARRIOR",
+      displayName: "Armoured Warrior",
       lpAddresses: "0xcb7a7E4257ABC87745B40B5b51B82FFFBAa087A0",
       contractAddress: {
         "5777": "0xF234C4AF44D4345269d433ce74Bf0366eAD25067",
@@ -98,6 +101,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wCROSSBOWMAN",
+      displayName: "Crossbowman",
       lpAddresses: "0xEd5D84185d0BB1d9fEAF7b59F38220Fc26F4FDD0",
       contractAddress: {
         "5777": "0x39597c82A835d0D4c1Fae84BCd2F142731088925",
@@ -145,6 +149,7 @@ export function getTroops() {
       tier: 3,
       tierDesc: 'Arcane Library',
       name: "wWIZARD",
+      displayName: "Wizard",
       lpAddresses: "0x651E5fE33a17f39E65c94A4e4D6AA220C33C9b2B",
       contractAddress: {
         "5777": "0x14742bB55d8949Ee0DddF9136461514746b0b174",
@@ -469,6 +474,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wHORSEMAN",
+      displayName: "Horseman",
       lpAddresses: "0x205e51964a88ecfcfe0ee3516d0b4a952d1b2425",
       contractAddress: {
         "5777": "",

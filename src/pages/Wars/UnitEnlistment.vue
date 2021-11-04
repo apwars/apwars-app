@@ -14,7 +14,7 @@
             />
             <div class="name-container d-flex">
               <game-title class="d-flex flex-column justify-space-between">
-                <h2 class="troop-name">{{ troop.name }}</h2>
+                <h2 class="troop-name">{{ troop.displayName }}</h2>
                 <div class="name-decoration"></div>
               </game-title>
               <img
@@ -32,7 +32,7 @@
               </div>
               <div class="enlist-form" v-else>
                 <div class="enlist-title">
-                  {{ troop.name }}
+                  {{ troop.displayName }}
                 </div>
                 <v-currency-field
                   outlined
@@ -114,9 +114,7 @@
               <div class="amount-title">
                 You have units:
               </div>
-              <div class="amount">
-                {{ troop.balance }} {{ troop.name }}
-              </div>
+              <div class="amount">{{ troop.balance }} {{ troop.name }}</div>
             </div>
           </v-col>
           <v-col>
@@ -137,6 +135,11 @@
                 :alt="troop.name"
               />
               <img
+                class="aura"
+                :src="`/images/troops/humans-aura.png`"
+                :alt="troop.name"
+              />
+              <img
                 v-show="weapon.amount"
                 class="weapon-image"
                 height="150"
@@ -147,7 +150,16 @@
             </div>
           </v-col>
           <v-col>
-            <div class="enlistment-title d-flex"><img class="mr-1" height="32" width="32" src="/images/icons/battle-shield.png" alt="Enlistment resume" /> Your troops enlistment</div>
+            <div class="enlistment-title d-flex">
+              <img
+                class="mr-1"
+                height="32"
+                width="32"
+                src="/images/icons/battle-shield.png"
+                alt="Enlistment resume"
+              />
+              Your troops enlistment
+            </div>
             <div class="troop-list mt-2">
               <div
                 class="troop-status mb-1"
@@ -171,7 +183,10 @@
                     {{ unit.amount || "Not staked" }}
                   </div>
                 </div>
-                <div class="unit-info ml-3" v-if="getWeapon(unit.weaponId).amount">
+                <div
+                  class="unit-info ml-3"
+                  v-if="getWeapon(unit.weaponId).amount"
+                >
                   <div class="unit-name">
                     {{ getWeapon(unit.weaponId).title }}
                   </div>
@@ -180,7 +195,7 @@
                   </div>
                 </div>
               </div>
-              <Button type="wsecondary" text="Enlist and Battle" isBlock/>
+              <Button type="wsecondary" text="Enlist and Battle" isBlock />
             </div>
           </v-col>
         </v-row>
@@ -243,7 +258,7 @@ export default {
 
     weapon() {
       if (!this.troop) {
-        return null
+        return null;
       }
       return this.getWeapon(TIER_WEAPONS[this.troop.tier]);
     },
@@ -291,7 +306,7 @@ export default {
       updatePrices: "enlistment/updatePrices",
       stakeTroop: "enlistment/stakeTroop",
       stakeWeapon: "enlistment/stakeWeapon",
-      updateWeaponsBalance: "enlistment/updateWeaponsBalance"
+      updateWeaponsBalance: "enlistment/updateWeaponsBalance",
     }),
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
@@ -321,7 +336,10 @@ export default {
       this.stakeTroop({ amount: this.troop.balance, troopId: this.troop.id });
     },
     stakeMaxWeapon() {
-      this.stakeWeapon({ amount: this.weapon.balance, weaponId: this.weapon.id });
+      this.stakeWeapon({
+        amount: this.weapon.balance,
+        weaponId: this.weapon.id,
+      });
     },
   },
   watch: {
@@ -494,7 +512,8 @@ export default {
   display: flex;
 }
 
-.price-amount, .btn-buy {
+.price-amount,
+.btn-buy {
   width: 50%;
   font-size: 18px;
   font-weight: bold;
@@ -505,7 +524,7 @@ export default {
   font-weight: bold;
   font-size: 14px;
   line-height: 19px;
-  color: #FFEEBC;
+  color: #ffeebc;
 }
 
 .amount-container {
@@ -513,7 +532,7 @@ export default {
   .amount-title {
     font-weight: bold;
     line-height: 21px;
-    color: #FFEEBC;
+    color: #ffeebc;
   }
   .amount {
     font-weight: bold;
@@ -526,24 +545,49 @@ export default {
   font-weight: bold;
   font-size: 22px;
   line-height: 29px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .weapon-image {
   position: absolute;
   bottom: 0;
   right: 0;
-  animation: weapon-fall .3s linear forwards;
+  animation: weapon-fall 0.3s linear forwards;
+}
+
+.aura {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: -3;
+  animation: aura-flutuation 2.2s linear forwards infinite;
 }
 
 @keyframes weapon-fall {
-    from {
-        opacity: 0;
-        transform: translateY(-1200px);
+  from {
+    opacity: 0;
+    transform: translateY(-1200px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-    to {
-        opacity: 1;
-        transform : translateY(0);
-    }
+@keyframes aura-flutuation {
+  0% {
+    opacity: 0.4;
+    transform: translateY(-50%);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-60%);
+  }
+
+  100% {
+    opacity: 0.4;
+    transform: translateY(-50%);
+  }
 }
 </style>
