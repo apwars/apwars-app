@@ -7,7 +7,7 @@
       <img class="force" src="/images/icons/force.png" alt="force-4" />
       <img class="force" src="/images/icons/force.png" alt="force-5" />
     </div>
-    <div class="active" :style="`--percent: ${percent}`">
+    <div class="active" :style="`--percent: ${percent}`" v-show="value > 0">
       <img
         class="force"
         src="/images/icons/force-active.png"
