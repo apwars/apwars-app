@@ -91,13 +91,13 @@
                 <div class="status-icon">
                   <img src="/images/icons/attack.png" alt="Attack points" />
                 </div>
-                <div class="status-info">{{ troop.strength }}/10</div>
+                <ForceMeter :maxScale="maxStrength" :value="stakedStrength" />
               </div>
               <div class="troop-status">
                 <div class="status-icon">
                   <img src="/images/icons/defense.png" alt="Defense points" />
                 </div>
-                <div class="status-info">{{ troop.defense }}/10</div>
+                <ForceMeter :maxScale="maxDefense" :value="stakedDefense" />
               </div>
             </div>
             <div class="price-container">
@@ -224,6 +224,7 @@ import wButton from "@/lib/components/ui/Buttons/wButton";
 import Button from "@/lib/components/ui/Buttons/Button";
 import GameTitle from "@/lib/components/ui/Utils/GameTitle";
 import TripleIcon from "@/lib/components/ui/TripleIcon";
+import ForceMeter from "@/lib/components/ui/ForceMeter";
 
 export default {
   components: {
@@ -232,6 +233,7 @@ export default {
     GameText,
     Button,
     TripleIcon,
+    ForceMeter
   },
   computed: {
     ...mapGetters({
@@ -284,6 +286,26 @@ export default {
         return 0;
       }
       return this.getTotalStakedWeapon(TIER_WEAPONS[this.troop.tier]);
+    },
+
+    stakedStrength() {
+      return this.troop.strength * this.troop.amount + (this.weapon.strength * this.troop.weaponAmount)
+    },
+
+    stakedDefense() {
+      return this.troop.defense * this.troop.amount + (this.weapon.defense * this.troop.weaponAmount)
+    },
+
+    maxStrength() {
+      return (this.troop.strength * this.troop.war.stakeLimit) + (this.weapon.strength * this.weapon.war.stakeLimit)
+    },
+
+    maxDefense() {
+      return (this.troop.defense * this.troop.war.stakeLimit) + (this.weapon.defense * this.weapon.war.stakeLimit)
+    },
+
+    maxForce() {
+      return this.maxStrength + this.maxDefense()
     },
 
     stake: {
@@ -464,7 +486,6 @@ export default {
 .troop-status {
   display: flex;
   align-items: center;
-  width: 140px;
 }
 .status-icon {
   height: 60px;
