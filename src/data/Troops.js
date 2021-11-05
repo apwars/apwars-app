@@ -19,7 +19,9 @@ export function getTroops() {
       image: "/images/troops/wWARRIOR.png",
       strength: 2,
       defense: 4,
-      weaponId: 39,
+      war: {
+        stakeLimit: 1000
+      },
       combinators: {
         warPreparation: {
           name: 'Simple Shield',
@@ -70,6 +72,9 @@ export function getTroops() {
       image: "/images/troops/wARCHER.png",
       strength: 5,
       defense: 1,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 2,
@@ -91,6 +96,9 @@ export function getTroops() {
       strength: 0,
       defense: 0,
       weaponId: 4,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 3,
@@ -111,6 +119,9 @@ export function getTroops() {
       image: "/images/troops/wCROSSBOWMAN.png",
       strength: 0,
       defense: 0,
+      war: {
+        stakeLimit: 1000
+      },
       combinators: {
         trainingCenter: {
           name: 'wHORSEMAN',
@@ -160,6 +171,9 @@ export function getTroops() {
       strength: 0,
       defense: 0,
       weaponId: 6,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 5,
@@ -179,7 +193,9 @@ export function getTroops() {
       image: "/images/icons/coins/wGRUNT.png",
       strength: 2,
       defense: 4,
-      weaponId: 39,
+      war: {
+        stakeLimit: 1000
+      },
       combinators: {
         warPreparation: {
           name: 'Simple Shield',
@@ -229,6 +245,9 @@ export function getTroops() {
       image: "/images/troops/wORC-ARCHER.png",
       strength: 5,
       defense: 1,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 7,
@@ -248,6 +267,9 @@ export function getTroops() {
       image: "/images/troops/wARMOURED-GRUNT.png",
       strength: 0,
       defense: 0,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 8,
@@ -267,6 +289,9 @@ export function getTroops() {
       image: "/images/troops/wPIKE-ORC.png",
       strength: 0,
       defense: 0,
+      war: {
+        stakeLimit: 1000
+      },
       combinators: {
         trainingCenter: {
           name: 'wWARG',
@@ -314,6 +339,9 @@ export function getTroops() {
       image: "/images/troops/wSHAMAN.png",
       strength: 0,
       defense: 0,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 10,
@@ -333,7 +361,9 @@ export function getTroops() {
       image: "/images/icons/coins/wSKELETON-WARRIOR.png",
       strength: 8,
       defense: 2,
-      weaponId: 39,
+      war: {
+        stakeLimit: 1000
+      },
       combinators: {
         warPreparation: {
           combinatorAddress: {
@@ -379,6 +409,9 @@ export function getTroops() {
       image: "/images/troops/wHOUND.png",
       strength: 8,
       defense: 2,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 12,
@@ -398,6 +431,9 @@ export function getTroops() {
       image: "/images/troops/wUNDEAD-ARCHER.png",
       strength: 35,
       defense: 8,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 13,
@@ -417,6 +453,9 @@ export function getTroops() {
       image: "/images/troops/wUNDEAD-PIKEMAN.png",
       strength: 22,
       defense: 22,
+      war: {
+        stakeLimit: 1000
+      },
       combinators: {
         trainingCenter: {
           name: 'wDEATH-KNIGHT',
@@ -464,6 +503,9 @@ export function getTroops() {
       image: "/images/troops/wWITCH.png",
       strength: 70,
       defense: 20,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 15,
@@ -484,6 +526,9 @@ export function getTroops() {
       image: "/images/troops/wHORSEMAN.png",
       strength: 150,
       defense: 50,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 16,
@@ -503,6 +548,9 @@ export function getTroops() {
       image: "/images/icons/coins/wWARG.png",
       strength: 150,
       defense: 50,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 17,
@@ -522,6 +570,9 @@ export function getTroops() {
       image: "/images/troops/wDEATH-KNIGHT.png",
       strength: 150,
       defense: 50,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 18,
@@ -541,7 +592,9 @@ export function getTroops() {
       image: "/images/troops/wPIKE-ELF.png",
       strength: 6,
       defense: 10,
-      weaponId: 39,
+      war: {
+        stakeLimit: 1000
+      },
       combinators: {
         warPreparation: {
           name: 'Simple Shield',
@@ -591,6 +644,9 @@ export function getTroops() {
       image: "/images/troops/wELVEN-ARCHER.png",
       strength: 12,
       defense: 6,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 20,
@@ -610,6 +666,9 @@ export function getTroops() {
       image: "/images/troops/wARMORED-ELF.png",
       strength: 25,
       defense: 25,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 20,
@@ -629,6 +688,9 @@ export function getTroops() {
       image: "/images/troops/wBLADEMASTER.png",
       strength: 25,
       defense: 25,
+      war: {
+        stakeLimit: 1000
+      },
       combinators: {
         trainingCenter: {
           name: 'wELK-RIDER',
@@ -677,6 +739,9 @@ export function getTroops() {
       image: "/images/troops/wFERAL-SPIRIT.png",
       strength: 70,
       defense: 20,
+      war: {
+        stakeLimit: 1000
+      },
     },
     {
       id: 22,
@@ -696,6 +761,9 @@ export function getTroops() {
       image: "/images/troops/wELK-RIDER.png",
       strength: 250,
       defense: 90,
+      war: {
+        stakeLimit: 1000
+      },
     },
   ];
 }

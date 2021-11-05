@@ -40,11 +40,12 @@
                   persistent-hint
                   v-bind="currencyConfig"
                   v-model="stake"
+                  :max="troop.war.stakeLimit"
                   :disabled="!troop.balance"
                 >
                   <template v-slot:append>
                     <div class="d-flex align-center">
-                      /1000
+                      /{{ troop.war.stakeLimit }}
                       <v-btn
                         class="ml-1"
                         rounded
@@ -66,11 +67,12 @@
                   persistent-hint
                   v-bind="currencyConfig"
                   v-model="stakedWeapon"
+                  :max="weapon.war.stakeLimit"
                   :disabled="!weapon.balance"
                 >
                   <template v-slot:append>
                     <div class="d-flex align-center">
-                      /1000
+                      /{{ weapon.war.stakeLimit }}
                       <v-btn
                         class="ml-1"
                         rounded
@@ -109,7 +111,7 @@
                 {{ troop.price }} wGOLD
               </div>
               <div clas="btn-buy">
-                <Button type="wprimary" text="Buy Troops" />
+                <Button type="wprimary" text="Buy Troops" :handleClick="openBuy" />
               </div>
             </div>
             <div class="amount-container" v-if="troop.balance">
@@ -235,7 +237,7 @@ export default {
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
       getByNameOrAddress: "enlistment/getByNameOrAddress",
-      getWeapon: "enlistment/getWeapon",
+      getWeaponByTier: "enlistment/getWeaponByTier",
       getTotalStakedWeapon: "enlistment/totalStakedWeapon",
       totalStakedForce: "enlistment/totalStakedForce",
     }),
@@ -319,6 +321,7 @@ export default {
         autoDecimalMode: false,
         allowNegative: false,
       },
+      buyURL: 'https://exchange.apwars.farm/#/swap?showFarms=true&outputCurrency'
     };
   },
   methods: {
@@ -354,17 +357,17 @@ export default {
       return this.unitsFromRace[position].name;
     },
     stakeMax() {
-      this.stakeTroop({ amount: this.troop.balance, troopId: this.troop.id });
+      this.stakeTroop({ amount: Math.min(this.troop.balance, this.troop.war.stakeLimit), troopId: this.troop.id });
     },
     stakeMaxWeapon() {
       this.stakeWeapon({
-        amount: this.weapon.balance,
+        amount: Math.min(this.weapon.balance, this.weapon.war.stakeLimit),
         troopId: this.troop.id,
       });
     },
-    getWeaponByTier(tier) {
-      return this.getWeapon(TIER_WEAPONS[tier]);
-    },
+    openBuy() {
+      window.open(`${this.buyURL}=${this.troop.contractAddress[this.networkInfo.id]}`, '_blank').focus();
+    }
   },
   watch: {
     isConnected() {

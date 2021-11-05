@@ -8,10 +8,15 @@ export function getWeapons() {
       type: "weapons",
       typeDesc: "Weapons",
       contractAddress: Addresses.collectibles,
-      title: "Simple sword",
+      title: "Simple Bow",
       description: 'The Simples Sword can be used by your troops in direct conflict with enemies. And it will give you the initial strength to conquer your path to victory.',
       image: "/images/nfts/weapon-simple-sword.png",
-      icon: "simple-sword"
+      icon: "simple-sword",
+      strength: 15,
+      defense: 0,
+      war: {
+        stakeLimit: 1000
+      }
     },
     {
       id: 5,
@@ -21,7 +26,12 @@ export function getWeapons() {
       title: "Simple spear",
       description: 'The Simple Spear is sharp and can be used from a distance causing great damage to the enemy team.',
       image: "/images/nfts/weapon-simple-spear.png",
-      icon: "simple-spear"
+      icon: "simple-spear",
+      strength: 40,
+      defense: 0,
+      war: {
+        stakeLimit: 1000
+      }
     },
     {
       id: 6,
@@ -32,6 +42,11 @@ export function getWeapons() {
       description: 'The Simple Potion has magical elements that give power to your troops. Once used, it causes irreversible damage to opponents.',
       image: "/images/nfts/weapon-simple-potion.png",
       icon: "simple-potion",
+      strength: 20,
+      defense: 5,
+      war: {
+        stakeLimit: 1000
+      }
     },
     {
       id: 39,
@@ -43,6 +58,11 @@ export function getWeapons() {
       effectDescription: "It improves defense points of units by 1",
       image: "/images/nfts/weapon-simple-shield.png",
       icon: "simple-shield",
+      strength: 0,
+      defense: 15,
+      war: {
+        stakeLimit: 1000
+      }
     },
   ];
 }
