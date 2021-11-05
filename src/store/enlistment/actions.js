@@ -5,8 +5,8 @@ export default {
     stakeTroop({ commit }, { amount, troopId }) {
         commit('setAmount', { amount, troopId });
     },
-    stakeWeapon({ commit }, { weaponId, amount }) {
-        commit('setWeaponAmount', { weaponId, amount })
+    stakeWeapon({ commit }, { troopId, amount }) {
+        commit('setWeaponAmount', { troopId, amount })
     },
     async updateBalances({ commit, state, rootState }) {
         for (const troop of state.troops) {

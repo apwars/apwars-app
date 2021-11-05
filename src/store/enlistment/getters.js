@@ -18,5 +18,12 @@ export default {
         return getters.byRace(race).reduce((total, troop) => {
             total += troop.amount;
         }, 0);
-    }
+    },
+    totalStakedWeapon: state => (weaponId) => {
+        if (!weaponId) {
+            return {}
+        }
+        const troops = state.troops.filter(w => w.weaponId === weaponId);
+        return troops.reduce((total, troop) => total += troop.weaponAmount, 0);
+    },
 };

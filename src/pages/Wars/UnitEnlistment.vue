@@ -61,7 +61,7 @@
                 <v-currency-field
                   color="#FFF"
                   outlined
-                  :hint="`Available: ${weapon.balance}`"
+                  :hint="`Available: ${weapon.balance - totalStakedWeapon}`"
                   persistent-hint
                   v-bind="currencyConfig"
                   v-model="stakedWeapon"
@@ -140,7 +140,7 @@
                 :alt="troop.name"
               />
               <img
-                v-show="weapon.amount"
+                v-show="troop.weaponAmount"
                 class="weapon-image"
                 height="150"
                 width="150"
@@ -185,13 +185,13 @@
                 </div>
                 <div
                   class="unit-info ml-3"
-                  v-if="getWeapon(unit.weaponId).amount"
+                  v-if="unit.weaponAmount"
                 >
                   <div class="unit-name">
-                    {{ getWeapon(unit.weaponId).title }}
+                    {{ getWeaponByTier(unit.tier).title }}
                   </div>
                   <div class="amount">
-                    {{ getWeapon(unit.weaponId).amount || "Not staked" }}
+                    {{ unit.weaponAmount || "Not staked" }}
                   </div>
                 </div>
               </div>
@@ -224,6 +224,7 @@ export default {
       getAllFromRace: "enlistment/byRace",
       getByNameOrAddress: "enlistment/getByNameOrAddress",
       getWeapon: "enlistment/getWeapon",
+      getTotalStakedWeapon: "enlistment/totalStakedWeapon"
     }),
     troop() {
       return this.getByNameOrAddress(this.$route.params.nameOrAddress);
@@ -260,7 +261,14 @@ export default {
       if (!this.troop) {
         return null;
       }
-      return this.getWeapon(TIER_WEAPONS[this.troop.tier]);
+      return this.getWeaponByTier(this.troop.tier);
+    },
+
+    totalStakedWeapon() {
+      if (!this.troop) {
+        return 0;
+      }
+      return this.getTotalStakedWeapon(TIER_WEAPONS[this.troop.tier]);
     },
 
     stake: {
@@ -274,14 +282,14 @@ export default {
 
     stakedWeapon: {
       get() {
-        return this.weapon.amount;
+        return this.troop.weaponAmount;
       },
       set(value) {
         if (!this.weapon) {
           return;
         }
         return this.stakeWeapon({
-          weaponId: this.weapon.id,
+          troopId: this.troop.id,
           amount: value,
         });
       },
@@ -338,9 +346,12 @@ export default {
     stakeMaxWeapon() {
       this.stakeWeapon({
         amount: this.weapon.balance,
-        weaponId: this.weapon.id,
+        troopId: this.troop.id,
       });
     },
+    getWeaponByTier(tier) {
+      return this.getWeapon(TIER_WEAPONS[tier]);
+    }
   },
   watch: {
     isConnected() {

@@ -10,6 +10,7 @@ const state = {
     ...t,
     amount: 0,
     balance: 0,
+    weaponAmount: 0,
     enlisted: 0,
   })),
   weapons: getWeapons().map((w) => ({ ...w, amount: 0, balance: 0 })),

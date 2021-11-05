@@ -26,14 +26,14 @@ export default {
       }
     });
   },
-  setWeaponAmount(state, { weaponId, amount }) {
-    state.weapons = state.weapons.map((w) => {
-      if (w.id === weaponId) {
-        return { ...w, amount };
+  setWeaponAmount(state, { troopId, amount }) {
+    state.troops = state.troops.map(t => {
+      if (t.id === troopId) {
+        return ({... t, weaponAmount: amount }) 
       } else {
-        return w;
+        return t
       }
-    });
+    })
   },
   setWeaponsBalance(state, { weaponId, balance }) {
     state.weapons = state.weapons.map((w) => {
