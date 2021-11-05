@@ -15,9 +15,12 @@ export default {
         if (!race) {
             return 0;
         }
-        return getters.byRace(race).reduce((total, troop) => {
-            total += troop.amount;
+        const total = getters.byRace(race).reduce((total, troop) => {
+            let strength = troop.strength * troop.amount;
+            let defense = troop.defense * troop.amount;
+            return total += strength + defense;
         }, 0);
+        return total;
     },
     totalStakedWeapon: state => (weaponId) => {
         if (!weaponId) {

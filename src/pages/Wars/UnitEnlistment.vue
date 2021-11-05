@@ -55,7 +55,7 @@
                     </div>
                   </template>
                 </v-currency-field>
-                <div class="weapon-title">
+                <div class="enlist-title">
                   {{ weapon.title }}
                 </div>
                 <v-currency-field
@@ -183,10 +183,7 @@
                     {{ unit.amount || "Not staked" }}
                   </div>
                 </div>
-                <div
-                  class="unit-info ml-3"
-                  v-if="unit.weaponAmount"
-                >
+                <div class="unit-info ml-3" v-if="unit.weaponAmount">
                   <div class="unit-name">
                     {{ getWeaponByTier(unit.tier).title }}
                   </div>
@@ -194,6 +191,10 @@
                     {{ unit.weaponAmount || "Not staked" }}
                   </div>
                 </div>
+              </div>
+              <div class="total-force mb-1">
+                Force:
+                <span class="amount">{{ totalStakedForce(troop.race) }} units</span>
               </div>
               <Button type="wsecondary" text="Enlist and Battle" isBlock />
             </div>
@@ -224,7 +225,8 @@ export default {
       getAllFromRace: "enlistment/byRace",
       getByNameOrAddress: "enlistment/getByNameOrAddress",
       getWeapon: "enlistment/getWeapon",
-      getTotalStakedWeapon: "enlistment/totalStakedWeapon"
+      getTotalStakedWeapon: "enlistment/totalStakedWeapon",
+      totalStakedForce: "enlistment/totalStakedForce",
     }),
     troop() {
       return this.getByNameOrAddress(this.$route.params.nameOrAddress);
@@ -351,7 +353,7 @@ export default {
     },
     getWeaponByTier(tier) {
       return this.getWeapon(TIER_WEAPONS[tier]);
-    }
+    },
   },
   watch: {
     isConnected() {
@@ -571,6 +573,16 @@ export default {
   transform: translateY(-50%);
   z-index: -3;
   animation: aura-flutuation 2.2s linear forwards infinite;
+}
+
+.total-force {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 24px;
+  color: #ffeebc;
+  .amount {
+    color: white;
+  }
 }
 
 @keyframes weapon-fall {
