@@ -43,9 +43,10 @@
                   :disabled="!troop.balance"
                 >
                   <template v-slot:append>
-                    <div class="d-flex">
+                    <div class="d-flex align-center">
+                      /1000
                       <v-btn
-                        class="align-self-center"
+                        class="ml-1"
                         rounded
                         small
                         @click="stakeMax"
@@ -68,9 +69,10 @@
                   :disabled="!weapon.balance"
                 >
                   <template v-slot:append>
-                    <div class="d-flex">
+                    <div class="d-flex align-center">
+                      /1000
                       <v-btn
-                        class="align-self-center"
+                        class="ml-1"
                         rounded
                         small
                         @click="stakeMaxWeapon"
@@ -176,19 +178,25 @@
                   />
                 </div>
                 <div class="unit-info">
-                  <div class="unit-name">
+                  <div class="unit-name mb-1">
                     {{ unit.tierDesc }}
                   </div>
                   <div class="amount">
-                    {{ unit.amount || "Not staked" }}
+                    <span class="d-flex align-end" v-if="unit.amount">
+                      <TripleIcon class="mr-1" :name="unit.name" size="16px" />
+                      {{ unit.amount }}
+                    </span>
+                    <span v-else>
+                      Not staked
+                    </span>
                   </div>
                 </div>
                 <div class="unit-info ml-3" v-if="unit.weaponAmount">
-                  <div class="unit-name">
+                  <div class="unit-name mb-1">
                     {{ getWeaponByTier(unit.tier).title }}
                   </div>
-                  <div class="amount">
-                    {{ unit.weaponAmount || "Not staked" }}
+                  <div class="amount d-flex">
+                    <TripleIcon class="mr-1" :name="getWeaponByTier(unit.tier).icon" size="16px" /> {{ unit.weaponAmount || "Not staked" }}
                   </div>
                 </div>
               </div>
@@ -213,12 +221,15 @@ import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Button from "@/lib/components/ui/Buttons/Button";
 import GameTitle from "@/lib/components/ui/Utils/GameTitle";
+import TripleIcon from "@/lib/components/ui/TripleIcon";
+
 export default {
   components: {
     GameTitle,
     wButton,
     GameText,
     Button,
+    TripleIcon,
   },
   computed: {
     ...mapGetters({
@@ -361,6 +372,11 @@ export default {
       this.updatePrices();
       this.updateWeaponsBalance();
     },
+    account() {
+      this.updateBalances();
+      this.updatePrices();
+      this.updateWeaponsBalance();
+    }
   },
   async mounted() {
     this.setHeader(false);
@@ -479,6 +495,9 @@ export default {
   white-space: nowrap;
   font-weight: 700;
   min-width: 120px;
+  .amount {
+    line-height: 1;
+  }
 }
 .agreement-container {
   display: flex;
