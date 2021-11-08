@@ -193,7 +193,7 @@
                     </span>
                   </div>
                 </div>
-                <div class="unit-info ml-3" v-if="unit.weaponAmount">
+                <div class="unit-info ml-1" v-if="unit.weaponAmount">
                   <div class="unit-name mb-1">
                     {{ getWeaponByTier(unit.tier).title }}
                   </div>
@@ -482,10 +482,16 @@ export default {
 .status-container {
   margin-top: 42px;
   display: flex;
+  flex-direction: column;
+  @media screen and (min-width: 425px) {
+    margin-top: 42px;
+    flex-direction: row;
+  }
 }
 .troop-status {
   display: flex;
   align-items: center;
+  margin-top: 8px;
 }
 .status-icon {
   height: 60px;
@@ -585,6 +591,8 @@ export default {
 
 .amount-container {
   margin-top: 21px;
+  position: relative;
+  z-index: 1;
   .amount-title {
     font-weight: bold;
     line-height: 21px;

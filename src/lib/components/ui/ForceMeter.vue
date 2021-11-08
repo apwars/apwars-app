@@ -50,7 +50,6 @@ export default {
   },
   computed: {
       percent() {
-          console.log(this.value)
         return (100 * this.value) / this.maxScale.toString() + '%'
       }
   }
@@ -59,6 +58,9 @@ export default {
 <style lang="scss" scoped>
 .force-meter {
     position: relative;
+    .base {
+      white-space: nowrap;
+    }
 }
 .force {
     display: inline-block;
