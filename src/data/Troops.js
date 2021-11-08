@@ -583,6 +583,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wPIKE-ELF",
+      displayName: "Pike Elf",
       lpAddresses: "0x302eF0De472FA31aff1b52af943C425B6695d0F4",
       contractAddress: {
         "5777": "",
@@ -635,6 +636,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wELVEN-ARCHER",
+      displayName: 'Elven Archer',
       lpAddresses: "0x39F18435FfAc6d5bdE24551EfE166620DCc315B0",
       contractAddress: {
         "5777": "",
@@ -656,14 +658,15 @@ export function getTroops() {
       raceDesc: 'Elves',
       tier: 2,
       tierDesc: 'Armory',
-      name: "wARMORED-ELF",
+      name: "wARMOURED-ELF",
+      displayName: "Armoured Elf",
       lpAddresses: "0xaf08fe199dd8abb88cb62526955956ee8784b3f7",
       contractAddress: {
         "5777": "",
         "56": "0xF35e1Bd15E49651ad76aB0A4B9ce93F6e9850f7F",
         "97": "0xeab81a541Dc97222894c16c8DA7DA301b464dd2E",
       },
-      image: "/images/troops/wARMORED-ELF.png",
+      image: "/images/troops/wARMOURED-ELF.png",
       strength: 25,
       defense: 25,
       war: {
@@ -679,6 +682,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wBLADEMASTER",
+      displayName: "Blademaster",
       lpAddresses: "0x15548700a20ab8437a916b9e2c5f550c0fa645fd",
       contractAddress: {
         "5777": "",
@@ -730,6 +734,7 @@ export function getTroops() {
       tier: 3,
       tierDesc: 'Arcane Library',
       name: "wFERAL-SPIRIT",
+      displayName: "Feral Spirit",
       lpAddresses: "0x9bE00135880c4db3D3759d370758bDc87443af36",
       contractAddress: {
         "5777": "",
@@ -752,6 +757,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wELK-RIDER",
+      displayName: "Elk Rider",
       lpAddresses: "0xd6a89d10659895487e24d4a5f46baefdff4a7ea2",
       contractAddress: {
         "5777": "",
