@@ -1,13 +1,14 @@
 <template>
-  <div
+  <button
     :class="['btn-container', [type], isBlock ? 'is-block' : '']"
     @click="handleClick"
+    :disabled="disabled"
   >
     <game-text class="btn-tertiary-text" v-if="type === 'wtertiary'">{{
       text
     }}</game-text>
     <span v-else class="btn-text">{{ text }}</span>
-  </div>
+  </button>
 </template>
 <script>
 import GameText from "@/lib/components/ui/Utils/GameText";
@@ -29,22 +30,25 @@ export default {
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    }
   },
 };
 </script>
 <style lang="scss" scoped>
 .btn-container {
-  padding: 4px 16px;
+  padding: 8px 16px;
   display: inline-block;
   border: 1px solid white;
   color: white;
   border-radius: 5px;
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
-  line-height: 19px;
-  height: 32px;
-  &:hover {
+  font-size: 16px;
+  line-height: 21px;
+  &:hover:enabled {
     cursor: pointer;
     background-color: #e5e5e5;
     border: 1px solid #3a2720;
@@ -61,7 +65,7 @@ export default {
     > .btn-text {
       color: #fff;
     }
-    &:hover {
+    &:hover:enabled {
       background-color: #e5e5e5;
       border: 1px solid #3a2720;
       > .btn-text {
@@ -75,7 +79,7 @@ export default {
     > .btn-text {
       color: white;
     }
-    &:hover {
+    &:hover:enabled {
       background-color: #e5e5e5!important;
       border: 1px solid #3a2720;
       > .btn-text {
@@ -85,7 +89,8 @@ export default {
   }
   &.wtertiary {
     border: none;
-    &:hover {
+    &:hover:enabled {
+      border: none;
       background-color: transparent;
       > .btn-tertiary-text {
         cursor: pointer;
@@ -93,6 +98,12 @@ export default {
         transition: all 0.4s;
       }
     }
+  }
+  &:disabled {
+    background-color: #2A3238;
+    border: 1px solid white;
+    color: white;
+    cursor: not-allowed;
   }
 }
 </style>

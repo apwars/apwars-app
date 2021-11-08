@@ -2,7 +2,7 @@ import { TIER_WEAPONS } from "@/data/Collectibles/Weapons";
 
 export default {
     byRace: state => (race) => {
-        return state.troops.filter(t => t.race === race);
+        return state.troops.filter(t => t.race === Number(race));
     },
     getByNameOrAddress: (state, getters, rootState) => (nameOrAddress) => {
         return state.troops.find(t => t.name.toLowerCase() === nameOrAddress.toLowerCase() || t.contractAddress[rootState.user.networkInfo.id] === nameOrAddress);

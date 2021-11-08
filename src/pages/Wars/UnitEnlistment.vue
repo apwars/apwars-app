@@ -1,22 +1,27 @@
 <template>
   <div class="background">
     <v-container v-if="isConnected">
+      <v-row>
+        <v-col>
+          <Button
+            type="wtertiary"
+            text="Back to enlistment page"
+            :handleClick="backToWar"
+          />
+        </v-col>
+      </v-row>
       <v-row v-if="!troop">
-        Troop not found!
+        <v-col class="d-flex justify-center">
+          <h3 class="text-h4 text-md-h3 ma-0 ma-md-6">
+            This race is not available to enlist.
+          </h3>
+        </v-col>
       </v-row>
       <template v-else>
         <v-row>
           <v-col>
-            <Button
-              type="wtertiary"
-              text="Back to enlistment page"
-              :handleClick="backToWar"
-            />
-            <div class="name-container d-flex">
-              <game-title class="d-flex flex-column justify-space-between">
-                <h2 class="troop-name">{{ troop.displayName }}</h2>
-                <div class="name-decoration"></div>
-              </game-title>
+            <div class="name-container d-flex justify-space-between">
+              <Title :text="troop.displayName" />
               <img
                 class="ml-2"
                 height="104"
@@ -128,13 +133,14 @@
                   @click="goToUnit(currentIndex + 1)"
                 />
               </div>
-              <v-img
-                :src="`/images/troops/${troop.name.toLowerCase()}.webp`"
+              <div class="aura">
+              <img
+                :src="`/images/troops/humans-aura.png`"
                 :alt="troop.name"
               />
-              <img
-                class="aura"
-                :src="`/images/troops/humans-aura.png`"
+              </div>
+              <v-img
+                :src="`/images/troops/${troop.name.toLowerCase()}.webp`"
                 :alt="troop.name"
               />
               <img
@@ -215,7 +221,14 @@
                   <v-img src="/images/monsters/1.webp" alt="MONSTER NAME" />
                 </div>
               </div>
-              <Chance description="Rewards" minLabel="1%" maxLabel="10%" :maxScale="maxForce" :value="totalStakedForce(troop.race)" :maxChance="10" />
+              <Chance
+                description="Rewards"
+                minLabel="1%"
+                maxLabel="10%"
+                :maxScale="maxForce"
+                :value="totalStakedForce(troop.race)"
+                :maxChance="10"
+              />
               <Button type="wprimary" text="Enlist and Battle" isBlock />
             </div>
           </v-col>
@@ -232,20 +245,20 @@ import { TIER_WEAPONS } from "@/data/Collectibles/Weapons";
 import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Button from "@/lib/components/ui/Buttons/Button";
-import GameTitle from "@/lib/components/ui/Utils/GameTitle";
+import Title from "@/lib/components/ui/Title";
 import TripleIcon from "@/lib/components/ui/TripleIcon";
 import ForceMeter from "@/lib/components/ui/ForceMeter";
 import Chance from "@/lib/components/ui/Chance";
 
 export default {
   components: {
-    GameTitle,
+    Title,
     wButton,
     GameText,
     Button,
     TripleIcon,
     ForceMeter,
-    Chance
+    Chance,
   },
   computed: {
     ...mapGetters({
@@ -255,9 +268,6 @@ export default {
       getTotalStakedWeapon: "enlistment/totalStakedWeapon",
       totalStakedForce: "enlistment/totalStakedForce",
     }),
-    troop() {
-      return this.getByNameOrAddress(this.$route.params.nameOrAddress);
-    },
     isConnected() {
       return this.$store.getters["user/isConnected"];
     },
@@ -279,11 +289,15 @@ export default {
     },
 
     unitsFromRace() {
-      return this.getAllFromRace(this.troop.race);
+      return this.getAllFromRace(this.$route.params.raceId);
     },
 
     currentIndex() {
       return this.unitsFromRace.findIndex((u) => u.name === this.troop.name);
+    },
+
+    troop() {
+      return this.getByNameOrAddress(this.troopSelected);
     },
 
     weapon() {
@@ -358,6 +372,7 @@ export default {
   },
   data() {
     return {
+      troopSelected: null,
       isLoading: false,
       currencyConfig: {
         locale: window.navigator.userLanguage || window.navigator.language,
@@ -389,10 +404,8 @@ export default {
     },
     goToUnit(unitIndex) {
       const unitName = this.getUnitName(unitIndex);
-      if (this.$route.params.nameOrAddress !== unitName) {
-        this.$router.push(
-          `/wars/${this.$route.params.contractWar}/enlistment/${unitName}`
-        );
+      if (this.troopSelected !== unitName) {
+        this.troopSelected = unitName;
       }
     },
     getUnitName(position) {
@@ -438,6 +451,7 @@ export default {
   },
   async mounted() {
     this.setHeader(false);
+    this.troopSelected = this.unitsFromRace[0].name;
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
@@ -459,18 +473,6 @@ export default {
 }
 .troop-container {
   display: flex;
-}
-.troop-name {
-  font-weight: bold;
-  font-size: 48px;
-  line-height: 1.2;
-}
-.name-decoration {
-  margin-top: 8px;
-  width: 90%;
-  height: 3px;
-  border-radius: 5px;
-  background: linear-gradient(180deg, #faff00 0%, #ffb800 100%);
 }
 .troop-viewport {
   z-index: 2;

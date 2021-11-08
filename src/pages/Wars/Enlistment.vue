@@ -1,137 +1,70 @@
 <template>
-  <div>
-    <div v-if="!isCountdown">
-      <div class="bg-fed">
-        <v-alert v-if="isWar.showTest" type="warning">
-          Danger, it's a test war
-        </v-alert>
-        <v-container>
-          <v-row class="d-none d-sm-none d-md-flex my-0 my-md-3">
-            <v-col cols="12" md="4">
-              <v-img
-                class="mx-auto"
-                max-width="400"
-                src="/images/battle/the-corporation.png"
+  <div class="background">
+    <v-container>
+      <v-row v-if="1 == 1 || isConnected && !isLoading && isEnlistment">
+        <v-col sm="12">
+          <Button
+            type="wtertiary"
+            text="Back to war page"
+            :handleClick="backToWar"
+          />
+          <div class="d-flex justify-space-between mt-3">
+            <Title>Enlist Your Troop</Title>
+            <div class="image">
+              <v-img width="125" src="/images/icons/battle-shield.png" />
+            </div>
+          </div>
+        </v-col>
+        <v-col v-for="option in options" :key="option.id" sm="6" md="3">
+          <div class="d-flex flex-column align-center justify-center">
+            <div class="option-title mb-2">{{ option.title }}</div>
+            <div class="option d-flex flex-column align-center justify-center">
+              <img
+                :class="[isDisabled(option.name) ? 'disabled' : '']"
+                :src="option.image"
+                :alt="option.name"
               />
-            </v-col>
-            <v-col cols="12" md="4" class="d-flex justify-center">
-              <div class="align-self-center">
-                <div class="d-flex justify-center">
-                  <div class="align-self-center mx-3">
-                    <v-img
-                      max-width="40"
-                      width="40"
-                      src="/images/battle/battle-icon.png"
-                    />
-                  </div>
-
-                  <h3 class="text-h3 text-wGOLD align-self-center">
-                    Enlistment
-                  </h3>
-                </div>
-                <div>
-                  Prepare for the battle! Choose a side and send your troops to
-                  the war!
-                </div>
+              <div class="button-container d-flex justify-center">
+                <Button
+                  class="mt-3"
+                  type="wprimary"
+                  :text="
+                    isDisabled(option.name)
+                      ? 'Coming Soon'
+                      : `Enlist ${option.name} Now`
+                  "
+                  :disabled="isDisabled(option.name)"
+                  :handleClick="() => goToEnlistment(option.id)"
+                  isBlock
+                />
               </div>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-img
-                class="mx-auto"
-                max-width="400"
-                src="/images/battle/the-degenerate.png"
-              />
-            </v-col>
-          </v-row>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
 
-          <v-row class="d-flex d-sm-flex d-md-none mt-n3">
-            <v-col cols="12">
-              <v-img
-                class="mx-auto"
-                max-width="600"
-                src="/images/battle/battle-start-mobile.png"
-              />
-              <div>
-                Prepare for the battle! Choose a side and send your troops to
-                the war!
-              </div>
-            </v-col>
-          </v-row>
-        </v-container>
-        <div class="gradient"></div>
-      </div>
+      <v-row v-else-if="!isLoading && !isEnlistment">
+        <v-col cols="12" class="d-flex justify-center">
+          <h3 class="text-h4 text-md-h3 ma-0 ma-md-6">
+            Enlistment period ended
+          </h3>
+        </v-col>
+      </v-row>
 
-      <v-container>
-        <v-row class="mt-n6 mt-md-n16">
-          <v-col cols="12">
-            <countdown
-              :time="countdownTimeEnd"
-              title="The enlistment ends in"
-              @end="loadData"
-            ></countdown>
-            <h2 class="text-h2 text-wGOLD text-center mt-2">Units</h2>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <list-units
-        class="my-3"
-        v-if="isConnected && !isLoading && isEnlistment"
-        type="enlistment"
-        :contract-war="contractWar"
-      ></list-units>
-
-      <v-container v-else-if="!isLoading && !isEnlistment">
-        <v-row>
-          <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h4 text-md-h3 ma-0 ma-md-6">
-              Enlistment period ended
-            </h3>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <v-container v-else>
-        <v-row>
-          <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3">Loading...</h3>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <v-container v-if="!isLoading && !isEnlistment">
-        <v-row class="mt-3">
-          <v-col cols="12" class="d-flex justify-center">
-            <v-img
-              @click="goToSwap()"
-              class="mx-auto cursor-pointer"
-              max-width="300"
-              src="/images/buttons/btn-buy-more-troops.png"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
-    <div v-else>
-      <div class="bg-fed">
-        <v-container>
-          <v-row class="my-6">
-            <v-col cols="12">
-              <countdown
-                :time="countdownTime"
-                title="Countdown"
-                @end="initData"
-              ></countdown>
-            </v-col>
-          </v-row>
-        </v-container>
-        <div class="gradient"></div>
-      </div>
-    </div>
+      <v-row v-else>
+        <v-col cols="12" class="d-flex justify-center">
+          <h3 class="text-h3">Loading...</h3>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
+import Title from "@/lib/components/ui/Title";
+import Button from "@/lib/components/ui/Buttons/Button";
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
@@ -139,11 +72,14 @@ import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
+import { ENLISTMENT_OPTIONS } from "@/data/Races";
 
 import WarMachine from "@/lib/eth/WarMachine";
 
 export default {
   components: {
+    Title,
+    Button,
     wGOLDButton,
     wButton,
     Countdown,
@@ -163,6 +99,7 @@ export default {
       isCountdown: false,
       countdownTime: 0,
       countdownTimeEnd: 0,
+      options: ENLISTMENT_OPTIONS,
     };
   },
 
@@ -215,11 +152,20 @@ export default {
     if (!this.isConnected) {
       return;
     }
+    this.setHeader(false);
     this.initData();
     this.loadData();
   },
 
+  beforeRouteLeave(to, from, next) {
+    this.setHeader(true);
+    next();
+  },
+
   methods: {
+    ...mapMutations({
+      setHeader: "app/setMenuDisplay",
+    }),
     goToSwap() {
       this.$router.push("/exchange");
     },
@@ -258,7 +204,7 @@ export default {
         this.isEnlistment = await this.warMachine.activeEnlistment();
         if (!this.isEnlistment) {
           setTimeout(() => {
-            this.$router.push(`/wars/${this.contractWar}/round-1`);
+            //this.$router.push(`/wars/${this.contractWar}/round-1`);
           }, 3000);
           return "";
         }
@@ -269,13 +215,29 @@ export default {
         this.isLoading = false;
       }
     },
+    isDisabled(name) {
+      const enabled = ["Humans"];
+      return !enabled.includes(name);
+    },
+    backToWar() {
+      this.$router.push({
+        path: `/wars/${this.$route.params.contractWar}`,
+      });
+    },
+    goToEnlistment(raceId) {
+      this.$router.push({
+        path: `/wars/${this.$route.params.contractWar}/enlistment/${raceId}`,
+      });
+    },
   },
 };
 </script>
 
-<style scoped>
-.bg-fed {
-  background-image: url("/images/battle/fed-background.png");
+<style lang="scss" scoped>
+.background {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/background/enlistment.png");
   background-size: cover;
 }
 .gradient {
@@ -302,8 +264,22 @@ export default {
 }
 
 .disabled {
-  opacity: 0.5;
   filter: grayscale(100%);
+}
+
+.enlistment-options {
+  width: 100%;
+}
+
+.option-title {
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 29px;
+  color: #ffffff;
+}
+
+.button-container {
+  width: 80%;
 }
 
 @media only screen and (max-width: 1920px) {
