@@ -46,12 +46,7 @@
                   <template v-slot:append>
                     <div class="d-flex align-center">
                       /{{ troop.war.stakeLimit }}
-                      <v-btn
-                        class="ml-1"
-                        rounded
-                        small
-                        @click="stakeMax"
-                      >
+                      <v-btn class="ml-1" rounded small @click="stakeMax">
                         MAX
                       </v-btn>
                     </div>
@@ -73,12 +68,7 @@
                   <template v-slot:append>
                     <div class="d-flex align-center">
                       /{{ weapon.war.stakeLimit }}
-                      <v-btn
-                        class="ml-1"
-                        rounded
-                        small
-                        @click="stakeMaxWeapon"
-                      >
+                      <v-btn class="ml-1" rounded small @click="stakeMaxWeapon">
                         MAX
                       </v-btn>
                     </div>
@@ -111,7 +101,11 @@
                 {{ troop.price }} wGOLD
               </div>
               <div clas="btn-buy">
-                <Button type="wprimary" text="Buy Troops" :handleClick="openBuy" />
+                <Button
+                  type="wprimary"
+                  text="Buy Troops"
+                  :handleClick="openBuy"
+                />
               </div>
             </div>
             <div class="amount-container" v-if="troop.balance">
@@ -198,15 +192,31 @@
                     {{ getWeaponByTier(unit.tier).title }}
                   </div>
                   <div class="amount d-flex">
-                    <TripleIcon class="mr-1" :name="getWeaponByTier(unit.tier).icon" size="16px" /> {{ unit.weaponAmount || "Not staked" }}
+                    <TripleIcon
+                      class="mr-1"
+                      :name="getWeaponByTier(unit.tier).icon"
+                      size="16px"
+                    />
+                    {{ unit.weaponAmount || "Not staked" }}
                   </div>
                 </div>
               </div>
               <div class="total-force mb-1">
                 Force:
-                <span class="amount">{{ totalStakedForce(troop.race) }} units</span>
+                <span class="amount"
+                  >{{ totalStakedForce(troop.race) }} units</span
+                >
               </div>
-              <Button type="wsecondary" text="Enlist and Battle" isBlock />
+              <div class="bonus-container">
+                <div class="bonus-title">
+                  Monster Battle
+                </div>
+                <div class="illustration">
+                  <v-img src="/images/monsters/1.webp" alt="MONSTER NAME" />
+                </div>
+              </div>
+              <Chance description="Rewards" minLabel="1%" maxLabel="10%" :maxScale="maxForce" :value="totalStakedForce(troop.race)" :maxChance="10" />
+              <Button type="wprimary" text="Enlist and Battle" isBlock />
             </div>
           </v-col>
         </v-row>
@@ -225,6 +235,7 @@ import Button from "@/lib/components/ui/Buttons/Button";
 import GameTitle from "@/lib/components/ui/Utils/GameTitle";
 import TripleIcon from "@/lib/components/ui/TripleIcon";
 import ForceMeter from "@/lib/components/ui/ForceMeter";
+import Chance from "@/lib/components/ui/Chance";
 
 export default {
   components: {
@@ -233,7 +244,8 @@ export default {
     GameText,
     Button,
     TripleIcon,
-    ForceMeter
+    ForceMeter,
+    Chance
   },
   computed: {
     ...mapGetters({
@@ -289,23 +301,35 @@ export default {
     },
 
     stakedStrength() {
-      return this.troop.strength * this.troop.amount + (this.weapon.strength * this.troop.weaponAmount)
+      return (
+        this.troop.strength * this.troop.amount +
+        this.weapon.strength * this.troop.weaponAmount
+      );
     },
 
     stakedDefense() {
-      return this.troop.defense * this.troop.amount + (this.weapon.defense * this.troop.weaponAmount)
+      return (
+        this.troop.defense * this.troop.amount +
+        this.weapon.defense * this.troop.weaponAmount
+      );
     },
 
     maxStrength() {
-      return (this.troop.strength * this.troop.war.stakeLimit) + (this.weapon.strength * this.weapon.war.stakeLimit)
+      return (
+        this.troop.strength * this.troop.war.stakeLimit +
+        this.weapon.strength * this.weapon.war.stakeLimit
+      );
     },
 
     maxDefense() {
-      return (this.troop.defense * this.troop.war.stakeLimit) + (this.weapon.defense * this.weapon.war.stakeLimit)
+      return (
+        this.troop.defense * this.troop.war.stakeLimit +
+        this.weapon.defense * this.weapon.war.stakeLimit
+      );
     },
 
     maxForce() {
-      return this.maxStrength + this.maxDefense()
+      return this.maxStrength + this.maxDefense;
     },
 
     stake: {
@@ -343,7 +367,8 @@ export default {
         autoDecimalMode: false,
         allowNegative: false,
       },
-      buyURL: 'https://exchange.apwars.farm/#/swap?showFarms=true&outputCurrency'
+      buyURL:
+        "https://exchange.apwars.farm/#/swap?showFarms=true&outputCurrency",
     };
   },
   methods: {
@@ -379,7 +404,10 @@ export default {
       return this.unitsFromRace[position].name;
     },
     stakeMax() {
-      this.stakeTroop({ amount: Math.min(this.troop.balance, this.troop.war.stakeLimit), troopId: this.troop.id });
+      this.stakeTroop({
+        amount: Math.min(this.troop.balance, this.troop.war.stakeLimit),
+        troopId: this.troop.id,
+      });
     },
     stakeMaxWeapon() {
       this.stakeWeapon({
@@ -388,8 +416,13 @@ export default {
       });
     },
     openBuy() {
-      window.open(`${this.buyURL}=${this.troop.contractAddress[this.networkInfo.id]}`, '_blank').focus();
-    }
+      window
+        .open(
+          `${this.buyURL}=${this.troop.contractAddress[this.networkInfo.id]}`,
+          "_blank"
+        )
+        .focus();
+    },
   },
   watch: {
     isConnected() {
@@ -401,7 +434,7 @@ export default {
       this.updateBalances();
       this.updatePrices();
       this.updateWeaponsBalance();
-    }
+    },
   },
   async mounted() {
     this.setHeader(false);
@@ -633,6 +666,21 @@ export default {
   color: #ffeebc;
   .amount {
     color: white;
+  }
+}
+
+.bonus-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .bonus-title {
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 48px;
+    color: #ffeebc;
+  }
+  .illustration {
+    width: 96px;
   }
 }
 
