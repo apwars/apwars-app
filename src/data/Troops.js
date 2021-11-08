@@ -86,6 +86,36 @@ export function getTroops() {
       image: "/images/troops/wARMOURED-WARRIOR.png",
       strength: 0,
       defense: 0,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Sword',
+          image: '/images/icons/simple-sword.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 4,
+            "97": 4,
+          },
+          imageNft: '/images/nfts/weapon-simple-sword.png',
+          imageIcon: '/images/nfts/weapon-simple-sword.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wARMOURED-WARRIOR',
+              title: `wARMOURED-WARRIOR`,
+              image: '/images/icons/coins/wARMOURED-WARRIOR.png',
+            }
+          },
+        },
+      }
     },
     {
       id: 3,
@@ -152,6 +182,36 @@ export function getTroops() {
       image: "/images/troops/wWIZARD.png",
       strength: 0,
       defense: 0,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Potion',
+          image: '/images/icons/simple-potion.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 4,
+            "97": 4,
+          },
+          imageNft: '/images/nfts/weapon-simple-potion.png',
+          imageIcon: '/images/nfts/weapon-simple-potion.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wWIZARD',
+              title: `wWIZARD`,
+              image: '/images/icons/coins/wWIZARD.png',
+            }
+          },
+        },
+      }
     },
     {
       id: 5,
@@ -239,6 +299,36 @@ export function getTroops() {
       image: "/images/troops/wARMOURED-GRUNT.png",
       strength: 0,
       defense: 0,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Sword',
+          image: '/images/icons/simple-sword.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 6,
+            "97": 6,
+          },
+          imageNft: '/images/nfts/weapon-simple-sword.png',
+          imageIcon: '/images/nfts/weapon-simple-sword.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wARMOURED-GRUNT',
+              title: `wARMOURED-GRUNT`,
+              image: '/images/icons/coins/wARMOURED-GRUNT.png',
+            }
+          },
+        },
+      }
     },
     {
       id: 8,
@@ -305,6 +395,36 @@ export function getTroops() {
       image: "/images/troops/wSHAMAN.png",
       strength: 0,
       defense: 0,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Potion',
+          image: '/images/icons/simple-potion.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 4,
+            "97": 4,
+          },
+          imageNft: '/images/nfts/weapon-simple-potion.png',
+          imageIcon: '/images/nfts/weapon-simple-potion.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wSHAMAN',
+              title: `wSHAMAN`,
+              image: '/images/icons/coins/wSHAMAN.png',
+            }
+          },
+        },
+      }
     },
     {
       id: 10,
@@ -388,6 +508,32 @@ export function getTroops() {
       image: "/images/troops/wUNDEAD-ARCHER.png",
       strength: 35,
       defense: 8,
+      combinators: {
+        warPreparation: {
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 8,
+            "97": 8,
+          },
+          name: 'Simple Sword',
+          imageNft: '/images/nfts/weapon-simple-sword.png',
+          imageIcon: '/images/nfts/weapon-simple-sword.png',
+          image: '/images/icons/simple-sword.png',
+          inputs: [{
+            name: 'wCOURAGE',
+            image: '/images/wcourage.png'
+          },
+          {
+            name: 'wUNDEAD-ARCHER',
+            image: '/images/icons/coins/wUNDEAD-ARCHER.png'
+          }]
+        },
+      }
     },
     {
       id: 13,
@@ -454,6 +600,36 @@ export function getTroops() {
       image: "/images/troops/wWITCH.png",
       strength: 70,
       defense: 20,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Potion',
+          image: '/images/icons/simple-potion.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 4,
+            "97": 4,
+          },
+          imageNft: '/images/nfts/weapon-simple-potion.png',
+          imageIcon: '/images/nfts/weapon-simple-potion.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wWITCH',
+              title: `wWITCH`,
+              image: '/images/icons/coins/wWITCH.png',
+            }
+          },
+        },
+      }
     },
     {
       id: 15,
@@ -473,6 +649,36 @@ export function getTroops() {
       image: "/images/troops/wHORSEMAN.png",
       strength: 150,
       defense: 50,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Spear',
+          image: '/images/icons/simple-spear.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 4,
+            "97": 4,
+          },
+          imageNft: '/images/nfts/weapon-simple-spear.png',
+          imageIcon: '/images/nfts/weapon-simple-spear.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wHORSEMAN',
+              title: `wHORSEMAN`,
+              image: '/images/icons/coins/wHORSEMAN.png',
+            }
+          },
+        },
+      },
     },
     {
       id: 16,
@@ -492,6 +698,36 @@ export function getTroops() {
       image: "/images/icons/coins/wWARG.png",
       strength: 150,
       defense: 50,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Spear',
+          image: '/images/icons/simple-spear.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 4,
+            "97": 4,
+          },
+          imageNft: '/images/nfts/weapon-simple-spear.png',
+          imageIcon: '/images/nfts/weapon-simple-spear.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wWARG',
+              title: `wWARG`,
+              image: '/images/icons/coins/wWARG.png',
+            }
+          },
+        },
+      },
     },
     {
       id: 17,
@@ -511,6 +747,36 @@ export function getTroops() {
       image: "/images/troops/wDEATH-KNIGHT.png",
       strength: 150,
       defense: 50,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Spear',
+          image: '/images/icons/simple-spear.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 11,
+            "97": 11,
+          },
+          imageNft: '/images/nfts/weapon-simple-spear.png',
+          imageIcon: '/images/nfts/weapon-simple-spear.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wDEATH-KNIGHT',
+              title: `wDEATH-KNIGHT`,
+              image: '/images/icons/coins/wDEATH-KNIGHT.png',
+            }
+          },
+        },
+      },
     },
     {
       id: 18,
@@ -598,6 +864,36 @@ export function getTroops() {
       image: "/images/troops/wARMORED-ELF.png",
       strength: 25,
       defense: 25,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Sword',
+          image: '/images/icons/simple-sword.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 11,
+            "97": 11,
+          },
+          imageNft: '/images/nfts/weapon-simple-sword.png',
+          imageIcon: '/images/nfts/weapon-simple-sword.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wARMORED-ELF',
+              title: `wARMORED-ELF`,
+              image: '/images/icons/coins/wARMORED-ELF.png',
+            }
+          },
+        },
+      }
     },
     {
       id: 20,
@@ -665,6 +961,36 @@ export function getTroops() {
       image: "/images/troops/wFERAL-SPIRIT.png",
       strength: 70,
       defense: 20,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Potion',
+          image: '/images/icons/simple-potion.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 4,
+            "97": 4,
+          },
+          imageNft: '/images/nfts/weapon-simple-potion.png',
+          imageIcon: '/images/nfts/weapon-simple-potion.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wFERAL-SPIRIT',
+              title: `wFERAL-SPIRIT`,
+              image: '/images/icons/coins/wFERAL-SPIRIT.png',
+            }
+          },
+        },
+      }
     },
     {
       id: 22,
@@ -684,6 +1010,36 @@ export function getTroops() {
       image: "/images/troops/wELK-RIDER.png",
       strength: 250,
       defense: 90,
+      combinators: {
+        warPreparation: {
+          name: 'Simple Spear',
+          image: '/images/icons/simple-spear.png',
+          combinatorAddress: {
+            "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
+            "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
+          },
+          claimRouter: "/war-preparation",
+          idCombinator: {
+            "5777": 0,
+            "56": 4,
+            "97": 4,
+          },
+          imageNft: '/images/nfts/weapon-simple-spear.png',
+          imageIcon: '/images/nfts/weapon-simple-spear.png',
+          necessaryResources: {
+            tokenA: {
+              name: 'wcourage',
+              title: 'wCOURAGE',
+              image: '/images/wcourage.png',
+            },
+            tokenB: {
+              name: 'wELK-RIDER',
+              title: `wELK-RIDER`,
+              image: '/images/icons/coins/wELK-RIDER.png',
+            }
+          },
+        },
+      }
     },
   ];
 }
