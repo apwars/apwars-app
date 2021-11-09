@@ -10,8 +10,8 @@ export function getWeapons() {
       contractAddress: Addresses.collectibles,
       title: "Simple Bow",
       description: 'The Simples Sword can be used by your troops in direct conflict with enemies. And it will give you the initial strength to conquer your path to victory.',
-      image: "/images/nfts/weapon-simple-sword.png",
-      icon: "simple-sword",
+      image: "/images/nfts/weapon-simple-bow.png",
+      icon: "simple-bow",
       strength: 15,
       defense: 0,
       war: {

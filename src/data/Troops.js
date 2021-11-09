@@ -20,6 +20,7 @@ export function getTroops() {
       strength: 2,
       defense: 4,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
       combinators: {
@@ -184,6 +185,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wGRUNT",
+      displayName: "Grunt",
       lpAddresses: "0x8C58f3aEe4924D0Ab0a8e0Ee680a6611296573FF",
       contractAddress: {
         "5777": "0xA161008870579B16A717360d8754f4C484e18183",
@@ -236,6 +238,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wORC-ARCHER",
+      displayName: "Orc Archer",
       lpAddresses: "0x9e15154b80a68191E2D5C4B220a24bd99a422DeE",
       contractAddress: {
         "5777": "0x9BD4BD678286E99696024cBDEd857B83aE20058A",
@@ -258,6 +261,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wARMOURED-GRUNT",
+      displayName: "Armoured Grunt",
       lpAddresses: "0xc0749fA16072c377B786213aCa2837D4Aa203c8A",
       contractAddress: {
         "5777": "0xbBe4AA52a30bC5d360d6497F5cf2Dcd17ee0a6F2",
@@ -280,6 +284,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wPIKE-ORC",
+      displayName: "Pike Orc",
       lpAddresses: "0xC3Bc2A25C100fEf3A38f99543f89dCE330ceaBa0",
       contractAddress: {
         "5777": "0xF1b0d0a63D2D4497C598006c363904563485fa26",
@@ -330,6 +335,7 @@ export function getTroops() {
       tier: 3,
       tierDesc: 'Arcane Library',
       name: "wSHAMAN",
+      displayName: "Shaman",
       lpAddresses: "0xA6Ab5C50F7db14b96d03e64AE3fe3B0041f6aE0C",
       contractAddress: {
         "5777": "0xA9747cd1701DD66dcBc6EA2671b0514cbb61E693",
@@ -352,6 +358,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wSKELETON-WARRIOR",
+      displayName: "Skeleton Warrior",
       lpAddresses: "0xf101954d51ffc12640b006e9c951ffebbd6b7259",
       contractAddress: {
         "5777": "",
@@ -400,6 +407,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wHOUND",
+      displayName: "Hound",
       lpAddresses: "0xe8eae2eac9e1d87932c4e94303894ac28304ee23",
       contractAddress: {
         "5777": "",
@@ -422,6 +430,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wUNDEAD-ARCHER",
+      displayName: "Undead Archer",
       lpAddresses: "0xdf9aff48816e5e9930b050b7ab8ec2de04db2772",
       contractAddress: {
         "5777": "",
@@ -444,6 +453,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wUNDEAD-PIKEMAN",
+      displayName: "Undead Pikeman",
       lpAddresses: "0xD6406A6b247436bbc07a5B021740746c0dc1081d",
       contractAddress: {
         "5777": "",
@@ -494,6 +504,7 @@ export function getTroops() {
       tier: 3,
       tierDesc: 'Arcane Library',
       name: "wWITCH",
+      displayName: "Witch",
       lpAddresses: "0xc706987bfe6a81de045480772786c8d945d52b56",
       contractAddress: {
         "5777": "",
@@ -539,6 +550,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wWARG",
+      displayName: "Warg",
       lpAddresses: "0xae387d80862bdbf818adf80885e1039db1739a34",
       contractAddress: {
         "5777": "",
@@ -561,6 +573,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wDEATH-KNIGHT",
+      displayName: "Death Knight",
       lpAddresses: "0x65ede43524c68c5b7d14bc9d8792a46dda7f50ac",
       contractAddress: {
         "5777": "",

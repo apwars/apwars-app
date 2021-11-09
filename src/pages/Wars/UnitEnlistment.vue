@@ -117,7 +117,9 @@
               <div class="amount-title">
                 You have units:
               </div>
-              <div class="amount">{{ troop.balance }} {{ troop.name }}</div>
+              <div class="amount">
+                <Amount :amount="troop.balance" :symbol="troop.name" compact formatted/>
+              </div>
             </div>
           </v-col>
           <v-col>
@@ -134,10 +136,10 @@
                 />
               </div>
               <div class="aura">
-              <img
-                :src="`/images/troops/humans-aura.png`"
-                :alt="troop.name"
-              />
+                <img
+                  :src="`/images/troops/humans-aura.png`"
+                  :alt="troop.name"
+                />
               </div>
               <v-img
                 :src="`/images/troops/${troop.name.toLowerCase()}.webp`"
@@ -186,7 +188,7 @@
                   <div class="amount">
                     <span class="d-flex align-end" v-if="unit.amount">
                       <TripleIcon class="mr-1" :name="unit.name" size="16px" />
-                      {{ unit.amount }}
+                      <Amount :amount="unit.amount" decimals="0" formatted />
                     </span>
                     <span v-else>
                       Not staked
@@ -213,12 +215,12 @@
                   >{{ totalStakedForce(troop.race) }} units</span
                 >
               </div>
-              <div class="bonus-container">
+              <div class="bonus-container" v-if="monsterData">
                 <div class="bonus-title">
                   Monster Battle
                 </div>
                 <div class="illustration">
-                  <v-img src="/images/monsters/1.webp" alt="MONSTER NAME" />
+                  <v-img :src="`/images/monsters/${monsterData.id}.webp`" :alt="monsterData.name" />
                 </div>
               </div>
               <Chance
@@ -241,6 +243,8 @@
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import { TIER_WEAPONS } from "@/data/Collectibles/Weapons";
+import { ENLISTMENT_OPTIONS } from "@/data/Races";
+import { MONSTERS } from "@/data/Monsters";
 
 import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
@@ -249,6 +253,7 @@ import Title from "@/lib/components/ui/Title";
 import TripleIcon from "@/lib/components/ui/TripleIcon";
 import ForceMeter from "@/lib/components/ui/ForceMeter";
 import Chance from "@/lib/components/ui/Chance";
+import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
   components: {
@@ -259,6 +264,7 @@ export default {
     TripleIcon,
     ForceMeter,
     Chance,
+    Amount,
   },
   computed: {
     ...mapGetters({
@@ -297,6 +303,9 @@ export default {
     },
 
     troop() {
+      if (!this.troopSelected) {
+        return null
+      }
       return this.getByNameOrAddress(this.troopSelected);
     },
 
@@ -344,6 +353,17 @@ export default {
 
     maxForce() {
       return this.maxStrength + this.maxDefense;
+    },
+
+    enlistmentOptions() {
+      return ENLISTMENT_OPTIONS.find(eo => eo.id === Number(this.$route.params.raceId));
+    },
+
+    monsterData() {
+      if (!this.enlistmentOptions) {
+        return null;
+      }
+      return MONSTERS.find(m => m.id === this.enlistmentOptions.monsterId);
     },
 
     stake: {
