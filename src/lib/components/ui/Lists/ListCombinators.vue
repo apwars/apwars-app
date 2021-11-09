@@ -229,9 +229,12 @@ export default {
       if (this.type === 'magical-items') {
         units = getMagicalItems();
       }
-      try {
-        this.filterTroops = units.filter(t => t.combinators?.warPreparation);
 
+      if (this.filterTroops.length === 0) {
+        this.filterTroops = units.filter(t => t.combinators?.warPreparation);
+      }
+
+      try {
         this.globalTroops = await Promise.all(
           units.map((trooper) => {
             return new Promise(async (resolve) => {
@@ -293,7 +296,7 @@ export default {
         this.globalTroops = this.globalTroops.concat(gameItems)
         this.filterTroops = this.globalTroops.filter(t => t.combinators?.warPreparation);
 
-        //this.updateTroopsFilters();
+        this.updateTroopsFilters();
       } catch (error) {
         if (error.message) {
           return ToastSnackbar.error(error.message);
