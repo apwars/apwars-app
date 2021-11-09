@@ -229,10 +229,9 @@ export default {
       if (this.type === 'magical-items') {
         units = getMagicalItems();
       }
-
       try {
         this.filterTroops = units.filter(t => t.combinators?.warPreparation);
-        this.isLoading = false;
+
         this.globalTroops = await Promise.all(
           units.map((trooper) => {
             return new Promise(async (resolve) => {
@@ -292,7 +291,6 @@ export default {
         const gameItems = getGameItems().filter(g => g.combinators).map(g => ({...g, myQty: 0, teamDesc: '', raceDesc: '', tierDesc: '', name: g.title }));
 
         this.globalTroops = this.globalTroops.concat(gameItems)
-        /* this.filterTroops = units.filter(t => t.combinators?.warPreparation); */
         this.filterTroops = this.globalTroops.filter(t => t.combinators?.warPreparation);
 
         //this.updateTroopsFilters();
@@ -344,7 +342,7 @@ export default {
       });
       filterNames.map((trooper) => {
         if (filterSelect.name.indexOf(trooper.name) === -1) {
-          filterSelect.name.push(trooper.name);
+          trooper.combinators?.warPreparation ? filterSelect.name.push(trooper.name) : '';
         }
       });
       this.globalTroops.map((trooper) => {
@@ -362,7 +360,7 @@ export default {
       }
     },
 
-    async updateTroopsFilters() {
+    updateTroopsFilters() {
       this.filterTroops = this.globalTroops.filter((trooper) => {
         if (trooper.combinators?.warPreparation) { 
           if (!this.select.teams.length) {
