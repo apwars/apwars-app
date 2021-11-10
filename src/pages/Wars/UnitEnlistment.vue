@@ -118,12 +118,22 @@
                 You have units:
               </div>
               <div class="amount">
-                <Amount :amount="troop.balance" :symbol="troop.name" compact formatted/>
+                <Amount
+                  :amount="troop.balance"
+                  :symbol="troop.name"
+                  compact
+                  formatted
+                />
               </div>
             </div>
           </v-col>
           <v-col>
             <div class="troop-viewport">
+              <img
+                class="aura"
+                :src="`/images/troops/humans-aura.png`"
+                :alt="troop.name"
+              />
               <div class="controls">
                 <img
                   src="/images/icons/chevron.png"
@@ -135,12 +145,7 @@
                   @click="goToUnit(currentIndex + 1)"
                 />
               </div>
-              <div class="aura">
-                <img
-                  :src="`/images/troops/humans-aura.png`"
-                  :alt="troop.name"
-                />
-              </div>
+
               <v-img
                 :src="`/images/troops/${troop.name.toLowerCase()}.webp`"
                 :alt="troop.name"
@@ -220,7 +225,10 @@
                   Monster Battle
                 </div>
                 <div class="illustration">
-                  <v-img :src="`/images/monsters/${monsterData.id}.webp`" :alt="monsterData.name" />
+                  <v-img
+                    :src="`/images/monsters/${monsterData.id}.webp`"
+                    :alt="monsterData.name"
+                  />
                 </div>
               </div>
               <Chance
@@ -305,7 +313,7 @@ export default {
 
     troop() {
       if (!this.troopSelected) {
-        return null
+        return null;
       }
       return this.getByNameOrAddress(this.troopSelected);
     },
@@ -353,14 +361,16 @@ export default {
     },
 
     enlistmentOptions() {
-      return ENLISTMENT_OPTIONS.find(eo => eo.id === Number(this.$route.params.raceId));
+      return ENLISTMENT_OPTIONS.find(
+        (eo) => eo.id === Number(this.$route.params.raceId)
+      );
     },
 
     monsterData() {
       if (!this.enlistmentOptions) {
         return null;
       }
-      return MONSTERS.find(m => m.id === this.enlistmentOptions.monsterId);
+      return MONSTERS.find((m) => m.id === this.enlistmentOptions.monsterId);
     },
 
     stake: {
@@ -492,15 +502,8 @@ export default {
   display: flex;
 }
 .troop-viewport {
-  z-index: 2;
   position: relative;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  @media screen and (min-width: 768px) {
-    max-width: 380px;
-    min-height: 540px;
-  }
 }
 .enlist-title {
   font-size: 24px;
@@ -674,8 +677,8 @@ export default {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: -3;
   animation: aura-flutuation 2.2s linear forwards infinite;
+  width: 100%
 }
 
 .total-force {
