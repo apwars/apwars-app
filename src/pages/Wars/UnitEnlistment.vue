@@ -227,7 +227,7 @@
                 description="Rewards"
                 minLabel="1%"
                 maxLabel="10%"
-                :maxScale="maxForce"
+                :maxScale="maxStakeForce(troop.race)"
                 :value="totalStakedForce(troop.race)"
                 :maxChance="10"
               />
@@ -273,6 +273,7 @@ export default {
       getWeaponByTier: "enlistment/getWeaponByTier",
       getTotalStakedWeapon: "enlistment/totalStakedWeapon",
       totalStakedForce: "enlistment/totalStakedForce",
+      maxStakeForce: "enlistment/maxStakeForce",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -349,10 +350,6 @@ export default {
         this.troop.defense * this.troop.war.stakeLimit +
         this.weapon.defense * this.weapon.war.stakeLimit
       );
-    },
-
-    maxForce() {
-      return this.maxStrength + this.maxDefense;
     },
 
     enlistmentOptions() {
