@@ -19,7 +19,7 @@
       </v-row>
       <template v-else>
         <v-row>
-          <v-col>
+          <v-col md="4">
             <div class="name-container d-flex justify-space-between">
               <Title :text="troop.displayName" />
               <img
@@ -31,10 +31,6 @@
             </div>
             <div class="form-container mt-3 mb-2">
               <v-skeleton-loader type="text, button" v-if="isLoading" />
-              <div class="" v-else-if="!troop.balance">
-                You don`t have available {{ troop.name }} to enlist, you can
-                always buy more.
-              </div>
               <div class="enlist-form" v-else>
                 <div class="enlist-title">
                   {{ troop.displayName }}
@@ -68,7 +64,7 @@
                   v-bind="currencyConfig"
                   v-model="stakedWeapon"
                   :max="weapon.war.stakeLimit"
-                  :disabled="!weapon.balance"
+                  :disabled="!troop.balance || !weapon.balance"
                 >
                   <template v-slot:append>
                     <div class="d-flex align-center">
@@ -79,6 +75,10 @@
                     </div>
                   </template>
                 </v-currency-field>
+              </div>
+              <div v-if="!troop.balance">
+                You don`t have available {{ troop.name }} to enlist, you can
+                always buy more.
               </div>
             </div>
             <div class="status-container">
@@ -127,7 +127,7 @@
               </div>
             </div>
           </v-col>
-          <v-col>
+          <v-col md="4">
             <div class="troop-viewport">
               <img
                 class="aura"
@@ -160,7 +160,7 @@
               />
             </div>
           </v-col>
-          <v-col>
+          <v-col md="4">
             <div class="enlistment-title d-flex">
               <img
                 class="mr-1"
