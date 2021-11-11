@@ -413,7 +413,7 @@ export default {
         this.collectibles = getCollectibles();
         this.balances = await Promise.all(
           this.collectibles.map((item) => {
-            const collectibles = new Collectibles(item.contractAddress);
+            const collectibles = new Collectibles(item.contractAddress[this.networkInfo.id]);
             return collectibles.balanceOf(this.account, item.id);
           })
         );

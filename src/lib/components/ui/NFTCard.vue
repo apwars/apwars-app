@@ -353,7 +353,7 @@ export default {
       }
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       this.collectiblesContract = new Collectibles(
-        this.collectible.contractAddress
+        this.collectible.contractAddress[this.networkInfo.id]
       );
     },
 
@@ -436,11 +436,11 @@ export default {
       try {
         const res = await wgold.approve(
           this.account,
-          this.collectible.contractAddress
+          this.collectible.contractAddress[this.networkInfo.id]
         );
         this.isApprovedwGOLD = await this.wGOLDContract.hasAllowance(
           this.account,
-          this.collectible.contractAddress
+          this.collectible.contractAddress[this.networkInfo.id]
         );
       } catch (e) {
         console.log(e);

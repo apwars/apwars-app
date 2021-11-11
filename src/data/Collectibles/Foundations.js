@@ -1,6 +1,6 @@
 import Addresses from '../Addresses';
 
-const { wGOLD, collectibles } = Addresses;
+const { collectibles } = Addresses;
 
 export function getFoundations() {
 
