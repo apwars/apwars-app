@@ -74,6 +74,7 @@ export function getTroops() {
       strength: 5,
       defense: 1,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -98,6 +99,7 @@ export function getTroops() {
       defense: 0,
       weaponId: 4,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -121,6 +123,7 @@ export function getTroops() {
       strength: 0,
       defense: 0,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
       combinators: {
@@ -173,6 +176,7 @@ export function getTroops() {
       defense: 0,
       weaponId: 6,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -196,6 +200,7 @@ export function getTroops() {
       strength: 2,
       defense: 4,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
       combinators: {
@@ -249,6 +254,7 @@ export function getTroops() {
       strength: 5,
       defense: 1,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -272,6 +278,7 @@ export function getTroops() {
       strength: 0,
       defense: 0,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -295,6 +302,7 @@ export function getTroops() {
       strength: 0,
       defense: 0,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
       combinators: {
@@ -346,6 +354,7 @@ export function getTroops() {
       strength: 0,
       defense: 0,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -369,6 +378,7 @@ export function getTroops() {
       strength: 8,
       defense: 2,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
       combinators: {
@@ -418,6 +428,7 @@ export function getTroops() {
       strength: 8,
       defense: 2,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -441,6 +452,7 @@ export function getTroops() {
       strength: 35,
       defense: 8,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -464,6 +476,7 @@ export function getTroops() {
       strength: 22,
       defense: 22,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
       combinators: {
@@ -515,6 +528,7 @@ export function getTroops() {
       strength: 70,
       defense: 20,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -538,6 +552,7 @@ export function getTroops() {
       strength: 150,
       defense: 50,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -561,6 +576,7 @@ export function getTroops() {
       strength: 150,
       defense: 50,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -584,6 +600,7 @@ export function getTroops() {
       strength: 150,
       defense: 50,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -607,6 +624,7 @@ export function getTroops() {
       strength: 6,
       defense: 10,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
       combinators: {
@@ -660,6 +678,7 @@ export function getTroops() {
       strength: 12,
       defense: 6,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -683,6 +702,7 @@ export function getTroops() {
       strength: 25,
       defense: 25,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -706,6 +726,7 @@ export function getTroops() {
       strength: 25,
       defense: 25,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
       combinators: {
@@ -758,6 +779,7 @@ export function getTroops() {
       strength: 70,
       defense: 20,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },
@@ -781,6 +803,7 @@ export function getTroops() {
       strength: 250,
       defense: 90,
       war: {
+        stakeMin: 100,
         stakeLimit: 1000
       },
     },

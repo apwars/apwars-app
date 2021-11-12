@@ -45,7 +45,7 @@
                   persistent-hint
                   v-bind="currencyConfig"
                   v-model="stake"
-                  :max="troop.war.stakeLimit"
+                  :max="this.maxPossibleTroopStake"
                   :disabled="!troop.balance"
                 >
                   <template v-slot:append>
@@ -67,7 +67,7 @@
                   persistent-hint
                   v-bind="currencyConfig"
                   v-model="stakedWeapon"
-                  :max="weapon.war.stakeLimit"
+                  :max="this.maxPossibleWeaponStake"
                   :disabled="!troop.balance || !weapon.balance"
                 >
                   <template v-slot:append>
@@ -81,8 +81,7 @@
                 </v-currency-field>
               </div>
               <div v-if="!troop.balance">
-                You don`t have available {{ troop.name }} to enlist, you can
-                always buy more.
+                You don`t have the minimun amount of {{ troop.war.stakeMin }} {{ troop.name }} to enlist, why don't you buy some more.
               </div>
             </div>
             <div class="status-container">
@@ -377,6 +376,13 @@ export default {
       return MONSTERS.find((m) => m.id === this.enlistmentOptions.monsterId);
     },
 
+    maxPossibleTroopStake() {
+      return Math.min(this.troop.balance, this.troop.war.stakeLimit);
+    },
+    maxPossibleWeaponStake() {
+      return Math.min(this.weapon.balance - this.totalStakedWeapon, this.weapon.war.stakeLimit);
+    },
+
     stake: {
       get() {
         return this.troop.amount;
@@ -449,13 +455,13 @@ export default {
     },
     stakeMax() {
       this.stakeTroop({
-        amount: Math.min(this.troop.balance, this.troop.war.stakeLimit),
+        amount: this.maxPossibleTroopStake,
         troopId: this.troop.id,
       });
     },
     stakeMaxWeapon() {
       this.stakeWeapon({
-        amount: Math.min(this.weapon.balance, this.weapon.war.stakeLimit),
+        amount: this.maxPossibleWeaponStake,
         troopId: this.troop.id,
       });
     },
