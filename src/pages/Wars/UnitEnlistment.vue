@@ -1,5 +1,8 @@
 <template>
-  <div class="background">
+  <div
+    class="background"
+    :style="`background-image: url(${enlistmentOptions.background})`"
+  >
     <v-container v-if="isConnected">
       <v-row>
         <v-col>
@@ -131,7 +134,7 @@
             <div class="troop-viewport">
               <img
                 class="aura"
-                :src="`/images/troops/humans-aura.png`"
+                :src="enlistmentOptions.aura"
                 :alt="troop.name"
               />
               <div class="controls">
@@ -504,36 +507,43 @@ export default {
 .troop-viewport {
   position: relative;
   width: 100%;
+  .aura {
+    position: absolute;
+    top: 50%;
+    animation: aura-flutuation 2.2s linear forwards infinite;
+    width: 100%;
+  }
+  .troop-model {
+    width: 100%;
+  }
+  .controls {
+    z-index: 5;
+    position: absolute;
+    top: 50%;
+    transition: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    > img {
+      height: 58px;
+      width: 58px;
+      &:hover {
+        transform: scale(1.2);
+        cursor: pointer;
+      }
+    }
+    > .invert {
+      transform: rotate(180deg);
+      &:hover {
+        transform: rotate(180deg) scale(1.2);
+      }
+    }
+  }
 }
 .enlist-title {
   font-size: 24px;
   font-weight: bold;
 }
-.troop-model {
-  width: 100%;
-}
-.controls {
-  z-index: 5;
-  position: absolute;
-  top: 50%;
-  transition: translateY(-50%);
-  display: flex;
-  justify-content: space-between;
-  > img {
-    height: 58px;
-    width: 58px;
-    &:hover {
-      transform: scale(1.2);
-      cursor: pointer;
-    }
-  }
-  > .invert {
-    transform: rotate(180deg);
-    &:hover {
-      transform: rotate(180deg) scale(1.2);
-    }
-  }
-}
+
 .status-container {
   margin-top: 42px;
   display: flex;
@@ -614,7 +624,6 @@ export default {
 .background {
   height: 100%;
   width: 100%;
-  background-image: url("/images/background/enlistment-1.png");
   background-size: cover;
 }
 
@@ -671,14 +680,6 @@ export default {
   bottom: 0;
   right: 0;
   animation: weapon-fall 0.3s linear forwards;
-}
-
-.aura {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  animation: aura-flutuation 2.2s linear forwards infinite;
-  width: 100%
 }
 
 .total-force {
