@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="['btn-container', [type], isBlock ? 'is-block' : '']"
+    :class="['btn-container', [type], isBlock ? 'is-block' : '', noPadding ? 'no-padding' : '']"
     @click="handleClick"
     :disabled="disabled"
   >
@@ -33,6 +33,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    noPadding: {
+      type: Boolean,
+      default: false,
     }
   },
 };
@@ -48,6 +52,9 @@ export default {
   font-weight: bold;
   font-size: 16px;
   line-height: 21px;
+  &.no-padding {
+    padding: 8px 0;
+  }
   &:hover:enabled {
     cursor: pointer;
     background-color: #e5e5e5;

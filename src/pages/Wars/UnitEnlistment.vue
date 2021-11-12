@@ -4,12 +4,13 @@
     :style="`background-image: url(${enlistmentOptions.background})`"
   >
     <v-container v-if="isConnected">
-      <v-row>
+      <v-row dense no-gutters>
         <v-col>
           <Button
             type="wtertiary"
             text="Back to enlistment page"
             :handleClick="backToWar"
+            noPadding
           />
         </v-col>
       </v-row>
@@ -21,7 +22,7 @@
         </v-col>
       </v-row>
       <template v-else>
-        <v-row>
+        <v-row dense>
           <v-col md="4">
             <div class="name-container d-flex justify-space-between">
               <Title :text="troop.displayName" />
