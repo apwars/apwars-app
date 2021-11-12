@@ -4,68 +4,49 @@
     :isLoading="isLoading"
     :disabledConfirm="isLoading || disabledConfirm || !checkbox"
     :disabledClose="isLoading"
-    title="Provide Liquidity"
+    title="Withdraw Liquidity"
     @close="$emit('close')"
-    @confirm="$emit('confirm')"
+    @confirm="$emit('confirm', infoLP.id)"
     :width="width"
     :height="height"
   >
     <v-row dense>
       <v-col v-if="!isLoading" dense cols="12" md="12">
-        <div
-          class="d-flex flex-column flex-md-row justify-center align-center mx-3"
-        >
-          <div class="d-flex justify-center align-center mr-3">
-            <div class="box-token mr-2">
-              <v-img :src="`/images/${infoLP.symbolTokenBase}.png`" />
-            </div>
-            <number-field
-              class="mt-3"
-              v-model="infoLP.baseAmount"
-              dense
-              :min="min"
-              disabled
-            ></number-field>
-          </div>
-
-          <div class="d-flex justify-center align-center">
-            <div class="box-token mr-2">
-              <v-img :src="`/images/${infoLP.symbolTokenSide}.png`" />
-            </div>
-            <number-field
-              class="mt-3"
-              v-model="infoLP.sideAmount"
-              dense
-              disabled
-            ></number-field>
-          </div>
+        <div class="mb-1">
+          <span class="white--text font-weight-bold">My Pool Tokens: </span>
+          <span class="primary--text font-weight-bold ">
+            <amount :amount="infoLP.balanceLP" decimals="2" />
+            {{ infoLP.symbolLp }} Pool Tokens
+          </span>
+        </div>
+        <div class="mb-1">
+          <span class="white--text font-weight-bold">Fee withdraw: </span>
+          <span class="primary--text font-weight-bold ">
+            <amount :amount="infoLP.balanceLP" decimals="2" />
+            {{ infoLP.symbolLp }} Pool Tokens (1%)
+          </span>
         </div>
 
-        <div class="mt-2">
-          <div class="mt-1">
-            <span class="white--text font-weight-bold">You will spend: </span>
-            <span class="primary--text font-weight-bold ">
-              <amount approximate :amount="infoLP.lpAmount" :symbol="`${infoLP.symbolLp} Pool Tokens`" decimals="2" />
-            </span>
-          </div>
-
-          <div class="d-flex mt-1">
-            <span class="white--text font-weight-bold">Time to earn the reward: </span>
-            <span class="ml-1 primary--text font-weight-bold ">
-              <time-block only-time :blocks="infoLP.getGeneralConfig.blocks" />
-            </span>
-          </div>
-
-          <div class="mt-1">
-            <span class="white--text font-weight-bold">Reward: </span>
-            <span class="primary--text font-weight-bold ">
-              {{ infoLP.getGeneralConfig.rewardAmount }}
-              {{ infoLP.rewardSymbol }}
-            </span>
-          </div>
+        <div class="mb-1">
+          <span class="white--text font-weight-bold">You will receive </span>
+          <span class="primary--text font-weight-bold ">
+            <amount :amount="infoLP.balanceLP" decimals="2" />
+            {{ infoLP.symbolLp }} Pool Tokens
+          </span>
         </div>
 
-        <div class="d-flex justify-center align-center">
+        <div class="mb-1">
+          <span class="white--text font-weight-bold">Loyalty points to receive: </span>
+          <span class="primary--text font-weight-bold ">
+            <amount
+              :amount="infoLP.getGeneralConfig.points"
+              formatted
+              decimals="0"
+            />
+          </span>
+        </div>
+
+        <div class="d-flex justify-center align-center mt-2">
           <v-checkbox
             v-model="checkbox"
             class="checkbox-modal-input ma-0 pa-0"
@@ -73,12 +54,15 @@
           >
             <template v-slot:label>
               <div class="my-1">
-                I understand that my balance
-                <amount :amount="infoLP.baseAmount" formatted :symbol="infoLP.symbolTokenBase" decimals="2" />
-                + 
-                <amount :amount="infoLP.sideAmount" formatted :symbol="infoLP.symbolTokenSide" decimals="2" />
-                will be converted to 
-                <amount approximate :amount="infoLP.lpAmount" :symbol="`${infoLP.symbolLp} Pool Tokens`" decimals="2" />
+                I understand that I will receive
+                <amount :amount="infoLP.balanceLP" decimals="2" />
+                {{ infoLP.rewardSymbol }} Pool Tokens and
+                <amount
+                  :amount="infoLP.getGeneralConfig.points"
+                  formatted
+                  decimals="0"
+                />
+                loyalty points.
               </div>
             </template>
           </v-checkbox>
@@ -104,7 +88,6 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 import TimeBlock from "@/lib/components/ui/Utils/TimeBlock";
 import ModalWood from "@/lib/components/ui/Modals/Templates/Wood";
-import NumberField from "@/lib/components/ui/Utils/NumberField";
 
 export default {
   props: [
@@ -114,20 +97,18 @@ export default {
     "width",
     "height",
     "textClose",
-    "min",
     "infoLP",
   ],
 
   data() {
     return {
-      checkbox: false
+      checkbox: false,
     };
   },
 
   components: {
     Amount,
     ModalWood,
-    NumberField,
     TimeBlock,
   },
 

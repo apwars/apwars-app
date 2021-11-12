@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  props: ["blocks"],
+  props: ["blocks", "onlyTime"],
 
   data() {
     return {
@@ -38,6 +38,9 @@ export default {
         time = `${seconds} second`;
       } else if (seconds > 0) {
         time = `${seconds} seconds`;
+      }
+      if (this.onlyTime !== undefined) {
+        return `~${time}`;
       }
       return `Estimated time: ~${time}`;
     },

@@ -2,54 +2,51 @@
   <modal-wood
     :open="open"
     :isLoading="isLoading"
-    :disabledConfirm="isLoading || disabledConfirm || !checkbox || !amount"
+    :disabledConfirm="isLoading || disabledConfirm || !checkbox"
     :disabledClose="isLoading"
-    title="Remove Liquidity"
+    title="Renew Reward"
     @close="$emit('close')"
-    @confirm="$emit('confirm', amount)"
+    @confirm="$emit('confirm', infoLP.id)"
     :width="width"
     :height="height"
   >
     <v-row dense>
-      <v-col dense cols="12" md="12">
-
-        <div>
-          <div class="mb-1">
-            <span class=" font-weight-bold">You balance LP: </span>
-            <span class="primary--text font-weight-bold ">
-              16.836 wLAND/BUSD Pool Tokens
-            </span>
-          </div>
+      <v-col v-if="!isLoading" dense cols="12" md="12">
+        <div class="mb-1">
+          <span class="white--text font-weight-bold">My Pool Tokens: </span>
+          <span class="primary--text font-weight-bold ">
+            <amount :amount="infoLP.balanceLP" decimals="2" />
+            {{ infoLP.symbolLp }} Pool Tokens
+          </span>
+        </div>
+        <div class="mb-1">
+          <span class="white--text font-weight-bold">Fee renew reward: </span>
+          <span class="primary--text font-weight-bold ">
+            <amount :amount="infoLP.balanceLP" decimals="2" />
+            {{ infoLP.symbolLp }} Pool Tokens (0.5%)
+          </span>
         </div>
 
-        <span class=" font-weight-bold">You will receive: </span>
-        <div
-          class="d-flex flex-column flex-md-row justify-center align-center mt-3 mx-3"
-        >
-          <div class="d-flex justify-center align-center mr-3">
-            <div class="box-token mr-2">
-              <v-img src="/images/icons/wLAND.png" />
-            </div>
-            <number-field
-              class="mt-3"
-              v-model="amount"
-              dense
-              :min="min"
-              disabled
-            ></number-field>
-          </div>
+        <div class="mb-1">
+          <span class="white--text font-weight-bold">Amount in stake:</span>
+          <span class="primary--text font-weight-bold ">
+            <amount :amount="infoLP.balanceLP" decimals="2" />
+            {{ infoLP.symbolLp }} Pool Tokens
+          </span>
+        </div>
 
-          <div class="d-flex justify-center align-center">
-            <div class="box-token mr-2">
-              <v-img src="/images/icons/BUSD.png" />
-            </div>
-            <number-field
-              class="mt-3"
-              v-model="amountTokenB"
-              dense
-              disabled
-            ></number-field>
-          </div>
+        <div class="mb-1">
+          <span class="white--text font-weight-bold"
+            >Loyalty points to receive:
+          </span>
+          <span class="primary--text font-weight-bold ">
+            <amount
+              :amount="infoLP.getGeneralConfig.points * 1.1"
+              formatted
+              decimals="0"
+            />
+            (10% increase for renewal)
+          </span>
         </div>
 
         <div class="d-flex justify-center align-center mt-2">
@@ -60,10 +57,27 @@
           >
             <template v-slot:label>
               <div class="my-1">
-                I understand that removing liquidity will not receive my reward.
+                I understand that the reward renewal will have a period of
+                {{ infoLP.getGeneralConfig.blocks }} blocks and that the amount
+                of
+                <amount :amount="infoLP.balanceLP" decimals="2" />
+                {{ infoLP.symbolLp }} Pool Token will be on stake until the
+                deadline.
               </div>
             </template>
           </v-checkbox>
+        </div>
+      </v-col>
+      <v-col v-else cols="12" md="12">
+        <div class="d-flex align-center justify-center">
+          <v-progress-circular
+            class="mr-1"
+            :size="36"
+            :width="2"
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
+          <h3>Loading...</h3>
         </div>
       </v-col>
     </v-row>
@@ -74,7 +88,6 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 import TimeBlock from "@/lib/components/ui/Utils/TimeBlock";
 import ModalWood from "@/lib/components/ui/Modals/Templates/Wood";
-import NumberField from "@/lib/components/ui/Utils/NumberField";
 
 export default {
   props: [
@@ -84,21 +97,18 @@ export default {
     "width",
     "height",
     "textClose",
-    "min",
+    "infoLP",
   ],
 
   data() {
     return {
       checkbox: false,
-      amount: 0,
-      amountTokenB: 15,
     };
   },
 
   components: {
     Amount,
     ModalWood,
-    NumberField,
     TimeBlock,
   },
 

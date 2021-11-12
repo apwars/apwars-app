@@ -67,7 +67,7 @@ export default {
 
   methods: {
     progress(data) {
-      this.currentBlockNumber += 1 / this.averageConfirmationTime;
+      this.currentBlockNumber = this.$store.getters["user/currentBlockNumber"] - 3;
       this.$emit("progress", data);
     },
 

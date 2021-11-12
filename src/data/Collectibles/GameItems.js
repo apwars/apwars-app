@@ -296,6 +296,16 @@ export function getGameItems() {
       description: "Workers are essential in Arcadia. They will carry on working effortlessly and effectively for as long as necessary in order to clean up the lands and build up strong foundations for generations to come.",
       image: "/images/nfts/worker.png",
     },
+    {
+      id: 66,
+      type: 'gameItem',
+      typeDesc: 'Game Items',
+      contractAddress: addresses.collectibles,
+      isGift: false,
+      title: "Loyalty Points",
+      description: "Loyalty points are earned by the bravest and most loyal warriors.",
+      image: "/images/nfts/loyalty-points.png",
+    },
     // {
     //   id: 63,
     //   type: "gameItem",

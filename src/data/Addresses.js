@@ -47,4 +47,12 @@ export default {
     "56": "0xd6adBAff5CD8ca7f702244106a30c90797274469",
     "97": "0x2A6eaAADac4B671F3D6643272564520EaC037997",
   },
+  loyaltyProgram: {
+    "56": "",
+    "97": "0x7E0f83408D5BdeaaeC48Fb8d36866f209821e705",
+  },
+  loyaltyProgramManager: {
+    "56": "",
+    "97": "0x6CF6998B79Db1Ec5B60C0143a3D8e00fE16c88EE",
+  },
 };

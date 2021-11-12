@@ -52,9 +52,10 @@
 
         <v-col
           v-for="reward in rewards"
-          v-bind:key="reward.requirement"
+          v-bind:key="reward.id"
           cols="12"
-          md="4"
+          md="6"
+          lg="4"
           class="align-self-center"
         >
           <div class="rewards-info">
@@ -66,10 +67,23 @@
             </p>
 
             <div class="my-1 d-flex align-center">
+              <div class="font-weight-bold mr-1">Liquidity Pool:</div>
+              <div class="primary--text d-flex align-center">
+                <span class="mr-1">
+                  {{ reward.symbolLp }}
+                </span>
+              </div>
+            </div>
+
+            <div class="my-1 d-flex align-center">
               <div class="font-weight-bold mr-1">Requirement:</div>
               <div class="primary--text d-flex align-center">
                 <span class="mr-1">
-                  {{ reward.requirement }}
+                  <amount
+                    :amount="reward.getLpConfig.baseAmount"
+                    decimals="0"
+                  />
+                  {{ reward.symbolTokenBase }}
                 </span>
               </div>
             </div>
@@ -79,7 +93,12 @@
                 Time to earn the reward:
               </div>
               <div class="primary--text d-flex align-center">
-                <span class="mr-1">{{ reward.time }}</span>
+                <span class="mr-1">
+                  <time-block
+                    only-time
+                    :blocks="reward.getGeneralConfig.blocks"
+                  />
+                </span>
               </div>
             </div>
 
@@ -98,21 +117,9 @@
               </div>
               <div class="primary--text d-flex align-center">
                 <span class="mr-1"
-                  >{{ reward.totalRewardAvailable }}
+                  >{{ reward.getRewardConfig.available }}
                   {{ reward.rewardSymbol }}</span
                 >
-              </div>
-            </div>
-
-            <div class="my-1 d-flex align-center">
-              <div class="font-weight-bold mr-1">
-                Total reward to distribute:
-              </div>
-              <div class="primary--text d-flex align-center">
-                <span class="mr-1">
-                  {{ reward.totalRewardDistribute }}
-                  {{ reward.rewardSymbol }}
-                </span>
               </div>
             </div>
 
@@ -121,37 +128,59 @@
                 Loyalty points:
               </div>
               <div class="primary--text d-flex align-center">
-                <span class="mr-1">{{ reward.loyaltyPoints }}</span>
+                <span class="mr-1">{{ reward.getGeneralConfig.points }}</span>
+              </div>
+            </div>
+
+            <div class="my-1 d-flex align-center">
+              <div class="font-weight-bold mr-1">
+                Renewal Fee:
+              </div>
+              <div class="primary--text d-flex align-center">
+                <span class="mr-1">0.5%</span>
+              </div>
+            </div>
+
+            <div class="my-1 d-flex align-center">
+              <div class="font-weight-bold mr-1">
+                Non-renewal fee:
+              </div>
+              <div class="primary--text d-flex align-center">
+                <span class="mr-1">1%</span>
               </div>
             </div>
 
             <div v-if="reward.isDone">
-              <div class="py-1 d-flex justify-center">
-                <wButton class="white--text">
-                  get and renew reward
+              <div class="py-1 flex-column flex-sm-row d-flex justify-center">
+                <wButton
+                  size="small"
+                  class="white--text mr-3"
+                  @click="openRenewReward(reward)"
+                >
+                  Renew reward
                 </wButton>
-              </div>
-              <div class="py-1 d-flex justify-center">
-                <wButton class="white--text">
-                  get reward and remove liquidity
+                <wButton
+                  size="small"
+                  class="white--text"
+                  @click="openWithdrawLiquidity(reward)"
+                >
+                  withdraw liquidity
                 </wButton>
               </div>
             </div>
             <div v-else-if="reward.isProgress">
               <div class="py-1 d-flex justify-center">
-                <countdown-timer
-                  :start-time="new Date().getTime() - 8.64e7"
-                  :end-time="new Date().getTime() + 2.592e8"
+                <countdown-block
+                  :start-blocks="reward.loyalties.startBlock"
+                  :end-blocks="reward.loyalties.endBlock"
                   show-progress
-                ></countdown-timer>
+                  @end="loadData()"
+                ></countdown-block>
               </div>
             </div>
             <div v-else>
               <div v-if="reward.isBalance" class="py-1 d-flex justify-center">
-                <wButton
-                  @click="openModalProvider(reward)"
-                  class="white--text"
-                >
+                <wButton @click="openModalProvider(reward)" class="white--text">
                   Provide liquidity
                 </wButton>
               </div>
@@ -177,22 +206,32 @@
       @tokenAmountA="getLiquidityMinted"
     ></add-liquidity-modal>
 
-    <remove-liquidity-modal
-      v-if="modalRemoveLiquidity"
-      :open="modalRemoveLiquidity"
-      @close="modalRemoveLiquidity = false"
-      @confirm="() => {}"
-      :min="10"
-      :isLoading="isLoadingAddLiquidity"
-    ></remove-liquidity-modal>
+    <withdraw-liquidity-modal
+      v-if="modalWithdrawLiquidity"
+      :open="modalWithdrawLiquidity"
+      @close="modalWithdrawLiquidity = false"
+      @confirm="withdrawLiquidity"
+      :isLoading="isLoadingWithdrawLiquidity"
+      :infoLP="infoLP"
+    ></withdraw-liquidity-modal>
+
+    <renew-reward-modal
+      v-if="modalRenewReward"
+      :open="modalRenewReward"
+      @close="modalRenewReward = false"
+      @confirm="renewReward"
+      :isLoading="isLoadingRenewReward"
+      :infoLP="infoLP"
+    ></renew-reward-modal>
 
     <provide-liquidity-modal
       v-if="modalProvideLiquidity"
       :open="modalProvideLiquidity"
       @close="modalProvideLiquidity = false"
-      @confirm="() => {}"
-      :min="10"
-      :isLoading="isLoadingAddLiquidity"
+      @confirm="startLoyaltyProgram"
+      :min="5"
+      :isLoading="isLoadingProvideLiquidity"
+      :infoLP="infoLP"
     ></provide-liquidity-modal>
   </div>
 </template>
@@ -201,107 +240,61 @@
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
-import CountdownTimer from "@/lib/components/ui/Utils/CountdownTimer";
+import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
 import AddLiquidityModal from "@/lib/components/ui/Modals/AddLiquidityModal";
-import RemoveLiquidityModal from "@/lib/components/ui/Modals/RemoveLiquidityModal";
+import WithdrawLiquidityModal from "@/lib/components/ui/Modals/WithdrawLiquidityModal";
+import RenewRewardModal from "@/lib/components/ui/Modals/RenewRewardModal";
 import ProvideLiquidityModal from "@/lib/components/ui/Modals/ProvideLiquidityModal";
 import PancakePair from "@/lib/eth/PancakePair.js";
 import Convert from "@/lib/helpers/Convert";
+import TimeBlock from "@/lib/components/ui/Utils/TimeBlock";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+
+import LoyaltyProgram from "@/lib/eth/LoyaltyProgram";
+import ERC20 from "@/lib/eth/ERC20";
+import Collectibles from "@/lib/eth/Collectibles";
 
 export default {
   components: {
     wGOLDButton,
     Amount,
     wButton,
-    CountdownTimer,
+    CountdownBlock,
     AddLiquidityModal,
-    RemoveLiquidityModal,
+    WithdrawLiquidityModal,
+    RenewRewardModal,
     ProvideLiquidityModal,
+    TimeBlock,
   },
 
   data() {
     return {
       isLoading: true,
       isLoadingAddLiquidity: false,
+      isLoadingProvideLiquidity: false,
+      isLoadingRenewReward: false,
+      isLoadingWithdrawLiquidity: false,
+      infoLP: {},
       modalAddLiquidity: false,
-      modalRemoveLiquidity: false,
+      modalWithdrawLiquidity: false,
       modalProvideLiquidity: false,
+      modalRenewReward: false,
       rewards: [
         {
+          id: 1,
           title: "Conquer more lands",
           description:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Error corrupti praesentium nihil quod",
-          requirement: "100 wLAND in wLAND/BUSD LP",
-          time: "7 days",
-          reward: 10,
-          tokenRequirement: '0x2c6107c27a15d2c7f397d88d76257ea42c12f89f',
-          tokenAmountA: 5,
-          tokenAmountB: 6.93173,
-          rewardSymbol: "wLAND",
-          totalRewardDistribute: 5000,
-          totalRewardAvailable: 3000,
-          loyaltyPoints: 1000,
+          symbolLp: "wGOLD/wCOURAGE",
+          symbolTokenBase: "wCOURAGE",
+          symbolTokenSide: "wGOLD",
+          rewardSymbol: "Simple Shield",
           isBalance: true,
           isProgress: false,
-          lp: "0x04eb5daf52ab295a12a665a02e5b80ecd2f347a3",
-        },
-        {
-          title: "Be a great explorer",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Error corrupti praesentium nihil quod",
-          requirement: "5000 wGOLD in wGOLD/BUSD LP",
-          time: "3 days",
-          reward: 100,
-          tokenRequirement: '0x2c6107c27a15d2c7f397d88d76257ea42c12f89f',
-          tokenAmountA: 5,
-          tokenAmountB: 6.93173,
-          rewardSymbol: "Workers",
-          totalRewardDistribute: 20000,
-          totalRewardAvailable: 17570,
-          loyaltyPoints: 100,
-          isBalance: true,
-          isProgress: false,
-          lp: "0x04eb5daf52ab295a12a665a02e5b80ecd2f347a3",
-        },
-        {
-          title: "Battle strategy",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Error corrupti praesentium nihil quod",
-          requirement: "20000 wGRUNT in wGRUNT/wGOLD LP",
-          time: "10 days",
-          reward: 1,
-          tokenRequirement: '0x2c6107c27a15d2c7f397d88d76257ea42c12f89f',
-          tokenAmountA: 5,
-          tokenAmountB: 6.93173,
-          rewardSymbol: "The Elixir (10%) (Spendable)",
-          totalRewardDistribute: 100,
-          totalRewardAvailable: 78,
-          loyaltyPoints: 2000,
-          balance: 100,
-          isBalance: true,
-          isProgress: true,
-          lp: "0x04eb5daf52ab295a12a665a02e5b80ecd2f347a3",
-        },
-        {
-          title: "Conquer more lands",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Error corrupti praesentium nihil quod",
-          requirement: "10 wLAND in wLAND/BUSD LP",
-          time: "7 days",
-          reward: 10,
-          tokenRequirement: '0x2c6107c27a15d2c7f397d88d76257ea42c12f89f',
-          tokenAmountA: 5,
-          tokenAmountB: 6.93173,
-          rewardSymbol: "wLAND",
-          totalRewardDistribute: 5000,
-          totalRewardAvailable: 3000,
-          loyaltyPoints: 1000,
-          isBalance: true,
-          isProgress: false,
-          lp: "0x04eb5daf52ab295a12a665a02e5b80ecd2f347a3",
-          isDone: true,
+          isDone: false,
         },
       ],
+      loyaltyProgram: {},
     };
   },
 
@@ -328,21 +321,29 @@ export default {
   },
 
   watch: {
-    isConnected() {
-      this.loadData();
+    async isConnected() {
+      await this.initData();
+      await this.loadData();
     },
 
     account() {
+      if (this.isLoading) {
+        return;
+      }
       this.loadData();
     },
 
     currentBlockNumber() {
+      if (this.isLoading) {
+        return;
+      }
       this.loadData();
     },
   },
 
-  mounted() {
-    this.loadData();
+  async mounted() {
+    await this.initData();
+    await this.loadData();
   },
 
   methods: {
@@ -350,29 +351,181 @@ export default {
       this.$router.push("/exchange");
     },
 
+    async initData() {
+      if (!this.isConnected) {
+        return;
+      }
+      this.loyaltyProgram = new LoyaltyProgram(this.addresses.loyaltyProgram);
+      await this.loyaltyProgram.getContractManager();
+      return;
+    },
+
     async loadData() {
       if (!this.isConnected) {
         return;
       }
+
+      for (let indexOfItem in this.rewards) {
+        let reward = this.rewards[indexOfItem];
+        const getGeneralConfig = await this.loyaltyProgram.getGeneralConfig(
+          this.account,
+          this.account,
+          reward.id
+        );
+        let getRewardConfig = await this.loyaltyProgram.getRewardConfig(
+          this.account,
+          this.account,
+          reward.id
+        );
+
+        if (getRewardConfig.isCollectibles) {
+          getRewardConfig.available = await new Collectibles(
+            getRewardConfig.rewardAddress
+          ).balanceOf(this.account, getRewardConfig.collectibleId);
+        } else {
+          getRewardConfig.available = await new ERC20(
+            getRewardConfig.rewardAddress
+          ).balanceOf(this.account);
+        }
+
+        const getLpConfig = await this.loyaltyProgram.getLpConfig(
+          this.account,
+          this.account,
+          reward.id
+        );
+        const loyalties = await this.loyaltyProgram.getLoyalties(
+          reward.id,
+          this.account
+        );
+
+        if (
+          loyalties.loyaltyId !== "0" &&
+          this.currentBlockNumber > parseInt(loyalties.endBlock)
+        ) {
+          reward.isDone = true;
+          reward.isProgress = false;
+        } else if (loyalties.loyaltyId !== "0") {
+          reward.isProgress = true;
+          reward.isDone = false;
+        } else {
+          reward.isProgress = false;
+          reward.isDone = false;
+        }
+
+        reward = {
+          ...reward,
+          ...{ loyalties: loyalties },
+          ...{ getGeneralConfig: getGeneralConfig },
+          ...{ getRewardConfig: getRewardConfig },
+          ...{ getLpConfig: getLpConfig },
+        };
+        this.$set(this.rewards, indexOfItem, reward);
+      }
+
       this.isLoading = false;
     },
 
-    async openModalProvider(liquidity) {
-      const LP = new PancakePair(liquidity.lp);
-      const tokenAmountA = Convert.toWei(liquidity.tokenAmountA);
-      const tokenAmountB = await LP.getCalculateToken(tokenAmountA, liquidity.tokenRequirement);
-      console.log('tokenAmountB', tokenAmountB);
-
-
-      // const tokenAmountB = Convert.toWei(liquidity.tokenAmountB);
-      const value = await LP.getLiquidityMinted(tokenAmountA, tokenAmountB);
-      console.log('value', value);
+    async openModalProvider(reward) {
+      this.infoLP = {};
       this.modalProvideLiquidity = true;
+      this.isLoadingProvideLiquidity = true;
+      const LP = new PancakePair(reward.getLpConfig.lpToken);
+      const baseAmount = reward.getLpConfig.baseAmount;
+      const sideAmount = await LP.getCalculateToken(
+        baseAmount,
+        reward.getLpConfig.baseToken
+      );
 
+      const value = await LP.getLiquidityMinted(baseAmount, sideAmount);
 
+      this.infoLP = {
+        ...reward,
+        ...{
+          baseAmount: Convert.fromWei(baseAmount),
+          sideAmount: Convert.fromWei(sideAmount),
+          lpAmount: value,
+        },
+      };
+      this.isLoadingProvideLiquidity = false;
+    },
 
+    async startLoyaltyProgram() {
+      this.isLoadingProvideLiquidity = true;
+      const confirmTransaction = this.loyaltyProgram.startLoyaltyProgram(
+        this.infoLP.id,
+        this.account
+      );
 
-    }
+      confirmTransaction.on("error", (error) => {
+        this.isLoadingProvideLiquidity = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(
+          "An error has occurred while to provide liquidity"
+        );
+      });
+
+      confirmTransaction.on("receipt", async () => {
+        await this.loadData();
+        this.isLoadingProvideLiquidity = false;
+        this.modalProvideLiquidity = false;
+        this.infoLP = {};
+        ToastSnackbar.success("Provide liquidity successfully");
+      });
+    },
+
+    async openWithdrawLiquidity(reward) {
+      this.infoLP = {};
+      this.modalWithdrawLiquidity = true;
+      this.isLoadingWithdrawLiquidity = true;
+
+      const balanceLP = await this.loyaltyProgram.getBalanceLp(
+        reward.id,
+        this.account
+      );
+      this.infoLP = { ...reward, ...{ balanceLP: balanceLP } };
+      this.isLoadingWithdrawLiquidity = false;
+    },
+
+    async withdrawLiquidity(id) {
+      try {
+        this.isLoadingWithdrawLiquidity = true;
+        await this.loyaltyProgram.withdraw(id, this.account);
+        await this.loadData();
+        ToastSnackbar.success("Withdraw liquidity successfully");
+        this.modalWithdrawLiquidity = false;
+        this.isLoadingWithdrawLiquidity = false;
+      } catch (error) {
+        ToastSnackbar.error(error.toString());
+      }
+    },
+
+    async openRenewReward(reward) {
+      this.infoLP = {};
+      this.modalRenewReward = true;
+      this.isLoadingRenewReward = true;
+
+      const balanceLP = await this.loyaltyProgram.getBalanceLp(
+        reward.id,
+        this.account
+      );
+      this.infoLP = { ...reward, ...{ balanceLP: balanceLP } };
+      this.isLoadingRenewReward = false;
+    },
+
+    async renewReward(id) {
+      try {
+        this.isLoadingRenewReward = true;
+        await this.loyaltyProgram.withdrawAndRenew(id, this.account);
+        await this.loadData();
+        ToastSnackbar.success("Renew reward successfully");
+        this.modalRenewReward = false;
+        this.isLoadingRenewReward = false;
+      } catch (error) {
+        ToastSnackbar.error(error.toString());
+      }
+    },
   },
 };
 </script>
