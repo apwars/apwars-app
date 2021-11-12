@@ -497,7 +497,11 @@ export default {
         this.modalWithdrawLiquidity = false;
         this.isLoadingWithdrawLiquidity = false;
       } catch (error) {
-        ToastSnackbar.error(error.toString());
+        this.isLoadingWithdrawLiquidity = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(error.toString());
       }
     },
 
@@ -523,7 +527,11 @@ export default {
         this.modalRenewReward = false;
         this.isLoadingRenewReward = false;
       } catch (error) {
-        ToastSnackbar.error(error.toString());
+        this.isLoadingRenewReward = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(error.toString());
       }
     },
   },
