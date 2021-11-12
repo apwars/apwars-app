@@ -290,7 +290,7 @@ export default {
   width: 60%;
 }
 .side-menu {
-  width: 20%;
+  width: 30%;
 }
 .menu-footer {
   width: 100%;

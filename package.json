@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "dev": "npm run serve"
+    "dev": "npm run serve --open"
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "^1.1.5",

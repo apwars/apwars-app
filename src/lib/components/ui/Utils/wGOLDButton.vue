@@ -12,6 +12,7 @@
         </span>
         <span v-else>
           <amount
+            compact
             :amount="amount"
             decimals="2"        
             tooltip
