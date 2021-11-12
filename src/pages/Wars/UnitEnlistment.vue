@@ -44,9 +44,10 @@
                   color="#FFF"
                   persistent-hint
                   v-bind="currencyConfig"
-                  v-model="stake"
+                  v-model="stakedTroop"
+                  :error="stakedTroop > this.maxPossibleTroopStake"
                   :max="this.maxPossibleTroopStake"
-                  :disabled="!troop.balance"
+                  :disabled="!troop.balance || !troop.balance > troop.war.stakeMin"
                 >
                   <template v-slot:append>
                     <div class="d-flex align-center">
@@ -68,6 +69,7 @@
                   v-bind="currencyConfig"
                   v-model="stakedWeapon"
                   :max="this.maxPossibleWeaponStake"
+                  :error="totalStakedWeapon > weapon.balance"
                   :disabled="!troop.balance || !weapon.balance"
                 >
                   <template v-slot:append>
@@ -253,7 +255,6 @@
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
-import { TIER_WEAPONS } from "@/data/Collectibles/Weapons";
 import { ENLISTMENT_OPTIONS } from "@/data/Races";
 import { MONSTERS } from "@/data/Monsters";
 
@@ -380,10 +381,10 @@ export default {
       return Math.min(this.troop.balance, this.troop.war.stakeLimit);
     },
     maxPossibleWeaponStake() {
-      return Math.min(this.weapon.balance - this.totalStakedWeapon, this.weapon.war.stakeLimit);
+      return Math.min(this.weapon.balance, this.weapon.war.stakeLimit);
     },
 
-    stake: {
+    stakedTroop: {
       get() {
         return this.troop.amount;
       },
@@ -397,10 +398,7 @@ export default {
         return this.troop.weaponAmount;
       },
       set(value) {
-        if (!this.weapon) {
-          return;
-        }
-        return this.stakeWeapon({
+        this.stakeWeapon({
           troopId: this.troop.id,
           amount: value,
         });
@@ -461,7 +459,7 @@ export default {
     },
     stakeMaxWeapon() {
       this.stakeWeapon({
-        amount: this.maxPossibleWeaponStake,
+        amount: this.maxPossibleWeaponStake - this.totalStakedWeapon,
         troopId: this.troop.id,
       });
     },
