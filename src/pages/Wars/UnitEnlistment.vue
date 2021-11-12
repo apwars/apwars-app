@@ -51,7 +51,7 @@
                   <template v-slot:append>
                     <div class="d-flex align-center">
                       /{{ troop.war.stakeLimit }}
-                      <v-btn class="ml-1" rounded small @click="stakeMax">
+                      <v-btn class="ml-1" rounded small @click="stakeMax" :disabled="!maxPossibleTroopStake">
                         MAX
                       </v-btn>
                     </div>
@@ -73,7 +73,7 @@
                   <template v-slot:append>
                     <div class="d-flex align-center">
                       /{{ weapon.war.stakeLimit }}
-                      <v-btn class="ml-1" rounded small @click="stakeMaxWeapon">
+                      <v-btn class="ml-1" rounded small @click="stakeMaxWeapon" :disabled="!maxPossibleWeaponStake">
                         MAX
                       </v-btn>
                     </div>
@@ -116,7 +116,7 @@
                 />
               </div>
             </div>
-            <div class="amount-container" v-if="troop.balance">
+            <div class="amount-container">
               <div class="amount-title">
                 You have units:
               </div>
@@ -332,7 +332,7 @@ export default {
       if (!this.troop) {
         return 0;
       }
-      return this.getTotalStakedWeapon(TIER_WEAPONS[this.troop.tier]);
+      return this.getTotalStakedWeapon(this.troop.tier);
     },
 
     stakedStrength() {

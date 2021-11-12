@@ -25,11 +25,11 @@ export default {
         }, 0);
         return total;
     },
-    totalStakedWeapon: state => (weaponId) => {
-        if (!weaponId) {
-            return {}
+    totalStakedWeapon: state => (tier) => {
+        if (!tier) {
+            return 0
         }
-        const troops = state.troops.filter(w => w.weaponId === weaponId);
+        const troops = state.troops.filter(w => w.tier === tier);
         return troops.reduce((total, troop) => total += troop.weaponAmount, 0);
     },
     maxStakeForce: (state, getters) => (race) => {
