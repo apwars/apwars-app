@@ -46,8 +46,8 @@ export default class LoyaltyProgram {
     return this.smc.methods.withdraw(_LoyaltyProgramId).send({ from });
   }
 
-  withdrawAndRenew(_LoyaltyProgramId, from) {
-    return this.smc.methods.withdrawAndRenew(_LoyaltyProgramId).send({ from });
+  renew(_LoyaltyProgramId, from) {
+    return this.smc.methods.renew(_LoyaltyProgramId).send({ from });
   }
 
 }

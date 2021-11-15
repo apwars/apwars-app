@@ -49,10 +49,10 @@ export default {
   },
   loyaltyProgram: {
     "56": "",
-    "97": "0x7E0f83408D5BdeaaeC48Fb8d36866f209821e705",
+    "97": "0x50d8b5b2D7c5459884fb3a968e83c34A688160Ca",
   },
   loyaltyProgramManager: {
     "56": "",
-    "97": "0x6CF6998B79Db1Ec5B60C0143a3D8e00fE16c88EE",
+    "97": "0x72c3a1fc08693B27BFE587948E8143aE70eA9AA2",
   },
 };

@@ -209,6 +209,48 @@
     "constant": true
   },
   {
+    "inputs": [],
+    "name": "collectibleIdPoint",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "collectiblesAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "feeAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
     "inputs": [
       {
         "internalType": "bytes32",
@@ -391,6 +433,20 @@
     "constant": true
   },
   {
+    "inputs": [],
+    "name": "nonRenewalFee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -469,6 +525,34 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "pointPercentage",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "renewalFee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
     "inputs": [
       {
         "internalType": "bytes32",
@@ -533,6 +617,11 @@
       },
       {
         "internalType": "address",
+        "name": "_feeAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_collectiblesAddress",
         "type": "address"
       },
@@ -544,6 +633,16 @@
       {
         "internalType": "uint256",
         "name": "_pointPercentage",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_renewalFee",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nonRenewalFee",
         "type": "uint256"
       }
     ],
@@ -596,9 +695,39 @@
         "internalType": "uint256",
         "name": "_loyaltyId",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "isRenewal",
+        "type": "bool"
       }
     ],
-    "name": "withdrawAndRenew",
+    "name": "getCalculateBalanceLP",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "netAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_loyaltyId",
+        "type": "uint256"
+      }
+    ],
+    "name": "renew",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

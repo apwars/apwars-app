@@ -372,6 +372,7 @@ export default {
           this.account,
           reward.id
         );
+        console.log(getGeneralConfig);
         let getRewardConfig = await this.loyaltyProgram.getRewardConfig(
           this.account,
           this.account,
@@ -521,7 +522,7 @@ export default {
     async renewReward(id) {
       try {
         this.isLoadingRenewReward = true;
-        await this.loyaltyProgram.withdrawAndRenew(id, this.account);
+        await this.loyaltyProgram.renew(id, this.account);
         await this.loadData();
         ToastSnackbar.success("Renew reward successfully");
         this.modalRenewReward = false;
