@@ -168,21 +168,21 @@ export default {
   width: 680px;
   height: 32px;
   margin-top: 2px;
-  margin-left: calc(-1 * (var(--index) * 19px));
+  margin-left: calc(-1 * (var(--index) * 12px));
 }
 .slot {
   position: relative;
   height: 32px;
   width: 32px;
   display: inline-block;
-  background: #74685d;
-  transform: skewX(-30deg);
+  background-image: url('/images/battle/floor.png');
+  transform: skewX(-20deg);
   margin-right: 1px;
   &:hover {
     transform-style: preserve-3d;
     cursor: pointer;
     outline: 1px solid #312c26;
-    transform: skewX(-30deg) scale(1.1);
+    transform: skewX(-20deg) scale(1.1);
     z-index: 2;
   }
   &.selected {
@@ -192,7 +192,7 @@ export default {
     position: absolute;
     left: 0px;
     top: -8px;
-    transform: skewX(30deg);
+    transform: skewX(20deg);
     animation: unit-enter 0.2s ease-in;
   }
 
