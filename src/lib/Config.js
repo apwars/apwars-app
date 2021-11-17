@@ -3,6 +3,7 @@ import Addresses from "@/data/Addresses";
 export function getSmartContractAddresses(networkId) {
   return {
     collectibles: Addresses.collectibles[networkId],
+    BUSD: Addresses.BUSD[networkId],
     wGOLD: Addresses.wGOLD[networkId],
     wLAND: Addresses.wLAND[networkId],
     wCOURAGE: Addresses.wCOURAGE[networkId],

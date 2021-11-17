@@ -196,15 +196,36 @@
       </v-row>
     </v-container>
 
-    <add-liquidity-modal
-      v-if="modalAddLiquidity"
-      :open="modalAddLiquidity"
-      @close="modalAddLiquidity = false"
-      @confirm="() => {}"
-      :min="10"
-      :isLoading="isLoadingAddLiquidity"
-      @tokenAmountA="getLiquidityMinted"
-    ></add-liquidity-modal>
+    <approve-busd-modal
+      v-if="modalApproveBUSD"
+      :open="modalApproveBUSD"
+      @close="modalApproveBUSD = false"
+      @confirm="approveBUSD"
+      :isLoading="isLoadingApproveBUSD"
+      textConfirm="Approve BUSD"
+      hideClose
+      title="Loyalty Program - Approve BUSD"
+      :text="textBUSD"
+    ></approve-busd-modal>
+
+    <npc-modal
+      v-if="modalNPC"
+      :open="modalNPC"
+      @close="modalNPC = false"
+      hideConfirm
+      :title="NPC_OTTO_DALGOR.name"
+      :portrait="NPC_OTTO_DALGOR.portrait"
+    >
+      <p>
+        You need to approve me to manage your invetory!
+      </p>
+      <p>
+        Go you inventory and approve the {{ symbolTokenApprovedOtto }} token.
+      </p>
+      <wButton @click="$router.push('/inventory')" class="white--text" size="small">
+        got to inventory
+      </wButton>
+    </npc-modal>
 
     <withdraw-liquidity-modal
       v-if="modalWithdrawLiquidity"
@@ -241,7 +262,8 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
-import AddLiquidityModal from "@/lib/components/ui/Modals/AddLiquidityModal";
+import ApproveBusdModal from "@/lib/components/ui/Modals/ApproveBusdModal";
+import NPCModal from "@/lib/components/ui/Modals/NPCModal";
 import WithdrawLiquidityModal from "@/lib/components/ui/Modals/WithdrawLiquidityModal";
 import RenewRewardModal from "@/lib/components/ui/Modals/RenewRewardModal";
 import ProvideLiquidityModal from "@/lib/components/ui/Modals/ProvideLiquidityModal";
@@ -249,6 +271,7 @@ import PancakePair from "@/lib/eth/PancakePair.js";
 import Convert from "@/lib/helpers/Convert";
 import TimeBlock from "@/lib/components/ui/Utils/TimeBlock";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
+import { NPCS, NPC_INFO } from "@/data/NPCs";
 
 import LoyaltyProgram from "@/lib/eth/LoyaltyProgram";
 import ERC20 from "@/lib/eth/ERC20";
@@ -260,7 +283,8 @@ export default {
     Amount,
     wButton,
     CountdownBlock,
-    AddLiquidityModal,
+    "npc-modal": NPCModal,
+    ApproveBusdModal,
     WithdrawLiquidityModal,
     RenewRewardModal,
     ProvideLiquidityModal,
@@ -270,15 +294,23 @@ export default {
   data() {
     return {
       isLoading: true,
-      isLoadingAddLiquidity: false,
       isLoadingProvideLiquidity: false,
       isLoadingRenewReward: false,
       isLoadingWithdrawLiquidity: false,
+      isLoadingApproveBUSD: false,
       infoLP: {},
-      modalAddLiquidity: false,
       modalWithdrawLiquidity: false,
       modalProvideLiquidity: false,
       modalRenewReward: false,
+      modalApproveBUSD: false,
+      modalNPC: false,
+      NPC_OTTO_DALGOR: NPC_INFO()[NPCS.OTTO_DALGOR],
+      textBUSD: `
+        The loyalty program is for you diamond hands player looking to win more game items. <br />
+        You provide liquidity with wUNITS + BUSD and receive in-game items and loyalty points.<br />
+        wUNITS are managed by Otto Dalgor, BUSD is directly approved in the loyalty program contract.<br />
+      `,
+      symbolTokenApprovedOtto: "",
       rewards: [
         {
           id: 1,
@@ -295,6 +327,7 @@ export default {
         },
       ],
       loyaltyProgram: {},
+      contractBUSD: {},
     };
   },
 
@@ -357,7 +390,11 @@ export default {
       }
       this.loyaltyProgram = new LoyaltyProgram(this.addresses.loyaltyProgram);
       await this.loyaltyProgram.getContractManager();
-      return;
+      this.contractBUSD = new ERC20(this.addresses.BUSD);
+      this.modalApproveBUSD = !(await this.contractBUSD.hasAllowance(
+        this.account,
+        this.addresses.loyaltyProgram
+      ));
     },
 
     async loadData() {
@@ -372,7 +409,7 @@ export default {
           this.account,
           reward.id
         );
-        console.log(getGeneralConfig);
+
         let getRewardConfig = await this.loyaltyProgram.getRewardConfig(
           this.account,
           this.account,
@@ -426,11 +463,60 @@ export default {
       this.isLoading = false;
     },
 
+    async approveBUSD() {
+      try {
+        this.isLoadingApproveBUSD = true;
+
+        await this.contractBUSD.approve(
+          this.account,
+          this.addresses.loyaltyProgram
+        );
+
+        this.isLoadingApproveBUSD = false;
+        this.modalApproveBUSD = false;
+        ToastSnackbar.success("BUSD smart contract approved successfully!");
+      } catch (error) {
+        this.isLoadingApproveBUSD = false;
+        if (error.message) {
+          return this.showError(error.message);
+        }
+        return ToastSnackbar.error("An error has occurred while to approve");
+      }
+    },
+
     async openModalProvider(reward) {
       this.infoLP = {};
       this.modalProvideLiquidity = true;
       this.isLoadingProvideLiquidity = true;
       const LP = new PancakePair(reward.getLpConfig.lpToken);
+      let isApproveManager = false;
+      let token;
+
+      if (reward.getLpConfig.baseToken != this.addresses.BUSD) {
+        token = new ERC20(reward.getLpConfig.baseToken);
+        isApproveManager = await token.hasAllowance(
+          this.account,
+          this.addresses.inventoryManagerTokens
+        );
+      } else {
+        const getTokenA = new ERC20(await LP.getTokenA());
+        const getTokenB = new ERC20(await LP.getTokenB());
+        token = new ERC20(
+          getTokenA != this.addresses.BUSD ? getTokenA : getTokenB
+        );
+        isApproveManager = await token.hasAllowance(
+          this.account,
+          this.addresses.inventoryManagerTokens
+        );
+      }
+
+      if (!isApproveManager) {
+        this.symbolTokenApprovedOtto = await token.symbol();
+        this.modalProvideLiquidity = false;
+        this.isLoadingProvideLiquidity = false;
+        return (this.modalNPC = true);
+      }
+
       const baseAmount = reward.getLpConfig.baseAmount;
       const sideAmount = await LP.getCalculateToken(
         baseAmount,

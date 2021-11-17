@@ -29,6 +29,7 @@
               color="secondary"
             ></v-progress-circular>
             <span v-html="text"></span>
+            <slot></slot>
           </p>
           <div v-if="illustration" class="align-self-center">
             <img width="60px" height="60px" :src="illustration" />

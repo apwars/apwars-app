@@ -13,6 +13,10 @@ export default class wGOLD {
     );
   }
 
+  symbol() {
+    return this.smc.methods.symbol().call();
+  }
+
   allowance(owner, spender) {
     return this.smc.methods.allowance(owner, spender).call();
   }

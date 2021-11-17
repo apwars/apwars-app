@@ -20,6 +20,7 @@ export default {
   },
   BUSD: {
     "56": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    "97": "0xFa1d2186CEbFe49F3e053d4751C2d6680775a70F",
   },
   wGOLD_BUSD_LP: {
     "56": "0xab6Ddad53513f9F0b57778A2ebf8aA81FBaCc8c9",

@@ -17,6 +17,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <wButton
+            v-if="!isHideClose"
             class="mr-1"
             @click="$emit('close')"
             :disabled="disabledClose"
@@ -24,7 +25,11 @@
             {{ getTextClose }}
           </wButton>
 
-          <wButton v-if="!isHideConfirm" @click="$emit('confirm')" :disabled="disabledConfirm">
+          <wButton
+            v-if="!isHideConfirm"
+            @click="$emit('confirm')"
+            :disabled="disabledConfirm"
+          >
             {{ isLoading ? "Waiting..." : getTextConfirm }}
           </wButton>
         </v-card-actions>
@@ -47,6 +52,7 @@ export default {
     "height",
     "textConfirm",
     "hideConfirm",
+    "hideClose",
   ],
 
   components: {
@@ -87,7 +93,10 @@ export default {
     },
     isHideConfirm() {
       return this.hideConfirm !== undefined;
-    }
+    },
+    isHideClose() {
+      return this.hideClose !== undefined;
+    },
   },
 
   methods: {
