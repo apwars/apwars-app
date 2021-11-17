@@ -48,7 +48,7 @@
                 :key="index"
                 @click="selected = rowIndex + '' + index"
               >
-                <img class="unit" height="100%" :src="enlistmentOptions.basicUnit" v-if="rowIndex + '' + index === selected" />
+                <img class="unit" height="100%" :src="enlistmentOptions.basicUnit" v-show="rowIndex + '' + index === selected" />
               </div>
             </div>
           </div>
