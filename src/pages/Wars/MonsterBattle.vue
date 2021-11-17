@@ -30,7 +30,7 @@
           sm="9"
           order="2"
           order-sm="1"
-          class="board-viewport d-flex justify-center  align-sm-end"
+          class="board-viewport d-flex justify-center justify-sm-end  align-sm-end"
         >
           <div class="board-container">
             <div
@@ -48,7 +48,12 @@
                 :key="index"
                 @click="selected = rowIndex + '' + index"
               >
-                <img class="unit" height="100%" :src="enlistmentOptions.basicUnit" v-show="rowIndex + '' + index === selected" />
+                <img
+                  class="unit"
+                  height="100%"
+                  :src="enlistmentOptions.basicUnit"
+                  v-show="rowIndex + '' + index === selected"
+                />
               </div>
             </div>
           </div>
@@ -60,10 +65,21 @@
           order-sm="2"
           class="d-flex align-sm-end"
         >
-          <v-img
-            :src="`/images/monsters/${monsterData.id}.webp`"
-            :alt="monsterData.name"
-          />
+          <div class="monster-container">
+            <v-img
+              :src="`/images/monsters/${monsterData.id}.webp`"
+              :alt="monsterData.name"
+            />
+            <div class="treasure-progress">
+              <Progress class="progress" :value="4" :maxScale="10" />
+              <div class="treasure">
+                <img src="/images/battle/fed-round-2.png" />
+                <div class="treasure-info">
+                  10% FED
+                </div>
+              </div>
+            </div>
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -77,9 +93,10 @@ import { MONSTERS } from "@/data/Monsters";
 
 import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
+import Progress from "@/lib/components/ui/Progress";
 
 export default {
-  components: { Title, Button },
+  components: { Title, Button, Progress },
   data() {
     return {
       selected: null,
@@ -106,7 +123,9 @@ export default {
       setHeader: "app/setMenuDisplay",
     }),
     backToEnlistment() {
-      this.$router.push(`/wars/${this.$route.params.contractWar}/enlistment/${this.$route.params.raceId}`);
+      this.$router.push(
+        `/wars/${this.$route.params.contractWar}/enlistment/${this.$route.params.raceId}`
+      );
     },
   },
   async mounted() {
@@ -136,7 +155,8 @@ export default {
   }
 }
 .board-viewport {
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
   flex: 1;
 }
@@ -169,24 +189,69 @@ export default {
     outline: 1px solid yellow;
   }
   > .unit {
-      position: absolute;
-      left: 0px;
-      top: -8px;
-      transform: skewX(30deg);
-      animation: unit-enter 0.2s ease-in;
+    position: absolute;
+    left: 0px;
+    top: -8px;
+    transform: skewX(30deg);
+    animation: unit-enter 0.2s ease-in;
   }
 
   @keyframes unit-enter {
-      0% {
-          opacity: 0;
-          top: 20px;
-          z-index: -1;
-      }
-      100% {
-          opacity: 1;
-          top: 0;
-          z-index: 3;
-      }
+    0% {
+      opacity: 0;
+      top: -50px;
+      left: 0;
+      z-index: -1;
+    }
+    100% {
+      opacity: 1;
+      top: 0;
+      z-index: 3;
+    }
   }
+}
+
+.monster-container {
+  width: 100%;
+  position: relative;
+}
+
+.treasure-progress {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.progress {
+  z-index: 2;
+  width: 100%;
+}
+
+.treasure {
+  position: absolute;
+  bottom: -16px;
+  right: -48px;
+  z-index: 3;
+  > img {
+      width: 120px
+  }
+  @media screen and (min-width: 1441px) {
+     > img {
+      width: 180px
+  } 
+  }
+}
+.treasure-info {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  padding: 8px 4px;
+  transform: translateX(-50%);
+  background-color: #3a2720;
+  border: 1px solid #ffeebc;
+  box-sizing: border-box;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 1.2;
 }
 </style>

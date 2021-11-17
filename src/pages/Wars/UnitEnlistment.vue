@@ -47,12 +47,20 @@
                   v-model="stakedTroop"
                   :error="stakedTroop > this.maxPossibleTroopStake"
                   :max="this.maxPossibleTroopStake"
-                  :disabled="!troop.balance || !troop.balance > troop.war.stakeMin"
+                  :disabled="
+                    !troop.balance || !troop.balance > troop.war.stakeMin
+                  "
                 >
                   <template v-slot:append>
                     <div class="d-flex align-center">
                       /{{ troop.war.stakeLimit }}
-                      <v-btn class="ml-1" rounded small @click="stakeMax" :disabled="!maxPossibleTroopStake">
+                      <v-btn
+                        class="ml-1"
+                        rounded
+                        small
+                        @click="stakeMax"
+                        :disabled="!maxPossibleTroopStake"
+                      >
                         MAX
                       </v-btn>
                     </div>
@@ -75,7 +83,13 @@
                   <template v-slot:append>
                     <div class="d-flex align-center">
                       /{{ weapon.war.stakeLimit }}
-                      <v-btn class="ml-1" rounded small @click="stakeMaxWeapon" :disabled="!maxPossibleWeaponStake">
+                      <v-btn
+                        class="ml-1"
+                        rounded
+                        small
+                        @click="stakeMaxWeapon"
+                        :disabled="!maxPossibleWeaponStake"
+                      >
                         MAX
                       </v-btn>
                     </div>
@@ -83,7 +97,8 @@
                 </v-currency-field>
               </div>
               <div v-if="!troop.balance">
-                You don`t have the minimun amount of {{ troop.war.stakeMin }} {{ troop.name }} to enlist, why don't you buy some more.
+                You don`t have the minimun amount of {{ troop.war.stakeMin }}
+                {{ troop.name }} to enlist, why don't you buy some more.
               </div>
             </div>
             <div class="status-container">
@@ -225,26 +240,19 @@
                   >{{ totalStakedForce(troop.race) }} units</span
                 >
               </div>
-              <div class="bonus-container" v-if="monsterData">
-                <div class="bonus-title">
-                  Monster Battle
-                </div>
-                <div class="illustration">
-                  <v-img
-                    :src="`/images/monsters/${monsterData.id}.webp`"
-                    :alt="monsterData.name"
-                  />
-                </div>
-              </div>
-              <Chance
-                description="Rewards"
-                minLabel="1%"
-                maxLabel="10%"
-                :maxScale="maxStakeForce(troop.race)"
-                :value="totalStakedForce(troop.race)"
-                :maxChance="10"
-              />
               <Button type="wprimary" text="Enlist and Battle" isBlock />
+              <Progress
+                class="mt-2"
+                :value="50"
+                :maxScale="100"
+                color1="#1A3436"
+                color2="#346568"
+                noText
+              />
+              <div class="slots-info d-flex justify-center">54/100</div>
+              <div class="slots-description d-flex justify-center">
+                Fullfiled Slots
+              </div>
             </div>
           </v-col>
         </v-row>
@@ -264,7 +272,7 @@ import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
 import TripleIcon from "@/lib/components/ui/TripleIcon";
 import ForceMeter from "@/lib/components/ui/ForceMeter";
-import Chance from "@/lib/components/ui/Chance";
+import Progress from "@/lib/components/ui/Progress";
 import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
@@ -275,7 +283,7 @@ export default {
     Button,
     TripleIcon,
     ForceMeter,
-    Chance,
+    Progress,
     Amount,
   },
   computed: {
@@ -710,6 +718,18 @@ export default {
   .illustration {
     width: 96px;
   }
+}
+
+.slots-info {
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 29px;
+}
+
+.slots-description {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 19px;
 }
 
 @keyframes weapon-fall {
