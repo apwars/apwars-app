@@ -8,6 +8,7 @@ import Units from "@/pages/Units.vue";
 import Wars from "@/pages/Wars.vue";
 import Enlistment from "@/pages/Wars/Enlistment.vue";
 import UnitEnlistment from "@/pages/Wars/UnitEnlistment.vue";
+import MonsterBattle from "@/pages/Wars/MonsterBattle.vue";
 import Round1 from "@/pages/Wars/Round1.vue";
 import Round2 from "@/pages/Wars/Round2.vue";
 import WarReport from "@/pages/Wars/WarReport.vue";
@@ -80,8 +81,13 @@ export const routes = [
       },
       {
         path: "/wars/:contractWar/enlistment/:raceId",
-        name: "/unit-enlistment",
+        name: "unit-enlistment",
         component: UnitEnlistment
+      },
+      {
+        path: "/wars/:contractWar/enlistment/:raceId/battle",
+        name: "monster-battle",
+        component: MonsterBattle
       },
       {
         path: "/wars/:contractWar/round-1",

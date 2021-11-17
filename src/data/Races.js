@@ -19,7 +19,8 @@ export const ENLISTMENT_OPTIONS = [{
     title: 'Day 1',
     monsterId: 1,
     background: '/images/background/enlistment-1.jpg',
-    aura: '/images/troops/aura-1.png'
+    aura: '/images/troops/aura-1.png',
+    basicUnit: '/images/troops/wwarrior.webp',
 },
 {
     id: RACES.ORCS,
@@ -28,7 +29,8 @@ export const ENLISTMENT_OPTIONS = [{
     title: 'Day 2',
     monsterId: 2,
     background: '/images/background/enlistment-2.jpg',
-    aura: '/images/troops/aura-2.png'
+    aura: '/images/troops/aura-2.png',
+    basicUnit: '/images/troops/wgrunt.webp',
 },
 {
     id: RACES.UNDEADS,
@@ -37,7 +39,8 @@ export const ENLISTMENT_OPTIONS = [{
     title: 'Day 3',
     monsterId: 3,
     background: '/images/background/enlistment-3.jpg',
-    aura: '/images/troops/aura-3.png'
+    aura: '/images/troops/aura-3.png',
+    basicUnit: '/images/troops/wskeleton-warrior.webp',
 },
 {
     id: RACES.ELVES,
@@ -46,5 +49,6 @@ export const ENLISTMENT_OPTIONS = [{
     title: 'Day 4',
     monsterId: 4,
     background: '/images/background/enlistment-4.jpg',
-    aura: '/images/troops/aura-4.png'
+    aura: '/images/troops/aura-4.png',
+    basicUnit: '/images/troops/warmoured-elf.webp',
 }]
