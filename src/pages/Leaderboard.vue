@@ -2,7 +2,7 @@
   <div>
     <div class="bg-war">
       <v-container fluid>
-        <v-row class="d-none d-sm-none d-md-flex my-n6">
+        <v-row class="d-none d-sm-none d-md-flex mt-n6">
           <v-col cols="12" md="3">
             <v-img
               class="mx-auto"
@@ -26,7 +26,6 @@
           </v-col>
         </v-row>
 
-
         <v-row class="d-flex d-sm-flex d-md-none">
           <v-col cols="12">
             <v-img
@@ -40,15 +39,13 @@
       <div class="gradient"></div>
     </div>
 
-    <v-container fluid>
+    <v-container class="mt-n6">
       <v-row v-if="isConnected && !isLoading">
-        <v-col cols="12">
-          <h1 class="text-h1 text-wGOLD text-center">Wars</h1>
+        <v-col cols="4"> </v-col>
+        <v-col cols="4">
+          <v-avatar :address="this.account" link tooltip />
         </v-col>
-
-        <v-col v-for="war in wars" v-bind:key="war.name" cols="12">
-          <war-info :war="war"></war-info>
-        </v-col>
+        <v-col cols="4"> </v-col>
       </v-row>
 
       <v-row v-else>
@@ -61,27 +58,42 @@
 </template>
 
 <script>
-import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Amount from "@/lib/components/ui/Utils/Amount";
-import WarInfo from "@/lib/components/ui/Utils/WarInfo";
+import VAvatar from "@/lib/components/ui/Utils/VAvatar";
 
-import { getWars } from "@/data/Wars";
 import { mapMutations } from "vuex";
 
 export default {
   components: {
-    wGOLDButton,
     Amount,
     wButton,
-    WarInfo,
+    VAvatar,
   },
 
   data() {
     return {
       isLoading: true,
-      gobalTroops: [],
-      wars: [],
+      leaderboards: [
+        {
+          account: "0x35E7097DAeEb621057293c64288337ED5170AAaf",
+        },
+        {
+          account: "0x64F5E89350eEf65c3fCe69d6cBF7fdd1eC61Aa00",
+        },
+        {
+          account: "0xF80783C375f6F34999Cc16Fce2d326f597aeF38b",
+        },
+        {
+          account: "0xFC9A805C4CE604711FA18d663CaccBef2965E667",
+        },
+        {
+          account: "0x2d4bb1bcE02E1c0ec6cf08f585924F82707BEF89",
+        },
+        {
+          account: "0xF7AE8490eb37973A4bb5797C3F193e1A5b721dA9",
+        },
+      ],
     };
   },
 
@@ -122,6 +134,7 @@ export default {
   },
 
   mounted() {
+    this.setHeader(false);
     this.loadData();
   },
 
@@ -130,27 +143,12 @@ export default {
       setHeader: "app/setMenuDisplay",
     }),
 
-    goToSwap() {
-      this.$router.push("/exchange");
-    },
-
     async loadData() {
       if (!this.isConnected) {
         return;
       }
 
-      this.setHeader(false);
-
-      try {
-        this.wars = getWars(this.networkInfo.id !== "56");
-        this.wars = this.wars.reverse();
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 1000);
-      }
+      this.isLoading = false;
     },
   },
 };
@@ -169,10 +167,6 @@ export default {
   width: 100%;
   height: 100px;
   background: linear-gradient(180deg, rgb(49 45 35 / 0%) 0, rgb(17 17 17) 100%);
-}
-
-.war-battle {
-  margin-top: -130px !important;
 }
 
 .isLoading {
