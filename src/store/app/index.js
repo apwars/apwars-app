@@ -12,7 +12,9 @@ const state = {
   globalTheme,
 
   // themes and layout configurations
-  isRTL
+  isRTL,
+
+  isMenuDisplaying: true,
 }
 
 export default {
