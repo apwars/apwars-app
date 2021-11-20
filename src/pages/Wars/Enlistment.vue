@@ -16,44 +16,102 @@
           </div>
         </v-col>
 
-        <!-- <v-tabs
-          show-arrows
-          centered
-          background-color="transparent"
-          dark
-          color="transparent"
-          v-model="tab"
-          class="mx-auto"
-        > -->
-          <v-col v-for="option in options()" :key="option.id" sm="6" md="3">
-            <div class="d-flex flex-column align-center justify-center">
-              <div class="option-title mb-2">{{ option.name }}</div>
-              <div class="option d-flex flex-column align-center justify-center">
-                <!-- :class="[isDisabled(option.name) ? 'disabled' : 'invert-image']" -->
-                <img
-                  :class="[invertImage(option.name) ? 'invert-image' : '']"
-                  
-                  :src="option.image"
-                  :alt="option.name"
-                />
-                <div class="button-container d-flex justify-center">
-                  <Button
-                    class="mt-3"
-                    type="wprimary"
-                    :text="
-                      isDisabled(option.name)
-                        ? 'Coming Soon'
-                        : `Enlist ${option.name} Now`
-                    "
-                    :disabled="isDisabled(option.name)"
-                    :handleClick="() => goToEnlistment(option.id)"
-                    isBlock
+        <v-col v-for="option in options()" :key="option.id" sm="6" md="3">
+          <div class="d-flex flex-column align-center justify-center">
+            <div class="option-title mb-2">{{ option.name }}</div>
+            <div class="option d-flex flex-column align-center justify-center">
+              <!-- :class="[isDisabled(option.name) ? 'disabled' : 'invert-image']" -->
+              <v-hover v-slot="{ hover }">
+                <div
+                  class="raceImage"
+                  :elevation="hover ? 12 : 2"
+                  :class="{ 'on-hover': hover }"
+                >
+                  <img
+                    :class="[invertImage(option.name) ? 'invert-image' : '']"
+                    :src="option.image"
+                    :alt="option.name"
+                      @click="selectRace(option.name)"
                   />
                 </div>
+              </v-hover>
+              <div class="button-container d-flex justify-center">
+                <Button
+                  class="mt-3"
+                  type="wprimary"
+                  :text="
+                    isDisabled(option.name)
+                      ? 'Coming Soon'
+                      : `Enlist ${option.name} Now`
+                  "
+                  :disabled="isDisabled(option.name)"
+                  :handleClick="() => goToEnlistment(option.id)"
+                  isBlock
+                />
               </div>
             </div>
-          </v-col>
-        <!-- </v-tabs> -->
+          </div>
+        </v-col>
+
+        <v-col cols="12">
+          <v-row>
+            <v-col cols="12" md="8">
+              <v-row>
+                <v-col
+                  v-for="unit in listTroops()"
+                  :key="unit.name"
+                  cols="12"
+                  sm="6"
+                  md="6"
+                  class="d-flex px-0">
+                  <div class="text-center">
+                    <v-img width="180" :src="unit.img" :lazy-src="unit.imgLazy">
+                      <template v-slot:placeholder>
+                        <v-row class="fill-height ma-0" align="center" justify="center">
+                          <v-progress-circular
+                            indeterminate
+                            color="#ffeebc lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                    <span class="unit-name">{{ unit.ticker }}</span>
+                  </div>
+
+                  <div class="ml-1">
+                    <span class="text-h6 d-block" style="color: #FFB800;">Report</span>
+                    <span class="d-block mt-1">Units enlisted: 105k</span>
+                    <span class="d-block">Deads units: 80k</span>
+                    <span class="d-block mb-2">Survivors: 25k</span>
+                    <span class="d-block" style="color: #FFB800;">Global Dead Units: 80k</span>
+                    <span class="d-block" style="color: #FFB800;">Global Survivors: 25k</span>
+                  </div>
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col v-for="weapon in weapons" :key="weapon.name" cols="6" md="3" class="px-0">
+                  <div class="d-flex">
+                    <v-img width="55" :src="`/images/weapons/${weapon.icon}.png`"/>
+                    <div>
+                      <span class="d-block">{{ weapon.title }}</span>
+                      <span class="d-block">Global: 1,5M</span>
+                      <span class="d-block">My troops: 10,4K</span>
+                    </div>
+                  </div>
+                </v-col>
+              </v-row>
+            </v-col>
+
+            <v-col class="pa-0" cols="12" md="4">
+              <v-img
+                width="523"
+                :src="require('../../../public/images/troops/units/humans/monster.png')"
+                :lazy-src="require('../../../public/images/troops/units/humans/monster.png')"
+              />
+            </v-col>
+          </v-row>
+        </v-col>
       </v-row>
 
       <v-row v-else-if="!isLoading && !isEnlistment">
@@ -86,6 +144,8 @@ import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
 import { ENLISTMENT_OPTIONS } from "@/data/Races";
+import { getUnitsEnlistment } from '@/data/UnitsEnlistment'
+import { getWeapons } from '@/data/Collectibles/Weapons'
 
 import WarMachine from "@/lib/eth/WarMachine";
 
@@ -114,6 +174,8 @@ export default {
       countdownTime: 0,
       countdownTimeEnd: 0,
       tab: 0,
+      troops: [],
+      weapons: [],
     };
   },
 
@@ -124,6 +186,7 @@ export default {
     this.setHeader(false);
     this.initData();
     this.loadData();
+    this.listTroops();
   },
 
   computed: {
@@ -211,6 +274,12 @@ export default {
     },
 
     async loadData() {
+      const troops = await getUnitsEnlistment()
+      this.troops = troops
+
+      const weapons = await getWeapons()
+      this.weapons = weapons
+
       try {
         if (this.warMachine.isLoading) {
           return;
@@ -257,9 +326,25 @@ export default {
       const races = ENLISTMENT_OPTIONS
       const invertedRaces = []
 
-      invertedRaces.push(races[3], races[0], races[1], races[2])
+      invertedRaces.push(races[3], races[0], races[1], races[2]);
       return invertedRaces
     },
+
+    selectRace(raceName) {
+      if (raceName === 'Elves') this.listTroops(1);
+      else if (raceName === 'Humans') this.listTroops(0);
+      else if (raceName === 'Orcs') this.listTroops(2);
+      else if (raceName === "Undeads") this.listTroops(3);
+    },
+
+    listTroops(racePosition) {
+      if (racePosition === undefined) {
+        return this.troops[0]
+      } else {
+        console.log(this.troops[racePosition])
+        return this.troops[racePosition]
+      };
+    }
   },
 };
 </script>
@@ -332,5 +417,18 @@ export default {
 .swordIcon {
   position: relative;
   top: 17rem;
+}
+
+.raceImage{
+  transition: opacity .4s ease-in-out;
+}
+
+.raceImage:not(.on-hover) {
+  opacity: 0.6;
+}
+
+.unit-name {
+  font-size: 13px;
+  font-weight: 700;
 }
 </style>
