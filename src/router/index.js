@@ -20,6 +20,7 @@ import TrainingCenter from "@/pages/TrainingCenter.vue";
 import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
 import Arcadia from "@/pages/Arcadia/Arcadia.vue";
+import Battle from "@/pages/Wars/Battle.vue";
 
 Vue.use(Router);
 
@@ -73,6 +74,11 @@ export const routes = [
         path: "/training-center",
         name: "/training-center",
         component: TrainingCenter
+      },
+      {
+        path: "/wars/:contractWar/battle",
+        name: "war-battle",
+        component: Battle
       },
       {
         path: "/wars/:contractWar/enlistment",

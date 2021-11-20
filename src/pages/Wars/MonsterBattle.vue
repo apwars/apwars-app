@@ -32,31 +32,7 @@
           order-sm="1"
           class="board-viewport d-flex justify-center justify-sm-end  align-sm-end"
         >
-          <div class="board-container">
-            <div
-              class="board-row"
-              v-for="rowIndex in 5"
-              :key="rowIndex"
-              :style="`--index: ${rowIndex}`"
-            >
-              <div
-                :class="[
-                  'slot',
-                  rowIndex + '' + index === selected ? 'selected' : '',
-                ]"
-                v-for="index in 20"
-                :key="index"
-                @click="selected = rowIndex + '' + index"
-              >
-                <img
-                  class="unit"
-                  height="100%"
-                  :src="enlistmentOptions.basicUnit"
-                  v-show="rowIndex + '' + index === selected"
-                />
-              </div>
-            </div>
-          </div>
+          <Board :rows="5" :cols="20" unitImage="/images/troops/wwarrior.webp" />
         </v-col>
         <v-col
           cols="12"
@@ -94,9 +70,10 @@ import { MONSTERS } from "@/data/Monsters";
 import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
 import Progress from "@/lib/components/ui/Progress";
+import Board from "@/lib/components/ui/War/Board";
 
 export default {
-  components: { Title, Button, Progress },
+  components: { Title, Button, Progress, Board },
   data() {
     return {
       selected: null,
@@ -159,56 +136,6 @@ export default {
   overflow-y: hidden;
   width: 100%;
   flex: 1;
-}
-.board-container {
-  width: 100%;
-  padding-left: 82px;
-}
-.board-row {
-  width: 680px;
-  height: 32px;
-  margin-top: 2px;
-  margin-left: calc(-1 * (var(--index) * 12px));
-}
-.slot {
-  position: relative;
-  height: 32px;
-  width: 32px;
-  display: inline-block;
-  background-image: url('/images/battle/floor.png');
-  transform: skewX(-20deg);
-  margin-right: 1px;
-  &:hover {
-    transform-style: preserve-3d;
-    cursor: pointer;
-    outline: 1px solid #312c26;
-    transform: skewX(-20deg) scale(1.1);
-    z-index: 2;
-  }
-  &.selected {
-    outline: 1px solid yellow;
-  }
-  > .unit {
-    position: absolute;
-    left: 0px;
-    top: -8px;
-    transform: skewX(20deg);
-    animation: unit-enter 0.2s ease-in;
-  }
-
-  @keyframes unit-enter {
-    0% {
-      opacity: 0;
-      top: -50px;
-      left: 0;
-      z-index: -1;
-    }
-    100% {
-      opacity: 1;
-      top: 0;
-      z-index: 3;
-    }
-  }
 }
 
 .monster-container {
