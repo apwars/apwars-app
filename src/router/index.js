@@ -76,7 +76,7 @@ export const routes = [
       },
       {
         path: "/wars/:contractWar/enlistment",
-        name: "/wars-enlistment",
+        name: "Enlistment",
         component: Enlistment
       },
       {

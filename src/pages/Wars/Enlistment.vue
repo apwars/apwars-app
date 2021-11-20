@@ -9,38 +9,51 @@
             :handleClick="backToWar"
           />
           <div class="d-flex justify-space-between mt-3">
-            <Title>Enlist Your Troop</Title>
-            <div class="image">
-              <v-img width="125" src="/images/icons/battle-shield.png" />
-            </div>
+            <Title>Report</Title>
+          </div>
+          <div class="d-flex justify-center">
+            <v-img class="swordIcon" max-width="56.57" src="/images/icons/swords.png" />
           </div>
         </v-col>
-        <v-col v-for="option in options" :key="option.id" sm="6" md="3">
-          <div class="d-flex flex-column align-center justify-center">
-            <div class="option-title mb-2">{{ option.title }}</div>
-            <div class="option d-flex flex-column align-center justify-center">
-              <img
-                :class="[isDisabled(option.name) ? 'disabled' : '']"
-                :src="option.image"
-                :alt="option.name"
-              />
-              <div class="button-container d-flex justify-center">
-                <Button
-                  class="mt-3"
-                  type="wprimary"
-                  :text="
-                    isDisabled(option.name)
-                      ? 'Coming Soon'
-                      : `Enlist ${option.name} Now`
-                  "
-                  :disabled="isDisabled(option.name)"
-                  :handleClick="() => goToEnlistment(option.id)"
-                  isBlock
+
+        <!-- <v-tabs
+          show-arrows
+          centered
+          background-color="transparent"
+          dark
+          color="transparent"
+          v-model="tab"
+          class="mx-auto"
+        > -->
+          <v-col v-for="option in options()" :key="option.id" sm="6" md="3">
+            <div class="d-flex flex-column align-center justify-center">
+              <div class="option-title mb-2">{{ option.name }}</div>
+              <div class="option d-flex flex-column align-center justify-center">
+                <!-- :class="[isDisabled(option.name) ? 'disabled' : 'invert-image']" -->
+                <img
+                  :class="[invertImage(option.name) ? 'invert-image' : '']"
+                  
+                  :src="option.image"
+                  :alt="option.name"
                 />
+                <div class="button-container d-flex justify-center">
+                  <Button
+                    class="mt-3"
+                    type="wprimary"
+                    :text="
+                      isDisabled(option.name)
+                        ? 'Coming Soon'
+                        : `Enlist ${option.name} Now`
+                    "
+                    :disabled="isDisabled(option.name)"
+                    :handleClick="() => goToEnlistment(option.id)"
+                    isBlock
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </v-col>
+          </v-col>
+        <!-- </v-tabs> -->
       </v-row>
 
       <v-row v-else-if="!isLoading && !isEnlistment">
@@ -77,6 +90,7 @@ import { ENLISTMENT_OPTIONS } from "@/data/Races";
 import WarMachine from "@/lib/eth/WarMachine";
 
 export default {
+  name: 'Enlistment',
   components: {
     Title,
     Button,
@@ -99,8 +113,17 @@ export default {
       isCountdown: false,
       countdownTime: 0,
       countdownTimeEnd: 0,
-      options: ENLISTMENT_OPTIONS,
+      tab: 0,
     };
+  },
+
+  mounted() {
+    if (!this.isConnected) {
+      return;
+    }
+    this.setHeader(false);
+    this.initData();
+    this.loadData();
   },
 
   computed: {
@@ -146,15 +169,6 @@ export default {
     currentBlockNumber() {
       this.loadData();
     },
-  },
-
-  mounted() {
-    if (!this.isConnected) {
-      return;
-    }
-    this.setHeader(false);
-    this.initData();
-    this.loadData();
   },
 
   beforeRouteLeave(to, from, next) {
@@ -215,19 +229,36 @@ export default {
         this.isLoading = false;
       }
     },
+
     isDisabled(name) {
-      const enabled = ["Humans"];
+      const enabled = ['Humans'];
+
       return !enabled.includes(name);
     },
+
+    invertImage(name) {
+
+      return name === 'Orcs' || name === 'Undeads';
+    },
+
     backToWar() {
       this.$router.push({
         path: `/wars/${this.$route.params.contractWar}`,
       });
     },
+    
     goToEnlistment(raceId) {
       this.$router.push({
         path: `/wars/${this.$route.params.contractWar}/enlistment/${raceId}`,
       });
+    },
+
+    options() {
+      const races = ENLISTMENT_OPTIONS
+      const invertedRaces = []
+
+      invertedRaces.push(races[3], races[0], races[1], races[2])
+      return invertedRaces
     },
   },
 };
@@ -292,5 +323,14 @@ export default {
   .gradient {
     display: none;
   }
+}
+
+.invert-image {
+  transform: scaleX(-1);
+}
+
+.swordIcon {
+  position: relative;
+  top: 17rem;
 }
 </style>
