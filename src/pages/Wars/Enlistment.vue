@@ -103,12 +103,42 @@
               </v-row>
             </v-col>
 
-            <v-col class="pa-0" cols="12" md="4">
-              <v-img
-                width="523"
+            <v-col
+              class="monster-position pa-0"
+              cols="12"
+              md="4">
+              <img
+                width="370"
                 :src="require('../../../public/images/troops/units/humans/monster.png')"
-                :lazy-src="require('../../../public/images/troops/units/humans/monster.png')"
               />
+              <v-btn
+                color="#3A2720"
+                tile
+                style="padding: 22px; border: 2px solid #FFEEBC;">
+                <span class="text-h5">Go to Monster Battle</span>
+              </v-btn>
+            </v-col>
+          </v-row>
+
+          <v-row align="center" justify="center">
+            <v-col cols="8" sm="6" md="5" class="px-0">
+              <v-btn
+                block
+                color="#3A2720"
+                tile
+                class="d-flex"
+                style="padding: 30px 0px; border: 2px solid #FFEEBC;">
+                <v-img max-width="48.74" src="/images/icons/swords.png" />
+                <span class="text-h5 ml-2">Bring survivors and claim prizes</span>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-col>
+
+        <v-col class="pa-0">
+          <v-row>
+            <v-col>
+              <h1 class="text-center">Players</h1>
             </v-col>
           </v-row>
         </v-col>
@@ -430,5 +460,14 @@ export default {
 .unit-name {
   font-size: 13px;
   font-weight: 700;
+}
+
+.monster-position {
+  /* position: relative;
+  top: 5rem; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>
