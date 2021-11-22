@@ -56,7 +56,7 @@
               <Button
                 type="wsecondary"
                 text="Enlist for Humans"
-                :handleClick="backToHome"
+                :handleClick="() => goToEnlistment(1)"
               />
             </div>
           </v-col>
@@ -83,12 +83,14 @@
               <Button
                 type="wsecondary"
                 text="Enlist for Elves"
-                :handleClick="backToHome"
+                :handleClick="() => goToEnlistment(4)"
               />
             </div>
           </v-col>
         </v-col>
-        <v-col md="1" class="big-text d-flex justify-center align-center">VS</v-col>
+        <v-col md="1" class="big-text d-flex justify-center align-center"
+          >VS</v-col
+        >
         <v-col md="5">
           <v-col>
             <div class="board-label d-flex justify-end">
@@ -114,7 +116,7 @@
               <Button
                 type="wsecondary"
                 text="Enlist for Orcs"
-                :handleClick="backToHome"
+                :handleClick="() => goToEnlistment(2)"
               />
             </div>
           </v-col>
@@ -142,7 +144,7 @@
               <Button
                 type="wsecondary"
                 text="Enlist for Undeads"
-                :handleClick="backToHome"
+                :handleClick="() => goToEnlistment(3)"
               />
             </div>
           </v-col>
@@ -166,10 +168,16 @@ export default {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
     }),
+    backToHome() {
+      this.$router.push("/");
+    },
+    goToEnlistment(raceId) {
+      this.$router.push(
+        `/wars/${this.$route.params.contractWar}/enlistment/${raceId}`
+      );
+    },
   },
-  backToHome() {
-    this.$router.push("/");
-  },
+
   async mounted() {
     this.setHeader(false);
   },

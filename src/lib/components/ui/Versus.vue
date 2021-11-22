@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="phase-title">
+      Parcial Result
+    </div>
     <div class="versus-bar">
       <div class="corp">
         <img class="faction-icon left" src="/images/icons/corp.png" />
@@ -47,6 +50,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.phase-title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-weight: bold;
+font-size: 24px;
+line-height: 1.4;
+}
 .versus-bar {
   width: 100%;
   height: 40px;
