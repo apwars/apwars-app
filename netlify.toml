@@ -10,6 +10,3 @@
 [[redirects]]
   from = "https://deploy-preview-178--apwars-blackmarket-v2.netlify.app/battle"
   to = "http://apw-battle.netlify.app"
-  status = 200
-  force = true
-  headers = {X-From = "Netlify"}
