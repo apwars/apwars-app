@@ -1,13 +1,17 @@
 export const MONSTERS = [{
     id: 1,
-    name: 'Stone'
+    name: 'Stone',
+    image: '/images/monsters/1.webp',
 },{
     id: 2,
-    name: 'Baphomet'
+    name: 'Baphomet',
+    image: '/images/monsters/2.webp',
 },{
     id: 3,
-    name: 'Knight'
+    name: 'Knight',
+    image: '/images/monsters/3.webp',
 },{
     id: 4,
-    name: 'Forger'
+    name: 'Forger',
+    image: '/images/monsters/4.webp',
 },];

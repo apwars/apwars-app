@@ -79,6 +79,15 @@ export default {
         color: #3a2720;
       }
     }
+    &:focus:enabled{
+      filter: grayscale(100%);
+      > .btn-text {
+        color: #fff;
+      }
+      &:hover:enabled {
+        background-color: #3a2720;
+      }
+    }
   }
   &.wsecondary {
     background-color: transparent !important;
