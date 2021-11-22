@@ -16,9 +16,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .wtitle {
-    display: inline-block;
+  display: inline-block;
   font-weight: bold;
-  font-size: 48px;
+  font-size: 36px;
   line-height: 1.2;
 }
 .decoration {

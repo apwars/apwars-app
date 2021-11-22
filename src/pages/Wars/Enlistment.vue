@@ -2,13 +2,14 @@
   <div class="background">
     <v-container>
       <v-row v-if="1 == 1 || isConnected && !isLoading && isEnlistment">
-        <v-col cols="12" sm="12">
+        <v-col cols="12" sm="12" :class="$vuetify.breakpoint.xs ? 'pt-3' : 'pt-1 pb-0'">
           <Button
             type="wtertiary"
             text="Back to war page"
             :handleClick="backToWar"
+            noPadding
           />
-          <div class="d-flex justify-space-between mt-3">
+          <div class="d-flex justify-space-between mt-2">
             <Title>Report</Title>
           </div>
           <div class="d-flex justify-center swordIcon">
@@ -16,50 +17,39 @@
           </div>
         </v-col>
 
-        <v-col v-for="option in options()" :key="option.id" cols="12" sm="6" md="3">
-          <div class="d-flex flex-column align-center justify-center">
-            <div class="option-title mb-2">{{ option.name }}</div>
-            <div class="option d-flex flex-column align-center justify-center">
-              <v-hover v-slot="{ hover }">
-                <div
-                  class="raceImage"
-                  :elevation="hover ? 12 : 2"
-                  :class="{ 'on-hover': hover }"
+        <v-col v-for="option in options()" :key="option.id" cols="12" sm="6" md="3" class="px-0 pt-0">
+          <div class="option d-flex flex-column align-center">
+            <v-hover v-slot="{ hover }">
+              <div
+                class="raceImage"
+                :class="{ 'on-hover': hover }"
+                :style="selectedRace === option.name ? 'opacity: 1;' : ''"
+              >
+                <v-img
+                  :class="[invertImage(option.name) ? 'invert-image' : '']"
+                  :src="option.image"
+                  :lazy-src="option.image"
+                  :alt="option.name"
+                  width="214"
                 >
-                  <div :class="[isDisabled(option.name) ? 'disabled' : '']">
-                    <v-img
-                      :class="[invertImage(option.name) ? 'invert-image' : '']"
-                      :src="option.image"
-                      :lazy-src="option.image"
-                      :alt="option.name"
-                      @click="selectRace(option.name)"
-                    >
-                      <template v-slot:placeholder>
-                        <v-row class="fill-height ma-0" align="center" justify="center">
-                          <v-progress-circular
-                            indeterminate
-                            color="#ffeebc lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </div>
-                </div>
-              </v-hover>
-              <div class="button-container d-flex justify-center">
-                <Button
-                  class="mt-3"
-                  type="wprimary"
-                  :text="
-                    isDisabled(option.name)
-                      ? 'Coming Soon'
-                      : `Enlist ${option.name} Now`
-                  "
-                  :disabled="isDisabled(option.name)"
-                  :handleClick="() => goToEnlistment(option.id)"
-                  isBlock
-                />
+                  <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                      <v-progress-circular
+                        indeterminate
+                        color="#ffeebc lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
               </div>
+            </v-hover>
+            <div @click="selectRace(option.name)" class="button-container d-flex justify-center">
+              <Button
+                class="mt-1"
+                type="wprimary"
+                :text="option.name"
+                isBlock
+              />
             </div>
           </div>
         </v-col>
@@ -69,7 +59,7 @@
             <v-col cols="12" md="8">
               <v-row>
                 <v-col
-                  v-for="unit in listTroops()"
+                  v-for="unit in troopsToView"
                   :key="unit.name"
                   cols="12"
                   sm="6"
@@ -86,11 +76,10 @@
                         </v-row>
                       </template>
                     </v-img>
-                    <span class="unit-name">{{ unit.ticker }}</span>
                   </div>
 
                   <div class="ml-1">
-                    <span class="text-h6 d-block" style="color: #FFB800;">Report</span>
+                    <span class="d-block" style="color: #FFB800; font-size: 17px;">{{ unit.ticker }}</span>
                     <span class="d-block mt-1">Units enlisted: 105k</span>
                     <span class="d-block">Deads units: 80k</span>
                     <span class="d-block mb-2">Survivors: 25k</span>
@@ -120,7 +109,7 @@
               style="position: relative;">
               <img
                 :width="$vuetify.breakpoint.xs ? '300' : '370'"
-                :src="require('../../../public/images/troops/units/humans/monster.png')"
+                :src="`/images/monsters/${monsterToView}`"
               />
               <div class="treasure-progress mb-3">
                 <Progress class="progress" :value="4" :maxScale="10" />
@@ -138,7 +127,7 @@
           </v-row>
 
           <v-row align="center" justify="center">
-            <v-col xs="12" sm="10" md="6" class="px-0">
+            <v-col cols="11" sm="" md="6" lg="5" xl="4" class="px-0">
               <v-btn
                 block
                 color="#3A2720"
@@ -147,8 +136,7 @@
                 style="padding: 30px 0px; border: 2px solid #FFEEBC;">
                 <v-img :max-width="$vuetify.breakpoint.xs ? '36' : '48.74'" src="/images/icons/swords.png" />
                 <span
-                  class="ml-2"
-                  :class="$vuetify.breakpoint.xs ? 'text-h6' : 'text-h5'"
+                  :class="$vuetify.breakpoint.xs ? 'text-h6 ml-1 text-button' : 'text-h5 ml-2'"
                 >
                     Bring survivors and claim prizes
                 </span>
@@ -247,6 +235,10 @@ export default {
       tab: 0,
       troops: [],
       weapons: [],
+      troopsToView: [],
+      monsters: ['2.webp', '1.webp', '3.webp', '4.webp'],
+      monsterToView: '',
+      selectedRace: '',
     };
   },
 
@@ -257,7 +249,6 @@ export default {
     this.setHeader(false);
     this.initData();
     this.loadData();
-    this.listTroops();
   },
 
   computed: {
@@ -349,6 +340,9 @@ export default {
       const troops = await getUnitsEnlistment()
       this.troops = troops
 
+      
+      this.listTroops(1);
+
       const weapons = await getWeapons()
       this.weapons = weapons
 
@@ -371,11 +365,11 @@ export default {
       }
     },
 
-    isDisabled(name) {
+    /* isDisabled(name) {
       const enabled = ['Humans'];
 
       return !enabled.includes(name);
-    },
+    }, */
 
     invertImage(name) {
 
@@ -399,10 +393,12 @@ export default {
       const invertedRaces = []
 
       invertedRaces.push(races[3], races[0], races[1], races[2]);
-      return invertedRaces
+      return invertedRaces;
     },
 
     selectRace(raceName) {
+      this.isDisabled(raceName);
+
       if (raceName === 'Elves') this.listTroops(1);
       else if (raceName === 'Humans') this.listTroops(0);
       else if (raceName === 'Orcs') this.listTroops(2);
@@ -410,12 +406,13 @@ export default {
     },
 
     listTroops(racePosition) {
-      if (racePosition === undefined) {
-        return this.troops[0]
-      } else {
-        return this.troops[racePosition]
-      };
-    }
+      this.troopsToView = this.troops[racePosition];
+      this.monsterToView = this.monsters[racePosition];
+    },
+
+    isDisabled(name) {
+      this.selectedRace = name;
+    },
   },
 };
 </script>
@@ -437,6 +434,7 @@ export default {
 .isLoading {
   opacity: 0;
 }
+
 .loading {
   display: none;
 }
@@ -459,15 +457,8 @@ export default {
   width: 100%;
 }
 
-.option-title {
-  font-weight: bold;
-  font-size: 22px;
-  line-height: 29px;
-  color: #ffffff;
-}
-
 .button-container {
-  width: 80%;
+  width: 165px;
 }
 
 @media only screen and (max-width: 1920px) {
@@ -488,9 +479,9 @@ export default {
 
 .swordIcon {
   position: relative;
-  top: 17rem;
+  top: 11rem;
   @media only screen and (max-width: 959px) {
-    top: 30rem;
+    top: 18rem;
   }
   @media only screen and (max-width: 599px) {
     display: none !important;
@@ -499,15 +490,9 @@ export default {
 
 .raceImage{
   transition: opacity .4s ease-in-out;
-}
-
-.raceImage:not(.on-hover) {
-  opacity: 0.6;
-}
-
-.unit-name {
-  font-size: 13px;
-  font-weight: 700;
+  &:not(.on-hover) {
+    opacity: 0.6;
+  }
 }
 
 .monster-position {
@@ -546,4 +531,12 @@ export default {
   } 
   }
 }
+
+.text-button {
+  text-transform: none !important;
+  @media screen and (max-width: 345px) {
+    font-size: 13px !important;
+  }
+}
+
 </style>
