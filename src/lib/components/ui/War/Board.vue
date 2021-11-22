@@ -120,4 +120,26 @@ export default {
     }
   }
 }
+
+/* width */
+div::-webkit-scrollbar {
+  height: 4px;
+  background-color: rgba($color: #000000, $alpha: 0.1);
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: rgba($color: #000000, $alpha: 0.2);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 </style>
