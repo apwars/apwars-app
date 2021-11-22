@@ -48,6 +48,22 @@ export function getWeapons() {
         stakeLimit: 1000
       }
     },
+    {
+      id: 39,
+      type: "weapons",
+      typeDesc: "Weapons",
+      contractAddress: Addresses.collectibles,
+      title: "Simple Shield",
+      description: 'The Simple Shield is strong and resistant, who wield it will be much safer in a direct confrontation.',
+      effectDescription: "It improves defense points of units by 1",
+      image: "/images/nfts/weapon-simple-shield.png",
+      icon: "simple-shield",
+      strength: 0,
+      defense: 15,
+      war: {
+        stakeLimit: 1000
+      }
+    },
   ];
 }
 
