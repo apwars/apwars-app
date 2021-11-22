@@ -9,7 +9,7 @@ const state = {
   openModalMetaMask: false,
   account: "",
   avatar: avatar ? avatar : "corp",
-  networkInfo: {},
+  networkInfo: { definedNetwork: process.env.VUE_APP_BSC_NETWORK },
   addresses: {},
   currentBlockNumber: 0
 };

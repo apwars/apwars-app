@@ -19,13 +19,13 @@ export default {
     commit("setOpenModalMetaMask", true);
   },
 
-  async connectToMetaMask({ commit }) {
+  async connectToMetaMask({ commit }, { definedNetwork }) {
     const configure = async ({ commit }) => {
       const accounts = await window.ethereum.enable();
       const networkInfo = {
         id: (await web3.eth.net.getId()).toString(),
         type: await web3.eth.net.getNetworkType(),
-        definedNetwork: process.env.VUE_APP_BSC_NETWORK,
+        definedNetwork: definedNetwork || process.env.VUE_APP_BSC_NETWORK,
       };
 
       const addresses = getSmartContractAddresses(networkInfo.id);
@@ -38,7 +38,7 @@ export default {
     const clear = ({ commit }) => {
       commit("setIsConnected", false);
       commit("setAccount", null);
-      commit("setNetworkInfo", {});
+      commit("setNetworkInfo", { definedNetwork: definedNetwork || process.env.VUE_APP_BSC_NETWORK });
       commit("setAddresses", null);
     };
 

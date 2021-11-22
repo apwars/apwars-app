@@ -147,6 +147,10 @@ export default {
           title: "Buy Arcadia Foundations",
           href: "/arcadia-expansion",
         },
+        {
+          title: "Buy wLAND",
+          href: "/buy-wland",
+        },
       ],
     };
   },
