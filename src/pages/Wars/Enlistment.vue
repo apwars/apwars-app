@@ -2,7 +2,7 @@
   <div class="background">
     <v-container>
       <v-row v-if="1 == 1 || isConnected && !isLoading && isEnlistment">
-        <v-col sm="12">
+        <v-col cols="12" sm="12">
           <Button
             type="wtertiary"
             text="Back to war page"
@@ -11,12 +11,12 @@
           <div class="d-flex justify-space-between mt-3">
             <Title>Report</Title>
           </div>
-          <div class="d-flex justify-center">
-            <v-img class="swordIcon" max-width="56.57" src="/images/icons/swords.png" />
+          <div class="d-flex justify-center swordIcon">
+            <v-img max-width="56.57" src="/images/icons/swords.png" />
           </div>
         </v-col>
 
-        <v-col v-for="option in options()" :key="option.id" sm="6" md="3">
+        <v-col v-for="option in options()" :key="option.id" cols="12" sm="6" md="3">
           <div class="d-flex flex-column align-center justify-center">
             <div class="option-title mb-2">{{ option.name }}</div>
             <div class="option d-flex flex-column align-center justify-center">
@@ -27,12 +27,22 @@
                   :class="{ 'on-hover': hover }"
                 >
                   <div :class="[isDisabled(option.name) ? 'disabled' : '']">
-                    <img
-                    :class="[invertImage(option.name) ? 'invert-image' : '']"
-                    :src="option.image"
-                    :alt="option.name"
+                    <v-img
+                      :class="[invertImage(option.name) ? 'invert-image' : '']"
+                      :src="option.image"
+                      :lazy-src="option.image"
+                      :alt="option.name"
                       @click="selectRace(option.name)"
-                  />
+                    >
+                      <template v-slot:placeholder>
+                        <v-row class="fill-height ma-0" align="center" justify="center">
+                          <v-progress-circular
+                            indeterminate
+                            color="#ffeebc lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
                   </div>
                 </div>
               </v-hover>
@@ -103,14 +113,13 @@
                 </v-col>
               </v-row>
             </v-col>
-
             <v-col
               class="monster-position pa-0"
               cols="12"
               md="4"
               style="position: relative;">
               <img
-                width="370"
+                :width="$vuetify.breakpoint.xs ? '300' : '370'"
                 :src="require('../../../public/images/troops/units/humans/monster.png')"
               />
               <div class="treasure-progress mb-3">
@@ -480,6 +489,12 @@ export default {
 .swordIcon {
   position: relative;
   top: 17rem;
+  @media only screen and (max-width: 959px) {
+    top: 30rem;
+  }
+  @media only screen and (max-width: 599px) {
+    display: none !important;
+  }
 }
 
 .raceImage{
