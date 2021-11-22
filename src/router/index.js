@@ -19,6 +19,7 @@ import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
 import Arcadia from "@/pages/Arcadia/Arcadia.vue";
 import Leaderboard from "@/pages/Leaderboard.vue";
+import Bridge from "@/pages/Bridge.vue";
 
 Vue.use(Router);
 
@@ -117,6 +118,11 @@ export const routes = [
         path: "/leaderboard",
         name: "/leaderboard",
         component: Leaderboard
+      },
+      {
+        path: "/bridge",
+        name: "/bridge",
+        component: Bridge
       },
       {
         path: "/farms",
