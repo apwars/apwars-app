@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <v-container>
+    <v-container fluid>
       <v-row dense no-gutters>
         <v-col>
           <Button
@@ -33,119 +33,127 @@
       </v-row>
       <v-row>
         <v-col md="5">
-          <v-col>
-            <div class="board-label d-flex justify-end">
-              <Amount
-                :amount="150000000"
-                formatted
-                symbol="total Humans power enlisted"
-              />
-            </div>
-            <Board
-              :rows="5"
-              :cols="20"
-              unitImage="/images/troops/wwarrior.webp"
-            />
-            <div class="action-container">
-              <div class="prize-share">
-                <img src="/images/battle/treasure.png" width="32" />
-                <div class="prize-info">
-                  4%
-                </div>
+          <v-col class="d-flex justify-center align-center">
+            <div class="race-board">
+              <div class="board-label d-flex justify-end">
+                <Amount
+                  :amount="150000000"
+                  formatted
+                  symbol="total Humans power enlisted"
+                />
               </div>
-              <Button
-                type="wsecondary"
-                text="Enlist for Humans"
-                :handleClick="() => goToEnlistment(1)"
+              <Board
+                :rows="6"
+                :cols="16"
+                unitImage="/images/troops/wwarrior.webp"
               />
+              <div class="action-container">
+                <div class="prize-share">
+                  <img src="/images/battle/treasure.png" width="32" />
+                  <div class="prize-info">
+                    4%
+                  </div>
+                </div>
+                <Button
+                  type="wsecondary"
+                  text="Enlist for Humans"
+                  :handleClick="() => goToEnlistment(1)"
+                />
+              </div>
             </div>
           </v-col>
-          <v-col>
-            <div class="board-label d-flex justify-end">
-              <Amount
-                :amount="150000000"
-                formatted
-                symbol="total Elvens power enlisted"
-              />
-            </div>
-            <Board
-              :rows="5"
-              :cols="20"
-              unitImage="/images/troops/warmoured-elf.webp"
-            />
-            <div class="action-container">
-              <div class="prize-share">
-                <img src="/images/battle/treasure.png" width="32" />
-                <div class="prize-info">
-                  4%
-                </div>
+          <v-col class="d-flex justify-center align-center">
+            <div class="race-board">
+              <div class="board-label d-flex justify-end">
+                <Amount
+                  :amount="150000000"
+                  formatted
+                  symbol="total Elvens power enlisted"
+                />
               </div>
-              <Button
-                type="wsecondary"
-                text="Enlist for Elves"
-                :handleClick="() => goToEnlistment(4)"
+              <Board
+                :rows="6"
+                :cols="16"
+                unitImage="/images/troops/warmoured-elf.webp"
               />
+              <div class="action-container">
+                <div class="prize-share">
+                  <img src="/images/battle/treasure.png" width="32" />
+                  <div class="prize-info">
+                    4%
+                  </div>
+                </div>
+                <Button
+                  type="wsecondary"
+                  text="Enlist for Elves"
+                  :handleClick="() => goToEnlistment(4)"
+                />
+              </div>
             </div>
           </v-col>
         </v-col>
-        <v-col md="1" class="big-text d-flex justify-center align-center"
+        <v-col cols="12" md="1" class="big-text d-flex justify-center align-center"
           >VS</v-col
         >
         <v-col md="5">
-          <v-col>
-            <div class="board-label d-flex justify-end">
-              <Amount
-                :amount="150000000"
-                formatted
-                symbol="total Orcs power enlisted"
-              />
-            </div>
-            <Board
-              :rows="5"
-              :cols="20"
-              unitImage="/images/troops/wgrunt.webp"
-              invertUnitDirection
-            />
-            <div class="action-container">
-              <div class="prize-share">
-                <img src="/images/battle/treasure.png" width="32" />
-                <div class="prize-info">
-                  4%
-                </div>
+          <v-col class="d-flex justify-center align-center">
+            <div class="race-board">
+              <div class="board-label d-flex justify-end">
+                <Amount
+                  :amount="150000000"
+                  formatted
+                  symbol="total Orcs power enlisted"
+                />
               </div>
-              <Button
-                type="wsecondary"
-                text="Enlist for Orcs"
-                :handleClick="() => goToEnlistment(2)"
+              <Board
+                :rows="6"
+                :cols="16"
+                unitImage="/images/troops/wgrunt.webp"
+                invertUnitDirection
               />
+              <div class="action-container">
+                <div class="prize-share">
+                  <img src="/images/battle/treasure.png" width="32" />
+                  <div class="prize-info">
+                    4%
+                  </div>
+                </div>
+                <Button
+                  type="wsecondary"
+                  text="Enlist for Orcs"
+                  :handleClick="() => goToEnlistment(2)"
+                />
+              </div>
             </div>
           </v-col>
-          <v-col>
-            <div class="board-label d-flex justify-end">
-              <Amount
-                :amount="150000000"
-                formatted
-                symbol="total Undeads power enlisted"
-              />
-            </div>
-            <Board
-              :rows="5"
-              :cols="20"
-              unitImage="/images/troops/wskeleton-warrior.webp"
-              invertUnitDirection
-            />
-            <div class="action-container">
-              <div class="prize-share">
-                <img src="/images/battle/treasure.png" width="32" />
-                <div class="prize-info">
-                  4%
-                </div>
+          <v-col class="d-flex justify-center align-center">
+            <div class="race-board">
+              <div class="board-label d-flex justify-end">
+                <Amount
+                  :amount="150000000"
+                  formatted
+                  symbol="total Undeads power enlisted"
+                />
               </div>
-              <Button
-                type="wsecondary"
-                text="Enlist for Undeads"
-                :handleClick="() => goToEnlistment(3)"
+              <Board
+                :rows="6"
+                :cols="16"
+                unitImage="/images/troops/wskeleton-warrior.webp"
+                invertUnitDirection
               />
+              <div class="action-container">
+                <div class="prize-share">
+                  <img src="/images/battle/treasure.png" width="32" />
+                  <div class="prize-info">
+                    4%
+                  </div>
+                </div>
+                <Button
+                  type="wsecondary"
+                  text="Enlist for Undeads"
+                  :handleClick="() => goToEnlistment(3)"
+                />
+              </div>
             </div>
           </v-col>
         </v-col>
@@ -246,6 +254,13 @@ export default {
       font-weight: bold;
       margin-left: 4px;
     }
+  }
+}
+.race-board {
+  display: block;
+  width: 100%;
+  @media screen and (min-width: 768px) {
+    width: auto;
   }
 }
 </style>

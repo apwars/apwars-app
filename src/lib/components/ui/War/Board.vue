@@ -72,15 +72,15 @@ export default {
   padding-left: 82px;
 }
 .board-row {
-  width: 680px;
-  height: 32px;
+  height: 24px;
   margin-top: 2px;
-  margin-left: calc(-1 * (var(--index) * 12px));
+  margin-left: calc(-1 * (var(--index) * 10px));
+  white-space: nowrap;
 }
 .slot {
   position: relative;
-  height: 32px;
-  width: 32px;
+  height: 24px;
+  width: 24px;
   display: inline-block;
   background-image: url("/images/battle/floor.png");
   transform: skewX(-20deg);
