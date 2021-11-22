@@ -8,5 +8,5 @@
     VUE_APP_BSC_NETWORK="ALL"
     VUE_APP_SERVERLESS="https://api-dev.apwars.farm"
 [[redirects]]
-  from = "https://deploy-preview-178--apwars-blackmarket-v2.netlify.app/battle"
+  from = "/battle"
   to = "http://apw-battle.netlify.app"
