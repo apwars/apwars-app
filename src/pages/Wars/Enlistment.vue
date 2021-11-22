@@ -20,19 +20,20 @@
           <div class="d-flex flex-column align-center justify-center">
             <div class="option-title mb-2">{{ option.name }}</div>
             <div class="option d-flex flex-column align-center justify-center">
-              <!-- :class="[isDisabled(option.name) ? 'disabled' : 'invert-image']" -->
               <v-hover v-slot="{ hover }">
                 <div
                   class="raceImage"
                   :elevation="hover ? 12 : 2"
                   :class="{ 'on-hover': hover }"
                 >
-                  <img
+                  <div :class="[isDisabled(option.name) ? 'disabled' : '']">
+                    <img
                     :class="[invertImage(option.name) ? 'invert-image' : '']"
                     :src="option.image"
                     :alt="option.name"
                       @click="selectRace(option.name)"
                   />
+                  </div>
                 </div>
               </v-hover>
               <div class="button-container d-flex justify-center">
@@ -92,7 +93,7 @@
               <v-row>
                 <v-col v-for="weapon in weapons" :key="weapon.name" cols="6" md="3" class="px-0">
                   <div class="d-flex">
-                    <v-img width="55" :src="`/images/weapons/${weapon.icon}.png`"/>
+                    <img width="70" height="70" :src="`/images/weapons/${weapon.icon}.png`"/>
                     <div>
                       <span class="d-block">{{ weapon.title }}</span>
                       <span class="d-block">Global: 1,5M</span>
@@ -106,11 +107,18 @@
             <v-col
               class="monster-position pa-0"
               cols="12"
-              md="4">
+              md="4"
+              style="position: relative;">
               <img
                 width="370"
                 :src="require('../../../public/images/troops/units/humans/monster.png')"
               />
+              <div class="treasure-progress mb-3">
+                <Progress class="progress" :value="4" :maxScale="10" />
+                <div class="treasure">
+                  <img src="/images/battle/treasure.png" />
+                </div>
+              </div>
               <v-btn
                 color="#3A2720"
                 tile
@@ -121,15 +129,20 @@
           </v-row>
 
           <v-row align="center" justify="center">
-            <v-col cols="8" sm="6" md="5" class="px-0">
+            <v-col xs="12" sm="10" md="6" class="px-0">
               <v-btn
                 block
                 color="#3A2720"
                 tile
                 class="d-flex"
                 style="padding: 30px 0px; border: 2px solid #FFEEBC;">
-                <v-img max-width="48.74" src="/images/icons/swords.png" />
-                <span class="text-h5 ml-2">Bring survivors and claim prizes</span>
+                <v-img :max-width="$vuetify.breakpoint.xs ? '36' : '48.74'" src="/images/icons/swords.png" />
+                <span
+                  class="ml-2"
+                  :class="$vuetify.breakpoint.xs ? 'text-h6' : 'text-h5'"
+                >
+                    Bring survivors and claim prizes
+                </span>
               </v-btn>
             </v-col>
           </v-row>
@@ -139,6 +152,19 @@
           <v-row>
             <v-col>
               <h1 class="text-center">Players</h1>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <table-war-report
+                v-if="isWar.reportVersion === '1'"
+                :war="isWar"
+              ></table-war-report>
+              <table-war-report-v2
+                v-if="isWar.reportVersion === '2'"
+                :war="isWar"
+              ></table-war-report-v2>
             </v-col>
           </v-row>
         </v-col>
@@ -170,6 +196,9 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
+import TableWarReport from "@/lib/components/ui/Utils/Tables/TableWarReport"
+import TableWarReportV2 from "@/lib/components/ui/Utils/Tables/TableWarReportV2";
+import Progress from "@/lib/components/ui/Progress";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -188,6 +217,9 @@ export default {
     wButton,
     Countdown,
     ListUnits,
+    TableWarReport,
+    TableWarReportV2,
+    Progress,
   },
 
   data() {
@@ -277,10 +309,11 @@ export default {
       this.$router.push("/exchange");
     },
 
-    initData() {
+    async initData() {
       try {
         this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
-        this.isWar = getWars(this.networkInfo.id !== "56").find(
+
+        this.isWar = await getWars(this.networkInfo.id !== "56").find(
           (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
         );
 
@@ -371,7 +404,6 @@ export default {
       if (racePosition === undefined) {
         return this.troops[0]
       } else {
-        console.log(this.troops[racePosition])
         return this.troops[racePosition]
       };
     }
@@ -381,10 +413,11 @@ export default {
 
 <style lang="scss" scoped>
 .background {
-  height: 100%;
+  height: 40%;
   width: 100%;
-  background-image: url("/images/background/enlistment.png");
+  background-image: url("/images/bg-home.jpg");
   background-size: cover;
+  background-position: center;
 }
 .gradient {
   width: 100%;
@@ -463,11 +496,39 @@ export default {
 }
 
 .monster-position {
-  /* position: relative;
-  top: 5rem; */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.treasure-progress {
+  position: relative;
+  bottom: 0;
+  width: 80%;
+  height: 32px;
+}
+
+.progress {
+  z-index: 2;
+  width: 100%;
+}
+
+.treasure {
+  position: absolute;
+  right: -40px;
+  bottom: -34px;
+  z-index: 3;
+  @media screen and (max-width: 500px) {
+    right: -26px;
+  }
+  > img {
+      width: 90px
+  }
+  @media screen and (min-width: 1441px) {
+     > img {
+      width: 150px
+  } 
+  }
 }
 </style>
