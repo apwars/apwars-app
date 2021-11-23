@@ -18,26 +18,29 @@
       </div>
     </div>
     <div class="prizes">
-      <v-col class="corp-prize d-flex justify-start">
+      <div class="winner-prize">
+        <div class="d-sm-none">Winner Prize</div>
         <IconInfo iconPath="/images/wgold.png" title="Unlocked Prize">
           <Amount :amount="1555555555555555555555" formatted compact />
         </IconInfo>
-        <IconInfo class="ml-2" iconPath="/images/battle/burned.png" title="Unlocked Prize">
+        <IconInfo iconPath="/images/battle/burned.png" title="Unlocked Prize">
           <Amount
             :amount="1555555555555555555555"
             formatted
             compact
           /> </IconInfo
       >
-      </v-col>
-      <v-col class="degen-prize d-flex justify-end"
-        ><div class="info-placeholder"></div><IconInfo iconPath="/images/wcourage.png" title="Unlocked Prize">
+      </div>
+      <div class="loser-prize"
+        >
+        <div class="d-sm-none">Loser Prize</div>
+        <IconInfo iconPath="/images/wcourage.png" title="Unlocked Prize">
           <Amount
             :amount="1555555555555555555555"
             formatted
             compact
           /> </IconInfo
-      ></v-col>
+      ></div>
     </div>
   </div>
 </template>
@@ -108,13 +111,24 @@ line-height: 1.4;
 }
 .prizes {
   width: 100%;
+  margin-top: 12px;
   display: flex;
-  .corp-prize {
-    width: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 14px;
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    .winner-prize {
+      display: flex;
+      > div {
+        margin-right: 6px;
+      }
+    }
   }
-  .degen-prize {
-    width: 50%;
-  }
-
+  @media screen and (min-width: 1440px) {
+      padding: 0 48px;
+    }
 }
 </style>

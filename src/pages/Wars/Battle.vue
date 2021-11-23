@@ -19,6 +19,12 @@
             tip="How to play?"
             tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
           />
+          <countdown
+              :time="countdownTimer"
+              title="Time to claim units and prize"
+              @end="getNextWarPhase"
+              hideEnd
+            />
           <div class="prizepool">
             <img width="180" src="/images/battle/fed-round-2.png" />
             <div class="prize">
@@ -33,25 +39,23 @@
       </v-row>
       <v-row>
         <v-col md="5">
-          <v-col class="d-flex justify-end align-center">
-            <div class="race-board">
-              <div class="board-label d-flex justify-start align-center">
-                <Amount :amount="150000000" formatted symbol="PU" />
-                <div class="prize-share ml-1">
+          <div class="race-board">
+            <div class="board-info">
+              <div class="board-label d-flex justify-start align-center mr-3">
+                <div class="prize-share mr-2">
                   <img src="/images/battle/treasure.png" width="32" />
                   <div class="prize-info">
                     4%
                   </div>
                 </div>
+                <Amount :amount="150000000" formatted symbol="PU" />
               </div>
-              <div class="board-viewport">
-                <Board
-                  :rows="6"
-                  :cols="16"
-                  unitImage="/images/troops/wwarrior.webp"
-                />
-              </div>
-              <div class="mt-1">
+              <Board
+                :rows="6"
+                :cols="16"
+                unitImage="/images/troops/wwarrior.webp"
+              />
+              <div class="d-flex justify-end mt-1 mr-2">
                 <Button
                   type="wsecondary"
                   text="Enlist Humans"
@@ -59,26 +63,25 @@
                 />
               </div>
             </div>
-          </v-col>
-          <v-col class="d-flex justify-end align-center">
-            <div class="race-board">
-              <div class="board-label d-flex justify-start align-center">
-                <Amount :amount="150000000" formatted symbol="PU" />
-                <div class="prize-share ml-1">
+          </div>
+
+          <div class="race-board mt-6">
+            <div class="board-info">
+              <div class="board-label d-flex justify-start align-center mr-3">
+                <div class="prize-share mr-2">
                   <img src="/images/battle/treasure.png" width="32" />
                   <div class="prize-info">
                     4%
                   </div>
                 </div>
+                <Amount :amount="150000000" formatted symbol="PU" />
               </div>
-              <div class="board-viewport">
-                <Board
-                  :rows="6"
-                  :cols="16"
-                  unitImage="/images/troops/warmoured-elf.webp"
-                />
-              </div>
-              <div class="mt-1">
+              <Board
+                :rows="6"
+                :cols="16"
+                unitImage="/images/troops/warmoured-elf.webp"
+              />
+              <div class="d-flex justify-end mt-1 mr-2">
                 <Button
                   type="wsecondary"
                   text="Enlist Elves"
@@ -86,7 +89,7 @@
                 />
               </div>
             </div>
-          </v-col>
+          </div>
         </v-col>
         <v-col
           cols="12"
@@ -95,54 +98,53 @@
           >VS</v-col
         >
         <v-col md="5">
-          <v-col class="d-flex justify-start align-center">
-            <div class="race-board">
-              <div class="board-label d-flex justify-end align-center">
+          <div class="race-board">
+            <div class="board-info">
+              <div class="board-label d-flex justify-end align-center mr-3">
                 <Amount :amount="150000000" formatted symbol="PU" />
-                <div class="prize-share ml-1">
+                <div class="prize-share ml-2">
                   <img src="/images/battle/treasure.png" width="32" />
                   <div class="prize-info">
                     4%
                   </div>
                 </div>
-              </div>
-              <div class="board-viewport">
+                </div>
                 <Board
                   :rows="6"
                   :cols="16"
                   unitImage="/images/troops/wgrunt.webp"
                   invertUnitDirection
                 />
+                <div class="d-flex justify-start mt-1">
+                  <Button
+                    type="wsecondary"
+                    text="Enlist Orcs"
+                    :handleClick="() => goToEnlistment(2)"
+                  />
+                </div>
               </div>
-              <div class="d-flex justify-end mt-1">
-                <Button
-                  type="wsecondary"
-                  text="Enlist Orcs"
-                  :handleClick="() => goToEnlistment(2)"
-                />
-              </div>
-            </div>
-          </v-col>
-          <v-col class="d-flex justify-start align-center">
-            <div class="race-board">
-              <div class="board-label d-flex justify-end align-center">
+          </div>
+
+          <div class="race-board mt-6">
+            <div class="board-info">
+              <div class="board-label d-flex justify-end align-center mr-3">
                 <Amount :amount="150000000" formatted symbol="PU" />
-                <div class="prize-share ml-1">
+                <div class="prize-share ml-2">
                   <img src="/images/battle/treasure.png" width="32" />
                   <div class="prize-info">
                     4%
                   </div>
                 </div>
               </div>
-              <div class="board-viewport">
-                <Board
-                  :rows="6"
-                  :cols="16"
-                  unitImage="/images/troops/wskeleton-warrior.webp"
-                  invertUnitDirection
-                />
-              </div>
-              <div class="d-flex justify-end mt-1">
+
+              <Board
+                :rows="6"
+                :cols="16"
+                unitImage="/images/troops/wskeleton-warrior.webp"
+                invertUnitDirection
+              />
+
+              <div class="d-flex justify-start mt-1">
                 <Button
                   type="wsecondary"
                   text="Enlist Undeads"
@@ -150,7 +152,7 @@
                 />
               </div>
             </div>
-          </v-col>
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -164,9 +166,15 @@ import Title from "@/lib/components/ui/Title";
 import Board from "@/lib/components/ui/War/Board";
 import Versus from "@/lib/components/ui/Versus";
 import Amount from "@/lib/components/ui/Utils/Amount";
+import Countdown from "@/lib/components/ui/Utils/Countdown";
 
 export default {
-  components: { Title, Button, Versus, Board, Amount },
+  components: { Title, Button, Versus, Board, Amount, Countdown },
+  computed: {
+    countdownTimer() {
+      return 1637711108;
+    }
+  },
   methods: {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
@@ -205,7 +213,6 @@ export default {
 .board-label {
   font-size: 12px;
   font-weight: bold;
-  padding: 0 21px;
 }
 
 .prizepool {
@@ -244,16 +251,14 @@ export default {
     margin-left: 4px;
   }
 }
-.board-viewport {
-  width: 100%;
-  overflow-y: auto;
-}
 .race-board {
-  display: block;
   width: 100%;
-  overflow-y: auto;
-  @media screen and (min-width: 1025px) {
-    width: auto;
-  }
+  overflow-x: auto;
+  display: flex;
+}
+.board-info {
+  display: inline-block;
+  min-height: 0;
+  margin: 0 auto;
 }
 </style>
