@@ -47,7 +47,6 @@ export default {
   display: inline-block;
   border: 1px solid white;
   color: white;
-  border-radius: 5px;
   text-align: center;
   font-weight: bold;
   font-size: 16px;
