@@ -507,13 +507,13 @@ export default {
   }
 }
 
-@media only screen and (max-width: 600px) {
-  .container-race-image-and-btn {
+.container-race-image-and-btn{
+  @media only screen and (max-width: 600px) {
+    width: 100%;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     flex-direction: column !important;
-    margin: 0 auto;
   }
 }
 
@@ -545,7 +545,7 @@ export default {
   }
   @media only screen and (max-width: 440px) {
     > .race-image {
-      height: 190px !important;
+      height: 199px !important;
     }
   }
   transition: opacity .4s ease-in-out;
