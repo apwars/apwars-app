@@ -248,6 +248,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-top: 4px;
+  padding: 0 16px;
 }
 .prize-share {
     display: flex;
