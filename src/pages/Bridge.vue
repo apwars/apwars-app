@@ -72,50 +72,57 @@
               <v-card flat>
                 <div class="select-transfer px-1 px-sm-6 px-md-12 pt-3">
                   <v-alert dense outlined text type="info">
-                    You can select up to 5 wUNITS or GameItems to single
+                    You can select up to 5 Token or GameItems to single
                     transfer
                   </v-alert>
-                  <v-autocomplete
-                    v-model="bridgeListSelect"
-                    :items="bridgeList"
-                    outlined
-                    chips
-                    dense
-                    label="Select wUNITS or GameItems"
-                    item-text="name"
-                    item-value="name"
-                    multiple
-                    return-object
-                    @input="inputSelect"
-                  >
-                    <template v-slot:selection="data">
-                      <v-chip
-                        v-bind="data.attrs"
-                        :input-value="data.selected"
-                        close
-                        @click="data.select"
-                        @click:close="remove(data.item)"
-                      >
-                        <img height="30px" :src="data.item.image" />
+                  <div class="d-flex align-center">
+                    <div class="d-flex align-center mt-n3 mr-2">
+                      Token
+                      <v-switch v-model="typeTransfer" class="ml-1"></v-switch>
+                      GameItem
+                    </div>
+                    <v-autocomplete
+                      v-model="bridgeListSelect"
+                      :items="filterBridgeList"
+                      outlined
+                      chips
+                      dense
+                      :label="`Select ${typeTransfer ? 'GameItems' : 'Token'}`"
+                      item-text="name"
+                      item-value="name"
+                      multiple
+                      return-object
+                      @input="inputSelect"
+                    >
+                      <template v-slot:selection="data">
+                        <v-chip
+                          v-bind="data.attrs"
+                          :input-value="data.selected"
+                          close
+                          @click="data.select"
+                          @click:close="remove(data.item)"
+                        >
+                          <img height="30px" :src="data.item.image" />
 
-                        {{ data.item.name }}
-                      </v-chip>
-                    </template>
-                    <template v-slot:item="data">
-                      <template>
-                        <div class="d-flex py-1 align-center">
-                          <div class="image-select">
-                            <img
-                              class="text-center"
-                              height="50px"
-                              :src="data.item.image"
-                            />
-                          </div>
-                          <div>{{ data.item.name }}</div>
-                        </div>
+                          {{ data.item.name }}
+                        </v-chip>
                       </template>
-                    </template>
-                  </v-autocomplete>
+                      <template v-slot:item="data">
+                        <template>
+                          <div class="d-flex py-1 align-center">
+                            <div class="image-select">
+                              <img
+                                class="text-center"
+                                height="50px"
+                                :src="data.item.image"
+                              />
+                            </div>
+                            <div>{{ data.item.name }}</div>
+                          </div>
+                        </template>
+                      </template>
+                    </v-autocomplete>
+                  </div>
                 </div>
 
                 <v-list>
@@ -276,6 +283,7 @@ export default {
   data() {
     return {
       isLoading: true,
+      typeTransfer: false,
       headers: [
         {
           text: "Player",
@@ -404,6 +412,14 @@ export default {
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
+
+    filterBridgeList() {
+      return this.bridgeList.filter(
+        (bridge) =>
+          (this.typeTransfer && bridge.type === "erc1155") ||
+          (!this.typeTransfer && bridge.type === "erc20")
+      );
+    },
   },
 
   watch: {
@@ -448,7 +464,7 @@ export default {
       if (items.length > this.limitSelectList) {
         this.bridgeListSelect.splice(items.length - 1, 1);
         return ToastSnackbar.warning(
-          "The transfer limit wUNITS or GameItem is 5."
+          "The transfer limit Token or GameItem is 5."
         );
       }
     },
