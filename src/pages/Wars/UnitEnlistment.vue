@@ -8,7 +8,7 @@
         <v-col>
           <Button
             type="wtertiary"
-            text="Back to enlistment page"
+            text="Back to war resume"
             :handleClick="backToWar"
             noPadding
           />
@@ -189,7 +189,7 @@
                 src="/images/icons/battle-shield.png"
                 alt="Enlistment resume"
               />
-              Your troops enlistment
+              Select your formation
             </div>
             <div class="troop-list mt-2">
               <div
@@ -240,7 +240,7 @@
                   >{{ totalStakedForce(troop.race) }} units</span
                 >
               </div>
-              <Button type="wprimary" text="Enlist and Battle" isBlock />
+              <Button type="wprimary" text="Choose slot" isBlock />
               <Progress
                 class="mt-2"
                 :value="50"
@@ -263,8 +263,9 @@
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
-import { ENLISTMENT_OPTIONS } from "@/data/Races";
+import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
+import { FORMATIONS, FORMATIONS_NAMES } from "@/data/Enlistment";
 
 import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
@@ -391,6 +392,10 @@ export default {
     maxPossibleWeaponStake() {
       return Math.min(this.weapon.balance, this.weapon.war.stakeLimit);
     },
+    formationOptions() {
+      console.log(Object.values(FORMATIONS))
+      return Object.values(FORMATIONS).map(value => ({ label: FORMATIONS_NAMES[value], value }));
+    },
 
     stakedTroop: {
       get() {
@@ -442,7 +447,7 @@ export default {
     }),
     backToWar() {
       this.$router.push({
-        path: `/wars/${this.$route.params.contractWar}/enlistment`,
+        path: `/wars/${this.$route.params.contractWar}`,
       });
     },
     goToUnit(unitIndex) {

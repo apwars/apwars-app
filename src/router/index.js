@@ -76,8 +76,8 @@ export const routes = [
         component: TrainingCenter
       },
       {
-        path: "/wars/:contractWar/battle",
-        name: "war-battle",
+        path: "/wars/:contractWar",
+        name: "war-resume",
         component: Battle
       },
       {

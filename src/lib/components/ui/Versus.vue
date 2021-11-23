@@ -18,11 +18,11 @@
       </div>
     </div>
     <div class="prizes">
-      <v-col class="corp-prize d-flex justify-space-between">
+      <v-col class="corp-prize d-flex justify-start">
         <IconInfo iconPath="/images/wgold.png" title="Unlocked Prize">
           <Amount :amount="1555555555555555555555" formatted compact />
         </IconInfo>
-        <IconInfo iconPath="/images/battle/burned.png" title="Unlocked Prize">
+        <IconInfo class="ml-2" iconPath="/images/battle/burned.png" title="Unlocked Prize">
           <Amount
             :amount="1555555555555555555555"
             formatted
@@ -30,7 +30,7 @@
           /> </IconInfo
       >
       </v-col>
-      <v-col class="degen-prize d-flex justify-space-between"
+      <v-col class="degen-prize d-flex justify-end"
         ><div class="info-placeholder"></div><IconInfo iconPath="/images/wcourage.png" title="Unlocked Prize">
           <Amount
             :amount="1555555555555555555555"
@@ -78,12 +78,13 @@ line-height: 1.4;
   }
   .faction-icon {
     position: absolute;
-    top: -14px;
-    left: -32px;
-    width: 98px;
+    top: -9px;
+    left: -18px;
+    width: 64px;
     @media screen and (min-width: 1440px) {
-      width: 98px;
-      left: -49px;
+      width: 88px;
+      left: -16px;
+      top: -14px;
     }
   }
 }
@@ -95,12 +96,13 @@ line-height: 1.4;
   width: 50%;
   .faction-icon {
     position: absolute;
-    top: -14px;
-    right: -32px;
-    width: 98px;
+    top: -9px;
+    right: -18px;
+    width: 64px;
     @media screen and (min-width: 1440px) {
-      width: 98px;
-      right: -49px;
+      width: 88px;
+      right: -16px;
+      top: -14px;
     }
   }
 }

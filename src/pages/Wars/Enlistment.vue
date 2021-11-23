@@ -199,7 +199,7 @@ import Progress from "@/lib/components/ui/Progress";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
-import { ENLISTMENT_OPTIONS } from "@/data/Races";
+import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { getUnitsEnlistment } from '@/data/UnitsEnlistment'
 import { getWeapons } from '@/data/Collectibles/Weapons'
 

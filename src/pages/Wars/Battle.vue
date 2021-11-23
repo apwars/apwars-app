@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <v-container fluid>
+    <v-container>
       <v-row dense no-gutters>
         <v-col>
           <Button
@@ -29,18 +29,24 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col md="10" offset="1"><Versus /></v-col>
+        <v-col><Versus /></v-col>
       </v-row>
       <v-row>
         <v-col md="5">
-          <v-col class="d-flex justify-center align-center">
+          <v-col class="d-flex justify-end align-center">
             <div class="race-board">
-              <div class="board-label d-flex justify-end">
+              <div class="board-label d-flex justify-end align-center">
                 <Amount
                   :amount="150000000"
                   formatted
-                  symbol="total Humans power enlisted"
+                  symbol="PU"
                 />
+                <div class="prize-share ml-1">
+                  <img src="/images/battle/treasure.png" width="32" />
+                  <div class="prize-info">
+                    4%
+                  </div>
+                </div>
               </div>
               <Board
                 :rows="6"
@@ -48,12 +54,6 @@
                 unitImage="/images/troops/wwarrior.webp"
               />
               <div class="action-container">
-                <div class="prize-share">
-                  <img src="/images/battle/treasure.png" width="32" />
-                  <div class="prize-info">
-                    4%
-                  </div>
-                </div>
                 <Button
                   type="wsecondary"
                   text="Enlist for Humans"
@@ -62,14 +62,20 @@
               </div>
             </div>
           </v-col>
-          <v-col class="d-flex justify-center align-center">
+          <v-col class="d-flex justify-end align-center">
             <div class="race-board">
-              <div class="board-label d-flex justify-end">
+              <div class="board-label d-flex justify-end align-center">
                 <Amount
                   :amount="150000000"
                   formatted
-                  symbol="total Elvens power enlisted"
+                  symbol="PU"
                 />
+                <div class="prize-share ml-1">
+                  <img src="/images/battle/treasure.png" width="32" />
+                  <div class="prize-info">
+                    4%
+                  </div>
+                </div>
               </div>
               <Board
                 :rows="6"
@@ -77,12 +83,6 @@
                 unitImage="/images/troops/warmoured-elf.webp"
               />
               <div class="action-container">
-                <div class="prize-share">
-                  <img src="/images/battle/treasure.png" width="32" />
-                  <div class="prize-info">
-                    4%
-                  </div>
-                </div>
                 <Button
                   type="wsecondary"
                   text="Enlist for Elves"
@@ -96,14 +96,20 @@
           >VS</v-col
         >
         <v-col md="5">
-          <v-col class="d-flex justify-center align-center">
+          <v-col class="d-flex justify-start align-center">
             <div class="race-board">
-              <div class="board-label d-flex justify-end">
+              <div class="board-label d-flex justify-end align-center">
                 <Amount
                   :amount="150000000"
                   formatted
-                  symbol="total Orcs power enlisted"
+                  symbol="PU"
                 />
+                <div class="prize-share ml-1">
+                  <img src="/images/battle/treasure.png" width="32" />
+                  <div class="prize-info">
+                    4%
+                  </div>
+                </div>
               </div>
               <Board
                 :rows="6"
@@ -112,12 +118,7 @@
                 invertUnitDirection
               />
               <div class="action-container">
-                <div class="prize-share">
-                  <img src="/images/battle/treasure.png" width="32" />
-                  <div class="prize-info">
-                    4%
-                  </div>
-                </div>
+                
                 <Button
                   type="wsecondary"
                   text="Enlist for Orcs"
@@ -126,14 +127,20 @@
               </div>
             </div>
           </v-col>
-          <v-col class="d-flex justify-center align-center">
+          <v-col class="d-flex justify-start align-center">
             <div class="race-board">
-              <div class="board-label d-flex justify-end">
+              <div class="board-label d-flex justify-end align-center">
                 <Amount
                   :amount="150000000"
                   formatted
-                  symbol="total Undeads power enlisted"
+                  symbol="PU"
                 />
+                <div class="prize-share ml-1">
+                  <img src="/images/battle/treasure.png" width="32" />
+                  <div class="prize-info">
+                    4%
+                  </div>
+                </div>
               </div>
               <Board
                 :rows="6"
@@ -142,12 +149,6 @@
                 invertUnitDirection
               />
               <div class="action-container">
-                <div class="prize-share">
-                  <img src="/images/battle/treasure.png" width="32" />
-                  <div class="prize-info">
-                    4%
-                  </div>
-                </div>
                 <Button
                   type="wsecondary"
                   text="Enlist for Undeads"
@@ -247,7 +248,8 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-top: 4px;
-  .prize-share {
+}
+.prize-share {
     display: flex;
     align-items: center;
     .prize-info {
@@ -255,11 +257,10 @@ export default {
       margin-left: 4px;
     }
   }
-}
 .race-board {
   display: block;
   width: 100%;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1025px) {
     width: auto;
   }
 }

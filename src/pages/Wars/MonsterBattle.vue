@@ -64,7 +64,7 @@
 <script>
 import { mapMutations } from "vuex";
 
-import { ENLISTMENT_OPTIONS } from "@/data/Races";
+import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
 
 import Title from "@/lib/components/ui/Title";
