@@ -12,7 +12,7 @@
         </v-col>
       </v-row>
       <v-row dense no-gutters>
-        <v-col class="d-flex justify-space-between">
+        <v-col class="battle-header">
           <Title
             text="WAR IV"
             subtitle="Battle field"
@@ -205,6 +205,14 @@ export default {
   background-size: cover;
   background-image: url("/images/background/battle.png");
 }
+.battle-header {
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: 1024px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
 .big-text {
   font-weight: bold;
   font-size: 40px;
@@ -217,6 +225,8 @@ export default {
 
 .prizepool {
   position: relative;
+  display: flex;
+  justify-content: center;
   > img {
     user-select: none;
   }
