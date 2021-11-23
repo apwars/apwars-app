@@ -51,6 +51,7 @@ export default {
   font-weight: bold;
   font-size: 16px;
   line-height: 21px;
+  height: 40px;
   &.no-padding {
     padding: 8px 0;
   }

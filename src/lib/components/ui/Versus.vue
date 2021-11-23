@@ -18,7 +18,8 @@
       </div>
     </div>
     <div class="prizes">
-      <v-col class="corp-prize d-flex justify-space-between">
+      <div class="winner-prize">
+        <div class="d-sm-none">Winner Prize</div>
         <IconInfo iconPath="/images/wgold.png" title="Unlocked Prize">
           <Amount :amount="1555555555555555555555" formatted compact />
         </IconInfo>
@@ -29,15 +30,17 @@
             compact
           /> </IconInfo
       >
-      </v-col>
-      <v-col class="degen-prize d-flex justify-space-between"
-        ><div class="info-placeholder"></div><IconInfo iconPath="/images/wcourage.png" title="Unlocked Prize">
+      </div>
+      <div class="loser-prize"
+        >
+        <div class="d-sm-none">Loser Prize</div>
+        <IconInfo iconPath="/images/wcourage.png" title="Unlocked Prize">
           <Amount
             :amount="1555555555555555555555"
             formatted
             compact
           /> </IconInfo
-      ></v-col>
+      ></div>
     </div>
   </div>
 </template>
@@ -78,12 +81,13 @@ line-height: 1.4;
   }
   .faction-icon {
     position: absolute;
-    top: -14px;
-    left: -32px;
-    width: 98px;
+    top: -9px;
+    left: -18px;
+    width: 64px;
     @media screen and (min-width: 1440px) {
-      width: 98px;
-      left: -49px;
+      width: 88px;
+      left: -16px;
+      top: -14px;
     }
   }
 }
@@ -95,24 +99,36 @@ line-height: 1.4;
   width: 50%;
   .faction-icon {
     position: absolute;
-    top: -14px;
-    right: -32px;
-    width: 98px;
+    top: -9px;
+    right: -18px;
+    width: 64px;
     @media screen and (min-width: 1440px) {
-      width: 98px;
-      right: -49px;
+      width: 88px;
+      right: -16px;
+      top: -14px;
     }
   }
 }
 .prizes {
   width: 100%;
+  margin-top: 12px;
   display: flex;
-  .corp-prize {
-    width: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 14px;
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    .winner-prize {
+      display: flex;
+      > div {
+        margin-right: 6px;
+      }
+    }
   }
-  .degen-prize {
-    width: 50%;
-  }
-
+  @media screen and (min-width: 1440px) {
+      padding: 0 48px;
+    }
 }
 </style>

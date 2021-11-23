@@ -1,15 +1,16 @@
 <template>
-  <div class="board-container">
+  <div class="board-container" :style="`--rows: ${rows};--cols: ${cols}`">
     <div
-      class="board-row"
+      :class="['board-row', invertUnitDirection ? 'invert' : '']"
       v-for="rowIndex in rows"
       :key="rowIndex"
-      :style="`--index: ${rowIndex}`"
+      :style="`--index: ${invertUnitDirection ? rows - rowIndex : rowIndex}`"
     >
       <div
         :class="[
           'slot',
           rowIndex + '' + colIndex === selected ? 'selected' : '',
+          invertUnitDirection ? 'invert' : ''
         ]"
         v-for="colIndex in cols"
         :key="colIndex"
@@ -17,7 +18,7 @@
       >
         <img
           :class="['unit', invertUnitDirection ? 'invert' : '']"
-          height="100%"
+          height="150%"
           :src="unitImage"
           v-show="rowIndex + '' + colIndex === selected"
         />
@@ -64,18 +65,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .board-container {
-  width: 100%;
-  overflow-y: none;
-  overflow-x: auto;
-  padding: 10px;
-  /* responsive overflow */
-  padding-left: 82px;
+  width: calc(var(--cols) * 26px);
+  height: calc(var(--rows) * 26px);
 }
 .board-row {
   height: 24px;
-  margin-top: 2px;
-  margin-left: calc(-1 * (var(--index) * 10px));
+  margin-top: 1px;
+  margin-left: calc(1 * (var(--index) * 2px));
   white-space: nowrap;
+  &.invert {
+      margin-left: calc(3px + (var(--index) * 2px));
+    }
 }
 .slot {
   position: relative;
@@ -83,13 +83,16 @@ export default {
   width: 24px;
   display: inline-block;
   background-image: url("/images/battle/floor.png");
-  transform: skewX(-20deg);
-  margin-right: 1px;
+  transform: skewX(5deg);
+  box-sizing: border-box;
+  &.invert {
+        transform: skewX(-5deg) translateZ(0) scaleX(-1)!important;
+    }
   &:hover {
     transform-style: preserve-3d;
     cursor: pointer;
     outline: 1px solid #312c26;
-    transform: skewX(-20deg) scale(1.1);
+    transform: skewX(5deg) scale(1.1);
     z-index: 2;
   }
   &.selected {
@@ -97,12 +100,12 @@ export default {
   }
   > .unit {
     position: absolute;
-    left: 0px;
-    top: -8px;
-    transform: skewX(20deg);
+    left: 2px;
+    top: -14px;
+    transform: skewX(5deg) translateZ(0);
     animation: unit-enter 0.2s ease-in;
     &.invert {
-        transform: skewX(20deg) scaleX(-1)!important;
+        transform: skewX(-5deg) translateZ(0)!important;
     }
   }
 

@@ -10,6 +10,7 @@ export const RACE_DESCRIPTION = {
     [RACES.ORCS]: 'Orcs',
     [RACES.UNDEADS]: 'Undeads',
     [RACES.ELVES]: 'Elves',
+<<<<<<< HEAD
 }
 
 export const ENLISTMENT_OPTIONS = [{
@@ -56,3 +57,6 @@ export const ENLISTMENT_OPTIONS = [{
     aura: '/images/troops/aura-4.png',
     basicUnit: '/images/troops/warmoured-elf.webp',
 }]
+=======
+};
+>>>>>>> 67122cd531c963e5e34b5e3cac3b1b7b9334b937

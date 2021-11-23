@@ -126,7 +126,7 @@
               style="position: relative;">
               <img
                 :width="$vuetify.breakpoint.xs ? '300' : '370'"
-                :src="monsterToView"
+                :src="`/images/monsters/${monsterToView}`"
               />
               <div class="treasure-progress mb-3">
                 <Progress class="progress" :value="4" :maxScale="10" />
@@ -219,7 +219,6 @@ import { getTroops } from "@/data/Troops";
 import { ENLISTMENT_OPTIONS } from "@/data/Races";
 import { getUnitsEnlistment } from '@/data/UnitsEnlistment'
 import { getWeapons } from '@/data/Collectibles/Weapons'
-import { MONSTERS } from '@/data/Monsters/'
 
 import WarMachine from "@/lib/eth/WarMachine";
 
@@ -254,7 +253,7 @@ export default {
       troops: [],
       weapons: [],
       troopsToView: [],
-      monsters: [],
+      monsters: ['2.webp', '1.webp', '3.webp', '4.webp'],
       monsterToView: '',
       selectedRace: '',
     };
@@ -329,15 +328,6 @@ export default {
 
     async initData() {
       try {
-        const troops = await getUnitsEnlistment()
-        this.troops = troops
-        this.monsters = MONSTERS
-        
-        this.listTroops(1);
-
-        const weapons = await getWeapons()
-        this.weapons = weapons
-
         this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
 
         this.isWar = await getWars(this.networkInfo.id !== "56").find(
@@ -364,6 +354,15 @@ export default {
     },
 
     async loadData() {
+      const troops = await getUnitsEnlistment()
+      this.troops = troops
+
+      
+      this.listTroops(1);
+
+      const weapons = await getWeapons()
+      this.weapons = weapons
+
       try {
         if (this.warMachine.isLoading) {
           return;
@@ -425,7 +424,7 @@ export default {
 
     listTroops(racePosition) {
       this.troopsToView = this.troops[racePosition];
-      this.monsterToView = this.monsters[racePosition].image;
+      this.monsterToView = this.monsters[racePosition];
     },
 
     isDisabled(name) {
