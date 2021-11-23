@@ -14,8 +14,8 @@
       <v-row dense no-gutters>
         <v-col class="d-flex justify-space-between">
           <Title
-            text="Battle field"
-            subtitle="WAR IV"
+            text="WAR IV"
+            subtitle="Battle field"
             tip="How to play?"
             tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
           />
