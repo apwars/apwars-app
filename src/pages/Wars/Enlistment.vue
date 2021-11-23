@@ -12,25 +12,38 @@
           <div class="d-flex justify-space-between mt-2">
             <Title>Report</Title>
           </div>
-          <div class="d-flex justify-center swordIcon">
-            <v-img max-width="56.57" src="/images/icons/swords.png" />
+          <div class="d-flex justify-center sword-icon">
+            <v-img :max-width="$vuetify.breakpoint.lgAndUp ? '56.57' : '46'" src="/images/icons/swords.png" />
           </div>
         </v-col>
 
-        <v-col v-for="option in options()" :key="option.id" cols="12" sm="6" md="3" class="px-0 pt-0">
-          <div class="option d-flex flex-column align-center">
+        <v-col 
+          v-for="option in options()" 
+          :key="option.id"
+          cols="12"
+          sm="6"
+          md="3"
+          lg="3"
+          class="px-0 pt-0"
+        >
+          <div
+            class="container-race-image-and-btn"
+            :class="option.name === 'Orcs' ||
+            option.name === 'Undeads' ? 'd-flex flex-column align-end' : ''">
             <v-hover v-slot="{ hover }">
               <div
-                class="raceImage"
+                class="race-image-container"
                 :class="{ 'on-hover': hover }"
-                :style="selectedRace === option.name ? 'opacity: 1;' : ''"
+                :style="selectedRace === option.name ? 'opacity: 1; filter: none;' : ''"
               >
                 <v-img
+                  class="race-image"
                   :class="[invertImage(option.name) ? 'invert-image' : '']"
                   :src="option.image"
                   :lazy-src="option.image"
                   :alt="option.name"
-                  width="214"
+                  :width="option.name === 'Orcs' ? '240' : '225'"
+                  height="250"
                 >
                   <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center">
@@ -43,7 +56,11 @@
                 </v-img>
               </div>
             </v-hover>
-            <div @click="selectRace(option.name)" class="button-container d-flex justify-center">
+            <div
+              @click="selectRace(option.name)"
+              :class="option.name === 'Orcs' ||
+                option.name === 'Undeads' ? 'button-container-degens' : 'button-container-corp'" 
+              >
               <Button
                 class="mt-1"
                 type="wprimary"
@@ -454,14 +471,6 @@ export default {
   filter: grayscale(100%);
 }
 
-.enlistment-options {
-  width: 100%;
-}
-
-.button-container {
-  width: 165px;
-}
-
 @media only screen and (max-width: 1920px) {
   .qty {
     font-size: 14px;
@@ -478,21 +487,120 @@ export default {
   transform: scaleX(-1);
 }
 
-.swordIcon {
+.sword-icon {
   position: relative;
   top: 11rem;
   @media only screen and (max-width: 959px) {
     top: 18rem;
+    left: -7rem;
+  }
+   @media only screen and (max-width: 799px) {
+    left: -6rem;
+  }
+  @media only screen and (max-width: 700px) {
+    left: -4rem;
+  }
+  @media only screen and (max-width: 660px) {
+    left: -3.5rem;
   }
   @media only screen and (max-width: 599px) {
     display: none !important;
   }
 }
 
-.raceImage{
+@media only screen and (max-width: 600px) {
+  .container-race-image-and-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    margin: 0 auto;
+  }
+}
+
+.race-image-container {
+  width: 80%;
+  @media only screen and (min-width: 1903px) {
+    width: 54%;
+  }
+  @media only screen and (max-width: 1264px) {
+    width: 90%;
+    > .race-image {
+      width: 200px !important;
+      height: 210px !important;
+    }
+  }
+  @media only screen and (max-width: 960px) {
+    margin: 0 auto;
+    width: 100%;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 40%;
+  }
+  @media only screen and (max-width: 540px) {
+    width: 50%;
+    > .race-image {
+      width: 220px !important;
+      height: 230px !important;
+    }
+  }
+  @media only screen and (max-width: 440px) {
+    > .race-image {
+      height: 190px !important;
+    }
+  }
   transition: opacity .4s ease-in-out;
   &:not(.on-hover) {
     opacity: 0.6;
+    filter: grayscale(50%);
+  }
+}
+
+.button-container-corp {
+  width: 130px;
+  position: relative;
+  left: 3.2rem;
+  @media only screen and (max-width: 1264px) {
+    margin: 0 auto;
+    left: -0.5rem;
+  }
+  @media only screen and (max-width: 960px) {
+    left: 2.5rem;
+    margin: 0;
+  }
+  @media only screen and (max-width: 600px) {
+    margin: 0;
+    left: -0.9rem;
+    bottom: 0;
+  }
+  @media only screen and (max-width: 540px) {
+    left: .3rem;
+  }
+}
+
+.button-container-degens {
+  width: 130px;
+  position: relative;
+  right: 3.4rem;
+  @media only screen and (min-width: 1903px) {
+    right: 3.5rem;
+  }
+  @media only screen and (max-width: 1264px) {
+    margin: 0 auto;
+    left: 0.5rem;
+  }
+  @media only screen and (max-width: 960px) {
+    margin: 0;
+    margin-right: auto;
+    left: 2.2rem;
+  }
+  @media only screen and (max-width: 600px) {
+    margin: 0;
+    left: -1.2rem;
+    bottom: 0;
+  }
+  @media only screen and (max-width: 540px) {
+    left: 0;
   }
 }
 

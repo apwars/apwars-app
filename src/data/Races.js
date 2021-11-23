@@ -15,7 +15,8 @@ export const RACE_DESCRIPTION = {
 export const ENLISTMENT_OPTIONS = [{
     id: RACES.HUMANS,
     name: RACE_DESCRIPTION[RACES.HUMANS],
-    image: '/images/troops/wwizard-portrait.png',
+   /*  image: '/images/troops/wwizard-portrait.png', */
+    image: '/images/troops/units/humans/wWIZARD.png',
     title: 'Day 1',
     monsterId: 1,
     background: '/images/background/enlistment-1.jpg',
@@ -25,7 +26,8 @@ export const ENLISTMENT_OPTIONS = [{
 {
     id: RACES.ORCS,
     name: RACE_DESCRIPTION[RACES.ORCS],
-    image: '/images/troops/wshaman-portrait.png',
+    /* image: '/images/troops/wshaman-portrait.png', */
+    image: '/images/troops/units/orcs/wSHAMAN.png',
     title: 'Day 2',
     monsterId: 2,
     background: '/images/background/enlistment-2.jpg',
@@ -35,7 +37,8 @@ export const ENLISTMENT_OPTIONS = [{
 {
     id: RACES.UNDEADS,
     name: RACE_DESCRIPTION[RACES.UNDEADS],
-    image: '/images/troops/wwitch-portrait.png',
+    /* image: '/images/troops/wwitch-portrait.png', */
+    image: '/images/troops/units/undeads/wWITCH.png',
     title: 'Day 3',
     monsterId: 3,
     background: '/images/background/enlistment-3.jpg',
@@ -45,7 +48,8 @@ export const ENLISTMENT_OPTIONS = [{
 {
     id: RACES.ELVES,
     name: RACE_DESCRIPTION[RACES.ELVES],
-    image: '/images/troops/wferal-spirit-portrait.png',
+    /* image: '/images/troops/wferal-spirit-portrait.png', */
+    image: '/images/troops/units/elves/wFERAL-SPIRIT.png',
     title: 'Day 4',
     monsterId: 4,
     background: '/images/background/enlistment-4.jpg',
