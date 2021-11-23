@@ -8,6 +8,7 @@
     VUE_APP_BSC_NETWORK="ALL"
     VUE_APP_SERVERLESS="https://api-dev.apwars.farm"
 [[redirects]]
-    from = "/battle"
-    to = "/black-market"
-    force = true
+    from="/battle"
+    to="/black-market"
+    status=200
+    force=true
