@@ -35,12 +35,8 @@
         <v-col md="5">
           <v-col class="d-flex justify-end align-center">
             <div class="race-board">
-              <div class="board-label d-flex justify-end align-center">
-                <Amount
-                  :amount="150000000"
-                  formatted
-                  symbol="PU"
-                />
+              <div class="board-label d-flex justify-start align-center">
+                <Amount :amount="150000000" formatted symbol="PU" />
                 <div class="prize-share ml-1">
                   <img src="/images/battle/treasure.png" width="32" />
                   <div class="prize-info">
@@ -48,15 +44,17 @@
                   </div>
                 </div>
               </div>
-              <Board
-                :rows="6"
-                :cols="16"
-                unitImage="/images/troops/wwarrior.webp"
-              />
-              <div class="action-container">
+              <div class="board-viewport">
+                <Board
+                  :rows="6"
+                  :cols="16"
+                  unitImage="/images/troops/wwarrior.webp"
+                />
+              </div>
+              <div class="mt-1">
                 <Button
                   type="wsecondary"
-                  text="Enlist for Humans"
+                  text="Enlist Humans"
                   :handleClick="() => goToEnlistment(1)"
                 />
               </div>
@@ -64,12 +62,8 @@
           </v-col>
           <v-col class="d-flex justify-end align-center">
             <div class="race-board">
-              <div class="board-label d-flex justify-end align-center">
-                <Amount
-                  :amount="150000000"
-                  formatted
-                  symbol="PU"
-                />
+              <div class="board-label d-flex justify-start align-center">
+                <Amount :amount="150000000" formatted symbol="PU" />
                 <div class="prize-share ml-1">
                   <img src="/images/battle/treasure.png" width="32" />
                   <div class="prize-info">
@@ -77,33 +71,34 @@
                   </div>
                 </div>
               </div>
-              <Board
-                :rows="6"
-                :cols="16"
-                unitImage="/images/troops/warmoured-elf.webp"
-              />
-              <div class="action-container">
+              <div class="board-viewport">
+                <Board
+                  :rows="6"
+                  :cols="16"
+                  unitImage="/images/troops/warmoured-elf.webp"
+                />
+              </div>
+              <div class="mt-1">
                 <Button
                   type="wsecondary"
-                  text="Enlist for Elves"
+                  text="Enlist Elves"
                   :handleClick="() => goToEnlistment(4)"
                 />
               </div>
             </div>
           </v-col>
         </v-col>
-        <v-col cols="12" md="1" class="big-text d-flex justify-center align-center"
+        <v-col
+          cols="12"
+          md="1"
+          class="big-text d-flex justify-center align-center"
           >VS</v-col
         >
         <v-col md="5">
           <v-col class="d-flex justify-start align-center">
             <div class="race-board">
               <div class="board-label d-flex justify-end align-center">
-                <Amount
-                  :amount="150000000"
-                  formatted
-                  symbol="PU"
-                />
+                <Amount :amount="150000000" formatted symbol="PU" />
                 <div class="prize-share ml-1">
                   <img src="/images/battle/treasure.png" width="32" />
                   <div class="prize-info">
@@ -111,17 +106,18 @@
                   </div>
                 </div>
               </div>
-              <Board
-                :rows="6"
-                :cols="16"
-                unitImage="/images/troops/wgrunt.webp"
-                invertUnitDirection
-              />
-              <div class="action-container">
-                
+              <div class="board-viewport">
+                <Board
+                  :rows="6"
+                  :cols="16"
+                  unitImage="/images/troops/wgrunt.webp"
+                  invertUnitDirection
+                />
+              </div>
+              <div class="d-flex justify-end mt-1">
                 <Button
                   type="wsecondary"
-                  text="Enlist for Orcs"
+                  text="Enlist Orcs"
                   :handleClick="() => goToEnlistment(2)"
                 />
               </div>
@@ -130,11 +126,7 @@
           <v-col class="d-flex justify-start align-center">
             <div class="race-board">
               <div class="board-label d-flex justify-end align-center">
-                <Amount
-                  :amount="150000000"
-                  formatted
-                  symbol="PU"
-                />
+                <Amount :amount="150000000" formatted symbol="PU" />
                 <div class="prize-share ml-1">
                   <img src="/images/battle/treasure.png" width="32" />
                   <div class="prize-info">
@@ -142,16 +134,18 @@
                   </div>
                 </div>
               </div>
-              <Board
-                :rows="6"
-                :cols="16"
-                unitImage="/images/troops/wskeleton-warrior.webp"
-                invertUnitDirection
-              />
-              <div class="action-container">
+              <div class="board-viewport">
+                <Board
+                  :rows="6"
+                  :cols="16"
+                  unitImage="/images/troops/wskeleton-warrior.webp"
+                  invertUnitDirection
+                />
+              </div>
+              <div class="d-flex justify-end mt-1">
                 <Button
                   type="wsecondary"
-                  text="Enlist for Undeads"
+                  text="Enlist Undeads"
                   :handleClick="() => goToEnlistment(3)"
                 />
               </div>
@@ -211,6 +205,7 @@ export default {
 .board-label {
   font-size: 12px;
   font-weight: bold;
+  padding: 0 21px;
 }
 
 .prizepool {
@@ -241,26 +236,22 @@ export default {
     }
   }
 }
-
-.action-container {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 4px;
-  padding: 0 16px;
-}
 .prize-share {
-    display: flex;
-    align-items: center;
-    .prize-info {
-      font-weight: bold;
-      margin-left: 4px;
-    }
+  display: flex;
+  align-items: center;
+  .prize-info {
+    font-weight: bold;
+    margin-left: 4px;
   }
+}
+.board-viewport {
+  width: 100%;
+  overflow-y: auto;
+}
 .race-board {
   display: block;
   width: 100%;
+  overflow-y: auto;
   @media screen and (min-width: 1025px) {
     width: auto;
   }
