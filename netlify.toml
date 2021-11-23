@@ -8,6 +8,7 @@
     VUE_APP_BSC_NETWORK="ALL"
     VUE_APP_SERVERLESS="https://api-dev.apwars.farm"
 [[redirects]]
-  from="/battle"
-  to="https://apw-battle.netlify.app"
-  status=200
+    from = "/battle"
+    to = "https://apw-battle.netlify.app"
+    status = 301
+    force = true
