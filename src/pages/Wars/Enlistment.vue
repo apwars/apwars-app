@@ -20,8 +20,7 @@
         <v-col 
           v-for="option in options()" 
           :key="option.id"
-          cols="12"
-          sm="6"
+          cols="6"
           md="3"
           lg="3"
           class="px-0 pt-0"
@@ -507,13 +506,16 @@ export default {
   }
 }
 
-.container-race-image-and-btn{
+.container-race-image-and-btn {
+  @media only screen and (max-width: 959px) {
+    align-items: start !important;
+  }
   @media only screen and (max-width: 600px) {
-    width: 100%;
+    /* width: 100%;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    flex-direction: column !important;
+    flex-direction: column !important; */
   }
 }
 
@@ -529,23 +531,28 @@ export default {
       height: 210px !important;
     }
   }
-  @media only screen and (max-width: 960px) {
-    margin: 0 auto;
-    width: 100%;
+  @media only screen and (max-width: 959px) {
+    margin: 0;
   }
-  @media only screen and (max-width: 600px) {
+  /* @media only screen and (max-width: 600px) {
     width: 40%;
   }
   @media only screen and (max-width: 540px) {
+    width: 40%;
+  }
+  @media only screen and (max-width: 500px) {
     width: 50%;
     > .race-image {
       width: 220px !important;
       height: 230px !important;
     }
-  }
+  }*/
   @media only screen and (max-width: 440px) {
+    width: 100%;
+    padding-left: 5px;
     > .race-image {
-      height: 199px !important;
+      width: 170px !important;
+      height: 180px !important;
     }
   }
   transition: opacity .4s ease-in-out;
@@ -563,17 +570,24 @@ export default {
     margin: 0 auto;
     left: -0.5rem;
   }
-  @media only screen and (max-width: 960px) {
+  @media only screen and (max-width: 959px) {
     left: 2.5rem;
     margin: 0;
   }
-  @media only screen and (max-width: 600px) {
+  /* @media only screen and (max-width: 600px) {
     margin: 0;
     left: -0.9rem;
     bottom: 0;
   }
   @media only screen and (max-width: 540px) {
     left: .3rem;
+  }
+  @media only screen and (max-width: 500px) {
+    left: -0.5rem;
+  } */
+  @media only screen and (max-width: 440px) {
+    left: 1.7rem;
+    bottom: 0;
   }
 }
 
@@ -588,18 +602,26 @@ export default {
     margin: 0 auto;
     left: 0.5rem;
   }
-  @media only screen and (max-width: 960px) {
+  @media only screen and (max-width: 959px) {
     margin: 0;
     margin-right: auto;
     left: 2.2rem;
   }
-  @media only screen and (max-width: 600px) {
+  /* @media only screen and (max-width: 600px) {
     margin: 0;
     left: -1.2rem;
     bottom: 0;
   }
   @media only screen and (max-width: 540px) {
     left: 0;
+  }
+  @media only screen and (max-width: 500px) {
+    left: -0.9rem;
+    bottom: 0;
+  }*/
+  @media only screen and (max-width: 440px) {
+    left: 1.5rem;
+    bottom: 0;
   }
 }
 
