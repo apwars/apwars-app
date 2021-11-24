@@ -28,8 +28,8 @@ export default {
         "97": "0xb732A7877c6E7E12545730113fd5305849E848A7",
       },
       treasureHunt: {
-        "56": "0xE72A7aCC3751DaE14AA9A79aD96c472341674CBd",
-        "97": "0x79414a9b8B6c1DCaebeE7efCBFC48d1e72b817d7",
+        "56": "0x07ebef3047bb83d6ca6e3a0f921cbccc89c01b42",
+        "97": "0xd3fE14C58b1d284aF14Bf61dec20a7727F22f1cc",
       },
     };
   },
