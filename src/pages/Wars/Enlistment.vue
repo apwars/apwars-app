@@ -109,8 +109,8 @@
                 <v-col v-for="weapon in weapons" :key="weapon.name" cols="6" md="3" class="px-0">
                   <div class="d-flex">
                     <img
-                      :width="$vuetify.breakpoint.xs ? '60' : '60'" 
-                      :height="$vuetify.breakpoint.xs ? '60' : '60'"
+                      :width="$vuetify.breakpoint.xs ? '50' : '60'" 
+                      :height="$vuetify.breakpoint.xs ? '50' : '60'"
                       :src="`/images/weapons/${weapon.icon}.png`"/>
                     <div style="font-size: 14px">
                       <span class="d-block">{{ weapon.title }}</span>
