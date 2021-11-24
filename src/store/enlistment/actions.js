@@ -1,5 +1,6 @@
 import Troops from "@/lib/eth/Troops";
 import Collectibles from "@/lib/eth/Collectibles";
+import { RACE_FORMATIONS } from "@/data/Enlistment";
 
 export default {
     stakeTroop({ commit }, { amount, troopId }) {
@@ -28,5 +29,13 @@ export default {
             const balance = Number(await contract.balanceOf(rootState.user.account, weapon.id))
             commit('setWeaponsBalance', { balance, weaponId: weapon.id });
         }
+    },
+    async changeFormation({ commit, dispatch }, { raceId, value }) {
+        const formationData = RACE_FORMATIONS[raceId][value];
+        const troopsIds = Object.keys(formationData);
+        for (const troopId of troopsIds) {
+            dispatch('stakeTroop', { troopId: Number(troopId), amount: formationData[troopId] });
+        }
+        commit('setFormation', value);
     }
 };

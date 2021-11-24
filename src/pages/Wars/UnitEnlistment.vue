@@ -42,30 +42,11 @@
                 <v-currency-field
                   outlined
                   color="#FFF"
-                  persistent-hint
                   v-bind="currencyConfig"
                   v-model="stakedTroop"
-                  :error="stakedTroop > this.maxPossibleTroopStake"
-                  :max="this.maxPossibleTroopStake"
-                  :disabled="
-                    !troop.balance || !troop.balance > troop.war.stakeMin
-                  "
-                >
-                  <template v-slot:append>
-                    <div class="d-flex align-center">
-                      /{{ troop.war.stakeLimit }}
-                      <v-btn
-                        class="ml-1"
-                        rounded
-                        small
-                        @click="stakeMax"
-                        :disabled="!maxPossibleTroopStake"
-                      >
-                        MAX
-                      </v-btn>
-                    </div>
-                  </template>
-                </v-currency-field>
+                  :error="stakedTroop > this.troop.balance"
+                  disabled
+                />
                 <div class="enlist-title">
                   {{ weapon.title }}
                 </div>
@@ -191,6 +172,13 @@
               />
               Select your formation
             </div>
+            <v-select
+              :items="formationOptions"
+              label="Select"
+              single-line
+              :value="formation"
+              @change="handleFormationChange"
+            ></v-select>
             <div class="troop-list mt-2">
               <div
                 class="troop-status mb-1"
@@ -262,10 +250,10 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapActions } from "vuex";
+import { mapMutations, mapGetters, mapActions, mapState } from "vuex";
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
-import { FORMATIONS, FORMATIONS_NAMES } from "@/data/Enlistment";
+import { RACE_FORMATIONS, FORMATIONS_NAMES } from "@/data/Enlistment";
 
 import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
@@ -288,6 +276,9 @@ export default {
     Amount,
   },
   computed: {
+    ...mapState({
+      formation: state => state.enlistment.formation
+    }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
       getByNameOrAddress: "enlistment/getByNameOrAddress",
@@ -393,8 +384,7 @@ export default {
       return Math.min(this.weapon.balance, this.weapon.war.stakeLimit);
     },
     formationOptions() {
-      console.log(Object.values(FORMATIONS))
-      return Object.values(FORMATIONS).map(value => ({ label: FORMATIONS_NAMES[value], value }));
+      return Object.keys(RACE_FORMATIONS[this.troop.race]).map(key => ({ text: FORMATIONS_NAMES[key], value: key }));
     },
 
     stakedTroop: {
@@ -441,6 +431,7 @@ export default {
       stakeTroop: "enlistment/stakeTroop",
       stakeWeapon: "enlistment/stakeWeapon",
       updateWeaponsBalance: "enlistment/updateWeaponsBalance",
+      changeFormation: "enlistment/changeFormation",
     }),
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
@@ -464,12 +455,6 @@ export default {
       }
       return this.unitsFromRace[position].name;
     },
-    stakeMax() {
-      this.stakeTroop({
-        amount: this.maxPossibleTroopStake,
-        troopId: this.troop.id,
-      });
-    },
     stakeMaxWeapon() {
       this.stakeWeapon({
         amount: this.maxPossibleWeaponStake - this.totalStakedWeapon,
@@ -484,6 +469,9 @@ export default {
         )
         .focus();
     },
+    handleFormationChange(value) {
+      this.changeFormation({ raceId: this.troop.race, value });
+    }
   },
   watch: {
     isConnected() {
