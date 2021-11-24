@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-war">
+    <div class="bg-page">
       <v-container fluid>
         <v-row class="d-none d-sm-none d-md-flex mt-n6">
           <v-col cols="12" md="3">
@@ -429,10 +429,10 @@ export default {
 </script>
 
 <style scoped>
-.bg-war {
-  background-image: url("/images/battle/bg-war.jpg");
+.bg-page {
+  background-image: url("/images/backgrounds/jungle.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: top;
 }
 .text-subtitle-welcome-war {
   color: #bea38d;
