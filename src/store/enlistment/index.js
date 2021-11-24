@@ -14,6 +14,7 @@ const state = {
     enlisted: 0,
   })),
   weapons: getWeapons().map((w) => ({ ...w, amount: 0, balance: 0 })),
+  formation: null,
 };
 
 export default {

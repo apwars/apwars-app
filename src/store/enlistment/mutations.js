@@ -44,4 +44,7 @@ export default {
       }
     });
   },
+  setFormation(state, value) {
+    state.formation = value;
+  }
 };
