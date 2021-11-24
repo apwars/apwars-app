@@ -108,7 +108,10 @@
               <v-row class="pl-3">
                 <v-col v-for="weapon in weapons" :key="weapon.name" cols="6" md="3" class="px-0">
                   <div class="d-flex">
-                    <img width="70" height="70" :src="`/images/weapons/${weapon.icon}.png`"/>
+                    <img
+                      :width="$vuetify.breakpoint.xs ? '60' : '70'" 
+                      :height="$vuetify.breakpoint.xs ? '60' : '70'"
+                      :src="`/images/weapons/${weapon.icon}.png`"/>
                     <div>
                       <span class="d-block">{{ weapon.title }}</span>
                       <span class="d-block">Global: 1,5M</span>
