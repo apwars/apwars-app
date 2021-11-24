@@ -123,11 +123,22 @@
               cols="12"
               md="4"
               style="position: relative;">
-              <img
-                :width="$vuetify.breakpoint.xs ? '300' : '370'"
+              <v-img
+                :max-width="$vuetify.breakpoint.xs ? '300' : '370'"
+                :max-height="$vuetify.breakpoint.xs ? '430' : '500'"
                 :src="`/images/monsters/${monsterToView.id}.webp`"
+                :lazy-src="`/images/monsters/${monsterToView.id}.webp`"
                 :alt="monsterToView.name"
-              />
+              >
+                <template v-slot:placeholder>
+                  <v-row class="fill-height ma-0" align="center" justify="center">
+                    <v-progress-circular
+                      indeterminate
+                      color="#ffeebc lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
               <div class="treasure-progress mb-3">
                 <Progress class="progress" :value="4" :maxScale="10" />
                 <div class="treasure">
@@ -417,8 +428,8 @@ export default {
     },
 
     selectRace(raceName, monsterId, monsterName) {
-      this.isDisabled(raceName);
-      console.log('123', monsterId, monsterName);
+      this.isEnabled(raceName);
+
       if (raceName === 'Elves') this.listTroops(1, monsterId, monsterName);
       else if (raceName === 'Humans') this.listTroops(0, monsterId, monsterName);
       else if (raceName === 'Orcs') this.listTroops(2, monsterId, monsterName);
@@ -426,14 +437,12 @@ export default {
     },
 
     listTroops(racePosition, monsterId, monsterName) {
-      console.log('124', monsterId, monsterName);
-      this.troopsToView = this.troops[racePosition];
       this.monsterToView.id = monsterId;
       this.monsterToView.name = monsterName;
-
+      this.troopsToView = this.troops[racePosition];
     },
 
-    isDisabled(name) {
+    isEnabled(name) {
       this.selectedRace = name;
     },
   },
