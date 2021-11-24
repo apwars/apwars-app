@@ -22,7 +22,6 @@
           <countdown
               :time="countdownTimer"
               title="Time to claim units and prize"
-              @end="getNextWarPhase"
               hideEnd
             />
           <div class="prizepool">
@@ -57,7 +56,7 @@
               />
               <div class="d-flex justify-end mt-1 mr-2">
                 <Button
-                  type="wsecondary"
+                  type="wprimary"
                   text="Enlist Humans"
                   :handleClick="() => goToEnlistment(1)"
                 />
@@ -83,7 +82,7 @@
               />
               <div class="d-flex justify-end mt-1 mr-2">
                 <Button
-                  type="wsecondary"
+                  type="wprimary"
                   text="Enlist Elves"
                   :handleClick="() => goToEnlistment(4)"
                 />
@@ -117,7 +116,7 @@
                 />
                 <div class="d-flex justify-start mt-1">
                   <Button
-                    type="wsecondary"
+                    type="wprimary"
                     text="Enlist Orcs"
                     :handleClick="() => goToEnlistment(2)"
                   />
@@ -146,7 +145,7 @@
 
               <div class="d-flex justify-start mt-1">
                 <Button
-                  type="wsecondary"
+                  type="wprimary"
                   text="Enlist Undeads"
                   :handleClick="() => goToEnlistment(3)"
                 />
