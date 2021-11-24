@@ -2,76 +2,86 @@
   <div class="background">
     <v-container>
       <v-row v-if="1 == 1 || isConnected && !isLoading && isEnlistment">
-        <v-col cols="12" sm="12" :class="$vuetify.breakpoint.xs ? 'pt-3' : 'pt-1 pb-0'">
-          <Button
-            type="wtertiary"
-            text="Back to war page"
-            :handleClick="backToWar"
-            noPadding
-          />
-          <div class="d-flex justify-space-between mt-2">
-            <Title>Report</Title>
-          </div>
-          <div class="d-flex justify-center sword-icon">
-            <v-img :max-width="$vuetify.breakpoint.lgAndUp ? '56.57' : '46'" src="/images/icons/swords.png" />
-          </div>
-        </v-col>
-
-        <v-col 
-          v-for="option in options()" 
-          :key="option.id"
-          cols="6"
-          md="3"
-          lg="3"
-          class="px-0 pt-0"
-        >
-          <div
-            class="container-race-image-and-btn"
-            :class="option.name === 'Orcs' ||
-            option.name === 'Undeads' ? 'd-flex flex-column align-end' : ''">
-            <v-hover v-slot="{ hover }">
-              <div
-                class="race-image-container"
-                :class="{ 'on-hover': hover }"
-                :style="selectedRace === option.name ? 'opacity: 1; filter: none;' : ''"
-              >
-                <v-img
-                  class="race-image"
-                  :class="[invertImage(option.name) ? 'invert-image' : '']"
-                  :src="option.image"
-                  :lazy-src="option.image"
-                  :alt="option.name"
-                  :width="option.name === 'Orcs' ? '240' : '225'"
-                  height="250"
-                >
-                  <template v-slot:placeholder>
-                    <v-row class="fill-height ma-0" align="center" justify="center">
-                      <v-progress-circular
-                        indeterminate
-                        color="#ffeebc lighten-5"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </div>
-            </v-hover>
-            <div
-              @click="selectRace(option.name, option.monsterId, option.monsterName)"
-              :class="option.name === 'Orcs' ||
-                option.name === 'Undeads' ? 'button-container-degens' : 'button-container-corp'" 
-              >
-              <Button
-                class="mt-1"
-                type="wprimary"
-                :text="option.name"
-                isBlock
-              />
-            </div>
-          </div>
-        </v-col>
-
-        <v-col v-if="troopsToView" cols="12">
+        <v-col>
           <v-row>
+            <v-col cols="12" sm="12" :class="$vuetify.breakpoint.xs ? 'pt-3' : 'pt-1 pb-0'">
+              <Button
+                type="wtertiary"
+                text="Back to war page"
+                :handleClick="backToWar"
+                noPadding
+              />
+              <div class="d-flex justify-space-between mt-2">
+                <Title>Report</Title>
+              </div>
+              <!-- <div class="d-flex justify-center sword-icon">
+                <v-img :max-width="$vuetify.breakpoint.lgAndUp ? '56.57' : '46'" src="/images/icons/swords.png" />
+              </div> -->
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col 
+              v-for="option in options()" 
+              :key="option.id"
+              cols="6"
+              md="3"
+              lg="3"
+              class="px-0 pt-0"
+            >
+              <div
+                class="container-race-image-and-btn"
+                :class="option.name === 'Orcs' ||
+                option.name === 'Undeads' ? 'd-flex flex-column align-end' : ''">
+                <v-hover v-slot="{ hover }">
+                  <div
+                    class="race-image-container"
+                    :class="{ 'on-hover': hover }"
+                    :style="selectedRace === option.name ? 'opacity: 1; filter: none;' : ''"
+                  >
+                    <h2
+                      class="text-center mb-1"
+                      :class="option.name === 'Orcs' ||
+                        option.name === 'Undeads' ? 'button-container-degens' : 'button-container-corp'" >{{ option.name }}
+                    </h2>
+                    <v-img
+                      class="race-image"
+                      :class="[invertImage(option.name) ? 'invert-image' : '']"
+                      :src="option.image"
+                      :lazy-src="option.image"
+                      :alt="option.name"
+                      :width="option.name === 'Orcs' ? '240' : '225'"
+                      @click="selectRace(option.name, option.monsterId, option.monsterName)"
+                      height="250"
+                    >
+                      <template v-slot:placeholder>
+                        <v-row class="fill-height ma-0" align="center" justify="center">
+                          <v-progress-circular
+                            indeterminate
+                            color="#ffeebc lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </div>
+                </v-hover>
+                <!-- <div
+                  @click="selectRace(option.name, option.monsterId, option.monsterName)"
+                  :class="option.name === 'Orcs' ||
+                    option.name === 'Undeads' ? 'button-container-degens' : 'button-container-corp'" 
+                  >
+                  <Button
+                    class="mt-1"
+                    type="wprimary"
+                    :text="option.name"
+                    isBlock
+                  />
+                </div> -->
+              </div>
+            </v-col>
+          </v-row>
+
+          <v-row v-if="troopsToView">
             <v-col cols="12" md="8">
               <v-row>
                 <v-col
@@ -132,6 +142,7 @@
                 :src="`/images/monsters/${monsterToView.id}.webp`"
                 :lazy-src="`/images/monsters/${monsterToView.id}.webp`"
                 :alt="monsterToView.name"
+                :class="[invertImage(monsterToView.name) ? 'invert-image' : '']"
               >
                 <template v-slot:placeholder>
                   <v-row class="fill-height ma-0" align="center" justify="center">
@@ -156,37 +167,37 @@
               </v-btn>
             </v-col>
           </v-row>
-        </v-col>
-
-        <v-col>
-          <v-row align="center" justify="center">
-            <v-col cols="11" sm="" md="6" lg="5" xl="4" class="px-0">
-              <v-btn
-                block
-                color="#3A2720"
-                tile
-                class="d-flex"
-                style="padding: 30px 0px; border: 2px solid #FFEEBC;">
-                <v-img :max-width="$vuetify.breakpoint.xs ? '36' : '48.74'" src="/images/icons/swords.png" />
-                <span
-                  :class="$vuetify.breakpoint.xs ? 'text-h6 ml-1 text-button' : 'text-h5 ml-2'"
-                >
-                    Bring survivors and claim prizes
-                </span>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-col>
-
-        <v-col v-if="isWar.reportVersion" class="pa-0">
-          <v-row>
-            <v-col>
-              <h1 class="text-center">Players</h1>
-            </v-col>
-          </v-row>
 
           <v-row>
             <v-col>
+              <v-row align="center" justify="center">
+                <v-col cols="11" sm="" md="6" lg="5" xl="4" class="px-0">
+                  <v-btn
+                    block
+                    color="#3A2720"
+                    tile
+                    class="d-flex"
+                    style="padding: 30px 0px; border: 2px solid #FFEEBC;">
+                    <v-img :max-width="$vuetify.breakpoint.xs ? '36' : '48.74'" src="/images/icons/swords.png" />
+                    <span
+                      :class="$vuetify.breakpoint.xs ? 'text-h6 ml-1 text-button' : 'text-h5 ml-2'"
+                    >
+                        Bring survivors and claim prizes
+                    </span>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+
+          <v-row v-if="isWar.reportVersion">
+            <v-col class="pb-0">
+              <Title>Players</Title>
+            </v-col>
+          </v-row>
+
+          <v-row v-if="isWar.reportVersion">
+            <v-col class="pt-1">
               <table-war-report
                 v-if="isWar.reportVersion === '1'"
                 :war="isWar"
@@ -376,7 +387,7 @@ export default {
         const troops = await getUnitsEnlistment()
         this.troops = troops
 
-        this.listTroops(1, 4);
+        this.listTroops(1, 4, 'Forger');
 
         const weapons = await getWeapons()
         this.weapons = weapons
@@ -406,8 +417,7 @@ export default {
     }, */
 
     invertImage(name) {
-
-      return name === 'Orcs' || name === 'Undeads';
+      return name === 'Orcs' || name === 'Undeads' || name === 'Forger';
     },
 
     backToWar() {
@@ -520,9 +530,9 @@ export default {
   @media only screen and (max-width: 660px) {
     left: -3.5rem;
   }
-  @media only screen and (max-width: 599px) {
-    display: none !important;
-  }
+  /* @media only screen and (max-width: 599px) {
+    left: 0rem;
+  } */
 }
 
 .container-race-image-and-btn {
@@ -536,6 +546,10 @@ export default {
     justify-content: center !important;
     flex-direction: column !important; */
   }
+}
+
+.race-image {
+  cursor: pointer;
 }
 
 .race-image-container {
@@ -580,7 +594,7 @@ export default {
   }
 }
 
-.button-container-corp {
+/* .button-container-corp {
   width: 130px;
   position: relative;
   left: 3.2rem;
@@ -592,7 +606,7 @@ export default {
     left: 2.5rem;
     margin: 0;
   }
-  /* @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 600px) {
     margin: 0;
     left: -0.9rem;
     bottom: 0;
@@ -602,14 +616,14 @@ export default {
   }
   @media only screen and (max-width: 500px) {
     left: -0.5rem;
-  } */
+  }
   @media only screen and (max-width: 440px) {
     left: 1.7rem;
     bottom: 0;
   }
-}
+} */
 
-.button-container-degens {
+/* .button-container-degens {
   width: 130px;
   position: relative;
   right: 3.4rem;
@@ -625,7 +639,7 @@ export default {
     margin-right: auto;
     left: 2.2rem;
   }
-  /* @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 600px) {
     margin: 0;
     left: -1.2rem;
     bottom: 0;
@@ -636,12 +650,12 @@ export default {
   @media only screen and (max-width: 500px) {
     left: -0.9rem;
     bottom: 0;
-  }*/
+  }
   @media only screen and (max-width: 440px) {
     left: 1.5rem;
     bottom: 0;
   }
-}
+} */
 
 .monster-position {
   display: flex;
@@ -686,5 +700,4 @@ export default {
     font-size: 13px !important;
   }
 }
-
 </style>
