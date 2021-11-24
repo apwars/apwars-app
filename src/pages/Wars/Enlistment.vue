@@ -105,7 +105,7 @@
                 </v-col>
               </v-row>
 
-              <v-row>
+              <v-row class="pl-3">
                 <v-col v-for="weapon in weapons" :key="weapon.name" cols="6" md="3" class="px-0">
                   <div class="d-flex">
                     <img width="70" height="70" :src="`/images/weapons/${weapon.icon}.png`"/>
