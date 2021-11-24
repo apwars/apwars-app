@@ -56,7 +56,7 @@
               </div>
             </v-hover>
             <div
-              @click="selectRace(option.name)"
+              @click="selectRace(option.name, option.monsterId, option.monsterName)"
               :class="option.name === 'Orcs' ||
                 option.name === 'Undeads' ? 'button-container-degens' : 'button-container-corp'" 
               >
@@ -70,7 +70,7 @@
           </div>
         </v-col>
 
-        <v-col cols="12">
+        <v-col v-if="troopsToView" cols="12">
           <v-row>
             <v-col cols="12" md="8">
               <v-row>
@@ -125,7 +125,8 @@
               style="position: relative;">
               <img
                 :width="$vuetify.breakpoint.xs ? '300' : '370'"
-                :src="`/images/monsters/${monsterToView}`"
+                :src="`/images/monsters/${monsterToView.id}.webp`"
+                :alt="monsterToView.name"
               />
               <div class="treasure-progress mb-3">
                 <Progress class="progress" :value="4" :maxScale="10" />
@@ -141,7 +142,9 @@
               </v-btn>
             </v-col>
           </v-row>
+        </v-col>
 
+        <v-col>
           <v-row align="center" justify="center">
             <v-col cols="11" sm="" md="6" lg="5" xl="4" class="px-0">
               <v-btn
@@ -161,7 +164,7 @@
           </v-row>
         </v-col>
 
-        <v-col class="pa-0">
+        <v-col v-if="isWar.reportVersion" class="pa-0">
           <v-row>
             <v-col>
               <h1 class="text-center">Players</h1>
@@ -252,8 +255,10 @@ export default {
       troops: [],
       weapons: [],
       troopsToView: [],
-      monsters: ['2.webp', '1.webp', '3.webp', '4.webp'],
-      monsterToView: '',
+      monsterToView: [
+        { id: ''},
+        { name: ''},
+      ],
       selectedRace: '',
     };
   },
@@ -307,9 +312,9 @@ export default {
       this.loadData();
     },
 
-    currentBlockNumber() {
+    /* currentBlockNumber() {
       this.loadData();
-    },
+    }, */
   },
 
   beforeRouteLeave(to, from, next) {
@@ -353,16 +358,15 @@ export default {
     },
 
     async loadData() {
-      const troops = await getUnitsEnlistment()
-      this.troops = troops
-
-      
-      this.listTroops(1);
-
-      const weapons = await getWeapons()
-      this.weapons = weapons
-
       try {
+        const troops = await getUnitsEnlistment()
+        this.troops = troops
+
+        this.listTroops(1, 4);
+
+        const weapons = await getWeapons()
+        this.weapons = weapons
+
         if (this.warMachine.isLoading) {
           return;
         }
@@ -412,18 +416,21 @@ export default {
       return invertedRaces;
     },
 
-    selectRace(raceName) {
+    selectRace(raceName, monsterId, monsterName) {
       this.isDisabled(raceName);
-
-      if (raceName === 'Elves') this.listTroops(1);
-      else if (raceName === 'Humans') this.listTroops(0);
-      else if (raceName === 'Orcs') this.listTroops(2);
-      else if (raceName === "Undeads") this.listTroops(3);
+      console.log('123', monsterId, monsterName);
+      if (raceName === 'Elves') this.listTroops(1, monsterId, monsterName);
+      else if (raceName === 'Humans') this.listTroops(0, monsterId, monsterName);
+      else if (raceName === 'Orcs') this.listTroops(2, monsterId, monsterName);
+      else if (raceName === "Undeads") this.listTroops(3, monsterId, monsterName);
     },
 
-    listTroops(racePosition) {
+    listTroops(racePosition, monsterId, monsterName) {
+      console.log('124', monsterId, monsterName);
       this.troopsToView = this.troops[racePosition];
-      this.monsterToView = this.monsters[racePosition];
+      this.monsterToView.id = monsterId;
+      this.monsterToView.name = monsterName;
+
     },
 
     isDisabled(name) {
