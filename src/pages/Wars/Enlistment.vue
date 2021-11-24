@@ -95,7 +95,7 @@
                   </div>
 
                   <div class="ml-1">
-                    <span class="d-block" style="color: #FFB800; font-size: 17px;">{{ unit.ticker }}</span>
+                    <span class="d-block" style="color: #FFB800; font-size: 17px;">{{ unit.ticker.substring(1) }}</span>
                     <span class="d-block mt-1">Units enlisted: 105k</span>
                     <span class="d-block">Deads units: 80k</span>
                     <span class="d-block mb-2">Survivors: 25k</span>
