@@ -21,63 +21,131 @@
           </v-row>
 
           <v-row>
-            <v-col 
-              v-for="option in options()" 
-              :key="option.id"
-              cols="6"
-              md="3"
-              lg="3"
-              class="px-0 pt-0"
-            >
-              <div
-                class="container-race-image-and-btn"
-                :class="option.name === 'Orcs' ||
-                option.name === 'Undeads' ? 'd-flex flex-column align-end' : ''">
-                <v-hover v-slot="{ hover }">
-                  <div
-                    class="race-image-container"
-                    :class="{ 'on-hover': hover }"
-                    :style="selectedRace === option.name ? 'opacity: 1; filter: none;' : ''"
-                  >
-                    <h2
-                      class="text-center mb-1"
-                      :class="option.name === 'Orcs' ||
-                        option.name === 'Undeads' ? 'button-container-degens' : 'button-container-corp'" >{{ option.name }}
-                    </h2>
-                    <v-img
-                      class="race-image"
-                      :class="[invertImage(option.name) ? 'invert-image' : '']"
-                      :src="option.image"
-                      :lazy-src="option.image"
-                      :alt="option.name"
-                      :width="option.name === 'Orcs' ? '240' : '225'"
-                      @click="selectRace(option.name, option.monsterId, option.monsterName)"
-                      height="250"
+            <v-col cols="5">
+              <v-row>
+                <v-col 
+                  v-for="option in options('Corporation')" 
+                  :key="option.id"
+                  cols="12"
+                  md="6"
+                  class="pr-0 pt-0"
+                >
+                  <v-hover v-slot="{ hover }">
+                    <div
+                      class="race-image-container"
+                      :class="{ 'on-hover': hover }"
+                      :style="selectedRace === option.name ? 'opacity: 1; filter: none;' : ''"
                     >
-                      <template v-slot:placeholder>
-                        <v-row class="fill-height ma-0" align="center" justify="center">
-                          <v-progress-circular
-                            indeterminate
-                            color="#ffeebc lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </div>
-                </v-hover>
-                <!-- <div
-                  @click="selectRace(option.name, option.monsterId, option.monsterName)"
-                  :class="option.name === 'Orcs' ||
-                    option.name === 'Undeads' ? 'button-container-degens' : 'button-container-corp'" 
+                      <h2
+                        class="text-center mb-1"
+                        :class="option.name === 'Orcs' ||
+                          option.name === 'Undeads' ? 'button-container-degens' :
+                          'button-container-corp'" >{{ option.name }}
+                      </h2>
+                      <v-img
+                        class="race-image"
+                        :src="option.image"
+                        :lazy-src="option.image"
+                        :alt="option.name"
+                        width="240"
+                        @click="selectRace(option.name, option.monsterId, option.monsterName)"
+                        height="250"
+                      >
+                        <template v-slot:placeholder>
+                          <v-row class="fill-height ma-0" align="center" justify="center">
+                            <v-progress-circular
+                              indeterminate
+                              color="#ffeebc lighten-5"
+                            ></v-progress-circular>
+                          </v-row>
+                        </template>
+                      </v-img>
+                    </div>
+                  </v-hover>
+                  <!-- <div
+                    @click="selectRace(option.name, option.monsterId, option.monsterName)"
+                    :class="option.name === 'Orcs' ||
+                      option.name === 'Undeads' ? 'button-container-degens' : 'button-container-corp'" 
+                    >
+                    <Button
+                      class="mt-1"
+                      type="wprimary"
+                      :text="option.name"
+                      isBlock
+                    />
+                  </div> -->
+                </v-col>
+              </v-row>
+            </v-col>
+
+            <v-col cols="2" class="d-flex align-center justify-center px-0">
+              <v-img
+                :max-width="$vuetify.breakpoint.lgAndUp ? '56.57' : '46'"
+                src="/images/icons/swords.png">
+              </v-img>
+            </v-col>
+
+            <v-col cols="5">
+              <v-row>
+                <v-col 
+                  v-for="option in options('Degenerate')" 
+                  :key="option.id"
+                  cols="12"
+                  sm="7"
+                  md="6"
+                  class="pl-0 pt-0"
+                >
+                  <div
+                    class="container-race-image-and-bt d-flex flex-column align-end"
                   >
-                  <Button
-                    class="mt-1"
-                    type="wprimary"
-                    :text="option.name"
-                    isBlock
-                  />
-                </div> -->
-              </div>
+                    <v-hover v-slot="{ hover }">
+                      <div
+                        class="race-image-container"
+                        :class="{ 'on-hover': hover }"
+                        :style="selectedRace === option.name ? 'opacity: 1; filter: none;' : ''"
+                      >
+                        <h2
+                          class="text-center mb-1"
+                          :class="option.name === 'Orcs' ||
+                            option.name === 'Undeads' ? 'button-container-degens' :
+                            'button-container-corp'" >{{ option.name }}
+                        </h2>
+                        <v-img
+                          class="race-image"
+                          :class="[invertImage(option.name) ? 'invert-image' : '']"
+                          :src="option.image"
+                          :lazy-src="option.image"
+                          :alt="option.name"
+                          width="240"
+                          @click="selectRace(option.name, option.monsterId, option.monsterName)"
+                          height="250"
+                        >
+                          <template v-slot:placeholder>
+                            <v-row class="fill-height ma-0" align="center" justify="center">
+                              <v-progress-circular
+                                indeterminate
+                                color="#ffeebc lighten-5"
+                              ></v-progress-circular>
+                            </v-row>
+                          </template>
+                        </v-img>
+                      </div>
+                    </v-hover>
+                    <!-- <div
+                      @click="selectRace(option.name, option.monsterId, option.monsterName)"
+                      :class="option.name === 'Orcs' ||
+                        option.name === 'Undeads' ? 'button-container-degens' : 'button-container-corp'" 
+                      >
+                      <Button
+                        class="mt-1"
+                        type="wprimary"
+                        :text="option.name"
+                        isBlock
+                      />
+                    </div> -->
+                  </div>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
 
@@ -132,10 +200,10 @@
               </v-row>
             </v-col>
             <v-col
-              class="monster-position pa-0"
+              class="d-flex flex-column align-center pa-0"
               cols="12"
               md="4"
-              style="position: relative;">
+              style="position: relative; overflow: hidden;">
               <v-img
                 :max-width="$vuetify.breakpoint.xs ? '300' : '370'"
                 :max-height="$vuetify.breakpoint.xs ? '430' : '500'"
@@ -432,12 +500,17 @@ export default {
       });
     },
 
-    options() {
-      const races = ENLISTMENT_OPTIONS
-      const invertedRaces = []
+    options(faction) {
+      const races = ENLISTMENT_OPTIONS;
+      const invertedRaces = [];
+      const factionToView = [];
 
       invertedRaces.push(races[3], races[0], races[1], races[2]);
-      return invertedRaces;
+
+      if (faction === 'Corporation') factionToView.push(invertedRaces[0], invertedRaces[1]);
+      else if (faction === 'Degenerate') factionToView.push(invertedRaces[2], invertedRaces[3]);
+
+      return factionToView;
     },
 
     selectRace(raceName, monsterId, monsterName) {
@@ -514,9 +587,8 @@ export default {
   transform: scaleX(-1);
 }
 
-.sword-icon {
-  position: relative;
-  top: 11rem;
+/* .sword-icon {
+  
   @media only screen and (max-width: 959px) {
     top: 18rem;
     left: -7rem;
@@ -532,8 +604,8 @@ export default {
   }
   /* @media only screen and (max-width: 599px) {
     left: 0rem;
-  } */
-}
+  }
+}*/
 
 .container-race-image-and-btn {
   @media only screen and (max-width: 959px) {
@@ -553,8 +625,7 @@ export default {
 }
 
 .race-image-container {
-  width: 80%;
-  @media only screen and (min-width: 1903px) {
+  /* @media only screen and (min-width: 1903px) {
     width: 54%;
   }
   @media only screen and (max-width: 1264px) {
@@ -566,7 +637,7 @@ export default {
   }
   @media only screen and (max-width: 959px) {
     margin: 0;
-  }
+  } */
   /* @media only screen and (max-width: 600px) {
     width: 40%;
   }
@@ -581,7 +652,6 @@ export default {
     }
   }*/
   @media only screen and (max-width: 440px) {
-    width: 100%;
     padding-left: 5px;
     > .race-image {
       width: 170px !important;
@@ -591,6 +661,7 @@ export default {
   transition: opacity .4s ease-in-out;
   &:not(.on-hover) {
     filter: grayscale(90%);
+    transition: transform .3s;
   }
 }
 
@@ -656,13 +727,6 @@ export default {
     bottom: 0;
   }
 } */
-
-.monster-position {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
 
 .treasure-progress {
   position: relative;
