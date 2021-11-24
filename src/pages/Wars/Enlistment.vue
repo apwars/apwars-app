@@ -109,10 +109,10 @@
                 <v-col v-for="weapon in weapons" :key="weapon.name" cols="6" md="3" class="px-0">
                   <div class="d-flex">
                     <img
-                      :width="$vuetify.breakpoint.xs ? '60' : '70'" 
-                      :height="$vuetify.breakpoint.xs ? '60' : '70'"
+                      :width="$vuetify.breakpoint.xs ? '60' : '60'" 
+                      :height="$vuetify.breakpoint.xs ? '60' : '60'"
                       :src="`/images/weapons/${weapon.icon}.png`"/>
-                    <div>
+                    <div style="font-size: 14px">
                       <span class="d-block">{{ weapon.title }}</span>
                       <span class="d-block">Global: 1,5M</span>
                       <span class="d-block">My troops: 10,4K</span>
@@ -576,8 +576,7 @@ export default {
   }
   transition: opacity .4s ease-in-out;
   &:not(.on-hover) {
-    opacity: 0.6;
-    filter: grayscale(50%);
+    filter: grayscale(90%);
   }
 }
 
