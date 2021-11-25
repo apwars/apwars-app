@@ -47,7 +47,7 @@
                     4%
                   </div>
                 </div>
-                <Amount :amount="150000000" formatted symbol="PU" />
+                <Amount :amount="150000000" compact formatted symbol="Humans Power Units" />
               </div>
               <Board
                 :rows="6"
@@ -73,7 +73,7 @@
                     4%
                   </div>
                 </div>
-                <Amount :amount="150000000" formatted symbol="PU" />
+                <Amount :amount="150000000" compact formatted symbol="Elves Power Units" />
               </div>
               <Board
                 :rows="6"
@@ -100,7 +100,7 @@
           <div class="race-board">
             <div class="board-info">
               <div class="board-label d-flex justify-end align-center mr-3">
-                <Amount :amount="150000000" formatted symbol="PU" />
+                <Amount :amount="150000000" compact formatted symbol="Orcs Power Units" />
                 <div class="prize-share ml-2">
                   <img src="/images/battle/treasure.png" width="32" />
                   <div class="prize-info">
@@ -127,7 +127,7 @@
           <div class="race-board mt-6">
             <div class="board-info">
               <div class="board-label d-flex justify-end align-center mr-3">
-                <Amount :amount="150000000" formatted symbol="PU" />
+                <Amount :amount="150000000" compact formatted symbol="Undeads Power Units" />
                 <div class="prize-share ml-2">
                   <img src="/images/battle/treasure.png" width="32" />
                   <div class="prize-info">

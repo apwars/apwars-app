@@ -65,7 +65,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .board-container {
-  width: calc(var(--cols) * 26px);
+  width: calc(var(--cols) * 27px);
   height: calc(var(--rows) * 26px);
 }
 .board-row {
@@ -83,8 +83,10 @@ export default {
   width: 24px;
   display: inline-block;
   background-image: url("/images/battle/floor.png");
+  background-size: cover;
   transform: skewX(5deg);
   box-sizing: border-box;
+  margin-right: 1px;
   &.invert {
         transform: skewX(-5deg) translateZ(0) scaleX(-1)!important;
     }
@@ -97,6 +99,7 @@ export default {
   }
   &.selected {
     outline: 1px solid yellow;
+    z-index: 2;
   }
   > .unit {
     position: absolute;

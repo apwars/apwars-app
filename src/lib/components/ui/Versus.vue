@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="phase-title">
-      Parcial Result
+      <div>Parcial Result</div>
+      <Button text="Battle Report" type="wtertiary" :handleClick="goToReport" />
     </div>
+
     <div class="versus-bar">
       <div class="corp">
         <img class="faction-icon left" src="/images/icons/corp.png" />
@@ -24,43 +26,43 @@
           <Amount :amount="1555555555555555555555" formatted compact />
         </IconInfo>
         <IconInfo iconPath="/images/battle/burned.png" title="Unlocked Prize">
-          <Amount
-            :amount="1555555555555555555555"
-            formatted
-            compact
-          /> </IconInfo
-      >
+          <Amount :amount="1555555555555555555555" formatted compact />
+        </IconInfo>
       </div>
-      <div class="loser-prize"
-        >
+      <div class="loser-prize">
         <div class="d-sm-none">Loser Prize</div>
         <IconInfo iconPath="/images/wcourage.png" title="Unlocked Prize">
-          <Amount
-            :amount="1555555555555555555555"
-            formatted
-            compact
-          /> </IconInfo
-      ></div>
+          <Amount :amount="1555555555555555555555" formatted compact />
+        </IconInfo>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import Amount from "@/lib/components/ui/Utils/Amount";
 import IconInfo from "@/lib/components/ui/IconInfo";
+import Button from "@/lib/components/ui/Buttons/Button";
 
 export default {
-  components: { Amount, IconInfo },
+  components: { Amount, IconInfo, Button },
+  methods: {
+    goToReport() {
+      this.$router.push(`/wars/${this.$route.params.contractWar}/report`);
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
 .phase-title {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-bottom: 12px;
   font-weight: bold;
-font-size: 24px;
-line-height: 1.4;
+  font-size: 24px;
+  line-height: 1.4;
 }
 .versus-bar {
   width: 100%;
@@ -128,7 +130,7 @@ line-height: 1.4;
     }
   }
   @media screen and (min-width: 1440px) {
-      padding: 0 48px;
-    }
+    padding: 0 48px;
+  }
 }
 </style>

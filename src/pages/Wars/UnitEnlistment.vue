@@ -25,13 +25,7 @@
         <v-row dense>
           <v-col md="4">
             <div class="name-container d-flex justify-space-between">
-              <Title :text="troop.displayName" />
-              <img
-                class="ml-2"
-                height="104"
-                src="/images/icons/corp.png"
-                alt="Corporation standart"
-              />
+              <Title text="WAR IV" subtitle="Enlistment" />
             </div>
             <div class="form-container mt-3 mb-2">
               <v-skeleton-loader type="text, button" v-if="isLoading" />
@@ -196,7 +190,7 @@
                 </div>
                 <div class="unit-info">
                   <div class="unit-name mb-1">
-                    {{ unit.tierDesc }}
+                    {{ unit.displayName }}
                   </div>
                   <div class="amount">
                     <span class="d-flex align-end" v-if="unit.amount">
