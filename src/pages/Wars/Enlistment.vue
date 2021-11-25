@@ -208,8 +208,8 @@
               md="4"
               style="position: relative; overflow: hidden;">
               <v-img
-                :max-width="$vuetify.breakpoint.xs ? '300' : '370'"
-                :max-height="$vuetify.breakpoint.xs ? '430' : '500'"
+                :max-width="$vuetify.breakpoint.mdAndDown ? '300' : '370'"
+                :max-height="$vuetify.breakpoint.mdAndDown ? '430' : '500'"
                 :src="`/images/monsters/${monsterToView.id}.webp`"
                 :lazy-src="`/images/monsters/${monsterToView.id}.webp`"
                 :alt="monsterToView.name"
