@@ -83,13 +83,13 @@ export default {
   }
   .faction-icon {
     position: absolute;
-    top: -9px;
-    left: -18px;
-    width: 64px;
+    top: -12px;
+    left: -21px;
+    width: 88px;
     @media screen and (min-width: 1440px) {
-      width: 88px;
-      left: -16px;
-      top: -14px;
+      width: 115px;
+      right: -34px;
+      top: -18px;
     }
   }
 }
@@ -101,13 +101,13 @@ export default {
   width: 50%;
   .faction-icon {
     position: absolute;
-    top: -9px;
-    right: -18px;
-    width: 64px;
+    top: -12px;
+    right: -21px;
+    width: 88px;
     @media screen and (min-width: 1440px) {
-      width: 88px;
-      right: -16px;
-      top: -14px;
+      width: 115px;
+      right: -34px;
+      top: -18px;
     }
   }
 }
@@ -118,7 +118,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 14px;
+  padding: 0 28px;
   @media screen and (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
@@ -130,7 +130,7 @@ export default {
     }
   }
   @media screen and (min-width: 1440px) {
-    padding: 0 48px;
+    padding: 0 64px;
   }
 }
 </style>
