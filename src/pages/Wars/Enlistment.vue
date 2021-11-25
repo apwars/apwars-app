@@ -12,7 +12,7 @@
                 noPadding
               />
               <div class="d-flex justify-space-between mt-2">
-                <Title>Report</Title>
+                <Title>War IV</Title>
               </div>
               <!-- <div class="d-flex justify-center sword-icon">
                 <v-img :max-width="$vuetify.breakpoint.lgAndUp ? '56.57' : '46'" src="/images/icons/swords.png" />
@@ -359,11 +359,14 @@ export default {
     };
   },
 
+  created() {
+    this.setHeader(false);
+  },
+
   mounted() {
     if (!this.isConnected) {
       return;
     }
-    this.setHeader(false);
     this.initData();
     this.loadData();
   },
@@ -422,6 +425,7 @@ export default {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
     }),
+
     goToSwap() {
       this.$router.push("/exchange");
     },
