@@ -21,47 +21,50 @@
           </v-row>
 
           <v-row>
-            <v-col cols="5">
+            <v-col cols="5" class="px-0">
               <v-row>
                 <v-col 
                   v-for="option in options('Corporation')" 
                   :key="option.id"
                   cols="12"
                   md="6"
-                  class="pr-0 pt-0"
+                  class="pt-0"
+                  :class="$vuetify.breakpoint.mdAndDown ? 'pr-0' : 'pl-2'"
                 >
-                  <v-hover v-slot="{ hover }">
-                    <div
-                      class="race-image-container"
-                      :class="{ 'on-hover': hover }"
-                      :style="selectedRace === option.name ? 'opacity: 1; filter: none;' : ''"
-                    >
-                      <h2
-                        class="text-center mb-1"
-                        :class="option.name === 'Orcs' ||
-                          option.name === 'Undeads' ? 'button-container-degens' :
-                          'button-container-corp'" >{{ option.name }}
-                      </h2>
-                      <v-img
-                        class="race-image"
-                        :src="option.image"
-                        :lazy-src="option.image"
-                        :alt="option.name"
-                        width="240"
-                        @click="selectRace(option.name, option.monsterId, option.monsterName)"
-                        height="250"
+                  <div class="d-flex align-left">
+                    <v-hover v-slot="{ hover }">
+                      <div
+                        class="race-image-container"
+                        :class="{ 'on-hover': hover }"
+                        :style="selectedRace === option.name ? 'opacity: 1; filter: none;' : ''"
                       >
-                        <template v-slot:placeholder>
-                          <v-row class="fill-height ma-0" align="center" justify="center">
-                            <v-progress-circular
-                              indeterminate
-                              color="#ffeebc lighten-5"
-                            ></v-progress-circular>
-                          </v-row>
-                        </template>
-                      </v-img>
-                    </div>
-                  </v-hover>
+                        <h2
+                          class="text-center mb-1"
+                          :class="option.name === 'Orcs' ||
+                            option.name === 'Undeads' ? 'button-container-degens' :
+                            'button-container-corp'" >{{ option.name }}
+                        </h2>
+                        <v-img
+                          class="race-image"
+                          :src="option.image"
+                          :lazy-src="option.image"
+                          :alt="option.name"
+                          :width="$vuetify.breakpoint.mdAndDown ? '200' : '240'"
+                          :height="$vuetify.breakpoint.mdAndDown ? '210' : '250'"
+                          @click="selectRace(option.name, option.monsterId, option.monsterName)"
+                        >
+                          <template v-slot:placeholder>
+                            <v-row class="fill-height ma-0" align="center" justify="center">
+                              <v-progress-circular
+                                indeterminate
+                                color="#ffeebc lighten-5"
+                              ></v-progress-circular>
+                            </v-row>
+                          </template>
+                        </v-img>
+                      </div>
+                    </v-hover>
+                  </div>
                   <!-- <div
                     @click="selectRace(option.name, option.monsterId, option.monsterName)"
                     :class="option.name === 'Orcs' ||
@@ -78,7 +81,7 @@
               </v-row>
             </v-col>
 
-            <v-col cols="2" class="d-flex align-center justify-center px-0">
+            <v-col cols="2" class="d-flex align-center justify-center pa-0">
               <v-img
                 :max-width="$vuetify.breakpoint.lgAndUp ? '56.57' : '46'"
                 src="/images/icons/swords.png">
@@ -86,17 +89,17 @@
             </v-col>
 
             <v-col cols="5">
-              <v-row>
+              <v-row align="center" justify="end">
                 <v-col 
                   v-for="option in options('Degenerate')" 
                   :key="option.id"
                   cols="12"
-                  sm="7"
                   md="6"
-                  class="pl-0 pt-0"
+                  class="px-0 pt-0"
+                  :class="$vuetify.breakpoint.sm ? 'pr-2' : ''"
                 >
                   <div
-                    class="container-race-image-and-bt d-flex flex-column align-end"
+                    class="d-flex align-center justify-end"
                   >
                     <v-hover v-slot="{ hover }">
                       <div
@@ -116,9 +119,9 @@
                           :src="option.image"
                           :lazy-src="option.image"
                           :alt="option.name"
-                          width="240"
+                          :width="$vuetify.breakpoint.mdAndDown ? '200' : '240'"
+                          :height="$vuetify.breakpoint.mdAndDown ? '210' : '250'"
                           @click="selectRace(option.name, option.monsterId, option.monsterName)"
-                          height="250"
                         >
                           <template v-slot:placeholder>
                             <v-row class="fill-height ma-0" align="center" justify="center">
@@ -606,19 +609,6 @@ export default {
     left: 0rem;
   }
 }*/
-
-.container-race-image-and-btn {
-  @media only screen and (max-width: 959px) {
-    align-items: start !important;
-  }
-  @media only screen and (max-width: 600px) {
-    /* width: 100%;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-direction: column !important; */
-  }
-}
 
 .race-image {
   cursor: pointer;
