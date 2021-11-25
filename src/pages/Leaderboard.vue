@@ -1,7 +1,19 @@
 <template>
   <div>
-    <div class="bg-page">
-      <v-container fluid>
+    <div class="page-background">
+      <v-container>
+        <v-row>
+          <v-col cols="12" md="6">
+            <div class="page-title">
+              Leaderboard
+              <div class="page-title-line"></div>
+            </div>
+          </v-col>
+          <v-col cols="12" md="6"> </v-col>
+        </v-row>
+      </v-container>
+
+      <v-container v-if="false" fluid>
         <v-row class="d-none d-sm-none d-md-flex mt-n6">
           <v-col cols="12" md="3">
             <v-img
@@ -311,10 +323,10 @@ export default {
     },
 
     itemsTime() {
-      if(this.period === 'Daily') {
+      if (this.period === "Daily") {
         this.time = this.listDays[0];
         return this.listDays;
-      } else if (this.period === 'Weekly') {
+      } else if (this.period === "Weekly") {
         this.time = this.listWeeks[0];
         return this.listWeeks;
       } else {
@@ -429,13 +441,23 @@ export default {
 </script>
 
 <style scoped>
-.bg-page {
+.page-background {
   background-image: url("/images/backgrounds/jungle.jpg");
   background-size: cover;
   background-position: top;
 }
-.text-subtitle-welcome-war {
-  color: #bea38d;
+.page-title {
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 83px;
+}
+.page-title-line {
+  background: linear-gradient(180deg, #faff00 0%, #ffb800 100%);
+  border-radius: 5px;
+  height: 4px;
+  width: 90%;
 }
 
 .gradient {
