@@ -164,7 +164,7 @@
                 src="/images/icons/battle-shield.png"
                 alt="Enlistment resume"
               />
-              Select your formation
+              Select your designation
             </div>
             <v-select
               :items="formationOptions"

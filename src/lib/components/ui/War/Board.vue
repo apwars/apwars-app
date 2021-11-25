@@ -1,27 +1,34 @@
 <template>
-  <div class="board-container" :style="`--rows: ${rows};--cols: ${cols}`">
+  <div class="board-perspective">
     <div
-      :class="['board-row', invertUnitDirection ? 'invert' : '']"
-      v-for="rowIndex in rows"
-      :key="rowIndex"
-      :style="`--index: ${invertUnitDirection ? rows - rowIndex : rowIndex}`"
+      class="board-container"
+      :style="
+        `--rows: ${rows};--cols: ${cols}; --rotate: ${rotate};--translate: ${translate}`
+      "
     >
       <div
-        :class="[
-          'slot',
-          rowIndex + '' + colIndex === selected ? 'selected' : '',
-          invertUnitDirection ? 'invert' : ''
-        ]"
-        v-for="colIndex in cols"
-        :key="colIndex"
-        @click="() => selectUnit(rowIndex,colIndex)"
+        :class="['board-row', invertUnitDirection ? 'invert' : '']"
+        v-for="rowIndex in rows"
+        :key="rowIndex"
+        :style="`--index: ${invertUnitDirection ? rows - rowIndex : rowIndex}`"
       >
-        <img
-          :class="['unit', invertUnitDirection ? 'invert' : '']"
-          height="150%"
-          :src="unitImage"
-          v-show="rowIndex + '' + colIndex === selected"
-        />
+        <div
+          :class="[
+            'slot',
+            rowIndex + '' + colIndex === selected ? 'selected' : '',
+            invertUnitDirection ? 'invert' : '',
+          ]"
+          v-for="colIndex in cols"
+          :key="colIndex"
+          @click="() => selectUnit(rowIndex, colIndex)"
+        >
+          <img
+            :class="['unit', invertUnitDirection ? 'invert' : '']"
+            height="150%"
+            :src="unitImage"
+            v-show="rowIndex + '' + colIndex === selected"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -42,9 +49,17 @@ export default {
       default: "",
     },
     invertUnitDirection: {
-        type: Boolean,
-        default: false,
-    }
+      type: Boolean,
+      default: false,
+    },
+    rotate: {
+      type: Number,
+      default: 0,
+    },
+    translate: {
+      type: String,
+      default: '0',
+    },
   },
   data() {
     return {
@@ -52,30 +67,28 @@ export default {
     };
   },
   methods: {
-      selectUnit(rowIndex, colIndex) {
-          const key = this.getKey(rowIndex, colIndex);
-          this.selected = key;
-          this.$emit('selectSlot', key);
-      },
-      getKey(rowIndex, colIndex) {
-          return rowIndex + '' + colIndex
-      }
-  }
+    selectUnit(rowIndex, colIndex) {
+      const key = this.getKey(rowIndex, colIndex);
+      this.selected = key;
+      this.$emit("selectSlot", key);
+    },
+    getKey(rowIndex, colIndex) {
+      return rowIndex + "" + colIndex;
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
+.board-perspective {
+  perspective: 1500px;
+}
 .board-container {
-  width: calc(var(--cols) * 27px);
-  height: calc(var(--rows) * 26px);
+  transform: rotateX(var(--rotate)) translateZ(var(--translate));
 }
 .board-row {
   height: 24px;
   margin-top: 1px;
-  margin-left: calc(1 * (var(--index) * 2px));
   white-space: nowrap;
-  &.invert {
-      margin-left: calc(3px + (var(--index) * 2px));
-    }
 }
 .slot {
   position: relative;
@@ -83,18 +96,13 @@ export default {
   width: 24px;
   display: inline-block;
   background-image: url("/images/battle/floor.png");
-  background-size: cover;
-  transform: skewX(5deg);
+  background-size: contain;
   box-sizing: border-box;
   margin-right: 1px;
-  &.invert {
-        transform: skewX(-5deg) translateZ(0) scaleX(-1)!important;
-    }
   &:hover {
     transform-style: preserve-3d;
     cursor: pointer;
     outline: 1px solid #312c26;
-    transform: skewX(5deg) scale(1.1);
     z-index: 2;
   }
   &.selected {
@@ -105,10 +113,9 @@ export default {
     position: absolute;
     left: 2px;
     top: -14px;
-    transform: skewX(5deg) translateZ(0);
     animation: unit-enter 0.2s ease-in;
     &.invert {
-        transform: skewX(-5deg) translateZ(0)!important;
+      transform: scaleX(-1);
     }
   }
 
