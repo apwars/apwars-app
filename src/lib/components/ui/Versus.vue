@@ -23,16 +23,16 @@
       <div class="winner-prize">
         <div class="d-sm-none">Winner Prize</div>
         <IconInfo iconPath="/images/wgold.png" title="Unlocked Prize">
-          <Amount :amount="1555555555555555555555" formatted compact />
+          <span class="prize-text">~<Amount :amount="1555555555555555555555" formatted compact /> <span class="game-text">wGOLD</span></span>
         </IconInfo>
         <IconInfo iconPath="/images/battle/burned.png" title="Unlocked Prize">
-          <Amount :amount="1555555555555555555555" formatted compact />
+          <span class="prize-text">~<Amount :amount="1555555555555555555555" formatted compact /> <span class="game-text">wGOLD</span></span>
         </IconInfo>
       </div>
       <div class="loser-prize">
         <div class="d-sm-none">Loser Prize</div>
         <IconInfo iconPath="/images/wcourage.png" title="Unlocked Prize">
-          <Amount :amount="1555555555555555555555" formatted compact />
+          <span class="prize-text">~<Amount :amount="1555555555555555555555" formatted compact /> <span class="game-text-purple">wCOURAGE</span></span>
         </IconInfo>
       </div>
     </div>
@@ -113,7 +113,7 @@ export default {
 }
 .prizes {
   width: 100%;
-  margin-top: 12px;
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -132,5 +132,18 @@ export default {
   @media screen and (min-width: 1440px) {
     padding: 0 64px;
   }
+}
+.prize-text {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 26px;
+}
+.game-text {
+  background: -webkit-linear-gradient(#ffb800, #ead200);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.game-text-purple {
+  color: #5c62eb;
 }
 </style>

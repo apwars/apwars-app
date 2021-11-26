@@ -32,7 +32,7 @@
           order-sm="1"
           class="board-viewport d-flex justify-center justify-sm-end  align-sm-end"
         >
-          <Board :rows="5" :cols="20" unitImage="/images/troops/wwarrior.webp" />
+          <Board :rows="5" :cols="20" rotate="40deg" unitImage="/images/troops/wwarrior.webp" />
         </v-col>
         <v-col
           cols="12"

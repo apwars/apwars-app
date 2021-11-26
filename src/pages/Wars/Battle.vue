@@ -38,8 +38,6 @@
       <v-row>
         <v-col><Versus /></v-col>
       </v-row>
-    </v-container>
-    <v-container fluid>
       <v-row>
         <v-col md="5">
           <div class="race-board">
