@@ -27,8 +27,10 @@
           <div class="prizepool">
             <img width="158" src="/images/battle/fed-round-2.png" />
             <div class="prize">
-              <img src="/images/wgold.png" width="28" />
-              <div class="prize-text">800k wGOLD</div>
+              <div class="brown-info">
+                <img src="/images/wgold.png" width="28" />
+                <div class="prize-text">800k wGOLD</div>
+              </div>
             </div>
           </div>
         </v-col>
@@ -40,6 +42,23 @@
         <v-col md="5">
           <div class="race-board">
             <div class="board-info">
+              <div class="d-flex justify-space-between">
+                <div class="brown-info">
+                  <div class="power-text"><Amount
+                    :amount="150000000"
+                    compact
+                    formatted
+                    symbol="Power Units"
+                  /></div>
+                  
+                </div>
+                <div class="prize-share">
+                    <img src="/images/battle/treasure.png" width="32" />
+                    <div class="prize-info">
+                      4%
+                    </div>
+                </div>
+              </div>
               <Board
                 :rows="6"
                 :cols="16"
@@ -52,26 +71,29 @@
                   icon="swords"
                   :handleClick="() => goToEnlistment(1)"
                 />
-                <div class="board-label d-flex justify-start align-center ml-2">
-                  <div class="prize-share mr-2">
-                    <img src="/images/battle/treasure.png" width="32" />
-                    <div class="prize-info">
-                      4%
-                    </div>
-                  </div>
-                  <Amount
-                    :amount="150000000"
-                    compact
-                    formatted
-                    symbol="Humans Power Units"
-                  />
-                </div>
               </div>
             </div>
           </div>
 
           <div class="race-board mt-6">
             <div class="board-info">
+              <div class="d-flex justify-space-between">
+                <div class="brown-info">
+                  <div class="power-text"><Amount
+                    :amount="150000000"
+                    compact
+                    formatted
+                    symbol="Power Units"
+                  /></div>
+                  
+                </div>
+                <div class="prize-share">
+                    <img src="/images/battle/treasure.png" width="32" />
+                    <div class="prize-info">
+                      4%
+                    </div>
+                </div>
+              </div>
               <Board
                 :rows="6"
                 :cols="16"
@@ -85,20 +107,6 @@
                   icon="swords"
                   :handleClick="() => goToEnlistment(4)"
                 />
-                <div class="board-label d-flex justify-end align-center ml-2">
-                  <div class="prize-share mr-2">
-                    <img src="/images/battle/treasure.png" width="32" />
-                    <div class="prize-info">
-                      4%
-                    </div>
-                  </div>
-                  <Amount
-                    :amount="150000000"
-                    compact
-                    formatted
-                    symbol="Elves Power Units"
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -112,6 +120,23 @@
         <v-col md="5">
           <div class="race-board">
             <div class="board-info">
+              <div class="d-flex justify-space-between">
+                <div class="brown-info">
+                  <div class="power-text"><Amount
+                    :amount="150000000"
+                    compact
+                    formatted
+                    symbol="Power Units"
+                  /></div>
+                  
+                </div>
+                <div class="prize-share">
+                    <img src="/images/battle/treasure.png" width="32" />
+                    <div class="prize-info">
+                      4%
+                    </div>
+                </div>
+              </div>
               <Board
                 :rows="6"
                 :cols="16"
@@ -120,20 +145,6 @@
                 invertUnitDirection
               />
               <div class="d-flex justify-end mt-1">
-                <div class="board-label d-flex justify-end align-center mr-2">
-                  <Amount
-                    :amount="150000000"
-                    compact
-                    formatted
-                    symbol="Orcs Power Units"
-                  />
-                  <div class="prize-share ml-2">
-                    <img src="/images/battle/treasure.png" width="32" />
-                    <div class="prize-info">
-                      4%
-                    </div>
-                  </div>
-                </div>
                 <Button
                   type="wsecondary"
                   icon="swords"
@@ -145,6 +156,23 @@
 
           <div class="race-board mt-6">
             <div class="board-info">
+              <div class="d-flex justify-space-between">
+                <div class="brown-info">
+                  <div class="power-text"><Amount
+                    :amount="150000000"
+                    compact
+                    formatted
+                    symbol="Power Units"
+                  /></div>
+                  
+                </div>
+                <div class="prize-share">
+                    <img src="/images/battle/treasure.png" width="32" />
+                    <div class="prize-info">
+                      4%
+                    </div>
+                </div>
+              </div>
               <Board
                 :rows="6"
                 :cols="16"
@@ -155,20 +183,6 @@
               />
 
               <div class="d-flex justify-end mt-1">
-                <div class="board-label d-flex justify-end align-center mr-2">
-                  <Amount
-                    :amount="150000000"
-                    compact
-                    formatted
-                    symbol="Undeads Power Units"
-                  />
-                  <div class="prize-share ml-2">
-                    <img src="/images/battle/treasure.png" width="32" />
-                    <div class="prize-info">
-                      4%
-                    </div>
-                  </div>
-                </div>
                 <Button
                   type="wsecondary"
                   icon="swords"
@@ -282,28 +296,6 @@ export default {
     user-select: none;
     transform: scaleX(-1);
   }
-  .prize {
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #3a2720;
-    border: 1px solid #ffeebc;
-    padding: 4px 12px;
-    .prize-text {
-      display: block;
-      white-space: nowrap;
-      margin-left: 4px;
-      font-size: 16px;
-      font-weight: bold;
-      line-height: 1.2;
-      color: #ffb800;
-      user-select: none;
-    }
-  }
 }
 .prize-share {
   display: flex;
@@ -313,10 +305,41 @@ export default {
     margin-left: 4px;
   }
 }
+.prize {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.brown-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3a2720;
+  border: 1px solid #ffeebc;
+  padding: 4px 12px;
+  .prize-text {
+    display: block;
+    white-space: nowrap;
+    margin-left: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.2;
+    color: #ffb800;
+    user-select: none;
+  }
+  .power-text {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
 .race-board {
   width: 100%;
   overflow-x: auto;
   display: flex;
+  flex-direction: column;
 }
 .board-info {
   display: inline-block;
