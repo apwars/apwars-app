@@ -329,7 +329,7 @@ export default {
 
         this.filterTroops = this.globalTroops;
 
-        //this.updateTroopsFilters();
+        this.updateTroopsFilters();
 
       } catch (error) {
         if (error.message) {
@@ -425,7 +425,7 @@ export default {
 
       if (this.showMyUnits) {
         this.filterTroops = this.filterTroops.filter((trooper) => {
-          return trooper.myQty != "0";
+          return trooper.myQty != '0';
         });
       }
       this.updateSelectFilters();

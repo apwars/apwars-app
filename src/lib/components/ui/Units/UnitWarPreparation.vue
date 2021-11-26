@@ -61,7 +61,7 @@
         <div class="d-flex mt-1 qty ml-at-mobile" v-if="infoWeapon.imageIcon">
           <v-img
             style="margin-left: 0.4rem;"
-            class="mr-"
+            class=""
             :max-width="$vuetify.breakpoint.mobile ? 29 : 29"
             :height="$vuetify.breakpoint.mobile ? 48 : 48"
             :src="infoWeapon.imageIcon"
