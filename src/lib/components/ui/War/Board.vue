@@ -24,7 +24,7 @@
         >
           <img
             :class="['unit', invertUnitDirection ? 'invert' : '']"
-            height="150%"
+            width="120%"
             :src="unitImage"
             v-show="rowIndex + '' + colIndex === selected"
           />
@@ -80,20 +80,20 @@ export default {
 </script>
 <style lang="scss" scoped>
 .board-perspective {
-  perspective: 1500px;
+  perspective: 500px;
 }
 .board-container {
   transform: rotateX(var(--rotate)) translateZ(var(--translate));
 }
 .board-row {
   height: 24px;
-  margin-top: 1px;
+  margin-top: 4px;
   white-space: nowrap;
 }
 .slot {
   position: relative;
-  height: 24px;
-  width: 24px;
+  height: 28px;
+  width: 28px;
   display: inline-block;
   background-image: url("/images/battle/floor.png");
   background-size: contain;
@@ -111,8 +111,8 @@ export default {
   }
   > .unit {
     position: absolute;
-    left: 2px;
-    top: -14px;
+    left: 0px;
+    top: -24px;
     animation: unit-enter 0.2s ease-in;
     &.invert {
       transform: scaleX(-1);

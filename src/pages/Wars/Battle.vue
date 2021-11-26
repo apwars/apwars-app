@@ -38,6 +38,8 @@
       <v-row>
         <v-col><Versus /></v-col>
       </v-row>
+    </v-container>
+    <v-container fluid>
       <v-row>
         <v-col md="5">
           <div class="race-board">
@@ -62,7 +64,7 @@
               <Board
                 :rows="6"
                 :cols="16"
-                rotate="40deg"
+                rotate="30deg"
                 unitImage="/images/troops/wwarrior.webp"
               />
               <div class="d-flex justify-start mt-1">
@@ -97,7 +99,7 @@
               <Board
                 :rows="6"
                 :cols="16"
-                rotate="30deg"
+                rotate="15deg"
                 translate="20px"
                 unitImage="/images/troops/warmoured-elf.webp"
               />
@@ -140,7 +142,7 @@
               <Board
                 :rows="6"
                 :cols="16"
-                rotate="40deg"
+                rotate="30deg"
                 unitImage="/images/troops/wgrunt.webp"
                 invertUnitDirection
               />
@@ -176,8 +178,7 @@
               <Board
                 :rows="6"
                 :cols="16"
-                rotate="30deg"
-                translate="20px"
+                rotate="15deg"
                 unitImage="/images/troops/wskeleton-warrior.webp"
                 invertUnitDirection
               />
@@ -280,11 +281,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 12px;
   .war-title {
     font-weight: bold;
     font-size: 38px;
     color: white;
     margin-bottom: 4px;
+  }
+  @media screen and (min-width: 1024px) {
+    margin-bottom: 0;
   }
 }
 
