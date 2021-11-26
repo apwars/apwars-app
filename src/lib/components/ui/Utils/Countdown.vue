@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4 class="text-wGOLD text-center text-h4 text-md-h4 ma-0 mt-1">
+    <h4 :class="['title', 'text-center', 'text-h4', 'text-md-h4', 'ma-0', 'mt-1', titleColor ? 'custom-color' : 'text-wGOLD']" :style="`--color: ${titleColor}`">
       {{ title }}
     </h4>
     <div class="d-flex justify-center mt-2">
@@ -80,6 +80,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    titleColor: {
+      type: String,
+      default: '',
+    },
   },
 
   computed: {
@@ -91,6 +95,9 @@ export default {
 </script>
 
 <style scoped>
+.title.custom-color {
+  color: var(--color);
+}
 .countdown >>> .block-time {
   position: relative;
   margin: 0px 10px;

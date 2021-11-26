@@ -13,21 +13,21 @@
       </v-row>
       <v-row dense no-gutters>
         <v-col class="battle-header">
-          <Title
-            text="WAR IV"
-            subtitle="Battle field"
-            tip="How to play?"
-            tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
-          />
-          <countdown
-            :time="countdownTimer"
-            title="Time to claim units and prize"
-            hideEnd
-          />
+          <Title text="Battle field" />
+          <div class="war-info">
+            <div class="war-title">
+              War IV
+            </div>
+            <Button
+              text="How to Play"
+              type="wprimary"
+              :handleClick="redirectToDoc"
+            />
+          </div>
           <div class="prizepool">
-            <img width="180" src="/images/battle/fed-round-2.png" />
+            <img width="158" src="/images/battle/fed-round-2.png" />
             <div class="prize">
-              <img src="/images/wgold.png" width="32" />
+              <img src="/images/wgold.png" width="28" />
               <div class="prize-text">800k wGOLD</div>
             </div>
           </div>
@@ -179,6 +179,16 @@
           </div>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <countdown
+            :time="countdownTimer"
+            title="Time to collect prizes and wUNITS"
+            titleColor="#FFF"
+            hideEnd
+          />
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -210,6 +220,11 @@ export default {
       this.$router.push(
         `/wars/${this.$route.params.contractWar}/enlistment/${raceId}`
       );
+    },
+    redirectToDoc() {
+      window
+        .open("https://apwars.farm/docs/war/combat-dynamics", "_blank")
+        .focus();
     },
   },
 
@@ -247,12 +262,25 @@ export default {
   font-weight: bold;
 }
 
+.war-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .war-title {
+    font-weight: bold;
+    font-size: 38px;
+    color: white;
+    margin-bottom: 4px;
+  }
+}
+
 .prizepool {
   position: relative;
   display: flex;
   justify-content: center;
   > img {
     user-select: none;
+    transform: scaleX(-1);
   }
   .prize {
     position: absolute;

@@ -85,8 +85,8 @@ export default {
     position: absolute;
     top: -12px;
     left: -21px;
-    width: 88px;
-    @media screen and (min-width: 1440px) {
+    width: 96px;
+    @media screen and (min-width: 768px) {
       width: 115px;
       right: -34px;
       top: -18px;
@@ -103,8 +103,8 @@ export default {
     position: absolute;
     top: -12px;
     right: -21px;
-    width: 88px;
-    @media screen and (min-width: 1440px) {
+    width: 96px;
+    @media screen and (min-width: 768px) {
       width: 115px;
       right: -34px;
       top: -18px;
@@ -118,7 +118,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 28px;
+  padding: 0 62px;
   @media screen and (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
