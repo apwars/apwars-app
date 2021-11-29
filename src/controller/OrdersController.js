@@ -1,9 +1,10 @@
 import BaseController from './BaseController';
-import querystring from 'querystring';
+import store from "@/store";
 
 export default class OrdersController {
   constructor() {
-    this.base = new BaseController();
+    const addresses = store.getters["user/addresses"];
+    this.base = new BaseController(addresses.serverless);
   }
 
   getOrders(filter, skip, limit, sort) {
@@ -11,8 +12,7 @@ export default class OrdersController {
       sort = sort || 'orderId:-1';
       skip = skip || 0;
       limit = limit || 5;
-
-      const query = querystring.stringify({ ...filter, ...{ skip: skip }, ...{ limit: limit }, ...{ sort: sort } });
+      const query = new URLSearchParams({ ...filter, ...{ skip: skip }, ...{ limit: limit }, ...{ sort: sort } });
       return this.base._get(`/orders?${query}`);
     } catch (error) {
       throw error;

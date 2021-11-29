@@ -489,6 +489,8 @@ import Medal from "@/lib/components/ui/Utils/Medal";
 import { mapMutations } from "vuex";
 import moment from "moment";
 
+import LeaderboardController from "@/controller/LeaderboardController";
+
 export default {
   components: {
     Amount,
@@ -501,31 +503,6 @@ export default {
   data() {
     return {
       isLoading: true,
-      period: "Daily",
-      itemsPeriod: ["Daily", "Weekly", "Monthly"],
-      headers: [
-        {
-          text: "Ranking",
-          value: "ranking",
-          sortable: false,
-        },
-        {
-          text: "Player",
-          value: "account",
-          sortable: false,
-        },
-        { text: "Average time", value: "time", sortable: false },
-        {
-          text: "Points",
-          value: "points",
-          sortable: false,
-        },
-        {
-          text: "Score",
-          value: "score",
-          sortable: false,
-        },
-      ],
       leaderboards: [
         {
           ranking: 1,
@@ -620,9 +597,11 @@ export default {
           prize: "wGOLD",
         },
       ],
-      listDays: [],
-      listWeeks: [],
-      listMonths: [],
+      limit: 10,
+      pageWeek: 1,
+      pageMonth: 1,
+      listWeek: [],
+      listMonth: [],
       listGames: [
         {
           id: 0,
@@ -674,19 +653,6 @@ export default {
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
-
-    itemsTime() {
-      if (this.period === "Daily") {
-        this.time = this.listDays[0];
-        return this.listDays;
-      } else if (this.period === "Weekly") {
-        this.time = this.listWeeks[0];
-        return this.listWeeks;
-      } else {
-        this.time = this.listMonths[0];
-        return this.listMonths;
-      }
-    },
   },
 
   watch: {
@@ -711,8 +677,7 @@ export default {
     }),
 
     initData() {
-      this.listDays = this.getListDays();
-      this.listWeeks = this.getListWeeks();
+      this.listWeek = this.getListWeek(1);
       this.listMonths = this.getListMonths();
     },
 
@@ -724,52 +689,15 @@ export default {
       this.isLoading = false;
     },
 
-    getListDays() {
-      const listDays = [];
-      const limitSelect = 9;
-      const getTime = moment(new Date().getTime());
-      listDays.push({
-        date: getTime,
-        label: `Today`,
-      });
-
-      for (let index = 1; index < limitSelect; index++) {
-        const lastDate = listDays[index - 1].date;
-        const startDate = moment(lastDate).subtract(1, "days");
-        listDays.push({
-          date: startDate,
-          label: `${startDate.format("L")}`,
-        });
-      }
-
-      return listDays;
+    async getListWeek(_page) {
+      const leaderboardController = new LeaderboardController();
+      this.listWeekLoading = true;
+      this.listWeek = await leaderboardController.getWeek(1, this.limit*(_page-1));
+      console.log(this.listWeek);
+      this.listWeekLoading = false;
     },
 
-    getListWeeks() {
-      const listWeeks = [];
-      const limitSelect = 9;
-      const getTime = moment(new Date().getTime());
-      const dayWeek = getTime.format("d");
-      const startDateWeek = getTime.subtract(dayWeek, "days");
-      listWeeks.push({
-        date: startDateWeek,
-        label: `Current week`,
-      });
-
-      for (let index = 1; index < limitSelect; index++) {
-        const lastDate = listWeeks[index - 1].date;
-        const startDate = moment(lastDate).subtract(7, "days");
-        const endDate = moment(lastDate).subtract(1, "days");
-        listWeeks.push({
-          date: startDate,
-          label: `${startDate.format("L")} - ${endDate.format("L")}`,
-        });
-      }
-
-      return listWeeks;
-    },
-
-    getListMonths() {
+    getListMonths(limit, skip) {
       const listMonths = [];
       const limitSelect = 9;
       const getTime = moment(new Date().getTime());
