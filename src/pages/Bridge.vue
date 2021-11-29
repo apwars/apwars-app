@@ -1,21 +1,17 @@
 <template>
   <div>
-    <div class="bg-page">
-      <v-container>
-        <v-row class="d-flex mt-n6">
-          <v-col offset-sm="2" cols="12" sm="8">
-            <div class="mt-3">
-              <h1 class="text-h1 text-wGOLD text-center">Bridge</h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
-                dolorem tenetur repellendus sequi quisquam unde, dolorum esse
-                quam veritatis odio assumenda rerum necessitatibus numquam
-                dignissimos, id odit ea! Assumenda, consequuntur?
-              </p>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
+    <div class="page-background">
+      <div class="container d-flex align-center justify-space-between">
+        <div class="page-title">
+          Bridge
+          <div class="page-title-line"></div>
+        </div>
+        <img
+          class="page-title-icon"
+          src="/images/game/bridge.png"
+          alt="bridge"
+        />
+      </div>
       <div class="gradient"></div>
     </div>
 
@@ -480,15 +476,39 @@ export default {
 </script>
 
 <style scoped>
-.bg-page {
-  background-image: url("/images/black-market/Market.jpg");
+.page-background {
+  background-image: url("/images/backgrounds/desert.jpg");
   background-size: cover;
   background-position: top;
+  margin-bottom: -200px;
 }
-
+.page-title {
+  display: inline-block;
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 54px;
+  line-height: 73px;
+}
+.page-title-line {
+  background: linear-gradient(180deg, #faff00 0%, #ffb800 100%);
+  border-radius: 5px;
+  height: 4px;
+  width: 80%;
+}
+.page-subtitle {
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 41px;
+  background: linear-gradient(180deg, #faff00 0%, #ffb800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .gradient {
   width: 100%;
-  height: 100px;
+  height: 200px;
   background: linear-gradient(180deg, rgb(49 45 35 / 0%) 0, rgb(17 17 17) 100%);
 }
 
