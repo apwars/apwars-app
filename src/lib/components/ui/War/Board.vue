@@ -1,32 +1,29 @@
 <template>
   <div class="board-perspective">
+    <div class="versus">VS</div>
     <div
       class="board-container"
       :style="
-        `--rows: ${rows};--cols: ${cols}; --rotate: ${rotate};--translate: ${translate}`
+        `--rotate: ${rotate};`
       "
     >
       <div
-        :class="['board-row', invertUnitDirection ? 'invert' : '']"
-        v-for="rowIndex in rows"
+        :class="['board-row', isVerticalHalf(rowIndex) ? 'vertical-space' : '']"
+        v-for="(row, rowIndex) in board"
         :key="rowIndex"
-        :style="`--index: ${invertUnitDirection ? rows - rowIndex : rowIndex}`"
       >
         <div
           :class="[
             'slot',
-            rowIndex + '' + colIndex === selected ? 'selected' : '',
-            invertUnitDirection ? 'invert' : '',
           ]"
-          v-for="colIndex in cols"
+          v-for="(col, colIndex) in row"
           :key="colIndex"
-          @click="() => selectUnit(rowIndex, colIndex)"
         >
           <img
-            :class="['unit', invertUnitDirection ? 'invert' : '']"
-            width="110%"
-            :src="unitImage"
-            v-show="rowIndex + '' + colIndex === selected"
+            :class="['unit']"
+            width="24"
+            :src="getFaction(rowIndex, colIndex)"
+            v-show="col"
           />
         </div>
       </div>
@@ -36,30 +33,29 @@
 <script>
 export default {
   props: {
-    rows: {
-      type: Number,
-      default: 0,
-    },
-    cols: {
-      type: Number,
-      default: 0,
-    },
     unitImage: {
       type: String,
       default: "",
     },
-    invertUnitDirection: {
-      type: Boolean,
-      default: false,
-    },
     rotate: {
-      type: Number,
-      default: 0,
-    },
-    translate: {
       type: String,
       default: '0',
     },
+    board: {
+      type: Array,
+      default: () => [
+      [1,1,1,0,0,1,0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,0,1,1,0,0,1,1,0,1,0,0,1,1,0,1,0,1,1,0],
+      [1,0,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,0,1,0,1,0,0,1,0,1,1,0,0,1,1,0,1,0,1,0,1],
+      [0,0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,1,1,1,0,0,1,0,1,1,0,0,1,1,1,1,0,1,1,0,1,0,1,1,0],
+      [0,0,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,1,0,0,1,1,0,1,0,1,0,0],
+      [1,1,1,0,0,1,0,1,1,0,0,0,0,0,1,0,1,1,0,1,0,0,1,1,0,0,1,1,1,1,0,1,1,1,0,1,0,1,0,1],
+      [0,1,1,0,0,1,0,1,1,0,0,0,0,1,0,0,1,1,0,1,0,1,1,1,0,0,1,1,0,1,0,1,1,1,0,1,0,1,1,0],
+      [1,1,1,0,0,1,0,1,1,0,1,0,1,0,0,1,1,1,0,1,0,1,0,1,0,0,1,1,0,1,0,0,1,1,0,1,0,1,0,1],
+      [1,1,1,0,0,1,0,1,1,0,0,1,0,1,0,0,1,1,0,1,0,0,1,1,0,0,0,1,1,1,0,0,1,1,0,1,0,1,1,0],
+      [0,1,1,0,0,1,0,1,1,1,0,1,0,0,0,0,1,1,0,1,0,1,0,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,0,1],
+      [1,1,1,0,0,1,0,1,1,0,0,0,1,0,1,0,1,1,0,1,0,1,0,1,0,0,1,0,1,1,0,0,1,1,0,1,0,1,1,1],
+    ],
+    }
   },
   data() {
     return {
@@ -75,6 +71,28 @@ export default {
     getKey(rowIndex, colIndex) {
       return rowIndex + "" + colIndex;
     },
+    isVerticalHalf(rowIndex) {
+      const half = Math.floor(this.board.length/2);
+      return rowIndex === half;
+    },
+    isGreaterOrEqualVerticalHalf(rowIndex) {
+      const half = Math.floor(this.board.length/2);
+      return rowIndex >= half;
+    },
+    isGreaterOrEqualHorizontalHalf(colIndex) {
+      const half = Math.floor(this.board[0].length/2);
+      return colIndex >= half;
+    },
+    getFaction(rowIndex, colIndex) {
+      if (this.isGreaterOrEqualVerticalHalf(rowIndex) && this.isGreaterOrEqualHorizontalHalf(colIndex)) {
+        return '/images/troops/wskeleton-warrior.webp';
+      } else if (this.isGreaterOrEqualVerticalHalf(rowIndex) && !this.isGreaterOrEqualHorizontalHalf(colIndex)) {
+        return '/images/troops/warmoured-elf.webp';
+      } else if (!this.isGreaterOrEqualVerticalHalf(rowIndex) && this.isGreaterOrEqualHorizontalHalf(colIndex)) {
+        return '/images/troops/wgrunt.webp';
+      }
+      return '/images/troops/wwarrior.webp';
+    }
   },
 };
 </script>
@@ -83,12 +101,27 @@ export default {
   perspective: 1366px;
 }
 .board-container {
-  transform: rotateX(var(--rotate)) translateZ(var(--translate));
+  position: relative;
+  transform: rotateX(var(--rotate));
+  user-select: none;
+}
+.versus {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 1.4;
+  position: absolute;
+  left: 49.5%;
+  top: 45%;
+  transform: translate(-49%, -45.5%, 0);
+  box-sizing:content-box;
 }
 .board-row {
   height: 24px;
-  margin-top: 1px;
+  margin-top: 2px;
   white-space: nowrap;
+  &.vertical-space {
+    margin-top: 24px;
+  }
 }
 .slot {
   position: relative;
@@ -99,24 +132,21 @@ export default {
   background-size: contain;
   box-sizing: border-box;
   margin-right: 1px;
-  &:hover {
-    transform-style: preserve-3d;
-    cursor: pointer;
-    outline: 1px solid #312c26;
-    z-index: 2;
+  &:nth-child(n+20) {
+    margin-right: 52px;
   }
-  &.selected {
-    outline: 1px solid yellow;
-    z-index: 2;
+  &:nth-child(n+21) {
+    margin-right: 0;
+    > .unit {
+      transform: scaleX(-1);
+    }
   }
   > .unit {
     position: absolute;
     left: 0px;
     top: -18px;
     animation: unit-enter 0.2s ease-in;
-    &.invert {
-      transform: scaleX(-1);
-    }
+    transform: rotateX(0);
   }
 
   @keyframes unit-enter {

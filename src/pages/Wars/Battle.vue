@@ -13,17 +13,12 @@
       </v-row>
       <v-row dense no-gutters>
         <v-col class="battle-header">
-          <Title text="Battle field" />
-          <div class="war-info">
-            <div class="war-title">
-              War IV
-            </div>
-            <Button
-              text="How to Play"
-              type="wprimary"
-              :handleClick="redirectToDoc"
-            />
-          </div>
+          <Title
+            text="WAR IV"
+            subtitle="Battle field"
+            tip="How to play?"
+            tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
+          />
           <div class="prizepool">
             <img width="158" src="/images/battle/fed-round-2.png" />
             <div class="prize">
@@ -39,154 +34,118 @@
         <v-col><Versus /></v-col>
       </v-row>
       <v-row>
-        <v-col md="5">
-          <div class="race-board">
+        <v-col>
+          <div ref="board" class="race-board">
             <div class="board-info">
               <div class="d-flex justify-space-between">
-                <div class="brown-info">
-                  <div class="power-text"><Amount
-                    :amount="150000000"
-                    compact
-                    formatted
-                    symbol="Power Units"
-                  /></div>
-                  
+                <div class="enlistment-resume d-flex">
+                  <div class="prize-share mr-2">
+                    <img
+                      class="mirror"
+                      src="/images/battle/treasure.png"
+                      width="32"
+                    />
+                    <div class="prize-info">
+                      4%
+                    </div>
+                  </div>
+                  <div class="brown-info mr-2">
+                    <div class="power-text">
+                      <Amount
+                        :amount="150000000"
+                        compact
+                        formatted
+                        symbol="Power Units"
+                      />
+                    </div>
+                  </div>
+                  <Button
+                    type="wsecondary"
+                    icon="swords"
+                    :handleClick="() => goToEnlistment(1)"
+                  />
                 </div>
-                <div class="prize-share">
+                <div class="enlistment-resume d-flex">
+                  <Button
+                    type="wsecondary"
+                    icon="swords"
+                    :handleClick="() => goToEnlistment(2)"
+                  />
+                  <div class="brown-info ml-2">
+                    <div class="power-text">
+                      <Amount
+                        :amount="150000000"
+                        compact
+                        formatted
+                        symbol="Power Units"
+                      />
+                    </div>
+                  </div>
+                  <div class="prize-share ml-2 mr-2">
                     <img src="/images/battle/treasure.png" width="32" />
                     <div class="prize-info">
                       4%
                     </div>
+                  </div>
                 </div>
               </div>
               <Board
-                :rows="6"
-                :cols="16"
+                :rows="10"
+                :cols="40"
                 rotate="30deg"
                 unitImage="/images/troops/wwarrior.webp"
               />
-              <div class="d-flex justify-start mt-1">
-                <Button
-                  type="wsecondary"
-                  icon="swords"
-                  :handleClick="() => goToEnlistment(1)"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="race-board mt-6">
-            <div class="board-info">
               <div class="d-flex justify-space-between">
-                <div class="brown-info">
-                  <div class="power-text"><Amount
-                    :amount="150000000"
-                    compact
-                    formatted
-                    symbol="Power Units"
-                  /></div>
-                  
+                <div class="enlistment-resume d-flex">
+                  <div class="prize-share mr-2">
+                    <img
+                      class="mirror"
+                      src="/images/battle/treasure.png"
+                      width="32"
+                    />
+                    <div class="prize-info">
+                      4%
+                    </div>
+                  </div>
+                  <div class="brown-info mr-2">
+                    <div class="power-text">
+                      <Amount
+                        :amount="150000000"
+                        compact
+                        formatted
+                        symbol="Power Units"
+                      />
+                    </div>
+                  </div>
+                  <Button
+                    type="wsecondary"
+                    icon="swords"
+                    :handleClick="() => goToEnlistment(3)"
+                  />
                 </div>
-                <div class="prize-share">
+                <div class="enlistment-resume d-flex">
+                  <Button
+                    type="wsecondary"
+                    icon="swords"
+                    :handleClick="() => goToEnlistment(4)"
+                  />
+                  <div class="brown-info ml-2">
+                    <div class="power-text">
+                      <Amount
+                        :amount="150000000"
+                        compact
+                        formatted
+                        symbol="Power Units"
+                      />
+                    </div>
+                  </div>
+                  <div class="prize-share ml-2">
                     <img src="/images/battle/treasure.png" width="32" />
                     <div class="prize-info">
                       4%
                     </div>
+                  </div>
                 </div>
-              </div>
-              <Board
-                :rows="6"
-                :cols="16"
-                rotate="15deg"
-                translate="20px"
-                unitImage="/images/troops/warmoured-elf.webp"
-              />
-              <div class="d-flex justify-start mt-1">
-                <Button
-                  type="wsecondary"
-                  icon="swords"
-                  :handleClick="() => goToEnlistment(4)"
-                />
-              </div>
-            </div>
-          </div>
-        </v-col>
-        <v-col
-          cols="12"
-          md="1"
-          class="big-text d-flex justify-center align-center"
-          >VS</v-col
-        >
-        <v-col md="5">
-          <div class="race-board">
-            <div class="board-info">
-              <div class="d-flex justify-space-between">
-                <div class="brown-info">
-                  <div class="power-text"><Amount
-                    :amount="150000000"
-                    compact
-                    formatted
-                    symbol="Power Units"
-                  /></div>
-                  
-                </div>
-                <div class="prize-share">
-                    <img src="/images/battle/treasure.png" width="32" />
-                    <div class="prize-info">
-                      4%
-                    </div>
-                </div>
-              </div>
-              <Board
-                :rows="6"
-                :cols="16"
-                rotate="30deg"
-                unitImage="/images/troops/wgrunt.webp"
-                invertUnitDirection
-              />
-              <div class="d-flex justify-end mt-1">
-                <Button
-                  type="wsecondary"
-                  icon="swords"
-                  :handleClick="() => goToEnlistment(2)"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="race-board mt-6">
-            <div class="board-info">
-              <div class="d-flex justify-space-between">
-                <div class="brown-info">
-                  <div class="power-text"><Amount
-                    :amount="150000000"
-                    compact
-                    formatted
-                    symbol="Power Units"
-                  /></div>
-                  
-                </div>
-                <div class="prize-share">
-                    <img src="/images/battle/treasure.png" width="32" />
-                    <div class="prize-info">
-                      4%
-                    </div>
-                </div>
-              </div>
-              <Board
-                :rows="6"
-                :cols="16"
-                rotate="15deg"
-                unitImage="/images/troops/wskeleton-warrior.webp"
-                invertUnitDirection
-              />
-
-              <div class="d-flex justify-end mt-1">
-                <Button
-                  type="wsecondary"
-                  icon="swords"
-                  :handleClick="() => goToEnlistment(3)"
-                />
               </div>
             </div>
           </div>
@@ -243,6 +202,7 @@ export default {
 
   async mounted() {
     this.setHeader(false);
+    this.$refs.board.scrollLeft = (this.$refs.board.scrollWidth/2) - 125;
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
@@ -351,5 +311,8 @@ export default {
 }
 .button-container {
   width: 50%;
+}
+.mirror {
+  transform: scaleX(-1);
 }
 </style>
