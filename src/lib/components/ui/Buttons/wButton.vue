@@ -143,6 +143,11 @@ export default {
   flex: 0 0 auto;
 }
 
+.flat:hover {
+  background-color: #3a2720 !important;
+}
+
+
 .flat-actived {
   background-color: #3a2720 !important;
 }
