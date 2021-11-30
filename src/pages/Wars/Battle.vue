@@ -81,7 +81,7 @@
                       />
                     </div>
                   </div>
-                  <div class="prize-share ml-2 mr-2">
+                  <div class="prize-share ml-2">
                     <img src="/images/battle/treasure.png" width="32" />
                     <div class="prize-info">
                       4%
@@ -120,14 +120,14 @@
                   <Button
                     type="wsecondary"
                     icon="swords"
-                    :handleClick="() => goToEnlistment(3)"
+                    :handleClick="() => goToEnlistment(4)"
                   />
                 </div>
                 <div class="enlistment-resume d-flex">
                   <Button
                     type="wsecondary"
                     icon="swords"
-                    :handleClick="() => goToEnlistment(4)"
+                    :handleClick="() => goToEnlistment(3)"
                   />
                   <div class="brown-info ml-2">
                     <div class="power-text">

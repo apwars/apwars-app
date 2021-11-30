@@ -14,9 +14,11 @@
           width="42"
           src="/images/battle/battle-icon.png"
         />
+        <div class="total-amount d-none d-sm-flex"><Amount :amount="1555555555555555555555" formatted compact symbol="Power Units"/></div>
       </div>
       <div class="degen">
         <img class="faction-icon right" src="/images/icons/degen.png" />
+        <div class="total-amount d-none d-sm-flex"><Amount :amount="1555555555555555555555" formatted compact symbol="Power Units" /></div>
       </div>
     </div>
     <div class="prizes">
@@ -145,5 +147,15 @@ export default {
 }
 .game-text-purple {
   color: #5c62eb;
+}
+.total-amount {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
 }
 </style>

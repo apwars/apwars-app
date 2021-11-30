@@ -1,316 +1,247 @@
 <template>
-  <div class="background">
-    <v-container v-if="1 == 1 || (isConnected && !isLoading && isEnlistment)">
-      <v-row dense no-gutters>
-        <v-col
-          cols="12"
-          sm="12"
-          :class="$vuetify.breakpoint.xs ? 'pt-3' : 'pt-1 pb-0'"
-        >
-          <Button
-            type="wtertiary"
-            text="Back to war page"
-            :handleClick="backToWar"
-            noPadding
-          />
-          <div class="d-flex justify-space-between mt-2">
-            <Title text="WAR IV" subtitle="Report" />
-          </div>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="5" class="px-0">
-          <v-row>
-            <v-col
-              v-for="option in options('Corporation')"
-              :key="option.id"
-              cols="12"
-              md="6"
-              class="pt-0"
-              :class="$vuetify.breakpoint.mdAndDown ? 'pr-0' : 'pl-2'"
-            >
-              <div class="d-flex align-left">
-                <v-hover v-slot="{ hover }">
-                  <div
-                    class="race-image-container"
-                    :class="[hover ? 'on-hover' : '', selectedRace === option.name ? 'is-selected' : '']"
-                    :style="
-                      selectedRace === option.name
-                        ? 'opacity: 1; filter: none;'
-                        : ''
-                    "
-                  >
-                    <h2
-                      class="text-center mb-1"
-                    >
-                      {{ option.name }}
-                    </h2>
-                    <v-img
-                      class="race-image"
-                      :src="option.image"
-                      :lazy-src="option.image"
-                      :alt="option.name"
-                      :width="$vuetify.breakpoint.mdAndDown ? '200' : '240'"
-                      :height="$vuetify.breakpoint.mdAndDown ? '210' : '250'"
-                      @click="
-                        selectRace(
-                          option.name,
-                          option.monsterId,
-                          option.monsterName
-                        )
-                      "
-                    >
-                      <template v-slot:placeholder>
-                        <v-row
-                          class="fill-height ma-0"
-                          align="center"
-                          justify="center"
-                        >
-                          <v-progress-circular
-                            indeterminate
-                            color="#ffeebc lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </div>
-                </v-hover>
-              </div>
-            </v-col>
-          </v-row>
-        </v-col>
-
-        <v-col cols="2" class="d-flex align-center justify-center pa-0">
-          <v-img
-            :max-width="$vuetify.breakpoint.lgAndUp ? '56.57' : '46'"
-            src="/images/icons/swords.png"
+  <div class="color-bg">
+    <div class="background">
+      <v-container v-if="1 == 1 || (isConnected && !isLoading && isEnlistment)">
+        <v-row dense no-gutters>
+          <v-col
+            cols="12"
+            sm="12"
+            :class="$vuetify.breakpoint.xs ? 'pt-3' : 'pt-1 pb-0'"
           >
-          </v-img>
-        </v-col>
-
-        <v-col cols="5">
-          <v-row align="center" justify="end">
-            <v-col
-              v-for="option in options('Degenerate')"
-              :key="option.id"
-              cols="12"
-              md="6"
-              class="px-0 pt-0"
-              :class="$vuetify.breakpoint.sm ? 'pr-2' : ''"
-            >
-              <div class="d-flex align-center justify-end">
-                <v-hover v-slot="{ hover }">
-                  <div
-                    class="race-image-container"
-                    :class="[ hover ? 'on-hover': '', selectedRace === option.name ? 'is-selected' : '']"
-                    :style="
-                      selectedRace === option.name
-                        ? 'opacity: 1; filter: none;'
-                        : ''
-                    "
-                  >
-                    <h2
-                      class="text-center mb-1"
-                    >
-                      {{ option.name }}
-                    </h2>
-                    <v-img
-                      class="race-image"
-                      :class="[invertImage(option.name) ? 'invert-image' : '']"
-                      :src="option.image"
-                      :lazy-src="option.image"
-                      :alt="option.name"
-                      :width="$vuetify.breakpoint.mdAndDown ? '200' : '240'"
-                      :height="$vuetify.breakpoint.mdAndDown ? '210' : '250'"
-                      @click="
-                        selectRace(
-                          option.name,
-                          option.monsterId,
-                          option.monsterName
-                        )
-                      "
-                    >
-                      <template v-slot:placeholder>
-                        <v-row
-                          class="fill-height ma-0"
-                          align="center"
-                          justify="center"
-                        >
-                          <v-progress-circular
-                            indeterminate
-                            color="#ffeebc lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </div>
-                </v-hover>
-              </div>
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-
-      <v-row v-if="troopsToView">
-        <v-col cols="12" md="8">
-          <v-row>
-            <v-col
-              v-for="unit in troopsToView"
-              :key="unit.name"
-              cols="12"
-              sm="6"
-              md="6"
-              class="d-flex px-0"
-            >
-              <div class="text-center">
-                <v-img width="180" :src="unit.img" :lazy-src="unit.imgLazy">
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-progress-circular
-                        indeterminate
-                        color="#ffeebc lighten-5"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </div>
-
-              <div class="ml-1">
-                <span
-                  class="d-block"
-                  style="color: #FFB800; font-size: 17px;"
-                  >{{ unit.ticker.substring(1) }}</span
-                >
-                <span class="d-block mt-1">Units enlisted: 105k</span>
-                <span class="d-block">Deads units: 80k</span>
-                <span class="d-block mb-2">Survivors: 25k</span>
-                <span class="d-block" style="color: #FFB800;"
-                  >Global Dead Units: 80k</span
-                >
-                <span class="d-block" style="color: #FFB800;"
-                  >Global Survivors: 25k</span
-                >
-              </div>
-            </v-col>
-          </v-row>
-
-          <v-row class="pl-3">
-            <v-col
-              v-for="weapon in weapons"
-              :key="weapon.name"
-              cols="6"
-              md="3"
-              class="px-0"
-            >
-              <div class="d-flex">
-                <img
-                  :width="$vuetify.breakpoint.xs ? '50' : '60'"
-                  :height="$vuetify.breakpoint.xs ? '50' : '60'"
-                  :src="`/images/weapons/${weapon.icon}.png`"
-                />
-                <div style="font-size: 14px">
-                  <span class="d-block">{{ weapon.title }}</span>
-                  <span class="d-block">Global: 1,5M</span>
-                  <span class="d-block">My troops: 10,4K</span>
-                </div>
-              </div>
-            </v-col>
-          </v-row>
-        </v-col>
-        <v-col
-          class="d-flex flex-column align-center pa-0"
-          cols="12"
-          md="4"
-          style="position: relative; overflow: hidden;"
-        >
-          <v-img
-            :max-width="$vuetify.breakpoint.mdAndDown ? '300' : '370'"
-            :max-height="$vuetify.breakpoint.mdAndDown ? '430' : '500'"
-            :src="`/images/monsters/${monsterToView.id}.webp`"
-            :lazy-src="`/images/monsters/${monsterToView.id}.webp`"
-            :alt="monsterToView.name"
-            :class="[invertImage(monsterToView.name) ? 'invert-image' : '']"
-          >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="#ffeebc lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-          <div class="treasure-progress mb-3">
-            <Progress class="progress" :value="4" :maxScale="10" />
-            <div class="treasure">
-              <img src="/images/battle/treasure.png" />
+            <Button
+              type="wtertiary"
+              text="Back to war page"
+              :handleClick="backToWar"
+              noPadding
+            />
+            <div class="d-flex justify-space-between mt-2">
+              <Title text="WAR IV" subtitle="Report" />
             </div>
+          </v-col>
+        </v-row>
+
+        <div ref="raceSelect" class="race-select">
+          <div
+            class="race-container"
+            :class="[selectedRace === 1 ? 'is-selected' : '']"
+          >
+            <h2 class="text-center mb-1">
+              Humans
+            </h2>
+            <v-img
+              class="race-image"
+              src="/images/troops/wwizard-portrait.png"
+              alt="Humans"
+              width="240"
+              @click="selectedRace = 1"
+            >
+            </v-img>
           </div>
-          <Button type="wprimary" text="Go to Monster Battle" />
-        </v-col>
-      </v-row>
 
-      <v-row>
-        <v-col>
-          <v-row>
-            <v-col class="d-flex justify-center">
-              <Button
-                type="wprimary"
-                icon="swords"
-                text="Bring survivors and claim prizes"
-              />
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
+          <div
+            class="race-container"
+            :class="[selectedRace === 4 ? 'is-selected' : '']"
+          >
+            <h2 class="text-center mb-1">
+              Elves
+            </h2>
+            <v-img
+              class="race-image"
+              src="/images/troops/wferal-spirit-portrait.png"
+              alt="Elves"
+              width="240"
+              @click="selectedRace = 4"
+            >
+            </v-img>
+          </div>
 
-      <v-row v-if="isWar.reportVersion">
-        <v-col class="pb-0">
-          <Title>Players</Title>
-        </v-col>
-      </v-row>
+          <img width="46" src="/images/icons/swords.png" />
 
-      <v-row v-if="isWar.reportVersion">
-        <v-col class="pt-1">
-          <table-war-report
-            v-if="isWar.reportVersion === '1'"
-            :war="isWar"
-          ></table-war-report>
-          <table-war-report-v2
-            v-if="isWar.reportVersion === '2'"
-            :war="isWar"
-          ></table-war-report-v2>
-        </v-col>
-      </v-row>
-    </v-container>
+          <div
+            class="race-container "
+            :class="[selectedRace === 2 ? 'is-selected' : '']"
+          >
+            <h2 class="text-center mb-1">
+              Orcs
+            </h2>
+            <v-img
+              class="race-image"
+              src="/images/troops/wshaman-portrait.png"
+              alt="Orcs"
+              width="240"
+              @click="selectedRace = 2"
+            >
+            </v-img>
+          </div>
 
-    <v-container v-else-if="!isLoading && !isEnlistment">
-      <v-row>
-        <v-col cols="12" class="d-flex justify-center">
-          <h3 class="text-h4 text-md-h3 ma-0 ma-md-6">
-            Enlistment period ended
-          </h3>
-        </v-col>
-      </v-row>
-    </v-container>
+          <div
+            ref="raceSelect"
+            class="race-container"
+            :class="[selectedRace === 3 ? 'is-selected' : '']"
+          >
+            <h2 class="text-center mb-1">
+              Undeads
+            </h2>
+            <v-img
+              class="race-image invertImage"
+              src="/images/troops/wwitch-portrait.png"
+              alt="Undeads"
+              width="240"
+              @click="selectedRace = 3"
+            >
+            </v-img>
+          </div>
+        </div>
 
-    <v-container v-else>
-      <v-row>
-        <v-col cols="12" class="d-flex justify-center">
-          <h3 class="text-h3">Loading...</h3>
-        </v-col>
-      </v-row>
-    </v-container>
+        <v-row>
+          <v-col cols="12" md="8">
+            <v-row>
+              <v-col
+                v-for="unit in troopList"
+                :key="unit.name"
+                cols="12"
+                sm="6"
+                md="6"
+                class="d-flex px-0"
+              >
+                <div class="text-center">
+                  <v-img width="180" :src="`/images/troops/${unit.name.toLowerCase()}-portrait.png`">
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="#ffeebc lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </div>
+
+                <div class="ml-1">
+                  <span
+                    class="d-block"
+                    style="color: #FFB800; font-size: 17px;"
+                    >{{ unit.displayName }}</span
+                  >
+                  <span class="d-block mt-1">Units enlisted: 105k</span>
+                  <span class="d-block">Deads units: 80k</span>
+                  <span class="d-block mb-2">Survivors: 25k</span>
+                  <span class="d-block" style="color: #FFB800;"
+                    >Global Dead Units: 80k</span
+                  >
+                  <span class="d-block" style="color: #FFB800;"
+                    >Global Survivors: 25k</span
+                  >
+                </div>
+              </v-col>
+            </v-row>
+
+            <v-row class="pl-3">
+              <v-col
+                v-for="weapon in weapons"
+                :key="weapon.name"
+                cols="6"
+                md="3"
+                class="px-0"
+              >
+                <div class="d-flex">
+                  <img
+                    :width="$vuetify.breakpoint.xs ? '50' : '60'"
+                    :height="$vuetify.breakpoint.xs ? '50' : '60'"
+                    :src="`/images/weapons/${weapon.icon}.png`"
+                  />
+                  <div style="font-size: 14px">
+                    <span class="d-block">{{ weapon.title }}</span>
+                    <span class="d-block">Global: 1,5M</span>
+                    <span class="d-block">My troops: 10,4K</span>
+                  </div>
+                </div>
+              </v-col>
+            </v-row>
+          </v-col>
+          <v-col
+            class="d-flex flex-column align-center"
+            cols="12"
+            md="4"
+          >
+            <div class="monster-viewport">
+            <v-img
+              :src="`/images/monsters/${monsterData.id}.webp`"
+              :lazy-src="`/images/monsters/${monsterData.id}.webp`"
+              :alt="monsterData.name"
+            />
+            </div>
+            <div class="treasure-progress mb-3">
+              <Progress class="progress" :value="4" :maxScale="10" />
+              <div class="treasure">
+                <img src="/images/battle/treasure.png" />
+              </div>
+            </div>
+            <Button type="wprimary" text="Go to Monster Battle" />
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col>
+            <v-row>
+              <v-col class="d-flex justify-center">
+                <Button
+                  type="wprimary"
+                  icon="swords"
+                  text="Bring survivors and claim prizes"
+                />
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+
+        <v-row v-if="isWar.reportVersion">
+          <v-col class="pb-0">
+            <Title>Players</Title>
+          </v-col>
+        </v-row>
+
+        <v-row v-if="isWar.reportVersion">
+          <v-col class="pt-1">
+            <table-war-report
+              v-if="isWar.reportVersion === '1'"
+              :war="isWar"
+            ></table-war-report>
+            <table-war-report-v2
+              v-if="isWar.reportVersion === '2'"
+              :war="isWar"
+            ></table-war-report-v2>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <v-container v-else-if="!isLoading && !isEnlistment">
+        <v-row>
+          <v-col cols="12" class="d-flex justify-center">
+            <h3 class="text-h4 text-md-h3 ma-0 ma-md-6">
+              Enlistment period ended
+            </h3>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <v-container v-else>
+        <v-row>
+          <v-col cols="12" class="d-flex justify-center">
+            <h3 class="text-h3">Loading...</h3>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
@@ -325,7 +256,7 @@ import Progress from "@/lib/components/ui/Progress";
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
 import { ENLISTMENT_OPTIONS } from "@/data/Races";
-import { getUnitsEnlistment } from "@/data/UnitsEnlistment";
+import { MONSTERS } from "@/data/Monsters";
 import { getWeapons } from "@/data/Collectibles/Weapons";
 
 import WarMachine from "@/lib/eth/WarMachine";
@@ -357,12 +288,9 @@ export default {
       isCountdown: false,
       countdownTime: 0,
       countdownTimeEnd: 0,
-      tab: 0,
-      troops: [],
       weapons: [],
-      troopsToView: [],
       monsterToView: [{ id: "" }, { name: "" }],
-      selectedRace: "Elves",
+      selectedRace: 1,
     };
   },
 
@@ -374,11 +302,15 @@ export default {
     if (!this.isConnected) {
       return;
     }
+    this.$refs.raceSelect.scrollLeft = (this.$refs.raceSelect.scrollWidth/2) - 125;
     this.initData();
     this.loadData();
   },
 
   computed: {
+    ...mapGetters({
+      getAllFromRace: "enlistment/byRace",
+    }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
     },
@@ -406,6 +338,20 @@ export default {
     teamB() {
       return this.globalTroops.filter((trooper) => trooper.team === 2);
     },
+    troopList() {
+      return this.getAllFromRace(this.selectedRace);
+    },
+    enlistmentOptions() {
+      return ENLISTMENT_OPTIONS.find(
+        (eo) => eo.id === Number(this.selectedRace)
+      );
+    },
+    monsterData() {
+      if (!this.enlistmentOptions) {
+        return null;
+      }
+      return MONSTERS.find((m) => m.id === this.enlistmentOptions.monsterId);
+    },
   },
 
   watch: {
@@ -417,10 +363,6 @@ export default {
     account() {
       this.loadData();
     },
-
-    /* currentBlockNumber() {
-      this.loadData();
-    }, */
   },
 
   beforeRouteLeave(to, from, next) {
@@ -466,11 +408,6 @@ export default {
 
     async loadData() {
       try {
-        const troops = await getUnitsEnlistment();
-        this.troops = troops;
-
-        this.listTroops(1, 4, "Forger");
-
         const weapons = await getWeapons();
         this.weapons = weapons;
 
@@ -492,16 +429,6 @@ export default {
       }
     },
 
-    /* isDisabled(name) {
-      const enabled = ['Humans'];
-
-      return !enabled.includes(name);
-    }, */
-
-    invertImage(name) {
-      return name === "Orcs" || name === "Undeads" || name === "Forger";
-    },
-
     backToWar() {
       this.$router.push({
         path: `/wars/${this.$route.params.contractWar}`,
@@ -514,38 +441,6 @@ export default {
       });
     },
 
-    options(faction) {
-      const races = ENLISTMENT_OPTIONS;
-      const invertedRaces = [];
-      const factionToView = [];
-
-      invertedRaces.push(races[3], races[0], races[1], races[2]);
-
-      if (faction === "Corporation")
-        factionToView.push(invertedRaces[0], invertedRaces[1]);
-      else if (faction === "Degenerate")
-        factionToView.push(invertedRaces[2], invertedRaces[3]);
-
-      return factionToView;
-    },
-
-    selectRace(raceName, monsterId, monsterName) {
-      this.isEnabled(raceName);
-
-      if (raceName === "Elves") this.listTroops(1, monsterId, monsterName);
-      else if (raceName === "Humans")
-        this.listTroops(0, monsterId, monsterName);
-      else if (raceName === "Orcs") this.listTroops(2, monsterId, monsterName);
-      else if (raceName === "Undeads")
-        this.listTroops(3, monsterId, monsterName);
-    },
-
-    listTroops(racePosition, monsterId, monsterName) {
-      this.monsterToView.id = monsterId;
-      this.monsterToView.name = monsterName;
-      this.troopsToView = this.troops[racePosition];
-    },
-
     isEnabled(name) {
       this.selectedRace = name;
     },
@@ -554,6 +449,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.color-bg {
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+}
 .background {
   height: 40%;
   width: 100%;
@@ -609,21 +509,17 @@ export default {
   cursor: pointer;
 }
 
-.race-image-container {
+.race-container {
+  filter: grayscale(60%);
+  transition: transform 0.3s;
+  transition: opacity 0.4s ease-in-out;
+  opacity: 0.8;
+  &:hover,&.is-selected {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
   &.is-selected {
     color: #ffb800;
-  }
-  @media only screen and (max-width: 440px) {
-    padding-left: 5px;
-    > .race-image {
-      width: 170px !important;
-      height: 180px !important;
-    }
-  }
-  transition: opacity 0.4s ease-in-out;
-  &:not(.on-hover) {
-    filter: grayscale(60%);
-    transition: transform 0.3s;
   }
 }
 
@@ -662,5 +558,20 @@ export default {
   @media screen and (max-width: 345px) {
     font-size: 13px !important;
   }
+}
+
+.race-select {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  .race-container {
+    display: inline-block;
+  }
+}
+.monster-viewport {
+  width: 90%;
 }
 </style>
