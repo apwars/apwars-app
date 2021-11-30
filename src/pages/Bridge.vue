@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-background">
-      <div class="container d-flex align-center justify-space-between">
+      <div class="container py-3 d-flex align-center justify-space-between">
         <div class="page-title">
           Bridge
           <div class="page-title-line"></div>
@@ -15,240 +15,97 @@
       <div class="gradient"></div>
     </div>
 
-    <v-container class="mt-n6 mt-sm-n16">
-      <v-row v-if="isConnected && !isLoading">
-        <v-col cols="12" class="d-flex align-center justify-center">
-          <div>
-            <div class="primary--text font-weight-bold">From:</div>
+    <v-container v-if="isConnected && !isLoading">
+      <v-row>
+        <v-col cols="12">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est
+            pharetra faucibus nisl sit turpis iaculis elementum. Nibh lorem
+            auctor enim sit volutpat varius fames. Arcu aliquam sit id et. Non
+            id purus tincidunt egestas dui nibh commodo enim. Tortor feugiat
+            tortor augue purus morbi venenatis faucibus imperdiet sed. Fringilla
+            in metus, in interdum quis pellentesque duis. Vel gravida facilisi
+            ultricies duis at viverra morbi eu. Sed diam, convallis elementum
+            mauris elementum egestas tristique congue vitae.
+          </p>
+          <p>
+            d varius laoreet in mattis posuere quis ornare viverra in. Sit et,
+            quis lectus urna. Gravida est nunc massa, mi. Odio arcu risus amet
+            lectus. Cursus elementum luctus tortor tempus dignissim dictum. Sed
+            commodo netus cras aliquet morbi proin varius nec. Purus et,
+            dignissim nisl et tincidunt sapien. Placerat et lacinia enim iaculis
+            quis. Nulla habitant ut in mi. Sit nibh ipsum id scelerisque. Vel
+            risus urna, a sollicitudin ac euismod. Molestie integer malesuada
+            donec sapien scelerisque.
+          </p>
+        </v-col>
+      </v-row>
+
+      <v-row dense>
+        <v-col
+          cols="12"
+          class="d-flex flex-column flex-sm-row align-center justify-center"
+        >
+          <div class="box-bridge">
+            <div class="white--text text-h5 font-weight-bold">From:</div>
             <v-card
               color="white"
-              :width="$vuetify.breakpoint.smAndUp ? '170px' : '120px'"
-              :height="$vuetify.breakpoint.smAndUp ? '120px' : '170px'"
-              class="px-3 py-1"
+              width="100%"
+              class="d-flex align-center px-3 py-1"
             >
-              <img :src="bridgeNetwork.from.image" height="50px" />
-              <div class="black--text font-weight-bold">
+              <img :src="bridgeNetwork.from.image" height="90px" />
+              <div class="ml-3 text-h6 text-sm-h4 white--text font-weight-bold">
                 {{ bridgeNetwork.from.name }}
               </div>
             </v-card>
           </div>
-          <div class="mx-1 mx-sm-6 mt-3">
+          <div class="mx-1 mx-sm-4 mt-4">
             <div class="cursor-pointer" @click="changeNetwork()">
               <img
-                src="/images/icons/exchange.png"
-                width="50px"
+                src="/images/icons/exchange-bridge.png"
+                width="60px"
                 alt="exchange"
               />
             </div>
           </div>
-          <div>
-            <div class="primary--text font-weight-bold">To:</div>
+          <div class="box-bridge">
+            <div class="white--text text-h5 font-weight-bold">To:</div>
             <v-card
               color="white"
-              :width="$vuetify.breakpoint.smAndUp ? '170px' : '120px'"
-              :height="$vuetify.breakpoint.smAndUp ? '120px' : '170px'"
-              class="px-3 py-1"
+              width="100%"
+              class="d-flex align-center px-3 py-1"
             >
-              <img :src="bridgeNetwork.to.image" height="50px" />
-              <div class="black--text font-weight-bold">
+              <img :src="bridgeNetwork.to.image" height="90px" />
+              <div class="ml-3 text-h6 text-sm-h4 white--text font-weight-bold">
                 {{ bridgeNetwork.to.name }}
               </div>
             </v-card>
           </div>
         </v-col>
+      </v-row>
 
-        <v-col class="px-0" cols="12">
-          <v-tabs v-model="tab">
-            <v-tab>Transfer</v-tab>
-            <v-tab>History</v-tab>
-          </v-tabs>
-
-          <v-tabs-items v-model="tab">
-            <v-tab-item>
-              <v-card flat>
-                <div class="select-transfer px-1 px-sm-6 px-md-12 pt-3">
-                  <v-alert dense outlined text type="info">
-                    You can select up to 5 Token or GameItems to single
-                    transfer
-                  </v-alert>
-                  <div class="d-flex align-center">
-                    <div class="d-flex align-center mt-n3 mr-2">
-                      Token
-                      <v-switch v-model="typeTransfer" class="ml-1"></v-switch>
-                      GameItem
-                    </div>
-                    <v-autocomplete
-                      v-model="bridgeListSelect"
-                      :items="filterBridgeList"
-                      outlined
-                      chips
-                      dense
-                      :label="`Select ${typeTransfer ? 'GameItems' : 'Token'}`"
-                      item-text="name"
-                      item-value="name"
-                      multiple
-                      return-object
-                      @input="inputSelect"
-                    >
-                      <template v-slot:selection="data">
-                        <v-chip
-                          v-bind="data.attrs"
-                          :input-value="data.selected"
-                          close
-                          @click="data.select"
-                          @click:close="remove(data.item)"
-                        >
-                          <img height="30px" :src="data.item.image" />
-
-                          {{ data.item.name }}
-                        </v-chip>
-                      </template>
-                      <template v-slot:item="data">
-                        <template>
-                          <div class="d-flex py-1 align-center">
-                            <div class="image-select">
-                              <img
-                                class="text-center"
-                                height="50px"
-                                :src="data.item.image"
-                              />
-                            </div>
-                            <div>{{ data.item.name }}</div>
-                          </div>
-                        </template>
-                      </template>
-                    </v-autocomplete>
-                  </div>
-                </div>
-
-                <v-list>
-                  <v-list-item
-                    v-for="token in bridgeListSelect"
-                    :key="token.address"
-                  >
-                    <v-list-item-content>
-                      <div class="my-1 d-flex align-center justify-center">
-                        <div
-                          class="d-flex flex-column justify-center align-center list-avatar"
-                        >
-                          <img
-                            :width="
-                              $vuetify.breakpoint.smAndUp ? '70px' : '45px'
-                            "
-                            :src="token.image"
-                            :alt="token.name"
-                          />
-                          <div
-                            class="text-subtitle-2 primary--text font-weight-bold mt-1"
-                          >
-                            {{ token.name }}
-                          </div>
-                        </div>
-                        <div class="input-bridge">
-                          <v-currency-field
-                            label="Amount to send"
-                            outlined
-                            v-bind="
-                              token.type === 'erc20'
-                                ? currencyConfig
-                                : currencyGameItemConfig
-                            "
-                            v-model="token.amount"
-                            :hint="
-                              `Balance in Binance Smart Chain Network: 109.100,92`
-                            "
-                            persistent-hint
-                            dense
-                          >
-                            <template v-slot:append>
-                              <div class="d-flex">
-                                <span
-                                  class="mr-1 currency-append align-self-center"
-                                  >{{ token.name }}</span
-                                >
-                              </div>
-                            </template>
-                          </v-currency-field>
-                          <img
-                            src="images/icons/arrow.png"
-                            width="30px"
-                            class="d-block my-1 mx-auto arrow"
-                            alt="arrow"
-                          />
-                          <v-currency-field
-                            label="Amount to receive"
-                            outlined
-                            v-bind="
-                              token.type === 'erc20'
-                                ? currencyConfig
-                                : currencyGameItemConfig
-                            "
-                            v-model="token.amount"
-                            :hint="`Balance in Arcadia offchain: 109.100,92`"
-                            persistent-hint
-                            dense
-                            disabled
-                          >
-                            <template v-slot:append>
-                              <div class="d-flex">
-                                <span
-                                  class="mr-1 currency-append align-self-center"
-                                  >{{ token.name }}</span
-                                >
-                              </div>
-                            </template>
-                          </v-currency-field>
-                        </div>
-                      </div>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-                <wButton
-                  class="pb-4 text-center"
-                  :disabled="bridgeListSelect.length === 0"
-                  >Transfer</wButton
-                >
-              </v-card>
-            </v-tab-item>
-
-            <v-tab-item>
-              <v-card flat>
-                <v-data-table
-                  class="table-leaderboard elevation-2"
-                  :headers="headers"
-                  :items="leaderboards"
-                  nowrap
-                >
-                  <template v-slot:[`item.account`]="{ item }">
-                    <div class="d-flex align-center my-1">
-                      <v-avatar :address="item.account" />
-                      <v-address
-                        class="text-center text-caption"
-                        :address="item.account"
-                        link
-                        tooltip
-                      >
-                      </v-address>
-                    </div>
-                  </template>
-
-                  <template v-slot:[`item.time`]="{ item }">
-                    <countdown
-                      :auto-start="false"
-                      :time="item.time"
-                      v-slot="{ minutes, seconds }"
-                    >
-                      {{ minutes }} minutes, {{ seconds }} seconds
-                    </countdown>
-                  </template>
-                </v-data-table>
-              </v-card>
-            </v-tab-item>
-          </v-tabs-items>
+      <v-row>
+        <v-col cols="12">
+          <wButton flat size="large" actived class="mr-1">
+            <span class="mx-3">Transfer</span>
+          </wButton>
+          <wButton flat size="large">
+            <span class="mx-3">History</span>
+          </wButton>
         </v-col>
       </v-row>
 
-      <v-row v-else>
+      <v-row dense>
+        <v-col cols="12">
+          <v-alert class="mx-auto font-weight-bold text-center" dense type="info" outlined>
+            You can select up to 5 Tokens or Game Items to single transfer
+          </v-alert>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-container v-else>
+      <v-row>
         <v-col cols="12" class="d-flex justify-center">
           <h3 class="text-h3">Loading...</h3>
         </v-col>
@@ -324,8 +181,8 @@ export default {
           image: "/images/icons/bsc-icon.svg",
         },
         to: {
-          name: "APWars offchain",
-          image: "/images/icons/world.png",
+          name: "APWars Offchain",
+          image: "/images/project/logo-icon.png",
         },
       },
       tab: 0,
@@ -495,6 +352,7 @@ export default {
   border-radius: 5px;
   height: 4px;
   width: 80%;
+  min-width: 300px;
 }
 .page-subtitle {
   font-family: PT Serif;
@@ -521,6 +379,17 @@ export default {
 
 .currency-append {
   margin-top: 4px !important;
+}
+
+.box-bridge {
+  width: 100%;
+}
+
+.box-bridge >>> .v-card {
+  background-color: #3a2720 !important;
+  border: 2px solid #ffeebc;
+  border-radius: 0px;
+  color: #fff;
 }
 
 .table-leaderboard >>> .v-data-table__wrapper > table > tbody > tr > td,
