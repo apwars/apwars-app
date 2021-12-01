@@ -74,6 +74,9 @@
             class="board-viewport d-flex justify-center justify-sm-end  align-sm-end"
           >
           <v-col>
+            <div class="info-text mb-1">
+              Choose your slot to enlist
+            </div>
             <Board
               :rows="5"
               :cols="20"

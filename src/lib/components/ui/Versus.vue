@@ -2,12 +2,17 @@
   <div>
     <div class="phase-title">
       <div>Parcial Result</div>
-      <Button text="Battle Report" type="wtertiary" :handleClick="goToReport" />
+      <Button text="Go to War Report" type="wtertiary" :handleClick="goToReport" />
     </div>
 
     <div class="versus-bar">
       <div class="corp">
+        <div class="standart">
         <img class="faction-icon left" src="/images/icons/corp.png" />
+        <div class="crown">
+          <v-img src="/images/icons/crown.png" />
+        </div>
+        </div>
         <img
           class="battle-icon"
           height="42"
@@ -17,7 +22,12 @@
         <div class="total-amount d-none d-sm-flex"><Amount :amount="1555555555555555555555" formatted compact symbol="Power Units"/></div>
       </div>
       <div class="degen">
+        <div class="standart">
         <img class="faction-icon right" src="/images/icons/degen.png" />
+        <div class="crown" v-show="1 == 2">
+          <v-img src="/images/icons/crown.png" />
+        </div>
+        </div>
         <div class="total-amount d-none d-sm-flex"><Amount :amount="1555555555555555555555" formatted compact symbol="Power Units" /></div>
       </div>
     </div>
@@ -94,6 +104,17 @@ export default {
       top: -18px;
     }
   }
+  .crown {
+  position: absolute;
+  top: -48px;
+  left: -10px;
+  width: 71px;
+  @media screen and (min-width: 768px) {
+    width: 75px;
+      top: -54px;
+    left: -2px;
+  }
+}
 }
 .degen {
   height: 40px;
@@ -103,7 +124,7 @@ export default {
   width: 50%;
   .faction-icon {
     position: absolute;
-    top: -12px;
+    top: -14px;
     right: -21px;
     width: 96px;
     @media screen and (min-width: 768px) {
@@ -112,6 +133,17 @@ export default {
       top: -18px;
     }
   }
+  .crown {
+  position: absolute;
+  top: -48px;
+  right: -10px;
+  width: 71px;
+  @media screen and (min-width: 768px) {
+    width: 75px;
+      top: -52px;
+  right: -16px;
+  }
+}
 }
 .prizes {
   width: 100%;
@@ -157,5 +189,8 @@ export default {
   font-size: 14px;
   line-height: 19px;
   text-align: center;
+}
+.standart {
+  position: relative;
 }
 </style>

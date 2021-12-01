@@ -22,7 +22,7 @@
         >
           <img
             :class="['unit', invertUnitDirection ? 'invert' : '']"
-            width="120%"
+            height="160%"
             :src="unitImage"
             v-show="col || rowIndex + '' + colIndex === selected"
           />

@@ -19,6 +19,12 @@
             tip="How to play?"
             tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
           />
+          <countdown
+            :time="countdownTimer"
+            title="Time to collect prizes and wUNITS"
+            titleColor="#FFF"
+            hideEnd
+          />
           <div class="prizepool">
             <img width="158" src="/images/battle/fed-round-2.png" />
             <div class="prize">
@@ -149,16 +155,6 @@
               </div>
             </div>
           </div>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <countdown
-            :time="countdownTimer"
-            title="Time to collect prizes and wUNITS"
-            titleColor="#FFF"
-            hideEnd
-          />
         </v-col>
       </v-row>
     </v-container>

@@ -3,20 +3,18 @@
     <div class="background">
       <v-container v-if="1 == 1 || (isConnected && !isLoading && isEnlistment)">
         <v-row dense no-gutters>
-          <v-col
-            cols="12"
-            sm="12"
-            :class="$vuetify.breakpoint.xs ? 'pt-3' : 'pt-1 pb-0'"
-          >
+          <v-col>
             <Button
               type="wtertiary"
               text="Back to war page"
               :handleClick="backToWar"
               noPadding
             />
-            <div class="d-flex justify-space-between mt-2">
-              <Title text="WAR IV" subtitle="Report" />
-            </div>
+          </v-col>
+        </v-row>
+        <v-row dense no-gutters>
+          <v-col>
+            <Title text="WAR IV" subtitle="Report" />
           </v-col>
         </v-row>
 
@@ -65,7 +63,7 @@
               Orcs
             </h2>
             <v-img
-              class="race-image"
+              class="race-image invert-image"
               src="/images/troops/wshaman-portrait.png"
               alt="Orcs"
               width="240"
@@ -83,7 +81,7 @@
               Undeads
             </h2>
             <v-img
-              class="race-image invertImage"
+              class="race-image invert-image"
               src="/images/troops/wwitch-portrait.png"
               alt="Undeads"
               width="240"
@@ -173,15 +171,19 @@
               :src="`/images/monsters/${monsterData.id}.webp`"
               :lazy-src="`/images/monsters/${monsterData.id}.webp`"
               :alt="monsterData.name"
+              :class="[monsterData.id === 4 ? 'invert-image' : '']"
             />
+            </div>
+            <div class="monster-name text-center mb-2">
+                {{ monsterData.name }}
             </div>
             <div class="treasure-progress mb-3">
               <Progress class="progress" :value="4" :maxScale="10" />
               <div class="treasure">
-                <img src="/images/battle/treasure.png" />
+                <v-img src="/images/battle/treasure.png" />
               </div>
             </div>
-            <Button type="wprimary" text="Go to Monster Battle" />
+            <Button type="wprimary" text="Go to Monster Battle" :handleClick="goToMonsterBattle" />
           </v-col>
         </v-row>
 
@@ -441,6 +443,12 @@ export default {
       });
     },
 
+    goToMonsterBattle() {
+      this.$router.push({
+        path: `/wars/${this.$route.params.contractWar}/enlistment/${this.selectedRace}/battle`,
+      });
+    },
+
     isEnabled(name) {
       this.selectedRace = name;
     },
@@ -510,10 +518,10 @@ export default {
 }
 
 .race-container {
-  filter: grayscale(60%);
+  filter: grayscale(70%);
   transition: transform 0.3s;
   transition: opacity 0.4s ease-in-out;
-  opacity: 0.8;
+  opacity: 0.6;
   &:hover,&.is-selected {
     filter: grayscale(0%);
     opacity: 1;
@@ -573,5 +581,10 @@ export default {
 }
 .monster-viewport {
   width: 90%;
+}
+.monster-name {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 1.2;
 }
 </style>
