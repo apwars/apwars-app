@@ -24,7 +24,7 @@
         >
           <img
             :class="['unit', invertUnitDirection ? 'invert' : '']"
-            width="110%"
+            width="120%"
             :src="unitImage"
             v-show="rowIndex + '' + colIndex === selected"
           />
@@ -112,7 +112,7 @@ export default {
   > .unit {
     position: absolute;
     left: 0px;
-    top: -18px;
+    bottom: 8px;
     animation: unit-enter 0.2s ease-in;
     &.invert {
       transform: scaleX(-1);

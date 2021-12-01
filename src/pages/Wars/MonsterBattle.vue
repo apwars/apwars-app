@@ -14,13 +14,7 @@
       <v-row dense no-gutters>
         <v-col>
           <div class="name-container d-flex justify-start">
-            <Title text="Monster Battle" />
-            <img
-              class="ml-2"
-              height="104"
-              src="/images/icons/corp.png"
-              alt="Corporation standart"
-            />
+            <Title text="WAR IV" subtitle="Monster Battle" />
           </div>
         </v-col>
       </v-row>
@@ -84,7 +78,7 @@
               :rows="5"
               :cols="20"
               rotate="40deg"
-              unitImage="/images/troops/wwarrior.webp"
+              :unitImage="`/images/troops/${troopList[0].name.toLowerCase()}.webp`"
             />
           </v-col>
           </v-row>
