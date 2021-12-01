@@ -84,11 +84,12 @@
           </v-row>
           
         </v-col>
-        <v-col cols="12" sm="3" order="1" order-sm="2">
+        <v-col cols="12" sm="3" order="1" order-sm="2" class="d-flex align-end">
           <div class="monster-container">
             <v-img
               :src="`/images/monsters/${monsterData.id}.webp`"
               :alt="monsterData.name"
+              :class="[monsterData.id === 4 ? 'invert' : '']"
             />
             <div class="treasure-progress">
               <Progress class="progress" :value="4" :maxScale="10" />
@@ -198,8 +199,6 @@ export default {
 .monster-container {
   width: 100%;
   position: relative;
-  display: inline-block;
-  height: auto;
 }
 
 .treasure-progress {
@@ -248,5 +247,8 @@ export default {
 }
 .enlistment-resume {
   width: 100%;
+}
+.invert {
+  transform: scaleX(-1);
 }
 </style>

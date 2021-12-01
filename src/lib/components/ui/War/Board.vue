@@ -8,17 +8,15 @@
     >
       <div
         :class="['board-row', invertUnitDirection ? 'invert' : '']"
-        v-for="rowIndex in rows"
+        v-for="(row, rowIndex) in board"
         :key="rowIndex"
-        :style="`--index: ${invertUnitDirection ? rows - rowIndex : rowIndex}`"
       >
         <div
           :class="[
             'slot',
             rowIndex + '' + colIndex === selected ? 'selected' : '',
-            invertUnitDirection ? 'invert' : '',
           ]"
-          v-for="colIndex in cols"
+          v-for="(col, colIndex) in row"
           :key="colIndex"
           @click="() => selectUnit(rowIndex, colIndex)"
         >
@@ -26,7 +24,7 @@
             :class="['unit', invertUnitDirection ? 'invert' : '']"
             width="120%"
             :src="unitImage"
-            v-show="rowIndex + '' + colIndex === selected"
+            v-show="col || rowIndex + '' + colIndex === selected"
           />
         </div>
       </div>
@@ -60,6 +58,16 @@ export default {
       type: String,
       default: '0',
     },
+    board: {
+      type: Array,
+      default: () => [
+      [1,1,1,0,0,1,0,1,1,0,0,0,0,0,0,0,1,1,0,1],
+      [1,0,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1],
+      [0,0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,1,1,1,0],
+      [0,0,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1],
+      [1,1,1,0,0,1,0,1,1,0,0,0,0,0,1,0,1,1,0,1],
+    ],
+    }
   },
   data() {
     return {
