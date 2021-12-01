@@ -227,8 +227,8 @@
                 class="mt-2"
                 :value="50"
                 :maxScale="100"
-                color1="#1A3436"
-                color2="#346568"
+                color1="#346568"
+                color2="#1A3436"
                 noText
               />
               <div class="slots-info d-flex justify-center">54/100</div>

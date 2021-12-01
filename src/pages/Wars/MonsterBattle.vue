@@ -22,7 +22,9 @@
         <v-col cols="12" offset-sm="1" sm="8" order="2" order-sm="1">
           <v-row no-gutters class="enlistment-resume" v-if="troopList.length">
             <v-col
-              sm="4"
+              cols="12"
+              sm="6"
+              lg="4"
               class="troop-container d-flex justify-start align-center"
               v-for="unit in troopList"
               :key="unit.id"
@@ -49,8 +51,10 @@
             <v-col
               v-for="weapon in weapons"
               :key="weapon.id"
-              sm="3"
-              class="d-flex justify-start align-center"
+              cols="12"
+              sm="6"
+              lg="3"
+              class="d-flex justify-start align-center mt-2"
             >
               <img
                 :src="`/images/icons/${weapon.icon}.png`"
@@ -94,6 +98,7 @@
               :alt="monsterData.name"
               :class="[monsterData.id === 4 ? 'invert' : '']"
             />
+            <div class="monster-name text-center mb-2">{{ monsterData.name }}</div>
             <div class="treasure-progress">
               <Progress class="progress" :value="4" :maxScale="10" />
               <div class="treasure">
@@ -107,8 +112,8 @@
         <v-col sm="4">
           
               <div class="d-flex flex-column justify-center align-center">
-                <Progress class="progress" :value="54" :maxScale="100" />
-                <div class="info-text mt-1">Remaining slots</div>
+                <Progress class="progress" :value="54" :maxScale="100" noText/>
+                <div class="info-text mt-1">Remaining slots 54/100</div>
               </div>
         </v-col>
         <v-col offset-sm="4" sm="4">
@@ -204,12 +209,6 @@ export default {
   position: relative;
 }
 
-.treasure-progress {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
 .progress {
   z-index: 2;
   width: 100%;
@@ -217,21 +216,18 @@ export default {
 
 .treasure {
   position: absolute;
-  bottom: -26px;
-  right: -24px;
+  display: inline-block;
+  top: -21px;
+  right: -18px;
   z-index: 3;
-  > img {
-    width: 120px;
-  }
+  width: 48px;
   @media screen and (min-width: 1441px) {
-    > img {
-      width: 180px;
-    }
+    width: 64px;
   }
 }
 .treasure-info {
   position: absolute;
-  bottom: -16px;
+  bottom: 0px;
   left: 50%;
   padding: 8px 4px;
   transform: translateX(-50%);
@@ -253,5 +249,13 @@ export default {
 }
 .invert {
   transform: scaleX(-1);
+}
+.monster-name {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 1.2;
+}
+.treasure-progress {
+  position: relative;
 }
 </style>
