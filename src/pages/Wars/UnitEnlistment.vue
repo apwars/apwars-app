@@ -222,7 +222,7 @@
                   >{{ totalStakedForce(troop.race) }} units</span
                 >
               </div>
-              <Button type="wprimary" text="Choose slot" isBlock />
+              <Button type="wprimary" text="Choose slot" isBlock :handleClick="goToMonsterBattle" />
               <Progress
                 class="mt-2"
                 :value="50"
@@ -440,6 +440,11 @@ export default {
       if (this.troopSelected !== unitName) {
         this.troopSelected = unitName;
       }
+    },
+    goToMonsterBattle() {
+      this.$router.push({
+        path: `/wars/${this.$route.params.contractWar}/enlistment/${this.$route.params.raceId}/battle`
+      })
     },
     getUnitName(position) {
       if (position > this.unitsFromRace.length - 1) {

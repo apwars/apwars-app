@@ -24,23 +24,73 @@
           </div>
         </v-col>
       </v-row>
-      <v-row class="limit">
-        <v-col
-          cols="12"
-          sm="9"
-          order="2"
-          order-sm="1"
-          class="board-viewport d-flex justify-center justify-sm-end  align-sm-end"
-        >
-          <Board :rows="5" :cols="20" rotate="40deg" unitImage="/images/troops/wwarrior.webp" />
+      <v-row>
+        <v-col cols="12" offset-sm="1" sm="8" order="2" order-sm="1">
+          <v-row no-gutters class="enlistment-resume" v-if="troopList.length">
+            <v-col
+              sm="4"
+              class="troop-container d-flex justify-start align-center"
+              v-for="unit in troopList"
+              :key="unit.id"
+            >
+              <img
+                :src="`/images/troops/${unit.name.toLowerCase()}.webp`"
+                width="64"
+                class="mr-1"
+              />
+              <div class="troop-info">
+                <div class="info-text mb-1">
+                  {{ unit.displayName }}
+                </div>
+                <div class="info-text">
+                  Global: 1,5M
+                </div>
+                <div class="info-text">
+                  My Units: 10.4K
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+          <v-row no-gutters class="mt-3">
+            <v-col
+              v-for="weapon in weapons"
+              :key="weapon.id"
+              sm="3"
+              class="d-flex justify-start align-center"
+            >
+              <img
+                :src="`/images/icons/${weapon.icon}.png`"
+                width="52"
+                class="mr-1"
+              />
+              <div class="troop-info">
+                <div class="info-text mb-1">
+                  {{ weapon.title }}
+                </div>
+                <div class="info-text">
+                  Global: 1,5M
+                </div>
+                <div class="info-text">
+                  My Units: 10.4K
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+          <v-row
+            class="board-viewport d-flex justify-center justify-sm-end  align-sm-end"
+          >
+          <v-col>
+            <Board
+              :rows="5"
+              :cols="20"
+              rotate="40deg"
+              unitImage="/images/troops/wwarrior.webp"
+            />
+          </v-col>
+          </v-row>
+          
         </v-col>
-        <v-col
-          cols="12"
-          sm="3"
-          order="1"
-          order-sm="2"
-          class="d-flex align-sm-end"
-        >
+        <v-col cols="12" sm="3" order="1" order-sm="2">
           <div class="monster-container">
             <v-img
               :src="`/images/monsters/${monsterData.id}.webp`"
@@ -49,20 +99,29 @@
             <div class="treasure-progress">
               <Progress class="progress" :value="4" :maxScale="10" />
               <div class="treasure">
-                <img src="/images/battle/fed-round-2.png" />
-                <div class="treasure-info">
-                  10% FED
-                </div>
+                <v-img src="/images/battle/treasure.png" />
               </div>
             </div>
           </div>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col sm="4">
+          
+              <div class="d-flex flex-column justify-center align-center">
+                <Progress class="progress" :value="54" :maxScale="100" />
+                <div class="info-text mt-1">Remaining slots</div>
+              </div>
+        </v-col>
+        <v-col offset-sm="4" sm="4">
+          <Button type="wprimary" text="Enlist" isBlock />
         </v-col>
       </v-row>
     </v-container>
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters, mapState } from "vuex";
 
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
@@ -80,6 +139,12 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      weapons: (state) => state.enlistment.weapons,
+    }),
+    ...mapGetters({
+      getAllFromRace: "enlistment/byRace",
+    }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
     },
@@ -93,6 +158,9 @@ export default {
         return null;
       }
       return MONSTERS.find((m) => m.id === this.enlistmentOptions.monsterId);
+    },
+    troopList() {
+      return this.getAllFromRace(this.$route.params.raceId);
     },
   },
   methods: {
@@ -119,16 +187,11 @@ export default {
   height: 100%;
   width: 100%;
   background-size: cover;
-  background-image: url("/images/background/battle.png");
+  background-image: url("/images/background/battle-zoomed.png");
 }
 .main {
   @media screen and (min-width: 768px) {
     height: 100%;
-  }
-}
-.limit {
-  @media screen and (min-width: 768px) {
-    height: 80%;
   }
 }
 .board-viewport {
@@ -141,6 +204,8 @@ export default {
 .monster-container {
   width: 100%;
   position: relative;
+  display: inline-block;
+  height: auto;
 }
 
 .treasure-progress {
@@ -156,16 +221,16 @@ export default {
 
 .treasure {
   position: absolute;
-  bottom: -16px;
-  right: -48px;
+  bottom: -26px;
+  right: -24px;
   z-index: 3;
   > img {
-      width: 120px
+    width: 120px;
   }
   @media screen and (min-width: 1441px) {
-     > img {
-      width: 180px
-  } 
+    > img {
+      width: 180px;
+    }
   }
 }
 .treasure-info {
@@ -180,5 +245,14 @@ export default {
   font-weight: bold;
   font-size: 12px;
   line-height: 1.2;
+}
+.info-text {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.enlistment-resume {
+  width: 100%;
 }
 </style>

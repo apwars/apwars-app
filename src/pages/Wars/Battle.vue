@@ -89,7 +89,7 @@
                   </div>
                 </div>
               </div>
-              <Board
+              <FullBoard
                 :rows="10"
                 :cols="40"
                 rotate="30deg"
@@ -169,13 +169,13 @@ import { mapMutations } from "vuex";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
-import Board from "@/lib/components/ui/War/Board";
+import FullBoard from "@/lib/components/ui/War/FullBoard";
 import Versus from "@/lib/components/ui/Versus";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 
 export default {
-  components: { Title, Button, Versus, Board, Amount, Countdown },
+  components: { Title, Button, Versus, FullBoard, Amount, Countdown },
   computed: {
     countdownTimer() {
       return 1637711108;
