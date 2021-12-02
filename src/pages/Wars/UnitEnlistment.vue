@@ -217,7 +217,7 @@
                 </div>
               </div>
               <div class="total-force mb-1">
-                Force:
+                Power Units:
                 <span class="amount"
                   >{{ totalStakedForce(troop.race) }} units</span
                 >

@@ -19,7 +19,22 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" offset-sm="1" sm="8" order="2" order-sm="1">
+        <v-col cols="12" offset-sm="1" sm="8">
+          <v-row
+            class="board-viewport d-flex justify-center justify-sm-end  align-sm-end"
+          >
+          <v-col>
+            <div class="monster-name mt-6">
+              Choose your slot to enlist
+            </div>
+            <Board
+              :rows="5"
+              :cols="20"
+              rotate="40deg"
+              :unitImage="`/images/troops/${troopList[0].name.toLowerCase()}.webp`"
+            />
+          </v-col>
+          </v-row>
           <v-row no-gutters class="enlistment-resume" v-if="troopList.length">
             <v-col
               cols="12"
@@ -74,24 +89,10 @@
               </div>
             </v-col>
           </v-row>
-          <v-row
-            class="board-viewport d-flex justify-center justify-sm-end  align-sm-end"
-          >
-          <v-col>
-            <div class="info-text mb-1">
-              Choose your slot to enlist
-            </div>
-            <Board
-              :rows="5"
-              :cols="20"
-              rotate="40deg"
-              :unitImage="`/images/troops/${troopList[0].name.toLowerCase()}.webp`"
-            />
-          </v-col>
-          </v-row>
+          
           
         </v-col>
-        <v-col cols="12" sm="3" order="1" order-sm="2" class="d-flex align-end">
+        <v-col cols="12" sm="3" class="d-flex align-end">
           <div class="monster-container">
             <v-img
               :src="`/images/monsters/${monsterData.id}.webp`"
