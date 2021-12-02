@@ -4,6 +4,7 @@
       <v-row dense no-gutters>
         <v-col>
           <Button
+            icon="arrow-back"
             type="wtertiary"
             text="Back to home"
             :handleClick="backToHome"
@@ -198,7 +199,7 @@ export default {
 
   async mounted() {
     this.setHeader(false);
-    this.$refs.board.scrollLeft = (this.$refs.board.scrollWidth/2) - 125;
+    this.$refs.board.scrollLeft = this.$refs.board.scrollWidth / 2 - 125;
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);

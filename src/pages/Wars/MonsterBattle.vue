@@ -4,6 +4,7 @@
       <v-row dense no-gutters>
         <v-col>
           <Button
+            icon="arrow-back"
             type="wtertiary"
             text="Back to enlistment page"
             :handleClick="backToEnlistment"
@@ -23,17 +24,28 @@
           <v-row
             class="board-viewport d-flex justify-center justify-sm-end  align-sm-end"
           >
-          <v-col>
-            <div class="monster-name mt-6">
-              Choose your slot to enlist
-            </div>
-            <Board
-              :rows="5"
-              :cols="20"
-              rotate="40deg"
-              :unitImage="`/images/troops/${troopList[0].name.toLowerCase()}.webp`"
-            />
-          </v-col>
+            <v-col>
+              <div class="monster-name mt-6">
+                Choose your slot to enlist
+              </div>
+              <Board
+                :rows="5"
+                :cols="20"
+                rotate="40deg"
+                :unitImage="
+                  `/images/troops/${troopList[0].name.toLowerCase()}.webp`
+                "
+                @selectedSlot="handleSlotSelection"
+                currentUserAddress="3-3"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols=12>
+              <div class="monster-name" v-if="selectedSlot">
+                Enlistment at Row: {{ selectedSlot.row}} Col: {{ selectedSlot.col }}
+              </div>
+            </v-col>
           </v-row>
           <v-row no-gutters class="enlistment-resume" v-if="troopList.length">
             <v-col
@@ -53,12 +65,19 @@
                 <div class="info-text mb-1">
                   {{ unit.displayName }}
                 </div>
-                <div class="info-text">
-                  Global: 1,5M
-                </div>
-                <div class="info-text">
-                  My Units: 10.4K
-                </div>
+                <v-skeleton-loader
+                  v-if="isLoadingEnlistment"
+                  width="100%"
+                  type="text, text"
+                />
+                <template v-else>
+                  <div class="info-text">
+                    Global: 1,5M
+                  </div>
+                  <div class="info-text">
+                    My Units: 10.4K
+                  </div>
+                </template>
               </div>
             </v-col>
           </v-row>
@@ -80,17 +99,22 @@
                 <div class="info-text mb-1">
                   {{ weapon.title }}
                 </div>
-                <div class="info-text">
-                  Global: 1,5M
-                </div>
-                <div class="info-text">
-                  My Units: 10.4K
-                </div>
+                <v-skeleton-loader
+                  v-if="isLoadingEnlistment"
+                  width="100%"
+                  type="text, text"
+                />
+                <template v-else>
+                  <div class="info-text">
+                    Global: 1,5M
+                  </div>
+                  <div class="info-text">
+                    My Units: 10.4K
+                  </div>
+                </template>
               </div>
             </v-col>
           </v-row>
-          
-          
         </v-col>
         <v-col cols="12" sm="3" class="d-flex align-end">
           <div class="monster-container">
@@ -99,7 +123,9 @@
               :alt="monsterData.name"
               :class="[monsterData.id === 4 ? 'invert' : '']"
             />
-            <div class="monster-name text-center mb-2">{{ monsterData.name }}</div>
+            <div class="monster-name text-center mb-2">
+              {{ monsterData.name }}
+            </div>
             <div class="treasure-progress">
               <Progress class="progress" :value="4" :maxScale="10" />
               <div class="treasure">
@@ -111,11 +137,10 @@
       </v-row>
       <v-row>
         <v-col sm="4">
-          
-              <div class="d-flex flex-column justify-center align-center">
-                <Progress class="progress" :value="54" :maxScale="100" noText/>
-                <div class="info-text mt-1">Remaining slots 54/100</div>
-              </div>
+          <div class="d-flex flex-column justify-center align-center">
+            <Progress class="progress" :value="54" :maxScale="100" noText />
+            <div class="info-text mt-1">Remaining slots 54/100</div>
+          </div>
         </v-col>
         <v-col offset-sm="4" sm="4">
           <Button type="wprimary" text="Enlist" isBlock />
@@ -139,7 +164,8 @@ export default {
   components: { Title, Button, Progress, Board },
   data() {
     return {
-      selected: null,
+      selectedSlot: null,
+      isLoadingEnlistment: false,
     };
   },
   computed: {
@@ -175,6 +201,75 @@ export default {
       this.$router.push(
         `/wars/${this.$route.params.contractWar}/enlistment/${this.$route.params.raceId}`
       );
+    },
+    async handleSlotSelection(key) {
+      const [row, col] = key.split("-");
+      this.selectedSlot = { col, row };
+      this.isLoadingEnlistment = true;
+      const enlistment = await this.loadEnlistment();
+      this.isLoadingEnlistment = false;
+    },
+    loadEnlistment(address) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            troops: [
+              {
+                id: 0,
+                displayName: "Warrior",
+                amount: 15000000000000000000,
+              },
+              {
+                id: 1,
+                displayName: "Archer",
+                amount: 15000000000000000000,
+              },
+              {
+                id: 2,
+                displayName: "Armoured Warrior",
+                amount: 15000000000000000000,
+              },
+              {
+                id: 3,
+                displayName: "Crossbowman",
+                amount: 15000000000000000000,
+              },
+              {
+                id: 4,
+                displayName: "Wizard",
+                amount: 15000000000000000000,
+              },
+              {
+                id: 5,
+                displayName: "Horseman",
+                amount: 15000000000000000000,
+              },
+            ],
+            weapons: [
+              {
+                id: 4,
+                title: "Simple Bow",
+                amount: 10400,
+              },
+              {
+                id: 5,
+                title: "Simple Spear",
+                amount: 10400,
+              },
+              {
+                id: 6,
+                title: "Simple Potion",
+                amount: 10400,
+              },
+              {
+                id: 39,
+                title: "Simple Shield",
+                amount: 10400,
+              },
+            ],
+          });
+        }, 5000);
+      });
     },
   },
   async mounted() {

@@ -14,17 +14,22 @@
         <div
           :class="[
             'slot',
-            rowIndex + '' + colIndex === selected ? 'selected' : '',
+            getKey(rowIndex, colIndex) === selected ? 'selected' : '',
+            col.isAwarded ? 'is-awarded' : ''
           ]"
           v-for="(col, colIndex) in row"
           :key="colIndex"
           @click="() => selectUnit(rowIndex, colIndex)"
         >
+          <div
+            class="arrow-down"
+            v-if="getKey(rowIndex, colIndex) === currentUserAddress"
+          ></div>
           <img
             :class="['unit', invertUnitDirection ? 'invert' : '']"
             height="160%"
             :src="unitImage"
-            v-show="col || rowIndex + '' + colIndex === selected"
+            v-show="col.isEnlisted || getKey(rowIndex, colIndex) === selected"
           />
         </div>
       </div>
@@ -51,23 +56,27 @@ export default {
       default: false,
     },
     rotate: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: "0deg",
     },
     translate: {
       type: String,
-      default: '0',
+      default: "0",
     },
     board: {
       type: Array,
       default: () => [
-      [1,1,1,0,0,1,0,1,1,0,0,0,0,0,0,0,1,1,0,1],
-      [1,0,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1],
-      [0,0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,1,1,1,0],
-      [0,0,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1],
-      [1,1,1,0,0,1,0,1,1,0,0,0,0,0,1,0,1,1,0,1],
-    ],
-    }
+        [{ isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}],
+        [{ isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: true}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}],
+        [{ isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: true}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}],
+        [{ isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: true}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}],
+        [{ isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: true}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, 0, { isEnlisted: true, address: '4-3', isAwarded: false}],
+      ],
+    },
+    currentUserAddress: {
+        type: String,
+        default: "",
+      },
   },
   data() {
     return {
@@ -78,10 +87,10 @@ export default {
     selectUnit(rowIndex, colIndex) {
       const key = this.getKey(rowIndex, colIndex);
       this.selected = key;
-      this.$emit("selectSlot", key);
+      this.$emit("selectedSlot", key);
     },
     getKey(rowIndex, colIndex) {
-      return rowIndex + "" + colIndex;
+      return rowIndex + "-" + colIndex;
     },
   },
 };
@@ -117,6 +126,9 @@ export default {
     outline: 1px solid yellow;
     z-index: 2;
   }
+  &.is-awarded {
+    background-image: url("/images/battle/floor-awarded.png");
+  }
   > .unit {
     position: absolute;
     left: 0px;
@@ -142,6 +154,20 @@ export default {
   }
 }
 
+.arrow-down {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 0;
+  top: -28px;
+  left: 14px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 8px solid yellow;
+  animation: flutuation 1s linear forwards infinite;
+  transition: all ease;
+}
+
 /* width */
 div::-webkit-scrollbar {
   height: 4px;
@@ -162,5 +188,19 @@ div::-webkit-scrollbar {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+@keyframes flutuation {
+  0% {
+    transform: translateY(-50%);
+  }
+
+  50% {
+    transform: translateY(-80%);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
 }
 </style>

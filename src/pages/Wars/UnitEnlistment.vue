@@ -7,6 +7,7 @@
       <v-row dense no-gutters>
         <v-col>
           <Button
+            icon="arrow-back"
             type="wtertiary"
             text="Back to war resume"
             :handleClick="backToWar"

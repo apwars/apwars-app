@@ -5,7 +5,7 @@
     :disabled="disabled"
   >
     <img width="24" :src="`/images/icons/${icon}.png`" :alt="icon" v-if="icon" />
-    <game-text class="btn-tertiary-text" v-if="type === 'wtertiary'">{{
+    <game-text :class="['btn-tertiary-text', icon ? 'ml-1' : '']" v-if="type === 'wtertiary'">{{
       text
     }}</game-text>
     <span v-else-if="text" :class="['btn-text', icon ? 'ml-2' : '']">{{ text }}</span>
