@@ -82,13 +82,17 @@
                 <div class="status-icon">
                   <img src="/images/icons/attack.png" alt="Attack points" />
                 </div>
-                <ForceMeter :maxScale="maxStrength" :value="stakedStrength" />
+                <div class="force-text">
+                  {{ troop.strength }}
+                </div>
               </div>
               <div class="troop-status">
                 <div class="status-icon">
                   <img src="/images/icons/defense.png" alt="Defense points" />
                 </div>
-                <ForceMeter :maxScale="maxDefense" :value="stakedDefense" />
+                <div class="force-text">
+                  {{ troop.defense }}
+                </div>
               </div>
             </div>
             <div class="price-container">
@@ -723,6 +727,11 @@ export default {
   font-weight: bold;
   font-size: 14px;
   line-height: 19px;
+}
+
+.force-text {
+  font-size: 32px;
+  font-weight: bold;
 }
 
 @keyframes weapon-fall {
