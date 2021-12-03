@@ -25,8 +25,6 @@ export default class BaseController {
         },
         body: JSON.stringify(body)
       });
-      console.log(`response.status ${response.status}`);
-      console.log(response.status);
       if (response.status !== 200 && response.status !== 201) {
         throw await response.json();
       }

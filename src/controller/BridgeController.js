@@ -15,4 +15,12 @@ export default class BridgeController {
     }
   }
 
+  depositERC1155(tx) {
+    try {
+      return this.base._post(`/bridge/deposit/${tx}/depositERC1155`);
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }

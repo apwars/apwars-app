@@ -11,4 +11,8 @@ export default class Worker {
     return this.smc.methods.depositERC20(_tokens, _amounts).send({ from });
   }
 
+  depositERC1155(_ids, _amounts, from) {
+    return this.smc.methods.depositERC1155(_ids, _amounts).send({ from });
+  }
+
 }

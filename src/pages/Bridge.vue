@@ -496,6 +496,11 @@ export default {
     async transfer() {
       if (!this.typeTransfer && this.bridgeNetwork.from.type === "onChain") {
         await this.depositERC20();
+      } else if (
+        this.typeTransfer &&
+        this.bridgeNetwork.from.type === "onChain"
+      ) {
+        await this.depositERC1155();
       }
     },
 
@@ -556,6 +561,63 @@ export default {
       });
     },
 
+    async depositERC1155() {
+      this.isLoadingTransfer = true;
+
+      const smcBridge = new Bridge(this.addresses.bridge);
+
+      let _ids = [];
+      let _amounts = [];
+
+      this.bridgeList.map((list) => {
+        if (list.amountFrom > 0) {
+          _ids.push(list.id);
+          _amounts.push(list.amountFrom);
+        }
+      });
+
+      if (_ids.length === 0) {
+        this.isLoadingTransfer = false;
+        return ToastSnackbar.warning("There are no items for transfer");
+      }
+
+      const confirmTransaction = smcBridge.depositERC1155(
+        _ids,
+        _amounts,
+        this.account
+      );
+
+      confirmTransaction.on("error", (error) => {
+        this.isLoadingTransfer = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(
+          "An error has occurred while to signing contract"
+        );
+      });
+
+      confirmTransaction.on("transactionHash", (tx) => {});
+
+      confirmTransaction.on("receipt", async (receipt) => {
+        try {
+          const bridgeController = new BridgeController();
+          await bridgeController.depositERC1155(receipt.transactionHash);
+
+          this.isLoadingTransfer = false;
+          ToastSnackbar.success("Transfer successfully sent");
+        } catch (error) {
+          this.isLoadingTransfer = false;
+          if (error.status) {
+            return ToastSnackbar.error(error.code);
+          }
+          ToastSnackbar.error(
+            "An error has occurred while to signing contract"
+          );
+        }
+      });
+    },
+
     async addBridgeList() {
       // ERC20
       await this.addERC20BridgeList(
@@ -578,26 +640,35 @@ export default {
       );
 
       // ERC1155
-      await this.addERC1155BridgeList(49, "Worker", "/images/nfts/worker.png");
+      await this.addERC1155BridgeList(
+        49,
+        "Worker",
+        "/images/nfts/worker.png",
+        100
+      );
       await this.addERC1155BridgeList(
         39,
         "Simple Shield",
-        "/images/nfts/weapon-simple-shield.png"
+        "/images/nfts/weapon-simple-shield.png",
+        100
       );
       await this.addERC1155BridgeList(
         63,
         "Simple Archery",
-        "/images/nfts/weapon-simple-archery.png"
+        "/images/nfts/weapon-simple-archery.png",
+        100
       );
       await this.addERC1155BridgeList(
         64,
         "Simple Spear",
-        "/images/nfts/weapon-simple-spear.png"
+        "/images/nfts/weapon-simple-spear.png",
+        100
       );
       await this.addERC1155BridgeList(
         65,
         "Simple Potion",
-        "/images/nfts/weapon-simple-potion.png"
+        "/images/nfts/weapon-simple-potion.png",
+        100
       );
     },
 
@@ -619,7 +690,7 @@ export default {
       });
     },
 
-    async addERC1155BridgeList(id, name, image) {
+    async addERC1155BridgeList(id, name, image, minimumPackage) {
       const isItem = this.bridgeList.find((list) => list.name === name);
       if (isItem !== undefined) {
         return;
@@ -634,6 +705,7 @@ export default {
         image: image,
         balanceOnChain: balanceOnChain,
         balanceOffChain: balanceOnChain,
+        minimumPackage: minimumPackage,
       });
     },
 
