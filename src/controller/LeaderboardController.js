@@ -13,7 +13,6 @@ export default class LeaderboardController {
       skip = skip || 0;
       limit = limit || 10;
       const query = new URLSearchParams({ ...filter, ...{ limit: limit }, ...{ skip: skip } });
-      console.log(query.toString());
       return this.base._get(`/leaderboard/${game}?${query.toString()}`);
     } catch (error) {
       throw error;

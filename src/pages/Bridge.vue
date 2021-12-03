@@ -139,65 +139,75 @@
             </v-col>
           </v-row>
 
-          <v-row dense>
-            <div class="scroll-items-transfer">
-              <v-col
-                class="pa-1"
-                dense
-                v-for="item in filterBridgeList"
-                :key="item.name"
-                cols="12"
-                md="4"
-                lg="3"
-              >
-                <div class="card-bridge d-flex flex-column align-center">
-                  <div class="my-1 card-bridge-image d-flex align-center">
-                    <div>
-                      <img
-                        width="120px"
-                        :src="item.image"
-                        alt="weapon-simple-shield"
-                      />
-                    </div>
-                  </div>
-                  <div class="card-bridge-title">
-                    {{ item.name }}
-                  </div>
-                  <div class="text-caption">
-                    Fee: 1% / Minimum transfer: 1000
-                  </div>
-                  <div class="input-bridge">
-                    <v-currency-field
-                      label="Amount to send"
-                      outlined
-                      v-bind="!typeTransfer ? currencyConfig : currencyGameItemConfig"
-                      v-model="item.amountFrom"
-                      :hint="hintFrom(item.balanceFormattedFrom)"
-                      persistent-hint
-                      dense
-                    >
-                    </v-currency-field>
+          <v-row dense class="scroll-items-transfer">
+            <v-col
+              class="pa-1"
+              dense
+              v-for="item in filterBridgeList"
+              :key="item.name"
+              cols="12"
+              md="4"
+              lg="3"
+            >
+              <div class="card-bridge d-flex flex-column align-center">
+                <div class="my-1 card-bridge-image d-flex align-center">
+                  <div>
                     <img
-                      src="images/icons/arrow.png"
-                      width="25px"
-                      class="d-block mb-1 mx-auto arrow"
-                      alt="arrow"
+                      width="100px"
+                      :src="item.image"
+                      alt="weapon-simple-shield"
                     />
-                    <v-currency-field
-                      label="Amount to receive"
-                      outlined
-                      v-bind="!typeTransfer ? currencyConfig : currencyGameItemConfig"
-                      v-model="item.amountTo"
-                      :hint="hintTo(item.balanceFormattedTo)"
-                      persistent-hint
-                      dense
-                      disabled
-                    >
-                    </v-currency-field>
                   </div>
                 </div>
-              </v-col>
-            </div>
+                <div class="card-bridge-title">
+                  {{ item.name }}
+                </div>
+                <div class="text-caption">
+                  Fee: 1% / Minimum transfer: 1000 <br />
+                  Pack amount: 1000
+                </div>
+                <div class="input-bridge">
+                  <number-field
+                    label="Pack quantity"
+                    dense
+                    v-model="item.packQuantity"
+                    @input="packQuantity(item)"
+                  ></number-field>
+                  <v-currency-field
+                    label="Amount to send"
+                    outlined
+                    v-bind="
+                      !typeTransfer ? currencyConfig : currencyGameItemConfig
+                    "
+                    v-model="item.amountFrom"
+                    :hint="hintFrom(item.balanceFormattedFrom)"
+                    persistent-hint
+                    dense
+                    disabled
+                  >
+                  </v-currency-field>
+                  <img
+                    src="images/icons/arrow.png"
+                    width="25px"
+                    class="d-block mb-1 mx-auto arrow"
+                    alt="arrow"
+                  />
+                  <v-currency-field
+                    label="Amount to receive"
+                    outlined
+                    v-bind="
+                      !typeTransfer ? currencyConfig : currencyGameItemConfig
+                    "
+                    v-model="item.amountTo"
+                    :hint="hintTo(item.balanceFormattedTo)"
+                    persistent-hint
+                    dense
+                    disabled
+                  >
+                  </v-currency-field>
+                </div>
+              </div>
+            </v-col>
           </v-row>
 
           <v-row dense>
@@ -208,8 +218,12 @@
                   flat
                   :size="$vuetify.breakpoint.mobile ? 'small' : 'default'"
                   class="mx-auto btn-transfer mt-1"
+                  :disabled="isLoadingTransfer"
                 >
-                  <span class="mx-3">
+                  <span v-if="isLoadingTransfer" class="mx-3">
+                    Loading...
+                  </span>
+                  <span v-else class="mx-3">
                     Transfer to {{ bridgeNetwork.to.name }}
                   </span>
                 </wButton>
@@ -263,18 +277,24 @@
 
 <script>
 import wButton from "@/lib/components/ui/Buttons/wButton";
+import NumberField from "@/lib/components/ui/Utils/NumberField";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import VAvatar from "@/lib/components/ui/Utils/VAvatar";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
 import ERC20 from "@/lib/eth/ERC20";
+import Bridge from "@/lib/eth/Bridge";
 import Collectibles from "@/lib/eth/Collectibles";
 import Convert from "@/lib/helpers/Convert";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+
+import BridgeController from "@/controller/BridgeController";
 
 import { mapMutations } from "vuex";
 
 export default {
   components: {
+    NumberField,
     Amount,
     wButton,
     VAvatar,
@@ -287,6 +307,7 @@ export default {
       isLoading: true,
       typeTransfer: false,
       tab: "transfer",
+      isLoadingTransfer: false,
       search: "",
       headers: [
         {
@@ -418,28 +439,26 @@ export default {
           item.balanceFormattedTo = item.balanceTo;
         }
 
-        item.amountFrom = 0;
-        item.amountTo = 0;
         return item;
       });
     },
   },
 
   watch: {
-    isConnected() {
-      this.loadData();
+    async isConnected() {
+      await this.loadData();
     },
 
-    account() {
-      this.loadData();
-    },
-
-    currentBlockNumber() {
-      this.loadData();
+    async account() {
+      if (this.bridgeList.length > 0) {
+        this.isLoading = true;
+        this.bridgeList = [];
+        await this.loadData();
+      }
     },
   },
 
-  mounted() {
+  async mounted() {
     this.setHeader(false);
     this.loadData();
   },
@@ -454,9 +473,7 @@ export default {
         return;
       }
 
-      if (this.bridgeList.length === 0) {
-        await this.addBridgeList();
-      }
+      await this.addBridgeList();
 
       this.isLoading = false;
     },
@@ -468,8 +485,75 @@ export default {
       };
     },
 
-    transfer() {
-      console.log(this.bridgeList);
+    packQuantity(item) {
+      this.$nextTick(() => {
+        item.amountFrom = item.packQuantity * item.minimumPackage;
+        item.amountTo = item.packQuantity * item.minimumPackage;
+        this.$forceUpdate();
+      });
+    },
+
+    async transfer() {
+      if (!this.typeTransfer && this.bridgeNetwork.from.type === "onChain") {
+        await this.depositERC20();
+      }
+    },
+
+    async depositERC20() {
+      this.isLoadingTransfer = true;
+
+      const smcBridge = new Bridge(this.addresses.bridge);
+
+      let _tokens = [];
+      let _amounts = [];
+
+      this.bridgeList.map((list) => {
+        if (list.amountFrom > 0) {
+          _tokens.push(list.address);
+          _amounts.push(Convert.toWei(list.amountFrom));
+        }
+      });
+
+      if (_tokens.length === 0) {
+        this.isLoadingTransfer = false;
+        return ToastSnackbar.warning("There are no items for transfer");
+      }
+
+      const confirmTransaction = smcBridge.depositERC20(
+        _tokens,
+        _amounts,
+        this.account
+      );
+
+      confirmTransaction.on("error", (error) => {
+        this.isLoadingTransfer = false;
+        if (error.message) {
+          return ToastSnackbar.error(error.message);
+        }
+        return ToastSnackbar.error(
+          "An error has occurred while to signing contract"
+        );
+      });
+
+      confirmTransaction.on("transactionHash", (tx) => {});
+
+      confirmTransaction.on("receipt", async (receipt) => {
+        try {
+          const bridgeController = new BridgeController();
+          await bridgeController.depositERC20(receipt.transactionHash);
+
+          this.isLoadingTransfer = false;
+          ToastSnackbar.success("Transfer successfully sent");
+        } catch (error) {
+          this.isLoadingTransfer = false;
+          if (error.status) {
+            return ToastSnackbar.error(error.code);
+          }
+          ToastSnackbar.error(
+            "An error has occurred while to signing contract"
+          );
+        }
+      });
     },
 
     async addBridgeList() {
@@ -477,12 +561,20 @@ export default {
       await this.addERC20BridgeList(
         this.addresses.wGOLD,
         "wGOLD",
-        "/images/wGOLD.png"
+        "/images/wGOLD.png",
+        1000
       );
       await this.addERC20BridgeList(
         this.addresses.wCOURAGE,
         "wCOURAGE",
-        "/images/wCOURAGE.png"
+        "/images/wCOURAGE.png",
+        1000
+      );
+      await this.addERC20BridgeList(
+        this.addresses.wLAND,
+        "wLAND",
+        "/images/wLAND.png",
+        1000
       );
 
       // ERC1155
@@ -509,7 +601,11 @@ export default {
       );
     },
 
-    async addERC20BridgeList(address, name, image) {
+    async addERC20BridgeList(address, name, image, minimumPackage) {
+      const isItem = this.bridgeList.find((list) => list.name === name);
+      if (isItem !== undefined) {
+        return;
+      }
       const smc = new ERC20(address);
       const balanceOnChain = await smc.balanceOf(this.account);
       this.bridgeList.push({
@@ -519,10 +615,15 @@ export default {
         image: image,
         balanceOnChain: balanceOnChain,
         balanceOffChain: balanceOnChain,
+        minimumPackage: minimumPackage,
       });
     },
 
     async addERC1155BridgeList(id, name, image) {
+      const isItem = this.bridgeList.find((list) => list.name === name);
+      if (isItem !== undefined) {
+        return;
+      }
       const smc = new Collectibles(this.addresses.collectibles);
       const balanceOnChain = await smc.balanceOf(this.account, id);
       this.bridgeList.push({
@@ -627,6 +728,7 @@ export default {
 .card-bridge {
   background: #181a1b;
   border: 2px solid #2a3238;
+  min-height: 530px;
 }
 .card-bridge-title {
   font-family: PT Serif;
@@ -638,16 +740,14 @@ export default {
   text-align: center;
 }
 .card-bridge-image {
-  min-height: 200px;
+  min-height: 180px;
 }
 
 .scroll-items-transfer {
-  padding: 3px 0px;
-  width: 100%;
+  height: 580px;
   overflow: auto;
+  margin: 0px 0px 0px 0px;
   border: 2px solid #ffeebc;
-  margin: 0px 8px;
-  display: flex;
 }
 
 .table-leaderboard >>> .v-data-table__wrapper > table > tbody > tr > td,

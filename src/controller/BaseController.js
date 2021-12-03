@@ -6,6 +6,30 @@ export default class BaseController {
   async _get(endpoint) {
     try {
       const response = await fetch(`${this.api}${endpoint}`);
+      if (response.status !== 200 && response.status !== 201) {
+        throw await response.json();
+      }
+      return await response.json();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async _post(endpoint, body) {
+    try {
+      const response = await fetch(`${this.api}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      console.log(`response.status ${response.status}`);
+      console.log(response.status);
+      if (response.status !== 200 && response.status !== 201) {
+        throw await response.json();
+      }
       return await response.json();
     } catch (error) {
       throw error;

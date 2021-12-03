@@ -13,5 +13,6 @@ export function getSmartContractAddresses(networkId) {
     inventoryManagerTokens: Addresses.inventoryManagerTokens[networkId],
     serverless: Addresses.serverless[networkId],
     apiArcadia: Addresses.apiArcadia[networkId],
+    bridge: Addresses.bridge[networkId],
   };
 }
