@@ -151,7 +151,7 @@
                 <v-img src="/images/battle/treasure.png" />
               </div>
             </div>
-            <div class="reward-title">
+            <div class="reward-description mt-1">
               Total reward conquered
             </div>
           </div>
@@ -421,5 +421,12 @@ export default {
   font-size: 10px;
   font-weight: bold;
   padding: 2px 4px;
+}
+.reward-description {
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.2;
+  width: 100%;
+  text-align: center;
 }
 </style>
