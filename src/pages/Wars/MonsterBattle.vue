@@ -43,7 +43,7 @@
           <v-row>
             <v-col cols="12">
               <div class="monster-name" v-if="selectedSlot">
-                Enlistment at Row: {{ selectedSlot.row }} Col:
+                Enlistment at Spot: {{ selectedSlot.row }} Col:
                 {{ selectedSlot.col }}
               </div>
             </v-col>
