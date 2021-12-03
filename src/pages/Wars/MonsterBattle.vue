@@ -151,6 +151,9 @@
                 <v-img src="/images/battle/treasure.png" />
               </div>
             </div>
+            <div class="reward-title">
+              Total reward conquered
+            </div>
           </div>
         </v-col>
       </v-row>
