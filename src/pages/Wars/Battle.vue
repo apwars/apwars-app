@@ -69,6 +69,7 @@
                   <Button
                     type="wsecondary"
                     icon="swords"
+                    text="Humans"
                     :handleClick="() => goToEnlistment(1)"
                   />
                 </div>
@@ -76,6 +77,7 @@
                   <Button
                     type="wsecondary"
                     icon="swords"
+                    text="Orcs"
                     :handleClick="() => goToEnlistment(2)"
                   />
                   <div class="brown-info ml-2">
@@ -127,6 +129,7 @@
                   <Button
                     type="wsecondary"
                     icon="swords"
+                    text="Elves"
                     :handleClick="() => goToEnlistment(4)"
                   />
                 </div>
@@ -134,6 +137,7 @@
                   <Button
                     type="wsecondary"
                     icon="swords"
+                    text="Undeads"
                     :handleClick="() => goToEnlistment(3)"
                   />
                   <div class="brown-info ml-2">
