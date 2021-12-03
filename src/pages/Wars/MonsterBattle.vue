@@ -41,9 +41,10 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols=12>
+            <v-col cols="12">
               <div class="monster-name" v-if="selectedSlot">
-                Enlistment at Row: {{ selectedSlot.row}} Col: {{ selectedSlot.col }}
+                Enlistment at Row: {{ selectedSlot.row }} Col:
+                {{ selectedSlot.col }}
               </div>
             </v-col>
           </v-row>
@@ -115,8 +116,26 @@
               </div>
             </v-col>
           </v-row>
+          <v-row v-if="slotData && slotData.rewards.length > 0">
+            <v-col cols="12">
+              <div class="monster-name mb-2">
+                This slot was rewarded with:
+              </div>
+              <div class="rewards-container">
+                <div
+                  class="reward-container"
+                  v-for="reward in slotData.rewards"
+                  :key="reward.id"
+                >
+                  <img height="64" :src="reward.image" :alt="reward.title" />
+                  <div class="reward-title mt-1">{{ reward.title }}</div>
+                  <div class="reward-amount">{{ reward.amount }}</div>
+                </div>
+              </div>
+            </v-col>
+          </v-row>
         </v-col>
-        <v-col cols="12" sm="3" class="d-flex align-end">
+        <v-col cols="12" sm="3" class="">
           <div class="monster-container">
             <v-img
               :src="`/images/monsters/${monsterData.id}.webp`"
@@ -154,6 +173,7 @@ import { mapMutations, mapGetters, mapState } from "vuex";
 
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
+import { getCollectibleById } from "@/data/Collectibles";
 
 import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
@@ -166,6 +186,7 @@ export default {
     return {
       selectedSlot: null,
       isLoadingEnlistment: false,
+      slotData: null,
     };
   },
   computed: {
@@ -206,7 +227,18 @@ export default {
       const [row, col] = key.split("-");
       this.selectedSlot = { col, row };
       this.isLoadingEnlistment = true;
-      const enlistment = await this.loadEnlistment();
+      let slotData = await this.loadEnlistment();
+      slotData = {
+        ...slotData,
+        rewards: slotData.rewards.map((reward) => {
+          const item = getCollectibleById(reward.id);
+          return {
+            ...item,
+            amount: reward.amount,
+          };
+        }),
+      };
+      this.slotData = slotData;
       this.isLoadingEnlistment = false;
     },
     loadEnlistment(address) {
@@ -266,6 +298,10 @@ export default {
                 title: "Simple Shield",
                 amount: 10400,
               },
+            ],
+            rewards: [
+              { id: 42, amount: 3 },
+              { id: 49, amount: 2 },
             ],
           });
         }, 5000);
@@ -353,5 +389,34 @@ export default {
 }
 .treasure-progress {
   position: relative;
+}
+.rewards-container {
+  display: flex;
+}
+.reward-container {
+  position: relative;
+  margin-right: 8px;
+  text-align: center;
+}
+.reward-title {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 12px;
+  width: 120px;
+  text-align: center;
+  height: 28px;
+}
+.reward-amount {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  background-color: black;
+  outline: 0.1px solid white;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 4px;
 }
 </style>
