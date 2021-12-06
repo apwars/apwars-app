@@ -457,6 +457,7 @@ export default {
 
   watch: {
     async isConnected() {
+      this.listWallets = await this.getWallets();
       await this.loadData();
     },
 
@@ -469,9 +470,8 @@ export default {
     },
   },
 
-  async mounted() {
+  mounted() {
     this.setHeader(false);
-    this.listWallets = await this.getWallets();
     this.loadData();
   },
 
@@ -485,6 +485,9 @@ export default {
         return;
       }
 
+      if (this.listWallets.length === 0) {
+        this.listWallets = await this.getWallets();
+      }
       await this.addBridgeList();
 
       this.isLoading = false;
