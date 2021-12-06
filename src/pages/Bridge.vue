@@ -166,7 +166,7 @@
                   Fee: 1% / Minimum transfer: 1000 <br />
                   Pack amount: 1000
                 </div>
-                <div v-else class="text-caption red--text">
+                <div v-else class="text-caption red--text font-weight-bold">
                   Requires guardian approval: <br />
                   Otto Dalgor
                 </div>

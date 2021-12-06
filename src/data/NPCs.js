@@ -63,6 +63,20 @@ export function NPC_INFO() {
           address: addresses.wLAND,
           type: "erc20",
           image: "/images/icons/wLAND.png",
+        },
+        {
+          name: "wGOLD",
+          description: "wGOLD is the core token of APWars. Through it liquidity is channeled to all other tokens. With wGOLD you can foster loyal troops or hire mercenaries.",
+          address: addresses.wGOLD,
+          type: "erc20",
+          image: "/images/wGOLD.png",
+        },
+        {
+          name: "wCOURAGE",
+          description: "wCOURAGE is a resource token from APWars with unlimited supply that can be earned by sending troops to the War for Supremacy. wCOURAGE minting is proportional to troop attack power times morale modifier.",
+          address: addresses.wCOURAGE,
+          type: "erc20",
+          image: "/images/wCOURAGE.png",
         }
       ]
     },
