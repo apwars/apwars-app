@@ -693,7 +693,6 @@ export default {
       const leaderboardController = new LeaderboardController();
       this.listWeekLoading = true;
       this.listWeek = await leaderboardController.getWeek(1, this.limit*(_page-1));
-      console.log(this.listWeek);
       this.listWeekLoading = false;
     },
 

@@ -121,9 +121,9 @@
                 v-model="typeTransfer"
                 class="ml-2"
               ></v-switch>
-              <span class="font-weight-bold white--text text-h6"
-                >Game Item</span
-              >
+              <span class="font-weight-bold white--text text-h6">
+                Game Item
+              </span>
             </v-col>
             <v-col cols="12" md="4">
               <div class="text-center text-h6 font-weight-bold">
@@ -501,6 +501,16 @@ export default {
         this.bridgeNetwork.from.type === "onChain"
       ) {
         await this.depositERC1155();
+      } else if (
+        !this.typeTransfer &&
+        this.bridgeNetwork.from.type === "offChain"
+      ) {
+        await this.claimERC20();
+      } else if (
+        this.typeTransfer &&
+        this.bridgeNetwork.from.type === "offChain"
+      ) {
+        await this.claimERC1155();
       }
     },
 
@@ -618,6 +628,120 @@ export default {
       });
     },
 
+    async claimERC20() {
+      try {
+        this.isLoadingTransfer = true;
+
+        let _tokens = [];
+        let _amounts = [];
+
+        this.bridgeList.map((list) => {
+          if (list.amountFrom > 0) {
+            _tokens.push(list.address);
+            _amounts.push(Convert.toWei(list.amountFrom));
+          }
+        });
+
+        if (_tokens.length === 0) {
+          this.isLoadingTransfer = false;
+          return ToastSnackbar.warning("There are no items for transfer");
+        }
+
+        const bridgeController = new BridgeController();
+        const claim = await bridgeController.claimERC20({
+          tokens: _tokens,
+          amounts: _amounts,
+        });
+
+        const smcBridge = new Bridge(this.addresses.bridge);
+        const confirmTransaction = smcBridge.claimERC20(
+          claim.tokens,
+          claim.amounts,
+          claim.nonce,
+          claim.signature,
+          this.account
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.isLoadingTransfer = false;
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error(
+            "An error has occurred while to signing contract"
+          );
+        });
+
+        confirmTransaction.on("receipt", async () => {
+          this.isLoadingTransfer = false;
+          ToastSnackbar.success("Transfer successfully sent");
+        });
+      } catch (error) {
+        this.isLoadingTransfer = false;
+        if (error.code) {
+          return ToastSnackbar.error(error.code);
+        }
+        return ToastSnackbar.error(error.toString() || error);
+      }
+    },
+
+    async claimERC1155() {
+      try {
+        this.isLoadingTransfer = true;
+
+        let _tokens = [];
+        let _amounts = [];
+
+        this.bridgeList.map((list) => {
+          if (list.amountFrom > 0) {
+            _tokens.push(list.id);
+            _amounts.push(list.amountFrom);
+          }
+        });
+
+        if (_tokens.length === 0) {
+          this.isLoadingTransfer = false;
+          return ToastSnackbar.warning("There are no items for transfer");
+        }
+
+        const bridgeController = new BridgeController();
+        const claim = await bridgeController.claimERC1155({
+          tokens: _tokens,
+          amounts: _amounts,
+        });
+
+        const smcBridge = new Bridge(this.addresses.bridge);
+        const confirmTransaction = smcBridge.claimERC1155(
+          claim.tokens,
+          claim.amounts,
+          claim.nonce,
+          claim.signature,
+          this.account
+        );
+
+        confirmTransaction.on("error", (error) => {
+          this.isLoadingTransfer = false;
+          if (error.message) {
+            return ToastSnackbar.error(error.message);
+          }
+          return ToastSnackbar.error(
+            "An error has occurred while to signing contract"
+          );
+        });
+
+        confirmTransaction.on("receipt", async () => {
+          this.isLoadingTransfer = false;
+          ToastSnackbar.success("Transfer successfully sent");
+        });
+      } catch (error) {
+        this.isLoadingTransfer = false;
+        if (error.code) {
+          return ToastSnackbar.error(error.code);
+        }
+        return ToastSnackbar.error(error.toString() || error);
+      }
+    },
+
     async addBridgeList() {
       // ERC20
       await this.addERC20BridgeList(
@@ -644,31 +768,31 @@ export default {
         49,
         "Worker",
         "/images/nfts/worker.png",
-        100
+        10
       );
       await this.addERC1155BridgeList(
         39,
         "Simple Shield",
         "/images/nfts/weapon-simple-shield.png",
-        100
+        10
       );
       await this.addERC1155BridgeList(
         63,
         "Simple Archery",
         "/images/nfts/weapon-simple-archery.png",
-        100
+        10
       );
       await this.addERC1155BridgeList(
         64,
         "Simple Spear",
         "/images/nfts/weapon-simple-spear.png",
-        100
+        10
       );
       await this.addERC1155BridgeList(
         65,
         "Simple Potion",
         "/images/nfts/weapon-simple-potion.png",
-        100
+        10
       );
     },
 

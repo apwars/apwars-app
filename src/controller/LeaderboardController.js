@@ -32,7 +32,6 @@ export default class LeaderboardController {
         endDate: endDateWeek.valueOf(),
       }, limit, skip);
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }

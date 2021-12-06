@@ -23,4 +23,20 @@ export default class BridgeController {
     }
   }
 
+  claimERC20({ tokens, amounts }) {
+    try {
+      return this.base._postSignature(`/bridge/claim/claimERC20`, { tokens, amounts });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  claimERC1155({ tokens, amounts }) {
+    try {
+      return this.base._postSignature(`/bridge/claim/claimERC1155`, { tokens, amounts });
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
