@@ -1,27 +1,37 @@
 <template>
-  <div class="board-container" :style="`--rows: ${rows};--cols: ${cols}`">
+  <div class="board-perspective">
     <div
-      :class="['board-row', invertUnitDirection ? 'invert' : '']"
-      v-for="rowIndex in rows"
-      :key="rowIndex"
-      :style="`--index: ${invertUnitDirection ? rows - rowIndex : rowIndex}`"
+      class="board-container"
+      :style="
+        `--rows: ${rows};--cols: ${cols}; --rotate: ${rotate};--translate: ${translate}`
+      "
     >
       <div
-        :class="[
-          'slot',
-          rowIndex + '' + colIndex === selected ? 'selected' : '',
-          invertUnitDirection ? 'invert' : ''
-        ]"
-        v-for="colIndex in cols"
-        :key="colIndex"
-        @click="() => selectUnit(rowIndex,colIndex)"
+        :class="['board-row', invertUnitDirection ? 'invert' : '']"
+        v-for="(row, rowIndex) in board"
+        :key="rowIndex"
       >
-        <img
-          :class="['unit', invertUnitDirection ? 'invert' : '']"
-          height="150%"
-          :src="unitImage"
-          v-show="rowIndex + '' + colIndex === selected"
-        />
+        <div
+          :class="[
+            'slot',
+            getKey(rowIndex, colIndex) === selected ? 'selected' : '',
+            col.isAwarded ? 'is-awarded' : ''
+          ]"
+          v-for="(col, colIndex) in row"
+          :key="colIndex"
+          @click="() => selectUnit(rowIndex, colIndex)"
+        >
+          <div
+            class="arrow-down"
+            v-if="getKey(rowIndex, colIndex) === currentUserAddress"
+          ></div>
+          <img
+            :class="['unit', invertUnitDirection ? 'invert' : '']"
+            height="160%"
+            :src="unitImage"
+            v-show="col.isEnlisted || getKey(rowIndex, colIndex) === selected"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -42,9 +52,31 @@ export default {
       default: "",
     },
     invertUnitDirection: {
-        type: Boolean,
-        default: false,
-    }
+      type: Boolean,
+      default: false,
+    },
+    rotate: {
+      type: String,
+      default: "0deg",
+    },
+    translate: {
+      type: String,
+      default: "0",
+    },
+    board: {
+      type: Array,
+      default: () => [
+        [{ isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}],
+        [{ isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: true}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}],
+        [{ isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: true}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}],
+        [{ isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: true}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}],
+        [{ isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: true}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: false, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, { isEnlisted: true, address: '4-3', isAwarded: false}, 0, { isEnlisted: true, address: '4-3', isAwarded: false}],
+      ],
+    },
+    currentUserAddress: {
+        type: String,
+        default: "",
+      },
   },
   data() {
     return {
@@ -52,60 +84,58 @@ export default {
     };
   },
   methods: {
-      selectUnit(rowIndex, colIndex) {
-          const key = this.getKey(rowIndex, colIndex);
-          this.selected = key;
-          this.$emit('selectSlot', key);
-      },
-      getKey(rowIndex, colIndex) {
-          return rowIndex + '' + colIndex
-      }
-  }
+    selectUnit(rowIndex, colIndex) {
+      const key = this.getKey(rowIndex, colIndex);
+      this.selected = key;
+      this.$emit("selectedSlot", key);
+    },
+    getKey(rowIndex, colIndex) {
+      return rowIndex + "-" + colIndex;
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
+.board-perspective {
+  perspective: 1366px;
+}
 .board-container {
-  width: calc(var(--cols) * 26px);
-  height: calc(var(--rows) * 26px);
+  transform: rotateX(var(--rotate)) translateZ(var(--translate));
 }
 .board-row {
-  height: 24px;
+  height: 32px;
   margin-top: 1px;
-  margin-left: calc(1 * (var(--index) * 2px));
   white-space: nowrap;
-  &.invert {
-      margin-left: calc(3px + (var(--index) * 2px));
-    }
 }
 .slot {
   position: relative;
-  height: 24px;
-  width: 24px;
+  height: 32px;
+  width: 32px;
   display: inline-block;
   background-image: url("/images/battle/floor.png");
-  transform: skewX(5deg);
+  background-size: contain;
   box-sizing: border-box;
-  &.invert {
-        transform: skewX(-5deg) translateZ(0) scaleX(-1)!important;
-    }
+  margin-right: 1px;
   &:hover {
     transform-style: preserve-3d;
     cursor: pointer;
     outline: 1px solid #312c26;
-    transform: skewX(5deg) scale(1.1);
     z-index: 2;
   }
   &.selected {
     outline: 1px solid yellow;
+    z-index: 2;
+  }
+  &.is-awarded {
+    background-image: url("/images/battle/floor-awarded.png");
   }
   > .unit {
     position: absolute;
-    left: 2px;
-    top: -14px;
-    transform: skewX(5deg) translateZ(0);
+    left: 0px;
+    bottom: 8px;
     animation: unit-enter 0.2s ease-in;
     &.invert {
-        transform: skewX(-5deg) translateZ(0)!important;
+      transform: scaleX(-1);
     }
   }
 
@@ -122,6 +152,20 @@ export default {
       z-index: 3;
     }
   }
+}
+
+.arrow-down {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 0;
+  top: -28px;
+  left: 14px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 8px solid yellow;
+  animation: flutuation 1s linear forwards infinite;
+  transition: all ease;
 }
 
 /* width */
@@ -144,5 +188,19 @@ div::-webkit-scrollbar {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+@keyframes flutuation {
+  0% {
+    transform: translateY(-50%);
+  }
+
+  50% {
+    transform: translateY(-80%);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
 }
 </style>

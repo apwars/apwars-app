@@ -7,6 +7,7 @@
       <v-row dense no-gutters>
         <v-col>
           <Button
+            icon="arrow-back"
             type="wtertiary"
             text="Back to war resume"
             :handleClick="backToWar"
@@ -25,13 +26,7 @@
         <v-row dense>
           <v-col md="4">
             <div class="name-container d-flex justify-space-between">
-              <Title :text="troop.displayName" />
-              <img
-                class="ml-2"
-                height="104"
-                src="/images/icons/corp.png"
-                alt="Corporation standart"
-              />
+              <Title text="WAR IV" subtitle="Enlistment" />
             </div>
             <div class="form-container mt-3 mb-2">
               <v-skeleton-loader type="text, button" v-if="isLoading" />
@@ -87,13 +82,17 @@
                 <div class="status-icon">
                   <img src="/images/icons/attack.png" alt="Attack points" />
                 </div>
-                <ForceMeter :maxScale="maxStrength" :value="stakedStrength" />
+                <div class="force-text">
+                  {{ troop.strength }}
+                </div>
               </div>
               <div class="troop-status">
                 <div class="status-icon">
                   <img src="/images/icons/defense.png" alt="Defense points" />
                 </div>
-                <ForceMeter :maxScale="maxDefense" :value="stakedDefense" />
+                <div class="force-text">
+                  {{ troop.defense }}
+                </div>
               </div>
             </div>
             <div class="price-container">
@@ -170,7 +169,7 @@
                 src="/images/icons/battle-shield.png"
                 alt="Enlistment resume"
               />
-              Select your formation
+              Select your designation
             </div>
             <v-select
               :items="formationOptions"
@@ -196,7 +195,7 @@
                 </div>
                 <div class="unit-info">
                   <div class="unit-name mb-1">
-                    {{ unit.tierDesc }}
+                    {{ unit.displayName }}
                   </div>
                   <div class="amount">
                     <span class="d-flex align-end" v-if="unit.amount">
@@ -223,18 +222,18 @@
                 </div>
               </div>
               <div class="total-force mb-1">
-                Force:
+                Power Units:
                 <span class="amount"
                   >{{ totalStakedForce(troop.race) }} units</span
                 >
               </div>
-              <Button type="wprimary" text="Choose slot" isBlock />
+              <Button type="wprimary" text="Choose slot" isBlock :handleClick="goToMonsterBattle" />
               <Progress
                 class="mt-2"
                 :value="50"
                 :maxScale="100"
-                color1="#1A3436"
-                color2="#346568"
+                color1="#346568"
+                color2="#1A3436"
                 noText
               />
               <div class="slots-info d-flex justify-center">54/100</div>
@@ -446,6 +445,11 @@ export default {
       if (this.troopSelected !== unitName) {
         this.troopSelected = unitName;
       }
+    },
+    goToMonsterBattle() {
+      this.$router.push({
+        path: `/wars/${this.$route.params.contractWar}/enlistment/${this.$route.params.raceId}/battle`
+      })
     },
     getUnitName(position) {
       if (position > this.unitsFromRace.length - 1) {
@@ -723,6 +727,11 @@ export default {
   font-weight: bold;
   font-size: 14px;
   line-height: 19px;
+}
+
+.force-text {
+  font-size: 32px;
+  font-weight: bold;
 }
 
 @keyframes weapon-fall {

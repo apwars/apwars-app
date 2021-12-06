@@ -30,7 +30,7 @@ export default {
     },
     color2: {
         type: String,
-        default: '#ffb800'
+        default: '#E1A807'
     }
   },
   computed: {
@@ -41,22 +41,16 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.border {
-  margin-top: 12px;
-  border-radius: 10px;
-  width: 100%;
-}
 .progress {
   position: relative;
-  height: 32px;
+  height: 24px;
   width: 100%;
-  border: 10px solid;
-  border-image-slice: 1;
-  border-width: 5px;
-  border-image-source: linear-gradient(180deg, var(--color1) 0%, var(--color2) 100%);
+  border: 2px solid var(--color2);
+  border-radius: 10px;
 }
 .value {
-  height: 22px;
+  height: 100%;
+  border-radius: 5px;
   position: absolute;
   top: 0;
   left: 0;

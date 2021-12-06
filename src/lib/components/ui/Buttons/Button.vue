@@ -4,10 +4,11 @@
     @click="handleClick"
     :disabled="disabled"
   >
-    <game-text class="btn-tertiary-text" v-if="type === 'wtertiary'">{{
+    <img width="24" :src="`/images/icons/${icon}.png`" :alt="icon" v-if="icon" />
+    <game-text :class="['btn-tertiary-text', icon ? 'ml-1' : '']" v-if="type === 'wtertiary'">{{
       text
     }}</game-text>
-    <span v-else class="btn-text">{{ text }}</span>
+    <span v-else-if="text" :class="['btn-text', icon ? 'ml-2' : '']">{{ text }}</span>
   </button>
 </template>
 <script>
@@ -37,6 +38,10 @@ export default {
     noPadding: {
       type: Boolean,
       default: false,
+    },
+    icon: {
+      type: String,
+      default: '',
     }
   },
 };
@@ -44,7 +49,9 @@ export default {
 <style lang="scss" scoped>
 .btn-container {
   padding: 8px 16px;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid white;
   color: white;
   text-align: center;
