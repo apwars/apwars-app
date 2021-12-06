@@ -293,6 +293,7 @@ import Convert from "@/lib/helpers/Convert";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import BridgeController from "@/controller/BridgeController";
+import WalletController from "@/controller/WalletController";
 
 import { mapMutations } from "vuex";
 
@@ -380,6 +381,7 @@ export default {
         autoDecimalMode: true,
         allowNegative: false,
       },
+      listWallets: [],
     };
   },
 
@@ -436,8 +438,13 @@ export default {
         }
 
         if (!this.typeTransfer) {
-          item.balanceFormattedFrom = Convert.fromWei(item.balanceFrom, true);
-          item.balanceFormattedTo = Convert.fromWei(item.balanceTo, true);
+          if (this.bridgeNetwork.from.type === "onChain") {
+            item.balanceFormattedFrom = Convert.fromWei(item.balanceFrom, true);
+            item.balanceFormattedTo = item.balanceTo;
+          } else {
+            item.balanceFormattedFrom = item.balanceFrom;
+            item.balanceFormattedTo = Convert.fromWei(item.balanceTo, true);
+          }
         } else {
           item.balanceFormattedFrom = item.balanceFrom;
           item.balanceFormattedTo = item.balanceTo;
@@ -464,6 +471,7 @@ export default {
 
   async mounted() {
     this.setHeader(false);
+    this.listWallets = await this.getWallets();
     this.loadData();
   },
 
@@ -480,6 +488,11 @@ export default {
       await this.addBridgeList();
 
       this.isLoading = false;
+    },
+
+    getWallets() {
+      const walletController = new WalletController();
+      return walletController.wallets(this.account);
     },
 
     changeNetwork() {
@@ -818,6 +831,7 @@ export default {
       }
       const smc = new ERC20(address);
       const balanceOnChain = await smc.balanceOf(this.account);
+      const balanceOffChain = this.listWallets.balances[name];
       const isApproveOtto = await smc.hasAllowance(
         this.account,
         this.addresses.inventoryManagerTokens
@@ -828,7 +842,7 @@ export default {
         address: address,
         image: image,
         balanceOnChain: balanceOnChain,
-        balanceOffChain: balanceOnChain,
+        balanceOffChain: balanceOffChain || 0,
         minimumPackage: minimumPackage,
         isApproveOtto: isApproveOtto,
       });
@@ -841,6 +855,7 @@ export default {
       }
       const smc = new Collectibles(this.addresses.collectibles);
       const balanceOnChain = await smc.balanceOf(this.account, id);
+      const balanceOffChain = this.listWallets.balances[`GameItem${id}`];
       const isApproveOtto = await smc.isApprovedForAll(
         this.account,
         this.addresses.inventoryManagerCollectibles
@@ -852,7 +867,7 @@ export default {
         address: this.addresses.collectibles,
         image: image,
         balanceOnChain: balanceOnChain,
-        balanceOffChain: balanceOnChain,
+        balanceOffChain: balanceOffChain || 0,
         minimumPackage: minimumPackage,
         isApproveOtto: isApproveOtto,
       });
