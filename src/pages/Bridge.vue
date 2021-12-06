@@ -533,6 +533,7 @@ export default {
 
     async initStateBridgeList() {
       this.bridgeList = [];
+      this.listWallets = await this.getWallets();
       await this.addBridgeList();
     },
 
