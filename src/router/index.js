@@ -81,11 +81,6 @@ export const routes = [
         component: Battle
       },
       {
-        path: "/wars/:contractWar/enlistment",
-        name: "Enlistment",
-        component: Enlistment
-      },
-      {
         path: "/wars/:contractWar/enlistment/:raceId",
         name: "unit-enlistment",
         component: UnitEnlistment
@@ -108,7 +103,7 @@ export const routes = [
       {
         path: "/wars/:contractWar/report",
         name: "/wars-report",
-        component: WarReport
+        component: Enlistment
       },
       {
         path: "/private-sale",

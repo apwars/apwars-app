@@ -12,7 +12,7 @@
                 noPadding
               />
               <div class="d-flex justify-space-between mt-2">
-                <Title>War IV</Title>
+                <Title subtitle="Report">War IV</Title>
               </div>
               <!-- <div class="d-flex justify-center sword-icon">
                 <v-img :max-width="$vuetify.breakpoint.lgAndUp ? '56.57' : '46'" src="/images/icons/swords.png" />
@@ -20,15 +20,14 @@
             </v-col>
           </v-row>
 
-          <v-row>
+          <div :style="$vuetify.breakpoint.smAndDown ? 'width: 500px; overflow-x: auto' : ''">
+          <v-row :style="$vuetify.breakpoint.sm ? '' : ''">
             <v-col cols="5" class="px-0">
               <v-row>
                 <v-col 
                   v-for="option in options('Corporation')" 
                   :key="option.id"
-                  cols="12"
-                  md="6"
-                  class="pt-0"
+                  cols="6"
                   :class="$vuetify.breakpoint.mdAndDown ? 'pr-0' : 'pl-2'"
                 >
                   <div class="d-flex align-left">
@@ -40,9 +39,8 @@
                       >
                         <h2
                           class="text-center mb-1"
-                          :class="option.name === 'Orcs' ||
-                            option.name === 'Undeads' ? 'button-container-degens' :
-                            'button-container-corp'" >{{ option.name }}
+                          :style="selectedRace === option.name ? 'color: #FFB800' : ''"
+                        > {{ option.name }}
                         </h2>
                         <v-img
                           class="race-image"
@@ -81,7 +79,7 @@
               </v-row>
             </v-col>
 
-            <v-col cols="2" class="d-flex align-center justify-center pa-0">
+            <v-col cols="2" class="d-flex align-center justify-center px-0">
               <v-img
                 :max-width="$vuetify.breakpoint.lgAndUp ? '56.57' : '46'"
                 src="/images/icons/swords.png">
@@ -93,9 +91,8 @@
                 <v-col 
                   v-for="option in options('Degenerate')" 
                   :key="option.id"
-                  cols="12"
-                  md="6"
-                  class="px-0 pt-0"
+                  cols="6"
+                  class="px-0"
                   :class="$vuetify.breakpoint.sm ? 'pr-2' : ''"
                 >
                   <div
@@ -109,9 +106,8 @@
                       >
                         <h2
                           class="text-center mb-1"
-                          :class="option.name === 'Orcs' ||
-                            option.name === 'Undeads' ? 'button-container-degens' :
-                            'button-container-corp'" >{{ option.name }}
+                          :style="selectedRace === option.name ? 'color: #FFB800' : ''"
+                        > {{ option.name }}
                         </h2>
                         <v-img
                           class="race-image"
@@ -151,6 +147,7 @@
               </v-row>
             </v-col>
           </v-row>
+          </div>
 
           <v-row v-if="troopsToView">
             <v-col cols="12" md="8">
@@ -654,7 +651,8 @@ export default {
   }
   transition: opacity .4s ease-in-out;
   &:not(.on-hover) {
-    filter: grayscale(90%);
+    opacity: 0.7;
+    filter: grayscale(65%);
     transition: transform .3s;
   }
 }
@@ -746,9 +744,9 @@ export default {
       width: 90px
   }
   @media screen and (min-width: 1441px) {
-     > img {
+    > img {
       width: 150px
-  } 
+    } 
   }
 }
 
