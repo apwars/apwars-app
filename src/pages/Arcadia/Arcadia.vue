@@ -5,7 +5,7 @@
       id="gameArcadia"
       width="100%"
       :src="
-        `/Game/Arcadia/?worldManager=${getWorldManager}&landMap=${getLandMap}&treasureHunt=${getTreasureHunt}&expectedVersion=1.0.1.12`
+        `/Game/Arcadia/?worldManager=${getWorldManager}&landMap=${getLandMap}&treasureHunt=${getTreasureHunt}&treasureHuntId=${getTreasureHuntId}&expectedVersion=1.0.1.13`
       "
       frameborder="0"
       scrolling="no"
@@ -31,6 +31,10 @@ export default {
         "56": "0x66cadff076e70183ccc6d4d8d6c091670f4a2830",
         "97": "0xd3fE14C58b1d284aF14Bf61dec20a7727F22f1cc",
       },
+      treasureHuntId: {
+        "56": "2",
+        "97": "0",
+      },
     };
   },
 
@@ -49,6 +53,9 @@ export default {
     },
     getTreasureHunt() {
       return this.treasureHunt[this.networkInfo.id];
+    },
+    getTreasureHuntId() {
+      return this.treasureHuntId[this.networkInfo.id];
     },
   },
 
