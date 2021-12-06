@@ -514,6 +514,11 @@ export default {
       }
     },
 
+    async initStateBridgeList() {
+      this.bridgeList = [];
+      await this.addBridgeList();
+    },
+
     async depositERC20() {
       this.isLoadingTransfer = true;
 
@@ -556,6 +561,7 @@ export default {
         try {
           const bridgeController = new BridgeController();
           await bridgeController.depositERC20(receipt.transactionHash);
+          await this.initStateBridgeList();
 
           this.isLoadingTransfer = false;
           ToastSnackbar.success("Transfer successfully sent");
@@ -613,7 +619,8 @@ export default {
         try {
           const bridgeController = new BridgeController();
           await bridgeController.depositERC1155(receipt.transactionHash);
-
+          await this.initStateBridgeList();
+          
           this.isLoadingTransfer = false;
           ToastSnackbar.success("Transfer successfully sent");
         } catch (error) {
@@ -673,6 +680,8 @@ export default {
         });
 
         confirmTransaction.on("receipt", async () => {
+          await this.initStateBridgeList();
+          
           this.isLoadingTransfer = false;
           ToastSnackbar.success("Transfer successfully sent");
         });
@@ -730,6 +739,8 @@ export default {
         });
 
         confirmTransaction.on("receipt", async () => {
+          await this.initStateBridgeList();
+          
           this.isLoadingTransfer = false;
           ToastSnackbar.success("Transfer successfully sent");
         });
