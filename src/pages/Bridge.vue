@@ -162,9 +162,13 @@
                 <div class="card-bridge-title">
                   {{ item.name }}
                 </div>
-                <div class="text-caption">
+                <div v-if="item.isApproveOtto" class="text-caption">
                   Fee: 1% / Minimum transfer: 1000 <br />
                   Pack amount: 1000
+                </div>
+                <div v-else class="text-caption red--text">
+                  Requires guardian approval: <br />
+                  Otto Dalgor
                 </div>
                 <div class="input-bridge">
                   <number-field
@@ -620,7 +624,7 @@ export default {
           const bridgeController = new BridgeController();
           await bridgeController.depositERC1155(receipt.transactionHash);
           await this.initStateBridgeList();
-          
+
           this.isLoadingTransfer = false;
           ToastSnackbar.success("Transfer successfully sent");
         } catch (error) {
@@ -681,7 +685,7 @@ export default {
 
         confirmTransaction.on("receipt", async () => {
           await this.initStateBridgeList();
-          
+
           this.isLoadingTransfer = false;
           ToastSnackbar.success("Transfer successfully sent");
         });
@@ -740,7 +744,7 @@ export default {
 
         confirmTransaction.on("receipt", async () => {
           await this.initStateBridgeList();
-          
+
           this.isLoadingTransfer = false;
           ToastSnackbar.success("Transfer successfully sent");
         });
@@ -814,6 +818,10 @@ export default {
       }
       const smc = new ERC20(address);
       const balanceOnChain = await smc.balanceOf(this.account);
+      const isApproveOtto = await smc.hasAllowance(
+        this.account,
+        this.addresses.inventoryManagerTokens
+      );
       this.bridgeList.push({
         type: "erc20",
         name: name,
@@ -822,6 +830,7 @@ export default {
         balanceOnChain: balanceOnChain,
         balanceOffChain: balanceOnChain,
         minimumPackage: minimumPackage,
+        isApproveOtto: isApproveOtto,
       });
     },
 
@@ -832,6 +841,10 @@ export default {
       }
       const smc = new Collectibles(this.addresses.collectibles);
       const balanceOnChain = await smc.balanceOf(this.account, id);
+      const isApproveOtto = await smc.isApprovedForAll(
+        this.account,
+        this.addresses.inventoryManagerCollectibles
+      );
       this.bridgeList.push({
         type: "erc1155",
         id: id,
@@ -841,6 +854,7 @@ export default {
         balanceOnChain: balanceOnChain,
         balanceOffChain: balanceOnChain,
         minimumPackage: minimumPackage,
+        isApproveOtto: isApproveOtto,
       });
     },
 
