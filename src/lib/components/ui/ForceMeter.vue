@@ -7,7 +7,7 @@
       <img class="force" src="/images/icons/force.png" alt="force-4" />
       <img class="force" src="/images/icons/force.png" alt="force-5" />
     </div>
-    <div class="active" :style="`--percent: ${percent}`" v-show="value > 0">
+    <div :class="['active', [color]]" :style="`--percent: ${percent}`" v-show="value > 0">
       <img
         class="force"
         src="/images/icons/force-active.png"
@@ -47,34 +47,48 @@ export default {
       type: Number,
       default: 0,
     },
+    color: {
+      type: String,
+      validator: (value) => {
+        const supportedColors = ['wgreen', 'wyellow'];
+        return supportedColors.includes(value);
+      },
+      default: ''
+    }
   },
   computed: {
-      percent() {
-        return (100 * this.value) / this.maxScale.toString() + '%'
-      }
-  }
+    percent() {
+      return (100 * this.value) / this.maxScale.toString() + "%";
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
 .force-meter {
-    position: relative;
-    .base {
-      white-space: nowrap;
-    }
+  position: relative;
+  .base {
+    white-space: nowrap;
+  }
 }
 .force {
-    display: inline-block;
+  display: inline-block;
   &:not(:first-child) {
     margin-left: 2px;
   }
 }
 .active {
-    position: absolute;
-    top: 0;
-    height: 46px;
-    width: var(--percent);
-    white-space: nowrap;
-    overflow: hidden;
-    transition: all 1s ease;
+  position: absolute;
+  top: 0;
+  height: 46px;
+  width: var(--percent);
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 1s ease;
+  &.wyellow {
+    filter: hue-rotate(200deg);
+  }
+  &.wgreen {
+    filter: hue-rotate(260deg);
+  }
 }
 </style>
