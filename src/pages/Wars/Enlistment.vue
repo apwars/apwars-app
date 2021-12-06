@@ -20,7 +20,7 @@
             </v-col>
           </v-row>
 
-          <div :style="$vuetify.breakpoint.smAndDown ? 'width: 500px; overflow-x: auto' : ''">
+          <div :style="$vuetify.breakpoint.smAndDown ? 'width: 500px; overflow-x: auto' : ''">F
           <v-row :style="$vuetify.breakpoint.sm ? '' : ''">
             <v-col cols="5" class="px-0">
               <v-row>

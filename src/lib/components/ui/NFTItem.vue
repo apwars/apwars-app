@@ -2,7 +2,7 @@
   <v-card elevation="0" class="ma-2 mt-0 text-center">
     <v-img class="mx-auto" width="200" :src="collectible.image"></v-img>
     <wButton width="165px" class="my-3" @click="goToBuy(collectible.id)">
-      <div class="d-flex justify-center  px-2">
+      <div class="d-flex justify-center px-2">
         <img
           src="/images/buttons/btn-icon-buy.svg"
           class="mx-1  align-self-center"

@@ -7,8 +7,7 @@
       <v-row v-if="tokens.length > 0">
         <v-col
           cols="12"
-          lg="6"
-          xl="4"
+          md="6"
           v-for="token in tokens"
           v-bind:key="token.name"
         >

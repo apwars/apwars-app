@@ -547,17 +547,17 @@ export default {
 .treasure {
   position: absolute;
   right: -40px;
-  bottom: -34px;
+  bottom: -25px;
   z-index: 3;
   @media screen and (max-width: 500px) {
     right: -26px;
   }
   > img {
-    width: 90px;
+    width: 70px;
   }
   @media screen and (min-width: 1441px) {
     > img {
-      width: 150px;
+      width: 130px;
     }
   }
 }

@@ -52,10 +52,10 @@
                   :key="item.id"
                   sm="12"
                   md="6"
-                  :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
+                  :class="$vuetify.breakpoint.smAndUp ? 'd-flex' : ''"
                 >
                   <nft-item :collectible="item" />
-                  <div :class="$vuetify.breakpoint.mdAndUp ? 'description' : 'text-center'">
+                  <div class="description">
                     <game-text>{{ item.title }}</game-text>
                     <p
                     :style="$vuetify.breakpoint.mdAndUp ?
@@ -153,7 +153,7 @@ export default {
         this.loading = false;
       }
     },
-  },
+},
 };
 </script>
 <style lang="scss" scoped>
@@ -163,5 +163,11 @@ export default {
 }
 .description {
   padding-right: 48px;
+  @media only screen and (max-width: 1264px) {
+    padding: 0px;
+  }
+  @media only screen and (max-width: 599px) {
+    text-align: center !important;
+  }
 }
 </style>

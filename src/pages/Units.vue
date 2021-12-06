@@ -27,7 +27,7 @@
             v-if="isConnected"
             class="mx-auto"
             :amount="balanceFED"
-            :size="$vuetify.breakpoint.name === 'xs' ? 'small' : 'medium'"
+            :size="$vuetify.breakpoint.smAndDown ? 'small' : 'medium'"
           ></wGOLD-button>
         </v-col>
       </v-row>
