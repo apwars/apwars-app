@@ -46,6 +46,7 @@
                 Enlistment at Spot {{ selectedSlot.row }},
                 {{ selectedSlot.col }}
               </div>
+              <div class="info-text mt-1">Address: 0xe2ac249f15d838d517Da1641C09608b9E6E0eE38</div>
             </v-col>
           </v-row>
           <v-row no-gutters class="enlistment-resume" v-if="troopList.length">

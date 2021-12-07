@@ -138,7 +138,7 @@
                   <div style="font-size: 14px">
                     <span class="d-block">{{ weapon.title }}</span>
                     <span class="d-block">Global: 1,5M</span>
-                    <span class="d-block">My troops: 10,4K</span>
+                    <span class="d-block">My Qty: 10,4K</span>
                   </div>
                 </div>
               </v-col>
