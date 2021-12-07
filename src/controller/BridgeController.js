@@ -25,7 +25,7 @@ export default class BridgeController {
 
   claimERC20({ tokens, amounts }) {
     try {
-      return this.base._postSignature(`/bridge/claim/claimERC20`, { tokens, amounts });
+      return this.base._postSignature('/bridge/claim/claimERC20', { tokens, amounts });
     } catch (error) {
       throw error;
     }
@@ -33,7 +33,16 @@ export default class BridgeController {
 
   claimERC1155({ tokens, amounts }) {
     try {
-      return this.base._postSignature(`/bridge/claim/claimERC1155`, { tokens, amounts });
+      return this.base._postSignature('/bridge/claim/claimERC1155', { tokens, amounts });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  getHistory(account, pagination) {
+    pagination = pagination || { limit: 10, skip: 0 };
+    try {
+      return this.base._get(`/bridge/history/${account}?limit=${pagination.limit}&skip=${pagination.skip}`);
     } catch (error) {
       throw error;
     }

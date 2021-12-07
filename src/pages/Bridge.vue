@@ -19,14 +19,10 @@
       <v-row>
         <v-col cols="12">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est
-            pharetra faucibus nisl sit turpis iaculis elementum. Nibh lorem
-            auctor enim sit volutpat varius fames. Arcu aliquam sit id et. Non
-            id purus tincidunt egestas dui nibh commodo enim. Tortor feugiat
-            tortor augue purus morbi venenatis faucibus imperdiet sed. Fringilla
-            in metus, in interdum quis pellentesque duis. Vel gravida facilisi
-            ultricies duis at viverra morbi eu. Sed diam, convallis elementum
-            mauris elementum egestas tristique congue vitae.
+            The bridge is what makes the bridge (tell me something I don't know)
+            between the off-chain and on-chain features of the game. It is by
+            using the bridge that we will have the opportunity to reduce fees
+            while playing.
           </p>
         </v-col>
       </v-row>
@@ -91,7 +87,7 @@
             flat
             :size="$vuetify.breakpoint.mobile ? 'small' : 'default'"
           >
-            <span class="mx-3">History</span>
+            <span class="mx-3">Transaction history</span>
           </wButton>
         </v-col>
       </v-row>
@@ -127,7 +123,7 @@
             </v-col>
             <v-col cols="12" md="4">
               <div class="text-center text-h6 font-weight-bold">
-                Your Selection 1/5
+                You’ve already selected {{ selectList }}/{{ limitSelectList }}
               </div>
             </v-col>
             <v-col cols="12" md="4">
@@ -152,19 +148,15 @@
               <div class="card-bridge d-flex flex-column align-center">
                 <div class="my-1 card-bridge-image d-flex align-center">
                   <div>
-                    <img
-                      width="100px"
-                      :src="item.image"
-                      alt="weapon-simple-shield"
-                    />
+                    <img width="100px" :src="item.image" :alt="item.name" />
                   </div>
                 </div>
                 <div class="card-bridge-title">
                   {{ item.name }}
                 </div>
                 <div v-if="item.isApproveOtto" class="text-caption">
-                  Fee: 1% / Minimum transfer: 1000 <br />
-                  Pack amount: 1000
+                  Fee: 1% / Minimum transfer: {{ item.minimumPackage }} <br />
+                  Pack amount: {{ item.minimumPackage }}
                 </div>
                 <div v-else class="text-caption red--text font-weight-bold">
                   Requires guardian approval: <br />
@@ -172,10 +164,12 @@
                 </div>
                 <div class="input-bridge">
                   <number-field
-                    label="Pack quantity"
+                    label="Package qty"
                     dense
                     v-model="item.packQuantity"
                     @input="packQuantity(item)"
+                    :disabled="item.disabled"
+                    :max="item.packMax"
                   ></number-field>
                   <v-currency-field
                     label="Amount to send"
@@ -237,32 +231,86 @@
         </v-tab-item>
         <v-tab-item value="history">
           <v-data-table
-            class="table-leaderboard elevation-2"
+            class="table-bridge elevation-2"
             :headers="headers"
-            :items="history"
-            nowrap
+            :items="history.data"
+            item-key="tx"
+            :expanded.sync="expanded"
+            single-expand
           >
-            <template v-slot:[`item.account`]="{ item }">
-              <div class="d-flex align-center my-1">
-                <v-avatar :address="item.account" />
-                <v-address
-                  class="text-center text-caption"
-                  :address="item.account"
-                  link
-                  tooltip
-                >
-                </v-address>
-              </div>
+            <template v-slot:[`item.tx`]="{ item }">
+              <a
+                v-if="item.type.search('deposit') === 0"
+                :href="`https://bscscan.com/tx/${item.tx}`"
+              >
+                Tx: {{ item.tx.slice(0, 15) }}...
+              </a>
+              <div v-else>Hash: {{ item.tx.slice(0, 15) }}...</div>
             </template>
 
-            <template v-slot:[`item.time`]="{ item }">
-              <countdown
-                :auto-start="false"
-                :time="item.time"
-                v-slot="{ minutes, seconds }"
+            <template v-slot:[`item.type`]="{ item }">
+              {{ typeDescription[item.type] }}
+            </template>
+
+            <template v-slot:[`item.createdOn`]="{ item }">
+              {{ new Date(item.createdOn).toLocaleString() }}
+            </template>
+
+            <template v-slot:[`item.transfers`]="{ item }">
+              <wButton
+                @click="expandRow(item)"
+                flat
+                size="x-small"
+                class="mr-1"
               >
-                {{ minutes }} minutes, {{ seconds }} seconds
-              </countdown>
+                {{ item.showTransfer ? "Hide Transfers" : "Show Transfers" }}
+              </wButton>
+            </template>
+
+            <template v-slot:expanded-item="{ headers, item }">
+              <td :colspan="headers.length">
+                <div
+                  v-for="history in item.history"
+                  v-bind:key="history.name"
+                  class="my-1"
+                >
+                  <div
+                    v-if="item.type.search('ERC20') !== -1"
+                    class="px-10 py-1"
+                  >
+                    <amount
+                      :amount="history.amount"
+                      decimals="2"
+                      formatted
+                      tooltip
+                      :symbol="history.name"
+                      icon
+                    />
+                    <hr class="mt-1" />
+                  </div>
+                  <div
+                    v-else-if="item.type.search('ERC1155') !== -1"
+                    class="px-10 py-1"
+                  >
+                    <div class="d-flex align-center">
+                      <img
+                        width="30px"
+                        class="mr-1"
+                        :src="history.image"
+                        :alt="history.name"
+                      />
+                      <amount
+                        :amount="history.amount"
+                        decimals="0"
+                        formatted
+                        tooltip
+                      />
+                      <span class="ml-1"> - {{ history.name }} </span>
+                    </div>
+                    <hr class="mt-1" />
+                  </div>
+                </div>
+              </td>
             </template>
           </v-data-table>
         </v-tab-item>
@@ -316,39 +364,24 @@ export default {
       search: "",
       headers: [
         {
-          text: "Player",
-          value: "account",
-          width: "30%",
+          text: "Tx/Hash",
+          value: "tx",
           sortable: false,
         },
         {
-          text: "Amount",
-          value: "points",
-          width: "35%",
+          text: "Type",
+          value: "type",
           sortable: false,
         },
-      ],
-      history: [
         {
-          account: "0xFC9A805C4CE604711FA18d663CaccBef2965E667",
-          game: "Monstrous Journey",
-          time: 65000,
-          stage: "Start",
-          points: 1000,
+          text: "Date",
+          value: "createdOn",
+          sortable: false,
         },
         {
-          account: "0x2d4bb1bcE02E1c0ec6cf08f585924F82707BEF89",
-          game: "Monstrous Journey",
-          time: 64000,
-          stage: "Start",
-          points: 900,
-        },
-        {
-          account: "0xF7AE8490eb37973A4bb5797C3F193e1A5b721dA9",
-          game: "Monstrous Journey",
-          time: 67000,
-          stage: "Start",
-          points: 870,
+          text: "Transfers",
+          value: "transfers",
+          sortable: false,
         },
       ],
       bridgeNetwork: {
@@ -359,12 +392,13 @@ export default {
         },
         to: {
           type: "offChain",
-          name: "APWars Offchain",
+          name: "APWars Off-chain",
           image: "/images/project/logo-icon.png",
         },
       },
       bridgeList: [],
-      limitSelectList: 2,
+      selectList: 0,
+      limitSelectList: 3,
       currencyConfig: {
         locale: window.navigator.userLanguage || window.navigator.language,
         prefix: "",
@@ -381,7 +415,15 @@ export default {
         autoDecimalMode: true,
         allowNegative: false,
       },
-      listWallets: [],
+      walletsList: [],
+      history: [],
+      expanded: [],
+      typeDescription: {
+        claimERC1155: "Claim Game Item",
+        claimERC20: "Claim Token",
+        depositERC1155: "Deposit Game Item",
+        depositERC20: "Deposit Token",
+      },
     };
   },
 
@@ -450,6 +492,10 @@ export default {
           item.balanceFormattedTo = item.balanceTo;
         }
 
+        item.packMax = parseInt(
+          item.balanceFormattedFrom / item.minimumPackage
+        );
+
         return item;
       });
     },
@@ -457,7 +503,7 @@ export default {
 
   watch: {
     async isConnected() {
-      this.listWallets = await this.getWallets();
+      this.walletsList = await this.getWallets();
       await this.loadData();
     },
 
@@ -465,6 +511,8 @@ export default {
       if (this.bridgeList.length > 0) {
         this.isLoading = true;
         this.bridgeList = [];
+        this.walletsList = [];
+        this.history = [];
         await this.loadData();
       }
     },
@@ -485,17 +533,68 @@ export default {
         return;
       }
 
-      if (this.listWallets.length === 0) {
-        this.listWallets = await this.getWallets();
+      if (this.walletsList.length === 0) {
+        this.walletsList = await this.getWallets();
       }
       await this.addBridgeList();
+      if (this.history.length === 0) {
+        this.history = await this.getHistory();
+      }
 
       this.isLoading = false;
     },
 
-    getWallets() {
-      const walletController = new WalletController();
-      return walletController.wallets(this.account);
+    async getWallets() {
+      try {
+        const walletController = new WalletController();
+        const wallet = await walletController.wallets(this.account);
+        return wallet;
+      } catch (error) {
+        if (error.status === 404) {
+          return { balances: {} };
+        }
+        if (error.status) {
+          return ToastSnackbar.error(error.code);
+        }
+        ToastSnackbar.error("An error has occurred while to get wallet");
+      }
+    },
+
+    async getHistory() {
+      try {
+        const bridgeController = new BridgeController();
+        let history = await bridgeController.getHistory(this.account, {
+          limit: 50,
+          skip: 0,
+        });
+
+        history.data = history.data.map((item) => {
+          item.history = item.history.map((itemHistory) => {
+            const getGamItem = this.bridgeList.find(
+              (list) => `GameItem${list.id}` === itemHistory.name
+            );
+            return { ...itemHistory, ...getGamItem };
+          });
+          return item;
+        });
+        return history;
+      } catch (error) {
+        if (error.status === 404) {
+          return { data: [], total: 0 };
+        }
+        if (error.status) {
+          return ToastSnackbar.error(error.code);
+        }
+        ToastSnackbar.error("An error has occurred while to get history");
+      }
+    },
+
+    expandRow(item) {
+      if (this.expanded.length && item !== this.expanded[0]) {
+        this.expanded[0].showTransfer = !this.expanded[0].showTransfer;
+      }
+      item.showTransfer = !item.showTransfer;
+      this.expanded = item === this.expanded[0] ? [] : [item];
     },
 
     changeNetwork() {
@@ -503,12 +602,25 @@ export default {
         from: this.bridgeNetwork.to,
         to: this.bridgeNetwork.from,
       };
+      this.initStateBridgeList();
     },
 
     packQuantity(item) {
       this.$nextTick(() => {
+        this.selectList = this.bridgeList.filter(
+          (itemFilter) => itemFilter.packQuantity > 0
+        ).length;
         item.amountFrom = item.packQuantity * item.minimumPackage;
         item.amountTo = item.packQuantity * item.minimumPackage;
+
+        if (
+          !item.isApproveOtto ||
+          (this.selectList >= this.limitSelectList &&
+            item.packQuantity === 0) ||
+          item.balanceFormattedFrom === 0
+        ) {
+          item.disabled = true;
+        }
         this.$forceUpdate();
       });
     },
@@ -536,8 +648,9 @@ export default {
 
     async initStateBridgeList() {
       this.bridgeList = [];
-      this.listWallets = await this.getWallets();
+      this.walletsList = await this.getWallets();
       await this.addBridgeList();
+      this.history = await this.getHistory();
     },
 
     async depositERC20() {
@@ -835,7 +948,7 @@ export default {
       }
       const smc = new ERC20(address);
       const balanceOnChain = await smc.balanceOf(this.account);
-      const balanceOffChain = this.listWallets.balances[name];
+      const balanceOffChain = this.walletsList.balances[name];
       const isApproveOtto = await smc.hasAllowance(
         this.account,
         this.addresses.inventoryManagerTokens
@@ -849,6 +962,7 @@ export default {
         balanceOffChain: balanceOffChain || 0,
         minimumPackage: minimumPackage,
         isApproveOtto: isApproveOtto,
+        packQuantity: 0,
       });
     },
 
@@ -859,7 +973,7 @@ export default {
       }
       const smc = new Collectibles(this.addresses.collectibles);
       const balanceOnChain = await smc.balanceOf(this.account, id);
-      const balanceOffChain = this.listWallets.balances[`GameItem${id}`];
+      const balanceOffChain = this.walletsList.balances[`GameItem${id}`];
       const isApproveOtto = await smc.isApprovedForAll(
         this.account,
         this.addresses.inventoryManagerCollectibles
@@ -874,6 +988,7 @@ export default {
         balanceOffChain: balanceOffChain || 0,
         minimumPackage: minimumPackage,
         isApproveOtto: isApproveOtto,
+        packQuantity: 0,
       });
     },
 
@@ -882,7 +997,7 @@ export default {
       if (this.bridgeNetwork.from.type === "onChain") {
         return `Balance in BSC Network: ${amount}`;
       } else {
-        return `Balance in APWars Offchain: ${amount}`;
+        return `Balance in APWars Off-chain: ${amount}`;
       }
     },
 
@@ -891,7 +1006,7 @@ export default {
       if (this.bridgeNetwork.to.type === "onChain") {
         return `Balance in BSC Network: ${amount}`;
       } else {
-        return `Balance in APWars Offchain: ${amount}`;
+        return `Balance in APWars Off-chain: ${amount}`;
       }
     },
   },
@@ -990,29 +1105,24 @@ export default {
   border: 2px solid #ffeebc;
 }
 
-.table-leaderboard >>> .v-data-table__wrapper > table > tbody > tr > td,
-.table-leaderboard >>> .v-data-table__wrapper > table > thead > tr > td,
-.table-leaderboard >>> .v-data-table__wrapper > table > tfoot > tr > td {
+.table-bridge >>> .v-data-table__wrapper > table > tbody > tr > td,
+.table-bridge >>> .v-data-table__wrapper > table > thead > tr > td,
+.table-bridge >>> .v-data-table__wrapper > table > tfoot > tr > td {
   font-size: 1rem;
 }
 
-.table-leaderboard >>> .v-data-table__wrapper > table > tbody > tr > th,
-.table-leaderboard >>> .v-data-table__wrapper > table > thead > tr > th,
-.table-leaderboard >>> .v-data-table__wrapper > table > tfoot > tr > th {
+.table-bridge >>> .v-data-table__wrapper > table > tbody > tr > th,
+.table-bridge >>> .v-data-table__wrapper > table > thead > tr > th,
+.table-bridge >>> .v-data-table__wrapper > table > tfoot > tr > th {
   font-size: 1rem;
   color: #ffb800;
 }
 
-.table-leaderboard
-  >>> .v-data-table__wrapper
-  > table
-  > thead
-  > tr:last-child
-  > th {
+.table-bridge >>> .v-data-table__wrapper > table > thead > tr:last-child > th {
   border-bottom: thin solid #ffffff;
 }
 
-.table-leaderboard
+.table-bridge
   >>> .v-data-table__wrapper
   > table
   > tbody
@@ -1027,7 +1137,7 @@ export default {
   border-bottom: thin solid #ffffff;
 }
 
-.table-leaderboard
+.table-bridge
   >>> .v-data-table__wrapper
   > table
   > tbody
@@ -1042,14 +1152,21 @@ export default {
   border-bottom: thin solid #ffffff;
 }
 
-.table-leaderboard >>> .v-data-footer {
+.table-bridge >>> .v-data-footer {
   border-top: thin solid #ffffff;
 }
 
-.table-leaderboard >>> .avatar {
+.table-bridge >>> .avatar {
   width: 60px;
   border: 3px solid #bb7248;
   border-radius: 6px;
+}
+
+.table-bridge
+  >>> .v-data-table__wrapper
+  tbody
+  tr.v-data-table__expanded__content {
+  background-color: #3a2720 !important;
 }
 
 .cursor-pointer-exchange {
