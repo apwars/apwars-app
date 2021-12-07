@@ -88,8 +88,8 @@
         <v-col
           cols="12"
           md="6"
-          v-for="token in tokens"
-          v-bind:key="token.name"
+          v-for="trooper in filterTroops"
+          v-bind:key="trooper.name"
         >
           <game-items-combinators :gameItems="trooper" v-if="type === 'magical-items'" />
           <unit-war-preparation v-else

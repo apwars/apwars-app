@@ -79,7 +79,7 @@
               @change="updateTroopsFilters()"
               label="Show only my units"
               color="primary"
-            ></v-checkbox>
+            ></v-checkbox>{{ filterTroops.length > 0 }}
           </div>
         </v-col>
       </v-row>
@@ -95,7 +95,7 @@
           cols="12"
           md="6"
           v-for="trooper in filterTroops"
-          v-bind:key="trooper.name || trooper.title"
+          :key="trooper.name || trooper.title"
         >
           <trooper v-if="getType(trooper) === 'trooper'" :info="trooper" />
           <stake-trooper
@@ -327,6 +327,7 @@ export default {
         this.globalTroops = this.globalTroops.concat(gameItems)
 
         this.filterTroops = this.globalTroops;
+        console.log(this.filterTroops)
 
         this.updateTroopsFilters();
 
@@ -334,6 +335,7 @@ export default {
         if (error.message) {
           return ToastSnackbar.error(error.message);
         }
+        console.log('123')
         return ToastSnackbar.error(error);
       } finally {
         this.isLoading = false
