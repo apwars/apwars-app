@@ -17,10 +17,11 @@
             :max-height="$vuetify.breakpoint.mobile ? 25 : 33"
             :max-width="$vuetify.breakpoint.mobile ? 28 : 36"
             src="/images/wcourage.png" />
-          <div class="mt-token-text">
+          <div :class="$vuetify.breakpoint.lgAndUp ? 'mt-token-text' : ''">
             <amount
             :amount="getTokenAConfig.amount"
             decimals="2"
+            compact
             symbol="wCOURAGE"/>
           </div>
         </div>
@@ -36,6 +37,7 @@
             <amount
               :amount="getTokenBConfig.amount"
               decimals="2"
+              compact
               :symbol="unit.name"/>
           </div>
         </div>
