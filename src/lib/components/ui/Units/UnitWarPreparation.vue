@@ -14,7 +14,7 @@
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty ml-at-mobile">
           <v-img class="mr-1"
-            :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
+            :max-height="$vuetify.breakpoint.mobile ? 25 : 33"
             :max-width="$vuetify.breakpoint.mobile ? 28 : 36"
             src="/images/wcourage.png" />
           <div class="mt-token-text">
