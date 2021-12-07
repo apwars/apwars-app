@@ -227,7 +227,7 @@
                   >{{ totalStakedForce(troop.race) }}</span
                 >
               </div>
-              <Button type="wprimary" text="Choose a slot" isBlock :handleClick="goToMonsterBattle" />
+              <Button type="wprimary" text="Choose a spot" isBlock :handleClick="goToMonsterBattle" />
               <Progress
                 class="mt-2"
                 :value="50"
@@ -238,7 +238,7 @@
               />
               <div class="slots-info d-flex justify-center">54/100</div>
               <div class="slots-description d-flex justify-center">
-                Fullfiled Slots
+                Fullfiled Spots
               </div>
             </div>
           </v-col>

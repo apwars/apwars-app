@@ -43,7 +43,8 @@
           <v-row>
             <v-col cols="12">
               <div class="monster-name" v-if="selectedSlot">
-                Enlistment at Spot {{ selectedSlot.row }}, {{ selectedSlot.col }}
+                Enlistment at Spot {{ selectedSlot.row }},
+                {{ selectedSlot.col }}
               </div>
             </v-col>
           </v-row>
@@ -71,9 +72,6 @@
                   type="text, text"
                 />
                 <template v-else>
-                  <div class="info-text">
-                    Global: 1,5M
-                  </div>
                   <div class="info-text">
                     My Units: 10.4K
                   </div>
@@ -105,11 +103,8 @@
                   type="text, text"
                 />
                 <template v-else>
-                  <div class="info-text">
-                    Global: 1,5M
-                  </div>
-                  <div class="info-text">
-                    My Units: 10.4K
+                  <div class="info-text d-flex align-items-end">
+                    My Qty: 10.4K
                   </div>
                 </template>
               </div>
@@ -121,20 +116,25 @@
                 This slot was rewarded with:
               </div>
               <div class="rewards-container">
-                <div
+                <Reward
                   class="reward-container"
                   v-for="reward in slotData.rewards"
                   :key="reward.id"
-                >
-                  <img height="64" :src="reward.image" :alt="reward.title" />
-                  <div class="reward-title mt-1">{{ reward.title }}</div>
-                  <div class="reward-amount">{{ reward.amount }}</div>
-                </div>
+                  :rewardId="reward.id"
+                  :amount="reward.amount"
+                />
               </div>
             </v-col>
           </v-row>
+          <v-row
+            ><v-col>
+              <Button
+                type="wsecondary"
+                text="Go to full report"
+                :handleClick="goToReport"/></v-col
+          ></v-row>
         </v-col>
-        <v-col cols="12" sm="3" class="">
+        <v-col cols="12" sm="3">
           <div class="monster-container">
             <v-img
               :src="`/images/monsters/${monsterData.id}.webp`"
@@ -175,15 +175,15 @@ import { mapMutations, mapGetters, mapState } from "vuex";
 
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
-import { getCollectibleById } from "@/data/Collectibles";
 
 import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
 import Progress from "@/lib/components/ui/Progress";
 import Board from "@/lib/components/ui/War/Board";
+import Reward from "@/lib/components/ui/Reward";
 
 export default {
-  components: { Title, Button, Progress, Board },
+  components: { Title, Button, Progress, Board, Reward },
   data() {
     return {
       selectedSlot: null,
@@ -230,16 +230,6 @@ export default {
       this.selectedSlot = { col, row };
       this.isLoadingEnlistment = true;
       let slotData = await this.loadEnlistment();
-      slotData = {
-        ...slotData,
-        rewards: slotData.rewards.map((reward) => {
-          const item = getCollectibleById(reward.id);
-          return {
-            ...item,
-            amount: reward.amount,
-          };
-        }),
-      };
       this.slotData = slotData;
       this.isLoadingEnlistment = false;
     },
@@ -308,6 +298,9 @@ export default {
           });
         }, 5000);
       });
+    },
+    goToReport() {
+      this.$router.push(`/wars/${this.$route.params.contractWar}/report`);
     },
   },
   async mounted() {
@@ -394,38 +387,5 @@ export default {
 }
 .rewards-container {
   display: flex;
-}
-.reward-container {
-  position: relative;
-  margin-right: 8px;
-  text-align: center;
-}
-.reward-title {
-  font-size: 12px;
-  font-weight: bold;
-  padding: 0 12px;
-  width: 120px;
-  text-align: center;
-  height: 28px;
-}
-.reward-amount {
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 4px;
-  background-color: black;
-  outline: 0.1px solid white;
-  color: white;
-  font-size: 10px;
-  font-weight: bold;
-  padding: 2px 4px;
-}
-.reward-description {
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 1.2;
-  width: 100%;
-  text-align: center;
 }
 </style>
