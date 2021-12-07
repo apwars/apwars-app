@@ -136,7 +136,7 @@
                     :src="`/images/weapons/${weapon.icon}.png`"
                   />
                   <div style="font-size: 14px">
-                    <span class="d-block">{{ weapon.title }}</span>
+                    <span class="d-block bold">{{ weapon.title }}</span>
                     <span class="d-block">Global: 1,5M</span>
                     <span class="d-block">My Qty: 10,4K</span>
                   </div>
@@ -596,5 +596,9 @@ export default {
 .rewards-title {
   font-size: 32px;
   font-weight: bold;
+}
+.bold {
+  font-weight: bold;
+  font-size: 16px;
 }
 </style>
