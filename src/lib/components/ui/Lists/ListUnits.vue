@@ -79,7 +79,7 @@
               @change="updateTroopsFilters()"
               label="Show only my units"
               color="primary"
-            ></v-checkbox>{{ filterTroops.length > 0 }}
+            ></v-checkbox>
           </div>
         </v-col>
       </v-row>
@@ -327,7 +327,6 @@ export default {
         this.globalTroops = this.globalTroops.concat(gameItems)
 
         this.filterTroops = this.globalTroops;
-        console.log(this.filterTroops)
 
         this.updateTroopsFilters();
 
@@ -335,7 +334,6 @@ export default {
         if (error.message) {
           return ToastSnackbar.error(error.message);
         }
-        console.log('123')
         return ToastSnackbar.error(error);
       } finally {
         this.isLoading = false
