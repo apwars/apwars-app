@@ -126,7 +126,7 @@
                     style="color: #FFB800; font-size: 17px;"
                     >{{ unit.displayName }}</span
                   >
-                  <span class="d-block mt-1">Units enlisted: 105k</span>
+                  <span class="d-block mt-1">Enlisted units: 105k</span>
                   <span class="d-block">Deads units: 80k</span>
                   <span class="d-block mb-2">Survivors: 25k</span>
                   <span class="d-block" style="color: #FFB800;"
@@ -184,7 +184,7 @@
                 <v-img src="/images/battle/treasure.png" />
               </div>
             </div>
-            <Button type="wprimary" text="Go to Monster Battle" :handleClick="goToMonsterBattle" />
+            <Button type="wprimary" text="Go to the Monster Battle" :handleClick="goToMonsterBattle" />
           </v-col>
         </v-row>
 
@@ -195,7 +195,7 @@
                 <Button
                   type="wprimary"
                   icon="swords"
-                  text="Bring survivors and claim prizes"
+                  text="Claim prizes and restore survivors"
                 />
               </v-col>
             </v-row>

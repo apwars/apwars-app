@@ -26,7 +26,7 @@
           >
             <v-col>
               <div class="monster-name mt-6">
-                Choose your slot to enlist
+                Choose your slot to enlist the troops
               </div>
               <Board
                 :rows="5"
@@ -43,8 +43,7 @@
           <v-row>
             <v-col cols="12">
               <div class="monster-name" v-if="selectedSlot">
-                Enlistment at Spot: {{ selectedSlot.row }} Col:
-                {{ selectedSlot.col }}
+                Enlistment at Spot {{ selectedSlot.row }}, {{ selectedSlot.col }}
               </div>
             </v-col>
           </v-row>

@@ -73,8 +73,8 @@
                 </v-currency-field>
               </div>
               <div v-if="!troop.balance">
-                You don`t have the minimun amount of {{ troop.war.stakeMin }}
-                {{ troop.name }} to enlist, why don't you buy some more.
+                You don't have the minimun amount of {{ troop.war.stakeMin }}
+                {{ troop.name }} to enlist. How about acquiring some more?
               </div>
             </div>
             <div class="status-container">
@@ -115,7 +115,7 @@
             </div>
             <div class="amount-container">
               <div class="amount-title">
-                You have units:
+                Units you have:
               </div>
               <div class="amount">
                 <Amount
@@ -169,7 +169,7 @@
                 src="/images/icons/battle-shield.png"
                 alt="Enlistment resume"
               />
-              Select your designation
+              Select your formation
             </div>
             <v-select
               :items="formationOptions"
@@ -224,10 +224,10 @@
               <div class="total-force mb-1">
                 Power Units:
                 <span class="amount"
-                  >{{ totalStakedForce(troop.race) }} units</span
+                  >{{ totalStakedForce(troop.race) }}</span
                 >
               </div>
-              <Button type="wprimary" text="Choose slot" isBlock :handleClick="goToMonsterBattle" />
+              <Button type="wprimary" text="Choose a slot" isBlock :handleClick="goToMonsterBattle" />
               <Progress
                 class="mt-2"
                 :value="50"
