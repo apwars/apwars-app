@@ -1,36 +1,36 @@
 <template>
   <div class="force-meter">
     <div class="base">
-      <img class="force" src="/images/icons/force.png" alt="force-1" />
-      <img class="force" src="/images/icons/force.png" alt="force-2" />
-      <img class="force" src="/images/icons/force.png" alt="force-3" />
-      <img class="force" src="/images/icons/force.png" alt="force-4" />
-      <img class="force" src="/images/icons/force.png" alt="force-5" />
+      <img class="force" :src="asset" alt="force-1" />
+      <img class="force" :src="asset" alt="force-2" />
+      <img class="force" :src="asset" alt="force-3" />
+      <img class="force" :src="asset" alt="force-4" />
+      <img class="force" :src="asset" alt="force-5" />
     </div>
     <div :class="['active', [color]]" :style="`--percent: ${percent}`" v-show="value > 0">
       <img
         class="force"
-        src="/images/icons/force-active.png"
+        :src="activeAsset"
         alt="force-1-active"
       />
       <img
         class="force"
-        src="/images/icons/force-active.png"
+        :src="activeAsset"
         alt="force-2-active"
       />
       <img
         class="force"
-        src="/images/icons/force-active.png"
+        :src="activeAsset"
         alt="force-3-active"
       />
       <img
         class="force"
-        src="/images/icons/force-active.png"
+        :src="activeAsset"
         alt="force-4-active"
       />
       <img
         class="force"
-        src="/images/icons/force-active.png"
+        :src="activeAsset"
         alt="force-5-active"
       />
     </div>
@@ -53,19 +53,37 @@ export default {
         const supportedColors = ['wgreen', 'wyellow'];
         return supportedColors.includes(value);
       },
-      default: ''
+      default: '',
+    },
+    type: {
+      type: String,
+      default: '',
     }
   },
   computed: {
     percent() {
       return (100 * this.value) / this.maxScale.toString() + "%";
     },
+    asset() {
+      if (this.type === 'flat') {
+        return "/images/icons/stat-point.png"
+      }
+      return "/images/icons/force.png"
+    },
+    activeAsset() {
+      if (this.type === 'flat') {
+        return "/images/icons/stat-active.png"
+      }
+      return "/images/icons/force-active.png"
+    }
+
   },
 };
 </script>
 <style lang="scss" scoped>
 .force-meter {
   position: relative;
+  user-select: none;
   .base {
     white-space: nowrap;
   }
@@ -79,7 +97,6 @@ export default {
 .active {
   position: absolute;
   top: 0;
-  height: 46px;
   width: var(--percent);
   white-space: nowrap;
   overflow: hidden;

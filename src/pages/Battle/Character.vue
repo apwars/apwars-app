@@ -15,7 +15,11 @@
                 <v-img src="/images/troops/wwarrior-toon.png" />
               </div>
               <div class="unit-data">
-                <div class="input-name">Edit name</div>
+                <v-text-field placeholder="Edit name">
+                  <v-icon slot="append" color="white">
+                    mdi-pencil-outline
+                  </v-icon>
+                </v-text-field>
                 <div class="class-info">Class: Warrior</div>
                 <div class="xp-container mt-2">
                   <div class="xp-label d-flex justify-space-between">
@@ -40,36 +44,97 @@
               </div>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col class="d-flex"
-              ><div class="text-large mr-2">Courage</div>
-              <ForceMeter :maxScale="100" :value="60" color="wgreen"
-            /></v-col>
-            <v-col class="d-flex"
-              ><div class="text-large  mr-2">Energy</div>
-              <ForceMeter :maxScale="100" :value="10" color="wyellow" />
-            </v-col>
-          </v-row>
         </v-col>
         <v-col md="5">
           <v-row>
             <v-col md="4">
-              <div class="icon-container">
+              <div class="icon-container mb-2">
                 <v-img src="/images/icons/sword.png" />
               </div>
             </v-col>
             <v-col md="4">
-              <div class="icon-container">
+              <div class="icon-container mb-2">
                 <v-img src="/images/icons/patent.png" />
               </div>
+              <Button text="Unlock" type="wsecondary" isBlock />
             </v-col>
             <v-col md="4">
-              <div class="icon-container">
+              <div class="icon-container mb-2">
                 <v-img src="/images/icons/anvil.png" />
               </div>
+              <Button text="Unlock" type="wsecondary" isBlock />
             </v-col>
           </v-row>
         </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <div class="d-flex">
+            <div class="stat-container text-medium">Strenght</div>
+            <ForceMeter type="flat" :maxScale="5" :value="1" />
+            <div class="text-medium ml-2">1/5</div>
+          </div>
+          <div class="d-flex">
+            <div class="stat-container text-medium">Speed</div>
+            <ForceMeter type="flat" :maxScale="5" :value="1" />
+            <div class="text-medium ml-2">1/5</div>
+          </div>
+          <div class="d-flex">
+            <div class="stat-container text-medium">HP</div>
+            <ForceMeter type="flat" :maxScale="50" :value="20" />
+            <div class="text-medium ml-2">20/50</div>
+          </div>
+        </v-col>
+        <v-col class="d-flex"
+          ><div class="mr-2">
+            <div class="status-description">
+              <div class="label text-large">Courage</div>
+              <Button class="mt-1" size="small" type="wsecondary" isBlock
+                ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
+                Recharge</Button
+              >
+            </div>
+          </div>
+          <div>
+            <ForceMeter :maxScale="100" :value="60" color="wgreen" />
+            <div class="d-flex justify-end">
+              60/100
+            </div>
+          </div></v-col
+        >
+        <v-col class="d-flex"
+          ><div class="mr-2">
+            <div class="status-description">
+              <div class="label text-large">Energy</div>
+              <Button class="mt-1" size="small" type="wsecondary" isBlock
+                ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
+                Recharge</Button
+              >
+            </div>
+          </div>
+          <div>
+            <ForceMeter :maxScale="100" :value="10" color="wyellow" />
+            <div class="d-flex justify-end">
+              10/100
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <div class="divider"></div>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col md="4">
+          <div class="stat-value text-large">Statistics</div>
+        </v-col>
+        <v-col>
+          <div class="stat-value text-medium">Plays</div>
+        </v-col>
+        <v-col><div class="stat-value text-medium">Record Time</div> </v-col>
+        <v-col><div class="stat-value text-medium">Record Score</div> </v-col>
+        <v-col><div class="stat-value text-medium">Record Points</div> </v-col>
       </v-row>
     </v-container>
   </div>
@@ -138,6 +203,23 @@ export default {
 .icon-container {
   width: 100%;
   border-radius: 50%;
-  outline: 2px solid #FFEEBC;
+  outline: 2px solid #ffeebc;
+}
+.divider {
+  width: 100%;
+  outline: 2px solid #ffeebc;
+  border-radius: 50%;
+}
+.stat-value {
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+.btn-icon {
+  color: inherit;
+  margin-right: 2px;
+}
+.stat-container {
+  width: 88px;
 }
 </style>
