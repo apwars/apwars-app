@@ -581,8 +581,8 @@ export default {
   line-height: 1.2;
 }
 .image-container {
-  height: 180px;
-  width: 190px;
+  height: 190px;
+  width: 180px;
   > img {
     width: 100%;
     height: 100%;
