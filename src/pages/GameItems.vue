@@ -58,7 +58,7 @@
                   <div class="description">
                     <game-text>{{ item.title }}</game-text>
                     <p
-                    class="hide-text"
+                    class="scrolbar"
                     :style="$vuetify.breakpoint.mdAndUp ?
                       'font-size: 12px' : 'font-size: 13px; text-align: justify;'"
                     v-html="item.description" />
@@ -173,11 +173,35 @@ export default {
   }
 }
 
-.hide-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
+.scrolbar {
+  padding-right: 0.3rem;
+  overflow-y: auto;
   display: -webkit-box;
   -webkit-line-clamp: 17;
   -webkit-box-orient: vertical;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  /* display: none; */
+  background: #111!important;
+}
+
+::-webkit-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 4px;
+  background: #f1e3b8;
+  opacity: 0;
+  cursor: default;
+  outline: none;
+  z-index: 1;
+  will-change: transform;
+}
+
+::-webkit-scrollbar-thumb:not(:hover) ::-webkit-scrollbar-thumb{
+  transition: opacity .1s .5s;
 }
 </style>
