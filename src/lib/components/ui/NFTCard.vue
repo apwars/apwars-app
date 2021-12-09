@@ -6,7 +6,7 @@
         class="cursor-pointer"
         @click="openInfo()"
         :src="collectible.image"
-        :src-lazy="collectible.image"
+        :lazy-src="collectible.image"
         :gradient="
           remaining === 0 && !myCollection
             ? `to top right, rgba(100,115,201,.10), rgba(25,32,72,.7)`

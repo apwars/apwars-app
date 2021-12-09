@@ -8,7 +8,7 @@
         <v-img
           :width="$vuetify.breakpoint.mobile ? 130 : 165"
           :src="infoWeapon.imageNft"
-          :src-lazy="infoWeapon.imageNft"
+          :lazy-src="infoWeapon.imageNft"
         >
           <template v-slot:placeholder>
             <v-row

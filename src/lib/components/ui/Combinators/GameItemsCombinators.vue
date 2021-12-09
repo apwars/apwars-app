@@ -8,7 +8,7 @@
         <v-img
           :width="$vuetify.breakpoint.mobile ? 130 : 165"
           :src="gameItems.image"
-          :src-lazy="gameItems.image"
+          :lazy-src="gameItems.image"
         >
           <template v-slot:placeholder>
             <v-row
