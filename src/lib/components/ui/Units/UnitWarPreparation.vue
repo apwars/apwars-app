@@ -64,15 +64,15 @@
 
           <div class="d-flex flex-column">
             <span>
-              Working time:
+              Working time: <br v-if="$vuetify.breakpoint.width < 401" />
               <amount
                 :amount="getGeneralConfig.blocks"
                 decimals="0"
                 formatted
               />
-              blocks</span
-            >
-            <span><time-block :blocks="getGeneralConfig.blocks"/></span>
+              blocks
+            </span>
+            <span><time-block :blocks="getGeneralConfig.blocks" /></span>
           </div>
         </div>
         <hr />
