@@ -97,7 +97,7 @@
       </v-row>
 
       <v-row v-else class="war-info mb-4">
-        <v-col cols="12" sm="9" md="6">
+        <v-col cols="12" sm="7" md="6">
           <h2>Resources</h2>
           <v-row class="mt-1 ml-2">
             <v-col cols="12" sm="6" lg="5" class="d-flex pa-0">
@@ -430,7 +430,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .resources {
   width: 60px;
   height: 60px;
@@ -519,8 +519,19 @@ export default {
   border: 1px solid #ffb800;
 }
 
-@media only screen and (max-width: 650px) {
-  .col-sm-9 {
+
+.col-sm-7 {
+  @media only screen and (max-width: 880px) {
+    flex: 0 0 65%;
+    max-width: 65%;
+  }
+
+  @media only screen and (max-width: 750px) {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+
+  @media only screen and (max-width: 650px) {
     flex: 0 0 85%;
     max-width: 85%;
   }
