@@ -1,6 +1,6 @@
 <template>
   <v-card elevation="0" class="ma-2 mt-0 text-center">
-    <v-img class="mx-auto" width="200" :src="collectible.image" :src-lazy="collectible.image">
+    <v-img class="mx-auto" width="200" :src="collectible.image" :lazy-src="collectible.image">
       <template v-slot:placeholder>
         <v-row
           class="fill-height ma-0"
