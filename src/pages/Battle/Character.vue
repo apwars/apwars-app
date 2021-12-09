@@ -1,6 +1,11 @@
 <template>
   <div class="background">
     <v-container>
+      <v-row dense no-gutters>
+        <v-col>
+          <Title text="Soldier" />
+        </v-col>
+      </v-row>
       <v-row>
         <v-col class="d-flex">
           <Button type="wprimary" text="Corps" class="mr-2" />
@@ -8,9 +13,9 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col md="7">
+        <v-col sm="12" md="7">
           <v-row>
-            <v-col class="d-flex">
+            <v-col class="d-flex flex-column flex-md-row">
               <div class="unit-image">
                 <v-img src="/images/troops/wwarrior-toon.png" />
               </div>
@@ -39,7 +44,6 @@
                   <img src="/images/icons/slot.png" />
                   <img src="/images/icons/slot.png" />
                   <img src="/images/icons/slot.png" />
-                  <img src="/images/icons/slot.png" />
                 </div>
               </div>
             </v-col>
@@ -47,18 +51,32 @@
         </v-col>
         <v-col md="5">
           <v-row>
-            <v-col md="4">
+            <v-col cols="4">
               <div class="icon-container mb-2">
                 <v-img src="/images/icons/sword.png" />
               </div>
+              <div class="force-group">
+                <div class="text-center mr-1">
+                  <PowerBar :maxScale="4" :value="2" />
+                  <img class="mt-1" height="12" src="/images/icons/axe.png" />
+                </div>
+                <div class="text-center mr-1">
+                  <PowerBar :maxScale="4" :value="1" />
+                  <img class="mt-1" height="14" src="/images/icons/lightning.png" />
+                </div>
+                <div class="text-center mr-1">
+                  <PowerBar :maxScale="4" :value="1" />
+                  <img class="mt-1" height="14" src="/images/icons/fist.png" />
+                </div>
+              </div>
             </v-col>
-            <v-col md="4">
+            <v-col cols="4">
               <div class="icon-container mb-2">
                 <v-img src="/images/icons/patent.png" />
               </div>
               <Button text="Unlock" type="wsecondary" isBlock />
             </v-col>
-            <v-col md="4">
+            <v-col cols="4">
               <div class="icon-container mb-2">
                 <v-img src="/images/icons/anvil.png" />
               </div>
@@ -68,7 +86,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col>
+        <v-col cols="12" md="4">
           <div class="d-flex">
             <div class="stat-container text-medium">Strenght</div>
             <ForceMeter type="flat" :maxScale="5" :value="1" />
@@ -85,7 +103,7 @@
             <div class="text-medium ml-2">20/50</div>
           </div>
         </v-col>
-        <v-col class="d-flex"
+        <v-col cols="12" md="4" class="d-flex"
           ><div class="mr-2">
             <div class="status-description">
               <div class="label text-large">Courage</div>
@@ -102,7 +120,7 @@
             </div>
           </div></v-col
         >
-        <v-col class="d-flex"
+        <v-col cols="12" md="4" class="d-flex"
           ><div class="mr-2">
             <div class="status-description">
               <div class="label text-large">Energy</div>
@@ -126,7 +144,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col md="4">
+        <v-col cols="12" md="4">
           <div class="stat-value text-large">Statistics</div>
         </v-col>
         <v-col>
@@ -144,11 +162,16 @@ import { mapMutations } from "vuex";
 import Button from "@/lib/components/ui/Buttons/Button";
 import ForceMeter from "@/lib/components/ui/ForceMeter";
 import Progress from "@/lib/components/ui/Progress";
+import Title from "@/lib/components/ui/Title";
+import PowerBar from "@/lib/components/ui/PowerBar";
+
 export default {
   components: {
     Button,
     ForceMeter,
     Progress,
+    Title,
+    PowerBar
   },
   methods: {
     ...mapMutations({
@@ -187,8 +210,12 @@ export default {
   line-height: 37px;
 }
 .unit-image {
-  max-width: 240px;
-  margin-right: 24px;
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 768px) {
+    margin-right: 24px;
+    max-width: 240px;
+  }
 }
 .unit-data {
   width: 100%;
@@ -221,5 +248,9 @@ export default {
 }
 .stat-container {
   width: 88px;
+}
+.force-group {
+  display: flex;
+  justify-content: center;
 }
 </style>
