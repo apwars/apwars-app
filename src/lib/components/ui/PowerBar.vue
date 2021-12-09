@@ -4,10 +4,8 @@
       <div class="power-unit-active"></div>
       <div class="power-unit-active"></div>
       <div class="power-unit-active"></div>
-      <div class="power-unit-active"></div>
     </div>
     <div class="active" :style="`--percent: ${percent()}`">
-      <div class="power-unit"></div>
       <div class="power-unit"></div>
       <div class="power-unit"></div>
       <div class="power-unit"></div>
