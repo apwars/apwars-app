@@ -32,7 +32,7 @@ export default {
         "97": "0xd3fE14C58b1d284aF14Bf61dec20a7727F22f1cc",
       },
       treasureHuntId: {
-        "56": "2",
+        "56": "1",
         "97": "0",
       },
     };
