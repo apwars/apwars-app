@@ -49,10 +49,9 @@
                 <v-col
                   v-for="item in itemsList"
                   :key="item.id"
-                  sm="12"
+                  cols="12"
                   md="6"
-                  class="px-1"
-                  :class="$vuetify.breakpoint.smAndUp ? 'd-flex' : ''"
+                  :class="$vuetify.breakpoint.smAndUp ? 'd-flex px-1' : ''"
                 >
                   <nft-item :collectible="item" />
                   <div class="description">
@@ -183,8 +182,7 @@ export default {
 
 ::-webkit-scrollbar {
   width: 3px;
-  /* display: none; */
-  background: #111!important;
+  background: #222222!important;
 }
 
 ::-webkit-scrollbar-thumb {

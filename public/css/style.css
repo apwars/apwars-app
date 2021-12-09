@@ -1,7 +1,6 @@
 ::-webkit-scrollbar {
   width: 8px;
-  /* display: none; */
-  background: #111!important;
+  background: #111111!important;
 }
 
 ::-webkit-scrollbar-thumb {
