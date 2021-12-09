@@ -2,7 +2,23 @@
   <div>
     <div class="d-flex justify-center" v-bind:class="{ disabled: info.disabled }">
       <div class="align-self-center">
-        <v-img width="160" :src="`/images/troops/${info.name}.png`" />
+        <v-img
+          width="160"
+          :src="`/images/troops/${info.name}.png`"
+          :lazy-src="`/images/troops/${info.name}.png`">
+          <template v-slot:placeholder>
+            <v-row
+              class="fill-height ma-0"
+              align="center"
+              justify="center"
+            >
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
       </div>
       <div class="ml-1 align-self-center">
         <div :class="$vuetify.breakpoint.mobile ? 'stats mt-2' : 'stats mt-6'">Stats</div>

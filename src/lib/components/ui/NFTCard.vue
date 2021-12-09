@@ -6,12 +6,26 @@
         class="cursor-pointer"
         @click="openInfo()"
         :src="collectible.image"
+        :src-lazy="collectible.image"
         :gradient="
           remaining === 0 && !myCollection
             ? `to top right, rgba(100,115,201,.10), rgba(25,32,72,.7)`
             : ''
         "
-      ></v-img>
+      >
+        <template v-slot:placeholder>
+          <v-row
+            class="fill-height ma-0"
+            align="center"
+            justify="center"
+          >
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+      </v-img>
       <div class="mt-1">
         <game-text>{{ collectible.title }}</game-text>
       </div>

@@ -8,7 +8,21 @@
         <v-img
           :width="$vuetify.breakpoint.mobile ? 130 : 165"
           :src="gameItems.image"
-        />
+          :src-lazy="gameItems.image"
+        >
+          <template v-slot:placeholder>
+            <v-row
+              class="fill-height ma-0"
+              align="center"
+              justify="center"
+            >
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
       </div>
       <div v-if="isLoadingUnit" class="ml-1 align-self-start">
         <div class="title">Necessary Resources</div>
@@ -28,7 +42,7 @@
             :symbol="tokenAName"
           />
         </div>
-        <div class="d-flex mt-1 qty">
+        <div class="d-flex align-center mt-1 qty">
           <v-img
             class="mr-1"
             max-width="26px"
@@ -59,7 +73,7 @@
 
           <div class="d-flex flex-column">
             <span class="d-flex align-items-center justify-content-justify">
-              <span>
+              <span style="white-space: nowrap;">
                 Working time:
                 <amount
                   :amount="getGeneralConfig.blocks"
@@ -69,18 +83,17 @@
                 blocks
               </span>
             </span>
-            <span><time-block :blocks="getGeneralConfig.blocks"/></span>
+            <span style="white-space: nowrap;"><time-block :blocks="getGeneralConfig.blocks"/></span>
           </div>
         </div>
         <hr />
         <div class="d-flex mt-1 qty" v-if="gameItems.image">
           <img
             class="mr-1"
-            max-width="30px"
             height="40px"
             :src="gameItems.combinators.warPreparation.image"
           />
-          <span style="margin-top: -5px">
+          <span style="margin-top: -5px; white-space: nowrap;">
             Item conquered: <br />
             <amount
               :amount="getGameItemCConfig.amount"

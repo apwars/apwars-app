@@ -1,8 +1,8 @@
 <template>
-  <v-tooltip top>
+  <v-tooltip :top="!unitsColor" :right="unitsColor">
     <template v-slot:activator="{ on, attrs }">
       <span class="amount" v-bind="attrs" v-on="isTooltip ? on : false">
-        <span>
+        <span class="hide-text">
           <img
             v-if="isIcon"
             :src="`/images/${symbol.toLowerCase()}.png`"
@@ -10,13 +10,13 @@
             :alt="symbol"
             class="image-symbol"
           />
-          <span v-if="size" :style="`font-size: ${size}px`"> {{ computedAmount }} </span>
-          <span v-else> {{ computedAmount }} </span>
-          <span v-if="symbol"> {{ symbol }} </span>
+            <span v-if="size" :style="`font-size: ${size}px`"> {{ computedAmount }} </span>
+            <span v-else> {{ computedAmount }} </span>
+            <span v-if="symbol"> {{ symbol }} </span>
         </span>
       </span>
     </template>
-    <span>{{ tooltipAmount }}</span>
+    <span style="color: #FFB800">{{ tooltipAmount }}</span>
   </v-tooltip>
 </template>
 
@@ -24,12 +24,13 @@
 import Convert from '@/lib/helpers/Convert';
 
 export default {
-  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size'],
+  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'unitsColor'],
 
   computed: {
     computedAmount() {
       let numberAmount = this.amount || '0';
       numberAmount = this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
+
       if (this.compact !== undefined) {
         numberAmount = Convert.compactNumber(numberAmount, this.getDecimals);
       } else {
@@ -42,9 +43,19 @@ export default {
       }
       return numberAmount;
     },
+    
     tooltipAmount() {
       let numberAmount = this.amount || '0';
-      return this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
+      numberAmount = this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
+      
+      if (this.compact === undefined) {
+        numberAmount = Convert.compactNumber(numberAmount, this.getDecimals);
+      } else {
+        numberAmount = Convert.roundDown(numberAmount, this.getDecimals);
+        numberAmount = Convert.formatString(numberAmount, this.getDecimals);
+      }
+
+      return numberAmount;
     },
     isTooltip() {
       return this.tooltip !== undefined;
@@ -66,5 +77,9 @@ export default {
 .image-symbol {
   vertical-align: bottom;
   margin-left: 2px !important;
+}
+
+.hide-text {
+  white-space: nowrap;
 }
 </style>

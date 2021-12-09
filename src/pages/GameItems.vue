@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <div class="bg-library">
@@ -52,12 +51,14 @@
                   :key="item.id"
                   sm="12"
                   md="6"
+                  class="px-1"
                   :class="$vuetify.breakpoint.smAndUp ? 'd-flex' : ''"
                 >
                   <nft-item :collectible="item" />
                   <div class="description">
                     <game-text>{{ item.title }}</game-text>
                     <p
+                    class="hide-text"
                     :style="$vuetify.breakpoint.mdAndUp ?
                       'font-size: 12px' : 'font-size: 13px; text-align: justify;'"
                     v-html="item.description" />
@@ -153,7 +154,7 @@ export default {
         this.loading = false;
       }
     },
-},
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -161,6 +162,7 @@ export default {
   background-image: url('/images/black-market/Library.png');
   background-size: cover;
 }
+
 .description {
   padding-right: 48px;
   @media only screen and (max-width: 1264px) {
@@ -169,5 +171,13 @@ export default {
   @media only screen and (max-width: 599px) {
     text-align: center !important;
   }
+}
+
+.hide-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 17;
+  -webkit-box-orient: vertical;
 }
 </style>

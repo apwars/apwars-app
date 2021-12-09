@@ -5,8 +5,8 @@
       v-if="isConnected && !isLoading"
     >
       <div v-if="type === 'weapons'">
-        <v-row :no-gutters="$vuetify.breakpoint.mobile">
-          <v-col cols="12" lg="3">
+        <v-row :no-gutters="$vuetify.breakpoint.smAndDown">
+          <v-col cols="12" md="3">
             <v-select
               v-model="select.teams"
               :items="filter.teamDesc"
@@ -18,7 +18,7 @@
             >
             </v-select>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" md="3">
             <v-select
               v-model="select.tiers"
               :items="filter.tierDesc"
@@ -30,7 +30,7 @@
             >
             </v-select>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" md="3">
             <v-select
               v-model="select.races"
               :items="filter.raceDesc"
@@ -42,7 +42,7 @@
             >
             </v-select>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" md="3">
             <v-select
               v-model="select.names"
               :items="filter.name"

@@ -8,36 +8,52 @@
         <v-img
           :width="$vuetify.breakpoint.mobile ? 130 : 165"
           :src="infoWeapon.imageNft"
-        />
+          :src-lazy="infoWeapon.imageNft"
+        >
+          <template v-slot:placeholder>
+            <v-row
+              class="fill-height ma-0"
+              align="center"
+              justify="center"
+            >
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
       </div>
       <div v-if="isLoadingUnit" class="ml-1 align-self-start info-container">
         <div class="title">Necessary Resources</div>
-        <div class="d-flex qty ml-at-mobile">
+        <div class="d-flex align-center qty ml-at-mobile">
           <v-img class="mr-1"
             :max-height="$vuetify.breakpoint.mobile ? 25 : 33"
             :max-width="$vuetify.breakpoint.mobile ? 28 : 36"
             src="/images/wcourage.png" />
-          <div :class="$vuetify.breakpoint.lgAndUp ? 'mt-token-text' : ''">
+          <div>
             <amount
-            :amount="getTokenAConfig.amount"
-            decimals="2"
-            compact
-            symbol="wCOURAGE"/>
+              :amount="getTokenAConfig.amount"
+              decimals="2"
+              compact
+              symbol="wCOURAGE" />
           </div>
         </div>
-        <div class="d-flex qty ml-at-mobile">
+        <div class="d-flex align-cente qty ml-at-mobile mt-1">
           <v-img
             style="margin-left: 0.2rem;"
-            class="mr-1 mt-1"
+            class="mr-1"
             :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
             :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
             :src="`/images/icons/coins/smallers/${unit.name}.png`"
           />
-          <div class="mt-1">
+          <div>
             <amount
               :amount="getTokenBConfig.amount"
               decimals="2"
               compact
+              tooltip
+              :unitsColor="true"
               :symbol="unit.name"/>
           </div>
         </div>
@@ -700,10 +716,6 @@ export default {
   .current-price {
     font-size: 14px;
   }
-}
-
-.mt-token-text {
-  margin-top: 0.3rem;
 }
 
 @media only screen and (max-width: 380px) {

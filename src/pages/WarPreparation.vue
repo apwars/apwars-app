@@ -11,28 +11,14 @@
       </v-container>
       <div v-if="tab === 0" class="d-flex text-center justify-center">
         <v-img
-          v-if="$vuetify.breakpoint.mobile"
-          class="mx-auto"
-          max-width="90%"
-          src="/images/war-preparation/weapon-research.png"
-        />
-        <v-img
-          v-else
-          max-width="610px"
+          class="mx-auto weapon-research-image"
           src="/images/war-preparation/weapon-research.png"
         />
       </div>
 
       <div v-else class="d-flex text-center justify-center">
         <v-img
-          v-if="$vuetify.breakpoint.mobile"
-          class="mx-auto"
-          max-width="90%"
-          src="/images/war-preparation/spendables-research.png"
-        />
-        <v-img
-          v-else
-          max-width="610px"
+          class="mx-auto weapon-research-image"
           src="/images/war-preparation/spendables-research.png"
         />
       </div>
@@ -118,7 +104,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .bg-war-preparation {
   background-image: url("/images/war-preparation/bg-war-preparation.png");
   background-size: cover;
@@ -135,6 +121,24 @@ export default {
   .bg-war-preparation {
     background-size: contain;
     background-position: top;
+  }
+}
+
+.weapon-research-image {
+  @media only screen and (min-width: 0px) {
+    max-width: 90%;
+  }
+
+  @media only screen and (min-width: 600px) {
+    max-width: 70%;
+  }
+
+  @media only screen and (min-width: 960px) {
+    max-width: 55%;
+  }
+
+  @media only screen and (min-width: 1264px) {
+    max-width: 610px;
   }
 }
 </style>
