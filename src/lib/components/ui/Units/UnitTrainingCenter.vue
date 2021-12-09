@@ -6,21 +6,21 @@
     >
       <div class="align-self-center">
         <v-img
-          :width="$vuetify.breakpoint.mobile ? 130 : 160"
-          :height="$vuetify.breakpoint.mobile ? 250 : 307.47"
+          :width="$vuetify.breakpoint.sm ? 130 : 160"
+          :height="$vuetify.breakpoint.sm ? 250 : 307.47"
           :src="`/images/troops/${unit.combinators.trainingCenter.name}.png`"
         />
       </div>
 
       <div v-if="isLoadingUnit" class="ml-1 mt-1 align-self-start">
         <div class="title">Necessary Resources</div>
-        <div class="d-flex qty">
+        <div class="d-flex align-center qty">
           <v-img class="mr-1"
             :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
             :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
             src="/images/wcourage.png"
             style="margin-left: -4px"/>
-          <div class="mt-token-text">
+          <div class="">
             <amount
             :amount="getTokenAConfig.amount"
             decimals="0"
@@ -28,7 +28,7 @@
           />
           </div>
         </div>
-        <div class="d-flex mt-1 qty">
+        <div class="d-flex align-center mt-1 qty">
           <v-img
             class="mr-1"
             :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
@@ -36,7 +36,7 @@
             :src="`/images/icons/coins/smallers/${unit.name}.png`"
             style="margin-left: -2px"
           />
-          <div class="mt-token-text">
+          <div>
             <amount
             :amount="getTokenBConfig.amount"
             decimals="0"
@@ -698,9 +698,5 @@ export default {
   .current-price {
     font-size: 14px;
   }
-}
-
-.mt-token-text {
-  margin-top: 0.3rem;
 }
 </style>

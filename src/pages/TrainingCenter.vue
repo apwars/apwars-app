@@ -11,14 +11,7 @@
       </v-container>
       <div class="d-flex text-center justify-center">
         <v-img
-          v-if="$vuetify.breakpoint.mobile"
-          class="mx-auto"
-          max-width="90%"
-          src="/images/training-center/training-process.png"
-        />
-        <v-img
-          v-else
-          max-width="610px"
+          class="mx-auto training-process-image"
           src="/images/training-center/training-process.png"
         />
       </div>
@@ -82,7 +75,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .bg-training-center {
   background-image: url("/images/training-center/bg-training-center.png");
   background-size: cover;
@@ -99,6 +92,24 @@ export default {
   .bg-training-center {
     background-size: contain;
     background-position: top;
+  }
+}
+
+.training-process-image {
+  @media only screen and (min-width: 0px) {
+    max-width: 90%;
+  }
+
+  @media only screen and (min-width: 600px) {
+    max-width: 70%;
+  }
+
+  @media only screen and (min-width: 960px) {
+    max-width: 55%;
+  }
+
+  @media only screen and (min-width: 1264px) {
+    max-width: 610px;
   }
 }
 </style>
