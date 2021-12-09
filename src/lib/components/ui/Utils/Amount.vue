@@ -1,8 +1,8 @@
 <template>
-  <v-tooltip :top="!unitsColor" :right="unitsColor">
+  <v-tooltip :top="!unitsColor" :right="unitsColor" color="#111111">
     <template v-slot:activator="{ on, attrs }">
       <span class="amount" v-bind="attrs" v-on="isTooltip ? on : false">
-        <span class="hide-text">
+        <span :style="$vuetify.breakpoint.lgAndUp ? 'white-space: nowrap;': ''">
           <img
             v-if="isIcon"
             :src="`/images/${symbol.toLowerCase()}.png`"
@@ -43,7 +43,7 @@ export default {
       }
       return numberAmount;
     },
-    
+
     tooltipAmount() {
       let numberAmount = this.amount || '0';
       numberAmount = this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
@@ -73,13 +73,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .image-symbol {
   vertical-align: bottom;
   margin-left: 2px !important;
-}
-
-.hide-text {
-  white-space: nowrap;
 }
 </style>
