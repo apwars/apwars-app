@@ -15,11 +15,11 @@
 
     <v-container>
       <v-row v-if="$vuetify.breakpoint.name === 'xs'" class="war-info mb-4 text-center">
-        <v-col cols="12" md="6" xm="12" class="px-0">
+        <v-col cols="12" class="px-0">
           <h2>Resources</h2>
           <v-row class="mt-1">
-            <v-col class="d-flex py-0 justify-begin">
-              <img src="/images/wgold.png" class="resources ml-0 mr-1" />
+            <v-col cols="12" class="d-flex py-0 justify-begin">
+              <img src="/images/wgold.png" class="resources mx-0 mr-1" />
               <div class="text-left">
                 <amount
                   v-if="isConnected"
@@ -32,12 +32,8 @@
                 <h4>wGOLD</h4>
               </div>
             </v-col>
-          </v-row>
-        </v-col>
 
-        <v-col cols="12" md="6" xm="12">
-          <v-row>
-            <v-col class="d-flex justify-begin px-0">
+            <v-col color="12" class="d-flex justify-begin py-0">
               <img src="/images/wcourage.png" class="resources mx-0 mr-1" />
               <div class="text-left">
                 <amount
@@ -54,7 +50,7 @@
           </v-row>
         </v-col>
 
-        <v-col cols="12" md="3" xm="12" class="px-0 ">
+        <v-col cols="12" md="3" class="px-0 ">
           <h2>Game Items</h2>
           <v-row class="mt-1 justify-space-between">
             <v-col class="d-flex justify-begin" cols="12" md="3" xm="12">
@@ -67,7 +63,7 @@
           </v-row>
         </v-col>
 
-        <v-col cols="12" md="3" xm="12" class="mb-4 d-flex justify-center">
+        <v-col cols="12" md="3" class="mb-4 d-flex justify-center">
           <v-row class="mt-1 justify-space-between d-block">
             <a class="router-link" href="https://exchange.apwars.farm/">
               <wButton width="250px" class="d-flex  justify-center mt-">
@@ -101,10 +97,10 @@
       </v-row>
 
       <v-row v-else class="war-info mb-4">
-        <v-col cols="12" md="6">
+        <v-col cols="12" sm="9" md="6">
           <h2>Resources</h2>
-          <v-row class="mt-1 ml-4">
-            <div class="d-flex">
+          <v-row class="mt-1 ml-2">
+            <v-col cols="12" sm="6" lg="5" class="d-flex pa-0">
               <img src="/images/wgold.png" class="resources" />
               <div class="text-center">
                 <amount
@@ -117,8 +113,8 @@
                 />
                 <h4>wGOLD</h4>
               </div>
-            </div>
-            <div class="d-flex ml-4">
+            </v-col>
+            <v-col cols="12" sm="6" lg="5" class="d-flex pa-0">
               <img src="/images/wcourage.png" class="resources" />
               <div class="text-center">
                 <amount
@@ -131,11 +127,11 @@
                 />
                 <h4>wCOURAGE</h4>
               </div>
-            </div>
+            </v-col>
           </v-row>
         </v-col>
 
-        <v-col cols="12" sm="5" md="3">
+        <v-col cols="12" sm="6" md="3">
           <h2>Game Items</h2>
           <v-row class="mt-1 ml-4 justify-space-between">
             <div class="d-flex">
@@ -147,7 +143,7 @@
             </div>
           </v-row>
         </v-col>
-        <v-col cols="12" sm="4" md="3" class="mb-4">
+        <v-col cols="12" sm="6" md="3" class="mb-4">
           <v-row class="mt-1 ml-4 justify-space-between d-block">
             <a class="router-link" href="https://exchange.apwars.farm/">
               <wButton width="180px" class="d-flex align-self-center mt-1">
@@ -521,5 +517,12 @@ export default {
   height: 98px;
   border-radius: 8px;
   border: 1px solid #ffb800;
+}
+
+@media only screen and (max-width: 650px) {
+  .col-sm-9 {
+    flex: 0 0 85%;
+    max-width: 85%;
+  }
 }
 </style>
