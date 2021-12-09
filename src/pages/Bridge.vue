@@ -20,9 +20,8 @@
         <v-col cols="12">
           <p>
             The bridge is what makes the bridge (tell me something I don't know)
-            between the off-chain and on-chain features of the game. It is by
-            using the bridge that we will have the opportunity to reduce fees
-            while playing.
+            between the off-chain and on-chain features of the game. By using
+            the bridge, fees to play will be reduced fees while playing.
           </p>
         </v-col>
       </v-row>
@@ -102,7 +101,8 @@
                 type="info"
                 outlined
               >
-                You can select up to 5 Tokens or Game Items to single transfer
+                You can select up to {{ limitSelectList }} Tokens or Game Items
+                to single transfer
               </v-alert>
             </v-col>
           </v-row>
@@ -115,6 +115,7 @@
                 flat
                 color="#FFEEBC"
                 v-model="typeTransfer"
+                @change="clearBridgeList"
                 class="ml-2"
               ></v-switch>
               <span class="font-weight-bold white--text text-h6">
@@ -123,7 +124,7 @@
             </v-col>
             <v-col cols="12" md="4">
               <div class="text-center text-h6 font-weight-bold">
-                You’ve already selected {{ selectList }}/{{ limitSelectList }}
+                You selected {{ selectList }}/{{ limitSelectList }}
               </div>
             </v-col>
             <v-col cols="12" md="4">
@@ -155,11 +156,38 @@
                   {{ item.name }}
                 </div>
                 <div v-if="item.isApproveOtto" class="text-caption">
-                  Fee: 1% / Minimum transfer: {{ item.minimumPackage }} <br />
-                  Pack amount: {{ item.minimumPackage }}
+                  Fee:
+                  <amount :amount="item.feeUnit" decimals="2" formatted />
+                  (units per pack)
+                  <br />
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <span v-bind="attrs" v-on="on">
+                        Off-chain limit:
+                      </span>
+                    </template>
+                    <span>
+                      The off-chain limit is the maximum amount you can supply
+                      in off-chain, <br />
+                      if you already have this amount it is not possible to send
+                      more units.
+                    </span>
+                  </v-tooltip>
+
+                  <amount
+                    :amount="item.offChainLimit"
+                    decimals="2"
+                    formatted
+                  /><br />
+                  Pack amount:
+                  <amount
+                    :amount="item.minimumPackage"
+                    decimals="2"
+                    formatted
+                  />
                 </div>
                 <div v-else class="text-caption red--text font-weight-bold">
-                  Requires guardian approval: <br />
+                  Requires guardian's approval: <br />
                   Otto Dalgor
                 </div>
                 <div class="input-bridge">
@@ -239,13 +267,9 @@
             single-expand
           >
             <template v-slot:[`item.tx`]="{ item }">
-              <a
-                v-if="item.type.search('deposit') === 0"
-                :href="`https://bscscan.com/tx/${item.tx}`"
-              >
+              <a :href="`${urlTx[networkInfo.id]}${item.tx}`">
                 Tx: {{ item.tx.slice(0, 15) }}...
               </a>
-              <div v-else>Hash: {{ item.tx.slice(0, 15) }}...</div>
             </template>
 
             <template v-slot:[`item.type`]="{ item }">
@@ -424,6 +448,10 @@ export default {
         depositERC1155: "Deposit Game Item",
         depositERC20: "Deposit Token",
       },
+      urlTx: {
+        "56": "https://bscscan.com/tx/",
+        "97": "https://testnet.bscscan.com/tx/",
+      },
     };
   },
 
@@ -492,9 +520,18 @@ export default {
           item.balanceFormattedTo = item.balanceTo;
         }
 
-        item.packMax = parseInt(
+        const packOffChainLimit = parseInt(
+          item.offChainLimit / item.minimumPackage
+        );
+
+        const balanceOffChainLimit = parseInt(
           item.balanceFormattedFrom / item.minimumPackage
         );
+
+        item.packMax =
+          balanceOffChainLimit > packOffChainLimit
+            ? packOffChainLimit
+            : balanceOffChainLimit;
 
         return item;
       });
@@ -611,15 +648,28 @@ export default {
           (itemFilter) => itemFilter.packQuantity > 0
         ).length;
         item.amountFrom = item.packQuantity * item.minimumPackage;
-        item.amountTo = item.packQuantity * item.minimumPackage;
+        item.amountTo = item.amountFrom - item.feeUnit * item.packQuantity;
 
         if (
           !item.isApproveOtto ||
-          (this.selectList >= this.limitSelectList &&
-            item.packQuantity === 0) ||
+          this.selectList > this.limitSelectList ||
           item.balanceFormattedFrom === 0
         ) {
           item.disabled = true;
+        }
+
+        if (this.selectList >= this.limitSelectList) {
+          this.bridgeList = this.bridgeList.map((list) => {
+            if (list.packQuantity === 0) {
+              list.disabled = true;
+            }
+            return list;
+          });
+        } else {
+          this.bridgeList = this.bridgeList.map((list) => {
+            list.disabled = false;
+            return list;
+          });
         }
         this.$forceUpdate();
       });
@@ -651,6 +701,14 @@ export default {
       this.walletsList = await this.getWallets();
       await this.addBridgeList();
       this.history = await this.getHistory();
+    },
+
+    clearBridgeList() {
+      this.selectList = 0;
+      this.bridgeList = this.bridgeList.map((list) => {
+        list.packQuantity = 0;
+        return list;
+      });
     },
 
     async depositERC20() {
@@ -813,11 +871,23 @@ export default {
           );
         });
 
-        confirmTransaction.on("receipt", async () => {
-          await this.initStateBridgeList();
+        confirmTransaction.on("receipt", async (receipt) => {
+          try {
+            const bridgeController = new BridgeController();
+            await bridgeController.claimSaveTx(receipt.transactionHash);
+            await this.initStateBridgeList();
 
-          this.isLoadingTransfer = false;
-          ToastSnackbar.success("Transfer successfully sent");
+            this.isLoadingTransfer = false;
+            ToastSnackbar.success("Transfer successfully sent");
+          } catch (error) {
+            this.isLoadingTransfer = false;
+            if (error.status) {
+              return ToastSnackbar.error(error.code);
+            }
+            ToastSnackbar.error(
+              "An error has occurred while to signing contract"
+            );
+          }
         });
       } catch (error) {
         this.isLoadingTransfer = false;
@@ -872,11 +942,23 @@ export default {
           );
         });
 
-        confirmTransaction.on("receipt", async () => {
-          await this.initStateBridgeList();
+        confirmTransaction.on("receipt", async (receipt) => {
+          try {
+            const bridgeController = new BridgeController();
+            await bridgeController.claimSaveTx(receipt.transactionHash);
+            await this.initStateBridgeList();
 
-          this.isLoadingTransfer = false;
-          ToastSnackbar.success("Transfer successfully sent");
+            this.isLoadingTransfer = false;
+            ToastSnackbar.success("Transfer successfully sent");
+          } catch (error) {
+            this.isLoadingTransfer = false;
+            if (error.status) {
+              return ToastSnackbar.error(error.code);
+            }
+            ToastSnackbar.error(
+              "An error has occurred while to signing contract"
+            );
+          }
         });
       } catch (error) {
         this.isLoadingTransfer = false;
@@ -893,19 +975,25 @@ export default {
         this.addresses.wGOLD,
         "wGOLD",
         "/images/wGOLD.png",
-        1000
+        1000,
+        10000,
+        100
       );
       await this.addERC20BridgeList(
         this.addresses.wCOURAGE,
         "wCOURAGE",
         "/images/wCOURAGE.png",
-        1000
+        1000,
+        10000,
+        100
       );
       await this.addERC20BridgeList(
         this.addresses.wLAND,
         "wLAND",
         "/images/wLAND.png",
-        1000
+        1000,
+        10000,
+        100
       );
 
       // ERC1155
@@ -913,35 +1001,52 @@ export default {
         49,
         "Worker",
         "/images/nfts/worker.png",
-        10
+        10,
+        100,
+        1
       );
       await this.addERC1155BridgeList(
         39,
         "Simple Shield",
         "/images/nfts/weapon-simple-shield.png",
-        10
+        10,
+        100,
+        1
       );
       await this.addERC1155BridgeList(
         63,
         "Simple Archery",
         "/images/nfts/weapon-simple-archery.png",
-        10
+        10,
+        100,
+        1
       );
       await this.addERC1155BridgeList(
         64,
         "Simple Spear",
         "/images/nfts/weapon-simple-spear.png",
-        10
+        10,
+        100,
+        1
       );
       await this.addERC1155BridgeList(
         65,
         "Simple Potion",
         "/images/nfts/weapon-simple-potion.png",
-        10
+        10,
+        100,
+        1
       );
     },
 
-    async addERC20BridgeList(address, name, image, minimumPackage) {
+    async addERC20BridgeList(
+      address,
+      name,
+      image,
+      minimumPackage,
+      offChainLimit,
+      feeUnit
+    ) {
       const isItem = this.bridgeList.find((list) => list.name === name);
       if (isItem !== undefined) {
         return;
@@ -963,10 +1068,19 @@ export default {
         minimumPackage: minimumPackage,
         isApproveOtto: isApproveOtto,
         packQuantity: 0,
+        offChainLimit: offChainLimit,
+        feeUnit: feeUnit,
       });
     },
 
-    async addERC1155BridgeList(id, name, image, minimumPackage) {
+    async addERC1155BridgeList(
+      id,
+      name,
+      image,
+      minimumPackage,
+      offChainLimit,
+      feeUnit
+    ) {
       const isItem = this.bridgeList.find((list) => list.name === name);
       if (isItem !== undefined) {
         return;
@@ -989,24 +1103,26 @@ export default {
         minimumPackage: minimumPackage,
         isApproveOtto: isApproveOtto,
         packQuantity: 0,
+        offChainLimit: offChainLimit,
+        feeUnit: feeUnit,
       });
     },
 
     hintFrom(value) {
       const amount = this.typeTransfer ? value : Convert.formatString(value, 2);
       if (this.bridgeNetwork.from.type === "onChain") {
-        return `Balance in BSC Network: ${amount}`;
+        return `Balance in the BSC Network: ${amount}`;
       } else {
-        return `Balance in APWars Off-chain: ${amount}`;
+        return `Balance in the APWars Off-chain: ${amount}`;
       }
     },
 
     hintTo(value) {
       const amount = this.typeTransfer ? value : Convert.formatString(value, 2);
       if (this.bridgeNetwork.to.type === "onChain") {
-        return `Balance in BSC Network: ${amount}`;
+        return `Balance in the BSC Network: ${amount}`;
       } else {
-        return `Balance in APWars Off-chain: ${amount}`;
+        return `Balance in the APWars Off-chain: ${amount}`;
       }
     },
   },

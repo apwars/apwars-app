@@ -39,6 +39,14 @@ export default class BridgeController {
     }
   }
 
+  claimSaveTx(tx) {
+    try {
+      return this.base._post(`/bridge/claim/${tx}/tx`);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   getHistory(account, pagination) {
     pagination = pagination || { limit: 10, skip: 0 };
     try {
@@ -47,5 +55,4 @@ export default class BridgeController {
       throw error;
     }
   }
-
 }
