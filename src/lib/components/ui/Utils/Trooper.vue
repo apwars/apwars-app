@@ -43,19 +43,18 @@
           </div>
         </div>
 
-        <div v-if="$vuetify.breakpoint.mobile"
+        <div v-if="$vuetify.breakpoint.smAndDown"
           class="d-flex flex-column justify-center mt-2">
           <v-img
             class="mb-1"
             max-width="86"
-            max-height="50"
             :src="`/images/tier-${info.tier}.png`"
           />
           <a
             :href="`${redirectTo}=${info.contractAddress[this.networkInfo.id]}`">
             <wButton
               style="color: #fff"
-              width="70px" height="40">
+              width="80px" height="40">
               <div class="d-flex justify-center">
                 <img
                   src="/images/buttons/btn-icon-buy.svg"
@@ -72,14 +71,13 @@
           class="d-flex justify-center mt-3">
           <v-img
             class="mr-1"
-            max-width="80"
-            max-height="40"
+            max-width="90"
             :src="`/images/tier-${info.tier}.png`"
           />
           <a :href="`${redirectTo}=${info.contractAddress[this.networkInfo.id]}`">
             <wButton
               style="margin-top: -2px; color: #fff"
-              width="50px" height="40">
+              width="75px" height="55">
               <div class="d-flex justify-center">
                 <img
                   src="/images/buttons/btn-icon-buy.svg"
