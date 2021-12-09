@@ -31,7 +31,6 @@
               class="race-image"
               src="/images/troops/wwizard-portrait.png"
               alt="Humans"
-              width="240"
               @click="selectedRace = 1"
             >
             </v-img>
@@ -48,7 +47,6 @@
               class="race-image"
               src="/images/troops/wferal-spirit-portrait.png"
               alt="Elves"
-              width="240"
               @click="selectedRace = 4"
             >
             </v-img>
@@ -67,7 +65,6 @@
               class="race-image invert-image"
               src="/images/troops/wshaman-portrait.png"
               alt="Orcs"
-              width="240"
               @click="selectedRace = 2"
             >
             </v-img>
@@ -85,7 +82,6 @@
               class="race-image invert-image"
               src="/images/troops/wwitch-portrait.png"
               alt="Undeads"
-              width="240"
               @click="selectedRace = 3"
             >
             </v-img>
@@ -103,30 +99,16 @@
                 md="6"
                 class="d-flex px-0"
               >
-                <div class="text-center">
-                  <v-img width="180" :src="`/images/troops/${unit.name.toLowerCase()}-portrait.png`">
-                    <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-progress-circular
-                          indeterminate
-                          color="#ffeebc lighten-5"
-                        ></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
+                <div class="image-container">
+                  <img :src="`/images/troops/${unit.name.toLowerCase()}-portrait.png`" :alt="unit.name" />
                 </div>
 
                 <div class="ml-1">
                   <span
-                    class="d-block"
-                    style="color: #FFB800; font-size: 17px;"
+                    class="d-block unit-name"
                     >{{ unit.displayName }}</span
                   >
-                  <span class="d-block mt-1">Units enlisted: 105k</span>
+                  <span class="d-block mt-1">Enlisted units: 105k</span>
                   <span class="d-block">Deads units: 80k</span>
                   <span class="d-block mb-2">Survivors: 25k</span>
                   <span class="d-block" style="color: #FFB800;"
@@ -154,9 +136,9 @@
                     :src="`/images/weapons/${weapon.icon}.png`"
                   />
                   <div style="font-size: 14px">
-                    <span class="d-block">{{ weapon.title }}</span>
+                    <span class="d-block bold">{{ weapon.title }}</span>
                     <span class="d-block">Global: 1,5M</span>
-                    <span class="d-block">My troops: 10,4K</span>
+                    <span class="d-block">My Qty: 10,4K</span>
                   </div>
                 </div>
               </v-col>
@@ -184,7 +166,7 @@
                 <v-img src="/images/battle/treasure.png" />
               </div>
             </div>
-            <Button type="wprimary" text="Go to Monster Battle" :handleClick="goToMonsterBattle" />
+            <Button type="wprimary" text="Go to the Monster Battle" :handleClick="goToMonsterBattle" />
           </v-col>
         </v-row>
 
@@ -195,29 +177,37 @@
                 <Button
                   type="wprimary"
                   icon="swords"
-                  text="Bring survivors and claim prizes"
+                  text="Claim prizes and restore survivors"
                 />
               </v-col>
             </v-row>
           </v-col>
         </v-row>
 
-        <v-row v-if="isWar.reportVersion">
-          <v-col class="pb-0">
-            <Title>Players</Title>
-          </v-col>
-        </v-row>
-
-        <v-row v-if="isWar.reportVersion">
-          <v-col class="pt-1">
-            <table-war-report
-              v-if="isWar.reportVersion === '1'"
-              :war="isWar"
-            ></table-war-report>
-            <table-war-report-v2
-              v-if="isWar.reportVersion === '2'"
-              :war="isWar"
-            ></table-war-report-v2>
+        <v-row>
+          <v-col>
+            <div class="rewards-title">Rewarded spots</div>
+            <div class="rewards-container mt-2">
+              <div class="spot-info">
+              <div class="unit-name">0,5</div>
+              <Reward :rewardId="39" :amount="25" />
+              <Reward :rewardId="49" :amount="1000" />
+              </div>
+            </div>
+            <div class="rewards-container mt-2">
+              <div class="spot-info">
+              <div class="unit-name">3,8</div>
+              <Reward :rewardId="39" :amount="12" />
+              <Reward :rewardId="49" :amount="500" />
+              </div>
+            </div>
+            <div class="rewards-container mt-2">
+              <div class="spot-info">
+              <div class="unit-name">4,16</div>
+              <Reward :rewardId="36" :amount="8" />
+              <Reward :rewardId="50" :amount="755" />
+              </div>
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -255,6 +245,7 @@ import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 import TableWarReport from "@/lib/components/ui/Utils/Tables/TableWarReport";
 import TableWarReportV2 from "@/lib/components/ui/Utils/Tables/TableWarReportV2";
 import Progress from "@/lib/components/ui/Progress";
+import Reward from "@/lib/components/ui/Reward";
 
 import { getWars } from "@/data/Wars";
 import { getTroops } from "@/data/Troops";
@@ -276,6 +267,7 @@ export default {
     TableWarReport,
     TableWarReportV2,
     Progress,
+    Reward
   },
 
   data() {
@@ -587,5 +579,26 @@ export default {
   font-weight: bold;
   font-size: 24px;
   line-height: 1.2;
+}
+.image-container {
+  height: 190px;
+  width: 180px;
+  > img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.unit-name {
+  color: #FFB800;
+  font-size: 18px;
+  font-weight: bold;
+}
+.rewards-title {
+  font-size: 32px;
+  font-weight: bold;
+}
+.bold {
+  font-weight: bold;
+  font-size: 16px;
 }
 </style>

@@ -4,10 +4,10 @@
       <v-row dense no-gutters>
         <v-col>
           <Button
-            icon="arrow-back"
             type="wtertiary"
-            text="Back to home"
+            icon="arrow-back"
             :handleClick="backToHome"
+            text="Back to home"
             noPadding
           />
         </v-col>
@@ -16,13 +16,13 @@
         <v-col class="battle-header">
           <Title
             text="WAR IV"
-            subtitle="Battle field"
+            subtitle="Battlefield"
             tip="How to play?"
             tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
           />
           <countdown
             :time="countdownTimer"
-            title="Time to collect prizes and wUNITS"
+            title="Countdown to collect prizes and wUNITS"
             titleColor="#FFF"
             hideEnd
           />
