@@ -3,6 +3,11 @@
     <v-container>
       <v-row dense no-gutters>
         <v-col>
+          <Button type="wtertiary" icon="arrow-back" text="Go back to Home" noPadding :handleClick="goBackHome" />
+        </v-col>
+      </v-row>
+      <v-row dense no-gutters>
+        <v-col>
           <Title text="Soldier" />
         </v-col>
       </v-row>
@@ -58,22 +63,28 @@
               <div class="force-group">
                 <div class="d-flex mt-1">
                   <div class="force-icon">
-                  <img class="mt-1" height="12" src="/images/icons/axe.png" />
+                  <img height="12" src="/images/icons/axe.png" />
                   </div>
                   <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="2" />
                 </div>
                 <div class="d-flex mt-1">
                   <div class="force-icon">
-                  <img class="mt-1" height="14" src="/images/icons/lightning.png" />
+                  <img height="14" src="/images/icons/lightning.png" />
                   </div>
                   <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="1" />
                   
                 </div>
                 <div class="d-flex mt-1">
                   <div class="force-icon">
-                  <img class="mt-1" height="14" src="/images/icons/fist.png" />
+                  <img height="14" src="/images/icons/fist.png" />
                   </div>
                   <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="1" />
+                </div>
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
+                  <img height="12" src="/images/icons/fear.png" />
+                  </div>
+                  <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="0" />
                 </div>
               </div>
             </v-col>
@@ -184,6 +195,9 @@ export default {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
     }),
+    goBackHome() {
+      this.$router.push('/');
+    }
   },
   async mounted() {
     this.setHeader(false);
@@ -259,6 +273,7 @@ export default {
 .force-icon {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 32px;
 }
 .flag-button {

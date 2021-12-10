@@ -10,16 +10,8 @@
     @click="handleClick"
     :disabled="disabled"
   >
-    <slot></slot>
-    <img :src="`/images/icons/${icon}.png`" :alt="icon" v-if="icon" />
-    <game-text
-      :class="['btn-tertiary-text', icon ? 'ml-1' : '']"
-      v-if="type === 'wtertiary'"
-      >{{ text }}</game-text
-    >
-    <span v-else-if="text" :class="['btn-text', icon ? 'ml-2' : '']">{{
-      text
-    }}</span>
+    <img :src="`/images/icons/${icon}.png`" :alt="icon" v-if="icon" class="mr-1" />
+    <slot><game-text v-if="type === 'wtertiary'">{{ text }}</game-text><span v-else>{{ text }}</span></slot>
   </button>
 </template>
 <script>
@@ -132,11 +124,9 @@ export default {
     &:hover:enabled {
       border: none;
       background-color: transparent;
-      > .btn-tertiary-text {
-        cursor: pointer;
+      cursor: pointer;
         font-size: 17px;
         transition: all 0.4s;
-      }
     }
   }
   &:disabled {
