@@ -68,7 +68,7 @@
         </div>
 
         <div v-else
-          class="d-flex justify-center mt-3">
+          class="d-flex justify-center align-center mt-3">
           <v-img
             class="mr-1"
             max-width="90"
@@ -76,7 +76,7 @@
           />
           <a :href="`${redirectTo}=${info.contractAddress[this.networkInfo.id]}`">
             <wButton
-              style="margin-top: -2px; color: #fff"
+              style="margin-top: 2.5px; color: #fff"
               width="75px" height="55">
               <div class="d-flex justify-center">
                 <img

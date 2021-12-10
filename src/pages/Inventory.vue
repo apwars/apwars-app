@@ -255,7 +255,7 @@
           <v-card flat>
             <v-container>
               <v-row>
-                <v-col>
+                <v-col class="pa-0">
                   <list-units />
                 </v-col>
               </v-row>
