@@ -47,7 +47,7 @@
             :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
             :src="`/images/icons/coins/smallers/${unit.name}.png`"
           />
-          <div class="hide-name-unit">
+          <div :class="$vuetify.breakpoint.lgAndUp ? '' : 'hide-name-unit'">
             <amount
               :amount="getTokenBConfig.amount"
               decimals="2"
@@ -685,6 +685,7 @@ export default {
 .qty >>> span,
 .globalQty >>> span {
   color: #fff;
+  font-weight: bold;
 }
 .current-price {
   font-weight: bold;
@@ -729,5 +730,12 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  @media only screen and (max-width: 416px) {
+    max-width: 20ch;
+  }
+
+  @media only screen and (max-width: 350px) {
+    max-width: 18ch;
+  }
 }
 </style>

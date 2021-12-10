@@ -780,6 +780,7 @@ export default {
 .qty >>> span,
 .globalQty >>> span {
   color: #fff;
+  font-weight: bold;
 }
 .current-price {
   font-weight: bold;
