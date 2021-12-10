@@ -33,7 +33,8 @@
           <v-row>
             <v-col class="d-flex flex-column flex-md-row">
               <div class="unit-image">
-                <v-img :src="unit.portrait" contain />
+                <Button class="unlock-button" type="wprimary" text="Click to unlock" :handleClick="() => openUnitUnlock()" v-if="!unit.isUnlocked" />
+                <v-img :class="unit.isUnlocked ? '' : 'locked'" :src="unit.portrait" contain />
               </div>
               <div class="unit-data">
                 <v-text-field placeholder="Edit name">
@@ -132,6 +133,7 @@
                 </div>
               </div>
               <Button
+                :disabled="!unit.isUnlocked"
                 text="Unlock"
                 type="wsecondary"
                 isBlock
@@ -202,6 +204,7 @@
                 </div>
               </div>
               <Button
+                :disabled="!unit.isUnlocked"
                 text="Unlock"
                 type="wsecondary"
                 isBlock
@@ -272,6 +275,7 @@
                 </div>
               </div>
               <Button
+                :disabled="!unit.isUnlocked"
                 text="Unlock"
                 type="wsecondary"
                 isBlock
@@ -308,7 +312,7 @@
           ><div class="mr-2">
             <div class="status-description">
               <div class="label text-large">Courage</div>
-              <Button class="mt-1" size="small" type="wsecondary" isBlock
+              <Button class="mt-1" size="small" type="wsecondary" isBlock :disabled="!unit.isUnlocked"
                 ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
                 Recharge</Button
               >
@@ -325,7 +329,7 @@
           ><div class="mr-2">
             <div class="status-description">
               <div class="label text-large">Energy</div>
-              <Button class="mt-1" size="small" type="wsecondary" isBlock
+              <Button class="mt-1" size="small" type="wsecondary" isBlock :disabled="!unit.isUnlocked"
                 ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
                 Recharge</Button
               >
@@ -355,6 +359,12 @@
         <v-col><div class="stat-value text-medium">Record Score</div> </v-col>
         <v-col><div class="stat-value text-medium">Record Points</div> </v-col>
       </v-row>
+      <wood :open="isUnlockModalOpen" @close="isUnlockModalOpen = false" @confirm="() => unlockUnit()" title="Unlock Soldier">
+        <div class="modal-message d-flex justify-space-between">
+          <img :src="unit.portrait" />
+          <div class="modal-text text-medium">You are unlocking your Soldier to fight the enemies</div>
+        </div>
+      </wood>
     </v-container>
   </div>
 </template>
@@ -367,6 +377,7 @@ import Title from "@/lib/components/ui/Title";
 import PowerBar from "@/lib/components/ui/PowerBar";
 import Slot from "@/lib/components/ui/Slot";
 import IconBase from "@/lib/components/ui/IconBase";
+import Wood from "@/lib/components/ui/Modals/Templates/Wood";
 
 export default {
   components: {
@@ -377,9 +388,11 @@ export default {
     PowerBar,
     Slot,
     IconBase,
+    Wood
   },
   data() {
     return {
+      isUnlockModalOpen: false,
       unit: {
         isUnlocked: false,
         portrait: "/images/troops/wwarrior-toon.png",
@@ -414,9 +427,17 @@ export default {
     format(value) {
       return new Intl.NumberFormat("en-US").format(value);
     },
+    openUnitUnlock() {
+      this.isUnlockModalOpen = true;
+    },
+    unlockUnit() {
+      this.unit.isUnlocked = true;
+      this.isUnlockModalOpen = false;
+    },
     changeUnit(id) {
       if (id === 1) {
         this.unit = {
+          isUnlocked: true,
           id: 1,
           portrait: "/images/troops/wwarrior-toon.png",
           name: "",
@@ -443,8 +464,11 @@ export default {
           experience: null,
           armory: null,
         };
+        this.unit.experience = null;
+        this.unit.armory = null;
       } else {
         this.unit = {
+          isUnlocked: true,
           id: 2,
           portrait: "/images/troops/wgrunt-toon.png",
           name: "",
@@ -471,6 +495,8 @@ export default {
           experience: null,
           armory: null,
         };
+        this.unit.experience = null;
+        this.unit.armory = null;
       }
     },
     unlockProperty(property) {
@@ -514,6 +540,7 @@ export default {
   line-height: 37px;
 }
 .unit-image {
+  position: relative;
   display: flex;
   justify-content: center;
   @media screen and (min-width: 768px) {
@@ -591,5 +618,18 @@ export default {
       calc(100% + var(--b) / 2) calc(100% + var(--b) / 2) / calc(50% + var(--b))
       calc(50% + var(--b));
   }
+}
+.locked {
+  filter: grayscale(100%);
+}
+.unlock-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+.modal-text {
+  max-width: 260px;
 }
 </style>

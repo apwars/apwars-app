@@ -66,6 +66,7 @@ export default {
   font-size: 16px;
   line-height: 21px;
   height: 40px;
+  white-space: nowrap;
   > img {
     width: 24px;
   }
