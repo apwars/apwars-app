@@ -1,44 +1,27 @@
 <template>
   <div class="force-meter">
     <div class="base">
-      <img class="force" :src="asset" alt="force-1" />
-      <img class="force" :src="asset" alt="force-2" />
-      <img class="force" :src="asset" alt="force-3" />
-      <img class="force" :src="asset" alt="force-4" />
-      <img class="force" :src="asset" alt="force-5" />
+      <img v-for="i in ticks"
+        :key="i" class="force" :src="asset" :alt="`force-${i}`" />
     </div>
     <div :class="['active', [color]]" :style="`--percent: ${percent}`" v-show="value > 0">
       <img
+        v-for="i in ticks"
+        :key="i"
         class="force"
         :src="activeAsset"
-        alt="force-1-active"
-      />
-      <img
-        class="force"
-        :src="activeAsset"
-        alt="force-2-active"
-      />
-      <img
-        class="force"
-        :src="activeAsset"
-        alt="force-3-active"
-      />
-      <img
-        class="force"
-        :src="activeAsset"
-        alt="force-4-active"
-      />
-      <img
-        class="force"
-        :src="activeAsset"
-        alt="force-5-active"
-      />
+        :alt="`force-${i}-active`"
+        />
     </div>
   </div>
 </template>
 <script>
 export default {
   props: {
+    ticks: {
+      type: Number,
+      default: 5,
+    },
     maxScale: {
       type: Number,
       default: 0,

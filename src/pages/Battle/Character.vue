@@ -8,8 +8,8 @@
       </v-row>
       <v-row>
         <v-col class="d-flex">
-          <Button type="wprimary" text="Corps" class="mr-2" />
-          <Button type="wprimary" text="Degens" />
+          <img class="flag-button" width="56" src="/images/battle/flag-the-corporation-human.png" />
+          <img class="flag-button ml-3" width="56" src="/images/battle/flag-the-degenerate-orc.png" />
         </v-col>
       </v-row>
       <v-row>
@@ -56,17 +56,24 @@
                 <v-img src="/images/icons/sword.png" />
               </div>
               <div class="force-group">
-                <div class="text-center mr-1">
-                  <PowerBar :maxScale="4" :value="2" />
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
                   <img class="mt-1" height="12" src="/images/icons/axe.png" />
+                  </div>
+                  <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="2" />
                 </div>
-                <div class="text-center mr-1">
-                  <PowerBar :maxScale="4" :value="1" />
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
                   <img class="mt-1" height="14" src="/images/icons/lightning.png" />
+                  </div>
+                  <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="1" />
+                  
                 </div>
-                <div class="text-center mr-1">
-                  <PowerBar :maxScale="4" :value="1" />
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
                   <img class="mt-1" height="14" src="/images/icons/fist.png" />
+                  </div>
+                  <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="1" />
                 </div>
               </div>
             </v-col>
@@ -249,8 +256,16 @@ export default {
 .stat-container {
   width: 88px;
 }
-.force-group {
+.force-icon {
   display: flex;
   justify-content: center;
+  width: 32px;
+}
+.flag-button {
+  &:hover {
+    cursor: pointer;
+    transition: all ease 1s;
+    transform: scale(1.1);
+  }
 }
 </style>
