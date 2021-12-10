@@ -53,7 +53,7 @@ export default {
   border-radius: 5px;
   position: absolute;
   top: 0;
-  left: 0;
+  left: -1px;
   width: var(--percent);
   background: linear-gradient(180deg, var(--color1) 0%, var(--color2) 100%);
   display: flex;
