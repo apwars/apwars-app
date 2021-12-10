@@ -26,7 +26,7 @@
       </div>
       <div v-if="isLoadingUnit" class="ml-1 align-self-start info-container">
         <div class="title">Necessary Resources</div>
-        <div class="d-flex align-center qty ml-at-mobile">
+        <div class="d-flex align-center ml-at-mobile">
           <v-img class="mr-1"
             :max-height="$vuetify.breakpoint.mobile ? 25 : 33"
             :max-width="$vuetify.breakpoint.mobile ? 28 : 36"
@@ -673,12 +673,12 @@ export default {
   font-size: 28px;
 }
 .qty {
-  color: #ffb800;
+  /* color: #ffb800; */
   font-weight: bold;
   font-size: 16px;
 }
 .globalQty {
-  color: #f6ff00;
+  /* color: #f6ff00; */
   font-weight: bold;
   font-size: 16px;
 }
@@ -701,11 +701,8 @@ export default {
 }
 
 
-
-@media screen and (min-width:1024px) {
-  .info-container {
-    width: 280px;
-  }
+.info-container {
+  width: 280px;
 }
 
 @media only screen and (max-width: 600px) {

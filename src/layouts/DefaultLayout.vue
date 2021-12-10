@@ -497,6 +497,12 @@ export default {
   right: 19px !important;
 }
 
+@media only screen and (max-width: 638px) {
+  .btn-chat {
+    bottom: 38px !important;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .btn-chat {
     bottom: 135px !important;
