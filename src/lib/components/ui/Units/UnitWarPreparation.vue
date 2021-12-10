@@ -24,7 +24,7 @@
           </template>
         </v-img>
       </div>
-      <div v-if="isLoadingUnit" class="ml-1 align-self-start info-container">
+      <div v-if="isLoadingUnit" class="ml-1 align-self-start info-card">
         <div class="title">Necessary Resources</div>
         <div class="d-flex align-center ml-at-mobile">
           <v-img class="mr-1"
@@ -47,7 +47,7 @@
             :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
             :src="`/images/icons/coins/smallers/${unit.name}.png`"
           />
-          <div>
+          <div class="hide-name-unit">
             <amount
               :amount="getTokenBConfig.amount"
               decimals="2"
@@ -667,7 +667,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .title {
   font-weight: bold;
   font-size: 28px;
@@ -700,9 +700,11 @@ export default {
   filter: grayscale(100%);
 }
 
-
-.info-container {
-  width: 280px;
+.info-card {
+  width: 250px;
+  @media only screen and (min-width: 600px){
+    width: 280px;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -720,5 +722,12 @@ export default {
     margin-left: -0.3rem;
     font-size: 0.8rem;
   }
+}
+
+.hide-name-unit {
+  max-width: 25ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
