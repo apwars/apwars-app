@@ -89,6 +89,9 @@
                     :maxScale="3"
                     :value="unit.attack.force"
                   />
+                  <div class="force-icon">
+                    <div class="plus" v-if="unit.attack.force !== 3"></div>
+                  </div>
                 </div>
                 <div class="d-flex mt-1">
                   <div class="force-icon">
@@ -100,6 +103,9 @@
                     :maxScale="3"
                     :value="unit.attack.speed"
                   />
+                  <div class="force-icon">
+                    <div class="plus"></div>
+                  </div>
                 </div>
                 <div class="d-flex mt-1">
                   <div class="force-icon">
@@ -111,6 +117,9 @@
                     :maxScale="3"
                     :value="unit.attack.accuracy"
                   />
+                  <div class="force-icon">
+                    <div class="plus"></div>
+                  </div>
                 </div>
                 <div class="d-flex mt-1">
                   <div class="force-icon">
@@ -122,6 +131,9 @@
                     :maxScale="3"
                     :value="unit.attack.fear"
                   />
+                  <div class="force-icon">
+                    <div class="plus"></div>
+                  </div>
                 </div>
               </div>
             </v-col>
@@ -216,6 +228,7 @@ import Progress from "@/lib/components/ui/Progress";
 import Title from "@/lib/components/ui/Title";
 import PowerBar from "@/lib/components/ui/PowerBar";
 import Slot from "@/lib/components/ui/Slot";
+import IconBase from "@/lib/components/ui/IconBase";
 
 export default {
   components: {
@@ -224,7 +237,8 @@ export default {
     Progress,
     Title,
     PowerBar,
-    Slot
+    Slot,
+    IconBase
   },
   data() {
     return {
@@ -403,12 +417,32 @@ export default {
   justify-content: center;
   align-items: center;
   width: 32px;
+  padding-bottom: 6px;
+  color: white;
 }
 .flag-button {
   &:hover {
     cursor: pointer;
     transition: all ease 1s;
     transform: scale(1.1);
+  }
+}
+.plus {
+  --b:4px; /* the thickness */
+  width:12px; /* the size */
+  aspect-ratio:1/1;
+  border:transparent; /* the outer space */
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#000 90deg,#fff 0) 
+    calc(100% + var(--b)/2) calc(100% + var(--b)/2)/
+    calc(50%  + var(--b))   calc(50%  + var(--b));
+  display:inline-block;
+  &:hover {
+    cursor: pointer;
+    background:
+    conic-gradient(from 90deg at var(--b) var(--b),#000 90deg,yellow 0) 
+    calc(100% + var(--b)/2) calc(100% + var(--b)/2)/
+    calc(50%  + var(--b))   calc(50%  + var(--b));
   }
 }
 </style>
