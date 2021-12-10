@@ -1,17 +1,9 @@
 <template>
   <div class="force-meter">
     <div class="base">
-      <img v-for="i in ticks"
-        :key="i" class="force" :src="asset" :alt="`force-${i}`" />
-    </div>
-    <div :class="['active', [color]]" :style="`--percent: ${percent}`" v-show="value > 0">
-      <img
-        v-for="i in ticks"
-        :key="i"
-        class="force"
-        :src="activeAsset"
-        :alt="`force-${i}-active`"
-        />
+      <div v-for="(tick, index) in ticksPercent"
+        :key="index" class="unit" :src="asset" :alt="`unit-${i}`">
+        <div class="active" :style="`--width: ${tick}%`"></div></div>
     </div>
   </div>
 </template>
@@ -30,36 +22,27 @@ export default {
       type: Number,
       default: 0,
     },
-    color: {
-      type: String,
-      validator: (value) => {
-        const supportedColors = ['wgreen', 'wyellow'];
-        return supportedColors.includes(value);
-      },
-      default: '',
-    },
     type: {
       type: String,
       default: '',
     }
   },
   computed: {
-    percent() {
-      return (100 * this.value) / this.maxScale.toString() + "%";
-    },
-    asset() {
-      if (this.type === 'flat') {
-        return "/images/icons/stat-point.png"
+    ticksPercent() {
+      let ticks = [];
+      let remainingTicks = this.value;
+      const unit = this.maxScale / this.ticks;
+       for (let i = 0; i <= this.ticks - 1; i++) {  
+         if ((remainingTicks - unit) >= 0) {
+           ticks = ticks.concat(100);
+         } else {
+           const rest = (100 * remainingTicks) / this.maxScale;
+           ticks = ticks.concat(rest > 0 ? rest : 0);
+         }
+         remainingTicks = remainingTicks-unit;
       }
-      return "/images/icons/force.png"
+      return ticks;
     },
-    activeAsset() {
-      if (this.type === 'flat') {
-        return "/images/icons/stat-active.png"
-      }
-      return "/images/icons/force-active.png"
-    }
-
   },
 };
 </script>
@@ -71,24 +54,21 @@ export default {
     white-space: nowrap;
   }
 }
-.force {
+.unit {
   display: inline-block;
-  &:not(:first-child) {
-    margin-left: 2px;
-  }
-}
-.active {
-  position: absolute;
-  top: 0;
-  width: var(--percent);
-  white-space: nowrap;
-  overflow: hidden;
-  transition: all 1s ease;
-  &.wyellow {
-    filter: hue-rotate(200deg);
-  }
-  &.wgreen {
-    filter: hue-rotate(260deg);
+  height: 20px;
+  width: 20px;
+  background-color: black;
+  outline: 1px solid #FFEEBC;
+  margin-right: 4px;
+  > .active {
+    height: 20px;
+  width: 20px;
+  display: inline-block;
+    
+    width: var(--width);
+    background-color: #FFEEBC;
+    box-sizing: border-box;
   }
 }
 </style>

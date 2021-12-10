@@ -9,29 +9,24 @@
             text="Go back to Home"
             noPadding
             :handleClick="goBackHome"
+            class="mb-1"
           />
-        </v-col>
-      </v-row>
-      <v-row dense no-gutters>
-        <v-col>
           <Title text="Soldier" />
         </v-col>
-      </v-row>
-      <v-row>
-        <v-col class="d-flex">
+        <div class="flag-container">
           <img
             class="flag-button"
-            width="56"
+            width="64"
             src="/images/battle/flag-the-corporation-human.png"
             @click="() => changeUnit(1)"
           />
           <img
             class="flag-button ml-3"
-            width="56"
+            width="64"
             src="/images/battle/flag-the-degenerate-orc.png"
             @click="() => changeUnit(2)"
           />
-        </v-col>
+        </div>
       </v-row>
       <v-row>
         <v-col sm="12" md="7">
@@ -63,10 +58,10 @@
                   />
                 </div>
                 <div class="items-container d-flex justify-space-between mt-2">
-                  <Slot><img src="/images/icons/items/boots.png" /></Slot>
-                  <Slot><img src="/images/icons/items/platemail.png" /></Slot>
-                  <Slot><img src="/images/icons/items/swords.png" /></Slot>
-                  <Slot><img src="/images/icons/items/shield.png" /></Slot>
+                  <Slot><img src="/images/icons/items/boots.png"/></Slot>
+                  <Slot><img src="/images/icons/items/platemail.png"/></Slot>
+                  <Slot><img src="/images/icons/items/swords.png"/></Slot>
+                  <Slot><img src="/images/icons/items/shield.png"/></Slot>
                 </div>
               </div>
             </v-col>
@@ -78,7 +73,7 @@
               <div class="icon-container mb-2">
                 <v-img src="/images/icons/sword.png" />
               </div>
-              <div class="force-group">
+              <div class="force-group" v-if="unit.attack">
                 <div class="d-flex mt-1">
                   <div class="force-icon">
                     <img height="12" src="/images/icons/axe.png" />
@@ -136,18 +131,153 @@
                   </div>
                 </div>
               </div>
+              <Button
+                text="Unlock"
+                type="wsecondary"
+                isBlock
+                :handleClick="() => unlockProperty('attack')"
+                v-else
+              />
             </v-col>
             <v-col cols="4">
               <div class="icon-container mb-2">
                 <v-img src="/images/icons/patent.png" />
               </div>
-              <Button text="Unlock" type="wsecondary" isBlock />
+              <div class="force-group" v-if="unit.experience">
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
+                    <img height="12" src="/images/icons/axe.png" />
+                  </div>
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.experience.force"
+                  />
+                  <div class="force-icon">
+                    <div class="plus" v-if="unit.experience.force !== 3"></div>
+                  </div>
+                </div>
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
+                    <img height="14" src="/images/icons/lightning.png" />
+                  </div>
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.experience.speed"
+                  />
+                  <div class="force-icon">
+                    <div class="plus"></div>
+                  </div>
+                </div>
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
+                    <img height="14" src="/images/icons/fist.png" />
+                  </div>
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.experience.accuracy"
+                  />
+                  <div class="force-icon">
+                    <div class="plus"></div>
+                  </div>
+                </div>
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
+                    <img height="12" src="/images/icons/fear.png" />
+                  </div>
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.experience.fear"
+                  />
+                  <div class="force-icon">
+                    <div class="plus"></div>
+                  </div>
+                </div>
+              </div>
+              <Button
+                text="Unlock"
+                type="wsecondary"
+                isBlock
+                :handleClick="() => unlockProperty('experience')"
+                v-else
+              />
             </v-col>
             <v-col cols="4">
               <div class="icon-container mb-2">
                 <v-img src="/images/icons/anvil.png" />
               </div>
-              <Button text="Unlock" type="wsecondary" isBlock />
+              <div class="force-group" v-if="unit.armory">
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
+                    <img height="12" src="/images/icons/axe.png" />
+                  </div>
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.armory.force"
+                  />
+                  <div class="force-icon">
+                    <div class="plus" v-if="unit.armory.force !== 3"></div>
+                  </div>
+                </div>
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
+                    <img height="14" src="/images/icons/lightning.png" />
+                  </div>
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.armory.speed"
+                  />
+                  <div class="force-icon">
+                    <div class="plus"></div>
+                  </div>
+                </div>
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
+                    <img height="14" src="/images/icons/fist.png" />
+                  </div>
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.armory.accuracy"
+                  />
+                  <div class="force-icon">
+                    <div class="plus"></div>
+                  </div>
+                </div>
+                <div class="d-flex mt-1">
+                  <div class="force-icon">
+                    <img height="12" src="/images/icons/fear.png" />
+                  </div>
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.armory.fear"
+                  />
+                  <div class="force-icon">
+                    <div class="plus"></div>
+                  </div>
+                </div>
+              </div>
+              <Button
+                text="Unlock"
+                type="wsecondary"
+                isBlock
+                :handleClick="() => unlockProperty('armory')"
+                v-else
+              />
             </v-col>
           </v-row>
         </v-col>
@@ -157,12 +287,16 @@
           <div class="d-flex">
             <div class="stat-container text-medium">Strength</div>
             <ForceMeter type="flat" :maxScale="5" :value="1" />
-            <div class="text-medium ml-2">{{ unit.strength }}/{{ unit.maxStrength }}</div>
+            <div class="text-medium ml-2">
+              {{ unit.strength }}/{{ unit.maxStrength }}
+            </div>
           </div>
           <div class="d-flex">
             <div class="stat-container text-medium">Speed</div>
             <ForceMeter type="flat" :maxScale="5" :value="1" />
-            <div class="text-medium ml-2">{{ unit.speed }}/{{ unit.maxSpeed }}</div>
+            <div class="text-medium ml-2">
+              {{ unit.speed }}/{{ unit.maxSpeed }}
+            </div>
           </div>
           <div class="d-flex">
             <div class="stat-container text-medium">HP</div>
@@ -181,8 +315,10 @@
             </div>
           </div>
           <div>
-            <ForceMeter :maxScale="unit.maxCourage" :value="unit.courage" color="wgreen" />
-            <div class="d-flex justify-end">{{ unit.courage }}/{{ unit.maxCourage }}</div>
+            <ForceMeter :maxScale="unit.maxCourage" :value="unit.courage" />
+            <div class="d-flex justify-end">
+              {{ unit.courage }}/{{ unit.maxCourage }}
+            </div>
           </div></v-col
         >
         <v-col cols="12" md="4" class="d-flex"
@@ -196,8 +332,10 @@
             </div>
           </div>
           <div>
-            <ForceMeter :maxScale="unit.maxEnergy" :value="unit.energy" color="wyellow" />
-            <div class="d-flex justify-end">{{ unit.energy }}/{{ unit.maxEnergy }}</div>
+            <ForceMeter :maxScale="unit.maxEnergy" :value="unit.energy" />
+            <div class="d-flex justify-end">
+              {{ unit.energy }}/{{ unit.maxEnergy }}
+            </div>
           </div>
         </v-col>
       </v-row>
@@ -238,33 +376,29 @@ export default {
     Title,
     PowerBar,
     Slot,
-    IconBase
+    IconBase,
   },
   data() {
     return {
       unit: {
+        isUnlocked: false,
         portrait: "/images/troops/wwarrior-toon.png",
         name: "",
         className: "Warrior",
-        level: 3,
-        XP: 3778,
+        level: 1,
+        XP: 0,
         maxXP: 10000,
-        strength: 1,
+        strength: 0,
         maxStrength: 5,
-        speed: 1,
+        speed: 0,
         maxSpeed: 5,
-        HP: 18.7,
+        HP: 0,
         maxHP: 50,
-        courage: 60,
+        courage: 0,
         maxCourage: 100,
-        energy: 10,
+        energy: 0,
         maxEnergy: 100,
-        attack: {
-          force: 2,
-          speed: 1,
-          accuracy: 1,
-          fear: 0,
-        },
+        attack: null,
         experience: null,
         armory: null,
       },
@@ -337,8 +471,15 @@ export default {
           experience: null,
           armory: null,
         };
-        
       }
+    },
+    unlockProperty(property) {
+      this.unit[property] = () => ({
+        force: 0,
+        speed: 0,
+        accuracy: 0,
+        fear: 0,
+      });
     },
   },
   async mounted() {
@@ -428,21 +569,27 @@ export default {
   }
 }
 .plus {
-  --b:4px; /* the thickness */
-  width:12px; /* the size */
-  aspect-ratio:1/1;
-  border:transparent; /* the outer space */
-  background:
-    conic-gradient(from 90deg at var(--b) var(--b),#000 90deg,#fff 0) 
-    calc(100% + var(--b)/2) calc(100% + var(--b)/2)/
-    calc(50%  + var(--b))   calc(50%  + var(--b));
-  display:inline-block;
+  --b: 4px; /* the thickness */
+  width: 12px; /* the size */
+  aspect-ratio: 1/1;
+  border: transparent; /* the outer space */
+  background: conic-gradient(
+      from 90deg at var(--b) var(--b),
+      #000 90deg,
+      #fff 0
+    )
+    calc(100% + var(--b) / 2) calc(100% + var(--b) / 2) / calc(50% + var(--b))
+    calc(50% + var(--b));
+  display: inline-block;
   &:hover {
     cursor: pointer;
-    background:
-    conic-gradient(from 90deg at var(--b) var(--b),#000 90deg,yellow 0) 
-    calc(100% + var(--b)/2) calc(100% + var(--b)/2)/
-    calc(50%  + var(--b))   calc(50%  + var(--b));
+    background: conic-gradient(
+        from 90deg at var(--b) var(--b),
+        #000 90deg,
+        yellow 0
+      )
+      calc(100% + var(--b) / 2) calc(100% + var(--b) / 2) / calc(50% + var(--b))
+      calc(50% + var(--b));
   }
 }
 </style>
