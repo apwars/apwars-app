@@ -38,7 +38,7 @@
           <v-row>
             <v-col class="d-flex flex-column flex-md-row">
               <div class="unit-image">
-                <img :src="unit.portrait" />
+                <v-img :src="unit.portrait" contain />
               </div>
               <div class="unit-data">
                 <v-text-field placeholder="Edit name">
