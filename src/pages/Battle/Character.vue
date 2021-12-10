@@ -63,10 +63,10 @@
                   />
                 </div>
                 <div class="items-container d-flex justify-space-between mt-2">
-                  <img src="/images/icons/slot.png" />
-                  <img src="/images/icons/slot.png" />
-                  <img src="/images/icons/slot.png" />
-                  <img src="/images/icons/slot.png" />
+                  <Slot><img src="/images/icons/items/boots.png" /></Slot>
+                  <Slot><img src="/images/icons/items/platemail.png" /></Slot>
+                  <Slot><img src="/images/icons/items/swords.png" /></Slot>
+                  <Slot><img src="/images/icons/items/shield.png" /></Slot>
                 </div>
               </div>
             </v-col>
@@ -215,6 +215,7 @@ import ForceMeter from "@/lib/components/ui/ForceMeter";
 import Progress from "@/lib/components/ui/Progress";
 import Title from "@/lib/components/ui/Title";
 import PowerBar from "@/lib/components/ui/PowerBar";
+import Slot from "@/lib/components/ui/Slot";
 
 export default {
   components: {
@@ -223,6 +224,7 @@ export default {
     Progress,
     Title,
     PowerBar,
+    Slot
   },
   data() {
     return {
