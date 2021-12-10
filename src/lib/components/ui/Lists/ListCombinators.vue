@@ -65,7 +65,7 @@
         </v-row>
         <v-row class="mt-0 mt-lg-n5 mb-3">
           <v-col class="py-0 my-0" cols="12">
-            <div class="d-flex flex-column flex-md-row align-center">
+            <div class="d-flex flex-column flex-md-row align-left">
               <wButton @click="clearFilters()" class=" mr-3">
                 <div class="d-flex justify-center">
                   <v-icon class="mx-1">
