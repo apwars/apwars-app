@@ -3,7 +3,13 @@
     <v-container>
       <v-row dense no-gutters>
         <v-col>
-          <Button type="wtertiary" icon="arrow-back" text="Go back to Home" noPadding :handleClick="goBackHome" />
+          <Button
+            type="wtertiary"
+            icon="arrow-back"
+            text="Go back to Home"
+            noPadding
+            :handleClick="goBackHome"
+          />
         </v-col>
       </v-row>
       <v-row dense no-gutters>
@@ -13,8 +19,18 @@
       </v-row>
       <v-row>
         <v-col class="d-flex">
-          <img class="flag-button" width="56" src="/images/battle/flag-the-corporation-human.png" />
-          <img class="flag-button ml-3" width="56" src="/images/battle/flag-the-degenerate-orc.png" />
+          <img
+            class="flag-button"
+            width="56"
+            src="/images/battle/flag-the-corporation-human.png"
+            @click="() => changeUnit(1)"
+          />
+          <img
+            class="flag-button ml-3"
+            width="56"
+            src="/images/battle/flag-the-degenerate-orc.png"
+            @click="() => changeUnit(2)"
+          />
         </v-col>
       </v-row>
       <v-row>
@@ -22,7 +38,7 @@
           <v-row>
             <v-col class="d-flex flex-column flex-md-row">
               <div class="unit-image">
-                <v-img src="/images/troops/wwarrior-toon.png" />
+                <img :src="unit.portrait" />
               </div>
               <div class="unit-data">
                 <v-text-field placeholder="Edit name">
@@ -30,15 +46,17 @@
                     mdi-pencil-outline
                   </v-icon>
                 </v-text-field>
-                <div class="class-info">Class: Warrior</div>
+                <div class="class-info">Class: {{ unit.className }}</div>
                 <div class="xp-container mt-2">
                   <div class="xp-label d-flex justify-space-between">
-                    <div class="level">Level 3</div>
-                    <div class="value">3,500/10,000</div>
+                    <div class="level">Level {{ unit.level }}</div>
+                    <div class="value">
+                      {{ format(unit.XP) }}/{{ format(unit.maxXP) }}
+                    </div>
                   </div>
                   <Progress
-                    :maxScale="10000"
-                    :value="3500"
+                    :maxScale="unit.maxXP"
+                    :value="unit.XP"
                     color1="#00FFFF"
                     color2="#59BBFC"
                     noText
@@ -63,28 +81,47 @@
               <div class="force-group">
                 <div class="d-flex mt-1">
                   <div class="force-icon">
-                  <img height="12" src="/images/icons/axe.png" />
+                    <img height="12" src="/images/icons/axe.png" />
                   </div>
-                  <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="2" />
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.attack.force"
+                  />
                 </div>
                 <div class="d-flex mt-1">
                   <div class="force-icon">
-                  <img height="14" src="/images/icons/lightning.png" />
+                    <img height="14" src="/images/icons/lightning.png" />
                   </div>
-                  <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="1" />
-                  
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.attack.speed"
+                  />
                 </div>
                 <div class="d-flex mt-1">
                   <div class="force-icon">
-                  <img height="14" src="/images/icons/fist.png" />
+                    <img height="14" src="/images/icons/fist.png" />
                   </div>
-                  <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="1" />
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.attack.accuracy"
+                  />
                 </div>
                 <div class="d-flex mt-1">
                   <div class="force-icon">
-                  <img height="12" src="/images/icons/fear.png" />
+                    <img height="12" src="/images/icons/fear.png" />
                   </div>
-                  <ForceMeter type="flat" :ticks="3" :maxScale="3" :value="0" />
+                  <ForceMeter
+                    type="flat"
+                    :ticks="3"
+                    :maxScale="3"
+                    :value="unit.attack.fear"
+                  />
                 </div>
               </div>
             </v-col>
@@ -108,17 +145,17 @@
           <div class="d-flex">
             <div class="stat-container text-medium">Strenght</div>
             <ForceMeter type="flat" :maxScale="5" :value="1" />
-            <div class="text-medium ml-2">1/5</div>
+            <div class="text-medium ml-2">{{ unit.strenght }}/{{ unit.maxStrenght }}</div>
           </div>
           <div class="d-flex">
             <div class="stat-container text-medium">Speed</div>
             <ForceMeter type="flat" :maxScale="5" :value="1" />
-            <div class="text-medium ml-2">1/5</div>
+            <div class="text-medium ml-2">{{ unit.speed }}/{{ unit.maxSpeed }}</div>
           </div>
           <div class="d-flex">
             <div class="stat-container text-medium">HP</div>
             <ForceMeter type="flat" :maxScale="50" :value="20" />
-            <div class="text-medium ml-2">20/50</div>
+            <div class="text-medium ml-2">{{ unit.HP }}/{{ unit.maxHP }}</div>
           </div>
         </v-col>
         <v-col cols="12" md="4" class="d-flex"
@@ -132,10 +169,8 @@
             </div>
           </div>
           <div>
-            <ForceMeter :maxScale="100" :value="60" color="wgreen" />
-            <div class="d-flex justify-end">
-              60/100
-            </div>
+            <ForceMeter :maxScale="unit.maxCourage" :value="unit.courage" color="wgreen" />
+            <div class="d-flex justify-end">{{ unit.courage }}/{{ unit.maxCourage }}</div>
           </div></v-col
         >
         <v-col cols="12" md="4" class="d-flex"
@@ -149,10 +184,8 @@
             </div>
           </div>
           <div>
-            <ForceMeter :maxScale="100" :value="10" color="wyellow" />
-            <div class="d-flex justify-end">
-              10/100
-            </div>
+            <ForceMeter :maxScale="unit.maxEnergy" :value="unit.energy" color="wyellow" />
+            <div class="d-flex justify-end">{{ unit.energy }}/{{ unit.maxEnergy }}</div>
           </div>
         </v-col>
       </v-row>
@@ -189,15 +222,108 @@ export default {
     ForceMeter,
     Progress,
     Title,
-    PowerBar
+    PowerBar,
+  },
+  data() {
+    return {
+      unit: {
+        portrait: "/images/troops/wwarrior-toon.png",
+        name: "",
+        className: "Warrior",
+        level: 3,
+        XP: 3778,
+        maxXP: 10000,
+        strenght: 1,
+        maxStrenght: 5,
+        speed: 1,
+        maxSpeed: 5,
+        HP: 18.7,
+        maxHP: 50,
+        courage: 60,
+        maxCourage: 100,
+        energy: 10,
+        maxEnergy: 100,
+        attack: {
+          force: 2,
+          speed: 1,
+          accuracy: 1,
+          fear: 0,
+        },
+        experience: null,
+        armory: null,
+      },
+    };
   },
   methods: {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
     }),
     goBackHome() {
-      this.$router.push('/');
-    }
+      this.$router.push("/");
+    },
+    format(value) {
+      return new Intl.NumberFormat("en-US").format(value);
+    },
+    changeUnit(id) {
+      if (id === 1) {
+        this.unit = {
+          id: 1,
+          portrait: "/images/troops/wwarrior-toon.png",
+          name: "",
+          className: "Warrior",
+          level: 3,
+          XP: 3778,
+          maxXP: 10000,
+          strenght: 1,
+          maxStrenght: 5,
+          speed: 1,
+          maxSpeed: 5,
+          HP: 18.7,
+          maxHP: 50,
+          courage: 60,
+          maxCourage: 100,
+          energy: 10,
+          maxEnergy: 100,
+          attack: {
+            force: 2,
+            speed: 1,
+            accuracy: 1,
+            fear: 0,
+          },
+          experience: null,
+          armory: null,
+        };
+      } else {
+        this.unit = {
+          id: 2,
+          portrait: "/images/troops/wgrunt-toon.png",
+          name: "",
+          className: "Warrior",
+          level: 5,
+          XP: 8659,
+          maxXP: 25000,
+          strenght: 2,
+          maxStrenght: 5,
+          speed: 3,
+          maxSpeed: 5,
+          HP: 48,
+          maxHP: 50,
+          courage: 90,
+          maxCourage: 100,
+          energy: 72,
+          maxEnergy: 100,
+          attack: {
+            force: 3,
+            speed: 1,
+            accuracy: 2,
+            fear: 2,
+          },
+          experience: null,
+          armory: null,
+        };
+        
+      }
+    },
   },
   async mounted() {
     this.setHeader(false);
