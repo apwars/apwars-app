@@ -155,9 +155,9 @@
       <v-row>
         <v-col cols="12" md="4">
           <div class="d-flex">
-            <div class="stat-container text-medium">Strenght</div>
+            <div class="stat-container text-medium">Strength</div>
             <ForceMeter type="flat" :maxScale="5" :value="1" />
-            <div class="text-medium ml-2">{{ unit.strenght }}/{{ unit.maxStrenght }}</div>
+            <div class="text-medium ml-2">{{ unit.strength }}/{{ unit.maxStrength }}</div>
           </div>
           <div class="d-flex">
             <div class="stat-container text-medium">Speed</div>
@@ -249,8 +249,8 @@ export default {
         level: 3,
         XP: 3778,
         maxXP: 10000,
-        strenght: 1,
-        maxStrenght: 5,
+        strength: 1,
+        maxStrength: 5,
         speed: 1,
         maxSpeed: 5,
         HP: 18.7,
@@ -290,8 +290,8 @@ export default {
           level: 3,
           XP: 3778,
           maxXP: 10000,
-          strenght: 1,
-          maxStrenght: 5,
+          strength: 1,
+          maxStrength: 5,
           speed: 1,
           maxSpeed: 5,
           HP: 18.7,
@@ -318,8 +318,8 @@ export default {
           level: 5,
           XP: 8659,
           maxXP: 25000,
-          strenght: 2,
-          maxStrenght: 5,
+          strength: 2,
+          maxStrength: 5,
           speed: 3,
           maxSpeed: 5,
           HP: 48,
