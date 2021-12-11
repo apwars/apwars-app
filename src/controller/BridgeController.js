@@ -55,4 +55,20 @@ export default class BridgeController {
       throw error;
     }
   }
+
+  getListTokens() {
+    try {
+      return this.base._get('/bridge/list/tokens');
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  getListGameItems() {
+    try {
+      return this.base._get('/bridge/list/gameitems');
+    } catch (error) {
+      throw error;
+    }
+  }
 }

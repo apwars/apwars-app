@@ -218,7 +218,7 @@ export default {
             {
               title: "Bridge",
               href: "/bridge",
-              image: "/images/icons/bridge.png",
+              image: "/images/icons/exchange.png",
             },
           ],
         },

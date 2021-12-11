@@ -707,6 +707,7 @@ export default {
       this.selectList = 0;
       this.bridgeList = this.bridgeList.map((list) => {
         list.packQuantity = 0;
+        list.amountFrom = 0;
         return list;
       });
     },
@@ -970,73 +971,43 @@ export default {
     },
 
     async addBridgeList() {
-      // ERC20
-      await this.addERC20BridgeList(
-        this.addresses.wGOLD,
-        "wGOLD",
-        "/images/wGOLD.png",
-        1000,
-        10000,
-        100
-      );
-      await this.addERC20BridgeList(
-        this.addresses.wCOURAGE,
-        "wCOURAGE",
-        "/images/wCOURAGE.png",
-        1000,
-        10000,
-        100
-      );
-      await this.addERC20BridgeList(
-        this.addresses.wLAND,
-        "wLAND",
-        "/images/wLAND.png",
-        1000,
-        10000,
-        100
-      );
+      try {
+        const bridgeController = new BridgeController();
+        const getListTokens = await bridgeController.getListTokens();
+       ;
+        const getListGameItems = await bridgeController.getListGameItems();
 
-      // ERC1155
-      await this.addERC1155BridgeList(
-        49,
-        "Worker",
-        "/images/nfts/worker.png",
-        10,
-        100,
-        1
-      );
-      await this.addERC1155BridgeList(
-        39,
-        "Simple Shield",
-        "/images/nfts/weapon-simple-shield.png",
-        10,
-        100,
-        1
-      );
-      await this.addERC1155BridgeList(
-        63,
-        "Simple Archery",
-        "/images/nfts/weapon-simple-archery.png",
-        10,
-        100,
-        1
-      );
-      await this.addERC1155BridgeList(
-        64,
-        "Simple Spear",
-        "/images/nfts/weapon-simple-spear.png",
-        10,
-        100,
-        1
-      );
-      await this.addERC1155BridgeList(
-        65,
-        "Simple Potion",
-        "/images/nfts/weapon-simple-potion.png",
-        10,
-        100,
-        1
-      );
+        for (let list of getListTokens) {
+          await this.addERC20BridgeList(
+            list.token,
+            list.name,
+            list.image,
+            list.minimumPackage,
+            list.offChainLimit,
+            list.feeUnit
+          );
+        }
+
+        for (let list of getListGameItems) {
+          await this.addERC1155BridgeList(
+            list.gameItemId,
+            list.token,
+            list.name,
+            list.image,
+            list.minimumPackage,
+            list.offChainLimit,
+            list.feeUnit
+          );
+        }
+      } catch (error) {
+        if (error.status === 404) {
+          return { balances: {} };
+        }
+        if (error.status) {
+          return ToastSnackbar.error(error.code);
+        }
+        ToastSnackbar.error("An error has occurred while to add Bridge List");
+      }
     },
 
     async addERC20BridgeList(
@@ -1075,6 +1046,7 @@ export default {
 
     async addERC1155BridgeList(
       id,
+      collectibles,
       name,
       image,
       minimumPackage,
@@ -1085,7 +1057,7 @@ export default {
       if (isItem !== undefined) {
         return;
       }
-      const smc = new Collectibles(this.addresses.collectibles);
+      const smc = new Collectibles(collectibles);
       const balanceOnChain = await smc.balanceOf(this.account, id);
       const balanceOffChain = this.walletsList.balances[`GameItem${id}`];
       const isApproveOtto = await smc.isApprovedForAll(
@@ -1096,7 +1068,7 @@ export default {
         type: "erc1155",
         id: id,
         name: name,
-        address: this.addresses.collectibles,
+        address: collectibles,
         image: image,
         balanceOnChain: balanceOnChain,
         balanceOffChain: balanceOffChain || 0,
