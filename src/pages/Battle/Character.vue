@@ -43,13 +43,12 @@
             <v-row>
               <v-col class="d-flex flex-column flex-md-row">
                 <div class="unit-image">
-                  <div class="unlock-button">
+                  <div class="unlock-button" v-if="!isUnlocked">
                     <Button
                       type="wprimary"
                       size="small"
                       text="Click to unlock"
                       :handleClick="() => openUnitUnlock()"
-                      v-if="!isUnlocked"
                     />
                     <div
                       class="recharge-price  mt-1 d-flex justify-center align-center"
