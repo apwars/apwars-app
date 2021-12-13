@@ -379,16 +379,16 @@
                 <div>
                   <ForceMeter
                     :maxScale="maxCourage"
-                    :value="unit.recharges.wCOURAGE.count"
+                    :value="unit.courage"
                     fillColor="#148F00"
                   />
                   <div class="d-flex justify-end">
-                    {{ unit.recharges.wCOURAGE.count }}/{{ maxCourage }}
+                    {{ unit.courage }}/{{ maxCourage }}
                   </div>
                 </div></v-col
               ></v-row
             >
-            <v-row dense no-gutters v-if="!(unit.recharges.wCOURAGE.count === maxCourage)">
+            <v-row dense no-gutters v-if="!(unit.courage === maxCourage)">
               <v-col>
                 <div class="d-flex align-items-center">
                   <Button size="small" type="wsecondary" :disabled="!isUnlocked" :handleClick="() => rechargeToken('wCOURAGE')"
@@ -419,16 +419,16 @@
                   <ForceMeter
                     :ticks="3"
                     :maxScale="maxEnergy"
-                    :value="unit.recharges.wENERGY.count"
+                    :value="unit.energy"
                     fillColor="#FFB800"
                   />
                   <div class="d-flex justify-end">
-                    {{ unit.recharges.wENERGY.count }}/{{ maxEnergy }}
+                    {{ unit.energy }}/{{ maxEnergy }}
                   </div>
                 </div>
               </v-col></v-row
             >
-            <v-row dense no-gutters v-if="!(unit.recharges.wENERGY.count === maxEnergy) && (hasFreeEnergyRecharge || hasPaidEnergyRecharge)">
+            <v-row dense no-gutters v-if="!(unit.energy === maxEnergy) && (hasFreeEnergyRecharge || hasPaidEnergyRecharge)">
               <v-col>
                 <div class="d-flex align-items-center">
                   <Button size="small" type="wsecondary" :disabled="!isUnlocked" :handleClick="() => rechargeToken('wENERGY')"
