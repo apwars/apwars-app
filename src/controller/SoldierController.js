@@ -15,7 +15,12 @@ export default class SoldierController {
     }
   }
 
-  
-
+  getNFTByType(account, type) {
+    try {
+      return this.base._get(`/accounts/${account}/nfts/${type}`);
+    } catch (error) {
+      throw error;
+    }
+  }
 
 }

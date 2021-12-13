@@ -378,6 +378,7 @@ import PowerBar from "@/lib/components/ui/PowerBar";
 import Slot from "@/lib/components/ui/Slot";
 import IconBase from "@/lib/components/ui/IconBase";
 import Wood from "@/lib/components/ui/Modals/Templates/Wood";
+import Controller from "@/controller/SoldierController";
 
 export default {
   components: {
@@ -389,6 +390,17 @@ export default {
     Slot,
     IconBase,
     Wood
+  },
+  computed: {
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
+    account() {
+      return this.$store.getters["user/account"];
+    },
+    addresses() {
+      return this.$store.getters["user/addresses"];
+    },
   },
   data() {
     return {
@@ -433,6 +445,17 @@ export default {
     unlockUnit() {
       this.unit.isUnlocked = true;
       this.isUnlockModalOpen = false;
+    },
+    async loadWallet() {
+      console.log('api address', this.addresses.apiArcadia)
+      const c = new Controller(this.addresses.apiArcadia);
+      const response = await c.wallets('0x124');
+      console.log(response);
+    },
+    async loadNFT(type) {
+      const c = new Controller(this.addresses.apiArcadia);
+      const response = await c.getNFTByType('0x124', 'HUMAN_SOLDIER');
+      console.log(response);
     },
     changeUnit(id) {
       if (id === 1) {
@@ -506,6 +529,17 @@ export default {
         accuracy: 0,
         fear: 0,
       });
+    },
+  },
+  watch: {
+    isConnected() {
+      this.loadWallet();
+    this.loadNFT();
+    },
+
+    account() {
+      this.loadWallet();
+      this.loadNFT();
     },
   },
   async mounted() {

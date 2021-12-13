@@ -47,4 +47,8 @@ export default {
     "56": "0xd6adBAff5CD8ca7f702244106a30c90797274469",
     "97": "0x2A6eaAADac4B671F3D6643272564520EaC037997",
   },
+  apiArcadia: {
+    "56": process.env.VUE_APP_API_ARCADIA_56,
+    "97": process.env.VUE_APP_API_ARCADIA_97,
+  },
 };

@@ -2,7 +2,7 @@
   <div class="force-meter">
     <div class="base">
       <div v-for="(tick, index) in ticksPercent"
-        :key="index" class="unit" :src="asset" :alt="`unit-${i}`">
+        :key="index" class="unit">
         <div class="active" :style="`--width: ${tick}%`"></div></div>
     </div>
   </div>

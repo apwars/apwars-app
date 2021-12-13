@@ -1,12 +1,14 @@
 import store from "@/store";
 export default class BaseController {
   constructor(_api) {
+    console.log('constructor', _api)
     this.api = _api;
     this.account = store.getters["user/account"];
   }
 
   async _get(endpoint) {
     try {
+      console.log('api', this.api)
       const response = await fetch(`${this.api}${endpoint}`);
       if (response.status !== 200 && response.status !== 201) {
         throw await response.json();
