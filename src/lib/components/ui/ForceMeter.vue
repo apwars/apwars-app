@@ -3,7 +3,7 @@
     <div class="base">
       <div v-for="(tick, index) in ticksPercent"
         :key="index" class="unit">
-        <div class="active" :style="`--width: ${tick}%`"></div></div>
+        <div class="active" :style="`--width: ${tick}%;--fill:${fillColor}`"></div></div>
     </div>
   </div>
 </template>
@@ -22,9 +22,9 @@ export default {
       type: Number,
       default: 0,
     },
-    type: {
+    fillColor: {
       type: String,
-      default: '',
+      default: '#FFEEBC',
     }
   },
   computed: {
@@ -67,7 +67,7 @@ export default {
   display: inline-block;
     
     width: var(--width);
-    background-color: #FFEEBC;
+    background-color: var(--fill);
     box-sizing: border-box;
   }
 }

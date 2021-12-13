@@ -18,40 +18,46 @@
             class="flag-button"
             width="64"
             src="/images/battle/flag-the-corporation-human.png"
-            @click="() => changeUnit(1)"
+            @click="() => changeUnit(typeHuman)"
           />
           <img
             class="flag-button ml-3"
             width="64"
             src="/images/battle/flag-the-degenerate-orc.png"
-            @click="() => changeUnit(2)"
+            @click="() => changeUnit(typeOrc)"
           />
         </div>
       </v-row>
+      <v-row v-if="isLoadingNFT">
+        <v-col class="d-flex justify-space-between">
+          <v-skeleton-loader width="20%" type="image"/> <v-skeleton-loader width="30%" type="paragraph, paragraph, text"/> <v-skeleton-loader type="image, button"/> <v-skeleton-loader type="image, button"/> <v-skeleton-loader type="image, button"/>
+        </v-col>
+      </v-row>
+      <template v-else>
       <v-row>
         <v-col sm="12" md="7">
           <v-row>
             <v-col class="d-flex flex-column flex-md-row">
               <div class="unit-image">
-                <Button class="unlock-button" type="wprimary" text="Click to unlock" :handleClick="() => openUnitUnlock()" v-if="!unit.isUnlocked" />
-                <v-img :class="unit.isUnlocked ? '' : 'locked'" :src="unit.portrait" contain />
+                <Button class="unlock-button" type="wprimary" text="Click to unlock" :handleClick="() => openUnitUnlock()" v-if="!isUnlocked" />
+                <v-img :class="isUnlocked ? '' : 'locked'" :src="portrait" contain />
               </div>
               <div class="unit-data">
-                <v-text-field placeholder="Edit name">
+                <v-text-field placeholder="Edit name" :value="unit.name" @input="handleNameChange" :loading="isLoadingName" :disable="!isUnlocked || isLoadingName">
                   <v-icon slot="append" color="white">
                     mdi-pencil-outline
                   </v-icon>
                 </v-text-field>
-                <div class="class-info">Class: {{ unit.className }}</div>
+                <div class="class-info">Class: Warrior</div>
                 <div class="xp-container mt-2">
                   <div class="xp-label d-flex justify-space-between">
                     <div class="level">Level {{ unit.level }}</div>
                     <div class="value">
-                      {{ format(unit.XP) }}/{{ format(unit.maxXP) }}
+                      {{ format(unit.levelPoints) }}/{{ format(maxXP) }}
                     </div>
                   </div>
                   <Progress
-                    :maxScale="unit.maxXP"
+                    :maxScale="maxXP"
                     :value="unit.XP"
                     color1="#00FFFF"
                     color2="#59BBFC"
@@ -59,10 +65,10 @@
                   />
                 </div>
                 <div class="items-container d-flex justify-space-between mt-2">
-                  <Slot><img src="/images/icons/items/boots.png"/></Slot>
-                  <Slot><img src="/images/icons/items/platemail.png"/></Slot>
-                  <Slot><img src="/images/icons/items/swords.png"/></Slot>
-                  <Slot><img src="/images/icons/items/shield.png"/></Slot>
+                  <ItemSlot><img src="/images/icons/items/boots.png"/></ItemSlot>
+                  <ItemSlot><img src="/images/icons/items/platemail.png"/></ItemSlot>
+                  <ItemSlot><img src="/images/icons/items/swords.png"/></ItemSlot>
+                  <ItemSlot><img src="/images/icons/items/shield.png"/></ItemSlot>
                 </div>
               </div>
             </v-col>
@@ -133,7 +139,7 @@
                 </div>
               </div>
               <Button
-                :disabled="!unit.isUnlocked"
+                :disabled="!isUnlocked"
                 text="Unlock"
                 type="wsecondary"
                 isBlock
@@ -204,7 +210,7 @@
                 </div>
               </div>
               <Button
-                :disabled="!unit.isUnlocked"
+                :disabled="!isUnlocked"
                 text="Unlock"
                 type="wsecondary"
                 isBlock
@@ -275,7 +281,7 @@
                 </div>
               </div>
               <Button
-                :disabled="!unit.isUnlocked"
+                :disabled="!isUnlocked"
                 text="Unlock"
                 type="wsecondary"
                 isBlock
@@ -290,38 +296,38 @@
         <v-col cols="12" md="4">
           <div class="d-flex">
             <div class="stat-container text-medium">Strength</div>
-            <ForceMeter type="flat" :maxScale="5" :value="1" />
+            <ForceMeter type="flat" :maxScale="maxStrength" :value="unit.stats.strength" />
             <div class="text-medium ml-2">
-              {{ unit.strength }}/{{ unit.maxStrength }}
+              {{ unit.stats.strength }}/{{ maxStrength }}
             </div>
           </div>
           <div class="d-flex">
             <div class="stat-container text-medium">Speed</div>
-            <ForceMeter type="flat" :maxScale="5" :value="1" />
+            <ForceMeter type="flat" :maxScale="maxSpeed" :value="unit.stats.speed" />
             <div class="text-medium ml-2">
-              {{ unit.speed }}/{{ unit.maxSpeed }}
+              {{ unit.stats.speed }}/{{ maxSpeed }}
             </div>
           </div>
           <div class="d-flex">
             <div class="stat-container text-medium">HP</div>
-            <ForceMeter type="flat" :maxScale="50" :value="20" />
-            <div class="text-medium ml-2">{{ unit.HP }}/{{ unit.maxHP }}</div>
+            <ForceMeter type="flat" :maxScale="maxHP" :value="unit.stats.hp" />
+            <div class="text-medium ml-2">{{ unit.stats.hp }}/{{ maxHP }}</div>
           </div>
         </v-col>
         <v-col cols="12" md="4" class="d-flex"
           ><div class="mr-2">
             <div class="status-description">
               <div class="label text-large">Courage</div>
-              <Button class="mt-1" size="small" type="wsecondary" isBlock :disabled="!unit.isUnlocked"
+              <Button class="mt-1" size="small" type="wsecondary" isBlock :disabled="!isUnlocked"
                 ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
                 Recharge</Button
               >
             </div>
           </div>
           <div>
-            <ForceMeter :maxScale="unit.maxCourage" :value="unit.courage" />
+            <ForceMeter :maxScale="maxCourage" :value="unit.recharges.wCOURAGE.count" fillColor="#148F00" />
             <div class="d-flex justify-end">
-              {{ unit.courage }}/{{ unit.maxCourage }}
+              {{ unit.recharges.wCOURAGE.count }}/{{ maxCourage }}
             </div>
           </div></v-col
         >
@@ -329,16 +335,16 @@
           ><div class="mr-2">
             <div class="status-description">
               <div class="label text-large">Energy</div>
-              <Button class="mt-1" size="small" type="wsecondary" isBlock :disabled="!unit.isUnlocked"
+              <Button class="mt-1" size="small" type="wsecondary" isBlock :disabled="!isUnlocked"
                 ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
                 Recharge</Button
               >
             </div>
           </div>
           <div>
-            <ForceMeter :maxScale="unit.maxEnergy" :value="unit.energy" />
+            <ForceMeter :ticks="3" :maxScale="maxEnergy" :value="unit.recharges.wENERGY.count" fillColor="#FFB800" />
             <div class="d-flex justify-end">
-              {{ unit.energy }}/{{ unit.maxEnergy }}
+              {{ unit.recharges.wENERGY.count }}/{{ maxEnergy }}
             </div>
           </div>
         </v-col>
@@ -365,20 +371,25 @@
           <div class="modal-text text-medium">You are unlocking your Soldier to fight the enemies</div>
         </div>
       </wood>
+      </template>
     </v-container>
   </div>
 </template>
 <script>
 import { mapMutations } from "vuex";
+import { NFT, NFT_PORTRAIT } from '@/data/NFTs';
+
 import Button from "@/lib/components/ui/Buttons/Button";
 import ForceMeter from "@/lib/components/ui/ForceMeter";
 import Progress from "@/lib/components/ui/Progress";
 import Title from "@/lib/components/ui/Title";
 import PowerBar from "@/lib/components/ui/PowerBar";
-import Slot from "@/lib/components/ui/Slot";
+import ItemSlot from "@/lib/components/ui/ItemSlot";
 import IconBase from "@/lib/components/ui/IconBase";
 import Wood from "@/lib/components/ui/Modals/Templates/Wood";
 import Controller from "@/controller/SoldierController";
+
+const TEMP_ACC = '0x124'
 
 export default {
   components: {
@@ -387,7 +398,7 @@ export default {
     Progress,
     Title,
     PowerBar,
-    Slot,
+    ItemSlot,
     IconBase,
     Wood
   },
@@ -401,32 +412,63 @@ export default {
     addresses() {
       return this.$store.getters["user/addresses"];
     },
+    portrait() {
+      return NFT_PORTRAIT[this.type];
+    },
+    isUnlocked() {
+      return this.unit.owner;
+    },
+    typeHuman() {
+      return NFT.HUMAN
+    },
+    typeOrc() {
+      return NFT.ORC
+    },
   },
   data() {
     return {
       isUnlockModalOpen: false,
+      type: NFT.HUMAN,
+      isLoadingNFT: false,
+      timeout: null,
+      isLoadingName: false,
       unit: {
-        isUnlocked: false,
         portrait: "/images/troops/wwarrior-toon.png",
         name: "",
         className: "Warrior",
         level: 1,
-        XP: 0,
-        maxXP: 10000,
-        strength: 0,
-        maxStrength: 5,
-        speed: 0,
-        maxSpeed: 5,
-        HP: 0,
-        maxHP: 50,
-        courage: 0,
-        maxCourage: 100,
-        energy: 0,
-        maxEnergy: 100,
+        levelPoints: 0,      
+        strength: 0,      
+        speed: 0,     
+        HP: 0,    
+        courage: 0,    
+        energy: 0,   
         attack: null,
         experience: null,
         armory: null,
+        stats: {
+          hp: 0,
+          speed: 0,
+          strength: 0,
+        },
+        recharges: {
+          wCOURAGE: {
+            count: 0,
+            lastDate: null,
+          },
+          wENERGY: {
+            count: 0,
+            lastDate: null,
+            freeLastData: null,
+          }
+        }
       },
+      maxXP: 10000,
+      maxStrength: 5,
+      maxSpeed: 5,
+      maxHP: 50,
+      maxCourage: 100,
+      maxEnergy: 3,
     };
   },
   methods: {
@@ -442,84 +484,40 @@ export default {
     openUnitUnlock() {
       this.isUnlockModalOpen = true;
     },
-    unlockUnit() {
-      this.unit.isUnlocked = true;
+    async unlockUnit() {
+      this.unlockNFT();
       this.isUnlockModalOpen = false;
     },
     async loadWallet() {
-      console.log('api address', this.addresses.apiArcadia)
       const c = new Controller(this.addresses.apiArcadia);
-      const response = await c.wallets('0x124');
-      console.log(response);
+      await c.wallets(TEMP_ACC);
     },
     async loadNFT(type) {
+      this.isLoadingNFT = true;
       const c = new Controller(this.addresses.apiArcadia);
-      const response = await c.getNFTByType('0x124', 'HUMAN_SOLDIER');
-      console.log(response);
+      try {
+        const response = await c.getNFTByType(TEMP_ACC, type);
+        this.unit = {...response.data, owner: response.owner};
+      } catch (error) {
+        if (error.status === 404) {
+          console.log(`${type} NFT not found for this account`);
+        }
+      } finally {
+        this.isLoadingNFT = false;
+      }
     },
-    changeUnit(id) {
-      if (id === 1) {
-        this.unit = {
-          isUnlocked: true,
-          id: 1,
-          portrait: "/images/troops/wwarrior-toon.png",
-          name: "",
-          className: "Warrior",
-          level: 3,
-          XP: 3778,
-          maxXP: 10000,
-          strength: 1,
-          maxStrength: 5,
-          speed: 1,
-          maxSpeed: 5,
-          HP: 18.7,
-          maxHP: 50,
-          courage: 60,
-          maxCourage: 100,
-          energy: 10,
-          maxEnergy: 100,
-          attack: {
-            force: 2,
-            speed: 1,
-            accuracy: 1,
-            fear: 0,
-          },
-          experience: null,
-          armory: null,
-        };
-        this.unit.experience = null;
-        this.unit.armory = null;
-      } else {
-        this.unit = {
-          isUnlocked: true,
-          id: 2,
-          portrait: "/images/troops/wgrunt-toon.png",
-          name: "",
-          className: "Warrior",
-          level: 5,
-          XP: 8659,
-          maxXP: 25000,
-          strength: 2,
-          maxStrength: 5,
-          speed: 3,
-          maxSpeed: 5,
-          HP: 48,
-          maxHP: 50,
-          courage: 90,
-          maxCourage: 100,
-          energy: 72,
-          maxEnergy: 100,
-          attack: {
-            force: 3,
-            speed: 1,
-            accuracy: 2,
-            fear: 2,
-          },
-          experience: null,
-          armory: null,
-        };
-        this.unit.experience = null;
-        this.unit.armory = null;
+    async unlockNFT(type) {
+      const c = new Controller(this.addresses.apiArcadia);
+      try {
+        const response = await c.unlockNFT(TEMP_ACC, this.type);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    changeUnit(type) {
+      if (type !== this.type) {
+        this.type = type;
+        this.loadNFT(type);
       }
     },
     unlockProperty(property) {
@@ -530,16 +528,35 @@ export default {
         fear: 0,
       });
     },
+    async changeName(value) {
+      this.isLoadingName = true;
+      const c = new Controller(this.addresses.apiArcadia);
+      try {
+        await c.changeName(TEMP_ACC, this.type, value);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoadingName = false;
+      }
+    },
+    handleNameChange(value) {
+      if(this.timeout) {
+        clearTimeout(this.timeout);
+      }
+      this.timeout = setTimeout(() => {
+        this.changeName(value);
+      }, 800);
+    }
   },
   watch: {
     isConnected() {
       this.loadWallet();
-    this.loadNFT();
+      this.loadNFT(this.type);
     },
 
     account() {
       this.loadWallet();
-      this.loadNFT();
+      this.loadNFT(this.type);
     },
   },
   async mounted() {

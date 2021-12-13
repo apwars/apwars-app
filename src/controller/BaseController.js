@@ -1,7 +1,6 @@
 import store from "@/store";
 export default class BaseController {
   constructor(_api) {
-    console.log('constructor', _api)
     this.api = _api;
     this.account = store.getters["user/account"];
   }
@@ -54,6 +53,25 @@ export default class BaseController {
           'message-signature': messageSignature,
           'message-nonce': message.nonce,
           'signature': signature
+        },
+        body: JSON.stringify(body)
+      });
+      if (response.status !== 200 && response.status !== 201) {
+        throw await response.json();
+      }
+      return await response.json();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async _put(endpoint, body) {
+    try {
+      const response = await fetch(`${this.api}${endpoint}`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
       });

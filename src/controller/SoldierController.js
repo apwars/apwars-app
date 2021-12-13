@@ -9,7 +9,7 @@ export default class SoldierController {
 
   wallets(account) {
     try {
-      return this.base._get(`/wallets/${account}`);
+      return this.base._get(`/v1/wallets/${account}`);
     } catch (error) {
       throw error;
     }
@@ -17,7 +17,26 @@ export default class SoldierController {
 
   getNFTByType(account, type) {
     try {
-      return this.base._get(`/accounts/${account}/nfts/${type}`);
+      return this.base._get(`/v1/accounts/${account}/nfts/${type}`);
+    } catch (error) {
+      if (error.status === 404) {
+        return null;
+      }
+      throw error;
+    }
+  }
+
+  unlockNFT(account, type) {
+    try {
+      return this.base._postSignature(`/v1/nfts/${type}`, { account });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  changeName(account, type, name) {
+    try {
+      return this.base._put(`/v1/accounts/${account}/nfts/${type}`, { account, name });
     } catch (error) {
       throw error;
     }
