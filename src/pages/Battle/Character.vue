@@ -30,354 +30,462 @@
       </v-row>
       <v-row v-if="isLoadingNFT">
         <v-col class="d-flex justify-space-between">
-          <v-skeleton-loader width="20%" type="image"/> <v-skeleton-loader width="30%" type="paragraph, paragraph, text"/> <v-skeleton-loader type="image, button"/> <v-skeleton-loader type="image, button"/> <v-skeleton-loader type="image, button"/>
+          <v-skeleton-loader width="20%" type="image" />
+          <v-skeleton-loader width="30%" type="paragraph, paragraph, text" />
+          <v-skeleton-loader type="image, button" />
+          <v-skeleton-loader type="image, button" />
+          <v-skeleton-loader type="image, button" />
         </v-col>
       </v-row>
       <template v-else>
-      <v-row>
-        <v-col sm="12" md="7">
-          <v-row>
-            <v-col class="d-flex flex-column flex-md-row">
-              <div class="unit-image">
-                <Button class="unlock-button" type="wprimary" text="Click to unlock" :handleClick="() => openUnitUnlock()" v-if="!isUnlocked" />
-                <v-img :class="isUnlocked ? '' : 'locked'" :src="portrait" contain />
-              </div>
-              <div class="unit-data">
-                <v-text-field placeholder="Edit name" :value="unit.name" @input="handleNameChange" :loading="isLoadingName" :disable="!isUnlocked || isLoadingName">
-                  <v-icon slot="append" color="white">
-                    mdi-pencil-outline
-                  </v-icon>
-                </v-text-field>
-                <div class="class-info">Class: Warrior</div>
-                <div class="xp-container mt-2">
-                  <div class="xp-label d-flex justify-space-between">
-                    <div class="level">Level {{ unit.level }}</div>
-                    <div class="value">
-                      {{ format(unit.levelPoints) }}/{{ format(maxXP) }}
+        <v-row>
+          <v-col sm="12" md="7">
+            <v-row>
+              <v-col class="d-flex flex-column flex-md-row">
+                <div class="unit-image">
+                  <div class="unlock-button">
+                    <Button
+                      type="wprimary"
+                      size="small"
+                      text="Click to unlock"
+                      :handleClick="() => openUnitUnlock()"
+                      v-if="!isUnlocked"
+                    />
+                    <div
+                      class="recharge-price  mt-1 d-flex justify-center align-center"
+                    >
+                      2500
+                      <img height="12" src="/images/wgold.png" alt="wGOLD" />
                     </div>
                   </div>
-                  <Progress
-                    :maxScale="maxXP"
-                    :value="unit.XP"
-                    color1="#00FFFF"
-                    color2="#59BBFC"
-                    noText
+                  <v-img
+                    :class="isUnlocked ? '' : 'locked'"
+                    :src="portrait"
+                    contain
                   />
                 </div>
-                <div class="items-container d-flex justify-space-between mt-2">
-                  <ItemSlot><img src="/images/icons/items/boots.png"/></ItemSlot>
-                  <ItemSlot><img src="/images/icons/items/platemail.png"/></ItemSlot>
-                  <ItemSlot><img src="/images/icons/items/swords.png"/></ItemSlot>
-                  <ItemSlot><img src="/images/icons/items/shield.png"/></ItemSlot>
-                </div>
-              </div>
-            </v-col>
-          </v-row>
-        </v-col>
-        <v-col md="5">
-          <v-row>
-            <v-col cols="4">
-              <div class="icon-container mb-2">
-                <v-img src="/images/icons/sword.png" />
-              </div>
-              <div class="force-group" v-if="unit.attack">
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="12" src="/images/icons/axe.png" />
+                <div class="unit-data">
+                  <v-text-field
+                    placeholder="Edit name"
+                    :value="unit.name"
+                    @input="handleNameChange"
+                    :loading="isLoadingName"
+                    :disable="!isUnlocked || isLoadingName"
+                  >
+                    <v-icon slot="append" color="white">
+                      mdi-pencil-outline
+                    </v-icon>
+                  </v-text-field>
+                  <div class="class-info">Class: Warrior</div>
+                  <div class="xp-container mt-2">
+                    <div class="xp-label d-flex justify-space-between">
+                      <div class="level">Level {{ unit.level }}</div>
+                      <div class="value">
+                        {{ format(unit.levelPoints) }}/{{ format(maxXP) }}
+                      </div>
+                    </div>
+                    <Progress
+                      :maxScale="maxXP"
+                      :value="unit.XP"
+                      color1="#00FFFF"
+                      color2="#59BBFC"
+                      noText
+                    />
                   </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.attack.force"
-                  />
-                  <div class="force-icon">
-                    <div class="plus" v-if="unit.attack.force !== 3"></div>
-                  </div>
-                </div>
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="14" src="/images/icons/lightning.png" />
-                  </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.attack.speed"
-                  />
-                  <div class="force-icon">
-                    <div class="plus"></div>
-                  </div>
-                </div>
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="14" src="/images/icons/fist.png" />
-                  </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.attack.accuracy"
-                  />
-                  <div class="force-icon">
-                    <div class="plus"></div>
+                  <div
+                    class="items-container d-flex justify-space-between mt-2"
+                  >
+                    <ItemSlot
+                      ><img src="/images/icons/items/boots.png"
+                    /></ItemSlot>
+                    <ItemSlot
+                      ><img src="/images/icons/items/platemail.png"
+                    /></ItemSlot>
+                    <ItemSlot
+                      ><img src="/images/icons/items/swords.png"
+                    /></ItemSlot>
+                    <ItemSlot
+                      ><img src="/images/icons/items/shield.png"
+                    /></ItemSlot>
                   </div>
                 </div>
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="12" src="/images/icons/fear.png" />
+              </v-col>
+            </v-row>
+          </v-col>
+          <v-col md="5">
+            <v-row>
+              <v-col cols="4">
+                <div class="icon-container mb-2">
+                  <v-img src="/images/icons/sword.png" />
+                </div>
+                <div class="force-group" v-if="unit.attack">
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="12" src="/images/icons/axe.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.attack.force"
+                    />
+                    <div class="force-icon">
+                      <div class="plus" v-if="unit.attack.force !== 3"></div>
+                    </div>
                   </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.attack.fear"
-                  />
-                  <div class="force-icon">
-                    <div class="plus"></div>
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="14" src="/images/icons/lightning.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.attack.speed"
+                    />
+                    <div class="force-icon">
+                      <div class="plus"></div>
+                    </div>
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="14" src="/images/icons/fist.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.attack.accuracy"
+                    />
+                    <div class="force-icon">
+                      <div class="plus"></div>
+                    </div>
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="12" src="/images/icons/fear.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.attack.fear"
+                    />
+                    <div class="force-icon">
+                      <div class="plus"></div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <Button
-                :disabled="!isUnlocked"
-                text="Unlock"
-                type="wsecondary"
-                isBlock
-                :handleClick="() => unlockProperty('attack')"
-                v-else
+                <Button
+                  :disabled="!isUnlocked"
+                  text="Unlock"
+                  type="wsecondary"
+                  isBlock
+                  :handleClick="() => unlockProperty('attack')"
+                  v-else
+                />
+              </v-col>
+              <v-col cols="4">
+                <div class="icon-container mb-2">
+                  <v-img src="/images/icons/patent.png" />
+                </div>
+                <div class="force-group" v-if="unit.experience">
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="12" src="/images/icons/axe.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.experience.force"
+                    />
+                    <div class="force-icon">
+                      <div
+                        class="plus"
+                        v-if="unit.experience.force !== 3"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="14" src="/images/icons/lightning.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.experience.speed"
+                    />
+                    <div class="force-icon">
+                      <div class="plus"></div>
+                    </div>
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="14" src="/images/icons/fist.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.experience.accuracy"
+                    />
+                    <div class="force-icon">
+                      <div class="plus"></div>
+                    </div>
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="12" src="/images/icons/fear.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.experience.fear"
+                    />
+                    <div class="force-icon">
+                      <div class="plus"></div>
+                    </div>
+                  </div>
+                </div>
+                <Button
+                  :disabled="!isUnlocked"
+                  text="Unlock"
+                  type="wsecondary"
+                  isBlock
+                  :handleClick="() => unlockProperty('experience')"
+                  v-else
+                />
+              </v-col>
+              <v-col cols="4">
+                <div class="icon-container mb-2">
+                  <v-img src="/images/icons/anvil.png" />
+                </div>
+                <div class="force-group" v-if="unit.armory">
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="12" src="/images/icons/axe.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.armory.force"
+                    />
+                    <div class="force-icon">
+                      <div class="plus" v-if="unit.armory.force !== 3"></div>
+                    </div>
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="14" src="/images/icons/lightning.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.armory.speed"
+                    />
+                    <div class="force-icon">
+                      <div class="plus"></div>
+                    </div>
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="14" src="/images/icons/fist.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.armory.accuracy"
+                    />
+                    <div class="force-icon">
+                      <div class="plus"></div>
+                    </div>
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="force-icon">
+                      <img height="12" src="/images/icons/fear.png" />
+                    </div>
+                    <ForceMeter
+                      type="flat"
+                      :ticks="3"
+                      :maxScale="3"
+                      :value="unit.armory.fear"
+                    />
+                    <div class="force-icon">
+                      <div class="plus"></div>
+                    </div>
+                  </div>
+                </div>
+                <Button
+                  :disabled="!isUnlocked"
+                  text="Unlock"
+                  type="wsecondary"
+                  isBlock
+                  :handleClick="() => unlockProperty('armory')"
+                  v-else
+                />
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" md="4">
+            <div class="d-flex">
+              <div class="stat-container text-medium">Strength</div>
+              <ForceMeter
+                type="flat"
+                :maxScale="maxStrength"
+                :value="unit.stats.strength"
               />
-            </v-col>
-            <v-col cols="4">
-              <div class="icon-container mb-2">
-                <v-img src="/images/icons/patent.png" />
+              <div class="text-medium ml-2">
+                {{ unit.stats.strength }}/{{ maxStrength }}
               </div>
-              <div class="force-group" v-if="unit.experience">
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="12" src="/images/icons/axe.png" />
-                  </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.experience.force"
-                  />
-                  <div class="force-icon">
-                    <div class="plus" v-if="unit.experience.force !== 3"></div>
-                  </div>
-                </div>
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="14" src="/images/icons/lightning.png" />
-                  </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.experience.speed"
-                  />
-                  <div class="force-icon">
-                    <div class="plus"></div>
-                  </div>
-                </div>
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="14" src="/images/icons/fist.png" />
-                  </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.experience.accuracy"
-                  />
-                  <div class="force-icon">
-                    <div class="plus"></div>
-                  </div>
-                </div>
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="12" src="/images/icons/fear.png" />
-                  </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.experience.fear"
-                  />
-                  <div class="force-icon">
-                    <div class="plus"></div>
-                  </div>
-                </div>
-              </div>
-              <Button
-                :disabled="!isUnlocked"
-                text="Unlock"
-                type="wsecondary"
-                isBlock
-                :handleClick="() => unlockProperty('experience')"
-                v-else
+            </div>
+            <div class="d-flex">
+              <div class="stat-container text-medium">Speed</div>
+              <ForceMeter
+                type="flat"
+                :maxScale="maxSpeed"
+                :value="unit.stats.speed"
               />
-            </v-col>
-            <v-col cols="4">
-              <div class="icon-container mb-2">
-                <v-img src="/images/icons/anvil.png" />
+              <div class="text-medium ml-2">
+                {{ unit.stats.speed }}/{{ maxSpeed }}
               </div>
-              <div class="force-group" v-if="unit.armory">
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="12" src="/images/icons/axe.png" />
-                  </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.armory.force"
-                  />
-                  <div class="force-icon">
-                    <div class="plus" v-if="unit.armory.force !== 3"></div>
-                  </div>
-                </div>
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="14" src="/images/icons/lightning.png" />
-                  </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.armory.speed"
-                  />
-                  <div class="force-icon">
-                    <div class="plus"></div>
-                  </div>
-                </div>
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="14" src="/images/icons/fist.png" />
-                  </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.armory.accuracy"
-                  />
-                  <div class="force-icon">
-                    <div class="plus"></div>
-                  </div>
-                </div>
-                <div class="d-flex mt-1">
-                  <div class="force-icon">
-                    <img height="12" src="/images/icons/fear.png" />
-                  </div>
-                  <ForceMeter
-                    type="flat"
-                    :ticks="3"
-                    :maxScale="3"
-                    :value="unit.armory.fear"
-                  />
-                  <div class="force-icon">
-                    <div class="plus"></div>
-                  </div>
-                </div>
-              </div>
-              <Button
-                :disabled="!isUnlocked"
-                text="Unlock"
-                type="wsecondary"
-                isBlock
-                :handleClick="() => unlockProperty('armory')"
-                v-else
+            </div>
+            <div class="d-flex">
+              <div class="stat-container text-medium">HP</div>
+              <ForceMeter
+                type="flat"
+                :maxScale="maxHP"
+                :value="unit.stats.hp"
               />
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" md="4">
-          <div class="d-flex">
-            <div class="stat-container text-medium">Strength</div>
-            <ForceMeter type="flat" :maxScale="maxStrength" :value="unit.stats.strength" />
-            <div class="text-medium ml-2">
-              {{ unit.stats.strength }}/{{ maxStrength }}
+              <div class="text-medium ml-2">
+                {{ unit.stats.hp }}/{{ maxHP }}
+              </div>
             </div>
-          </div>
-          <div class="d-flex">
-            <div class="stat-container text-medium">Speed</div>
-            <ForceMeter type="flat" :maxScale="maxSpeed" :value="unit.stats.speed" />
-            <div class="text-medium ml-2">
-              {{ unit.stats.speed }}/{{ maxSpeed }}
-            </div>
-          </div>
-          <div class="d-flex">
-            <div class="stat-container text-medium">HP</div>
-            <ForceMeter type="flat" :maxScale="maxHP" :value="unit.stats.hp" />
-            <div class="text-medium ml-2">{{ unit.stats.hp }}/{{ maxHP }}</div>
-          </div>
-        </v-col>
-        <v-col cols="12" md="4" class="d-flex"
-          ><div class="mr-2">
-            <div class="status-description">
-              <div class="label text-large">Courage</div>
-              <Button class="mt-1" size="small" type="wsecondary" isBlock :disabled="!isUnlocked"
-                ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
-                Recharge</Button
-              >
-            </div>
-          </div>
-          <div>
-            <ForceMeter :maxScale="maxCourage" :value="unit.recharges.wCOURAGE.count" fillColor="#148F00" />
-            <div class="d-flex justify-end">
-              {{ unit.recharges.wCOURAGE.count }}/{{ maxCourage }}
-            </div>
-          </div></v-col
+          </v-col>
+          <v-col cols="12" md="4"
+            ><v-row
+              ><v-col class="d-flex"
+                ><div class="mr-2">
+                  <div class="status-description">
+                    <div class="label text-large">Courage</div>
+                  </div>
+                </div>
+                <div>
+                  <ForceMeter
+                    :maxScale="maxCourage"
+                    :value="unit.recharges.wCOURAGE.count"
+                    fillColor="#148F00"
+                  />
+                  <div class="d-flex justify-end">
+                    {{ unit.recharges.wCOURAGE.count }}/{{ maxCourage }}
+                  </div>
+                </div></v-col
+              ></v-row
+            >
+            <v-row dense no-gutters v-if="!(unit.recharges.wCOURAGE.count === maxCourage)">
+              <v-col>
+                <div class="d-flex align-items-center">
+                  <Button size="small" type="wsecondary" :disabled="!isUnlocked"
+                    ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
+                    Recharge</Button
+                  >
+                  <div class="recharge-price d-flex align-center ml-1">
+                    1000
+                    <img
+                      height="12px"
+                      src="/images/wcourage.png"
+                      alt="wCOURAGE"
+                    />
+                  </div>
+                </div>
+              </v-col>
+            </v-row>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-row
+              ><v-col class="d-flex">
+                <div class="mr-2">
+                  <div class="status-description">
+                    <div class="label text-large">Energy</div>
+                  </div>
+                </div>
+                <div>
+                  <ForceMeter
+                    :ticks="3"
+                    :maxScale="maxEnergy"
+                    :value="unit.recharges.wENERGY.count"
+                    fillColor="#FFB800"
+                  />
+                  <div class="d-flex justify-end">
+                    {{ unit.recharges.wENERGY.count }}/{{ maxEnergy }}
+                  </div>
+                </div>
+              </v-col></v-row
+            >
+            <v-row dense no-gutters v-if="!(unit.recharges.wENERGY.count === maxEnergy) && (hasFreeEnergyRecharge || hasPaidEnergyRecharge)">
+              <v-col>
+                <div class="d-flex align-items-center">
+                  <Button size="small" type="wsecondary" :disabled="!isUnlocked"
+                    ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
+                    Recharge</Button
+                  >
+                  <div class="recharge-price d-flex align-center ml-1">
+                    <span v-if="hasFreeEnergyRecharge">0</span
+                    ><span v-else>250</span>
+                    <img height="12px" src="/images/wgold.png" alt="wGOLD" />
+                  </div>
+                </div>
+                <div class="recharge-text mt-1" v-if="!hasFreeEnergyRecharge">You spent free recharge in the last 8 hours and can use it again in x hours</div>
+                <div class="recharge-text mt-1" v-if="!hasPaidEnergyRecharge">You spent paid recharge in the last 24 hours and can use it again in x hours</div>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <div class="divider"></div>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" md="4">
+            <div class="stat-value text-large">Statistics</div>
+          </v-col>
+          <v-col>
+            <div class="stat-value text-medium">Plays</div>
+          </v-col>
+          <v-col><div class="stat-value text-medium">Record Time</div> </v-col>
+          <v-col><div class="stat-value text-medium">Record Score</div> </v-col>
+          <v-col
+            ><div class="stat-value text-medium">Record Points</div>
+          </v-col>
+        </v-row>
+        <wood
+          :open="isUnlockModalOpen"
+          @close="isUnlockModalOpen = false"
+          @confirm="() => unlockUnit()"
+          title="Unlock Soldier"
         >
-        <v-col cols="12" md="4" class="d-flex"
-          ><div class="mr-2">
-            <div class="status-description">
-              <div class="label text-large">Energy</div>
-              <Button class="mt-1" size="small" type="wsecondary" isBlock :disabled="!isUnlocked"
-                ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
-                Recharge</Button
-              >
+          <div class="modal-message d-flex justify-space-between">
+            <img :src="portrait" />
+            <div class="modal-text text-medium">
+              You are unlocking your Soldier to fight the enemies
             </div>
           </div>
-          <div>
-            <ForceMeter :ticks="3" :maxScale="maxEnergy" :value="unit.recharges.wENERGY.count" fillColor="#FFB800" />
-            <div class="d-flex justify-end">
-              {{ unit.recharges.wENERGY.count }}/{{ maxEnergy }}
-            </div>
-          </div>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <div class="divider"></div>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" md="4">
-          <div class="stat-value text-large">Statistics</div>
-        </v-col>
-        <v-col>
-          <div class="stat-value text-medium">Plays</div>
-        </v-col>
-        <v-col><div class="stat-value text-medium">Record Time</div> </v-col>
-        <v-col><div class="stat-value text-medium">Record Score</div> </v-col>
-        <v-col><div class="stat-value text-medium">Record Points</div> </v-col>
-      </v-row>
-      <wood :open="isUnlockModalOpen" @close="isUnlockModalOpen = false" @confirm="() => unlockUnit()" title="Unlock Soldier">
-        <div class="modal-message d-flex justify-space-between">
-          <img :src="unit.portrait" />
-          <div class="modal-text text-medium">You are unlocking your Soldier to fight the enemies</div>
-        </div>
-      </wood>
+        </wood>
       </template>
     </v-container>
   </div>
 </template>
 <script>
 import { mapMutations } from "vuex";
-import { NFT, NFT_PORTRAIT } from '@/data/NFTs';
+import { NFT, NFT_PORTRAIT } from "@/data/NFTs";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import ForceMeter from "@/lib/components/ui/ForceMeter";
@@ -389,8 +497,6 @@ import IconBase from "@/lib/components/ui/IconBase";
 import Wood from "@/lib/components/ui/Modals/Templates/Wood";
 import Controller from "@/controller/SoldierController";
 
-const TEMP_ACC = '0x124'
-
 export default {
   components: {
     Button,
@@ -400,7 +506,7 @@ export default {
     PowerBar,
     ItemSlot,
     IconBase,
-    Wood
+    Wood,
   },
   computed: {
     isConnected() {
@@ -419,10 +525,22 @@ export default {
       return this.unit.owner;
     },
     typeHuman() {
-      return NFT.HUMAN
+      return NFT.HUMAN;
     },
     typeOrc() {
-      return NFT.ORC
+      return NFT.ORC;
+    },
+    hasFreeEnergyRecharge() {
+      const eightHoursAgo = new Date().getTime() + 8 * 60 * 60 * 1000;
+      const lastFree = new Date(this.unit.recharges.wENERGY.freeLastDate).getTime();
+      return (
+        this.unit.recharges.wENERGY.freeLastDate && eightHoursAgo > lastFree
+      );
+    },
+    hasPaidEnergyRecharge() {
+      const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
+      const lastFree = new Date(this.unit.recharges.wENERGY.lastDate).getTime();
+      return this.unit.recharges.wENERGY.lastDate && oneDayAgo > lastFree;
     },
   },
   data() {
@@ -433,16 +551,9 @@ export default {
       timeout: null,
       isLoadingName: false,
       unit: {
-        portrait: "/images/troops/wwarrior-toon.png",
         name: "",
-        className: "Warrior",
-        level: 1,
-        levelPoints: 0,      
-        strength: 0,      
-        speed: 0,     
-        HP: 0,    
-        courage: 0,    
-        energy: 0,   
+        level: 0,
+        levelPoints: 0,
         attack: null,
         experience: null,
         armory: null,
@@ -459,9 +570,9 @@ export default {
           wENERGY: {
             count: 0,
             lastDate: null,
-            freeLastData: null,
-          }
-        }
+            freeLastDate: null,
+          },
+        },
       },
       maxXP: 10000,
       maxStrength: 5,
@@ -490,14 +601,14 @@ export default {
     },
     async loadWallet() {
       const c = new Controller(this.addresses.apiArcadia);
-      await c.wallets(TEMP_ACC);
+      await c.wallets(this.account);
     },
     async loadNFT(type) {
       this.isLoadingNFT = true;
       const c = new Controller(this.addresses.apiArcadia);
       try {
-        const response = await c.getNFTByType(TEMP_ACC, type);
-        this.unit = {...response.data, owner: response.owner};
+        const response = await c.getNFTByType(this.account, type);
+        this.unit = { ...response.data, owner: response.owner };
       } catch (error) {
         if (error.status === 404) {
           console.log(`${type} NFT not found for this account`);
@@ -509,7 +620,8 @@ export default {
     async unlockNFT(type) {
       const c = new Controller(this.addresses.apiArcadia);
       try {
-        const response = await c.unlockNFT(TEMP_ACC, this.type);
+        const response = await c.unlockNFT(this.account, this.type);
+        this.unit = { ...response.data, owner: response.owner };
       } catch (error) {
         console.error(error);
       }
@@ -532,7 +644,7 @@ export default {
       this.isLoadingName = true;
       const c = new Controller(this.addresses.apiArcadia);
       try {
-        await c.changeName(TEMP_ACC, this.type, value);
+        await c.changeName(this.account, this.type, value);
       } catch (error) {
         console.error(error);
       } finally {
@@ -540,13 +652,13 @@ export default {
       }
     },
     handleNameChange(value) {
-      if(this.timeout) {
+      if (this.timeout) {
         clearTimeout(this.timeout);
       }
       this.timeout = setTimeout(() => {
         this.changeName(value);
       }, 800);
-    }
+    },
   },
   watch: {
     isConnected() {
@@ -682,5 +794,18 @@ export default {
 }
 .modal-text {
   max-width: 260px;
+}
+.recharge-price {
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 1.2;
+  > img {
+    margin-left: 2px;
+  }
+}
+.recharge-text {
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 1.2;
 }
 </style>
