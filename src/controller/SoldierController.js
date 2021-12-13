@@ -42,4 +42,12 @@ export default class SoldierController {
     }
   }
 
+  rechargeToken(account, type, token) {
+    try {
+      return this.base._post(`/v1/accounts/${account}/nfts/${type}/recharges/${token}`, { account });
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }

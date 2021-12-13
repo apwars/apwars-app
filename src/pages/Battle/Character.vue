@@ -392,7 +392,7 @@
             <v-row dense no-gutters v-if="!(unit.recharges.wCOURAGE.count === maxCourage)">
               <v-col>
                 <div class="d-flex align-items-center">
-                  <Button size="small" type="wsecondary" :disabled="!isUnlocked"
+                  <Button size="small" type="wsecondary" :disabled="!isUnlocked" :handleClick="() => rechargeToken('wCOURAGE')"
                     ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
                     Recharge</Button
                   >
@@ -432,7 +432,7 @@
             <v-row dense no-gutters v-if="!(unit.recharges.wENERGY.count === maxEnergy) && (hasFreeEnergyRecharge || hasPaidEnergyRecharge)">
               <v-col>
                 <div class="d-flex align-items-center">
-                  <Button size="small" type="wsecondary" :disabled="!isUnlocked"
+                  <Button size="small" type="wsecondary" :disabled="!isUnlocked" :handleClick="() => rechargeToken('wENERGY')"
                     ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
                     Recharge</Button
                   >
@@ -621,6 +621,15 @@ export default {
       const c = new Controller(this.addresses.apiArcadia);
       try {
         const response = await c.unlockNFT(this.account, this.type);
+        this.unit = { ...response.data, owner: response.owner };
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async rechargeToken(token) {
+      const c = new Controller(this.addresses.apiArcadia);
+      try {
+        const response = await c.rechargeToken(this.account, this.type, token);
         this.unit = { ...response.data, owner: response.owner };
       } catch (error) {
         console.error(error);
