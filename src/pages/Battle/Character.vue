@@ -391,16 +391,16 @@
           <div class="text-medium text-center mt-2">The cost of this action is 2500 wGOLD <img height="14" src="/images/wGOLD.png" /></div>
         </wood>
         <TemplateModalPapyrus :open="isRechargeModalOpen" @close="isRechargeModalOpen = false" @confirm="rechargeEnergy">
-          <div class="text-medium">{{ rechargeMessage }}</div>
+          <div class="text-medium text-center">{{ rechargeMessage }}</div>
         </TemplateModalPapyrus>
         <TemplateModalPapyrus :open="isRechargeModalOpen" @close="isRechargeModalOpen = false" @confirm="rechargeEnergy">
-          <div class="text-medium">{{ rechargeMessage }}</div>
+          <div class="text-medium text-center">{{ rechargeMessage }}</div>
         </TemplateModalPapyrus>
         <TemplateModalPapyrus :open="isCourageModalOpen" @close="isCourageModalOpen = false" @confirm="rechargeCourage">
-          <div class="text-medium">{{ courageRechargeMessage }}</div>
+          <div class="text-medium text-center">{{ courageRechargeMessage }}</div>
         </TemplateModalPapyrus>
         <TemplateModalPapyrus :open="isPointsModalOpen" @close="isPointsModalOpen = false" @confirm="upgradePoint">
-          <div class="text-medium">{{ pointsMessage }}</div>
+          <div class="text-medium text-center">{{ pointsMessage }}</div>
         </TemplateModalPapyrus>
       </template>
     </v-container>
@@ -517,6 +517,7 @@ export default {
           },
         },
       },
+      nameCache: null,
       maxXP: 10000,
       maxStrength: 5,
       maxSpeed: 5,
@@ -526,7 +527,7 @@ export default {
       rechargeMessage: null,
       rechargeAction: null,
       pointsAction: null,
-      pointsMessage: 'You are upgrading skill at the cost of 250 wGOLD and 1 level point.',
+      pointsMessage: 'You are upgrading skill at the cost of 250 wGOLD and {{QTY}} level points.',
       changeNameMessage: 'You are changing the name at the cost of 250 wGOLD.',
       courageRechargeMessage: 'You are recharging courage at the cost of 1000 wCOURAGE.',
       freeRechargeMessage: 'You are spending the free energy recharge, the next one will be available after 8 hours.',
@@ -560,6 +561,7 @@ export default {
       try {
         const response = await c.getNFTByType(this.account, type);
         this.unit = { ...response.data, owner: response.owner };
+        this.nameCache = this.unit.name;
       } catch (error) {
         if (error.status === 404) {
           console.log(`${type} NFT not found for this account`);
@@ -574,6 +576,7 @@ export default {
       try {
         const response = await c.unlockNFT(this.account, this.type);
         this.unit = { ...response.data, owner: response.owner };
+        this.nameCache = this.unit.name;
       } catch (error) {
         if (error.code === 4001) {
           return ToastSnackbar.error('Signature cancelled by user');
@@ -648,6 +651,7 @@ export default {
       try {
         await c.changeName(this.account, this.type, value);
       } catch (error) {
+        this.unit.name = this.nameCache;
         console.error(error);
       } finally {
         this.isLoadingName = false;
