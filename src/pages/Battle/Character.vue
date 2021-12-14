@@ -558,7 +558,11 @@ export default {
     async rechargeToken(token) {
       const c = new Controller(this.addresses.apiArcadia);
       try {
-        const response = await c.rechargeToken(this.account, this.type, token);
+        let t = token;
+        if (t === 'wENERGY' && this.hasFreeEnergyRecharge) {
+          t = 'wFREE-ENERGY';
+        }
+        const response = await c.rechargeToken(this.account, this.type, t);
         this.unit = { ...response.data, owner: response.owner };
       } catch (error) {
         console.error(error);

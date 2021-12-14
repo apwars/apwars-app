@@ -45,8 +45,8 @@ export default {
   position: relative;
   height: 24px;
   width: 100%;
+  background-color: #000;
   border: 2px solid var(--color2);
-  border-radius: 10px;
 }
 .value {
   height: 100%;
