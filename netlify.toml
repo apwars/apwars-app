@@ -4,6 +4,10 @@
 [context.develop.environment]
     VUE_APP_BSC_NETWORK="97"
     VUE_APP_SERVERLESS="https://api-dev.apwars.farm"
+    VUE_APP_API_ARCADIA_56=https://api-qa.apwars.farm
+    VUE_APP_API_ARCADIA_97=https://api-qa.apwars.farm
 [context.deploy-preview.environment]
     VUE_APP_BSC_NETWORK="ALL"
     VUE_APP_SERVERLESS="https://api-dev.apwars.farm"
+    VUE_APP_API_ARCADIA_56=https://api-qa.apwars.farm
+    VUE_APP_API_ARCADIA_97=https://api-qa.apwars.farm
