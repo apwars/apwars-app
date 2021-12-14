@@ -538,6 +538,7 @@ export default {
       } catch (error) {
         if (error.status === 404) {
           console.log(`${type} NFT not found for this account`);
+          this.resetUnit();
         }
       } finally {
         this.isLoadingNFT = false;
@@ -586,13 +587,39 @@ export default {
         this.loadNFT(type);
       }
     },
-    unlockProperty(property) {
-      this.unit[property] = () => ({
-        force: 0,
-        speed: 0,
-        accuracy: 0,
-        fear: 0,
-      });
+    resetUnit() {
+      this.unit = Object.assign({}, {
+        name: "",
+        level: 0,
+        levelPoints: 0,
+        attack: null,
+        experience: null,
+        armory: null,
+        energy: 0,
+        courage: 0,
+        points: 0,
+        stats: {
+          hp: 0,
+          speed: 0,
+          strength: 0,
+        },
+        skills: {
+          axe: 0,
+          willPower: 0,
+          combos: 0,
+          battleScars: 0,
+        },
+        recharges: {
+          wCOURAGE: {
+            count: 0,
+            lastDate: null,
+          },
+          wENERGY: {
+            count: 0,
+            lastDate: null,
+            freeLastDate: null,
+          },
+        }});
     },
     async changeName(value) {
       this.isLoadingName = true;
