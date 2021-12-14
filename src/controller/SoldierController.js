@@ -50,4 +50,13 @@ export default class SoldierController {
     }
   }
 
+  upgradeSkill(account, type, skills) {
+    try {
+      return this.base._put(`/v1/accounts/${account}/nfts/${type}`, { account, skills });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
 }

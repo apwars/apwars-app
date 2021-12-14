@@ -67,11 +67,20 @@ export default class BaseController {
 
   async _put(endpoint, body) {
     try {
+      const message = {
+        wallet: this.account.toLowerCase(),
+        nonce: new Date().getTime()
+      };
+      const messageSignature = web3.utils.sha3(JSON.stringify(message));
+      const signature = await window.web3.eth.personal.sign(messageSignature, message.wallet);
       const response = await fetch(`${this.api}${endpoint}`, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'message-signature': messageSignature,
+          'message-nonce': message.nonce,
+          'signature': signature
         },
         body: JSON.stringify(body)
       });
