@@ -444,27 +444,26 @@ export default {
       return NFT.ORC;
     },
     hasFreeEnergyRecharge() {
-      const eightHoursAgo = new Date().getTime() + 8 * 60 * 60 * 1000;
+      const eightHoursAgo = new Date().getTime() + (8 * 60 * 60 * 1000);
       let freeLast = new Date(this.unit.recharges.wENERGY.freeLastDate).getTime();
-      console.log(eightHoursAgo, freeLast)
       return (
         !this.unit.recharges.wENERGY.freeLastDate || (freeLast > eightHoursAgo)
       );
     },
     hasPaidEnergyRecharge() {
-      const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
+      const oneDayAgo = new Date().getTime() + (1 * 24 * 60 * 60 * 1000);
       const lastFree = new Date(this.unit.recharges.wENERGY.lastDate).getTime();
       return !this.unit.recharges.wENERGY.lastDate || (oneDayAgo > lastFree);
     },
     nextFreeRecharge() {
-      const eightHoursAgo = new Date().getTime() + 8 * 60 * 60 * 1000;
-      const lastFree = new Date(this.unit.recharges.wENERGY.freeLastDate).getTime();
-      return eightHoursAgo - lastFree;
+      let next = new Date(this.unit.recharges.wENERGY.freeLastDate);
+      next.setTime(next.getTime() + (8 * 60 * 60 * 1000));
+      return next.getTime() - new Date().getTime();
     },
     nextPaidRecharge() {
-      const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
-      const lastPaid = new Date(this.unit.recharges.wENERGY.lastDate).getTime();
-      return oneDayAgo - lastPaid;
+      let next = new Date(this.unit.recharges.wENERGY.freeLastDate);
+      next.setTime(next.getTime() + (1 * 24 * 60 * 60 * 1000));
+      return next.getTime() - new Date().getTime();
     }
   },
   data() {
