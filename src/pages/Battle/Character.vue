@@ -132,7 +132,7 @@
                       <div
                         class="plus"
                         v-if="unit.levelPoints && unit.skills.axe !== 3"
-                        @click="() => upgradeSkill('axe')"
+                        @click="() => openUpgradePointsModal('axe')"
                       ></div>
                     </div>
                   </div>
@@ -150,7 +150,7 @@
                       <div
                         class="plus"
                         v-if="unit.levelPoints && unit.skills.willPower !== 3"
-                        @click="() => upgradeSkill('willPower')"
+                        @click="() => openUpgradePointsModal('willPower')"
                       ></div>
                     </div>
                   </div>
@@ -168,7 +168,7 @@
                       <div
                         class="plus"
                         v-if="unit.levelPoints && unit.skills.combos !== 3"
-                        @click="() => upgradeSkill('combos')"
+                        @click="() => openUpgradePointsModal('combos')"
                       ></div>
                     </div>
                   </div>
@@ -186,7 +186,7 @@
                       <div
                         class="plus"
                         v-if="unit.levelPoints && unit.skills.battleScars !== 3"
-                        @click="() => upgradeSkill('battleScars')"
+                        @click="() => openUpgradePointsModal('battleScars')"
                       ></div>
                     </div>
                   </div>
@@ -285,7 +285,7 @@
                     size="small"
                     type="wsecondary"
                     :disabled="!isUnlocked"
-                    :handleClick="() => rechargeToken('wCOURAGE')"
+                    :handleClick="() => {isCourageModalOpen = true}"
                     ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
                     Recharge</Button
                   >
@@ -336,7 +336,7 @@
                     size="small"
                     type="wsecondary"
                     :disabled="!isUnlocked || (!hasPaidEnergyRecharge && !hasFreeEnergyRecharge)"
-                    :handleClick="() => rechargeToken('wENERGY')"
+                    :handleClick="() => openRechargeEnergyModal()"
                     ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
                     Recharge</Button
                   >
@@ -390,6 +390,18 @@
           </div>
           <div class="text-medium text-center mt-2">The cost of this action is 2500 wGOLD <img height="14" src="/images/wGOLD.png" /></div>
         </wood>
+        <TemplateModalPapyrus :open="isRechargeModalOpen" @close="isRechargeModalOpen = false" @confirm="rechargeEnergy">
+          <div class="text-medium">{{ rechargeMessage }}</div>
+        </TemplateModalPapyrus>
+        <TemplateModalPapyrus :open="isRechargeModalOpen" @close="isRechargeModalOpen = false" @confirm="rechargeEnergy">
+          <div class="text-medium">{{ rechargeMessage }}</div>
+        </TemplateModalPapyrus>
+        <TemplateModalPapyrus :open="isCourageModalOpen" @close="isCourageModalOpen = false" @confirm="rechargeCourage">
+          <div class="text-medium">{{ courageRechargeMessage }}</div>
+        </TemplateModalPapyrus>
+        <TemplateModalPapyrus :open="isPointsModalOpen" @close="isPointsModalOpen = false" @confirm="upgradePoint">
+          <div class="text-medium">{{ pointsMessage }}</div>
+        </TemplateModalPapyrus>
       </template>
     </v-container>
   </div>
@@ -408,6 +420,7 @@ import PowerBar from "@/lib/components/ui/PowerBar";
 import ItemSlot from "@/lib/components/ui/ItemSlot";
 import IconBase from "@/lib/components/ui/IconBase";
 import Wood from "@/lib/components/ui/Modals/Templates/Wood";
+import TemplateModalPapyrus from "@/lib/components/ui/Modals/Templates/TemplateModalPapyrus";
 import Controller from "@/controller/SoldierController";
 
 export default {
@@ -420,6 +433,7 @@ export default {
     ItemSlot,
     IconBase,
     Wood,
+    TemplateModalPapyrus,
   },
   computed: {
     isConnected() {
@@ -467,6 +481,9 @@ export default {
       isLoadingNFT: false,
       timeout: null,
       isLoadingName: false,
+      isCourageModalOpen: false,
+      isRechargeModalOpen: false,
+      isPointsModalOpen: false,
       unit: {
         name: "",
         level: 0,
@@ -506,6 +523,14 @@ export default {
       maxHP: 50,
       maxCourage: 100,
       maxEnergy: 3,
+      rechargeMessage: null,
+      rechargeAction: null,
+      pointsAction: null,
+      pointsMessage: 'You are upgrading skill at the cost of 250 wGOLD and 1 level point.',
+      changeNameMessage: 'You are changing the name at the cost of 250 wGOLD.',
+      courageRechargeMessage: 'You are recharging courage at the cost of 1000 wCOURAGE.',
+      freeRechargeMessage: 'You are spending the free energy recharge, the next one will be available after 8 hours.',
+      paidRechargeMessage: 'You are recharging energy for 250 wGOLD, the next paid recharge will be available after 24 hours.'
     };
   },
   methods: {
@@ -559,11 +584,7 @@ export default {
     async rechargeToken(token) {
       const c = new Controller(this.addresses.apiArcadia);
       try {
-        let t = token;
-        if (t === 'wENERGY' && this.hasFreeEnergyRecharge) {
-          t = 'wFREE-ENERGY';
-        }
-        const response = await c.rechargeToken(this.account, this.type, t);
+        const response = await c.rechargeToken(this.account, this.type, token);
         this.unit = { ...response.data, owner: response.owner };
       } catch (error) {
         ToastSnackbar.error(`Something went wrong while trying to recharge energy: ${error.code}`)
@@ -640,6 +661,32 @@ export default {
         this.changeName(value);
       }, 800);
     },
+    openRechargeEnergyModal() {
+      if (this.hasFreeEnergyRecharge) {
+        this.rechargeMessage = this.freeRechargeMessage;
+        this.rechargeAction = 'wFREE-ENERGY';
+      } else {
+        this.rechargeMessage = this.paidRechargeMessage;
+        this.rechargeAction = 'wENERGY';
+      }
+      this.isRechargeModalOpen = true;
+    },
+    rechargeEnergy() {
+      this.rechargeToken(this.rechargeAction);
+      this.isRechargeModalOpen = false;
+    },
+    rechargeCourage() {
+      this.rechargeToken('wCOURAGE');
+      this.isCourageModalOpen = false;
+    },
+    openUpgradePointsModal(skill) {
+      this.pointsAction = skill;
+      this.isPointsModalOpen = true;
+    },
+    upgradePoint() {
+      this.upgradeSkill(this.pointsAction);
+      this.isPointsModalOpen = false;
+    }
   },
   watch: {
     isConnected() {
