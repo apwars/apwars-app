@@ -393,9 +393,6 @@
         <TemplateModalPapyrus :open="isRechargeModalOpen" @close="isRechargeModalOpen = false" @confirm="rechargeEnergy">
           <div class="text-medium text-center">{{ rechargeMessage }}</div>
         </TemplateModalPapyrus>
-        <TemplateModalPapyrus :open="isRechargeModalOpen" @close="isRechargeModalOpen = false" @confirm="rechargeEnergy">
-          <div class="text-medium text-center">{{ rechargeMessage }}</div>
-        </TemplateModalPapyrus>
         <TemplateModalPapyrus :open="isCourageModalOpen" @close="isCourageModalOpen = false" @confirm="rechargeCourage">
           <div class="text-medium text-center">{{ courageRechargeMessage }}</div>
         </TemplateModalPapyrus>
@@ -527,8 +524,8 @@ export default {
       rechargeMessage: null,
       rechargeAction: null,
       pointsAction: null,
-      pointsMessage: 'You are upgrading skill at the cost of 250 wGOLD and {{QTY}} level points.',
-      changeNameMessage: 'You are changing the name at the cost of 250 wGOLD.',
+      pointsMessage: null,
+      basePointsMessage: 'You are upgrading skill at the cost of {{QTY}} level points.',
       courageRechargeMessage: 'You are recharging courage at the cost of 1000 wCOURAGE.',
       freeRechargeMessage: 'You are spending the free energy recharge, the next one will be available after 8 hours.',
       paidRechargeMessage: 'You are recharging energy for 250 wGOLD, the next paid recharge will be available after 24 hours.'
@@ -685,6 +682,8 @@ export default {
     },
     openUpgradePointsModal(skill) {
       this.pointsAction = skill;
+      const currentPoints = this.unit.skills[skill];
+      this.pointsMessage = this.basePointsMessage.replace('{{QTY}}', currentPoints + 2);
       this.isPointsModalOpen = true;
     },
     upgradePoint() {
