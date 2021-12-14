@@ -444,16 +444,10 @@ export default {
       return NFT.ORC;
     },
     hasFreeEnergyRecharge() {
-      const eightHoursAgo = new Date().getTime() + (8 * 60 * 60 * 1000);
-      let freeLast = new Date(this.unit.recharges.wENERGY.freeLastDate).getTime();
-      return (
-        !this.unit.recharges.wENERGY.freeLastDate || (freeLast > eightHoursAgo)
-      );
+      return !this.unit.recharges.wENERGY.freeLastDate || this.nextFreeRecharge < 0;
     },
     hasPaidEnergyRecharge() {
-      const oneDayAgo = new Date().getTime() + (1 * 24 * 60 * 60 * 1000);
-      const lastFree = new Date(this.unit.recharges.wENERGY.lastDate).getTime();
-      return !this.unit.recharges.wENERGY.lastDate || (oneDayAgo > lastFree);
+      return !this.unit.recharges.wENERGY.lastDate || this.nextPaidRecharge < 0;
     },
     nextFreeRecharge() {
       let next = new Date(this.unit.recharges.wENERGY.freeLastDate);
@@ -461,7 +455,7 @@ export default {
       return next.getTime() - new Date().getTime();
     },
     nextPaidRecharge() {
-      let next = new Date(this.unit.recharges.wENERGY.freeLastDate);
+      let next = new Date(this.unit.recharges.wENERGY.lastDate);
       next.setTime(next.getTime() + (1 * 24 * 60 * 60 * 1000));
       return next.getTime() - new Date().getTime();
     }
