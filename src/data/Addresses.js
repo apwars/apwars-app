@@ -56,6 +56,6 @@ export default {
     "97": process.env.VUE_APP_API_ARCADIA_97,
   },
   bridge: {
-    "97": "0xf73029345e967E48b2A9ebFdc53203774887090d"
+    "97": "0xC84549a4C108077E7dA55946b653Eb23B435992F"
   }
 };

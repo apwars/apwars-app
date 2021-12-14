@@ -21,7 +21,7 @@
           <p>
             The bridge is what makes the bridge (tell me something I don't know)
             between the off-chain and on-chain features of the game. By using
-            the bridge, fees to play will be reduced fees while playing.
+            the bridge, fees to play will be reduced.
           </p>
         </v-col>
       </v-row>
@@ -102,7 +102,7 @@
                 outlined
               >
                 You can select up to {{ limitSelectList }} Tokens or Game Items
-                to single transfer
+                in a single transfer
               </v-alert>
             </v-col>
           </v-row>
@@ -137,6 +137,9 @@
           </v-row>
 
           <v-row dense class="scroll-items-transfer">
+            <div v-if="isLoadingItems" class="loading-items-transfer">
+              <h2 class="text-center mt-9 text-h2">Loading...</h2>
+            </div>
             <v-col
               class="pa-1"
               dense
@@ -157,8 +160,8 @@
                 </div>
                 <div v-if="item.isApproveOtto" class="text-caption">
                   Fee:
-                  <amount :amount="item.feeUnit" decimals="2" formatted />
-                  (units per pack)
+                  <amount :amount="item.feeUnit" decimals="0" formatted />
+                  per pack
                   <br />
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -176,15 +179,16 @@
 
                   <amount
                     :amount="item.offChainLimit"
-                    decimals="2"
+                    decimals="0"
                     formatted
                   /><br />
                   Pack amount:
                   <amount
                     :amount="item.minimumPackage"
-                    decimals="2"
+                    decimals="0"
                     formatted
                   />
+                  items
                 </div>
                 <div v-else class="text-caption red--text font-weight-bold">
                   Requires guardian's approval: <br />
@@ -235,8 +239,26 @@
               </div>
             </v-col>
           </v-row>
-
           <v-row dense>
+            <v-col cols="8" offset="2">
+              <div class="d-flex justify-center align-center">
+                <v-checkbox
+                  v-model="checkboxTransfer"
+                  class="checkbox-transfer-input ma-0 pa-0"
+                  color="secondary"
+                >
+                  <template v-slot:label>
+                    <div>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Quam id deleniti hic vero, mollitia necessitatibus vel
+                      error delectus, iusto accusantium, minima dolorum.
+                    </div>
+                  </template>
+                </v-checkbox>
+              </div>
+            </v-col>
+          </v-row>
+          <v-row dense class="mt-n4">
             <v-col cols="12">
               <div class="d-flex justify-center">
                 <wButton
@@ -244,7 +266,7 @@
                   flat
                   :size="$vuetify.breakpoint.mobile ? 'small' : 'default'"
                   class="mx-auto btn-transfer mt-1"
-                  :disabled="isLoadingTransfer"
+                  :disabled="isLoadingTransfer || !checkboxTransfer"
                 >
                   <span v-if="isLoadingTransfer" class="mx-3">
                     Loading...
@@ -304,7 +326,7 @@
                   >
                     <amount
                       :amount="history.amount"
-                      decimals="2"
+                      decimals="0"
                       formatted
                       tooltip
                       :symbol="history.name"
@@ -381,10 +403,12 @@ export default {
 
   data() {
     return {
+      checkboxTransfer: false,
       isLoading: true,
       typeTransfer: false,
       tab: "transfer",
       isLoadingTransfer: false,
+      isLoadingItems: false,
       search: "",
       headers: [
         {
@@ -427,7 +451,7 @@ export default {
         locale: window.navigator.userLanguage || window.navigator.language,
         prefix: "",
         suffix: "",
-        decimalLength: 2,
+        decimalLength: 0,
         autoDecimalMode: true,
         allowNegative: false,
       },
@@ -635,6 +659,9 @@ export default {
     },
 
     changeNetwork() {
+      if (this.isLoadingItems) {
+        return;
+      }
       this.bridgeNetwork = {
         from: this.bridgeNetwork.to,
         to: this.bridgeNetwork.from,
@@ -697,10 +724,17 @@ export default {
     },
 
     async initStateBridgeList() {
-      this.bridgeList = [];
-      this.walletsList = await this.getWallets();
-      await this.addBridgeList();
-      this.history = await this.getHistory();
+      try {
+        this.isLoadingItems = true;
+        this.bridgeList = [];
+        this.walletsList = await this.getWallets();
+        await this.addBridgeList();
+        this.history = await this.getHistory();
+        this.isLoadingItems = false;
+        this.checkboxTransfer = false;
+      } catch (error) {
+        this.isLoadingItems = false;
+      }
     },
 
     clearBridgeList() {
@@ -974,7 +1008,6 @@ export default {
       try {
         const bridgeController = new BridgeController();
         const getListTokens = await bridgeController.getListTokens();
-       ;
         const getListGameItems = await bridgeController.getListGameItems();
 
         for (let list of getListTokens) {
@@ -1171,7 +1204,7 @@ export default {
 .card-bridge {
   background: #181a1b;
   border: 2px solid #2a3238;
-  min-height: 530px;
+  min-height: 560px;
 }
 .card-bridge-title {
   font-family: PT Serif;
@@ -1191,6 +1224,14 @@ export default {
   overflow: auto;
   margin: 0px 0px 0px 0px;
   border: 2px solid #ffeebc;
+  position: relative;
+}
+.loading-items-transfer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #111111b3;
+  z-index: 1;
 }
 
 .table-bridge >>> .v-data-table__wrapper > table > tbody > tr > td,
@@ -1301,6 +1342,43 @@ export default {
 .input-bridge {
   margin-top: 20px;
   width: 96%;
+}
+
+.checkbox-transfer-input >>> .v-input__control > .v-input__slot fieldset {
+  color: #fff !important;
+  border-width: 3px !important;
+  border-radius: 18px !important;
+}
+
+.checkbox-transfer-input >>> .v-label {
+  transform-origin: top left !important;
+  font-weight: bold !important;
+  color: #fff !important;
+}
+
+.checkbox-transfer-input >>> .v-input__append-inner {
+  color: #fff !important;
+  font-weight: bold !important;
+  font-size: 13px;
+}
+
+.checkbox-transfer-input >>> .v-icon {
+  color: #fff !important;
+}
+
+.checkbox-transfer-input.v-input--is-disabled {
+  opacity: 0.2;
+}
+
+.checkbox-transfer-input >>> input {
+  color: #fff;
+  font-weight: bold;
+}
+
+.checkbox-transfer-input >>> .v-messages__message {
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold;
 }
 
 @media only screen and (max-width: 600px) {
