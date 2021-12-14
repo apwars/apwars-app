@@ -100,15 +100,6 @@ export default {
       border: 1px solid #3a2720;
       color: #3a2720;
     }
-    &:focus:enabled {
-      filter: grayscale(100%);
-      > .btn-text {
-        color: #fff;
-      }
-      &:hover:enabled {
-        background-color: #3a2720;
-      }
-    }
   }
   &.wsecondary {
     background-color: transparent !important;
@@ -135,6 +126,7 @@ export default {
     border: 1px solid white;
     color: white;
     cursor: not-allowed;
+    opacity: 0.6;
   }
 }
 </style>
