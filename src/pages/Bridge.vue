@@ -158,10 +158,14 @@
                 <div class="card-bridge-title">
                   {{ item.name }}
                 </div>
-                <div v-if="item.isApproveOtto" class="text-caption">
+                <div
+                  v-if="item.isApproveOtto"
+                  style="height: 60px;"
+                  class="text-caption"
+                >
                   Fee:
                   <amount :amount="item.feeUnit" decimals="0" formatted />
-                  per pack
+                  per package
                   <br />
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -182,7 +186,7 @@
                     decimals="0"
                     formatted
                   /><br />
-                  Pack amount:
+                  Package amount:
                   <amount
                     :amount="item.minimumPackage"
                     decimals="0"
@@ -190,7 +194,11 @@
                   />
                   items
                 </div>
-                <div v-else class="text-caption red--text font-weight-bold">
+                <div
+                  v-else
+                  style="height: 60px;"
+                  class="text-caption red--text font-weight-bold"
+                >
                   Requires guardian's approval: <br />
                   Otto Dalgor
                 </div>
@@ -200,7 +208,7 @@
                     dense
                     v-model="item.packQuantity"
                     @input="packQuantity(item)"
-                    :disabled="item.disabled"
+                    :disabled="item.disabled || !item.isApproveOtto"
                     :max="item.packMax"
                   ></number-field>
                   <v-currency-field
@@ -784,24 +792,30 @@ export default {
 
       confirmTransaction.on("transactionHash", (tx) => {});
 
-      confirmTransaction.on("receipt", async (receipt) => {
-        try {
-          const bridgeController = new BridgeController();
-          await bridgeController.depositERC20(receipt.transactionHash);
-          await this.initStateBridgeList();
-
-          this.isLoadingTransfer = false;
-          ToastSnackbar.success("Transfer successfully sent");
-        } catch (error) {
-          this.isLoadingTransfer = false;
-          if (error.status) {
-            return ToastSnackbar.error(error.code);
+      confirmTransaction.on(
+        "confirmation",
+        async (confirmationNumber, receipt) => {
+          if (confirmationNumber !== 10) {
+            return;
           }
-          ToastSnackbar.error(
-            "An error has occurred while to signing contract"
-          );
+          try {
+            const bridgeController = new BridgeController();
+            await bridgeController.depositERC20(receipt.transactionHash);
+            await this.initStateBridgeList();
+
+            this.isLoadingTransfer = false;
+            ToastSnackbar.success("Transfer successfully sent");
+          } catch (error) {
+            this.isLoadingTransfer = false;
+            if (error.status) {
+              return ToastSnackbar.error(error.code);
+            }
+            ToastSnackbar.error(
+              "An error has occurred while to signing contract"
+            );
+          }
         }
-      });
+      );
     },
 
     async depositERC1155() {
@@ -842,24 +856,30 @@ export default {
 
       confirmTransaction.on("transactionHash", (tx) => {});
 
-      confirmTransaction.on("receipt", async (receipt) => {
-        try {
-          const bridgeController = new BridgeController();
-          await bridgeController.depositERC1155(receipt.transactionHash);
-          await this.initStateBridgeList();
-
-          this.isLoadingTransfer = false;
-          ToastSnackbar.success("Transfer successfully sent");
-        } catch (error) {
-          this.isLoadingTransfer = false;
-          if (error.status) {
-            return ToastSnackbar.error(error.code);
+      confirmTransaction.on(
+        "confirmation",
+        async (confirmationNumber, receipt) => {
+          if (confirmationNumber !== 10) {
+            return;
           }
-          ToastSnackbar.error(
-            "An error has occurred while to signing contract"
-          );
+          try {
+            const bridgeController = new BridgeController();
+            await bridgeController.depositERC1155(receipt.transactionHash);
+            await this.initStateBridgeList();
+
+            this.isLoadingTransfer = false;
+            ToastSnackbar.success("Transfer successfully sent");
+          } catch (error) {
+            this.isLoadingTransfer = false;
+            if (error.status) {
+              return ToastSnackbar.error(error.code);
+            }
+            ToastSnackbar.error(
+              "An error has occurred while to signing contract"
+            );
+          }
         }
-      });
+      );
     },
 
     async claimERC20() {
@@ -906,24 +926,30 @@ export default {
           );
         });
 
-        confirmTransaction.on("receipt", async (receipt) => {
-          try {
-            const bridgeController = new BridgeController();
-            await bridgeController.claimSaveTx(receipt.transactionHash);
-            await this.initStateBridgeList();
-
-            this.isLoadingTransfer = false;
-            ToastSnackbar.success("Transfer successfully sent");
-          } catch (error) {
-            this.isLoadingTransfer = false;
-            if (error.status) {
-              return ToastSnackbar.error(error.code);
+        confirmTransaction.on(
+          "confirmation",
+          async (confirmationNumber, receipt) => {
+            if (confirmationNumber !== 10) {
+              return;
             }
-            ToastSnackbar.error(
-              "An error has occurred while to signing contract"
-            );
+            try {
+              const bridgeController = new BridgeController();
+              await bridgeController.claimSaveTx(receipt.transactionHash);
+              await this.initStateBridgeList();
+
+              this.isLoadingTransfer = false;
+              ToastSnackbar.success("Transfer successfully sent");
+            } catch (error) {
+              this.isLoadingTransfer = false;
+              if (error.status) {
+                return ToastSnackbar.error(error.code);
+              }
+              ToastSnackbar.error(
+                "An error has occurred while to signing contract"
+              );
+            }
           }
-        });
+        );
       } catch (error) {
         this.isLoadingTransfer = false;
         if (error.code) {
@@ -977,24 +1003,30 @@ export default {
           );
         });
 
-        confirmTransaction.on("receipt", async (receipt) => {
-          try {
-            const bridgeController = new BridgeController();
-            await bridgeController.claimSaveTx(receipt.transactionHash);
-            await this.initStateBridgeList();
-
-            this.isLoadingTransfer = false;
-            ToastSnackbar.success("Transfer successfully sent");
-          } catch (error) {
-            this.isLoadingTransfer = false;
-            if (error.status) {
-              return ToastSnackbar.error(error.code);
+        confirmTransaction.on(
+          "confirmation",
+          async (confirmationNumber, receipt) => {
+            if (confirmationNumber !== 10) {
+              return;
             }
-            ToastSnackbar.error(
-              "An error has occurred while to signing contract"
-            );
+            try {
+              const bridgeController = new BridgeController();
+              await bridgeController.claimSaveTx(receipt.transactionHash);
+              await this.initStateBridgeList();
+
+              this.isLoadingTransfer = false;
+              ToastSnackbar.success("Transfer successfully sent");
+            } catch (error) {
+              this.isLoadingTransfer = false;
+              if (error.status) {
+                return ToastSnackbar.error(error.code);
+              }
+              ToastSnackbar.error(
+                "An error has occurred while to signing contract"
+              );
+            }
           }
-        });
+        );
       } catch (error) {
         this.isLoadingTransfer = false;
         if (error.code) {
