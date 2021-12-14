@@ -73,7 +73,7 @@ export function NPC_INFO() {
         },
         {
           name: "wCOURAGE",
-          description: "wCOURAGE is a resource token from APWars with supply that can be earned by sending troops to the War for Supremacy. wCOURAGE rewards will be distributed based on Arimedes and Dora Noble fees collection.",
+          description: "wCOURAGE is a resource token from APWars with limited supply that can be earned by sending troops to the Battle for Supremacy. wCOURAGE rewards will be distributed based on Arimedes and Dora Noble fees collection.",
           address: addresses.wCOURAGE,
           type: "erc20",
           image: "/images/wCOURAGE.png",
