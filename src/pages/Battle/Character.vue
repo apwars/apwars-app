@@ -85,7 +85,7 @@
                     </div>
                     <Progress
                       :maxScale="maxXP"
-                      :value="unit.XP"
+                      :value="unit.points"
                       color1="#00FFFF"
                       color2="#59BBFC"
                       noText
