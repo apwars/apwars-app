@@ -30,7 +30,16 @@
             <v-img :src="resource.img" max-width="80" class="img" />
           </td>
           <td>{{ resource.name }}</td>
-          <td class="text-center">{{ resource.supply }}</td>
+          <td class="text-center">
+            <amount
+              v-if="isConnected"
+              :amount="resource.supply"
+              decimals="3"
+              compact
+              tooltip
+              size="14"
+            />
+          </td>
           <td>
             <div class="text-center">
               <amount
@@ -87,7 +96,7 @@ import Address from "@/lib/components/ui/Utils/AddressTooltip";
 
 export default {
   name: 'TableResources',
-  props: ['balanceGold', 'balanceCourage', 'balanceLand'],
+  props: ['balanceGold', 'supplyGold', 'balanceCourage', 'supplyCourage', 'balanceLand', 'supplyWland'],
   components: {
     Amount,
     wButton,
@@ -131,7 +140,7 @@ export default {
         {
           img: '/images/wgold.png',
           name: 'wGOLD',
-          supply: '252,000,000.00',
+          supply: this.supplyGold,
           myQty: this.balanceGold,
           contract: this.addresses.wGOLD
         },
@@ -139,7 +148,7 @@ export default {
         {
           img: '/images/wcourage.png',
           name: 'wCOURAGE',
-          supply: '87,418,318.81',
+          supply: this.supplyCourage,
           myQty: this.balanceCourage,
           contract: this.addresses.wCOURAGE
         },
@@ -147,7 +156,7 @@ export default {
         {
           img: '/images/wLAND.png',
           name: 'wLAND',
-          supply: '1,500,000.00',
+          supply: this.supplyWland,
           myQty: this.balanceLand,
           contract: this.addresses.wLAND
         },

@@ -260,8 +260,11 @@
                 <v-col>
                   <table-resources
                     :balanceGold="balance"
+                    :supplyGold="supplyGold"
                     :balanceCourage="balanceCOURAGE"
+                    :supplyCourage="supplyCourage"
                     :balanceLand="balanceLand"
+                    :supplyWland="supplyWland"
                   >
                   </table-resources> 
                 </v-col>
@@ -343,8 +346,11 @@ export default {
   data() {
     return {
       balance: "0",
+      supplyGold: "0",
       balanceCOURAGE: "0",
+      supplyCourage: "0",
       balanceLand: "",
+      supplyWland: "",
       collectibles: [],
       balances: [],
       itemsCount: 0,
@@ -435,8 +441,13 @@ export default {
         const wland = new wLAND(this.addresses.wLAND);
 
         this.balance = await wgold.balanceOf(this.account);
+        this.supplyGold = await wgold.totalSupply(this.account);
+
         this.balanceCOURAGE = await wcourage.balanceOf(this.account);
+        this.supplyCourage = await wcourage.totalSupply(this.account);
+
         this.balanceLand = await wland.balanceOf(this.account);
+        this.supplyWland = await wland.totalSupply();
 
         this.collectibles = getCollectibles();
         this.balances = await Promise.all(
