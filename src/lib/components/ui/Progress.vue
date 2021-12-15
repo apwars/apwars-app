@@ -50,7 +50,6 @@ export default {
 }
 .value {
   height: 100%;
-  border-radius: 5px;
   position: absolute;
   top: 0;
   left: -1px;
