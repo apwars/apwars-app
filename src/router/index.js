@@ -18,6 +18,7 @@ import TrainingCenter from "@/pages/TrainingCenter.vue";
 import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
 import Arcadia from "@/pages/Arcadia/Arcadia.vue";
+import Character from "@/pages/Battle/Character.vue";
 
 Vue.use(Router);
 
@@ -111,6 +112,11 @@ export const routes = [
         path: "/arcadia",
         name: "/arcadia",
         component: Arcadia
+      },
+      {
+        path: "/char",
+        name: "/char",
+        component: Character
       },
       {
         path: "/farms",

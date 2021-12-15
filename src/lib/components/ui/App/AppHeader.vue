@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isMenuDisplaying">
     <v-navigation-drawer v-model="drawer" app temporary>
       <v-list dense nav>
         <v-subheader class="text-uppercase font-weight-bold">Menu</v-subheader>
@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import ToolbarNotifications from "@/lib/components/ui/Toolbar/ToolbarNotifications";
 import ToolbarUser from "@/lib/components/ui/Toolbar/ToolbarUser";
 import NetworkInfoModal from "@/lib/components/ui/Modals/NetworkInfoModal.vue";
@@ -113,6 +114,12 @@ export default {
     ToolbarUser,
     ToolbarNotifications,
     NetworkInfoModal,
+  },
+
+  computed: {
+    ...mapState({
+      isMenuDisplaying: state => state.app.isMenuDisplaying
+    })
   },
 
   data() {
