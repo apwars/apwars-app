@@ -87,7 +87,7 @@ import Address from "@/lib/components/ui/Utils/AddressTooltip";
 
 export default {
   name: 'TableResources',
-  props: ['balanceGold', 'balanceCourage'],
+  props: ['balanceGold', 'balanceCourage', 'balanceLand'],
   components: {
     Amount,
     wButton,
@@ -148,7 +148,7 @@ export default {
           img: '/images/wLAND.png',
           name: 'wLAND',
           supply: '1,500,000.00',
-          myQty: '',
+          myQty: this.balanceLand,
           contract: this.addresses.wLAND
         },
       ];

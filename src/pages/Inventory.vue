@@ -260,7 +260,9 @@
                 <v-col>
                   <table-resources
                     :balanceGold="balance"
-                    :balanceCourage="balanceCOURAGE">
+                    :balanceCourage="balanceCOURAGE"
+                    :balanceLand="balanceLand"
+                  >
                   </table-resources> 
                 </v-col>
               </v-row>
@@ -314,6 +316,7 @@ import PageTitle from "@/lib/components/ui/Utils/PageTitle.vue";
 import { getCollectibles, getGameItemTypesOptions } from "@/data/Collectibles";
 import wGOLD from "@/lib/eth/wGOLD";
 import wCOURAGE from "@/lib/eth/wCOURAGE";
+import wLAND from "@/lib/eth/ERC20";
 import NPCModal from "@/lib/components/ui/Modals/NPCModal";
 import GuardiansApproved from "@/lib/components/ui/Guardians/GuardiansApproved";
 
@@ -341,6 +344,7 @@ export default {
     return {
       balance: "0",
       balanceCOURAGE: "0",
+      balanceLand: "",
       collectibles: [],
       balances: [],
       itemsCount: 0,
@@ -428,8 +432,12 @@ export default {
         );
         const wgold = new wGOLD(this.addresses.wGOLD);
         const wcourage = new wCOURAGE(this.addresses.wCOURAGE);
+        const wland = new wLAND(this.addresses.wLAND);
+
         this.balance = await wgold.balanceOf(this.account);
         this.balanceCOURAGE = await wcourage.balanceOf(this.account);
+        this.balanceLand = await wland.balanceOf(this.account);
+
         this.collectibles = getCollectibles();
         this.balances = await Promise.all(
           this.collectibles.map((item) => {

@@ -159,9 +159,25 @@ export default {
         return;
       }
 
-      this.filteredTroops = await getTrooper(this.networkInfo.id, this.account);
-      
-      this.isLoading = false;
+      try {
+        const troops = await getTrooper(this.networkInfo.id, this.account);
+        this.sortTroops(troops);
+
+      } catch (erro) {
+        console.error(erro);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    sortTroops(troops) {
+      let sortTroops = []
+      sortTroops = sortTroops.concat(troops.filter(troop => troop.raceDesc === 'Humans'))
+      sortTroops = sortTroops.concat(troops.filter(troop => troop.raceDesc === 'Elfs'))
+      sortTroops = sortTroops.concat(troops.filter(troop => troop.raceDesc === 'Orcs'))
+      sortTroops = sortTroops.concat(troops.filter(troop => troop.raceDesc === 'Undead'))
+
+      this.filteredTroops = sortTroops
     },
 
     updateMyUnits() {
