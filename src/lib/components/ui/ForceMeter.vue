@@ -47,7 +47,7 @@ export default {
         if (remainingTicks - unit >= 0) {
           ticks = ticks.concat(100);
         } else {
-          const rest = (100 * remainingTicks) / this.maxScale;
+          const rest = (100 * remainingTicks) / unit;
           ticks = ticks.concat(rest > 0 ? rest : 0);
         }
         remainingTicks = remainingTicks - unit;

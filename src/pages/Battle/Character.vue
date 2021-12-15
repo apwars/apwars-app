@@ -53,7 +53,7 @@
                     <div
                       class="recharge-price  mt-1 d-flex justify-center align-center"
                     >
-                      2500
+                      2500 wGOLD
                       <img height="12" src="/images/wgold.png" alt="wGOLD" />
                     </div>
                   </div>
@@ -66,14 +66,21 @@
                 <div class="unit-data">
                   <v-text-field
                     placeholder="Edit name"
-                    :value="unit.name"
-                    @input="handleNameChange"
+                    v-model="unit.name"
                     :loading="isLoadingName"
-                    :disable="!isUnlocked || isLoadingName"
+                    :readonly="!isEditingName"
                   >
-                    <v-icon slot="append" color="white">
+                    <v-icon class="input-icon" slot="append" @click="() => { isEditingName = true }" v-if="!isEditingName" :disabled="!isUnlocked || isLoadingName">
                       mdi-pencil-outline
                     </v-icon>
+                    <template v-else>
+                      <v-icon class="input-icon" slot="append" @click="cancelNameChange">
+                      mdi-close
+                    </v-icon>
+                    <v-icon class="input-icon" slot="append" @click="handleNameChange">
+                      mdi-check-bold
+                    </v-icon>
+                    </template>
                   </v-text-field>
                   <div class="class-info">Class: Warrior</div>
                   <div class="xp-container mt-2">
@@ -290,7 +297,7 @@
                     Recharge</Button
                   >
                   <div class="recharge-price d-flex align-center ml-1">
-                    1000
+                    1000 wCOURAGE
                     <img
                       height="12px"
                       src="/images/wcourage.png"
@@ -341,8 +348,8 @@
                     Recharge</Button
                   >
                   <div class="recharge-price d-flex align-center ml-1">
-                    <span v-if="hasFreeEnergyRecharge">0</span
-                    ><span v-else>250</span>
+                    <span v-if="hasFreeEnergyRecharge">0 wGOLD</span
+                    ><span v-else>250 wGOLD</span>
                     <img height="12px" src="/images/wgold.png" alt="wGOLD" />
                   </div>
                 </div>
@@ -358,7 +365,7 @@
             </v-row>
           </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
           <v-col>
             <div class="divider"></div>
           </v-col>
@@ -375,7 +382,7 @@
           <v-col
             ><div class="stat-value text-medium">Record Points</div>
           </v-col>
-        </v-row>
+        </v-row> -->
         <wood
           :open="isUnlockModalOpen"
           @close="isUnlockModalOpen = false"
@@ -476,7 +483,6 @@ export default {
       isUnlockModalOpen: false,
       type: NFT.HUMAN,
       isLoadingNFT: false,
-      timeout: null,
       isLoadingName: false,
       isCourageModalOpen: false,
       isRechargeModalOpen: false,
@@ -528,7 +534,9 @@ export default {
       basePointsMessage: 'You are upgrading skill at the cost of {{QTY}} level points.',
       courageRechargeMessage: 'You are recharging courage at the cost of 1000 wCOURAGE.',
       freeRechargeMessage: 'You are spending the free energy recharge, the next one will be available after 8 hours.',
-      paidRechargeMessage: 'You are recharging energy for 250 wGOLD, the next paid recharge will be available after 24 hours.'
+      paidRechargeMessage: 'You are recharging energy for 250 wGOLD, the next paid recharge will be available after 24 hours.',
+      isEditingName: false,
+      nameCache: '',
     };
   },
   methods: {
@@ -647,20 +655,26 @@ export default {
       const c = new Controller(this.addresses.apiArcadia);
       try {
         await c.changeName(this.account, this.type, value);
+        this.nameCache = this.unit.name;
       } catch (error) {
-        this.unit.name = this.nameCache;
+        this.cancelNameChange();
         console.error(error);
       } finally {
         this.isLoadingName = false;
+        this.isEditingName = false;
       }
     },
-    handleNameChange(value) {
-      if (this.timeout) {
-        clearTimeout(this.timeout);
+    cancelNameChange() {
+      this.unit.name = this.nameCache;
+      this.isEditingName = false;
+      ToastSnackbar.error('Name change cancelled');
+    },
+    handleNameChange() {
+      if (this.unit.name !== this.nameCache) {
+        this.changeName(this.unit.name);
+      } else {
+        this.isEditingName = false;
       }
-      this.timeout = setTimeout(() => {
-        this.changeName(value);
-      }, 800);
     },
     openRechargeEnergyModal() {
       if (this.hasFreeEnergyRecharge) {
@@ -828,7 +842,7 @@ export default {
 }
 .recharge-price {
   font-weight: bold;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.2;
   > img {
     margin-left: 2px;
@@ -838,5 +852,11 @@ export default {
   font-weight: bold;
   font-size: 10px;
   line-height: 1.2;
+}
+.input-icon {
+  color: white;
+  &:hover {
+    color: yellow;
+  }
 }
 </style>
