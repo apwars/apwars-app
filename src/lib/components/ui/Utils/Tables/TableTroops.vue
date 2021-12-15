@@ -173,7 +173,7 @@ export default {
     sortTroops(troops) {
       let sortTroops = []
       sortTroops = sortTroops.concat(troops.filter(troop => troop.raceDesc === 'Humans'))
-      sortTroops = sortTroops.concat(troops.filter(troop => troop.raceDesc === 'Elfs'))
+      sortTroops = sortTroops.concat(troops.filter(troop => troop.raceDesc === 'Elves'))
       sortTroops = sortTroops.concat(troops.filter(troop => troop.raceDesc === 'Orcs'))
       sortTroops = sortTroops.concat(troops.filter(troop => troop.raceDesc === 'Undead'))
 
