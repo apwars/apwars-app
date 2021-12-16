@@ -15,13 +15,18 @@ export default new Vuex.Store({
   },
 
   state: {
-    packageVersion: process.env.PACKAGE_VERSION || '1.0.0'
+    packageVersion: process.env.PACKAGE_VERSION || '1.0.0',
+  },
+
+  mutations: {
+  },
+
+  actions: {
   },
 
   getters: {
     appVersion: (state) => {
       return state.packageVersion
-    }
-  },
-
+    },
+  }
 })
