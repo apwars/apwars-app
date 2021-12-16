@@ -158,8 +158,11 @@
                 <div class="card-bridge-title">
                   {{ item.name }}
                 </div>
+                <div style="height: 60px;" v-if="item.isLoading">
+                  Loading...
+                </div>
                 <div
-                  v-if="item.isApproveOtto"
+                  v-else-if="item.isApproveOtto"
                   style="height: 60px;"
                   class="text-caption"
                 >
@@ -452,7 +455,7 @@ export default {
       },
       bridgeList: [],
       selectList: 0,
-      limitSelectList: 3,
+      limitSelectList: 10,
       currencyConfig: {
         locale: window.navigator.userLanguage || window.navigator.language,
         prefix: "",
@@ -743,13 +746,12 @@ export default {
       }
     },
 
-    clearBridgeList() {
-      this.selectList = 0;
-      this.bridgeList = this.bridgeList.map((list) => {
-        list.packQuantity = 0;
-        list.amountFrom = 0;
-        return list;
-      });
+    async clearBridgeList() {
+      if (this.isLoadingItems) {
+        this.typeTransfer = !this.typeTransfer;
+        return;
+      }
+      await this.initStateBridgeList();
     },
 
     async depositERC20() {
@@ -1037,30 +1039,35 @@ export default {
     async addBridgeList() {
       try {
         const bridgeController = new BridgeController();
-        const getListTokens = await bridgeController.getListTokens();
-        const getListGameItems = await bridgeController.getListGameItems();
 
-        for (let list of getListTokens) {
-          await this.addERC20BridgeList(
-            list.token,
-            list.name,
-            list.image,
-            list.minimumPackage,
-            list.offChainLimit,
-            list.feeUnit
-          );
-        }
+        if (!this.typeTransfer) {
+          const getListTokens = await bridgeController.getListTokens();
+          for (let list of getListTokens) {
+            this.addERC20BridgeList(
+              list.token,
+              list.name,
+              list.image,
+              list.minimumPackage,
+              list.offChainLimit,
+              list.feeUnit
+            );
+          }
+          this.loadBalancesERC20BridgeList();
+        } else {
+          const getListGameItems = await bridgeController.getListGameItems();
 
-        for (let list of getListGameItems) {
-          await this.addERC1155BridgeList(
-            list.gameItemId,
-            list.token,
-            list.name,
-            list.image,
-            list.minimumPackage,
-            list.offChainLimit,
-            list.feeUnit
-          );
+          for (let list of getListGameItems) {
+            this.addERC1155BridgeList(
+              list.gameItemId,
+              list.token,
+              list.name,
+              list.image,
+              list.minimumPackage,
+              list.offChainLimit,
+              list.feeUnit
+            );
+          }
+          this.loadBalancesERC1155BridgeList();
         }
       } catch (error) {
         if (error.status === 404) {
@@ -1085,26 +1092,38 @@ export default {
       if (isItem !== undefined) {
         return;
       }
-      const smc = new ERC20(address);
-      const balanceOnChain = await smc.balanceOf(this.account);
-      const balanceOffChain = this.walletsList.balances[name];
-      const isApproveOtto = await smc.hasAllowance(
-        this.account,
-        this.addresses.inventoryManagerTokens
-      );
       this.bridgeList.push({
         type: "erc20",
         name: name,
         address: address,
         image: image,
-        balanceOnChain: balanceOnChain,
-        balanceOffChain: balanceOffChain || 0,
+        balanceOnChain: 0,
+        balanceOffChain: 0,
         minimumPackage: minimumPackage,
-        isApproveOtto: isApproveOtto,
+        isApproveOtto: false,
         packQuantity: 0,
         offChainLimit: offChainLimit,
         feeUnit: feeUnit,
+        isLoading: true,
       });
+    },
+
+    async loadBalancesERC20BridgeList() {
+      for (const bridge of this.bridgeList) {
+        if (bridge.type === "erc20") {
+          const smc = new ERC20(bridge.address);
+          const balanceOnChain = await smc.balanceOf(this.account);
+          const balanceOffChain = this.walletsList.balances[bridge.name];
+          const isApproveOtto = await smc.hasAllowance(
+            this.account,
+            this.addresses.inventoryManagerTokens
+          );
+          bridge.balanceOnChain = balanceOnChain;
+          bridge.balanceOffChain = balanceOffChain || 0;
+          bridge.isApproveOtto = isApproveOtto;
+          bridge.isLoading = false;
+        }
+      }
     },
 
     async addERC1155BridgeList(
@@ -1120,27 +1139,41 @@ export default {
       if (isItem !== undefined) {
         return;
       }
-      const smc = new Collectibles(collectibles);
-      const balanceOnChain = await smc.balanceOf(this.account, id);
-      const balanceOffChain = this.walletsList.balances[`GameItem${id}`];
-      const isApproveOtto = await smc.isApprovedForAll(
-        this.account,
-        this.addresses.inventoryManagerCollectibles
-      );
       this.bridgeList.push({
         type: "erc1155",
         id: id,
         name: name,
         address: collectibles,
         image: image,
-        balanceOnChain: balanceOnChain,
-        balanceOffChain: balanceOffChain || 0,
+        balanceOnChain: 0,
+        balanceOffChain: 0,
         minimumPackage: minimumPackage,
-        isApproveOtto: isApproveOtto,
+        isApproveOtto: false,
         packQuantity: 0,
         offChainLimit: offChainLimit,
         feeUnit: feeUnit,
+        isLoading: true,
       });
+    },
+
+    async loadBalancesERC1155BridgeList() {
+      for (const bridge of this.bridgeList) {
+        if (bridge.type === "erc1155") {
+          const smc = new Collectibles(bridge.address);
+          const balanceOnChain = await smc.balanceOf(this.account, bridge.id);
+          const balanceOffChain = this.walletsList.balances[
+            `GameItem${bridge.id}`
+          ];
+          const isApproveOtto = await smc.isApprovedForAll(
+            this.account,
+            this.addresses.inventoryManagerCollectibles
+          );
+          bridge.balanceOnChain = balanceOnChain;
+          bridge.balanceOffChain = balanceOffChain || 0;
+          bridge.isApproveOtto = isApproveOtto;
+          bridge.isLoading = false;
+        }
+      }
     },
 
     hintFrom(value) {
