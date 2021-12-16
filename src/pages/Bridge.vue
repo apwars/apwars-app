@@ -257,9 +257,7 @@
                 >
                   <template v-slot:label>
                     <div>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Quam id deleniti hic vero, mollitia necessitatibus vel
-                      error delectus, iusto accusantium, minima dolorum.
+                      I agree to transfer my tokens in game items to off-chain
                     </div>
                   </template>
                 </v-checkbox>
