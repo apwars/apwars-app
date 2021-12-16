@@ -9,3 +9,4 @@
     VUE_APP_BSC_NETWORK="ALL"
     VUE_APP_SERVERLESS="https://api-dev.apwars.farm"
     VUE_APP_API_ARCADIA_97="https://api-qa.apwars.farm/v1"
+    VUE_APP_API_ARCADIA_56="https://apiv2.apwars.farm/v1"
