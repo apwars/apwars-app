@@ -24,12 +24,17 @@
 import Convert from '@/lib/helpers/Convert';
 
 export default {
-  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size'],
+  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'attribute'],
 
   computed: {
     computedAmount() {
       let numberAmount = this.amount || '0';
       numberAmount = this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
+
+      if (this.attribute) {
+        numberAmount = numberAmount * this.attribute
+      }
+
       if (this.compact !== undefined) {
         numberAmount = Convert.compactNumber(numberAmount, this.getDecimals);
       } else {
