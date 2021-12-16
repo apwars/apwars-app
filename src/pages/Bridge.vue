@@ -792,30 +792,24 @@ export default {
 
       confirmTransaction.on("transactionHash", (tx) => {});
 
-      confirmTransaction.on(
-        "confirmation",
-        async (confirmationNumber, receipt) => {
-          if (confirmationNumber !== 10) {
-            return;
-          }
-          try {
-            const bridgeController = new BridgeController();
-            await bridgeController.depositERC20(receipt.transactionHash);
-            await this.initStateBridgeList();
+      confirmTransaction.on("receipt", async (receipt) => {
+        try {
+          const bridgeController = new BridgeController();
+          await bridgeController.depositERC20(receipt.transactionHash);
+          await this.initStateBridgeList();
 
-            this.isLoadingTransfer = false;
-            ToastSnackbar.success("Transfer successfully sent");
-          } catch (error) {
-            this.isLoadingTransfer = false;
-            if (error.status) {
-              return ToastSnackbar.error(error.code);
-            }
-            ToastSnackbar.error(
-              "An error has occurred while to signing contract"
-            );
+          this.isLoadingTransfer = false;
+          ToastSnackbar.success("Transfer successfully sent");
+        } catch (error) {
+          this.isLoadingTransfer = false;
+          if (error.status) {
+            return ToastSnackbar.error(error.code);
           }
+          ToastSnackbar.error(
+            "An error has occurred while to signing contract"
+          );
         }
-      );
+      });
     },
 
     async depositERC1155() {
@@ -856,30 +850,24 @@ export default {
 
       confirmTransaction.on("transactionHash", (tx) => {});
 
-      confirmTransaction.on(
-        "confirmation",
-        async (confirmationNumber, receipt) => {
-          if (confirmationNumber !== 10) {
-            return;
-          }
-          try {
-            const bridgeController = new BridgeController();
-            await bridgeController.depositERC1155(receipt.transactionHash);
-            await this.initStateBridgeList();
+      confirmTransaction.on("receipt", async (receipt) => {
+        try {
+          const bridgeController = new BridgeController();
+          await bridgeController.depositERC1155(receipt.transactionHash);
+          await this.initStateBridgeList();
 
-            this.isLoadingTransfer = false;
-            ToastSnackbar.success("Transfer successfully sent");
-          } catch (error) {
-            this.isLoadingTransfer = false;
-            if (error.status) {
-              return ToastSnackbar.error(error.code);
-            }
-            ToastSnackbar.error(
-              "An error has occurred while to signing contract"
-            );
+          this.isLoadingTransfer = false;
+          ToastSnackbar.success("Transfer successfully sent");
+        } catch (error) {
+          this.isLoadingTransfer = false;
+          if (error.status) {
+            return ToastSnackbar.error(error.code);
           }
+          ToastSnackbar.error(
+            "An error has occurred while to signing contract"
+          );
         }
-      );
+      });
     },
 
     async claimERC20() {
@@ -926,30 +914,24 @@ export default {
           );
         });
 
-        confirmTransaction.on(
-          "confirmation",
-          async (confirmationNumber, receipt) => {
-            if (confirmationNumber !== 10) {
-              return;
-            }
-            try {
-              const bridgeController = new BridgeController();
-              await bridgeController.claimSaveTx(receipt.transactionHash);
-              await this.initStateBridgeList();
+        confirmTransaction.on("receipt", async (receipt) => {
+          try {
+            const bridgeController = new BridgeController();
+            await bridgeController.claimSaveTx(receipt.transactionHash);
+            await this.initStateBridgeList();
 
-              this.isLoadingTransfer = false;
-              ToastSnackbar.success("Transfer successfully sent");
-            } catch (error) {
-              this.isLoadingTransfer = false;
-              if (error.status) {
-                return ToastSnackbar.error(error.code);
-              }
-              ToastSnackbar.error(
-                "An error has occurred while to signing contract"
-              );
+            this.isLoadingTransfer = false;
+            ToastSnackbar.success("Transfer successfully sent");
+          } catch (error) {
+            this.isLoadingTransfer = false;
+            if (error.status) {
+              return ToastSnackbar.error(error.code);
             }
+            ToastSnackbar.error(
+              "An error has occurred while to signing contract"
+            );
           }
-        );
+        });
       } catch (error) {
         this.isLoadingTransfer = false;
         if (error.code) {
@@ -1003,30 +985,24 @@ export default {
           );
         });
 
-        confirmTransaction.on(
-          "confirmation",
-          async (confirmationNumber, receipt) => {
-            if (confirmationNumber !== 10) {
-              return;
-            }
-            try {
-              const bridgeController = new BridgeController();
-              await bridgeController.claimSaveTx(receipt.transactionHash);
-              await this.initStateBridgeList();
+        confirmTransaction.on("receipt", async (receipt) => {
+          try {
+            const bridgeController = new BridgeController();
+            await bridgeController.claimSaveTx(receipt.transactionHash);
+            await this.initStateBridgeList();
 
-              this.isLoadingTransfer = false;
-              ToastSnackbar.success("Transfer successfully sent");
-            } catch (error) {
-              this.isLoadingTransfer = false;
-              if (error.status) {
-                return ToastSnackbar.error(error.code);
-              }
-              ToastSnackbar.error(
-                "An error has occurred while to signing contract"
-              );
+            this.isLoadingTransfer = false;
+            ToastSnackbar.success("Transfer successfully sent");
+          } catch (error) {
+            this.isLoadingTransfer = false;
+            if (error.status) {
+              return ToastSnackbar.error(error.code);
             }
+            ToastSnackbar.error(
+              "An error has occurred while to signing contract"
+            );
           }
-        );
+        });
       } catch (error) {
         this.isLoadingTransfer = false;
         if (error.code) {
