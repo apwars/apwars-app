@@ -33,7 +33,7 @@ export default {
       },
       baseUrl: {
         "56": "",
-        "97": "https://api-dev.apwars.farm",
+        "97": "https://api-qa.apwars.farm",
       },
       treasureHuntId: {
         "56": "2",
