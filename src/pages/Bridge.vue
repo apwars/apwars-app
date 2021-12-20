@@ -1015,7 +1015,6 @@ export default {
             const smcBridge = new Bridge(this.addresses.bridge);
             let nextBlock = await smcBridge.nextClaims(this.account);
             nextBlock -= this.currentBlockNumber;
-            console.log(nextBlock);
             return ToastSnackbar.warning(`
             <h3>${this.statusCode[error.code].title}</h3> <br />
             ${this.statusCode[error.code].text(nextBlock)}
@@ -1103,7 +1102,6 @@ export default {
             const smcBridge = new Bridge(this.addresses.bridge);
             let nextBlock = await smcBridge.nextClaims(this.account);
             nextBlock -= this.currentBlockNumber;
-            console.log(nextBlock);
             return ToastSnackbar.warning(`
             <h3>${this.statusCode[error.code].title}</h3> <br />
             ${this.statusCode[error.code].text(nextBlock)}
