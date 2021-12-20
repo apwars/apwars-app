@@ -72,6 +72,7 @@ export default {
   background-color: black;
   outline: 1px solid #ffeebc;
   margin-right: 4px;
+  transition: all ease 1s;
   &.large {
     height: 32px;
     width: 32px;

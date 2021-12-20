@@ -125,7 +125,8 @@
                   <v-img src="/images/icons/sword.png" />
                 </div>
                 <div class="force-group">
-                  <div class="d-flex mt-1">
+                  <div class="skill d-flex mt-1">
+                    <div class="sp-decrease" v-if="points.axe">-{{ points.axe }}</div>
                     <div class="force-icon">
                       <img height="14" src="/images/icons/axe.png" />
                     </div>
@@ -139,11 +140,12 @@
                       <div
                         class="plus"
                         v-if="unit.levelPoints && unit.skills.axe !== 3"
-                        @click="() => openUpgradePointsModal('axe')"
+                        @click="() => upgradeSkill('axe')"
                       ></div>
                     </div>
                   </div>
-                  <div class="d-flex mt-1">
+                  <div class="skill d-flex mt-1">
+                    <div class="sp-decrease" v-if="points.willPower">-{{ points.willPower }}</div>
                     <div class="force-icon">
                       <img height="14" src="/images/icons/lightning.png" />
                     </div>
@@ -157,11 +159,12 @@
                       <div
                         class="plus"
                         v-if="unit.levelPoints && unit.skills.willPower !== 3"
-                        @click="() => openUpgradePointsModal('willPower')"
+                        @click="() => upgradeSkill('willPower')"
                       ></div>
                     </div>
                   </div>
-                  <div class="d-flex mt-1">
+                  <div class="skill d-flex mt-1">
+                    <div class="sp-decrease" v-if="points.combos">-{{ points.combos }}</div>
                     <div class="force-icon">
                       <img height="10" src="/images/icons/fist.png" />
                     </div>
@@ -175,11 +178,12 @@
                       <div
                         class="plus"
                         v-if="unit.levelPoints && unit.skills.combos !== 3"
-                        @click="() => openUpgradePointsModal('combos')"
+                        @click="() => upgradeSkill('combos')"
                       ></div>
                     </div>
                   </div>
-                  <div class="d-flex mt-1">
+                  <div class="skill d-flex mt-1">
+                    <div class="sp-decrease" v-if="points.battleScars">-{{ points.battleScars }}</div>
                     <div class="force-icon">
                       <img height="10" src="/images/icons/fear.png" />
                     </div>
@@ -193,7 +197,7 @@
                       <div
                         class="plus"
                         v-if="unit.levelPoints && unit.skills.battleScars !== 3"
-                        @click="() => openUpgradePointsModal('battleScars')"
+                        @click="() => upgradeSkill('battleScars')"
                       ></div>
                     </div>
                   </div>
@@ -290,7 +294,7 @@
                     size="small"
                     type="wsecondary"
                     :disabled="!isUnlocked"
-                    :handleClick="() => {isCourageModalOpen = true}"
+                    :handleClick="() => rechargeToken('wCOURAGE')"
                     ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
                     Recharge</Button
                   >
@@ -341,7 +345,7 @@
                     size="small"
                     type="wsecondary"
                     :disabled="!isUnlocked || (!hasPaidEnergyRecharge && !hasFreeEnergyRecharge)"
-                    :handleClick="() => openRechargeEnergyModal()"
+                    :handleClick="() => rechargeToken(hasFreeEnergyRecharge ? 'wFREE-ENERGY' : 'wENERGY')"
                     ><v-icon class="btn-icon" small>mdi-autorenew</v-icon>
                     Recharge</Button
                   >
@@ -537,6 +541,12 @@ export default {
       freeRechargeMessage: 'You are spending the free energy recharge, the next one will be available after 8 hours.',
       paidRechargeMessage: 'You are recharging energy for 250 wGOLD, the next paid recharge will be available after 24 hours.',
       nameCache: '',
+      points: {
+        axe: null,
+        willPower: null,
+        combos: null,
+        battleScars: null,
+      }
     };
   },
   methods: {
@@ -584,7 +594,7 @@ export default {
         this.nameCache = this.unit.name;
       } catch (error) {
         if (error.code === 4001) {
-          return ToastSnackbar.error('Signature cancelled by user');
+          return ToastSnackbar.error('Signature cancelled by player');
         }
         if (error.code === 'INSUFFICIENT_FUNDS') {
           return ToastSnackbar.error(`Insufficient funds to buy Soldier, make sure you have ${error.data.subBalance} ${error.data.token} available in the offchain bridge`);
@@ -597,7 +607,11 @@ export default {
       try {
         const response = await c.rechargeToken(this.account, this.type, token);
         this.unit = { ...response.data, owner: response.owner };
+        ToastSnackbar.success('Recharged successfully');
       } catch (error) {
+        if (error.code === 4001) {
+          return ToastSnackbar.error('Signature cancelled by player');
+        }
         ToastSnackbar.error(`Something went wrong while trying to recharge energy: ${error.code}`)
       }
     },
@@ -607,9 +621,20 @@ export default {
         const s = {
           [skill]: 1,
         };
+        const currentPoints = this.unit.skills[skill];
+        const skillCost = currentPoints * 2 || 1;
         const response = await c.upgradeSkill(this.account, this.type, s);
         this.unit = { ...response.data, owner: response.owner };
+        this.points[skill] = skillCost;
+        setTimeout(() => {
+          this.points[skill] = null;
+        }, 2000)
+        ToastSnackbar.success('Skill was upgraded successfully');
       } catch (error) {
+        if (error.code === 4001) {
+          return ToastSnackbar.error('Signature cancelled by player');
+        }
+        ToastSnackbar.error(`Something went wrong while trying to upgrade skill: ${error.code}`)
         console.error(error);
       }
     },
@@ -659,6 +684,7 @@ export default {
       try {
         await c.changeName(this.account, this.type, value);
         this.nameCache = this.unit.name;
+        ToastSnackbar.success('Name was changed successfully');
       } catch (error) {
         this.cancelNameChange();
         console.error(error);
@@ -679,34 +705,6 @@ export default {
         this.isEditingName = false;
       }
     },
-    openRechargeEnergyModal() {
-      if (this.hasFreeEnergyRecharge) {
-        this.rechargeMessage = this.freeRechargeMessage;
-        this.rechargeAction = 'wFREE-ENERGY';
-      } else {
-        this.rechargeMessage = this.paidRechargeMessage;
-        this.rechargeAction = 'wENERGY';
-      }
-      this.isRechargeModalOpen = true;
-    },
-    rechargeEnergy() {
-      this.rechargeToken(this.rechargeAction);
-      this.isRechargeModalOpen = false;
-    },
-    rechargeCourage() {
-      this.rechargeToken('wCOURAGE');
-      this.isCourageModalOpen = false;
-    },
-    openUpgradePointsModal(skill) {
-      this.pointsAction = skill;
-      const currentPoints = this.unit.skills[skill];
-      this.pointsMessage = this.basePointsMessage.replace('{{QTY}}', currentPoints + 2);
-      this.isPointsModalOpen = true;
-    },
-    upgradePoint() {
-      this.upgradeSkill(this.pointsAction);
-      this.isPointsModalOpen = false;
-    }
   },
   watch: {
     isConnected() {
@@ -860,6 +858,34 @@ export default {
   color: white;
   &:hover {
     color: yellow;
+  }
+}
+.skill {
+  position: relative;
+  > .sp-decrease {
+    position: absolute;
+    z-index: 5;
+    padding: 6px;
+    background-color: red;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-weight: bold;
+    line-height: 1;
+    transition: all ease 2s;
+    animation: decrease 2s;
+  }
+
+  @keyframes decrease {
+    0% {
+      top: -16px;
+      opacity: 1;
+    }
+    100% {
+      top: 0;
+      opacity: 0;
+    }
   }
 }
 </style>
