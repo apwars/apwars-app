@@ -152,7 +152,7 @@
               <div class="card-bridge d-flex flex-column align-center">
                 <div class="my-1 card-bridge-image d-flex align-center">
                   <div>
-                    <img width="100px" :src="item.image" :alt="item.name" />
+                    <img width="70px" :src="item.image" :alt="item.name" />
                   </div>
                 </div>
                 <div class="card-bridge-title">
@@ -166,6 +166,13 @@
                   style="height: 60px;"
                   class="text-caption"
                 >
+                  Package amount:
+                  <amount
+                    :amount="item.minimumPackage"
+                    decimals="0"
+                    formatted
+                  />
+                  items<br />
                   Fee:
                   <amount :amount="item.feeUnit" decimals="0" formatted />
                   per package
@@ -184,18 +191,7 @@
                     </span>
                   </v-tooltip>
 
-                  <amount
-                    :amount="item.offChainLimit"
-                    decimals="0"
-                    formatted
-                  /><br />
-                  Package amount:
-                  <amount
-                    :amount="item.minimumPackage"
-                    decimals="0"
-                    formatted
-                  />
-                  items
+                  <amount :amount="item.offChainLimit" decimals="0" formatted />
                 </div>
                 <div
                   v-else
@@ -259,8 +255,27 @@
                   color="secondary"
                 >
                   <template v-slot:label>
-                    <div>
-                      I agree to transfer my tokens in game items to off-chain
+                    <div
+                      v-if="
+                        bridgeNetwork.to.name === 'Binance Smart Chain Network'
+                      "
+                    >
+                      I consent to convert my Tokens and Game Items to On-Chain
+                      balances. The withdrawal and deposit terms are stated at:
+                      <a
+                        href="https://medium.com/apwars/apwars-bridge-dece52b615c6"
+                        >https://medium.com/apwars/apwars-bridge-dece52b615c6</a
+                      >
+                    </div>
+                    <div v-else>
+                      I consent to converting my Tokens and Game Items to
+                      Off-Chain balances in order to play the game more
+                      conveniently and with a better game experience. The
+                      withdrawal and deposit terms are stated at:
+                      <a
+                        href="https://medium.com/apwars/apwars-bridge-dece52b615c6"
+                        >https://medium.com/apwars/apwars-bridge-dece52b615c6</a
+                      >
                     </div>
                   </template>
                 </v-checkbox>
@@ -485,6 +500,52 @@ export default {
         "56": "https://bscscan.com/tx/",
         "97": "https://testnet.bscscan.com/tx/",
       },
+      statusCode: {
+        INSUFFICIENT_FUNDS_BRIDGE: {
+          title: "You need more funds than that!",
+          text: "This wallet needs more funds to procced with your request!",
+        },
+        INVALID_BRIDGE_TRANSACTION: {
+          title: "The transaction tried was invalid!",
+          text:
+            "Sorry, your transaction was not found or not processed as it should! !",
+        },
+        INVALID_CONTRACT_BRIDGE: {
+          title: "Contract was invalid I'm afraid!",
+          text: "Contract is not correct. Please try again!",
+        },
+        INVALID_BRIDGE_CONTRACT_METHOD: {
+          title: "Wrong contract typed!",
+          text: "Contract entered was incorrect. Try once more!",
+        },
+        TRANSACTION_BRIDGE_ALREADY_REGISTERED: {
+          title: "Transaction was registered before!",
+          text: "The transaction you tried is already registered!",
+        },
+        INVALID_BODY_BRIDGE: {
+          title: "Invalid body!",
+          text:
+            "Inacurrate information. Have another go with the correct one this time!",
+        },
+        INVALID_NEXT_CLAIM_BRIDGE: {
+          title: "Next claim not authorized!",
+          text: (blocks) => {
+            return `You can try to claim again in (${blocks} blocks). Not before that!`;
+          },
+        },
+        INVALID_SIGNATURE_BRIDGE: {
+          title: "Signature was not good enough!",
+          text: "Verification signature needs to be perfect please!",
+        },
+        INVALID_AMOUNT: {
+          title: "Amount entered not valid!",
+          text: "Apologies,the value you're trying to send is not valid!",
+        },
+        INSUFFICIENT_FUNDS: {
+          title: "Oh oh, Not enough funds!",
+          text: "You need more funds to make this transaction works!",
+        },
+      },
     };
   },
 
@@ -624,7 +685,10 @@ export default {
           return { balances: {} };
         }
         if (error.status) {
-          return ToastSnackbar.error(error.code);
+          return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text}
+          `);
         }
         ToastSnackbar.error("An error has occurred while to get wallet");
       }
@@ -653,7 +717,10 @@ export default {
           return { data: [], total: 0 };
         }
         if (error.status) {
-          return ToastSnackbar.error(error.code);
+          return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text}
+          `);
         }
         ToastSnackbar.error("An error has occurred while to get history");
       }
@@ -668,7 +735,7 @@ export default {
     },
 
     changeNetwork() {
-      if (this.isLoadingItems) {
+      if (this.isLoadingItems || this.isLoadingTransfer) {
         return;
       }
       this.bridgeNetwork = {
@@ -736,18 +803,18 @@ export default {
       try {
         this.isLoadingItems = true;
         this.bridgeList = [];
+        this.checkboxTransfer = false;
         this.walletsList = await this.getWallets();
         await this.addBridgeList();
         this.history = await this.getHistory();
         this.isLoadingItems = false;
-        this.checkboxTransfer = false;
       } catch (error) {
         this.isLoadingItems = false;
       }
     },
 
     async clearBridgeList() {
-      if (this.isLoadingItems) {
+      if (this.isLoadingItems || this.isLoadingTransfer) {
         this.typeTransfer = !this.typeTransfer;
         return;
       }
@@ -803,7 +870,10 @@ export default {
         } catch (error) {
           this.isLoadingTransfer = false;
           if (error.status) {
-            return ToastSnackbar.error(error.code);
+            return ToastSnackbar.warning(`
+              <h3>${this.statusCode[error.code].title}</h3> <br />
+              ${this.statusCode[error.code].text}
+            `);
           }
           ToastSnackbar.error(
             "An error has occurred while to signing contract"
@@ -861,7 +931,10 @@ export default {
         } catch (error) {
           this.isLoadingTransfer = false;
           if (error.status) {
-            return ToastSnackbar.error(error.code);
+            return ToastSnackbar.warning(`
+              <h3>${this.statusCode[error.code].title}</h3> <br />
+              ${this.statusCode[error.code].text}
+            `);
           }
           ToastSnackbar.error(
             "An error has occurred while to signing contract"
@@ -925,7 +998,10 @@ export default {
           } catch (error) {
             this.isLoadingTransfer = false;
             if (error.status) {
-              return ToastSnackbar.error(error.code);
+              return ToastSnackbar.warning(`
+                <h3>${this.statusCode[error.code].title}</h3> <br />
+                ${this.statusCode[error.code].text}
+              `);
             }
             ToastSnackbar.error(
               "An error has occurred while to signing contract"
@@ -935,7 +1011,21 @@ export default {
       } catch (error) {
         this.isLoadingTransfer = false;
         if (error.code) {
-          return ToastSnackbar.error(error.code);
+          if (error.code === "INVALID_NEXT_CLAIM_BRIDGE") {
+            const smcBridge = new Bridge(this.addresses.bridge);
+            let nextBlock = await smcBridge.nextClaims(this.account);
+            nextBlock -= this.currentBlockNumber;
+            console.log(nextBlock);
+            return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text(nextBlock)}
+          `);
+          }
+
+          return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text}
+          `);
         }
         return ToastSnackbar.error(error.toString() || error);
       }
@@ -996,7 +1086,10 @@ export default {
           } catch (error) {
             this.isLoadingTransfer = false;
             if (error.status) {
-              return ToastSnackbar.error(error.code);
+              return ToastSnackbar.warning(`
+                <h3>${this.statusCode[error.code].title}</h3> <br />
+                ${this.statusCode[error.code].text}
+              `);
             }
             ToastSnackbar.error(
               "An error has occurred while to signing contract"
@@ -1006,7 +1099,10 @@ export default {
       } catch (error) {
         this.isLoadingTransfer = false;
         if (error.code) {
-          return ToastSnackbar.error(error.code);
+          return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text}
+          `);
         }
         return ToastSnackbar.error(error.toString() || error);
       }
@@ -1050,7 +1146,10 @@ export default {
           return { balances: {} };
         }
         if (error.status) {
-          return ToastSnackbar.error(error.code);
+          return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text}
+          `);
         }
         ToastSnackbar.error("An error has occurred while to add Bridge List");
       }
@@ -1243,7 +1342,7 @@ export default {
 .card-bridge {
   background: #181a1b;
   border: 2px solid #2a3238;
-  min-height: 560px;
+  min-height: 510px;
 }
 .card-bridge-title {
   font-family: PT Serif;
@@ -1255,11 +1354,11 @@ export default {
   text-align: center;
 }
 .card-bridge-image {
-  min-height: 180px;
+  min-height: 140px;
 }
 
 .scroll-items-transfer {
-  height: 580px;
+  height: 570px;
   overflow: auto;
   margin: 0px 0px 0px 0px;
   border: 2px solid #ffeebc;

@@ -23,4 +23,8 @@ export default class Worker {
     return this.smc.methods.claimERC1155(_ids, _amounts, _nonce, _signature).send({ from });
   }
 
+  nextClaims(from) {
+    return this.smc.methods.nextClaims(from).call();
+  }
+
 }
