@@ -1099,6 +1099,17 @@ export default {
       } catch (error) {
         this.isLoadingTransfer = false;
         if (error.code) {
+          if (error.code === "INVALID_NEXT_CLAIM_BRIDGE") {
+            const smcBridge = new Bridge(this.addresses.bridge);
+            let nextBlock = await smcBridge.nextClaims(this.account);
+            nextBlock -= this.currentBlockNumber;
+            console.log(nextBlock);
+            return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text(nextBlock)}
+          `);
+          }
+
           return ToastSnackbar.warning(`
             <h3>${this.statusCode[error.code].title}</h3> <br />
             ${this.statusCode[error.code].text}
