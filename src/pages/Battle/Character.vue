@@ -101,16 +101,16 @@
                   <div
                     class="items-container d-flex justify-space-between mt-2"
                   >
-                    <ItemSlot
+                    <ItemSlot isLocked
                       ><img src="/images/icons/items/boots.png"
                     /></ItemSlot>
-                    <ItemSlot
+                    <ItemSlot isLocked
                       ><img src="/images/icons/items/helmet.png"
                     /></ItemSlot>
-                    <ItemSlot
+                    <ItemSlot isLocked
                       ><img src="/images/icons/items/swords.png"
                     /></ItemSlot>
-                    <ItemSlot
+                    <ItemSlot isLocked
                       ><img src="/images/icons/items/shield.png"
                     /></ItemSlot>
                   </div>
@@ -203,7 +203,7 @@
                 <div class="icon-container mb-2">
                   <v-img src="/images/icons/patent.png" />
                 </div>
-                <Button disabled text="Locked" type="wsecondary" isBlock />
+                <Button disabled type="wsecondary" isBlock><v-icon>mdi-lock-outline</v-icon></Button>
               </v-col>
               <v-col cols="4">
                 <div class="icon-container mb-2">
@@ -212,10 +212,8 @@
                 <Button
                   disabled
                   isBlock
-                  text="Locked"
                   type="wsecondary"
-                  :handleClick="() => unlockProperty('armory')"
-                />
+                ><v-icon>mdi-lock-outline</v-icon></Button>
               </v-col>
             </v-row>
             <v-row dense no-gutters>
