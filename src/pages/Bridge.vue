@@ -262,23 +262,20 @@
                     >
                       I consent to convert my Tokens and Game Items to On-Chain
                       balances. The withdrawal and deposit terms are stated at:
-                      <a
-                        href="https://medium.com/apwars/apwars-bridge-dece52b615c6"
-                        >https://medium.com/apwars/apwars-bridge-dece52b615c6</a
-                      >
                     </div>
                     <div v-else>
                       I consent to converting my Tokens and Game Items to
                       Off-Chain balances in order to play the game more
                       conveniently and with a better game experience. The
                       withdrawal and deposit terms are stated at:
-                      <a
-                        href="https://medium.com/apwars/apwars-bridge-dece52b615c6"
-                        >https://medium.com/apwars/apwars-bridge-dece52b615c6</a
-                      >
                     </div>
                   </template>
                 </v-checkbox>
+              </div>
+              <div class="mt-n1 mb-3 text-center">
+                <a href="https://medium.com/apwars/apwars-bridge-dece52b615c6">
+                  https://medium.com/apwars/apwars-bridge-dece52b615c6
+                </a>
               </div>
             </v-col>
           </v-row>
