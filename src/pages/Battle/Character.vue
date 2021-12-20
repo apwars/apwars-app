@@ -68,9 +68,9 @@
                     placeholder="Edit name"
                     v-model="unit.name"
                     :loading="isLoadingName"
-                    :readonly="!isEditingName"
+                    :disabled="isLoadingName || !isUnlocked"
                   >
-                    <v-icon class="input-icon" slot="append" @click="() => { isEditingName = true }" v-if="!isEditingName" :disabled="!isUnlocked || isLoadingName">
+                    <v-icon class="input-icon" slot="append" v-if="!isEditingName">
                       mdi-pencil-outline
                     </v-icon>
                     <template v-else>
@@ -474,6 +474,9 @@ export default {
       let next = new Date(this.unit.recharges.wENERGY.lastDate);
       next.setTime(next.getTime() + (1 * 24 * 60 * 60 * 1000));
       return next.getTime() - new Date().getTime();
+    },
+    isEditingName() {
+      return this.isUnlocked && (this.unit.name !== this.nameCache);
     }
   },
   data() {
@@ -533,7 +536,6 @@ export default {
       courageRechargeMessage: 'You are recharging courage at the cost of 1000 wCOURAGE.',
       freeRechargeMessage: 'You are spending the free energy recharge, the next one will be available after 8 hours.',
       paidRechargeMessage: 'You are recharging energy for 250 wGOLD, the next paid recharge will be available after 24 hours.',
-      isEditingName: false,
       nameCache: '',
     };
   },
@@ -584,6 +586,9 @@ export default {
         if (error.code === 4001) {
           return ToastSnackbar.error('Signature cancelled by user');
         }
+        if (error.code === 'INSUFFICIENT_FUNDS') {
+          return ToastSnackbar.error(`Insufficient funds to buy Soldier, make sure you have ${error.data.subBalance} ${error.data.token} available in the offchain bridge`);
+        } 
         ToastSnackbar.error('Something went wrong while trying to unlock NFT');
       }
     },
