@@ -121,6 +121,16 @@ export default {
         transition: all 0.4s;
     }
   }
+  &.whot {
+    background-color: #FFD600;
+    border: 1px solid black;
+    color: black;
+    &:hover:enabled {
+      background-color: #E4C000;
+      border: 1px solid black;
+      color: black;
+    }
+  }
   &:disabled {
     background-color: #2a3238;
     border: 1px solid white;

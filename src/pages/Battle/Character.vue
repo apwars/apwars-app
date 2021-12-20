@@ -45,7 +45,7 @@
                 <div class="unit-image">
                   <div class="unlock-button" v-if="!isUnlocked">
                     <Button
-                      type="wprimary"
+                      type="whot"
                       size="small"
                       text="Click to unlock"
                       :handleClick="() => openUnitUnlock()"
