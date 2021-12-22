@@ -18,6 +18,8 @@ import TrainingCenter from "@/pages/TrainingCenter.vue";
 import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
 import Arcadia from "@/pages/Arcadia/Arcadia.vue";
+import Leaderboard from "@/pages/Leaderboard.vue";
+import Bridge from "@/pages/Bridge.vue";
 
 Vue.use(Router);
 
@@ -113,6 +115,16 @@ export const routes = [
         component: Arcadia
       },
       {
+        path: "/leaderboard",
+        name: "/leaderboard",
+        component: Leaderboard
+      },
+      {
+        path: "/bridge",
+        name: "/bridge",
+        component: Bridge
+      },
+      {
         path: "/farms",
         beforeEnter() {
           redirectBlank("https://farms.apwars.farm?showFarms=true");
@@ -155,16 +167,18 @@ const router = new Router({
   routes
 });
 
-// /**
-//  * Before each route update
-//  */
-// router.beforeEach((to, from, next) => {
-//   return next();
-// });
+/**
+ * Before each route update
+ */
+router.beforeEach((to, from, next) => {
+  return next();
+});
 
 // /**
 //  * After each route update
 //  */
-// router.afterEach((to, from) => {});
+router.afterEach((to, from) => {
+  router.app.$store.commit('app/setMenuDisplay', true);
+});
 
 export default router;
