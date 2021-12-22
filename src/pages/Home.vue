@@ -42,21 +42,20 @@
             <v-img class="mx-auto" max-width="300" src="/images/cards.png" />
             <div class="d-flex justify-center mt-1">
               <wButton @click="$router.push('/arcadia-expansion')" class="mt-1">
-                <span class="text-none text-center"
-                  >Buy Arcadia Foundations</span
-                >
+                <span class="text-none text-center">
+                  Buy Arcadia Foundations</span>
               </wButton>
             </div>
           </v-col>
           <v-col cols="12" md="4">
             <v-img
               class="mx-auto my-4"
-              max-width="380"
+              max-width="170"
               src="/images/bridge.png"
             />
             <div class="d-flex justify-center">
               <wButton @click="$router.push('/bridge')">
-                Bridge
+                <span class="text-none">Go to Bridge</span>
               </wButton>
             </div>
           </v-col>
