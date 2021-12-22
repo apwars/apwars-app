@@ -1,15 +1,23 @@
 <template>
-  <div v-bind:class="{ disabled: this.disabled }">
-    <div :class="`${this.getSize}`" @click="emitClick">
-      <div class="btn-bg" v-bind:class="{ 'actived': isActived }"></div>
-      <div class="btn-bg-c" v-bind:class="{ 'actived': isActived }">
+  <div class="d-inline-flex" v-bind:class="{ disabled: this.disabled }">
+    <div
+      v-if="isFlat"
+      :class="`flat ${this.getSize}-flat ${isActived && 'flat-actived'}`"
+      @click="emitClick"
+    >
+      <slot></slot>
+    </div>
+
+    <div v-else :class="`${this.getSize}`" @click="emitClick">
+      <div class="btn-bg" v-bind:class="{ actived: isActived }"></div>
+      <div class="btn-bg-c" v-bind:class="{ actived: isActived }">
         <div class="label">
           <slot></slot>
         </div>
       </div>
       <div
         class="btn-bg revert-img"
-        v-bind:class="{ 'actived': isActived }"
+        v-bind:class="{ actived: isActived }"
       ></div>
     </div>
   </div>
@@ -19,7 +27,7 @@
 import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
-  props: ["amount", "actived", "size", "disabled"],
+  props: ["amount", "actived", "size", "disabled", "flat"],
 
   components: {
     Amount,
@@ -30,7 +38,7 @@ export default {
       if (this.actived === undefined) {
         return false;
       }
-       return (this.actived === "" || this.actived) ? true : false;
+      return this.actived === "" || this.actived ? true : false;
     },
     getSize() {
       switch (this.size) {
@@ -45,6 +53,12 @@ export default {
         default:
           return "btn btn-default";
       }
+    },
+    isFlat() {
+      if (this.flat === undefined) {
+        return false;
+      }
+      return this.flat === "" || this.flat ? true : false;
     },
   },
 
@@ -116,6 +130,51 @@ export default {
   background-color: #ff00007d;
   z-index: 2;
   border-radius: 10px;
+}
+
+.flat {
+  background-color: #000;
+  border: 2px solid #ffeebc;
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  color: #ffffff;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.flat:hover {
+  background-color: #3a2720 !important;
+}
+
+
+.flat-actived {
+  background-color: #3a2720 !important;
+}
+
+.btn-default-flat {
+  font-size: 18px;
+  padding: 6px 16px;
+}
+
+.btn-x-large-flat {
+  font-size: 28px;
+  padding: 10px 24px;
+}
+
+.btn-large-flat {
+  font-size: 22px;
+  padding: 8px 20px;
+}
+
+.btn-small-flat {
+  font-size: 16px;
+  padding: 4px 16px;
+}
+
+.btn-x-small-flat {
+  font-size: 14px;
+  padding: 2px 8px;
 }
 
 /*********/

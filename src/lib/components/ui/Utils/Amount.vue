@@ -10,7 +10,9 @@
             :alt="symbol"
             class="image-symbol"
           />
-          <span v-if="size" :style="`font-size: ${size}px`"> {{ computedAmount }} </span>
+          <span v-if="size" :style="`font-size: ${size}px`">
+            {{ computedAmount }}
+          </span>
           <span v-else> {{ computedAmount }} </span>
           <span v-if="symbol"> {{ symbol }} </span>
         </span>
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-import Convert from '@/lib/helpers/Convert';
+import Convert from "@/lib/helpers/Convert";
 
 export default {
   props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'attribute'],
@@ -48,8 +50,10 @@ export default {
       return numberAmount;
     },
     tooltipAmount() {
-      let numberAmount = this.amount || '0';
-      return this.isFormatted ? numberAmount : Convert.fromWei(numberAmount.toString());
+      let numberAmount = this.amount || "0";
+      return this.isFormatted
+        ? numberAmount
+        : Convert.fromWei(numberAmount.toString());
     },
     isTooltip() {
       return this.tooltip !== undefined;
@@ -61,13 +65,20 @@ export default {
       return this.formatted !== undefined;
     },
     isIcon() {
-      return this.icon !== undefined && this.symbol !== undefined && this.symbol.length > 0;
+      return (
+        this.icon !== undefined &&
+        this.symbol !== undefined &&
+        this.symbol.length > 0
+      );
     },
   },
 };
 </script>
 
 <style scoped>
+.amount > span {
+  white-space: nowrap;
+}
 .image-symbol {
   vertical-align: bottom;
   margin-left: 2px !important;
