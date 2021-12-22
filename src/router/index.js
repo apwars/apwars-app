@@ -18,6 +18,7 @@ import TrainingCenter from "@/pages/TrainingCenter.vue";
 import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
 import Arcadia from "@/pages/Arcadia/Arcadia.vue";
+import StarterPacks from "@/pages/StarterPacks.vue";
 
 Vue.use(Router);
 
@@ -111,6 +112,11 @@ export const routes = [
         path: "/arcadia",
         name: "/arcadia",
         component: Arcadia
+      },
+      {
+        path: "/packs",
+        name: "/packs",
+        component: StarterPacks
       },
       {
         path: "/farms",
