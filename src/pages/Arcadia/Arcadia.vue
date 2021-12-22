@@ -5,7 +5,7 @@
       id="gameArcadia"
       width="100%"
       :src="
-        `/Game/Arcadia/?worldManager=${getWorldManager}&landMap=${getLandMap}&treasureHunt=${getTreasureHunt}&treasureHuntId=${getTreasureHuntId}&expectedVersion=1.1.0.11`
+        `/Game/Arcadia/?worldManager=${getWorldManager}&landMap=${getLandMap}&treasureHunt=${getTreasureHunt}&treasureHuntId=${getTreasureHuntId}&expectedVersion=1.1.0.11&baseUrl=${getBaseUrl}`
       "
       frameborder="0"
       scrolling="no"
@@ -30,6 +30,10 @@ export default {
       treasureHunt: {
         "56": "0x66cadff076e70183ccc6d4d8d6c091670f4a2830",
         "97": "0xd3fE14C58b1d284aF14Bf61dec20a7727F22f1cc",
+      },
+      baseUrl: {
+        "56": "https://apiv2.apwars.farm",
+        "97": "https://api-qa.apwars.farm",
       },
       treasureHuntId: {
         "56": "2",
@@ -56,6 +60,9 @@ export default {
     },
     getTreasureHuntId() {
       return this.treasureHuntId[this.networkInfo.id];
+    },
+    getBaseUrl() {
+      return this.baseUrl[this.networkInfo.id];
     },
   },
 
