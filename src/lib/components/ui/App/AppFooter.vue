@@ -208,7 +208,19 @@ export default {
         {
           title: "Inventory",
           image: "/images/icons/inventory.png",
-          href: "/inventory",
+          href: "",
+          submenu: [
+            {
+              title: "Inventory",
+              image: "/images/icons/inventory.png",
+              href: "/inventory",
+            },
+            {
+              title: "Bridge",
+              href: "/bridge",
+              image: "/images/icons/exchange.png",
+            },
+          ],
         },
         {
           title: "Arcadia",

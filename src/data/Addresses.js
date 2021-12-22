@@ -47,4 +47,16 @@ export default {
     "56": "0xd6adBAff5CD8ca7f702244106a30c90797274469",
     "97": "0x2A6eaAADac4B671F3D6643272564520EaC037997",
   },
+  serverless: {
+    "56": process.env.VUE_APP_SERVERLESS_56,
+    "97": process.env.VUE_APP_SERVERLESS_97,
+  },
+  apiArcadia: {
+    "56": process.env.VUE_APP_API_ARCADIA_56,
+    "97": process.env.VUE_APP_API_ARCADIA_97,
+  },
+  bridge: {
+    "97": "0x7e8e0bce742c06C8816DE8396F101F5d6A4F0bE7",
+    "56": "0xa2D9587c1be452C79D7F8a59F2aE4d42b5621186"
+  }
 };

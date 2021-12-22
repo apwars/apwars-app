@@ -9,5 +9,9 @@ export default {
   setRTL: (state, isRTL) => {
     Vuetify.framework.rtl = isRTL
     state.isRTL = isRTL
+  },
+
+  setMenuDisplay: (state, display) => {
+    state.isMenuDisplaying = display
   }
 }
