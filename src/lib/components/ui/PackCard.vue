@@ -21,8 +21,10 @@
           </div>
         </div>
         <div class="additional-info mt-3">
-          <div class="items-container"></div>
-          <div class="bonus-info">
+          <div class="items-container">
+            <GameItem size="large" :rewardId="29" :amount="1" />
+            <GameItem size="large" :rewardId="34" :amount="1" />
+          </div>
           <div :class="['bonus-container', [variant]]">
             <div class="bonus-text mr-2">Bonus:</div>
             <div class="tokens">
@@ -35,8 +37,6 @@
                 <div class="token-text ml-1">600 wGOLD</div>
               </div>
             </div>
-          </div>
-          <div class="bonus-chance text-center mt-1">You have 0,7% chance rare item</div>
           </div>
         </div>
       </div>
@@ -55,8 +55,10 @@
 import { getTroops } from "@/data/Troops";
 
 import Button from "@/lib/components/ui/Buttons/Button";
+import GameItem from "@/lib/components/ui/GameItem";
+
 export default {
-  components: { Button },
+  components: { Button, GameItem },
   props: {
     title: {
       type: String,
@@ -259,11 +261,8 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-.bonus-chance {
-  font-weight: bold;
-font-size: 22px;
-line-height: 29px;
-text-align: center;
-color: #FFEEBC;
+.items-container {
+  display: flex;
+  align-items: center;
 }
 </style>
