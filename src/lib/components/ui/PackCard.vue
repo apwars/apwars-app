@@ -4,9 +4,19 @@
       <div :class="['gem-container', [variant]]">
         <img class="gem" :src="gem" :alt="variant" />
       </div>
-      <div class="pack-info">
-        <div class="pack-title text-center">{{ title }}</div>
-        <div class="pack-subtitle text-center">{{ subtitle }}</div>
+      <div class="pack-info text-center">
+        <div class="pack-title">{{ pack.title }}</div>
+        <div class="pack-subtitle">{{ pack.subtitle }}</div>
+        <img
+          class="mt-2"
+          :src="
+            pack.nft.type === 'HUMAN_SOLDIER'
+              ? '/images/troops/wwarrior-nft.png'
+              : '/images/troops/wgrunt-nft.png'
+          "
+          :alt="pack.nft.type"
+        />
+        <div class="amount">x{{ pack.nft.amount }}</div>
       </div>
       <div class="divider"></div>
       <div class="pack-content">
@@ -18,6 +28,7 @@
               width="112"
             />
             <div class="unit-name text-center mt-1">{{ unit.name }}</div>
+            <div class="amount">x{{ pack.units[unit.id] || 0}}</div>
           </div>
         </div>
         <div class="additional-info mt-3">
@@ -30,11 +41,15 @@
             <div class="tokens">
               <div class="d-flex align-center">
                 <img src="/images/wcourage.png" alt="wcourage" width="48" />
-                <div class="token-text ml-1">2,650 wCOURAGE</div>
+                <div class="token-text ml-1">
+                  {{ format(pack.bonus.wCOURAGE) }} wCOURAGE
+                </div>
               </div>
               <div class="d-flex align-center mt-2">
                 <img src="/images/wgold.png" alt="wgold" width="48" />
-                <div class="token-text ml-1">600 wGOLD</div>
+                <div class="token-text ml-1">
+                  {{ format(pack.bonus.wGOLD) }} wGOLD
+                </div>
               </div>
             </div>
           </div>
@@ -43,10 +58,16 @@
     </div>
     <div :class="['pack-price-container', [variant]]">
       <img class="chest" :src="chest" :alt="variant" />
-      <div class="price-text mr-1">50.000</div>
-      <img src="/images/wgold.png" :alt="wGOLD" height="32" />
-      <div class="token-text mr-4">wGOLD</div>
-      <div class="remaining-text mr-2">Remaining Packs 100</div>
+      <div class="price-text mr-1">{{ format(pack.price) }}</div>
+      <img
+        :src="`/images/${pack.token.toLowerCase()}.png`"
+        :alt="pack.token"
+        height="32"
+      />
+      <div class="token-text mr-4">{{ pack.token }}</div>
+      <div class="remaining-text mr-2">
+        Remaining Packs {{ pack.remaining }}
+      </div>
       <Button type="whot" text="Buy this pack" />
     </div>
   </div>
@@ -60,21 +81,9 @@ import GameItem from "@/lib/components/ui/GameItem";
 export default {
   components: { Button, GameItem },
   props: {
-    title: {
-      type: String,
-      default: "",
-    },
-    subtitle: {
-      type: String,
-      default: "",
-    },
-    variant: {
-      type: String,
-      default: "blue",
-    },
-    race: {
-      type: Number,
-      default: 1,
+    pack: {
+      type: Object,
+      default: null,
     },
   },
   computed: {
@@ -109,7 +118,15 @@ export default {
       return "/images/icons/blue-chest.png";
     },
     raceUnits() {
-      return getTroops().filter((t) => t.race === this.race);
+      return getTroops().filter((t) => t.race === this.pack.race);
+    },
+    variant() {
+      return this.pack.theme || "blue";
+    },
+  },
+  methods: {
+    format(value) {
+      return new Intl.NumberFormat("en-US").format(value);
     },
   },
 };
@@ -151,6 +168,7 @@ export default {
   align-items: center;
   padding: 0 32px;
   justify-content: flex-end;
+  margin-bottom: 36px;
   &.blue {
     @extend .blue;
   }
@@ -250,7 +268,7 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  padding: 12px 24px;
+  padding: 6px 12px;
 }
 .bonus-text {
   font-weight: bold;
@@ -260,9 +278,17 @@ export default {
 .additional-info {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 }
 .items-container {
   display: flex;
   align-items: center;
+}
+.amount {
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 40px;
+  text-align: center;
+  color: #ffffff;
 }
 </style>

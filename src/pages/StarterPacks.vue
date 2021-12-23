@@ -7,21 +7,32 @@
     </v-row>
     <v-row>
         <v-col>
-            <PackCard class="mt-12" title="Warrior Pack" subtitle="Starter Pack" />
-            <PackCard class="mt-12" variant="green" title="Conqueror Pack" subtitle="Starter Pack" />
-            <PackCard class="mt-12" variant="red" title="Commander Pack" subtitle="Starter Pack" />
+            <PackCard class="pack" v-for="pack in humanPacks" :key="pack.id" :pack="pack" />
         </v-col>
     </v-row>
 </v-container>
     
 </template>
 <script>
+import { HUMANS, ORCS } from "@/data/UnitPacks";
 import Title from "@/lib/components/ui/Title";
 import PackCard from "@/lib/components/ui/PackCard";
 export default {
-    components: { Title, PackCard }
+    components: { Title, PackCard },
+    computed: {
+        humanPacks() {
+            return HUMANS;
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
-
+.pack {
+    &:first-child {
+        margin-top: 36px;
+    }
+    &:not(:first-child) {
+        margin-top: 120px;
+    }
+}
 </style>
