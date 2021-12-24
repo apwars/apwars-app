@@ -15,6 +15,7 @@
         <div
           :class="[
             'slot',
+            col && col.rewards.length ? 'is-awarded' : ''
           ]"
           v-for="(col, colIndex) in row"
           :key="colIndex"
@@ -148,6 +149,9 @@ export default {
     > .unit {
       transform: scaleX(-1);
     }
+  }
+  &.is-awarded {
+    background-image: url("/images/battle/floor-awarded.png");
   }
   > .unit {
     position: absolute;
