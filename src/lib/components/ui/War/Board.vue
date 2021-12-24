@@ -15,7 +15,7 @@
           :class="[
             'slot',
             getKey(rowIndex, colIndex) === selected ? 'selected' : '',
-            col.isAwarded ? 'is-awarded' : ''
+            col && col.rewards.length ? 'is-awarded' : ''
           ]"
           v-for="(col, colIndex) in row"
           :key="colIndex"
