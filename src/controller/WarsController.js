@@ -9,14 +9,14 @@ export default class WarsController {
 
   getOne(warId) {
     try {
-      return this.base._get(`/v1/wars/${warId}`);
+      return this.base._get(`/wars/${warId}`);
     } catch (error) {
       throw error;
     }
   }
   getBoard(warId, raceName) {
     try {
-      return this.base._get(`/v1/wars/${warId}/slots/${raceName}`);
+      return this.base._get(`/wars/${warId}/slots/${raceName}`);
     } catch (error) {
       throw error;
     }
