@@ -2,16 +2,20 @@
   <div>
     <div class="phase-title">
       <div>Parcial Result</div>
-      <Button text="Go to War Report" type="wtertiary" :handleClick="goToReport" />
+      <Button
+        text="Go to War Report"
+        type="wtertiary"
+        :handleClick="goToReport"
+      />
     </div>
 
     <div class="versus-bar">
-      <div class="corp">
+      <div class="corp" :style="`--corp:${getPercent(corpForce)}%`">
         <div class="standart">
-        <img class="faction-icon left" src="/images/icons/corp.png" />
-        <div class="crown">
-          <v-img src="/images/icons/crown.png" />
-        </div>
+          <img class="faction-icon left" src="/images/icons/corp.png" />
+          <div class="crown">
+            <v-img src="/images/icons/crown.png" />
+          </div>
         </div>
         <img
           class="battle-icon"
@@ -19,32 +23,49 @@
           width="42"
           src="/images/battle/battle-icon.png"
         />
-        <div class="total-amount d-none d-sm-flex"><Amount :amount="1555555555555555555555" formatted compact symbol="Power Units"/></div>
+        <div class="total-amount d-none d-sm-flex">
+          <Amount :amount="corpForce" formatted compact symbol="Power Units" />
+        </div>
       </div>
-      <div class="degen">
+      <div class="degen" :style="`--degen:${getPercent(degenForce)}%`">
         <div class="standart">
-        <img class="faction-icon right" src="/images/icons/degen.png" />
-        <div class="crown" v-show="1 == 2">
-          <v-img src="/images/icons/crown.png" />
+          <img class="faction-icon right" src="/images/icons/degen.png" />
+          <div class="crown" v-show="1 == 2">
+            <v-img src="/images/icons/crown.png" />
+          </div>
         </div>
+        <div class="total-amount d-none d-sm-flex">
+          <Amount :amount="degenForce" formatted compact symbol="Power Units" />
         </div>
-        <div class="total-amount d-none d-sm-flex"><Amount :amount="1555555555555555555555" formatted compact symbol="Power Units" /></div>
       </div>
     </div>
-    <div class="prizes">
+    <div :class="['prizes', degenForce >= corpForce ? 'invert' : '']">
       <div class="winner-prize">
         <div class="d-sm-none">Winner Prize</div>
         <IconInfo iconPath="/images/wgold.png" title="Unlocked Prize">
-          <span class="prize-text">~<Amount :amount="1555555555555555555555" formatted compact /> <span class="game-text">wGOLD</span></span>
+          <span class="prize-text"
+            >~<Amount :amount="winnerAmount" formatted compact />
+            <span class="game-text">wGOLD</span></span
+          >
         </IconInfo>
-        <IconInfo iconPath="/images/battle/burned.png" title="Unlocked Prize">
-          <span class="prize-text">~<Amount :amount="1555555555555555555555" formatted compact /> <span class="game-text">wGOLD</span></span>
+        <IconInfo
+          iconPath="/images/battle/burned.png"
+          title="Unlocked Prize"
+          v-if="burnAmount"
+        >
+          <span class="prize-text"
+            >~<Amount :amount="1555555555555555555555" formatted compact />
+            <span class="game-text">wGOLD</span></span
+          >
         </IconInfo>
       </div>
       <div class="loser-prize">
         <div class="d-sm-none">Loser Prize</div>
         <IconInfo iconPath="/images/wcourage.png" title="Unlocked Prize">
-          <span class="prize-text">~<Amount :amount="1555555555555555555555" formatted compact /> <span class="game-text-purple">wCOURAGE</span></span>
+          <span class="prize-text"
+            >~<Amount :amount="loserAmount" formatted compact />
+            <span class="game-text-purple">wCOURAGE</span></span
+          >
         </IconInfo>
       </div>
     </div>
@@ -56,10 +77,40 @@ import IconInfo from "@/lib/components/ui/IconInfo";
 import Button from "@/lib/components/ui/Buttons/Button";
 
 export default {
+  props: {
+    corpForce: {
+      type: Number,
+      default: 0,
+    },
+    degenForce: {
+      type: Number,
+      default: 0,
+    },
+    winnerAmount: {
+      type: Number,
+      default: 0,
+    },
+    burnAmount: {
+      type: Number,
+      default: 0,
+    },
+    loserAmount: {
+      type: Number,
+      default: 0,
+    },
+  },
   components: { Amount, IconInfo, Button },
+  computed: {
+    totalFactionForces() {
+      return this.corpForce + this.degenForce;
+    },
+  },
   methods: {
     goToReport() {
       this.$router.push(`/wars/${this.$route.params.contractWar}/report`);
+    },
+    getPercent(amount) {
+      return (100 * amount) / this.totalFactionForces;
     },
   },
 };
@@ -86,7 +137,7 @@ export default {
   background-color: #1c4844;
   display: inline-block;
   position: relative;
-  width: 50%;
+  width: var(--corp);
   > .battle-icon {
     position: absolute;
     right: -21px;
@@ -105,23 +156,23 @@ export default {
     }
   }
   .crown {
-  position: absolute;
-  top: -48px;
-  left: -10px;
-  width: 71px;
-  @media screen and (min-width: 768px) {
-    width: 75px;
+    position: absolute;
+    top: -48px;
+    left: -10px;
+    width: 71px;
+    @media screen and (min-width: 768px) {
+      width: 75px;
       top: -54px;
-    left: -2px;
+      left: -2px;
+    }
   }
-}
 }
 .degen {
   height: 40px;
   background-color: #45722c;
   display: inline-block;
   position: relative;
-  width: 50%;
+  width: var(--degen);
   .faction-icon {
     position: absolute;
     top: -14px;
@@ -134,16 +185,16 @@ export default {
     }
   }
   .crown {
-  position: absolute;
-  top: -48px;
-  right: -10px;
-  width: 71px;
-  @media screen and (min-width: 768px) {
-    width: 75px;
+    position: absolute;
+    top: -48px;
+    right: -10px;
+    width: 71px;
+    @media screen and (min-width: 768px) {
+      width: 75px;
       top: -52px;
-  right: -16px;
+      right: -16px;
+    }
   }
-}
 }
 .prizes {
   width: 100%;
@@ -156,6 +207,9 @@ export default {
   @media screen and (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
+    &.invert {
+      flex-direction: row-reverse;
+    }
     .winner-prize {
       display: flex;
       > div {
