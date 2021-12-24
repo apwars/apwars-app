@@ -23,7 +23,7 @@
         >
           <div
             class="arrow-down"
-            v-if="getKey(rowIndex, colIndex) === currentUserAddress"
+            v-if="col && col.account === currentUserAddress"
           ></div>
           <img
             :class="['unit', invertUnitDirection ? 'invert' : '']"

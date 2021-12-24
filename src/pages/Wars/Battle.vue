@@ -32,8 +32,8 @@
               tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
             />
             <countdown
-              :time="war.deadlines.endEnlistment"
-              title="Countdown to collect prizes and wUNITS"
+              :time="countdownTimer"
+              :title="countdownTitle"
               titleColor="#FFF"
               hideEnd
             />
@@ -64,13 +64,13 @@
                         width="32"
                       />
                       <div class="prize-info">
-                        4%
+                        {{ war.percentageConqueredPerSlot }}%
                       </div>
                     </div>
                     <div class="brown-info mr-2">
                       <div class="power-text">
                         <Amount
-                          :amount="150000000"
+                          :amount="war.races.find(r => r.name === 'Humans').power.total"
                           compact
                           formatted
                           symbol="Power Units"
@@ -94,7 +94,7 @@
                     <div class="brown-info ml-2">
                       <div class="power-text">
                         <Amount
-                          :amount="150000000"
+                          :amount="war.races.find(r => r.name === 'Orcs').power.total"
                           compact
                           formatted
                           symbol="Power Units"
@@ -104,14 +104,16 @@
                     <div class="prize-share ml-2">
                       <img src="/images/battle/treasure.png" width="32" />
                       <div class="prize-info">
-                        4%
+                        {{ war.percentageConqueredPerSlot }}%
                       </div>
                     </div>
                   </div>
                 </div>
                 <FullBoard
+                  :currentUserAddress="account"
                   :rows="10"
                   :cols="40"
+                  :board="fullBoard"
                   rotate="30deg"
                   unitImage="/images/troops/wwarrior.webp"
                 />
@@ -124,13 +126,13 @@
                         width="32"
                       />
                       <div class="prize-info">
-                        4%
+                        {{ war.percentageConqueredPerSlot }}%
                       </div>
                     </div>
                     <div class="brown-info mr-2">
                       <div class="power-text">
                         <Amount
-                          :amount="150000000"
+                          :amount="war.races.find(r => r.name === 'Elves').power.total"
                           compact
                           formatted
                           symbol="Power Units"
@@ -154,7 +156,7 @@
                     <div class="brown-info ml-2">
                       <div class="power-text">
                         <Amount
-                          :amount="150000000"
+                          :amount="war.races.find(r => r.name === 'Undead').power.total"
                           compact
                           formatted
                           symbol="Power Units"
@@ -164,7 +166,7 @@
                     <div class="prize-share ml-2">
                       <img src="/images/battle/treasure.png" width="32" />
                       <div class="prize-info">
-                        4%
+                        {{ war.percentageConqueredPerSlot }}%
                       </div>
                     </div>
                   </div>
@@ -178,7 +180,7 @@
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions, mapGetters } from "vuex";
 
 import WarsController from "@/controller/WarsController";
 
@@ -192,6 +194,9 @@ import Countdown from "@/lib/components/ui/Utils/Countdown";
 export default {
   components: { Title, Button, Versus, FullBoard, Amount, Countdown },
   computed: {
+    ...mapGetters({
+      getBoardByRace: "war/getBoardByRace"
+    }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
     },
@@ -203,9 +208,47 @@ export default {
     addresses() {
       return this.$store.getters["user/addresses"];
     },
-    countdownTimer() {
-      return 1637711108;
+    countdownTitle() {
+      if (this.war.status === "enlistment") {
+        return "Enlistment ends in"
+      }
+      return "Countdown to collect prizes and wUNITS"
     },
+    countdownTimer() {
+      const now = new Date().getTime();
+      return Math.ceil(Date.parse(this.war.deadlines.endEnlistment) - now, 0);
+    },
+    humansBoard() {
+      return this.getBoardByRace(1);
+    },
+    orcsBoard() {
+      return this.getBoardByRace(2);
+    },
+    elvesBoard() {
+      return this.getBoardByRace(3);
+    },
+    undeadsBoard() {
+      return this.getBoardByRace(4);
+    },
+    upperBoard() {
+      let b = [];
+      for (let i = 0; i < 5; i++) {
+        let row = [].concat(this.humansBoard[i], this.orcsBoard[i]);
+        b.push(row);
+      }
+      return b;
+    },
+    bottomBoard() {
+      let b = [];
+      for (let i = 0; i < 5; i++) {
+        let row = [].concat(this.elvesBoard[i], this.undeadsBoard[i]);
+        b.push(row);
+      }
+      return b;
+    },
+    fullBoard() {
+      return [].concat(this.upperBoard, this.bottomBoard)
+    }
   },
   data() {
     return {
@@ -216,6 +259,9 @@ export default {
   methods: {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
+    }),
+    ...mapActions({
+      getFullBoard: "war/getFullBoard"
     }),
     backToHome() {
       this.$router.push("/");
@@ -249,6 +295,7 @@ export default {
     },
     account() {
       this.load();
+      this.getFullBoard(this.$route.params.contractWar)
     }
   },
   async mounted() {

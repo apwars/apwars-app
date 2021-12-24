@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import AppModule from './app'
 import UserModule from './user'
 import EnlistmentModule from './enlistment'
+import WarModule from './war'
 
 Vue.use(Vuex)
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     app: AppModule,
     user: UserModule,
     enlistment: EnlistmentModule,
+    war: WarModule,
   },
 
   state: {
