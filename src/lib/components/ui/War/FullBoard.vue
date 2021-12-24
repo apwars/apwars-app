@@ -181,8 +181,8 @@ export default {
   width: 0;
   height: 0;
   z-index: 0;
-  top: -28px;
-  left: 14px;
+  top: -21px;
+  left: 8px;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   border-top: 8px solid yellow;
