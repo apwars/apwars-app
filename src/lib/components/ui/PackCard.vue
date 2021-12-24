@@ -109,13 +109,13 @@ export default {
     },
     chest() {
       if (this.variant === "red") {
-        return "/images/icons/red-chest.png";
+        return "/images/icons/red-chest.webp";
       }
       if (this.variant === "green") {
         return "/images/icons/green-chest.png";
       }
 
-      return "/images/icons/blue-chest.png";
+      return "/images/icons/blue-chest.webp";
     },
     raceUnits() {
       return getTroops().filter((t) => t.race === this.pack.race);
