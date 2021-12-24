@@ -11,14 +11,14 @@ export default {
   
   computed: {
     markedProposals() {
-      return this.$store.getters['user/markedProposals'];
+      return getters['user/markedProposals'];
     },
   },
 
   methods: {
     mark(proposalId) {
       const actual = this.showMarked(proposalId.toString());
-      this.$store.dispatch('user/markProposal', {proposalId: proposalId.toString(), marked: !actual});
+      dispatch('user/markProposal', {proposalId: proposalId.toString(), marked: !actual});
     },
 
     showMarked(proposalId) {

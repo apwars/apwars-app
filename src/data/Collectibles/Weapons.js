@@ -60,9 +60,33 @@ export function getWeapons() {
       icon: "simple-shield",
       strength: 0,
       defense: 15,
-      war: {
-        stakeLimit: 1000
-      }
+    },
+    {
+      id: 63,
+      type: "weapons",
+      typeDesc: "Weapons",
+      contractAddress: addresses.collectibles,
+      title: "Simple Bow",
+      description: 'The Simples Archery can be used by your troops in direct conflict with enemies. And it will give you the initial strength to conquer your path to victory.',
+      image: "/images/nfts/weapon-simple-bow.png",
+    },
+    {
+      id: 64,
+      type: "weapons",
+      typeDesc: "Weapons",
+      contractAddress: addresses.collectibles,
+      title: "Simple Spear",
+      description: 'The Simple Spear is sharp and can be used from a distance causing great damage to the enemy team.',
+      image: "/images/nfts/weapon-simple-spear.png",
+    },
+    {
+      id: 65,
+      type: "weapons",
+      typeDesc: "Weapons",
+      contractAddress: addresses.collectibles,
+      title: "Simple Potion",
+      description: 'The Simple Potion has magical elements that give power to your troops. Once used, it causes irreversible damage to opponents.',
+      image: "/images/nfts/weapon-simple-potion.png",
     },
   ];
 }

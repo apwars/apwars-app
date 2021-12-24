@@ -89,7 +89,7 @@
       :fluid="$vuetify.breakpoint.md || $vuetify.breakpoint.mobile"
       v-if="isConnected && !isLoading"
     >
-      <v-row v-if="filterTroops.length > 0">
+      <v-row v-if="filterTroops.length > 0 ">
         <v-col
           :class="$vuetify.breakpoint.mobile ? 'small-padding' : ''"
           cols="12"
@@ -98,6 +98,7 @@
           :key="trooper.name || trooper.title"
         >
           <trooper v-if="getType(trooper) === 'trooper'" :info="trooper" />
+
           <stake-trooper
             v-else-if="getType(trooper) === 'enlistment'"
             :trooper="trooper"
@@ -128,7 +129,7 @@
           />
         </v-col>
       </v-row>
-      <v-row v-else>
+      <v-row v-else-if="!filterTroops.length > 0">
         <v-col cols="12">
           <h1 class="text-center">No data available</h1>
         </v-col>
@@ -158,9 +159,10 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import { getTroops } from "@/data/Troops";
 import { getGameItems } from "@/data/Collectibles/GameItems";
-import Troops from "@/lib/eth/Troops";
 import wGOLD from "@/lib/eth/wGOLD";
 import GameItemsCombinators from '../Combinators/GameItemsCombinators.vue';
+import { getTrooper } from "@/data/Trooper";
+
 
 export default {
   components: {
@@ -175,7 +177,7 @@ export default {
     GameItemsCombinators,
   },
 
-  props: ["type", "contractWar", "filterRules", "showOnlyMyUnits"],
+  props: ["type", "contractWar", "filterRules", "showOnlyMyUnits",],
 
   data() {
     return {
@@ -234,6 +236,10 @@ export default {
     currentBlockNumber() {
       this.loadData();
     },
+
+    filterTroops() {
+      this.troopsFilter(this.filterTroops);
+    }
   },
 
   mounted() {
@@ -266,7 +272,9 @@ export default {
           }
         }
 
-        this.globalTroops = await Promise.all(
+        this.globalTroops = await getTrooper(this.networkInfo.id, this.account);
+
+        /* this.globalTroops = await Promise.all(
           troops.map((trooper) => {
             return new Promise(async (resolve) => {
               try {
@@ -320,7 +328,7 @@ export default {
             ...trooper,
             ...{ globalQty: trooper.globalQty, myQty: trooper.myQty },
           };
-        });
+        }); */
 
         const gameItems = getGameItems().filter(g => g.combinators).map(g => ({...g, myQty: 0, teamDesc: '', raceDesc: '', tierDesc: '', name: g.title }));
 

@@ -147,22 +147,12 @@ export default {
     },
   },
 
-  watch: {
-    currentBlockNumber() {
-      this.loadData();
-    },
-    account() {
-      this.loadData();
-    },
-  },
-
   mounted() {
-    this.loadData();
+    this.initData();
   },
 
   methods: {
-    initData() {},
-    async loadData() {
+    initData() {
       this.checkAllApproval();
     },
     checkAllApproval() {

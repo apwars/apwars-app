@@ -21,6 +21,10 @@ export default class wGOLD {
     return this.smc.methods.balanceOf(account).call();
   }
 
+  totalSupply() {
+    return this.smc.methods.totalSupply().call();
+  }
+
   approve(from, spender) {
     return this.smc.methods
       .approve(spender, ethers.constants.MaxUint256)
