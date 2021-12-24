@@ -181,7 +181,7 @@ export default {
   width: 0;
   height: 0;
   z-index: 0;
-  top: -21px;
+  top: -16px;
   left: 8px;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
@@ -210,5 +210,19 @@ div::-webkit-scrollbar {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+@keyframes flutuation {
+  0% {
+    transform: translateY(-50%);
+  }
+
+  50% {
+    transform: translateY(-80%);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
 }
 </style>
