@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div :class="['prizes', degenForce >= corpForce ? 'invert' : '']">
+    <div :class="['prizes', degenForce > corpForce ? 'invert' : '']">
       <div class="winner-prize">
         <div class="d-sm-none">Winner Prize</div>
         <IconInfo iconPath="/images/wgold.png" title="Unlocked Prize">

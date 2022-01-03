@@ -46,11 +46,9 @@ export default {
   height: 24px;
   width: 100%;
   border: 2px solid var(--color2);
-  border-radius: 10px;
 }
 .value {
   height: 100%;
-  border-radius: 5px;
   position: absolute;
   top: 0;
   left: 0;

@@ -43,14 +43,10 @@ export const ENLISTMENT_OPTIONS = [{
 
 export const FORMATIONS = {
     SQUADRON: 1,
-    BARRICADE: 2,
-    AVENGERS: 3
 }
 
 export const FORMATIONS_NAMES = {
     [FORMATIONS.SQUADRON]: 'Squadron',
-    [FORMATIONS.BARRICADE]: 'Barricade',
-    [FORMATIONS.AVENGERS]: 'Avengers',
 }
 
 export const RACE_FORMATIONS = {
@@ -63,14 +59,6 @@ export const RACE_FORMATIONS = {
             4: 10,
             15: 10,
         },
-        [FORMATIONS.BARRICADE]: {
-            0: 15,
-            1: 15,
-            2: 15,
-            3: 15,
-            4: 15,
-            15: 15,
-        },
     },
     [RACES.ORCS]: {
         [FORMATIONS.SQUADRON]: {
@@ -80,14 +68,6 @@ export const RACE_FORMATIONS = {
             8: 20,
             9: 20,
             16: 20,
-        },
-        [FORMATIONS.BARRICADE]: {
-            5: 25,
-            6: 25,
-            7: 25,
-            8: 25,
-            9: 25,
-            16: 25,
         },
     },
     [RACES.UNDEADS]: {
@@ -99,14 +79,6 @@ export const RACE_FORMATIONS = {
             14: 30,
             17: 30,
         },
-        [FORMATIONS.BARRICADE]: {
-            10: 35,
-            11: 35,
-            12: 35,
-            13: 35,
-            14: 35,
-            17: 35,
-        },
     },
     [RACES.ELVES]: {
         [FORMATIONS.SQUADRON]: {
@@ -116,14 +88,6 @@ export const RACE_FORMATIONS = {
             21: 40,
             22: 40,
             23: 40,
-        },
-        [FORMATIONS.BARRICADE]: {
-            18: 45,
-            19: 45,
-            20: 45,
-            21: 45,
-            22: 45,
-            23: 45,
         },
     },
 }

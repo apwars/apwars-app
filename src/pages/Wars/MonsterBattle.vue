@@ -172,7 +172,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapGetters, mapState } from "vuex";
+import { mapMutations, mapGetters, mapState, mapActions } from "vuex";
 
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
@@ -220,6 +220,9 @@ export default {
   methods: {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
+    }),
+    ...mapActions({
+      getBoard: "war/getBoard",
     }),
     backToEnlistment() {
       this.$router.push(
@@ -303,6 +306,15 @@ export default {
     goToReport() {
       this.$router.push(`/wars/${this.$route.params.contractWar}/report`);
     },
+  },
+  watch: {
+    isConnected() {
+      const warId = this.$route.params.contractWar;
+      const raceName = 'Humans';
+      this.getBoard({ warId, raceName });
+    },
+    account() {
+    }
   },
   async mounted() {
     this.setHeader(false);
