@@ -37,7 +37,7 @@
                   `/images/troops/${troopList[0].name.toLowerCase()}.webp`
                 "
                 @selectedSlot="handleSlotSelection"
-                currentUserAddress="3-3"
+                :currentUserAddress="account.toLowerCase()"
               />
             </v-col>
           </v-row>
@@ -48,7 +48,7 @@
                 Enlistment at Slot {{ selectedSlot.y }},
                 {{ selectedSlot.x }}
               </div>
-              <div class="info-text mt-1" v-if="slotData">Address: {{ slotData.account }}</div>
+              <div class="info-text mt-1" v-if="slotData">Address: {{ slotData.account }} <span v-if="isOwner" class="text-yellow">(YOU)</span></div>
               <div class="info-text mt-1" v-else>This slot is available!</div>
               </template>
             </v-col>
@@ -78,7 +78,7 @@
                 />
                 <template v-else>
                   <div class="info-text">
-                    My Units: 10.4K
+                    <span v-if="isOwner">My </span> Units <Amount :amount="getUnitAmount(unit.name)" compact formatted/>
                   </div>
                 </template>
               </div>
@@ -108,8 +108,8 @@
                   type="text, text"
                 />
                 <template v-else>
-                  <div class="info-text d-flex align-items-end">
-                    My Qty: 10.4K
+                  <div class="info-text">
+                    <span v-if="isOwner">My </span> Qty: <Amount :amount="getGameItemAmount(weapon.id)" compact formatted/>
                   </div>
                 </template>
               </div>
@@ -150,7 +150,7 @@
               {{ monsterData.name }}
             </div>
             <div class="treasure-progress">
-              <Progress class="progress" :value="4" :maxScale="10" />
+              <Progress class="progress" :value="percentageRewardConquered" :maxScale="100" />
               <div class="treasure">
                 <v-img src="/images/battle/treasure.png" />
               </div>
@@ -164,8 +164,8 @@
       <v-row>
         <v-col sm="4">
           <div class="d-flex flex-column justify-center align-center">
-            <Progress class="progress" :value="54" :maxScale="100" noText />
-            <div class="info-text mt-1">Remaining slots 54/100</div>
+            <Progress class="progress" :value="totalEnlistment" :maxScale="totalSlots" noText />
+            <div class="info-text mt-1">Remaining slots {{ totalAvailable}}/{{ totalSlots }}</div>
           </div>
         </v-col>
         <v-col offset-sm="4" sm="4">
@@ -187,10 +187,11 @@ import Button from "@/lib/components/ui/Buttons/Button";
 import Progress from "@/lib/components/ui/Progress";
 import Board from "@/lib/components/ui/War/Board";
 import Reward from "@/lib/components/ui/Reward";
+import Amount from "@/lib/components/ui/Utils/Amount";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 export default {
-  components: { Title, Button, Progress, Board, Reward },
+  components: { Title, Button, Progress, Board, Reward, Amount },
   data() {
     return {
       selectedSlot: null,
@@ -204,10 +205,14 @@ export default {
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
-      getBoardByRace: "war/getBoardByRace"
+      getBoardByRace: "war/getBoardByRace",
+      getRaceData: "war/getRaceData"
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
+    },
+    account() {
+      return this.$store.getters["user/account"];
     },
     enlistmentOptions() {
       return ENLISTMENT_OPTIONS.find(
@@ -225,6 +230,24 @@ export default {
     },
     board() {
       return this.getBoardByRace(Number(this.$route.params.raceId));
+    },
+    raceData() {
+      return this.getRaceData(Number(this.$route.params.raceId));
+    },
+    percentageRewardConquered() {
+      return this.raceData?.data?.percentageRewardConquered || 0;
+    },
+    totalAvailable() {
+      return this.raceData?.data?.totalAvailable || 0;
+    },
+    totalEnlistment() {
+      return this.raceData?.data?.totalEnlistment || 0;
+    },
+    totalSlots() {
+      return this.raceData?.data?.totalSlots || 0;
+    },
+    isOwner() {
+      return this.account && this.account.toLowerCase() === this.slotData?.account;
     }
   },
   methods: {
@@ -247,7 +270,7 @@ export default {
       this.slotData = slotData;
     },
     async handleEnlistment() {
-      const faction = (this.$route.params.raceId === 1 || this.$route.params.raceId === 4 ) ? "The Corporation" : "The Degens";
+      const faction = (this.$route.params.raceId === 1 || this.$route.params.raceId === 4 ) ? "The Corporation" : "The Degenerate";
       const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
       const warId = this.$route.params.contractWar;
       await this.getBoard({ warId, raceName });
@@ -261,6 +284,20 @@ export default {
     goToReport() {
       this.$router.push(`/wars/${this.$route.params.contractWar}/report`);
     },
+    getUnitAmount(troopName) {
+      if (!this.slotData) {
+        return 0;
+      } else {
+        return this.slotData.formation.soldiers[troopName].amount;
+      }
+    },
+    getGameItemAmount(gameItemId) {
+      if (!this.slotData) {
+        return 0;
+      } else {
+        return this.slotData?.gameItems?.find(g => g.id === gameItemId)?.amount || 0;
+      }
+    }
   },
   watch: {
     isConnected() {
@@ -358,5 +395,8 @@ export default {
 }
 .rewards-container {
   display: flex;
+}
+.text-yellow {
+  color: yellow;
 }
 </style>
