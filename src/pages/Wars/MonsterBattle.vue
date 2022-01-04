@@ -29,6 +29,7 @@
                 Choose your slot to enlist the troops
               </div>
               <Board
+                :board="board"
                 :rows="5"
                 :cols="20"
                 rotate="40deg"
@@ -42,11 +43,14 @@
           </v-row>
           <v-row>
             <v-col cols="12">
-              <div class="monster-name" v-if="selectedSlot">
-                Enlistment at Slot {{ selectedSlot.row }},
-                {{ selectedSlot.col }}
+              <template v-if="selectedSlot">
+              <div class="monster-name" >
+                Enlistment at Slot {{ selectedSlot.y }},
+                {{ selectedSlot.x }}
               </div>
-              <div class="info-text mt-1">Address: 0xe2ac249f15d838d517Da1641C09608b9E6E0eE38</div>
+              <div class="info-text mt-1" v-if="slotData">Address: {{ slotData.account }}</div>
+              <div class="info-text mt-1" v-else>This slot is available!</div>
+              </template>
             </v-col>
           </v-row>
           <v-row no-gutters class="enlistment-resume" v-if="troopList.length">
@@ -151,7 +155,7 @@
                 <v-img src="/images/battle/treasure.png" />
               </div>
             </div>
-            <div class="reward-description mt-1">
+            <div class="reward-description mt-1 text-center">
               Total reward conquered
             </div>
           </div>
@@ -165,7 +169,7 @@
           </div>
         </v-col>
         <v-col offset-sm="4" sm="4">
-          <Button type="wprimary" text="Enlist" isBlock />
+          <Button type="wprimary" text="Enlist" isBlock :handleClick="handleEnlistment" />
         </v-col>
       </v-row>
     </v-container>
@@ -174,6 +178,7 @@
 <script>
 import { mapMutations, mapGetters, mapState, mapActions } from "vuex";
 
+import { RACE_DESCRIPTION } from "@/data/Races";
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
 
@@ -182,6 +187,7 @@ import Button from "@/lib/components/ui/Buttons/Button";
 import Progress from "@/lib/components/ui/Progress";
 import Board from "@/lib/components/ui/War/Board";
 import Reward from "@/lib/components/ui/Reward";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 export default {
   components: { Title, Button, Progress, Board, Reward },
@@ -198,6 +204,7 @@ export default {
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
+      getBoardByRace: "war/getBoardByRace"
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -216,6 +223,9 @@ export default {
     troopList() {
       return this.getAllFromRace(this.$route.params.raceId);
     },
+    board() {
+      return this.getBoardByRace(Number(this.$route.params.raceId));
+    }
   },
   methods: {
     ...mapMutations({
@@ -223,6 +233,7 @@ export default {
     }),
     ...mapActions({
       getBoard: "war/getBoard",
+      enlist: "enlistment/enlist"
     }),
     backToEnlistment() {
       this.$router.push(
@@ -230,78 +241,22 @@ export default {
       );
     },
     async handleSlotSelection(key) {
-      const [row, col] = key.split("-");
-      this.selectedSlot = { col, row };
-      this.isLoadingEnlistment = true;
-      let slotData = await this.loadEnlistment();
+      const [y, x] = key.split("-");
+      this.selectedSlot = { x, y };
+      const slotData = this.board[y].find(e => e && (e.slot.x === Number(x) && e.slot.y === Number(y)));
       this.slotData = slotData;
-      this.isLoadingEnlistment = false;
     },
-    loadEnlistment(address) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            troops: [
-              {
-                id: 0,
-                displayName: "Warrior",
-                amount: 15000000000000000000,
-              },
-              {
-                id: 1,
-                displayName: "Archer",
-                amount: 15000000000000000000,
-              },
-              {
-                id: 2,
-                displayName: "Armoured Warrior",
-                amount: 15000000000000000000,
-              },
-              {
-                id: 3,
-                displayName: "Crossbowman",
-                amount: 15000000000000000000,
-              },
-              {
-                id: 4,
-                displayName: "Wizard",
-                amount: 15000000000000000000,
-              },
-              {
-                id: 5,
-                displayName: "Horseman",
-                amount: 15000000000000000000,
-              },
-            ],
-            weapons: [
-              {
-                id: 4,
-                title: "Simple Bow",
-                amount: 10400,
-              },
-              {
-                id: 5,
-                title: "Simple Spear",
-                amount: 10400,
-              },
-              {
-                id: 6,
-                title: "Simple Potion",
-                amount: 10400,
-              },
-              {
-                id: 39,
-                title: "Simple Shield",
-                amount: 10400,
-              },
-            ],
-            rewards: [
-              { id: 42, amount: 3 },
-              { id: 49, amount: 2 },
-            ],
-          });
-        }, 5000);
-      });
+    async handleEnlistment() {
+      const faction = (this.$route.params.raceId === 1 || this.$route.params.raceId === 4 ) ? "The Corporation" : "The Degens";
+      const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
+      const warId = this.$route.params.contractWar;
+      await this.getBoard({ warId, raceName });
+      ToastSnackbar.success("Successfully enlisted at war!");
+      try {
+        await this.enlist({ warId: this.$route.params.contractWar, faction, race: raceName, slot: this.selectedSlot});
+      } catch (error) {
+        ToastSnackbar.error(error.code);
+      }
     },
     goToReport() {
       this.$router.push(`/wars/${this.$route.params.contractWar}/report`);
@@ -310,10 +265,13 @@ export default {
   watch: {
     isConnected() {
       const warId = this.$route.params.contractWar;
-      const raceName = 'Humans';
+      const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
       this.getBoard({ warId, raceName });
     },
     account() {
+      const warId = this.$route.params.contractWar;
+      const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
+      this.getBoard({ warId, raceName });
     }
   },
   async mounted() {

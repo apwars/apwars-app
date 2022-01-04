@@ -10,7 +10,7 @@ export const RACE_DESCRIPTION = {
     [RACES.ORCS]: 'Orcs',
     [RACES.UNDEADS]: 'Undeads',
     [RACES.ELVES]: 'Elves',
-}
+};
 
 export const ENLISTMENT_OPTIONS = [{
     id: RACES.HUMANS,

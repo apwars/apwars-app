@@ -1,6 +1,7 @@
 import Troops from "@/lib/eth/Troops";
 import Collectibles from "@/lib/eth/Collectibles";
-import { RACE_FORMATIONS } from "@/data/Enlistment";
+import { RACE_FORMATIONS, FORMATIONS_NAMES } from "@/data/Enlistment";
+import WarsController from "@/controller/WarsController";
 
 export default {
     stakeTroop({ commit }, { amount, troopId }) {
@@ -26,7 +27,7 @@ export default {
     async updateWeaponsBalance({ commit, state, rootState }) {
         for (const weapon of state.weapons) {
             const contract = new Collectibles(weapon.contractAddress[rootState.user.networkInfo.id]);
-            const balance = Number(await contract.balanceOf(rootState.user.account, weapon.id))
+            const balance = Number(await contract.balanceOf(rootState.user.account, weapon.id));
             commit('setWeaponsBalance', { balance, weaponId: weapon.id });
         }
     },
@@ -37,5 +38,10 @@ export default {
             dispatch('stakeTroop', { troopId: Number(troopId), amount: formationData[troopId] });
         }
         commit('setFormation', value);
+    },
+    async enlist({ rootState }, { warId, faction, race, gameItems, slot }) {
+        const controller = new WarsController();
+        const formation = { name: FORMATIONS_NAMES[rootState.enlistment.formation].toLowerCase() };
+        await controller.enlist(warId, faction, race, rootState.user.account, formation, gameItems, slot);
     }
 };

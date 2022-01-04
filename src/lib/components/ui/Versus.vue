@@ -40,7 +40,7 @@
       </div>
     </div>
     <div :class="['prizes', degenForce > corpForce ? 'invert' : '']">
-      <div class="winner-prize">
+      <div :class="['winner-prize', degenForce > corpForce ? 'invert' : '']">
         <div class="d-sm-none">Winner Prize</div>
         <IconInfo iconPath="/images/wgold.png" title="Unlocked Prize">
           <span class="prize-text"
@@ -50,11 +50,11 @@
         </IconInfo>
         <IconInfo
           iconPath="/images/battle/burned.png"
-          title="Unlocked Prize"
+          title="Locked Prize"
           v-if="burnAmount"
         >
           <span class="prize-text"
-            >~<Amount :amount="1555555555555555555555" formatted compact />
+            >~<Amount :amount="burnAmount" formatted compact />
             <span class="game-text">wGOLD</span></span
           >
         </IconInfo>
@@ -131,6 +131,8 @@ export default {
   width: 100%;
   height: 40px;
   position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 .corp {
   height: 40px;
@@ -212,6 +214,9 @@ export default {
     }
     .winner-prize {
       display: flex;
+      &.invert {
+        flex-direction: row-reverse;
+      }
       > div {
         margin-right: 6px;
       }

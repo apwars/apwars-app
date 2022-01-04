@@ -49,7 +49,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col><Versus :corpForce="war.factions[0].power.total" :degenForce="war.factions[1].power.total" :winnerAmount="war.prizes.winner.amount" :loserAmount="war.prizes.loser.amount" /></v-col>
+          <v-col><Versus :corpForce="war.factions[0].power.total" :degenForce="war.factions[1].power.total" :winnerAmount="war.prizes.winner.unlocked" :loserAmount="war.prizes.loser.amount" :burnAmount="isWarFinished ? war.prizes.winner.locked : 0" /></v-col>
         </v-row>
         <v-row>
           <v-col>
@@ -110,12 +110,11 @@
                   </div>
                 </div>
                 <FullBoard
-                  :currentUserAddress="account"
+                  :currentUserAddress="account.toLowerCase()"
                   :rows="10"
                   :cols="40"
                   :board="fullBoard"
                   rotate="30deg"
-                  unitImage="/images/troops/wwarrior.webp"
                 />
                 <div class="d-flex justify-space-between">
                   <div class="enlistment-resume d-flex">
@@ -248,6 +247,9 @@ export default {
     },
     fullBoard() {
       return [].concat(this.upperBoard, this.bottomBoard)
+    },
+    isWarFinished() {
+      return this.war.status === 'finished';
     }
   },
   data() {

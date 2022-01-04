@@ -21,4 +21,20 @@ export default class WarsController {
       throw error;
     }
   }
+
+  enlist(warId, faction, race, account, formation, gameItems = [], slot) {
+    const enlistment = {
+      faction,
+      race,
+      account,
+      formation,
+      gameItems,
+      slot
+    };
+    try {
+      return this.base._postSignature(`/wars/${warId}/enlistment`, enlistment);
+    } catch (error) {
+      console.error('Error while trying to enlist', JSON.stringify(error));
+    }
+  }
 }
