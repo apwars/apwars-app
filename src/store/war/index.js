@@ -3,6 +3,7 @@ import actions from "./actions";
 import getters from "./getters";
 
 const initialState = () => ({
+  isLoading: false,
   war: null,
   humansBoard: {
     isLoading: false,

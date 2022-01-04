@@ -1,4 +1,10 @@
 export default {
+  setWar(state, war) {
+    state.war = war;
+  },
+  setLoading(state, loading) {
+    state.isLoading = loading;
+  },
   setBoard(state, { raceName, board }) {
     if (raceName === "Humans") {
       state.humansBoard.data = { ...board };

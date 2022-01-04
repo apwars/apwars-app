@@ -270,7 +270,7 @@ export default {
       this.slotData = slotData;
     },
     async handleEnlistment() {
-      const faction = (this.$route.params.raceId === 1 || this.$route.params.raceId === 4 ) ? "The Corporation" : "The Degenerate";
+      const faction = (Number(this.$route.params.raceId) === 1 || Number(this.$route.params.raceId) === 4 ) ? "The Corporation" : "The Degenerate";
       const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
       const warId = this.$route.params.contractWar;
       await this.getBoard({ warId, raceName });

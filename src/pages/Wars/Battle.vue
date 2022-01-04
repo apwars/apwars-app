@@ -12,7 +12,7 @@
           />
         </v-col>
       </v-row>
-      <v-row v-if="isLoading">
+      <v-row v-if="isLoadingWar">
         <v-col>
           Loading...
         </v-col>
@@ -179,9 +179,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions, mapGetters } from "vuex";
-
-import WarsController from "@/controller/WarsController";
+import { mapMutations, mapActions, mapGetters, mapState } from "vuex";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
@@ -195,6 +193,10 @@ export default {
   computed: {
     ...mapGetters({
       getBoardByRace: "war/getBoardByRace"
+    }),
+    ...mapState({
+      war: state => state.war.war,
+      isLoadingWar: state => state.war.isLoading
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -214,6 +216,9 @@ export default {
       return "Countdown to collect prizes and wUNITS"
     },
     countdownTimer() {
+      if (!this.war) {
+        return 0;
+      }
       const now = new Date().getTime();
       return Math.ceil(Date.parse(this.war.deadlines.endEnlistment) - now, 0);
     },
@@ -252,18 +257,13 @@ export default {
       return this.war.status === 'finished';
     }
   },
-  data() {
-    return {
-      isLoading: false,
-      war: null,
-    };
-  },
   methods: {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
     }),
     ...mapActions({
-      getFullBoard: "war/getFullBoard"
+      getFullBoard: "war/getFullBoard",
+      getWar: "war/getWar",
     }),
     backToHome() {
       this.$router.push("/");
@@ -278,25 +278,13 @@ export default {
         .open("https://apwars.farm/docs/war/combat-dynamics", "_blank")
         .focus();
     },
-    async load() {
-      this.isLoading = true;
-      try {
-        const controller = new WarsController();
-        const war = await controller.getOne(this.$route.params.contractWar);
-        this.war = war;
-      } catch (error) {
-        console.error(JSON.stringify(error));
-      } finally {
-        this.isLoading = false;
-      }
-    },
   },
   watch: {
     isConnected() {
-      this.load();
+      this.getWar(this.$route.params.contractWar);
     },
     account() {
-      this.load();
+      this.getWar(this.$route.params.contractWar);
       this.getFullBoard(this.$route.params.contractWar)
     }
   },
