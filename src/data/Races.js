@@ -8,7 +8,7 @@ export const RACES = {
 export const RACE_DESCRIPTION = {
     [RACES.HUMANS]: 'Humans',
     [RACES.ORCS]: 'Orcs',
-    [RACES.UNDEADS]: 'Undeads',
+    [RACES.UNDEADS]: 'Undead',
     [RACES.ELVES]: 'Elves',
 };
 

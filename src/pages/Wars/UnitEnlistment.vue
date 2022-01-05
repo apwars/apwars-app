@@ -34,13 +34,12 @@
                 <div class="enlist-title">
                   {{ troop.displayName }}
                 </div>
-                <v-currency-field
+                <v-text-field
                   outlined
-                  color="#FFF"
                   v-bind="currencyConfig"
                   v-model="stakedTroop"
-                  :error="stakedTroop > this.troopBalance"
-                  disabled
+                  :error="stakedTroop > troopBalance"
+                  readonly
                 />
                 <div class="enlist-title">
                   {{ weapon.title }}
@@ -52,13 +51,13 @@
                   persistent-hint
                   v-bind="currencyConfig"
                   v-model="stakedWeapon"
-                  :max="this.maxPossibleWeaponStake"
-                  :error="totalStakedWeapon > weaponBalance"
-                  :disabled="!troopBalance || !weaponBalance"
+                  :max="maxPossibleWeaponStake"
+                  :error="stakedWeapon > stakedTroop"
+                  :disabled="!stakedTroop || !weaponBalance"
                 >
                   <template v-slot:append>
                     <div class="d-flex align-center">
-                      /{{ weapon.war.stakeLimit }}
+                      /{{ maxPossibleWeaponStake }}
                       <v-btn
                         class="ml-1"
                         rounded
@@ -72,9 +71,10 @@
                   </template>
                 </v-currency-field>
               </div>
-              <div v-if="stakedTroop > this.troopBalance">
+              <div class="amount-error" v-if="stakedTroop > troopBalance">
                 You don't have the amount of {{ troop.war.stakeMin }}
-                {{ troop.name }} to fill the formation. How about acquiring some more?
+                {{ troop.name }} to fill the formation. How about acquiring some
+                more?
               </div>
             </div>
             <div class="status-container">
@@ -195,11 +195,11 @@
                   />
                 </div>
                 <div class="unit-info">
-                  <div class="unit-name mb-1">
+                  <div :class="['unit-name', 'mb-1', unit.amount > getTroopBalance(unit.name) ? 'error-color' : '']">
                     {{ unit.displayName }}
                   </div>
                   <div class="amount">
-                    <span class="d-flex align-end" v-if="unit.amount">
+                    <span :class="['d-flex', 'align-end', unit.amount > getTroopBalance(unit.name) ? 'error-color' : '']" v-if="unit.amount">
                       <TripleIcon class="mr-1" :name="unit.name" size="16px" />
                       <Amount :amount="unit.amount" decimals="0" formatted />
                     </span>
@@ -224,11 +224,16 @@
               </div>
               <div class="total-force mb-1">
                 Power Units:
-                <span class="amount"
-                  >{{ totalStakedForce(troop.race) }}</span
-                >
+                <span class="amount">{{ totalStakedForce(troop.race) }}</span>
               </div>
-              <Button type="wprimary" text="Choose a slot" isBlock :handleClick="goToMonsterBattle" />
+              <Button
+                type="wprimary"
+                text="Choose a slot"
+                isBlock
+                :handleClick="goToMonsterBattle"
+                :disabled="!formation || !isEnlistmentValid()"
+              />
+              <div class="text-center mt-1" v-if="formation && !isEnlistmentValid()">Please, check your troops balance to enlist.</div>
               <Progress
                 class="mt-2"
                 :value="totalEnlistment"
@@ -237,7 +242,9 @@
                 color2="#1A3436"
                 noText
               />
-              <div class="slots-info d-flex justify-center">{{ totalEnlistment }}/{{ totalSlots }}</div>
+              <div class="slots-info d-flex justify-center">
+                {{ totalEnlistment }}/{{ totalSlots }}
+              </div>
               <div class="slots-description d-flex justify-center">
                 Fullfiled Slots
               </div>
@@ -277,10 +284,10 @@ export default {
   },
   computed: {
     ...mapState({
-      formation: state => state.enlistment.formation.value,
-      currentEnlistment: state => state.enlistment.formation.raceId,
-      isLoadingBalances: state => state.user.isLoadingBalances,
-      balances: state => state.user.balances,
+      formation: (state) => state.enlistment.formation.value,
+      currentEnlistment: (state) => state.enlistment.formation.raceId,
+      isLoadingBalances: (state) => state.user.isLoadingBalances,
+      balances: (state) => state.user.balances,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
@@ -290,7 +297,7 @@ export default {
       totalStakedForce: "enlistment/totalStakedForce",
       maxStakeForce: "enlistment/maxStakeForce",
       account: "user/account",
-      getRaceData: "war/getRaceData"
+      getRaceData: "war/getRaceData",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -382,13 +389,16 @@ export default {
       return Math.min(this.troopBalance, this.troop.war.stakeLimit);
     },
     maxPossibleWeaponStake() {
-      return Math.min(this.weaponBalance, this.weapon.war.stakeLimit);
+      return Math.min(this.weaponBalance, this.stakedTroop);
     },
     formationOptions() {
-      return Object.keys(RACE_FORMATIONS[this.troop.race]).map(key => ({ text: FORMATIONS_NAMES[key], value: key }));
+      return Object.keys(RACE_FORMATIONS[this.troop.race]).map((key) => ({
+        text: FORMATIONS_NAMES[key],
+        value: key,
+      }));
     },
     troopBalance() {
-      return this.balances?.[this.troop.name] || 0;
+      return this.getTroopBalance(this.troop.name);
     },
     weaponBalance() {
       return this.balances?.[`GameItem${this.weapon?.id}`] || 0;
@@ -471,8 +481,8 @@ export default {
     },
     goToMonsterBattle() {
       this.$router.push({
-        path: `/wars/${this.$route.params.contractWar}/enlistment/${this.$route.params.raceId}/battle`
-      })
+        path: `/wars/${this.$route.params.contractWar}/enlistment/${this.$route.params.raceId}/battle`,
+      });
     },
     getUnitName(position) {
       if (position > this.unitsFromRace.length - 1) {
@@ -499,6 +509,18 @@ export default {
     handleFormationChange(value) {
       this.changeFormation({ raceId: this.troop.race, value });
     },
+    getTroopBalance(troopName) {
+      return this.balances?.[troopName] || 0;
+    },
+    isEnlistmentValid() {
+      let isValid = true;
+      for (let unit of this.unitsFromRace) {
+        if (unit.amount > this.getTroopBalance(unit.name)) {
+          isValid = false; 
+        }
+      }
+      return isValid;
+    }
   },
   watch: {
     isConnected() {
@@ -760,6 +782,14 @@ export default {
 .force-text {
   font-size: 32px;
   font-weight: bold;
+}
+
+.error-color {
+  color: var(--v-error-darken1);
+}
+.amount-error {
+  @extend .error-color;
+  font-size: 12px;
 }
 
 @keyframes weapon-fall {

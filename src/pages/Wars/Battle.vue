@@ -31,7 +31,9 @@
               tip="How to play?"
               tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
             />
+            <div class="big-text" v-if="!countdownTimer">War ended!</div>
             <countdown
+              v-else
               :time="countdownTimer"
               :title="countdownTitle"
               titleColor="#FFF"
@@ -49,7 +51,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col><Versus :corpForce="war.factions[0].power.total" :degenForce="war.factions[1].power.total" :winnerAmount="war.prizes.winner.amount" :loserAmount="war.prizes.loser.amount" :burnAmount="war.prizes.winner.locked" /></v-col>
+          <v-col><Versus :corpForce="war.factions[0].power.total" :degenForce="war.factions[1].power.total" :winnerAmount="war.prizes.winner.unlocked" :loserAmount="war.prizes.loser.amount" :burnAmount="war.prizes.winner.locked" /></v-col>
         </v-row>
         <v-row>
           <v-col>
@@ -149,7 +151,7 @@
                     <Button
                       type="wsecondary"
                       icon="swords"
-                      text="Undeads"
+                      text="Undead"
                       :handleClick="() => goToEnlistment(3)"
                     />
                     <div class="brown-info ml-2">
@@ -217,8 +219,14 @@ export default {
       if (!this.war) {
         return 0;
       }
+      let consideredDate = this.war.deadlines.startEnlistment;
+      if (this.war.status === "enlistment") {
+        consideredDate = this.war.deadlines.endEnlistment;
+      } else if (this.war.status === "finished") {
+        consideredDate = this.war.deadlines.endClaimPrize;
+      }
       const now = new Date().getTime();
-      return Math.ceil(Date.parse(this.war.deadlines.endEnlistment) - now, 0);
+      return Math.max(Date.parse(consideredDate) - now, 0);
     },
     isWarFinished() {
       return this.war.status === 'finished';

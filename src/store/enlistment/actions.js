@@ -53,7 +53,7 @@ export default {
             }
         }
         const controller = new WarsController();
-        const formation = { name: FORMATIONS_NAMES[rootState.enlistment.formation].toLowerCase() };
+        const formation = { name: FORMATIONS_NAMES[rootState.enlistment.formation.value].toLowerCase() };
         await controller.enlist(warId, faction, race, rootState.user.account, formation, gameItems, slot);
     }
 };

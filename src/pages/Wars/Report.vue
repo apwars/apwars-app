@@ -76,12 +76,12 @@
             :class="[selectedRace === 3 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Undeads
+              Undead
             </h2>
             <v-img
               class="race-image invert-image"
               src="/images/troops/wwitch-portrait.png"
-              alt="Undeads"
+              alt="Undead"
               @click="selectedRace = 3"
             >
             </v-img>

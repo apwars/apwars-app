@@ -61,7 +61,7 @@
       </div>
       <div class="loser-prize">
         <div class="d-sm-none">Loser Prize</div>
-        <IconInfo iconPath="/images/wcourage.png" title="Unlocked Prize">
+        <IconInfo iconPath="/images/wcourage.png" title="Prize">
           <span class="prize-text"
             >~<Amount :amount="loserAmount" formatted compact />
             <span class="game-text-purple">wCOURAGE</span></span
