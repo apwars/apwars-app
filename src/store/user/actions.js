@@ -1,5 +1,6 @@
 import Web3 from "web3";
 import { getSmartContractAddresses } from "@/lib/Config";
+import WalletController from "@/controller/WalletController";
 
 export default {
   disconnectFromMetaMask({ commit }) {
@@ -72,5 +73,12 @@ export default {
     } else {
       clear({ commit });
     }
+  },
+  async fetchUserWallet({state, commit}) {
+    commit('setLoadingBalances', true);
+    const controller = new WalletController();
+    const w = await controller.wallets(state.account);
+    commit('setBalances', w.balances);
+    commit('setLoadingBalances', false);
   }
 };

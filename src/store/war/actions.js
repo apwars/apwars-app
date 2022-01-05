@@ -1,7 +1,10 @@
 import WarsController from "@/controller/WarsController";
 
 export default {
-    async getWar({ commit, dispatch }, warId) {
+    async getWar({ state, commit, dispatch }, warId) {
+        if (state.isLoading) {
+            return
+        }
         commit('setLoading', true);
         const controller = new WarsController();
         const war = await controller.getOne(warId);
