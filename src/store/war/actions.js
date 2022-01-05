@@ -1,28 +1,40 @@
 import WarsController from "@/controller/WarsController";
 
 export default {
-    async getWar({ commit }, warId) {
+    async getWar({ commit, dispatch }, warId) {
         commit('setLoading', true);
         const controller = new WarsController();
         const war = await controller.getOne(warId);
+        await dispatch('getFullBoard', warId);
         commit('setWar', war);
         commit('setLoading', false);
     },
     async getFullBoard({ state, dispatch }, warId) {
-        if (!state.war) {
-            await dispatch('getWar', warId);
-        }
         const races = ['Humans', 'Orcs', 'Elves', 'Undead'];
         for (let raceName of races) {
             await dispatch('getBoard', { warId, raceName });
         }
+        dispatch('drawFullBoard');
     },
     async getBoard({ commit, state, dispatch }, { warId, raceName }) {
-        if (!state.war) {
-            await dispatch('getWar', warId);
-        }
         const controller = new WarsController();
         const board = await controller.getBoard(warId, raceName);
         commit('setBoard', { raceName, board });
     },
+    drawFullBoard({ state, commit }) {
+        let upperBoard = [];
+        for (let i = 0; i < 5; i++) {
+          let row = [].concat(state.humansBoard.data.slots[i], state.orcsBoard.data.slots[i]);
+          upperBoard.push(row);
+        }
+
+        let bottomBoard = [];
+        for (let i = 0; i < 5; i++) {
+            let row = [].concat(state.elvesBoard.data.slots[i], state.undeadsBoard.data.slots[i]);
+            bottomBoard.push(row);
+        }
+
+        const fullBoard = [].concat(upperBoard, bottomBoard);
+        commit('setFullBoard', fullBoard);
+    }
 }

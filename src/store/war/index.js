@@ -5,6 +5,7 @@ import getters from "./getters";
 const initialState = () => ({
   isLoading: false,
   war: null,
+  fullBoard: null,
   humansBoard: {
     isLoading: false,
     data: null,

@@ -2,6 +2,9 @@ export default {
   setWar(state, war) {
     state.war = war;
   },
+  setFullBoard(state, fullBoard) {
+    state.fullBoard = fullBoard;
+  },
   setLoading(state, loading) {
     state.isLoading = loading;
   },

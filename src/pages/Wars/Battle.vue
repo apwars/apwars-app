@@ -191,12 +191,10 @@ import Countdown from "@/lib/components/ui/Utils/Countdown";
 export default {
   components: { Title, Button, Versus, FullBoard, Amount, Countdown },
   computed: {
-    ...mapGetters({
-      getBoardByRace: "war/getBoardByRace"
-    }),
     ...mapState({
       war: state => state.war.war,
-      isLoadingWar: state => state.war.isLoading
+      isLoadingWar: state => state.war.isLoading,
+      fullBoard: state => state.war.fullBoard,
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -222,37 +220,6 @@ export default {
       const now = new Date().getTime();
       return Math.ceil(Date.parse(this.war.deadlines.endEnlistment) - now, 0);
     },
-    humansBoard() {
-      return this.getBoardByRace(1);
-    },
-    orcsBoard() {
-      return this.getBoardByRace(2);
-    },
-    elvesBoard() {
-      return this.getBoardByRace(3);
-    },
-    undeadsBoard() {
-      return this.getBoardByRace(4);
-    },
-    upperBoard() {
-      let b = [];
-      for (let i = 0; i < 5; i++) {
-        let row = [].concat(this.humansBoard[i], this.orcsBoard[i]);
-        b.push(row);
-      }
-      return b;
-    },
-    bottomBoard() {
-      let b = [];
-      for (let i = 0; i < 5; i++) {
-        let row = [].concat(this.elvesBoard[i], this.undeadsBoard[i]);
-        b.push(row);
-      }
-      return b;
-    },
-    fullBoard() {
-      return [].concat(this.upperBoard, this.bottomBoard)
-    },
     isWarFinished() {
       return this.war.status === 'finished';
     }
@@ -262,7 +229,6 @@ export default {
       setHeader: "app/setMenuDisplay",
     }),
     ...mapActions({
-      getFullBoard: "war/getFullBoard",
       getWar: "war/getWar",
     }),
     backToHome() {
@@ -281,11 +247,14 @@ export default {
   },
   watch: {
     isConnected() {
-      this.getWar(this.$route.params.contractWar);
+      if (!this.isLoadingWar){
+        this.getWar(this.$route.params.contractWar);
+      }
     },
     account() {
-      this.getWar(this.$route.params.contractWar);
-      this.getFullBoard(this.$route.params.contractWar)
+      if (!this.isLoadingWar){
+        this.getWar(this.$route.params.contractWar);
+      }
     }
   },
   async mounted() {

@@ -255,8 +255,8 @@ export default {
       setHeader: "app/setMenuDisplay",
     }),
     ...mapActions({
-      getBoard: "war/getBoard",
-      enlist: "enlistment/enlist"
+      enlist: "enlistment/enlist",
+      getWar: "war/getWar",
     }),
     backToEnlistment() {
       this.$router.push(
@@ -273,7 +273,7 @@ export default {
       const faction = (Number(this.$route.params.raceId) === 1 || Number(this.$route.params.raceId) === 4 ) ? "The Corporation" : "The Degenerate";
       const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
       const warId = this.$route.params.contractWar;
-      await this.getBoard({ warId, raceName });
+      await this.getWar(warId);
       ToastSnackbar.success("Successfully enlisted at war!");
       try {
         await this.enlist({ warId: this.$route.params.contractWar, faction, race: raceName, slot: this.selectedSlot});
@@ -302,13 +302,11 @@ export default {
   watch: {
     isConnected() {
       const warId = this.$route.params.contractWar;
-      const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
-      this.getBoard({ warId, raceName });
+      this.getWar(warId);
     },
     account() {
       const warId = this.$route.params.contractWar;
-      const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
-      this.getBoard({ warId, raceName });
+      this.getWar(warId);
     }
   },
   async mounted() {
