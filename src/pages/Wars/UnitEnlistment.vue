@@ -277,7 +277,8 @@ export default {
   },
   computed: {
     ...mapState({
-      formation: state => state.enlistment.formation,
+      formation: state => state.enlistment.formation.value,
+      currentEnlistment: state => state.enlistment.formation.raceId,
       isLoadingBalances: state => state.user.isLoadingBalances,
       balances: state => state.user.balances,
     }),
@@ -438,7 +439,8 @@ export default {
       stakeWeapon: "enlistment/stakeWeapon",
       updateWeaponsBalance: "enlistment/updateWeaponsBalance",
       changeFormation: "enlistment/changeFormation",
-      fetchUserWallet: "user/fetchUserWallet"
+      fetchUserWallet: "user/fetchUserWallet",
+      clearEnlistment: "enlistment/clearEnlistment",
     }),
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
@@ -502,6 +504,9 @@ export default {
   async mounted() {
     this.setHeader(false);
     this.troopSelected = this.unitsFromRace[0].name;
+    if (this.currentEnlistment !== Number(this.$route.params.raceId)) {
+      this.clearEnlistment();
+    }
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);

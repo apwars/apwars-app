@@ -202,7 +202,7 @@ export default {
   computed: {
     ...mapState({
       weapons: (state) => state.enlistment.weapons,
-      formation: (state) => state.enlistment.formation,
+      formation: (state) => state.enlistment.formation.value,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",

@@ -37,7 +37,10 @@ export default {
         for (const troopId of troopsIds) {
             dispatch('stakeTroop', { troopId: Number(troopId), amount: formationData[troopId] });
         }
-        commit('setFormation', value);
+        commit('setFormation', { raceId, value });
+    },
+    clearEnlistment({ commit }) {
+        commit('clearEnlistment');
     },
     async enlist({ rootState, getters }, { warId, faction, race, slot }) {
         const tiers = [1, 2, 3, 4];

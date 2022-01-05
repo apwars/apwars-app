@@ -24,7 +24,7 @@
           src="/images/battle/battle-icon.png"
         />
         <div class="total-amount d-none d-sm-flex">
-          <Amount :amount="corpForce" formatted compact symbol="Power Units" />
+          <Amount :amount="corpForce" formatted compact symbol="Power Units" v-if="getPercent(corpForce) > 10" />
         </div>
       </div>
       <div class="degen" :style="`--degen:${getPercent(degenForce)}%`">
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="total-amount d-none d-sm-flex">
-          <Amount :amount="degenForce" formatted compact symbol="Power Units" />
+          <Amount :amount="degenForce" formatted compact symbol="Power Units" v-if="getPercent(degenForce) > 10" />
         </div>
       </div>
     </div>
@@ -133,6 +133,7 @@ export default {
   position: relative;
   display: flex;
   justify-content: space-between;
+  background-color: gray;
 }
 .corp {
   height: 40px;
@@ -151,6 +152,7 @@ export default {
     top: -12px;
     left: -21px;
     width: 96px;
+    z-index: 2;
     @media screen and (min-width: 768px) {
       width: 115px;
       right: -34px;
@@ -180,6 +182,7 @@ export default {
     top: -14px;
     right: -21px;
     width: 96px;
+    z-index: 2;
     @media screen and (min-width: 768px) {
       width: 115px;
       right: -34px;

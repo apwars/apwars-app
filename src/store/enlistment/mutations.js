@@ -8,14 +8,14 @@ export default {
       }
     });
   },
-  setBalance(state, { balance, troopId }) {
+  clearEnlistment(state) {
     state.troops = state.troops.map((t) => {
-      if (t.id === troopId) {
-        return { ...t, balance };
-      } else {
-        return t;
-      }
+        return { ...t, amount: 0 };
     });
+    state.formation = {
+      raceId: null,
+      value: null,
+    };
   },
   setPrice(state, { price, troopId }) {
     state.troops = state.troops.map((t) => {
@@ -44,7 +44,7 @@ export default {
       }
     });
   },
-  setFormation(state, value) {
-    state.formation = value;
+  setFormation(state, { raceId, value }) {
+    state.formation = { raceId, value };
   }
 };
