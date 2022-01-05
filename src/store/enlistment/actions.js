@@ -39,7 +39,16 @@ export default {
         }
         commit('setFormation', value);
     },
-    async enlist({ rootState }, { warId, faction, race, gameItems, slot }) {
+    async enlist({ rootState, getters }, { warId, faction, race, slot }) {
+        const tiers = [1, 2, 3, 4];
+        let gameItems = [];
+        for (let t of tiers) {
+            const weapon = getters.getWeaponByTier(t);
+            const staked = getters.totalStakedWeapon(t);
+            if (staked > 0) {
+                gameItems = gameItems.concat({ id: weapon.id, amount: staked });
+            }
+        }
         const controller = new WarsController();
         const formation = { name: FORMATIONS_NAMES[rootState.enlistment.formation].toLowerCase() };
         await controller.enlist(warId, faction, race, rootState.user.account, formation, gameItems, slot);

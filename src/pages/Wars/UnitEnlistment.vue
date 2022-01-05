@@ -73,8 +73,8 @@
                 </v-currency-field>
               </div>
               <div v-if="!troop.balance">
-                You don't have the minimun amount of {{ troop.war.stakeMin }}
-                {{ troop.name }} to enlist. How about acquiring some more?
+                You don't have the amount of {{ troop.war.stakeMin }}
+                {{ troop.name }} to fill the formation. How about acquiring some more?
               </div>
             </div>
             <div class="status-container">
@@ -425,6 +425,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      getWar: "war/getWar",
       updateBalances: "enlistment/updateBalances",
       updatePrices: "enlistment/updatePrices",
       stakeTroop: "enlistment/stakeTroop",
@@ -482,8 +483,10 @@ export default {
       this.updateBalances();
       this.updatePrices();
       this.updateWeaponsBalance();
+      this.getWar(this.$route.params.contractWar);
     },
     account() {
+      this.getWar(this.$route.params.contractWar);
       this.updateBalances();
       this.updatePrices();
       this.updateWeaponsBalance();

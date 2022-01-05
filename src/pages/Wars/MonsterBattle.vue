@@ -169,7 +169,7 @@
           </div>
         </v-col>
         <v-col offset-sm="4" sm="4">
-          <Button type="wprimary" text="Enlist" isBlock :handleClick="handleEnlistment" />
+          <Button type="wprimary" text="Enlist" isBlock :handleClick="handleEnlistment" :disabled="!formation" />
         </v-col>
       </v-row>
     </v-container>
@@ -202,6 +202,7 @@ export default {
   computed: {
     ...mapState({
       weapons: (state) => state.enlistment.weapons,
+      formation: (state) => state.enlistment.formation,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
@@ -270,15 +271,16 @@ export default {
       this.slotData = slotData;
     },
     async handleEnlistment() {
-      const faction = (Number(this.$route.params.raceId) === 1 || Number(this.$route.params.raceId) === 4 ) ? "The Corporation" : "The Degenerate";
-      const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
-      const warId = this.$route.params.contractWar;
-      await this.getWar(warId);
-      ToastSnackbar.success("Successfully enlisted at war!");
       try {
+        const faction = (Number(this.$route.params.raceId) === 1 || Number(this.$route.params.raceId) === 4 ) ? "The Corporation" : "The Degenerate";
+        const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
+        const warId = this.$route.params.contractWar;
         await this.enlist({ warId: this.$route.params.contractWar, faction, race: raceName, slot: this.selectedSlot});
+        await this.getWar(warId);
+        ToastSnackbar.success("Successfully enlisted at war!");
       } catch (error) {
         ToastSnackbar.error(error.code);
+        console.error(error)
       }
     },
     goToReport() {

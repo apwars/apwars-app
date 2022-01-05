@@ -27,7 +27,7 @@ export default {
     },
     totalStakedWeapon: state => (tier) => {
         if (!tier) {
-            return 0
+            return 0;
         }
         const troops = state.troops.filter(w => w.tier === tier);
         return troops.reduce((total, troop) => total += troop.weaponAmount, 0);
