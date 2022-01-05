@@ -231,13 +231,13 @@
               <Button type="wprimary" text="Choose a slot" isBlock :handleClick="goToMonsterBattle" />
               <Progress
                 class="mt-2"
-                :value="50"
-                :maxScale="100"
+                :value="totalEnlistment"
+                :maxScale="totalSlots"
                 color1="#346568"
                 color2="#1A3436"
                 noText
               />
-              <div class="slots-info d-flex justify-center">54/100</div>
+              <div class="slots-info d-flex justify-center">{{ totalEnlistment }}/{{ totalSlots }}</div>
               <div class="slots-description d-flex justify-center">
                 Fullfiled Slots
               </div>
@@ -289,7 +289,8 @@ export default {
       getTotalStakedWeapon: "enlistment/totalStakedWeapon",
       totalStakedForce: "enlistment/totalStakedForce",
       maxStakeForce: "enlistment/maxStakeForce",
-      account: "user/account"
+      account: "user/account",
+      getRaceData: "war/getRaceData"
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -391,6 +392,18 @@ export default {
     },
     weaponBalance() {
       return this.balances?.[`GameItem${this.weapon?.id}`] || 0;
+    },
+    raceData() {
+      return this.getRaceData(Number(this.$route.params.raceId));
+    },
+    totalAvailable() {
+      return this.raceData?.data?.totalAvailable || 0;
+    },
+    totalEnlistment() {
+      return this.raceData?.data?.totalEnlistment || 0;
+    },
+    totalSlots() {
+      return this.raceData?.data?.totalSlots || 0;
     },
 
     stakedTroop: {

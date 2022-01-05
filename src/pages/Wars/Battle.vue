@@ -49,7 +49,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col><Versus :corpForce="war.factions[0].power.total" :degenForce="war.factions[1].power.total" :winnerAmount="war.prizes.winner.unlocked" :loserAmount="war.prizes.loser.amount" :burnAmount="isWarFinished ? war.prizes.winner.locked : 0" /></v-col>
+          <v-col><Versus :corpForce="war.factions[0].power.total" :degenForce="war.factions[1].power.total" :winnerAmount="war.prizes.winner.amount" :loserAmount="war.prizes.loser.amount" :burnAmount="war.prizes.winner.locked" /></v-col>
         </v-row>
         <v-row>
           <v-col>
