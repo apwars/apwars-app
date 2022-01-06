@@ -520,25 +520,27 @@ export default {
         }
       }
       return isValid;
-    }
+    },
+    async fetchData() {
+      if (!this.war && !this.isLoadingWar){
+        await this.getWar(this.$route.params.contractWar);
+        await this.fetchUserWallet(this.account);
+        await this.updatePrices();
+      }
+    },
   },
   watch: {
     isConnected() {
-      this.updatePrices();
-      this.updateWeaponsBalance();
-      this.getWar(this.$route.params.contractWar);
-      this.fetchUserWallet(this.account);
+      this.fetchData();
     },
     account() {
-      this.getWar(this.$route.params.contractWar);
-      this.updatePrices();
-      this.updateWeaponsBalance();
-      this.fetchUserWallet(this.account);
+      this.fetchData();
     },
   },
   async mounted() {
     this.setHeader(false);
     this.troopSelected = this.unitsFromRace[0].name;
+    this.fetchData();
     if (this.currentEnlistment !== Number(this.$route.params.raceId)) {
       this.clearEnlistment();
     }

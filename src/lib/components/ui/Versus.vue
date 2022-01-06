@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="phase-title">
-      <div>Parcial Result</div>
+      <div>{{ title }}</div>
       <Button
         text="Go to War Report"
         type="wtertiary"
@@ -78,6 +78,10 @@ import Button from "@/lib/components/ui/Buttons/Button";
 
 export default {
   props: {
+    title: {
+      type: String,
+      default: '',
+    },
     corpForce: {
       type: Number,
       default: 0,

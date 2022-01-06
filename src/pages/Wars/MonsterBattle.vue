@@ -44,12 +44,15 @@
           <v-row>
             <v-col cols="12">
               <template v-if="selectedSlot">
-              <div class="monster-name" >
-                Enlistment at Slot {{ selectedSlot.y }},
-                {{ selectedSlot.x }}
-              </div>
-              <div class="info-text mt-1" v-if="slotData">Address: {{ slotData.account }} <span v-if="isOwner" class="text-yellow">(YOU)</span></div>
-              <div class="info-text mt-1" v-else>This slot is available!</div>
+                <div class="monster-name">
+                  Enlistment at Slot {{ selectedSlot.y }},
+                  {{ selectedSlot.x }}
+                </div>
+                <div class="info-text mt-1" v-if="slotData">
+                  Address: {{ slotData.account }}
+                  <span v-if="isOwner" class="text-yellow">(YOU)</span>
+                </div>
+                <div class="info-text mt-1" v-else>This slot is available!</div>
               </template>
             </v-col>
           </v-row>
@@ -78,7 +81,12 @@
                 />
                 <template v-else>
                   <div class="info-text">
-                    <span v-if="isOwner">My </span> Units <Amount :amount="getUnitAmount(unit.name)" compact formatted/>
+                    <span v-if="isOwner">My </span> Units
+                    <Amount
+                      :amount="getUnitAmount(unit.name)"
+                      compact
+                      formatted
+                    />
                   </div>
                 </template>
               </div>
@@ -109,7 +117,12 @@
                 />
                 <template v-else>
                   <div class="info-text">
-                    <span v-if="isOwner">My </span> Qty: <Amount :amount="getGameItemAmount(weapon.id)" compact formatted/>
+                    <span v-if="isOwner">My </span> Qty:
+                    <Amount
+                      :amount="getGameItemAmount(weapon.id)"
+                      compact
+                      formatted
+                    />
                   </div>
                 </template>
               </div>
@@ -149,14 +162,18 @@
             <div class="monster-name text-center mb-2">
               {{ monsterData.name }}
             </div>
-            <div class="treasure-progress">
-              <Progress class="progress" :value="percentageRewardConquered" :maxScale="100" />
-              <div class="treasure">
-                <v-img src="/images/battle/treasure.png" />
+            <div class="d-flex align-items-center justify-center">
+              <div class="reward-description text-center pr-2">
+                Enlistment reward drop
               </div>
-            </div>
-            <div class="reward-description mt-1 text-center">
-              Total reward conquered
+              <div class="treasure-progress">
+                <div class="text">
+                  <Amount :amount="40000" compact formatted />
+                </div>
+                <div class="treasure">
+                  <v-img src="/images/battle/treasure.png" />
+                </div>
+              </div>
             </div>
           </div>
         </v-col>
@@ -164,12 +181,25 @@
       <v-row>
         <v-col sm="4">
           <div class="d-flex flex-column justify-center align-center">
-            <Progress class="progress" :value="totalEnlistment" :maxScale="totalSlots" noText />
-            <div class="info-text mt-1">Remaining slots {{ totalAvailable}}/{{ totalSlots }}</div>
+            <Progress
+              class="progress"
+              :value="totalEnlistment"
+              :maxScale="totalSlots"
+              noText
+            />
+            <div class="info-text mt-1">
+              Remaining slots {{ totalAvailable }}/{{ totalSlots }}
+            </div>
           </div>
         </v-col>
         <v-col offset-sm="4" sm="4">
-          <Button type="wprimary" text="Enlist" isBlock :handleClick="handleEnlistment" :disabled="!formation" />
+          <Button
+            type="wprimary"
+            text="Enlist"
+            isBlock
+            :handleClick="handleEnlistment"
+            :disabled="!formation"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -207,7 +237,7 @@ export default {
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
       getBoardByRace: "war/getBoardByRace",
-      getRaceData: "war/getRaceData"
+      getRaceData: "war/getRaceData",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -248,8 +278,10 @@ export default {
       return this.raceData?.data?.totalSlots || 0;
     },
     isOwner() {
-      return this.account && this.account.toLowerCase() === this.slotData?.account;
-    }
+      return (
+        this.account && this.account.toLowerCase() === this.slotData?.account
+      );
+    },
   },
   methods: {
     ...mapMutations({
@@ -267,20 +299,31 @@ export default {
     async handleSlotSelection(key) {
       const [y, x] = key.split("-");
       this.selectedSlot = { x, y };
-      const slotData = this.board[y].find(e => e && (e.slot.x === Number(x) && e.slot.y === Number(y)));
+      const slotData = this.board[y].find(
+        (e) => e && e.slot.x === Number(x) && e.slot.y === Number(y)
+      );
       this.slotData = slotData;
     },
     async handleEnlistment() {
       try {
-        const faction = (Number(this.$route.params.raceId) === 1 || Number(this.$route.params.raceId) === 4 ) ? "The Corporation" : "The Degenerate";
+        const faction =
+          Number(this.$route.params.raceId) === 1 ||
+          Number(this.$route.params.raceId) === 4
+            ? "The Corporation"
+            : "The Degenerate";
         const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
         const warId = this.$route.params.contractWar;
-        await this.enlist({ warId: this.$route.params.contractWar, faction, race: raceName, slot: this.selectedSlot});
+        await this.enlist({
+          warId: this.$route.params.contractWar,
+          faction,
+          race: raceName,
+          slot: this.selectedSlot,
+        });
         await this.getWar(warId);
         ToastSnackbar.success("Successfully enlisted at war!");
       } catch (error) {
         ToastSnackbar.error(error.code);
-        console.error(error)
+        console.error(error);
       }
     },
     goToReport() {
@@ -297,22 +340,29 @@ export default {
       if (!this.slotData) {
         return 0;
       } else {
-        return this.slotData?.gameItems?.find(g => g.id === gameItemId)?.amount || 0;
+        return (
+          this.slotData?.gameItems?.find((g) => g.id === gameItemId)?.amount ||
+          0
+        );
       }
-    }
+    },
+    async fetchData() {
+      if (!this.war && !this.isLoadingWar) {
+        await this.getWar(this.$route.params.contractWar);
+      }
+    },
   },
   watch: {
     isConnected() {
-      const warId = this.$route.params.contractWar;
-      this.getWar(warId);
+      this.fetchData();
     },
     account() {
-      const warId = this.$route.params.contractWar;
-      this.getWar(warId);
-    }
+      this.fetchData();
+    },
   },
   async mounted() {
     this.setHeader(false);
+    this.fetchData();
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
@@ -348,18 +398,6 @@ export default {
   z-index: 2;
   width: 100%;
 }
-
-.treasure {
-  position: absolute;
-  display: inline-block;
-  top: -21px;
-  right: -18px;
-  z-index: 3;
-  width: 48px;
-  @media screen and (min-width: 1441px) {
-    width: 64px;
-  }
-}
 .treasure-info {
   position: absolute;
   bottom: 0px;
@@ -392,6 +430,21 @@ export default {
 }
 .treasure-progress {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > .text {
+    z-index: 1;
+    font-weight: bold;
+    font-size: 24px;
+    text-shadow: 1px 1px 2px #000;
+  }
+  > .treasure {
+    position: absolute;
+    z-index: 0;
+    top: -21px;
+    width: 48px;
+  }
 }
 .rewards-container {
   display: flex;

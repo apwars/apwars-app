@@ -31,7 +31,7 @@
               tip="How to play?"
               tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
             />
-            <div class="big-text" v-if="!countdownTimer">War ended!</div>
+            <div class="big-text text-center" v-if="!countdownTimer">War ended!</div>
             <countdown
               v-else
               :time="countdownTimer"
@@ -51,7 +51,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col><Versus :corpForce="war.factions[0].power.total" :degenForce="war.factions[1].power.total" :winnerAmount="war.prizes.winner.unlocked" :loserAmount="war.prizes.loser.amount" :burnAmount="war.prizes.winner.locked" /></v-col>
+          <v-col><Versus :title="war.status === 'finished'  ? 'Result' : 'Parcial Result'" :corpForce="war.factions[0].power.total" :degenForce="war.factions[1].power.total" :winnerAmount="war.prizes.winner.unlocked" :loserAmount="war.prizes.loser.amount" :burnAmount="war.prizes.winner.locked" /></v-col>
         </v-row>
         <v-row>
           <v-col>
@@ -252,22 +252,28 @@ export default {
         .open("https://apwars.farm/docs/war/combat-dynamics", "_blank")
         .focus();
     },
+    async fetchData() {
+      if (!this.war && !this.isLoadingWar){
+        await this.getWar(this.$route.params.contractWar);
+      }
+    },
   },
   watch: {
     isConnected() {
-      if (!this.isLoadingWar){
-        this.getWar(this.$route.params.contractWar);
-      }
+      this.fetchData();
     },
     account() {
-      if (!this.isLoadingWar){
-        this.getWar(this.$route.params.contractWar);
-      }
+      this.fetchData();
     }
   },
   async mounted() {
     this.setHeader(false);
-    //this.$refs.board.scrollLeft = this.$refs.board.scrollWidth / 2 - 125;
+    this.fetchData();
+  },
+  updated() {
+    if (this.$refs.board) {
+      this.$refs.board.scrollLeft = this.$refs.board.scrollWidth / 2 - 125;
+    }
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);

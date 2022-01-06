@@ -160,10 +160,17 @@
             <div class="monster-name text-center mb-2">
                 {{ monsterData.name }}
             </div>
-            <div class="treasure-progress mb-3">
-              <Progress class="progress" :value="4" :maxScale="10" />
-              <div class="treasure">
-                <v-img src="/images/battle/treasure.png" />
+            <div class="d-flex align-items-center justify-center mb-1">
+              <div class="reward-description text-center pr-2">
+                Enlistment reward drop
+              </div>
+              <div class="treasure-progress">
+                <div class="text">
+                  <Amount :amount="40000" compact formatted />
+                </div>
+                <div class="treasure">
+                  <v-img src="/images/battle/treasure.png" />
+                </div>
               </div>
             </div>
             <Button type="wprimary" text="Go to the Monster Battle" :handleClick="goToMonsterBattle" />
@@ -244,7 +251,7 @@ import Countdown from "@/lib/components/ui/Utils/Countdown";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 import TableWarReport from "@/lib/components/ui/Utils/Tables/TableWarReport";
 import TableWarReportV2 from "@/lib/components/ui/Utils/Tables/TableWarReportV2";
-import Progress from "@/lib/components/ui/Progress";
+import Amount from "@/lib/components/ui/Utils/Amount";
 import Reward from "@/lib/components/ui/Reward";
 
 import { getWars } from "@/data/Wars";
@@ -266,7 +273,7 @@ export default {
     ListUnits,
     TableWarReport,
     TableWarReportV2,
-    Progress,
+    Amount,
     Reward
   },
 
@@ -524,33 +531,27 @@ export default {
   }
 }
 
-.treasure-progress {
-  position: relative;
-  bottom: 0;
-  width: 80%;
-  height: 32px;
-}
-
 .progress {
   z-index: 2;
   width: 100%;
 }
 
-.treasure {
-  position: absolute;
-  right: -40px;
-  bottom: -25px;
-  z-index: 3;
-  @media screen and (max-width: 500px) {
-    right: -26px;
+.treasure-progress {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > .text {
+    z-index: 1;
+    font-weight: bold;
+    font-size: 24px;
+    text-shadow: 1px 1px 2px #000;
   }
-  > img {
-    width: 70px;
-  }
-  @media screen and (min-width: 1441px) {
-    > img {
-      width: 130px;
-    }
+  > .treasure {
+    position: absolute;
+    z-index: 0;
+    top: -21px;
+    width: 48px;
   }
 }
 
