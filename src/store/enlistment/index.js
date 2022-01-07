@@ -11,8 +11,8 @@ const state = {
     amount: 0,
     weaponAmount: 0,
   })),
-  weapons: getWeapons().map((w) => ({ ...w, amount: 0, balance: 0 })),
-  formation: 1,
+  weapons: getWeapons().map((w) => ({ ...w })),
+  formation: null,
   raceId: null,
 };
 

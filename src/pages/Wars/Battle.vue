@@ -31,7 +31,9 @@
               tip="How to play?"
               tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
             />
-            <div class="big-text text-center" v-if="!countdownTimer">War ended!</div>
+            <div class="big-text text-center" v-if="!countdownTimer">
+              War ended!
+            </div>
             <countdown
               v-else
               :time="countdownTimer"
@@ -44,14 +46,30 @@
               <div class="prize">
                 <div class="brown-info">
                   <img src="/images/wgold.png" width="28" />
-                  <div class="prize-text"><Amount :amount="war.prizes.winner.amount" compact formatted/> {{ war.prizes.winner.prize }}</div>
+                  <div class="prize-text">
+                    <Amount
+                      :amount="war.prizes.winner.amount"
+                      compact
+                      formatted
+                    />
+                    {{ war.prizes.winner.prize }}
+                  </div>
                 </div>
               </div>
             </div>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col><Versus :title="war.status === 'finished'  ? 'Result' : 'Parcial Result'" :corpForce="war.factions[0].power.total" :degenForce="war.factions[1].power.total" :winnerAmount="war.prizes.winner.unlocked" :loserAmount="war.prizes.loser.amount" :burnAmount="war.prizes.winner.locked" /></v-col>
+        <v-row no-gutters>
+          <v-col
+            ><Versus
+              :title="war.status === 'finished' ? 'Result' : 'Parcial Result'"
+              :phase="war.status"
+              :corpForce="war.factions[0].power.total"
+              :degenForce="war.factions[1].power.total"
+              :winnerAmount="war.prizes.winner.unlocked"
+              :loserAmount="war.prizes.loser.amount"
+              :burnAmount="war.prizes.winner.locked"
+          /></v-col>
         </v-row>
         <v-row>
           <v-col>
@@ -72,7 +90,10 @@
                     <div class="brown-info mr-2">
                       <div class="power-text">
                         <Amount
-                          :amount="war.races.find(r => r.name === 'Humans').power.total"
+                          :amount="
+                            war.races.find((r) => r.name === 'Humans').power
+                              .total
+                          "
                           compact
                           formatted
                           symbol="Power Units"
@@ -96,7 +117,9 @@
                     <div class="brown-info ml-2">
                       <div class="power-text">
                         <Amount
-                          :amount="war.races.find(r => r.name === 'Orcs').power.total"
+                          :amount="
+                            war.races.find((r) => r.name === 'Orcs').power.total
+                          "
                           compact
                           formatted
                           symbol="Power Units"
@@ -133,7 +156,10 @@
                     <div class="brown-info mr-2">
                       <div class="power-text">
                         <Amount
-                          :amount="war.races.find(r => r.name === 'Elves').power.total"
+                          :amount="
+                            war.races.find((r) => r.name === 'Elves').power
+                              .total
+                          "
                           compact
                           formatted
                           symbol="Power Units"
@@ -157,7 +183,10 @@
                     <div class="brown-info ml-2">
                       <div class="power-text">
                         <Amount
-                          :amount="war.races.find(r => r.name === 'Undead').power.total"
+                          :amount="
+                            war.races.find((r) => r.name === 'Undead').power
+                              .total
+                          "
                           compact
                           formatted
                           symbol="Power Units"
@@ -194,9 +223,9 @@ export default {
   components: { Title, Button, Versus, FullBoard, Amount, Countdown },
   computed: {
     ...mapState({
-      war: state => state.war.war,
-      isLoadingWar: state => state.war.isLoading,
-      fullBoard: state => state.war.fullBoard,
+      war: (state) => state.war.war,
+      isLoadingWar: (state) => state.war.isLoading,
+      fullBoard: (state) => state.war.fullBoard,
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -211,9 +240,9 @@ export default {
     },
     countdownTitle() {
       if (this.war.status === "enlistment") {
-        return "Enlistment ends in"
+        return "Enlistment ends in";
       }
-      return "Countdown to collect prizes and wUNITS"
+      return "Countdown to collect prizes and wUNITS";
     },
     countdownTimer() {
       if (!this.war) {
@@ -229,7 +258,7 @@ export default {
       return Math.max(Date.parse(consideredDate) - now, 0);
     },
     isWarFinished() {
-      return this.war.status === 'finished';
+      return this.war.status === "finished";
     },
   },
   methods: {
@@ -253,7 +282,7 @@ export default {
         .focus();
     },
     async fetchData() {
-      if (this.account && !this.war && !this.isLoadingWar){
+      if (this.account && !this.war && !this.isLoadingWar) {
         await this.getWar(this.$route.params.contractWar);
       }
     },
@@ -264,7 +293,7 @@ export default {
     },
     account() {
       this.fetchData();
-    }
+    },
   },
   async mounted() {
     this.setHeader(false);

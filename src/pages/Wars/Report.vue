@@ -14,8 +14,15 @@
           </v-col>
         </v-row>
         <v-row dense no-gutters>
-          <v-col>
+          <v-col col="12" sm="4">
             <Title text="WAR IV" subtitle="Report" />
+          </v-col>
+          <v-col col="12" sm="4" offset-sm="4">
+            <Button
+                  type="wprimary"
+                  icon="swords"
+                  text="Claim prizes and restore survivors"
+                />
           </v-col>
         </v-row>
 
@@ -174,20 +181,6 @@
               </div>
             </div>
             <Button type="wprimary" text="Go to the Monster Battle" :handleClick="goToMonsterBattle" />
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <v-row>
-              <v-col class="d-flex justify-center">
-                <Button
-                  type="wprimary"
-                  icon="swords"
-                  text="Claim prizes and restore survivors"
-                />
-              </v-col>
-            </v-row>
           </v-col>
         </v-row>
 

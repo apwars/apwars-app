@@ -49,20 +49,26 @@ export default {
             const value = FORMATIONS[playerEnlistment.formation.name.toUpperCase()];
             const raceId = RACES[playerEnlistment.race.toUpperCase()];
             dispatch('changeFormation', { raceId, value});
+            for (let gameItem of playerEnlistment.gameItems) {
+                dispatch('stakeWeapon', { troopId: gameItem.troopId, amount: gameItem.amount });
+            }
         }
     },
     async enlist({ rootState, getters }, { warId, faction, race, slot }) {
         const tiers = [1, 2, 3, 4];
         let gameItems = [];
         for (let t of tiers) {
+            const troops = rootState.enlistment.troops.filter(troop => troop.tier === t);
             const weapon = getters.getWeaponByTier(t);
-            const staked = getters.totalStakedWeapon(t);
-            if (staked > 0) {
-                gameItems = gameItems.concat({ id: weapon.id, amount: staked });
+
+            for (let troop of troops) {
+                if (troop.weaponAmount) {
+                    gameItems = gameItems.concat({ id: weapon.id, amount: troop.weaponAmount, troopId: troop.id });
+                }
             }
         }
         const controller = new WarsController();
-        const formation = { name: FORMATIONS_NAMES[rootState.enlistment.formation.value].toLowerCase() };
+        const formation = { name: FORMATIONS_NAMES[rootState.enlistment.formation].toLowerCase() };
         await controller.enlist(warId, faction, race, rootState.user.account, formation, gameItems, slot);
     }
 };

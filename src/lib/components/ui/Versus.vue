@@ -3,7 +3,7 @@
     <div class="phase-title">
       <div>{{ title }}</div>
       <Button
-        text="Go to War Report"
+        :text="`Go to War Report ${phase === 'finished' ? 'and Claim Prizes' : ''}`"
         type="wtertiary"
         :handleClick="goToReport"
       />
@@ -79,6 +79,10 @@ import Button from "@/lib/components/ui/Buttons/Button";
 export default {
   props: {
     title: {
+      type: String,
+      default: '',
+    },
+    phase: {
       type: String,
       default: '',
     },

@@ -12,10 +12,8 @@ export default {
     state.troops = state.troops.map((t) => {
         return { ...t, amount: 0 };
     });
-    state.formation = {
-      raceId: null,
-      value: null,
-    };
+    state.formation = null;
+    state.raceId = null;
   },
   setPrice(state, { price, troopId }) {
     state.troops = state.troops.map((t) => {

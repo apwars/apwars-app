@@ -34,7 +34,7 @@ export default {
   userEnlistedRace: (state, getters) => {
     return getters.playerEnlistment?.race || null;
   },
-  getRaceEnlisted: (state, getters) => (currentRace) => {
-      return getters.userEnlistedRace !== RACE_DESCRIPTION[Number(currentRace)];
-  } 
+  getRaceEnlisted: (state, getters) => {
+      return getters.userEnlistedRace;
+  },
 };

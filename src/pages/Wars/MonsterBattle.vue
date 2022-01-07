@@ -235,7 +235,7 @@ export default {
   computed: {
     ...mapState({
       weapons: (state) => state.enlistment.weapons,
-      formation: (state) => state.enlistment.formation.value,
+      formation: (state) => state.enlistment.formation,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
@@ -292,7 +292,7 @@ export default {
       return RACE_DESCRIPTION[Number(this.$route.params.raceId)];
     },
     isEnlistedWithAnotherRace() {
-      return this.getRaceEnlisted(this.$route.params.raceId);
+      return this.getRaceEnlisted && this.getRaceEnlisted !== RACE_DESCRIPTION[Number(this.$route.params.raceId)];
     },
   },
   methods: {

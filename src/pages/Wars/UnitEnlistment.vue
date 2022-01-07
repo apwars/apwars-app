@@ -40,7 +40,6 @@
                     v-bind="currencyConfig"
                     v-model="stakedTroop"
                     :error="!validateAmount(stakedTroop, troopBalance)"
-                    readonly
                     :disabled="isEnlistedWithRace"
                   />
 
@@ -54,29 +53,20 @@
                     persistent-hint
                     v-bind="currencyConfig"
                     v-model="stakedWeapon"
-                    :max="maxPossibleWeaponStake"
-                    :error="!validateAmount(stakedWeapon, stakedTroop)"
+                    :error="stakedWeapon > stakedTroop || !validateAmount(stakedWeapon, weaponBalance)"
                     :disabled="isEnlistedWithRace"
-                  >
-                    <template v-slot:append>
-                      <div class="d-flex align-center">
-                        /{{ maxPossibleWeaponStake }}
-                        <v-btn
-                          class="ml-1"
-                          rounded
-                          small
-                          @click="stakeMaxWeapon"
-                          :disabled="!maxPossibleWeaponStake"
-                        >
-                          MAX
-                        </v-btn>
-                      </div>
-                    </template>
-                  </v-currency-field>
+                  />
                   <div class="amount-error" v-if="!validateAmount(stakedTroop, troopBalance)">
-                    You don't have the amount of {{ stakedTroop }}
+                    - You don't have the amount of {{ stakedTroop }}
                     {{ troop.name }} to fill the formation. How about acquiring
                     some more?
+                  </div>
+                  <div class="amount-error" v-if="!validateAmount(stakedWeapon, weaponBalance)">
+                    - You don't have the amount of {{ stakedWeapon }} {{ weapon.title }} to enlist. How about acquiring
+                    some more?
+                  </div>
+                  <div class="amount-error" v-if="stakedWeapon > stakedTroop">
+                    - The weapon qty can't be greater than troops units.
                   </div>
                 </template>
                 <div class="text-alert" v-else>
@@ -194,9 +184,6 @@
                     :class="[
                       'unit-name',
                       'mb-1',
-                      !validateAmount(unit.amount, getTroopBalance(unit.name))
-                        ? 'error-color'
-                        : '',
                     ]"
                   >
                     {{ unit.displayName }}
@@ -224,7 +211,9 @@
                   <div class="unit-name mb-1">
                     {{ getWeaponByTier(unit.tier).title }}
                   </div>
-                  <div class="amount d-flex">
+                  <div :class="[!validateAmount(getTotalStakedWeapon(unit.tier), getWeaponBalance(getWeaponByTier(unit.tier).id))
+                          ? 'error-color'
+                          : '',]" class="amount d-flex">
                     <TripleIcon
                       class="mr-1"
                       :name="getWeaponByTier(unit.tier).icon"
@@ -263,6 +252,7 @@ import { mapMutations, mapGetters, mapActions, mapState } from "vuex";
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
 import { RACE_FORMATIONS, FORMATIONS_NAMES } from "@/data/Enlistment";
+import { RACE_DESCRIPTION } from "@/data/Races";
 
 import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
@@ -294,12 +284,12 @@ export default {
       getAllFromRace: "enlistment/byRace",
       getByNameOrAddress: "enlistment/getByNameOrAddress",
       getWeaponByTier: "enlistment/getWeaponByTier",
-      getTotalStakedWeapon: "enlistment/totalStakedWeapon",
       maxStakeForce: "enlistment/maxStakeForce",
       account: "user/account",
       getRaceData: "war/getRaceData",
       userEnlistedRace: "war/userEnlistedRace",
       getRaceEnlisted: "war/getRaceEnlisted",
+      getTotalStakedWeapon: "enlistment/totalStakedWeapon",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -346,34 +336,6 @@ export default {
       return this.getTotalStakedWeapon(this.troop.tier);
     },
 
-    stakedStrength() {
-      return (
-        this.troop.strength * this.troop.amount +
-        this.weapon.strength * this.troop.weaponAmount
-      );
-    },
-
-    stakedDefense() {
-      return (
-        this.troop.defense * this.troop.amount +
-        this.weapon.defense * this.troop.weaponAmount
-      );
-    },
-
-    maxStrength() {
-      return (
-        this.troop.strength * this.troop.war.stakeLimit +
-        this.weapon.strength * this.weapon.war.stakeLimit
-      );
-    },
-
-    maxDefense() {
-      return (
-        this.troop.defense * this.troop.war.stakeLimit +
-        this.weapon.defense * this.weapon.war.stakeLimit
-      );
-    },
-
     enlistmentOptions() {
       return ENLISTMENT_OPTIONS.find(
         (eo) => eo.id === Number(this.$route.params.raceId)
@@ -386,13 +348,6 @@ export default {
       }
       return MONSTERS.find((m) => m.id === this.enlistmentOptions.monsterId);
     },
-
-    maxPossibleTroopStake() {
-      return Math.min(this.troopBalance, this.troop.war.stakeLimit);
-    },
-    maxPossibleWeaponStake() {
-      return Math.min(this.weaponBalance, this.stakedTroop);
-    },
     formationOptions() {
       return Object.keys(RACE_FORMATIONS[this.troop.race]).map((key) => ({
         text: FORMATIONS_NAMES[key],
@@ -403,7 +358,7 @@ export default {
       return this.getTroopBalance(this.troop.name);
     },
     weaponBalance() {
-      return this.balances?.[`GameItem${this.weapon?.id}`] || 0;
+      return this.getWeaponBalance(this.weapon?.id);
     },
     raceData() {
       return this.getRaceData(Number(this.$route.params.raceId));
@@ -418,10 +373,10 @@ export default {
       return this.raceData?.data?.totalSlots || 0;
     },
     isEnlistedWithAnotherRace() {
-      return this.getRaceEnlisted(this.$route.params.raceId);
+      return this.getRaceEnlisted && this.getRaceEnlisted !== RACE_DESCRIPTION[Number(this.$route.params.raceId)];
     },
     isEnlistedWithRace() {
-      return this.currentEnlistment === Number(this.$route.params.raceId);
+      return this.getRaceEnlisted === RACE_DESCRIPTION[Number(this.$route.params.raceId)];
     },
 
     stakedTroop: {
@@ -519,10 +474,13 @@ export default {
     getTroopBalance(troopName) {
       return this.balances?.[troopName] || 0;
     },
+    getWeaponBalance(weaponId) {
+      return this.balances?.[`GameItem${weaponId}`] || 0;
+    },
     isEnlistmentValid() {
       let isValid = true;
       for (let unit of this.unitsFromRace) {
-        if (!this.validateAmount(unit.amount, this.getTroopBalance(unit.name))) {
+        if (!this.validateAmount(unit.amount, this.getTroopBalance(unit.name)) || !this.validateAmount(this.getTotalStakedWeapon(unit.tier), this.getWeaponBalance(this.getWeaponByTier(unit.tier).id))) {
           isValid = false;
         }
       }
@@ -540,7 +498,7 @@ export default {
         isValid = false;
       }
       return isValid;
-    }
+    },
   },
   watch: {
     isConnected() {

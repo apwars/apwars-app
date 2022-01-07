@@ -29,18 +29,6 @@ export function getWeapons() {
       defense: 0,
     },
     {
-      id: 64,
-      type: "weapons",
-      typeDesc: "Weapons",
-      contractAddress: Addresses.collectibles,
-      title: "Simple Spear",
-      description: 'The Simple Spear is sharp and can be used from a distance causing great damage to the enemy team.',
-      image: "/images/nfts/weapon-simple-spear.png",
-      icon: "simple-spear",
-      strength: 40,
-      defense: 0,
-    },
-    {
       id: 65,
       type: "weapons",
       typeDesc: "Weapons",
@@ -52,12 +40,24 @@ export function getWeapons() {
       strength: 20,
       defense: 5,
     },
+    {
+      id: 64,
+      type: "weapons",
+      typeDesc: "Weapons",
+      contractAddress: Addresses.collectibles,
+      title: "Simple Spear",
+      description: 'The Simple Spear is sharp and can be used from a distance causing great damage to the enemy team.',
+      image: "/images/nfts/weapon-simple-spear.png",
+      icon: "simple-spear",
+      strength: 40,
+      defense: 0,
+    },
   ];
 }
 
 export const TIER_WEAPONS = {
   1: 39,
   2: 63,
-  3: 64,
-  4: 65
+  3: 65,
+  4: 64
 }
