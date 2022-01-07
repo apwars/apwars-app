@@ -82,8 +82,11 @@
               <div class="slot-info-container">
                 <template v-if="selectedSlot">
                   <div class="monster-name">
+                    <span v-if="slotData">
                     Enlistment at Slot {{ selectedSlot.y }},
                     {{ selectedSlot.x }}
+                    </span>
+                    <span v-else>Free Slot</span>
                   </div>
                   <div class="info-text mt-1" v-if="slotData">
                     Address: {{ slotData.account }}
@@ -116,7 +119,7 @@
                 </div>
                 <template>
                   <div class="info-text">
-                    <span v-if="isOwner">My </span> Units
+                    <span v-if="isOwner || !slotData">My </span> Units
                     <Amount
                       :amount="getUnitAmount(unit.name)"
                       compact
@@ -147,7 +150,7 @@
                 </div>
                 <template>
                   <div class="info-text">
-                    <span v-if="isOwner">My </span> Qty:
+                    <span v-if="isOwner || !slotData">My </span> Qty:
                     <Amount
                       :amount="getGameItemAmount(weapon.id)"
                       compact
@@ -210,6 +213,7 @@ import { mapMutations, mapGetters, mapState, mapActions } from "vuex";
 import { RACE_DESCRIPTION } from "@/data/Races";
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
+import { TIER_WEAPONS } from "@/data/Collectibles/Weapons";
 
 import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
@@ -239,6 +243,7 @@ export default {
       getRaceData: "war/getRaceData",
       userEnlistedRace: "war/userEnlistedRace",
       getRaceEnlisted: "war/getRaceEnlisted",
+      totalStakedWeapon: "enlistment/totalStakedWeapon"
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -341,14 +346,17 @@ export default {
     },
     getUnitAmount(troopName) {
       if (!this.slotData) {
-        return 0;
-      } else {
+        return this.troopList.find(t => t.name === troopName).amount;
+      } else if (this.slotData) {
         return this.slotData.formation.soldiers[troopName].amount;
+      } else {
+        return 0;
       }
     },
     getGameItemAmount(gameItemId) {
       if (!this.slotData) {
-        return 0;
+        const weaponTier = Number(Object.keys(TIER_WEAPONS).find(k => TIER_WEAPONS[k] === gameItemId));
+        return this.totalStakedWeapon(weaponTier);
       } else {
         return (
           this.slotData?.gameItems?.find((g) => g.id === gameItemId)?.amount ||

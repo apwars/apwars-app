@@ -15,9 +15,6 @@ export function getWeapons() {
       icon: "simple-shield",
       strength: 0,
       defense: 15,
-      war: {
-        stakeLimit: 1000
-      }
     },
     {
       id: 63,
@@ -30,9 +27,6 @@ export function getWeapons() {
       icon: "simple-bow",
       strength: 15,
       defense: 0,
-      war: {
-        stakeLimit: 1000
-      }
     },
     {
       id: 64,
@@ -45,9 +39,6 @@ export function getWeapons() {
       icon: "simple-spear",
       strength: 40,
       defense: 0,
-      war: {
-        stakeLimit: 1000
-      }
     },
     {
       id: 65,
@@ -60,9 +51,6 @@ export function getWeapons() {
       icon: "simple-potion",
       strength: 20,
       defense: 5,
-      war: {
-        stakeLimit: 1000
-      }
     },
   ];
 }

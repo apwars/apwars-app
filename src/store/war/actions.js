@@ -11,6 +11,7 @@ export default {
       const war = await controller.getOne(warId);
       commit("setWar", war);
       await dispatch("getFullBoard", warId);
+      dispatch("enlistment/checkPlayerEnlistment", null, { root: true});
     } catch (error) {
        console.error(error);
     } finally {

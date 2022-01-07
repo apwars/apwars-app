@@ -1,6 +1,7 @@
 import Troops from "@/lib/eth/Troops";
 import Collectibles from "@/lib/eth/Collectibles";
-import { RACE_FORMATIONS, FORMATIONS_NAMES } from "@/data/Enlistment";
+import { RACES } from "@/data/Races";
+import { FORMATIONS, RACE_FORMATIONS, FORMATIONS_NAMES } from "@/data/Enlistment";
 import WarsController from "@/controller/WarsController";
 
 export default {
@@ -41,6 +42,14 @@ export default {
     },
     clearEnlistment({ commit }) {
         commit('clearEnlistment');
+    },
+    checkPlayerEnlistment({ dispatch, rootGetters }) {
+        const playerEnlistment = rootGetters['war/playerEnlistment'];
+        if (playerEnlistment) {
+            const value = FORMATIONS[playerEnlistment.formation.name.toUpperCase()];
+            const raceId = RACES[playerEnlistment.race.toUpperCase()];
+            dispatch('changeFormation', { raceId, value});
+        }
     },
     async enlist({ rootState, getters }, { warId, faction, race, slot }) {
         const tiers = [1, 2, 3, 4];

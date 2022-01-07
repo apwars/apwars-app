@@ -45,6 +45,7 @@ export default {
     });
   },
   setFormation(state, { raceId, value }) {
-    state.formation = { raceId, value };
+    state.formation = value;
+    state.raceId = raceId;
   }
 };

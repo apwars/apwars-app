@@ -39,8 +39,9 @@
                     outlined
                     v-bind="currencyConfig"
                     v-model="stakedTroop"
-                    :error="stakedTroop > troopBalance"
+                    :error="!validateAmount(stakedTroop, troopBalance)"
                     readonly
+                    :disabled="isEnlistedWithRace"
                   />
 
                   <div class="enlist-title">
@@ -54,7 +55,8 @@
                     v-bind="currencyConfig"
                     v-model="stakedWeapon"
                     :max="maxPossibleWeaponStake"
-                    :error="stakedWeapon > stakedTroop"
+                    :error="!validateAmount(stakedWeapon, stakedTroop)"
+                    :disabled="isEnlistedWithRace"
                   >
                     <template v-slot:append>
                       <div class="d-flex align-center">
@@ -71,8 +73,8 @@
                       </div>
                     </template>
                   </v-currency-field>
-                  <div class="amount-error" v-if="stakedTroop > troopBalance">
-                    You don't have the amount of {{ troop.war.stakeMin }}
+                  <div class="amount-error" v-if="!validateAmount(stakedTroop, troopBalance)">
+                    You don't have the amount of {{ stakedTroop }}
                     {{ troop.name }} to fill the formation. How about acquiring
                     some more?
                   </div>
@@ -159,7 +161,8 @@
                   src="/images/icons/battle-shield.png"
                   alt="Enlistment resume"
                 />
-                Select your formation
+                <span v-if="!isEnlistedWithRace">Select your formation</span>
+                <span v-else>Your enlistment</span>
               </div>
               <v-select
                 :items="formationOptions"
@@ -168,7 +171,7 @@
                 :value="formation"
                 @change="handleFormationChange"
                 :loading="isLoadingWar || isLoadingBalances"
-                :disabled="isLoadingWar || isLoadingBalances"
+                :disabled="isLoadingWar || isLoadingBalances || isEnlistedWithRace"
               ></v-select>
             </template>
             <div class="troop-list mt-2">
@@ -191,7 +194,7 @@
                     :class="[
                       'unit-name',
                       'mb-1',
-                      unit.amount > getTroopBalance(unit.name)
+                      !validateAmount(unit.amount, getTroopBalance(unit.name))
                         ? 'error-color'
                         : '',
                     ]"
@@ -203,7 +206,7 @@
                       :class="[
                         'd-flex',
                         'align-end',
-                        unit.amount > getTroopBalance(unit.name)
+                        !validateAmount(unit.amount, getTroopBalance(unit.name))
                           ? 'error-color'
                           : '',
                       ]"
@@ -281,8 +284,8 @@ export default {
   },
   computed: {
     ...mapState({
-      formation: (state) => state.enlistment.formation.value,
-      currentEnlistment: (state) => state.enlistment.formation.raceId,
+      formation: (state) => state.enlistment.formation,
+      currentEnlistment: (state) => state.enlistment.raceId,
       isLoadingBalances: (state) => state.user.isLoadingBalances,
       balances: (state) => state.user.balances,
       isLoadingWar: (state) => state.war.isLoading,
@@ -393,7 +396,7 @@ export default {
     formationOptions() {
       return Object.keys(RACE_FORMATIONS[this.troop.race]).map((key) => ({
         text: FORMATIONS_NAMES[key],
-        value: key,
+        value: Number(key),
       }));
     },
     troopBalance() {
@@ -416,6 +419,9 @@ export default {
     },
     isEnlistedWithAnotherRace() {
       return this.getRaceEnlisted(this.$route.params.raceId);
+    },
+    isEnlistedWithRace() {
+      return this.currentEnlistment === Number(this.$route.params.raceId);
     },
 
     stakedTroop: {
@@ -516,7 +522,7 @@ export default {
     isEnlistmentValid() {
       let isValid = true;
       for (let unit of this.unitsFromRace) {
-        if (unit.amount > this.getTroopBalance(unit.name)) {
+        if (!this.validateAmount(unit.amount, this.getTroopBalance(unit.name))) {
           isValid = false;
         }
       }
@@ -528,6 +534,13 @@ export default {
         await this.fetchUserWallet(this.account);
       }
     },
+    validateAmount(amount, balance) {
+      let isValid = true;
+      if (balance < amount && !this.isEnlistedWithRace) {
+        isValid = false;
+      }
+      return isValid;
+    }
   },
   watch: {
     isConnected() {

@@ -16,20 +16,23 @@ export default {
   getBoardByRace: (state, getters) => (race) => {
     return getters.getRaceData(race).data?.slots || [];
   },
-  userEnlistedRace: (state, getters, rootState) => {
+  playerEnlistment: (state, getters, rootState) => {
     const account = rootState.user.account;
-    let isEnlisted = null;
+    let enlistment = null;
 
     if (account && state.fullBoard) {
       for (let row of state.fullBoard) {
         for (let col of row) {
           if (col && col.account === account.toLowerCase()) {
-            isEnlisted = col.race;
+            enlistment = col;
           }
         }
       }
     }
-    return isEnlisted;
+    return enlistment;
+  },
+  userEnlistedRace: (state, getters) => {
+    return getters.playerEnlistment?.race || null;
   },
   getRaceEnlisted: (state, getters) => (currentRace) => {
       return getters.userEnlistedRace !== RACE_DESCRIPTION[Number(currentRace)];
