@@ -365,7 +365,7 @@ export default {
       }
     },
     async fetchData() {
-      if (!this.war && !this.isLoadingWar) {
+      if (this.account && !this.war && !this.isLoadingWar) {
         await this.getWar(this.$route.params.contractWar);
       }
     },
