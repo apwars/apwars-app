@@ -91,13 +91,13 @@
           </span>
         </div>
         <div v-if="!isApproved">
-          <wButton
+          <!-- <wButton
             class="mt-1"
             :disabled="!getGeneralConfig.isEnabled"
             @click="openModalArimedesApproval()"
           >
             Approve Research
-          </wButton>
+          </wButton> -->
         </div>
         <div v-else-if="combinators.combinatorId === '0'">
           <!-- <wButton
