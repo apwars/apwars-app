@@ -26,7 +26,15 @@
           >
             <v-col>
               <div class="monster-name mt-6">
-                Choose your slot to enlist the troops
+                <span v-if="isEnlistedWithAnotherRace">
+                  {{ raceName }} Strategy Board
+                </span>
+                <span v-else-if="userEnlistedRace">
+                  Your slot is indicated with yellow arrow
+                </span>
+                <span v-else>
+                  Choose your slot to enlist the troops
+                </span>
               </div>
               <Board
                 :board="board"
@@ -39,11 +47,32 @@
                 @selectedSlot="handleSlotSelection"
                 :currentUserAddress="account.toLowerCase()"
               />
+              <div class="small-text">
+                Remaining slots {{ totalAvailable }}/{{ totalSlots }}
+              </div>
+            </v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col class="d-flex justify-center">
+              <Button
+                v-if="!userEnlistedRace"
+                type="wprimary"
+                text="Enlist"
+                :handleClick="handleEnlistment"
+                :disabled="!formation"
+              />
+              <Button
+                v-else
+                type="wsecondary"
+                text="Go to full report"
+                :handleClick="goToReport"
+              />
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12">
-              <template v-if="selectedSlot">
+              <div class="slot-info-container">
+                <template v-if="selectedSlot">
                 <div class="monster-name">
                   Enlistment at Slot {{ selectedSlot.y }},
                   {{ selectedSlot.x }}
@@ -54,6 +83,7 @@
                 </div>
                 <div class="info-text mt-1" v-else>This slot is available!</div>
               </template>
+              </div>
             </v-col>
           </v-row>
           <v-row no-gutters class="enlistment-resume" v-if="troopList.length">
@@ -144,13 +174,6 @@
               </div>
             </v-col>
           </v-row>
-          <v-row
-            ><v-col>
-              <Button
-                type="wsecondary"
-                text="Go to full report"
-                :handleClick="goToReport"/></v-col
-          ></v-row>
         </v-col>
         <v-col cols="12" sm="3">
           <div class="monster-container">
@@ -164,7 +187,7 @@
             </div>
             <div class="d-flex align-items-center justify-center">
               <div class="reward-description text-center pr-2">
-                Enlistment reward drop
+                Monster Prize Pool
               </div>
               <div class="treasure-progress">
                 <div class="text">
@@ -176,30 +199,6 @@
               </div>
             </div>
           </div>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col sm="4">
-          <div class="d-flex flex-column justify-center align-center">
-            <Progress
-              class="progress"
-              :value="totalEnlistment"
-              :maxScale="totalSlots"
-              noText
-            />
-            <div class="info-text mt-1">
-              Remaining slots {{ totalAvailable }}/{{ totalSlots }}
-            </div>
-          </div>
-        </v-col>
-        <v-col offset-sm="4" sm="4">
-          <Button
-            type="wprimary"
-            text="Enlist"
-            isBlock
-            :handleClick="handleEnlistment"
-            :disabled="!formation"
-          />
         </v-col>
       </v-row>
     </v-container>
@@ -238,6 +237,8 @@ export default {
       getAllFromRace: "enlistment/byRace",
       getBoardByRace: "war/getBoardByRace",
       getRaceData: "war/getRaceData",
+      userEnlistedRace: "war/userEnlistedRace",
+      getRaceEnlisted: "war/getRaceEnlisted",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -282,6 +283,12 @@ export default {
         this.account && this.account.toLowerCase() === this.slotData?.account
       );
     },
+    raceName() {
+      return RACE_DESCRIPTION[Number(this.$route.params.raceId)];
+    },
+    isEnlistedWithAnotherRace() {
+      return this.getRaceEnlisted(this.$route.params.raceId);
+    },
   },
   methods: {
     ...mapMutations({
@@ -311,7 +318,7 @@ export default {
           Number(this.$route.params.raceId) === 4
             ? "The Corporation"
             : "The Degenerate";
-        const raceName = RACE_DESCRIPTION[this.$route.params.raceId];
+        const raceName = RACE_DESCRIPTION[Number(this.$route.params.raceId)];
         const warId = this.$route.params.contractWar;
         await this.enlist({
           warId: this.$route.params.contractWar,
@@ -417,6 +424,10 @@ export default {
   line-height: 1.3;
   white-space: nowrap;
 }
+.small-text {
+  @extend .info-text;
+  font-size: 12px;
+}
 .enlistment-resume {
   width: 100%;
 }
@@ -451,5 +462,8 @@ export default {
 }
 .text-yellow {
   color: yellow;
+}
+.slot-info-container {
+  min-height: 56px;
 }
 </style>

@@ -11,20 +11,6 @@ export default {
         const weaponId = TIER_WEAPONS[tier];
         return state.weapons.find(w => w.id === weaponId);
     },
-    totalStakedForce: (state, getters) => (race) => {
-        if (!race) {
-            return 0;
-        }
-        const total = getters.byRace(race).reduce((total, troop) => {
-            let strength = troop.strength * troop.amount;
-            let defense = troop.defense * troop.amount;
-            let weapon = getters.getWeaponByTier(troop.tier);
-            strength += weapon.strength * troop.weaponAmount
-            defense += weapon.defense * troop.weaponAmount
-            return total += strength + defense;
-        }, 0);
-        return total;
-    },
     totalStakedWeapon: state => (tier) => {
         if (!tier) {
             return 0;

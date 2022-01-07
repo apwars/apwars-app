@@ -76,9 +76,14 @@ export default {
   },
   async fetchUserWallet({state, commit}) {
     commit('setLoadingBalances', true);
-    const controller = new WalletController();
-    const w = await controller.wallets(state.account);
-    commit('setBalances', w.balances);
-    commit('setLoadingBalances', false);
+    try {
+      const controller = new WalletController();
+      const w = await controller.wallets(state.account);
+      commit('setBalances', w.balances);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      commit('setLoadingBalances', false);
+    }
   }
 };

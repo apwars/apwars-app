@@ -9,12 +9,12 @@ export default {
       commit("setLoading", true);
       const controller = new WarsController();
       const war = await controller.getOne(warId);
-      await dispatch("getFullBoard", warId);
       commit("setWar", war);
+      await dispatch("getFullBoard", warId);
     } catch (error) {
-      console.error(error);
+       console.error(error);
     } finally {
-      commit("setLoading", false);
+       commit("setLoading", false);
     }
   },
   async getFullBoard({ state, dispatch }, warId) {

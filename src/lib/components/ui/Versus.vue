@@ -13,7 +13,7 @@
       <div class="corp" :style="`--corp:${getPercent(corpForce)}%`">
         <div class="standart">
           <img class="faction-icon left" src="/images/icons/corp.png" />
-          <div class="crown" v-show="corpForce >= degenForce">
+          <div class="crown" v-show="corpForce > 0 && corpForce >= degenForce">
             <v-img src="/images/icons/crown.png" />
           </div>
         </div>
@@ -30,7 +30,7 @@
       <div class="degen" :style="`--degen:${getPercent(degenForce)}%`">
         <div class="standart">
           <img class="faction-icon right" src="/images/icons/degen.png" />
-          <div class="crown" v-show="degenForce > corpForce">
+          <div class="crown" v-show="degenForce > 0 && degenForce > corpForce">
             <v-img src="/images/icons/crown.png" />
           </div>
         </div>

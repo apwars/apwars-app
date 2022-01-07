@@ -34,50 +34,70 @@
                 <div class="enlist-title">
                   {{ troop.displayName }}
                 </div>
-                <v-text-field
-                  outlined
-                  v-bind="currencyConfig"
-                  v-model="stakedTroop"
-                  :error="stakedTroop > troopBalance"
-                  readonly
-                />
-                <div class="enlist-title">
-                  {{ weapon.title }}
+                <template v-if="!isEnlistedWithAnotherRace">
+                  <v-text-field
+                    outlined
+                    v-bind="currencyConfig"
+                    v-model="stakedTroop"
+                    :error="stakedTroop > troopBalance"
+                    readonly
+                  />
+
+                  <div class="enlist-title">
+                    {{ weapon.title }}
+                  </div>
+                  <v-currency-field
+                    color="#FFF"
+                    outlined
+                    :hint="`Available: ${weaponBalance - totalStakedWeapon}`"
+                    persistent-hint
+                    v-bind="currencyConfig"
+                    v-model="stakedWeapon"
+                    :max="maxPossibleWeaponStake"
+                    :error="stakedWeapon > stakedTroop"
+                  >
+                    <template v-slot:append>
+                      <div class="d-flex align-center">
+                        /{{ maxPossibleWeaponStake }}
+                        <v-btn
+                          class="ml-1"
+                          rounded
+                          small
+                          @click="stakeMaxWeapon"
+                          :disabled="!maxPossibleWeaponStake"
+                        >
+                          MAX
+                        </v-btn>
+                      </div>
+                    </template>
+                  </v-currency-field>
+                  <div class="amount-error" v-if="stakedTroop > troopBalance">
+                    You don't have the amount of {{ troop.war.stakeMin }}
+                    {{ troop.name }} to fill the formation. How about acquiring
+                    some more?
+                  </div>
+                </template>
+                <div class="text-alert" v-else>
+                  You already enlisted with another race at this war, so you are
+                  in readonly mode.
                 </div>
-                <v-currency-field
-                  color="#FFF"
-                  outlined
-                  :hint="`Available: ${weaponBalance - totalStakedWeapon}`"
-                  persistent-hint
-                  v-bind="currencyConfig"
-                  v-model="stakedWeapon"
-                  :max="maxPossibleWeaponStake"
-                  :error="stakedWeapon > stakedTroop"
-                  :disabled="!stakedTroop || !weaponBalance"
-                >
-                  <template v-slot:append>
-                    <div class="d-flex align-center">
-                      /{{ maxPossibleWeaponStake }}
-                      <v-btn
-                        class="ml-1"
-                        rounded
-                        small
-                        @click="stakeMaxWeapon"
-                        :disabled="!maxPossibleWeaponStake"
-                      >
-                        MAX
-                      </v-btn>
-                    </div>
-                  </template>
-                </v-currency-field>
-              </div>
-              <div class="amount-error" v-if="stakedTroop > troopBalance">
-                You don't have the amount of {{ troop.war.stakeMin }}
-                {{ troop.name }} to fill the formation. How about acquiring some
-                more?
               </div>
             </div>
-            <div class="status-container">
+            <div class="amount-container">
+              <div class="amount-title">
+                Units you have:
+              </div>
+              <v-skeleton-loader type="text, button" v-if="isLoadingBalances" />
+              <div class="amount" v-else>
+                <Amount
+                  :amount="troopBalance"
+                  :symbol="troop.name"
+                  compact
+                  formatted
+                />
+              </div>
+            </div>
+            <div class="status-container mt-2">
               <div class="troop-status mr-2">
                 <div class="status-icon">
                   <img src="/images/icons/attack.png" alt="Attack points" />
@@ -93,38 +113,6 @@
                 <div class="force-text">
                   {{ troop.defense }}
                 </div>
-              </div>
-            </div>
-            <div class="price-container">
-              <div class="price-amount d-flex align-center">
-                <img
-                  src="/images/wgold.png"
-                  width="48"
-                  height="48"
-                  alt="wGOLD"
-                />
-                {{ troop.price }} wGOLD
-              </div>
-              <div clas="btn-buy">
-                <Button
-                  type="wprimary"
-                  text="Buy Troops"
-                  :handleClick="openBuy"
-                />
-              </div>
-            </div>
-            <div class="amount-container">
-              <div class="amount-title">
-                Units you have:
-              </div>
-              <v-skeleton-loader type="text, button" v-if="isLoadingBalances" />
-              <div class="amount" v-else>
-                <Amount
-                  :amount="troopBalance"
-                  :symbol="troop.name"
-                  compact
-                  formatted
-                />
               </div>
             </div>
           </v-col>
@@ -162,23 +150,27 @@
             </div>
           </v-col>
           <v-col md="4">
-            <div class="enlistment-title d-flex">
-              <img
-                class="mr-1"
-                height="32"
-                width="32"
-                src="/images/icons/battle-shield.png"
-                alt="Enlistment resume"
-              />
-              Select your formation
-            </div>
-            <v-select
-              :items="formationOptions"
-              label="Select"
-              single-line
-              :value="formation"
-              @change="handleFormationChange"
-            ></v-select>
+            <template v-if="!isEnlistedWithAnotherRace">
+              <div class="enlistment-title d-flex">
+                <img
+                  class="mr-1"
+                  height="32"
+                  width="32"
+                  src="/images/icons/battle-shield.png"
+                  alt="Enlistment resume"
+                />
+                Select your formation
+              </div>
+              <v-select
+                :items="formationOptions"
+                label="Select"
+                single-line
+                :value="formation"
+                @change="handleFormationChange"
+                :loading="isLoadingWar || isLoadingBalances"
+                :disabled="isLoadingWar || isLoadingBalances"
+              ></v-select>
+            </template>
             <div class="troop-list mt-2">
               <div
                 class="troop-status mb-1"
@@ -195,11 +187,28 @@
                   />
                 </div>
                 <div class="unit-info">
-                  <div :class="['unit-name', 'mb-1', unit.amount > getTroopBalance(unit.name) ? 'error-color' : '']">
+                  <div
+                    :class="[
+                      'unit-name',
+                      'mb-1',
+                      unit.amount > getTroopBalance(unit.name)
+                        ? 'error-color'
+                        : '',
+                    ]"
+                  >
                     {{ unit.displayName }}
                   </div>
                   <div class="amount">
-                    <span :class="['d-flex', 'align-end', unit.amount > getTroopBalance(unit.name) ? 'error-color' : '']" v-if="unit.amount">
+                    <span
+                      :class="[
+                        'd-flex',
+                        'align-end',
+                        unit.amount > getTroopBalance(unit.name)
+                          ? 'error-color'
+                          : '',
+                      ]"
+                      v-if="unit.amount"
+                    >
                       <TripleIcon class="mr-1" :name="unit.name" size="16px" />
                       <Amount :amount="unit.amount" decimals="0" formatted />
                     </span>
@@ -222,31 +231,21 @@
                   </div>
                 </div>
               </div>
-              <div class="total-force mb-1">
-                Power Units:
-                <span class="amount">{{ totalStakedForce(troop.race) }}</span>
-              </div>
               <Button
+                class="mt-1"
                 type="wprimary"
-                text="Choose a slot"
+                :text="userEnlistedRace ? `View slots (${totalEnlistment }/${totalSlots})` : `Choose a slot (${totalEnlistment }/${totalSlots})`"
                 isBlock
                 :handleClick="goToMonsterBattle"
-                :disabled="!formation || !isEnlistmentValid()"
+                :disabled="
+                  !userEnlistedRace && (!formation || !isEnlistmentValid())
+                "
               />
-              <div class="text-center mt-1" v-if="formation && !isEnlistmentValid()">Please, check your troops balance to enlist.</div>
-              <Progress
-                class="mt-2"
-                :value="totalEnlistment"
-                :maxScale="totalSlots"
-                color1="#346568"
-                color2="#1A3436"
-                noText
-              />
-              <div class="slots-info d-flex justify-center">
-                {{ totalEnlistment }}/{{ totalSlots }}
-              </div>
-              <div class="slots-description d-flex justify-center">
-                Fullfiled Slots
+              <div
+                class="text-center mt-1"
+                v-if="formation && !isEnlistmentValid()"
+              >
+                Please, check your troops balance to enlist.
               </div>
             </div>
           </v-col>
@@ -268,7 +267,6 @@ import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
 import TripleIcon from "@/lib/components/ui/TripleIcon";
 import ForceMeter from "@/lib/components/ui/ForceMeter";
-import Progress from "@/lib/components/ui/Progress";
 import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
@@ -279,7 +277,6 @@ export default {
     Button,
     TripleIcon,
     ForceMeter,
-    Progress,
     Amount,
   },
   computed: {
@@ -288,16 +285,18 @@ export default {
       currentEnlistment: (state) => state.enlistment.formation.raceId,
       isLoadingBalances: (state) => state.user.isLoadingBalances,
       balances: (state) => state.user.balances,
+      isLoadingWar: (state) => state.war.isLoading,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
       getByNameOrAddress: "enlistment/getByNameOrAddress",
       getWeaponByTier: "enlistment/getWeaponByTier",
       getTotalStakedWeapon: "enlistment/totalStakedWeapon",
-      totalStakedForce: "enlistment/totalStakedForce",
       maxStakeForce: "enlistment/maxStakeForce",
       account: "user/account",
       getRaceData: "war/getRaceData",
+      userEnlistedRace: "war/userEnlistedRace",
+      getRaceEnlisted: "war/getRaceEnlisted",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -415,6 +414,9 @@ export default {
     totalSlots() {
       return this.raceData?.data?.totalSlots || 0;
     },
+    isEnlistedWithAnotherRace() {
+      return this.getRaceEnlisted(this.$route.params.raceId);
+    },
 
     stakedTroop: {
       get() {
@@ -457,7 +459,6 @@ export default {
     ...mapActions({
       getWar: "war/getWar",
       updateBalances: "enlistment/updateBalances",
-      updatePrices: "enlistment/updatePrices",
       stakeTroop: "enlistment/stakeTroop",
       stakeWeapon: "enlistment/stakeWeapon",
       updateWeaponsBalance: "enlistment/updateWeaponsBalance",
@@ -516,16 +517,15 @@ export default {
       let isValid = true;
       for (let unit of this.unitsFromRace) {
         if (unit.amount > this.getTroopBalance(unit.name)) {
-          isValid = false; 
+          isValid = false;
         }
       }
       return isValid;
     },
     async fetchData() {
-      if (!this.war && !this.isLoadingWar){
+      if (this.account && !this.war && !this.isLoadingWar) {
         await this.getWar(this.$route.params.contractWar);
         await this.fetchUserWallet(this.account);
-        await this.updatePrices();
       }
     },
   },
@@ -607,7 +607,6 @@ export default {
 }
 
 .status-container {
-  margin-top: 42px;
   display: flex;
   flex-direction: column;
   @media screen and (min-width: 425px) {
@@ -695,19 +694,6 @@ export default {
   }
 }
 
-.price-container {
-  margin-top: 21px;
-  display: flex;
-}
-
-.price-amount,
-.btn-buy {
-  width: 50%;
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 24px;
-}
-
 .unit-name {
   font-weight: bold;
   font-size: 14px;
@@ -769,18 +755,6 @@ export default {
   }
 }
 
-.slots-info {
-  font-weight: bold;
-  font-size: 22px;
-  line-height: 29px;
-}
-
-.slots-description {
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 19px;
-}
-
 .force-text {
   font-size: 32px;
   font-weight: bold;
@@ -791,6 +765,11 @@ export default {
 }
 .amount-error {
   @extend .error-color;
+  font-size: 12px;
+}
+
+.text-alert {
+  color: yellow;
   font-size: 12px;
 }
 

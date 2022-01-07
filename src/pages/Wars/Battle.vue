@@ -230,7 +230,7 @@ export default {
     },
     isWarFinished() {
       return this.war.status === 'finished';
-    }
+    },
   },
   methods: {
     ...mapMutations({
@@ -253,7 +253,7 @@ export default {
         .focus();
     },
     async fetchData() {
-      if (!this.war && !this.isLoadingWar){
+      if (this.account && !this.war && !this.isLoadingWar){
         await this.getWar(this.$route.params.contractWar);
       }
     },

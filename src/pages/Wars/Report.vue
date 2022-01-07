@@ -162,7 +162,7 @@
             </div>
             <div class="d-flex align-items-center justify-center mb-1">
               <div class="reward-description text-center pr-2">
-                Enlistment reward drop
+                Monster Prize Pool
               </div>
               <div class="treasure-progress">
                 <div class="text">
