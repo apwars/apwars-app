@@ -57,10 +57,18 @@
               <Button
                 v-if="!userEnlistedRace"
                 type="wprimary"
-                text="Enlist"
                 :handleClick="handleEnlistment"
-                :disabled="!formation"
-              />
+                :disabled="!formation || isLoadingEnlistment"
+              >
+                Enlist
+                <v-progress-circular
+                  class="ml-1"
+                  indeterminate
+                  size="16"
+                  width="2"
+                  v-if="isLoadingEnlistment"
+                />
+              </Button>
               <Button
                 v-else
                 type="wsecondary"
@@ -73,16 +81,18 @@
             <v-col cols="12">
               <div class="slot-info-container">
                 <template v-if="selectedSlot">
-                <div class="monster-name">
-                  Enlistment at Slot {{ selectedSlot.y }},
-                  {{ selectedSlot.x }}
-                </div>
-                <div class="info-text mt-1" v-if="slotData">
-                  Address: {{ slotData.account }}
-                  <span v-if="isOwner" class="text-yellow">(YOU)</span>
-                </div>
-                <div class="info-text mt-1" v-else>This slot is available!</div>
-              </template>
+                  <div class="monster-name">
+                    Enlistment at Slot {{ selectedSlot.y }},
+                    {{ selectedSlot.x }}
+                  </div>
+                  <div class="info-text mt-1" v-if="slotData">
+                    Address: {{ slotData.account }}
+                    <span v-if="isOwner" class="text-yellow">(YOU)</span>
+                  </div>
+                  <div class="info-text mt-1" v-else>
+                    This slot is available!
+                  </div>
+                </template>
               </div>
             </v-col>
           </v-row>
@@ -104,12 +114,7 @@
                 <div class="info-text mb-1">
                   {{ unit.displayName }}
                 </div>
-                <v-skeleton-loader
-                  v-if="isLoadingEnlistment"
-                  width="100%"
-                  type="text, text"
-                />
-                <template v-else>
+                <template>
                   <div class="info-text">
                     <span v-if="isOwner">My </span> Units
                     <Amount
@@ -140,12 +145,7 @@
                 <div class="info-text mb-1">
                   {{ weapon.title }}
                 </div>
-                <v-skeleton-loader
-                  v-if="isLoadingEnlistment"
-                  width="100%"
-                  type="text, text"
-                />
-                <template v-else>
+                <template>
                   <div class="info-text">
                     <span v-if="isOwner">My </span> Qty:
                     <Amount
@@ -313,6 +313,7 @@ export default {
     },
     async handleEnlistment() {
       try {
+        this.isLoadingEnlistment = true;
         const faction =
           Number(this.$route.params.raceId) === 1 ||
           Number(this.$route.params.raceId) === 4
@@ -331,6 +332,8 @@ export default {
       } catch (error) {
         ToastSnackbar.error(error.code);
         console.error(error);
+      } finally {
+        this.isLoadingEnlistment = false;
       }
     },
     goToReport() {

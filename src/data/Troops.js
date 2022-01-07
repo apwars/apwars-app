@@ -18,10 +18,7 @@ export const HUMANS = [
     image: "/images/troops/wWARRIOR.png",
     strength: 2,
     defense: 4,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         name: "Simple Shield",
@@ -72,10 +69,7 @@ export const HUMANS = [
     image: "/images/troops/wARCHER.png",
     strength: 5,
     defense: 1,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
   },
   {
     id: 2,
@@ -94,13 +88,9 @@ export const HUMANS = [
       "97": "0x84866c7C2c490242ae37C9d73de588203B93e0B2",
     },
     image: "/images/troops/wARMOURED-WARRIOR.png",
-    strength: 0,
-    defense: 0,
-    weaponId: 4,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    strength: 15,
+    defense: 15,
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         name: "Simple Potion",
@@ -149,12 +139,9 @@ export const HUMANS = [
       "97": "0x9DB33bFDBCE63aC62717950ACea4cf030BDCFD92",
     },
     image: "/images/troops/wCROSSBOWMAN.png",
-    strength: 0,
-    defense: 0,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    strength: 25,
+    defense: 5,
+    improvementFactor: 0,
     combinators: {
       trainingCenter: {
         name: "wHORSEMAN",
@@ -201,13 +188,9 @@ export const HUMANS = [
       "97": "0x4F1580e353c16F05f234D2718Dd12d3f7B44a21d",
     },
     image: "/images/troops/wWIZARD.png",
-    strength: 0,
-    defense: 0,
-    weaponId: 6,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    strength: 70,
+    defense: 20,
+    improvementFactor: 0.1,
   },
   {
     id: 15,
@@ -228,10 +211,7 @@ export const HUMANS = [
     image: "/images/troops/wHORSEMAN.png",
     strength: 150,
     defense: 50,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         name: "Simple Spear",
@@ -285,10 +265,7 @@ export const ORCS = [
     image: "/images/icons/coins/wGRUNT.png",
     strength: 2,
     defense: 4,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         name: "Simple Shield",
@@ -339,10 +316,7 @@ export const ORCS = [
     image: "/images/troops/wORC-ARCHER.png",
     strength: 5,
     defense: 1,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
   },
   {
     id: 7,
@@ -361,12 +335,9 @@ export const ORCS = [
       "97": "0xC2d75018Cd8c2e87794d5839B80c35a09EeeA1BB",
     },
     image: "/images/troops/wARMOURED-GRUNT.png",
-    strength: 0,
-    defense: 0,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    strength: 15,
+    defense: 15,
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         name: "Simple Sword",
@@ -415,12 +386,9 @@ export const ORCS = [
       "97": "0x7b58Fc38F4EcD3f14F0189307881E63d79490A07",
     },
     image: "/images/troops/wPIKE-ORC.png",
-    strength: 0,
-    defense: 0,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    strength: 15,
+    defense: 15,
+    improvementFactor: 0,
     combinators: {
       trainingCenter: {
         name: "wWARG",
@@ -467,12 +435,9 @@ export const ORCS = [
       "97": "0x433499f0c12E6aE0D1f2A90fB640AE1EBe1Df890",
     },
     image: "/images/troops/wSHAMAN.png",
-    strength: 0,
-    defense: 0,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    strength: 70,
+    defense: 20,
+    improvementFactor: 0.1,
     combinators: {
       warPreparation: {
         name: "Simple Potion",
@@ -523,10 +488,7 @@ export const ORCS = [
     image: "/images/icons/coins/wWARG.png",
     strength: 150,
     defense: 50,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         name: "Simple Spear",
@@ -578,12 +540,9 @@ export const UNDEADS = [
       "97": "0x7a355C7633d3d097F6ed009faC66727E7C4E0Dee",
     },
     image: "/images/icons/coins/wSKELETON-WARRIOR.png",
-    strength: 8,
-    defense: 2,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    strength: 3,
+    defense: 5,
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         combinatorAddress: {
@@ -632,10 +591,7 @@ export const UNDEADS = [
     image: "/images/troops/wHOUND.png",
     strength: 8,
     defense: 2,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
   },
   {
     id: 12,
@@ -656,10 +612,7 @@ export const UNDEADS = [
     image: "/images/troops/wUNDEAD-ARCHER.png",
     strength: 35,
     defense: 8,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         combinatorAddress: {
@@ -708,10 +661,7 @@ export const UNDEADS = [
     image: "/images/troops/wUNDEAD-PIKEMAN.png",
     strength: 22,
     defense: 22,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
     combinators: {
       trainingCenter: {
         name: "wDEATH-KNIGHT",
@@ -760,10 +710,7 @@ export const UNDEADS = [
     image: "/images/troops/wWITCH.png",
     strength: 70,
     defense: 20,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0.1,
     combinators: {
       warPreparation: {
         name: "Simple Potion",
@@ -813,12 +760,9 @@ export const UNDEADS = [
       "97": "0x2BCEb0E99B9Eb54540aE32F3d5278e19829466ae",
     },
     image: "/images/troops/wDEATH-KNIGHT.png",
-    strength: 150,
-    defense: 50,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    strength: 200,
+    defense: 60,
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         name: "Simple Spear",
@@ -872,10 +816,7 @@ export const ELVES = [
     image: "/images/troops/wPIKE-ELF.png",
     strength: 6,
     defense: 10,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         name: "Simple Shield",
@@ -926,10 +867,7 @@ export const ELVES = [
     image: "/images/troops/wELVEN-ARCHER.png",
     strength: 12,
     defense: 6,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
   },
   {
     id: 20,
@@ -950,10 +888,7 @@ export const ELVES = [
     image: "/images/troops/wARMOURED-ELF.png",
     strength: 25,
     defense: 25,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         name: "Simple Sword",
@@ -1002,12 +937,9 @@ export const ELVES = [
       "97": "0x30201b70c98479370b38903682eB39A4570644Ed",
     },
     image: "/images/troops/wBLADEMASTER.png",
-    strength: 25,
-    defense: 25,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    strength: 40,
+    defense: 10,
+    improvementFactor: 0,
     combinators: {
       trainingCenter: {
         name: "wELK-RIDER",
@@ -1057,10 +989,7 @@ export const ELVES = [
     image: "/images/troops/wFERAL-SPIRIT.png",
     strength: 70,
     defense: 20,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0.1,
     combinators: {
       warPreparation: {
         name: "Simple Potion",
@@ -1111,10 +1040,7 @@ export const ELVES = [
     image: "/images/troops/wELK-RIDER.png",
     strength: 250,
     defense: 90,
-    war: {
-      stakeMin: 100,
-      stakeLimit: 1000,
-    },
+    improvementFactor: 0,
     combinators: {
       warPreparation: {
         name: "Simple Spear",
