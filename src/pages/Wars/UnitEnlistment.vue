@@ -310,7 +310,6 @@ export default {
       getAllFromRace: "enlistment/byRace",
       getByNameOrAddress: "enlistment/getByNameOrAddress",
       getWeaponByTier: "enlistment/getWeaponByTier",
-      maxStakeForce: "enlistment/maxStakeForce",
       account: "user/account",
       getRaceData: "war/getRaceData",
       userEnlistedRace: "war/userEnlistedRace",

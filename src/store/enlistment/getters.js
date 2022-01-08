@@ -18,18 +18,4 @@ export default {
         const troops = state.troops.filter(w => w.tier === tier);
         return troops.reduce((total, troop) => total += troop.weaponAmount, 0);
     },
-    maxStakeForce: (state, getters) => (race) => {
-        if (!race) {
-            return 0;
-        }
-        const total = getters.byRace(race).reduce((total, troop) => {
-            let strength = troop.strength * troop.war.stakeLimit;
-            let defense = troop.defense * troop.war.stakeLimit;
-            let weapon = getters.getWeaponByTier(troop.tier);
-            strength += weapon.strength * weapon.war.stakeLimit;
-            defense += weapon.defense * weapon.war.stakeLimit;
-            return total += strength + defense;
-        }, 0);
-        return total;
-    }
 };

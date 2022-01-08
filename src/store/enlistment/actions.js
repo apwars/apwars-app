@@ -1,5 +1,3 @@
-import Troops from "@/lib/eth/Troops";
-import Collectibles from "@/lib/eth/Collectibles";
 import { RACES } from "@/data/Races";
 import { FORMATIONS, RACE_FORMATIONS, FORMATIONS_NAMES } from "@/data/Enlistment";
 import WarsController from "@/controller/WarsController";

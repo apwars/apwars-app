@@ -22,6 +22,15 @@ export default class WarsController {
     }
   }
 
+  getReport(warId, raceName, account) {
+    console.log(account)
+    try {
+      return this.base._get(`/wars/${warId}/${raceName}/report/${account}`);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   enlist(warId, faction, race, account, formation, gameItems = [], slot) {
     const enlistment = {
       faction,

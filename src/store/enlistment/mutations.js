@@ -8,13 +8,6 @@ export default {
       }
     });
   },
-  clearEnlistment(state) {
-    state.troops = state.troops.map((t) => {
-        return { ...t, amount: 0 };
-    });
-    state.formation = null;
-    state.raceId = null;
-  },
   setWeaponAmount(state, { troopName, amount }) {
     state.troops = state.troops.map(t => {
       if (t.name === troopName) {
@@ -27,5 +20,12 @@ export default {
   setFormation(state, { raceId, value }) {
     state.formation = value;
     state.raceId = raceId;
-  }
+  },
+  clearEnlistment(state) {
+    state.troops = state.troops.map((t) => {
+        return { ...t, amount: 0 };
+    });
+    state.formation = null;
+    state.raceId = null;
+  },
 };

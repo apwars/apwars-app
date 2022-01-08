@@ -19,10 +19,11 @@
           </v-col>
           <v-col col="12" sm="4" offset-sm="4">
             <Button
-                  type="wprimary"
-                  icon="swords"
-                  text="Claim prizes and restore survivors"
-                />
+              v-if="war.status === 'finished'"
+              type="wprimary"
+              icon="swords"
+              text="Claim prizes and restore survivors"
+            />
           </v-col>
         </v-row>
 
@@ -38,7 +39,7 @@
               class="race-image"
               src="/images/troops/wwizard-portrait.png"
               alt="Humans"
-              @click="selectedRace = 1"
+              @click="() => handleRaceChange(1)"
             >
             </v-img>
           </div>
@@ -54,7 +55,7 @@
               class="race-image"
               src="/images/troops/wferal-spirit-portrait.png"
               alt="Elves"
-              @click="selectedRace = 4"
+              @click="() => handleRaceChange(4)"
             >
             </v-img>
           </div>
@@ -72,7 +73,7 @@
               class="race-image invert-image"
               src="/images/troops/wshaman-portrait.png"
               alt="Orcs"
-              @click="selectedRace = 2"
+              @click="() => handleRaceChange(2)"
             >
             </v-img>
           </div>
@@ -89,152 +90,189 @@
               class="race-image invert-image"
               src="/images/troops/wwitch-portrait.png"
               alt="Undead"
-              @click="selectedRace = 3"
+              @click="() => handleRaceChange(3)"
             >
             </v-img>
           </div>
         </div>
 
-        <v-row>
-          <v-col cols="12" md="8">
-            <v-row>
-              <v-col
-                v-for="unit in troopList"
-                :key="unit.name"
-                cols="12"
-                sm="6"
-                md="6"
-                class="d-flex px-0"
-              >
-                <div class="image-container">
-                  <img :src="`/images/troops/${unit.name.toLowerCase()}-portrait.png`" :alt="unit.name" />
-                </div>
+        <v-row v-if="isLoading">
+          <v-col>
+            <v-skeleton-loader type="image" height="112" />
+          </v-col>
+          <v-col>
+            <v-skeleton-loader type="paragraph" height="112" />
+          </v-col>
+          <v-col>
+            <v-skeleton-loader type="image" height="112" />
+          </v-col>
+          <v-col>
+            <v-skeleton-loader type="paragraph" height="112" />
+          </v-col>
+        </v-row>
+        <template v-else-if="hasSoldiers">
+          <v-row>
+            <v-col cols="12" md="8">
+              <v-row>
+                <v-col
+                  v-for="unit in troopList"
+                  :key="unit.name"
+                  cols="12"
+                  sm="6"
+                  md="6"
+                  class="d-flex px-0"
+                >
+                  <div class="image-container">
+                    <img
+                      :src="
+                        `/images/troops/${unit.name.toLowerCase()}-portrait.png`
+                      "
+                      :alt="unit.name"
+                    />
+                  </div>
 
-                <div class="ml-1">
-                  <span
-                    class="d-block unit-name"
-                    >{{ unit.displayName }}</span
-                  >
-                  <span class="d-block mt-1">Enlisted units: 105k</span>
-                  <span class="d-block">Deads units: 80k</span>
-                  <span class="d-block mb-2">Survivors: 25k</span>
-                  <span class="d-block" style="color: #FFB800;"
-                    >Global Dead Units: 80k</span
-                  >
-                  <span class="d-block" style="color: #FFB800;"
-                    >Global Survivors: 25k</span
-                  >
-                </div>
-              </v-col>
-            </v-row>
+                  <div class="ml-1">
+                    <span class="d-block unit-name">{{
+                      unit.displayName
+                    }}</span>
+                    <template v-if="report.soldiers[unit.name].enlisted">
+                      <span class="d-block mt-1"
+                        >Enlisted units:
+                        <Amount
+                          :amount="report.soldiers[unit.name].enlisted"
+                          compact
+                          formatted
+                      /></span>
+                      <span class="d-block"
+                        >Deads units:
+                        <Amount
+                          :amount="report.soldiers[unit.name].dead"
+                          compact
+                          formatted
+                      /></span>
+                      <span class="d-block mb-2"
+                        >Survivors:
+                        <Amount
+                          :amount="report.soldiers[unit.name].survivors"
+                          compact
+                          formatted
+                      /></span>
+                    </template>
+                    <span v-else>Not staked</span>
+                    <span class="d-block" style="color: #FFB800;"
+                      >Global Dead Units:
+                      <Amount
+                        :amount="report.soldiers[unit.name].globalReport.dead"
+                        compact
+                        formatted
+                    /></span>
+                    <span class="d-block" style="color: #FFB800;"
+                      >Global Survivors:
+                      <Amount
+                        :amount="
+                          report.soldiers[unit.name].globalReport.survivors
+                        "
+                        compact
+                        formatted
+                    /></span>
+                  </div>
+                </v-col>
+              </v-row>
 
-            <v-row class="pl-3">
-              <v-col
-                v-for="weapon in weapons"
-                :key="weapon.name"
-                cols="6"
-                md="3"
-                class="px-0"
-              >
-                <div class="d-flex">
-                  <img
-                    :width="$vuetify.breakpoint.xs ? '50' : '60'"
-                    :height="$vuetify.breakpoint.xs ? '50' : '60'"
-                    :src="`/images/weapons/${weapon.icon}.png`"
-                  />
-                  <div style="font-size: 14px">
-                    <span class="d-block bold">{{ weapon.title }}</span>
-                    <span class="d-block">Global: 1,5M</span>
-                    <span class="d-block">My Qty: 10,4K</span>
+              <v-row class="pl-3">
+                <v-col
+                  v-for="weapon in weapons"
+                  :key="weapon.name"
+                  cols="6"
+                  md="3"
+                  class="px-0"
+                >
+                  <div class="d-flex">
+                    <img
+                      :width="$vuetify.breakpoint.xs ? '50' : '60'"
+                      :height="$vuetify.breakpoint.xs ? '50' : '60'"
+                      :src="`/images/weapons/${weapon.icon}.png`"
+                    />
+                    <div style="font-size: 14px">
+                      <span class="d-block bold">{{ weapon.title }}</span>
+                      <span class="d-block">Global: <Amount
+                        :amount="
+                          report.gameItems.globalReport.find(w => w.id === weapon.id).amount
+                        "
+                        compact
+                        formatted
+                    /></span>
+                      <span class="d-block">My Qty: <Amount
+                        :amount="
+                          report.gameItems.accountReport.find(w => w.id === weapon.id).amount
+                        "
+                        compact
+                        formatted
+                    /></span>
+                    </div>
+                  </div>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-col class="d-flex flex-column align-center" cols="12" md="4">
+              <div class="monster-viewport">
+                <v-img
+                  :src="`/images/monsters/${monsterData.id}.webp`"
+                  :lazy-src="`/images/monsters/${monsterData.id}.webp`"
+                  :alt="monsterData.name"
+                  :class="[monsterData.id === 4 ? 'invert-image' : '']"
+                />
+              </div>
+              <div class="monster-name text-center mb-2">
+                {{ monsterData.name }}
+              </div>
+              <div class="d-flex align-items-center justify-center mb-1">
+                <div class="reward-description text-center pr-2">
+                  Monster Prize Pool
+                </div>
+                <div class="treasure-progress">
+                  <div class="text">
+                    <Amount :amount="40000" compact formatted />
+                  </div>
+                  <div class="treasure">
+                    <v-img src="/images/battle/treasure.png" />
                   </div>
                 </div>
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col
-            class="d-flex flex-column align-center"
-            cols="12"
-            md="4"
-          >
-            <div class="monster-viewport">
-            <v-img
-              :src="`/images/monsters/${monsterData.id}.webp`"
-              :lazy-src="`/images/monsters/${monsterData.id}.webp`"
-              :alt="monsterData.name"
-              :class="[monsterData.id === 4 ? 'invert-image' : '']"
-            />
-            </div>
-            <div class="monster-name text-center mb-2">
-                {{ monsterData.name }}
-            </div>
-            <div class="d-flex align-items-center justify-center mb-1">
-              <div class="reward-description text-center pr-2">
-                Monster Prize Pool
               </div>
-              <div class="treasure-progress">
-                <div class="text">
-                  <Amount :amount="40000" compact formatted />
-                </div>
-                <div class="treasure">
-                  <v-img src="/images/battle/treasure.png" />
+              <Button
+                type="wprimary"
+                text="Go to the Monster Battle"
+                :handleClick="goToMonsterBattle"
+              />
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <div class="rewards-title">Rewarded spots</div>
+              <div class="rewards-container mt-2">
+                <div class="spot-info" v-for="reward in report.rewards" :key="`${reward.spot.x}-${reward.spot.y}`">
+                  <div class="unit-name">{{ reward.spot.x }}, {{ reward.spot.y }}</div>
+                  <div class="winner">Winner: {{ reward.winner }} {{ account.toLowerCase === reward.winner ? '(YOU)' : ''}}</div>
                 </div>
               </div>
-            </div>
-            <Button type="wprimary" text="Go to the Monster Battle" :handleClick="goToMonsterBattle" />
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <div class="rewards-title">Rewarded spots</div>
-            <div class="rewards-container mt-2">
-              <div class="spot-info">
-              <div class="unit-name">0,5</div>
-              <Reward :rewardId="39" :amount="25" />
-              <Reward :rewardId="49" :amount="1000" />
-              </div>
-            </div>
-            <div class="rewards-container mt-2">
-              <div class="spot-info">
-              <div class="unit-name">3,8</div>
-              <Reward :rewardId="39" :amount="12" />
-              <Reward :rewardId="49" :amount="500" />
-              </div>
-            </div>
-            <div class="rewards-container mt-2">
-              <div class="spot-info">
-              <div class="unit-name">4,16</div>
-              <Reward :rewardId="36" :amount="8" />
-              <Reward :rewardId="50" :amount="755" />
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <v-container v-else-if="!isLoading && !isEnlistment">
-        <v-row>
-          <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h4 text-md-h3 ma-0 ma-md-6">
-              Enlistment period ended
-            </h3>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <v-container v-else>
-        <v-row>
-          <v-col cols="12" class="d-flex justify-center">
-            <h3 class="text-h3">Loading...</h3>
-          </v-col>
-        </v-row>
+            </v-col>
+          </v-row>
+        </template>
+        <div class="no-data" v-else-if="isWarNotStarted">
+          This war did not started yet, come back later.
+        </div>
+        <div class="no-data" v-else>
+          There is no data for this race yet, come back later.
+        </div>
       </v-container>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapState } from "vuex";
+import WarsController from "@/controller/WarsController";
 
 import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
@@ -242,18 +280,11 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
-import TableWarReport from "@/lib/components/ui/Utils/Tables/TableWarReport";
-import TableWarReportV2 from "@/lib/components/ui/Utils/Tables/TableWarReportV2";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Reward from "@/lib/components/ui/Reward";
 
-import { getWars } from "@/data/Wars";
-import { getTroops } from "@/data/Troops";
-import { ENLISTMENT_OPTIONS } from "@/data/Races";
+import { RACE_DESCRIPTION, ENLISTMENT_OPTIONS } from "@/data/Races";
 import { MONSTERS } from "@/data/Monsters";
-import { getWeapons } from "@/data/Collectibles/Weapons";
-
-import WarMachine from "@/lib/eth/WarMachine";
 
 export default {
   name: "Enlistment",
@@ -264,15 +295,13 @@ export default {
     wButton,
     Countdown,
     ListUnits,
-    TableWarReport,
-    TableWarReportV2,
     Amount,
-    Reward
+    Reward,
   },
 
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
       contractWar: this.$route.params.contractWar,
       globalTroops: [],
       isEnlistment: false,
@@ -286,6 +315,7 @@ export default {
       weapons: [],
       monsterToView: [{ id: "" }, { name: "" }],
       selectedRace: 1,
+      report: null,
     };
   },
 
@@ -297,14 +327,17 @@ export default {
     if (!this.isConnected) {
       return;
     }
-    this.$refs.raceSelect.scrollLeft = (this.$refs.raceSelect.scrollWidth/2) - 125;
-    this.initData();
+    this.$refs.raceSelect.scrollLeft =
+      this.$refs.raceSelect.scrollWidth / 2 - 125;
     this.loadData();
   },
 
   computed: {
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
+    }),
+    ...mapState({
+      war: (state) => state.war,
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -347,11 +380,20 @@ export default {
       }
       return MONSTERS.find((m) => m.id === this.enlistmentOptions.monsterId);
     },
+
+    hasSoldiers() {
+      return (
+        this.report?.soldiers && Object.keys(this.report.soldiers).length > 0
+      );
+    },
+
+    isWarNotStarted() {
+      return this.war.status === "created";
+    },
   },
 
   watch: {
     isConnected() {
-      this.initData();
       this.loadData();
     },
 
@@ -370,57 +412,35 @@ export default {
       setHeader: "app/setMenuDisplay",
     }),
 
-    goToSwap() {
-      this.$router.push("/exchange");
-    },
-
-    async initData() {
-      try {
-        this.warMachine = new WarMachine(this.contractWar, this.networkInfo.id);
-
-        this.isWar = await getWars(this.networkInfo.id !== "56").find(
-          (war) => war.contractAddress[this.networkInfo.id] === this.contractWar
-        );
-
-        this.isCountdown =
-          this.isWar.countdown.enlistment > new Date().getTime();
-        if (this.isCountdown) {
-          this.countdownTime =
-            this.isWar.countdown.enlistment - new Date().getTime();
-        } else {
-          this.countdownTimeEnd =
-            this.isWar.countdown.round1 - new Date().getTime();
-        }
-        if (!this.isWar) {
-          this.router.push("/wars");
-        }
-
-        this.globalTroops = getTroops();
-      } catch (e) {
-        console.log(e);
-      }
-    },
-
     async loadData() {
+      if (!this.account || this.isLoading) {
+        return;
+      }
       try {
-        const weapons = await getWeapons();
-        this.weapons = weapons;
-
-        if (this.warMachine.isLoading) {
-          return;
-        }
-        this.isEnlistment = await this.warMachine.activeEnlistment();
-        if (!this.isEnlistment) {
-          setTimeout(() => {
-            //this.$router.push(`/wars/${this.contractWar}/round-1`);
-          }, 3000);
-          return "";
-        }
-        // this.isEnlistment = false;
+        this.isLoading = true;
+        const controller = new WarsController();
+        const warId = this.$route.params.contractWar;
+        const raceName = RACE_DESCRIPTION[this.selectedRace];
+        const report = await controller.getReport(
+          warId,
+          raceName,
+          this.account
+        );
+        this.report = report;
       } catch (error) {
         console.log(error);
       } finally {
         this.isLoading = false;
+      }
+    },
+
+    async handleRaceChange(selectedRace) {
+      if (this.selectedRace === selectedRace) {
+        return;
+      }
+      this.selectedRace = selectedRace;
+      if (!this.isWarNotStarted) {
+        await this.loadData();
       }
     },
 
@@ -476,6 +496,11 @@ export default {
   display: none;
 }
 
+.no-data {
+  width: 100%;
+  text-align: center;
+}
+
 .stats {
   font-weight: bold;
   font-size: 28px;
@@ -515,7 +540,8 @@ export default {
   transition: transform 0.3s;
   transition: opacity 0.4s ease-in-out;
   opacity: 0.6;
-  &:hover,&.is-selected {
+  &:hover,
+  &.is-selected {
     filter: grayscale(0%);
     opacity: 1;
   }
@@ -583,7 +609,7 @@ export default {
   }
 }
 .unit-name {
-  color: #FFB800;
+  color: #ffb800;
   font-size: 18px;
   font-weight: bold;
 }

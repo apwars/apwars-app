@@ -12,7 +12,7 @@
           />
         </v-col>
       </v-row>
-      <BattleLoading v-if="isLoading" />
+      <BattleLoading v-if="isLoadingWar" />
       <v-row v-else-if="!war">
         <v-col>
           The war was not found
