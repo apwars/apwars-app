@@ -12,11 +12,7 @@
           />
         </v-col>
       </v-row>
-      <v-row v-if="isLoadingWar">
-        <v-col>
-          Loading...
-        </v-col>
-      </v-row>
+      <BattleLoading v-if="isLoading" />
       <v-row v-else-if="!war">
         <v-col>
           The war was not found
@@ -278,9 +274,10 @@ import FullBoard from "@/lib/components/ui/War/FullBoard";
 import Versus from "@/lib/components/ui/Versus";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
+import BattleLoading from "./BattleLoading";
 
 export default {
-  components: { Title, Button, Versus, FullBoard, Amount, Countdown },
+  components: { Title, Button, Versus, FullBoard, Amount, Countdown, BattleLoading },
   computed: {
     ...mapState({
       war: (state) => state.war.war,
