@@ -8,29 +8,8 @@ export default {
     stakeTroop({ commit }, { amount, troopId }) {
         commit('setAmount', { amount, troopId });
     },
-    stakeWeapon({ commit }, { troopId, amount }) {
-        commit('setWeaponAmount', { troopId, amount })
-    },
-    async updateBalances({ commit, state, rootState }) {
-        for (const troop of state.troops) {
-            const contract = new Troops(troop.contractAddress[rootState.user.networkInfo.id]);
-            const balance = Number(await contract.balanceOf(rootState.user.account))
-            commit('setBalance', { balance, troopId: troop.id });
-        }
-    },
-    async updatePrices({ commit, state, rootState }) {
-        for (const troop of state.troops) {
-            const contract = new Troops(troop.contractAddress[rootState.user.networkInfo.id]);
-            const price = Number(await contract.pricewGOLD(rootState.user.account))
-            commit('setPrice', { price, troopId: troop.id });
-        }
-    },
-    async updateWeaponsBalance({ commit, state, rootState }) {
-        for (const weapon of state.weapons) {
-            const contract = new Collectibles(weapon.contractAddress[rootState.user.networkInfo.id]);
-            const balance = Number(await contract.balanceOf(rootState.user.account, weapon.id));
-            commit('setWeaponsBalance', { balance, weaponId: weapon.id });
-        }
+    stakeWeapon({ commit }, { troopName, amount }) {
+        commit('setWeaponAmount', { troopName, amount })
     },
     async changeFormation({ commit, dispatch }, { raceId, value }) {
         const formationData = RACE_FORMATIONS[raceId][value];
@@ -63,7 +42,7 @@ export default {
 
             for (let troop of troops) {
                 if (troop.weaponAmount) {
-                    gameItems = gameItems.concat({ id: weapon.id, amount: troop.weaponAmount, troopId: troop.id });
+                    gameItems = gameItems.concat({ id: weapon.id, amount: troop.weaponAmount, troopId: troop.name });
                 }
             }
         }

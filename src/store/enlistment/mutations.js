@@ -15,32 +15,14 @@ export default {
     state.formation = null;
     state.raceId = null;
   },
-  setPrice(state, { price, troopId }) {
-    state.troops = state.troops.map((t) => {
-      if (t.id === troopId) {
-        return { ...t, price };
-      } else {
-        return t;
-      }
-    });
-  },
-  setWeaponAmount(state, { troopId, amount }) {
+  setWeaponAmount(state, { troopName, amount }) {
     state.troops = state.troops.map(t => {
-      if (t.id === troopId) {
+      if (t.name === troopName) {
         return ({... t, weaponAmount: amount }) 
       } else {
         return t
       }
     })
-  },
-  setWeaponsBalance(state, { weaponId, balance }) {
-    state.weapons = state.weapons.map((w) => {
-      if (w.id === weaponId) {
-        return { ...w, balance };
-      } else {
-        return w;
-      }
-    });
   },
   setFormation(state, { raceId, value }) {
     state.formation = value;

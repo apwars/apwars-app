@@ -41,6 +41,7 @@
                     v-model="stakedTroop"
                     :error="!validateAmount(stakedTroop, troopBalance)"
                     :disabled="isEnlistedWithRace"
+                    readonly
                   />
 
                   <div class="enlist-title">
@@ -53,17 +54,26 @@
                     persistent-hint
                     v-bind="currencyConfig"
                     v-model="stakedWeapon"
-                    :error="stakedWeapon > stakedTroop || !validateAmount(stakedWeapon, weaponBalance)"
+                    :error="
+                      stakedWeapon > stakedTroop ||
+                        !validateAmount(stakedWeapon, weaponBalance)
+                    "
                     :disabled="isEnlistedWithRace"
                   />
-                  <div class="amount-error" v-if="!validateAmount(stakedTroop, troopBalance)">
+                  <div
+                    class="amount-error"
+                    v-if="!validateAmount(stakedTroop, troopBalance)"
+                  >
                     - You don't have the amount of {{ stakedTroop }}
                     {{ troop.name }} to fill the formation. How about acquiring
                     some more?
                   </div>
-                  <div class="amount-error" v-if="!validateAmount(stakedWeapon, weaponBalance)">
-                    - You don't have the amount of {{ stakedWeapon }} {{ weapon.title }} to enlist. How about acquiring
-                    some more?
+                  <div
+                    class="amount-error"
+                    v-if="!validateAmount(stakedWeapon, weaponBalance)"
+                  >
+                    - You don't have the amount of {{ stakedWeapon }}
+                    {{ weapon.title }} to enlist. How about acquiring some more?
                   </div>
                   <div class="amount-error" v-if="stakedWeapon > stakedTroop">
                     - The weapon qty can't be greater than troops units.
@@ -161,7 +171,9 @@
                 :value="formation"
                 @change="handleFormationChange"
                 :loading="isLoadingWar || isLoadingBalances"
-                :disabled="isLoadingWar || isLoadingBalances || isEnlistedWithRace"
+                :disabled="
+                  isLoadingWar || isLoadingBalances || isEnlistedWithRace
+                "
               ></v-select>
             </template>
             <div class="troop-list mt-2">
@@ -180,12 +192,7 @@
                   />
                 </div>
                 <div class="unit-info">
-                  <div
-                    :class="[
-                      'unit-name',
-                      'mb-1',
-                    ]"
-                  >
+                  <div :class="['unit-name', 'mb-1']">
                     {{ unit.displayName }}
                   </div>
                   <div class="amount">
@@ -211,22 +218,41 @@
                   <div class="unit-name mb-1">
                     {{ getWeaponByTier(unit.tier).title }}
                   </div>
-                  <div :class="[!validateAmount(getTotalStakedWeapon(unit.tier), getWeaponBalance(getWeaponByTier(unit.tier).id))
+                  <div class="amount">
+                    <span
+                      :class="[
+                        'd-flex',
+                        'align-end',
+                        !validateAmount(
+                          getTotalStakedWeapon(unit.tier),
+                          getWeaponBalance(getWeaponByTier(unit.tier).id)
+                        )
                           ? 'error-color'
-                          : '',]" class="amount d-flex">
-                    <TripleIcon
-                      class="mr-1"
-                      :name="getWeaponByTier(unit.tier).icon"
-                      size="16px"
-                    />
-                    {{ unit.weaponAmount || "Not staked" }}
+                          : '',
+                      ]"
+                    >
+                      <TripleIcon
+                        class="mr-1"
+                        :name="getWeaponByTier(unit.tier).icon"
+                        size="16px"
+                      />
+                      <Amount
+                        :amount="unit.weaponAmount"
+                        decimals="0"
+                        formatted
+                      />
+                    </span>
                   </div>
                 </div>
               </div>
               <Button
                 class="mt-1"
                 type="wprimary"
-                :text="userEnlistedRace ? `View slots (${totalEnlistment }/${totalSlots})` : `Choose a slot (${totalEnlistment }/${totalSlots})`"
+                :text="
+                  userEnlistedRace
+                    ? `View slots (${totalEnlistment}/${totalSlots})`
+                    : `Choose a slot (${totalEnlistment}/${totalSlots})`
+                "
                 isBlock
                 :handleClick="goToMonsterBattle"
                 :disabled="
@@ -373,10 +399,17 @@ export default {
       return this.raceData?.data?.totalSlots || 0;
     },
     isEnlistedWithAnotherRace() {
-      return this.getRaceEnlisted && this.getRaceEnlisted !== RACE_DESCRIPTION[Number(this.$route.params.raceId)];
+      return (
+        this.getRaceEnlisted &&
+        this.getRaceEnlisted !==
+          RACE_DESCRIPTION[Number(this.$route.params.raceId)]
+      );
     },
     isEnlistedWithRace() {
-      return this.getRaceEnlisted === RACE_DESCRIPTION[Number(this.$route.params.raceId)];
+      return (
+        this.getRaceEnlisted ===
+        RACE_DESCRIPTION[Number(this.$route.params.raceId)]
+      );
     },
 
     stakedTroop: {
@@ -394,7 +427,7 @@ export default {
       },
       set(value) {
         this.stakeWeapon({
-          troopId: this.troop.id,
+          troopName: this.troop.name,
           amount: value,
         });
       },
@@ -419,10 +452,8 @@ export default {
   methods: {
     ...mapActions({
       getWar: "war/getWar",
-      updateBalances: "enlistment/updateBalances",
       stakeTroop: "enlistment/stakeTroop",
       stakeWeapon: "enlistment/stakeWeapon",
-      updateWeaponsBalance: "enlistment/updateWeaponsBalance",
       changeFormation: "enlistment/changeFormation",
       fetchUserWallet: "user/fetchUserWallet",
       clearEnlistment: "enlistment/clearEnlistment",
@@ -454,12 +485,6 @@ export default {
       }
       return this.unitsFromRace[position].name;
     },
-    stakeMaxWeapon() {
-      this.stakeWeapon({
-        amount: this.maxPossibleWeaponStake - this.totalStakedWeapon,
-        troopId: this.troop.id,
-      });
-    },
     openBuy() {
       window
         .open(
@@ -480,7 +505,13 @@ export default {
     isEnlistmentValid() {
       let isValid = true;
       for (let unit of this.unitsFromRace) {
-        if (!this.validateAmount(unit.amount, this.getTroopBalance(unit.name)) || !this.validateAmount(this.getTotalStakedWeapon(unit.tier), this.getWeaponBalance(this.getWeaponByTier(unit.tier).id))) {
+        if (
+          !this.validateAmount(unit.amount, this.getTroopBalance(unit.name)) ||
+          !this.validateAmount(
+            this.getTotalStakedWeapon(unit.tier),
+            this.getWeaponBalance(this.getWeaponByTier(unit.tier).id)
+          )
+        ) {
           isValid = false;
         }
       }
