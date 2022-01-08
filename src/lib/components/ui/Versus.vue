@@ -130,10 +130,10 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   font-weight: bold;
-  font-size: 24px;
-  line-height: 1.4;
+  font-size: 18px;
+  line-height: 1.2;
 }
 .versus-bar {
   width: 100%;
@@ -211,12 +211,12 @@ export default {
 }
 .prizes {
   width: 100%;
-  margin-top: 24px;
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 62px;
+  padding: 0 68px;
   @media screen and (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;

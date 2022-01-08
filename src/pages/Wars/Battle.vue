@@ -71,9 +71,9 @@
               :burnAmount="war.prizes.winner.locked"
           /></v-col>
         </v-row>
-        <v-row>
+        <v-row no-gutters>
           <v-col>
-            <div ref="board" class="race-board">
+            <div ref="board" class="race-board mt-2">
               <div class="board-info">
                 <div class="d-flex justify-space-between">
                   <div class="enlistment-resume d-flex">
@@ -84,7 +84,20 @@
                         width="32"
                       />
                       <div class="prize-info">
-                        {{ war.percentageConqueredPerSlot }}%
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Humans')
+                              .monsterPrizeAmount
+                          "
+                          compact
+                          formatted
+                        />
+                        <div class="prize-description">
+                          {{
+                            war.races.find((r) => r.name === "Humans")
+                              .monsterPrize
+                          }}
+                        </div>
                       </div>
                     </div>
                     <div class="brown-info mr-2">
@@ -127,9 +140,26 @@
                       </div>
                     </div>
                     <div class="prize-share ml-2">
-                      <img src="/images/battle/treasure.png" width="32" />
+                      <img
+                        class="right"
+                        src="/images/battle/treasure.png"
+                        width="32"
+                      />
                       <div class="prize-info">
-                        {{ war.percentageConqueredPerSlot }}%
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Orcs')
+                              .monsterPrizeAmount
+                          "
+                          compact
+                          formatted
+                        />
+                        <div class="prize-description">
+                          {{
+                            war.races.find((r) => r.name === "Orcs")
+                              .monsterPrize
+                          }}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -150,7 +180,20 @@
                         width="32"
                       />
                       <div class="prize-info">
-                        {{ war.percentageConqueredPerSlot }}%
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Elves')
+                              .monsterPrizeAmount
+                          "
+                          compact
+                          formatted
+                        />
+                        <div class="prize-description">
+                          {{
+                            war.races.find((r) => r.name === "Elves")
+                              .monsterPrize
+                          }}
+                        </div>
                       </div>
                     </div>
                     <div class="brown-info mr-2">
@@ -194,9 +237,26 @@
                       </div>
                     </div>
                     <div class="prize-share ml-2">
-                      <img src="/images/battle/treasure.png" width="32" />
+                      <img
+                        class="right"
+                        src="/images/battle/treasure.png"
+                        width="32"
+                      />
                       <div class="prize-info">
-                        {{ war.percentageConqueredPerSlot }}%
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Undead')
+                              .monsterPrizeAmount
+                          "
+                          compact
+                          formatted
+                        />
+                        <div class="prize-description">
+                          {{
+                            war.races.find((r) => r.name === "Undead")
+                              .monsterPrize
+                          }}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -361,11 +421,28 @@ export default {
   }
 }
 .prize-share {
+  position: relative;
   display: flex;
   align-items: center;
+  > img {
+    left: -18px;
+    position: absolute;
+    z-index: 0;
+    &.right {
+      left: initial;
+      right: -18px;
+    }
+  }
   .prize-info {
+    z-index: 1;
     font-weight: bold;
     margin-left: 4px;
+    font-size: 12px;
+    text-shadow: 1px 1px 0 #000;
+    text-align: center;
+    .prize-description {
+      font-size: 8px;
+    }
   }
 }
 .prize {
