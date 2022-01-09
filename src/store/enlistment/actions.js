@@ -27,7 +27,8 @@ export default {
             const raceId = RACES[playerEnlistment.race.toUpperCase()];
             dispatch('changeFormation', { raceId, value});
             for (let gameItem of playerEnlistment.gameItems) {
-                dispatch('stakeWeapon', { troopId: gameItem.troopId, amount: gameItem.amount });
+                
+                dispatch('stakeWeapon', { troopName: gameItem.token, amount: gameItem.amount });
             }
         }
     },
@@ -40,7 +41,7 @@ export default {
 
             for (let troop of troops) {
                 if (troop.weaponAmount) {
-                    gameItems = gameItems.concat({ id: weapon.id, amount: troop.weaponAmount, troopId: troop.name });
+                    gameItems = gameItems.concat({ id: weapon.id, amount: troop.weaponAmount, token: troop.name });
                 }
             }
         }

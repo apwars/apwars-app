@@ -52,4 +52,20 @@ export default {
     const fullBoard = [].concat(upperBoard, bottomBoard);
     commit("setFullBoard", fullBoard);
   },
+  checkWarCountdown(state) {
+    if (!state.war) {
+      return 0;
+    }
+    const now = new Date().getTime();
+    let countdown = Math.max(Date.parse(state.war.deadlines.startEnlistment) - now, 0);
+    if (countdown > 0) {
+      return countdown;
+    }
+    countdown = Math.max(Date.parse(state.war.deadlines.endEnlistment) - now, 0);
+    if (countdown > 0) {
+      return countdown;
+    }
+    countdown = Math.max(Date.parse(state.war.deadlines.endClaimPrize) - now, 0);  
+    return countdown;
+  }
 };

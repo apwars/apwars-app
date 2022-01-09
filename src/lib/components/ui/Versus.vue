@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-1">
     <div class="phase-title">
       <div>{{ title }}</div>
       <Button
