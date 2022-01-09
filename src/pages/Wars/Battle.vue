@@ -283,6 +283,8 @@ export default {
       war: (state) => state.war.war,
       isLoadingWar: (state) => state.war.isLoading,
       fullBoard: (state) => state.war.fullBoard,
+      countdownTimer: (state) => state.war.countdown,
+      phase: (state) => state.war.phase,
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -296,23 +298,12 @@ export default {
       return this.$store.getters["user/addresses"];
     },
     countdownTitle() {
-      if (this.war.status === "enlistment") {
+      if (this.phase === "not-started") {
+        return 'Starts in'
+      } else if (this.phase === "enlistment") {
         return "Enlistment ends in";
       }
       return "Countdown to collect prizes and wUNITS";
-    },
-    countdownTimer() {
-      if (!this.war) {
-        return 0;
-      }
-      let consideredDate = this.war.deadlines.startEnlistment;
-      if (this.war.status === "enlistment") {
-        consideredDate = this.war.deadlines.endEnlistment;
-      } else if (this.war.status === "finished") {
-        consideredDate = this.war.deadlines.endClaimPrize;
-      }
-      const now = new Date().getTime();
-      return Math.max(Date.parse(consideredDate) - now, 0);
     },
     isWarFinished() {
       return this.war.status === "finished";

@@ -22,6 +22,8 @@ const initialState = () => ({
     isLoading: false,
     data: null,
   },
+  countdown: 0,
+  phase: 'not-started',
 });
 
 export default {

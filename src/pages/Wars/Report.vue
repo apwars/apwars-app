@@ -1,7 +1,7 @@
 <template>
   <div class="color-bg">
     <div class="background">
-      <v-container v-if="1 == 1 || (isConnected && !isLoading && isEnlistment)">
+      <v-container v-if="isConnected">
         <v-row dense no-gutters>
           <v-col>
             <Button
@@ -19,7 +19,7 @@
           </v-col>
           <v-col col="12" sm="4" offset-sm="4">
             <Button
-              v-if="war.status === 'finished'"
+              v-if="phase === 'finished'"
               type="wprimary"
               icon="swords"
               text="Claim prizes and restore survivors"
@@ -338,6 +338,7 @@ export default {
     }),
     ...mapState({
       war: (state) => state.war,
+      phase: (state) => state.war.phase,
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -388,7 +389,7 @@ export default {
     },
 
     isWarNotStarted() {
-      return this.war.status === "created";
+      return this.phase === "not-started";
     },
   },
 

@@ -25,7 +25,7 @@
             class="board-viewport d-flex justify-center justify-sm-end  align-sm-end"
           >
             <v-col>
-              <div class="monster-name mt-6">
+              <div class="monster-name">
                 <span v-if="isEnlistedWithAnotherRace">
                   {{ raceName }} Strategy Board
                 </span>
@@ -55,10 +55,10 @@
           <v-row no-gutters>
             <v-col class="d-flex justify-center">
               <Button
-                v-if="!userEnlistedRace"
+                v-if="!userEnlistedRace || phase === 'not-started'"
                 type="wprimary"
                 :handleClick="handleEnlistment"
-                :disabled="!formation || isLoadingEnlistment"
+                :disabled="!formation || isLoadingEnlistmen || phase === 'not-started'"
               >
                 Enlist
                 <v-progress-circular
@@ -236,6 +236,7 @@ export default {
     ...mapState({
       weapons: (state) => state.enlistment.weapons,
       formation: (state) => state.enlistment.formation,
+      phase: (state) => state.war.phase,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",

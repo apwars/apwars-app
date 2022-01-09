@@ -248,16 +248,10 @@
               <Button
                 class="mt-1"
                 type="wprimary"
-                :text="
-                  userEnlistedRace
-                    ? `View slots (${totalEnlistment}/${totalSlots})`
-                    : `Choose a slot (${totalEnlistment}/${totalSlots})`
-                "
+                :text="enlistButtonText"
                 isBlock
                 :handleClick="goToMonsterBattle"
-                :disabled="
-                  !userEnlistedRace && (!formation || !isEnlistmentValid())
-                "
+                :disabled="isEnlistButtonDisabled"
               />
               <div
                 class="text-center mt-1"
@@ -305,6 +299,7 @@ export default {
       isLoadingBalances: (state) => state.user.isLoadingBalances,
       balances: (state) => state.user.balances,
       isLoadingWar: (state) => state.war.isLoading,
+      phase: (state) => state.war.phase,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
@@ -409,6 +404,18 @@ export default {
         this.getRaceEnlisted ===
         RACE_DESCRIPTION[Number(this.$route.params.raceId)]
       );
+    },
+    enlistButtonText() {
+      if (this.phase === 'not-started') {
+        return 'Not started';
+      } else if (this.userEnlistedRace) {
+        return `View slots (${this.totalEnlistment}/${this.totalSlots})`
+      } else {
+        return `Choose a slot (${this.totalEnlistment}/${this.totalSlots})`
+      }
+    },
+    isEnlistButtonDisabled() {
+      return this.phase === 'not-started' || !this.userEnlistedRace && (!this.formation || !this.isEnlistmentValid())
     },
 
     stakedTroop: {

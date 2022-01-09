@@ -11,11 +11,12 @@ export default {
       const war = await controller.getOne(warId);
       commit("setWar", war);
       await dispatch("getFullBoard", warId);
-      dispatch("enlistment/checkPlayerEnlistment", null, { root: true});
+      dispatch("checkWarCountdown");
+      dispatch("enlistment/checkPlayerEnlistment", null, { root: true });
     } catch (error) {
-       console.error(error);
+      console.error(error);
     } finally {
-       commit("setLoading", false);
+      commit("setLoading", false);
     }
   },
   async getFullBoard({ state, dispatch }, warId) {
@@ -52,20 +53,38 @@ export default {
     const fullBoard = [].concat(upperBoard, bottomBoard);
     commit("setFullBoard", fullBoard);
   },
-  checkWarCountdown(state) {
-    if (!state.war) {
-      return 0;
-    }
+  checkWarCountdown({ state, commit, dispatch }) {
     const now = new Date().getTime();
-    let countdown = Math.max(Date.parse(state.war.deadlines.startEnlistment) - now, 0);
+    let countdown = Math.max(
+      Date.parse(state.war.deadlines.startEnlistment) - now,
+      0
+    );
     if (countdown > 0) {
-      return countdown;
+      commit("setWarPhase", { countdown, phase: "not-started" });
+      setTimeout(() => {
+        dispatch("checkWarCountdown", countdown);
+      });
+      return
     }
-    countdown = Math.max(Date.parse(state.war.deadlines.endEnlistment) - now, 0);
+    countdown = Math.max(
+      Date.parse(state.war.deadlines.endEnlistment) - now,
+      0
+    );
     if (countdown > 0) {
-      return countdown;
+      commit("setWarPhase", { countdown, phase: "enlistment" });
+      setTimeout(() => {
+        dispatch("checkWarCountdown", countdown);
+      });
+      return
     }
-    countdown = Math.max(Date.parse(state.war.deadlines.endClaimPrize) - now, 0);  
-    return countdown;
-  }
+    countdown = Math.max(
+      Date.parse(state.war.deadlines.endClaimPrize) - now,
+      0
+    );
+    commit("setWarPhase", { countdown: 0, phase: "finished" });
+    setTimeout(() => {
+      dispatch("checkWarCountdown", countdown);
+    });
+    return
+  },
 };

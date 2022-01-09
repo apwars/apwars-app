@@ -24,4 +24,8 @@ export default {
     state.undeadsBoard.data = { ...board };
     return;
   },
+  setWarPhase(state, { countdown, phase }) {
+    state.countdown = countdown;
+    state.phase = phase;
+  }
 };
