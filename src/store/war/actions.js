@@ -33,7 +33,8 @@ export default {
   },
   drawFullBoard({ state, commit }) {
     let upperBoard = [];
-    for (let i = 0; i < 5; i++) {
+    const rowLength = state.humansBoard.data.slots.length;
+    for (let i = 0; i < rowLength; i++) {
       let row = [].concat(
         state.humansBoard.data.slots[i],
         state.orcsBoard.data.slots[i]
@@ -42,7 +43,7 @@ export default {
     }
 
     let bottomBoard = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < rowLength; i++) {
       let row = [].concat(
         state.elvesBoard.data.slots[i],
         state.undeadBoard.data.slots[i]
