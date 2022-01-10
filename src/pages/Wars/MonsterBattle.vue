@@ -58,7 +58,7 @@
                 v-if="!userEnlistedRace || phase === 'not-started'"
                 type="wprimary"
                 :handleClick="handleEnlistment"
-                :disabled="!formation || isLoadingEnlistment || phase === 'not-started'"
+                :disabled="!formation || isLoadingEnlistment || phase === 'not-started' || !selectedSlot"
               >
                 Enlist
                 <v-progress-circular

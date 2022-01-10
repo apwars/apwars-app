@@ -290,9 +290,9 @@
                   </div>
                   <div class="winner">
                     Winner: {{ reward.winner }}
-                    {{ account.toLowerCase === reward.winner ? "(YOU)" : "" }}
+                    <span class="unit-name">{{ account.toLowerCase() === reward.winner ? "(YOU)" : "" }}</span>
                   </div>
-                  <div class="rewards-container">
+                  <div class="rewards-container mt-1">
                     <Reward
                       class="reward-container"
                       v-for="prize in reward.prizes"

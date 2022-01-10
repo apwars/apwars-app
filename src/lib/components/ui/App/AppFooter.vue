@@ -122,8 +122,43 @@
         </v-sheet>
       </div>
       <div class="d-flex side-menu-right">
-        <v-icon v-if="isSoundActive" @click="() => toggleMusic(false)">mdi-volume-high</v-icon>
-        <v-icon v-else @click="() => toggleMusic(true)">mdi-volume-off</v-icon>
+        <div class="text-center">
+        <v-menu :close-on-content-click="false"
+      :nudge-height="200">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+            <v-icon v-if="isSoundActive"
+              >mdi-volume-high</v-icon
+            >
+            <v-icon v-else
+              >mdi-volume-off</v-icon
+            >
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item>
+              <v-list-item-title @click="() => setVolume(0)">Disable</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title @click="() => setVolume(0.25)">25%</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title @click="() => setVolume(0.50)">50%</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title @click="() => setVolume(0.75)">75%</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title @click="() => setVolume(1)">100%</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        </div>
       </div>
     </div>
 
@@ -281,7 +316,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      toggleMusic: "music/toggleMusic",
+      setVolume: "music/setVolume",
     }),
     async loadData() {
       if (!this.isConnected) {

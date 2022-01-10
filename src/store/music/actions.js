@@ -15,7 +15,17 @@ export default {
     commit('stopMusic');
   },
   toggleMusic({commit, dispatch}, isActive) {
-    dispatch('stopMusic');
+    if (!isActive) {
+      dispatch('stopMusic');
+    }
     commit('toggleMusic', isActive);
+  },
+  setVolume({state, commit, dispatch}, value) {
+    if (!value) {
+      dispatch('toggleMusic', false);
+    } else if (!state.isSoundActive) {
+      dispatch('toggleMusic', true);
+    }
+    commit('setVolume', value);
   }
 };

@@ -14,7 +14,13 @@ export default {
     if (isActive) {
       state.track.play();
       state.isPlaying = true;
+    } else {
+      state.track.pause();
+      state.isPlaying = false;
     }
     state.isSoundActive = isActive;
-  }
+  },
+  setVolume(state, value) {
+    state.track.volume = value;
+  },
 };
