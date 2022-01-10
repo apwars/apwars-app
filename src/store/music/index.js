@@ -5,7 +5,7 @@ import getters from "./getters";
 const state = {
   isPlaying: false,
   track: null,
-  isSoundActive: false,
+  volume: 0,
 };
 
 export default {

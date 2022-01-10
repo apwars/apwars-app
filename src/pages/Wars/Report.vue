@@ -447,14 +447,14 @@ export default {
 
   watch: {
     isConnected() {
-      if (!this.isPlaying){
-        this.playMusic({ musicKey: 'WAR', isLoop: true });
-      }
       this.getWar(this.$route.params.contractWar);
       this.loadData();
     },
 
     account() {
+      if (!this.isPlaying){
+        this.startMusic({ musicKey: 'WAR', isLoop: true });
+      }
       this.getWar(this.$route.params.contractWar);
       this.loadData();
     },
@@ -474,7 +474,7 @@ export default {
     }),
     ...mapActions({
       getWar: "war/getWar",
-      playMusic: "music/playMusic",
+      startMusic: "music/startMusic",
       stopMusic: "music/stopMusic",
     }),
 

@@ -316,7 +316,7 @@ export default {
     }),
     ...mapActions({
       getWar: "war/getWar",
-      playMusic: "music/playMusic",
+      startMusic: "music/startMusic",
       stopMusic: "music/stopMusic",
     }),
     backToHome() {
@@ -341,12 +341,12 @@ export default {
   watch: {
     isConnected() {
       this.fetchData();
-      if (!this.isPlaying){
-        this.playMusic({ musicKey: 'WAR', isLoop: true });
-      }
     },
     account() {
       this.fetchData();
+      if (!this.isPlaying){
+        this.startMusic({ musicKey: 'WAR', isLoop: true });
+      }
     },
   },
   async mounted() {

@@ -142,19 +142,19 @@
           </template>
           <v-list>
             <v-list-item>
-              <v-list-item-title @click="() => setVolume(0)">Disable</v-list-item-title>
+              <v-list-item-title @click="() => setVolume(0)" :class="['volume-button', volume === 0 ? 'text-yellow' : '']">Disable</v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.25)">25%</v-list-item-title>
+              <v-list-item-title @click="() => setVolume(0.1)" :class="['volume-button', volume === 0.1 ? 'text-yellow' : '']">25%</v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.50)">50%</v-list-item-title>
+              <v-list-item-title @click="() => setVolume(0.25)" :class="['volume-button', volume === 0.25 ? 'text-yellow' : '']">50%</v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.75)">75%</v-list-item-title>
+              <v-list-item-title @click="() => setVolume(0.4)" :class="['volume-button', volume === 0.4 ? 'text-yellow' : '']">75%</v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title @click="() => setVolume(1)">100%</v-list-item-title>
+              <v-list-item-title @click="() => setVolume(0.5)" :class="['volume-button', volume === 0.5 ? 'text-yellow' : '']">100%</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -276,6 +276,7 @@ export default {
     ...mapState({
       isPlaying: (state) => state.music.isPlaying,
       isSoundActive: (state) => state.music.isSoundActive,
+      volume: (state) => state.music.volume,
     }),
     appVersion() {
       return this.$store.getters.appVersion;
@@ -461,6 +462,18 @@ export default {
 
 .i-coin {
   width: 50px;
+}
+
+.volume-button {
+  font-size: 12px;
+  height: 24px;
+  &:hover {
+    cursor: pointer;
+    color: yellow;
+  }
+}
+.text-yellow {
+  color: yellow;
 }
 
 @media only screen and (max-width: 600px) {

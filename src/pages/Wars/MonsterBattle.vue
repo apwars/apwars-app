@@ -305,7 +305,7 @@ export default {
     ...mapActions({
       enlist: "enlistment/enlist",
       getWar: "war/getWar",
-      playMusic: "music/playMusic",
+      startMusic: "music/startMusic",
       stopMusic: "music/stopMusic",
     }),
     backToEnlistment() {
@@ -377,13 +377,13 @@ export default {
   },
   watch: {
     isConnected() {
-      if (!this.isPlaying){
-        this.playMusic({ musicKey: 'WAR', isLoop: true });
-      }
       this.fetchData();
     },
     account() {
       this.fetchData();
+      if (!this.isPlaying){
+        this.startMusic({ musicKey: 'WAR', isLoop: true });
+      }
     },
   },
   async mounted() {

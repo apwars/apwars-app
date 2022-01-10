@@ -464,7 +464,7 @@ export default {
       changeFormation: "enlistment/changeFormation",
       fetchUserWallet: "user/fetchUserWallet",
       clearEnlistment: "enlistment/clearEnlistment",
-      playMusic: "music/playMusic",
+      startMusic: "music/startMusic",
       stopMusic: "music/stopMusic",
     }),
     ...mapMutations({
@@ -542,12 +542,12 @@ export default {
   },
   watch: {
     isConnected() {
-      if (!this.isPlaying){
-        this.playMusic({ musicKey: 'WAR', isLoop: true });
-      }
       this.fetchData();
     },
     account() {
+      if (!this.isPlaying){
+        this.startMusic({ musicKey: 'WAR', isLoop: true });
+      }
       this.fetchData();
     },
   },

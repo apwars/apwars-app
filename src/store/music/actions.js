@@ -3,28 +3,26 @@ const supportedMusics = {
 };
 
 export default {
-  playMusic({ state, commit }, { musicKey, isLoop }) {
+  startMusic({ commit, dispatch }, { musicKey, isLoop }) {
     const path = supportedMusics[musicKey];
     if (!path) {
       console.error('The music requested was not found.');
       return;
     }
-    commit("playMusic", { path, isLoop });
+    commit("startMusic", { path, isLoop });
+    dispatch("playMusic");
+  },
+  playMusic({ commit }) {
+    commit("playMusic");
   },
   stopMusic({ commit }) {
     commit('stopMusic');
   },
-  toggleMusic({commit, dispatch}, isActive) {
-    if (!isActive) {
-      dispatch('stopMusic');
-    }
-    commit('toggleMusic', isActive);
-  },
   setVolume({state, commit, dispatch}, value) {
     if (!value) {
-      dispatch('toggleMusic', false);
-    } else if (!state.isSoundActive) {
-      dispatch('toggleMusic', true);
+      dispatch('stopMusic');
+    } else if (!state.isPlaying) {
+      dispatch('playMusic');
     }
     commit('setVolume', value);
   }
