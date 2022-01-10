@@ -146,7 +146,7 @@
                       unit.displayName
                     }}</span>
                     <template
-                      v-if="report.soldiers[unit.name].accountReport.enlisted"
+                      v-if="report.soldiers[unit.name].accountReport && report.soldiers[unit.name].accountReport.enlisted"
                     >
                       <span class="d-block mt-1"
                         >Enlisted units:
@@ -470,6 +470,7 @@ export default {
           raceName,
           this.account
         );
+        console.log(report);
         this.report = report;
       } catch (error) {
         console.log(error);
@@ -520,7 +521,7 @@ export default {
         );
         ToastSnackbar.success('Your troops and prizes are safe at Home');
       } catch (error) {
-        ToastSnackbar.success('Something went wrong while trying to bring troops and prizes Home, try again later.');
+        ToastSnackbar.error('Something went wrong while trying to bring troops and prizes Home, try again later.');
         console.log(error);
       } finally {
         this.isLoadingBringhome = false;
