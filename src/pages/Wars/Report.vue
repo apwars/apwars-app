@@ -135,25 +135,25 @@
                     <span class="d-block unit-name">{{
                       unit.displayName
                     }}</span>
-                    <template v-if="report.soldiers[unit.name].enlisted">
+                    <template v-if="report.soldiers[unit.name].accountReport.enlisted">
                       <span class="d-block mt-1"
                         >Enlisted units:
                         <Amount
-                          :amount="report.soldiers[unit.name].enlisted"
+                          :amount="report.soldiers[unit.name].accountReport.enlisted"
                           compact
                           formatted
                       /></span>
                       <span class="d-block"
                         >Deads units:
                         <Amount
-                          :amount="report.soldiers[unit.name].dead"
+                          :amount="report.soldiers[unit.name].accountReport.dead"
                           compact
                           formatted
                       /></span>
                       <span class="d-block mb-2"
                         >Survivors:
                         <Amount
-                          :amount="report.soldiers[unit.name].survivors"
+                          :amount="report.soldiers[unit.name].accountReport.survivors"
                           compact
                           formatted
                       /></span>
@@ -271,7 +271,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapState } from "vuex";
+import { mapMutations, mapGetters, mapState, mapActions } from "vuex";
 import WarsController from "@/controller/WarsController";
 
 import Title from "@/lib/components/ui/Title";
@@ -329,6 +329,7 @@ export default {
     }
     this.$refs.raceSelect.scrollLeft =
       this.$refs.raceSelect.scrollWidth / 2 - 125;
+    this.getWar(this.$route.params.contractWar);
     this.loadData();
   },
 
@@ -395,10 +396,12 @@ export default {
 
   watch: {
     isConnected() {
+      this.getWar(this.$route.params.contractWar);
       this.loadData();
     },
 
     account() {
+      this.getWar(this.$route.params.contractWar);
       this.loadData();
     },
   },
@@ -411,6 +414,9 @@ export default {
   methods: {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
+    }),
+    ...mapActions({
+      getWar: "war/getWar",
     }),
 
     async loadData() {

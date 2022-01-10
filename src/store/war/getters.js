@@ -11,7 +11,7 @@ export default {
     if (race === RACES.ELVES) {
       return state.elvesBoard || [];
     }
-    return state.undeadsBoard || [];
+    return state.undeadBoard || [];
   },
   getBoardByRace: (state, getters) => (race) => {
     return getters.getRaceData(race).data?.slots || [];

@@ -1,14 +1,14 @@
 export const RACES = {
     HUMANS: 1,
     ORCS: 2,
-    UNDEADS: 3,
+    UNDEAD: 3,
     ELVES: 4
 };
 
 export const RACE_DESCRIPTION = {
     [RACES.HUMANS]: 'Humans',
     [RACES.ORCS]: 'Orcs',
-    [RACES.UNDEADS]: 'Undead',
+    [RACES.UNDEAD]: 'Undead',
     [RACES.ELVES]: 'Elves',
 };
 
@@ -37,8 +37,8 @@ export const ENLISTMENT_OPTIONS = [{
     basicUnit: '/images/troops/wgrunt.webp',
 },
 {
-    id: RACES.UNDEADS,
-    name: RACE_DESCRIPTION[RACES.UNDEADS],
+    id: RACES.UNDEAD,
+    name: RACE_DESCRIPTION[RACES.UNDEAD],
     /* image: '/images/troops/wwitch-portrait.png', */
     image: '/images/troops/units/undeads/wWITCH.png',
     title: 'Day 3',

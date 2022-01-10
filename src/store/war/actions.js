@@ -45,7 +45,7 @@ export default {
     for (let i = 0; i < 5; i++) {
       let row = [].concat(
         state.elvesBoard.data.slots[i],
-        state.undeadsBoard.data.slots[i]
+        state.undeadBoard.data.slots[i]
       );
       bottomBoard.push(row);
     }

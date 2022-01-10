@@ -27,7 +27,6 @@ export default {
             const raceId = RACES[playerEnlistment.race.toUpperCase()];
             dispatch('changeFormation', { raceId, value});
             for (let gameItem of playerEnlistment.gameItems) {
-                
                 dispatch('stakeWeapon', { troopName: gameItem.token, amount: gameItem.amount });
             }
         }

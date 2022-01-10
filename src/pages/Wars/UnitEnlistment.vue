@@ -408,7 +408,7 @@ export default {
     enlistButtonText() {
       if (this.phase === 'not-started') {
         return 'Not started';
-      } else if (this.userEnlistedRace) {
+      } else if (this.userEnlistedRace || this.phase === 'finished') {
         return `View slots (${this.totalEnlistment}/${this.totalSlots})`
       } else {
         return `Choose a slot (${this.totalEnlistment}/${this.totalSlots})`

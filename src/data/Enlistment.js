@@ -21,8 +21,8 @@ export const ENLISTMENT_OPTIONS = [{
     basicUnit: '/images/troops/wgrunt.webp',
 },
 {
-    id: RACES.UNDEADS,
-    name: RACE_DESCRIPTION[RACES.UNDEADS],
+    id: RACES.UNDEAD,
+    name: RACE_DESCRIPTION[RACES.UNDEAD],
     image: '/images/troops/wwitch-portrait.png',
     title: 'Day 3',
     monsterId: 3,
@@ -70,7 +70,7 @@ export const RACE_FORMATIONS = {
             16: 100,
         },
     },
-    [RACES.UNDEADS]: {
+    [RACES.UNDEAD]: {
         [FORMATIONS.SQUADRON]: {
             10: 1000,
             11: 1000,

@@ -59,7 +59,7 @@
           <v-col
             ><Versus
               :title="war.status === 'finished' ? 'Result' : 'Parcial Result'"
-              :phase="war.status"
+              :phase="phase"
               :corpForce="war.factions[0].power.total"
               :degenForce="war.factions[1].power.total"
               :winnerAmount="war.prizes.winner.unlocked"

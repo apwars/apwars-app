@@ -522,7 +522,7 @@ export const ORCS = [
   },
 ];
 
-export const UNDEADS = [
+export const UNDEAD = [
   {
     id: 10,
     team: 2,
@@ -1075,7 +1075,7 @@ export const ELVES = [
 ];
 
 export function getTroops() {
-  return [].concat(HUMANS, ORCS, UNDEADS, ELVES);
+  return [].concat(HUMANS, ORCS, UNDEAD, ELVES);
 }
 
 export function getTroop(nameOrContract, networkId) {

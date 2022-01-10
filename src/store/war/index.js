@@ -18,7 +18,7 @@ const initialState = () => ({
     isLoading: false,
     data: null,
   },
-  undeadsBoard: {
+  undeadBoard: {
     isLoading: false,
     data: null,
   },

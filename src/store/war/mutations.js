@@ -21,7 +21,7 @@ export default {
       state.elvesBoard.data = { ...board };
       return;
     }
-    state.undeadsBoard.data = { ...board };
+    state.undeadBoard.data = { ...board };
     return;
   },
   setWarPhase(state, { countdown, phase }) {
