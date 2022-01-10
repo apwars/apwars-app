@@ -9,8 +9,6 @@ import Wars from "@/pages/Wars.vue";
 import Report from "@/pages/Wars/Report.vue";
 import UnitEnlistment from "@/pages/Wars/UnitEnlistment.vue";
 import MonsterBattle from "@/pages/Wars/MonsterBattle.vue";
-import Round1 from "@/pages/Wars/Round1.vue";
-import Round2 from "@/pages/Wars/Round2.vue";
 import BlackMarket from "@/pages/BlackMarket.vue";
 import PrivateSale from "@/pages/Arcadia/PrivateSale.vue";
 import ArcadiaExpansion from "@/pages/Arcadia/Landing.vue";
@@ -90,16 +88,6 @@ export const routes = [
         path: "/wars/:contractWar/enlistment/:raceId/battle",
         name: "monster-battle",
         component: MonsterBattle
-      },
-      {
-        path: "/wars/:contractWar/round-1",
-        name: "/wars-round-1",
-        component: Round1
-      },
-      {
-        path: "/wars/:contractWar/round-2",
-        name: "/wars-round-2",
-        component: Round2
       },
       {
         path: "/wars/:contractWar/report",

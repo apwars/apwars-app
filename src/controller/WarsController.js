@@ -46,9 +46,9 @@ export default class WarsController {
     }
   }
 
-  bringhome(warId) {
+  bringhome(warId, account) {
     try {
-      return this.base._postSignature(`/wars/${warId}/bringhome`);
+      return this.base._postSignature(`/wars/${warId}/bringhome`, { account });
     } catch (error) {
       throw error;
     }

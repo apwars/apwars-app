@@ -537,7 +537,7 @@ export default {
         this.isLoadingBringhome = true;
         const controller = new WarsController();
         const warId = this.$route.params.contractWar;
-        await controller.bringhome(warId);
+        await controller.bringhome(warId, this.account);
         ToastSnackbar.success("Your troops and prizes are safe at Home");
       } catch (error) {
         ToastSnackbar.error(

@@ -266,7 +266,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions, mapGetters, mapState } from "vuex";
+import { mapMutations, mapActions, mapState } from "vuex";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
