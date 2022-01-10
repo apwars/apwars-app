@@ -300,6 +300,7 @@ export default {
       balances: (state) => state.user.balances,
       isLoadingWar: (state) => state.war.isLoading,
       phase: (state) => state.war.phase,
+      isPlaying: (state) => state.music.isPlaying,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
@@ -463,6 +464,8 @@ export default {
       changeFormation: "enlistment/changeFormation",
       fetchUserWallet: "user/fetchUserWallet",
       clearEnlistment: "enlistment/clearEnlistment",
+      playMusic: "music/playMusic",
+      stopMusic: "music/stopMusic",
     }),
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
@@ -539,6 +542,9 @@ export default {
   },
   watch: {
     isConnected() {
+      if (!this.isPlaying){
+        this.playMusic({ musicKey: 'WAR', isLoop: true });
+      }
       this.fetchData();
     },
     account() {
@@ -555,6 +561,9 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
+    if (!to.path.includes('/wars')) {
+      this.stopMusic();
+    }
     next();
   },
 };

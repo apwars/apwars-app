@@ -278,15 +278,15 @@
 
           <v-row>
             <v-col>
-              <div class="rewards-title">Rewarded spots</div>
+              <div class="rewards-title">Rewarded slots</div>
               <div class="mt-2">
                 <div
                   class="spot-info"
                   v-for="reward in report.rewards"
-                  :key="`${reward.spot.x}-${reward.spot.y}`"
+                  :key="`${reward.slot.x}-${reward.slot.y}`"
                 >
                   <div class="unit-name">
-                    {{ reward.spot.x }}, {{ reward.spot.y }}
+                    {{ reward.slot.x }}, {{ reward.slot.y }}
                   </div>
                   <div class="winner">
                     Winner: {{ reward.winner }}
@@ -390,6 +390,7 @@ export default {
     ...mapState({
       war: (state) => state.war,
       phase: (state) => state.war.phase,
+      isPlaying: (state) => state.music.isPlaying,
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -446,6 +447,9 @@ export default {
 
   watch: {
     isConnected() {
+      if (!this.isPlaying){
+        this.playMusic({ musicKey: 'WAR', isLoop: true });
+      }
       this.getWar(this.$route.params.contractWar);
       this.loadData();
     },
@@ -458,6 +462,9 @@ export default {
 
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
+    if (!to.path.includes('/wars')) {
+      this.stopMusic();
+    }
     next();
   },
 
@@ -467,6 +474,8 @@ export default {
     }),
     ...mapActions({
       getWar: "war/getWar",
+      playMusic: "music/playMusic",
+      stopMusic: "music/stopMusic",
     }),
 
     async loadData() {

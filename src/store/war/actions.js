@@ -82,9 +82,6 @@ export default {
       0
     );
     commit("setWarPhase", { countdown: 0, phase: "finished" });
-    setTimeout(() => {
-      dispatch("checkWarCountdown", countdown);
-    });
     return
   },
 };

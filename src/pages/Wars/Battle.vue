@@ -285,6 +285,7 @@ export default {
       fullBoard: (state) => state.war.fullBoard,
       countdownTimer: (state) => state.war.countdown,
       phase: (state) => state.war.phase,
+      isPlaying: (state) => state.music.isPlaying,
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -315,6 +316,8 @@ export default {
     }),
     ...mapActions({
       getWar: "war/getWar",
+      playMusic: "music/playMusic",
+      stopMusic: "music/stopMusic",
     }),
     backToHome() {
       this.$router.push("/");
@@ -338,6 +341,9 @@ export default {
   watch: {
     isConnected() {
       this.fetchData();
+      if (!this.isPlaying){
+        this.playMusic({ musicKey: 'WAR', isLoop: true });
+      }
     },
     account() {
       this.fetchData();
@@ -354,6 +360,10 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
+    console.log(to.path.includes('/wars'));
+    if (!to.path.includes('/wars')) {
+      this.stopMusic();
+    }
     next();
   },
 };

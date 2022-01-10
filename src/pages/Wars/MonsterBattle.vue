@@ -238,6 +238,7 @@ export default {
       weapons: (state) => state.enlistment.weapons,
       formation: (state) => state.enlistment.formation,
       phase: (state) => state.war.phase,
+      isPlaying: (state) => state.isPlaying,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
@@ -304,6 +305,8 @@ export default {
     ...mapActions({
       enlist: "enlistment/enlist",
       getWar: "war/getWar",
+      playMusic: "music/playMusic",
+      stopMusic: "music/stopMusic",
     }),
     backToEnlistment() {
       this.$router.push(
@@ -374,6 +377,9 @@ export default {
   },
   watch: {
     isConnected() {
+      if (!this.isPlaying){
+        this.playMusic({ musicKey: 'WAR', isLoop: true });
+      }
       this.fetchData();
     },
     account() {
@@ -386,6 +392,9 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
+    if (!to.path.includes('/wars')) {
+      this.stopMusic();
+    }
     next();
   },
 };
