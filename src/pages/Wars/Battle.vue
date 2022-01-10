@@ -58,7 +58,7 @@
         <v-row no-gutters>
           <v-col
             ><Versus
-              :title="war.status === 'finished' ? 'Result' : 'Parcial Result'"
+              :title="phase === 'finished' ? 'Result' : 'Parcial Result'"
               :phase="phase"
               :corpForce="war.factions[0].power.total"
               :degenForce="war.factions[1].power.total"
