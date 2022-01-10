@@ -3,9 +3,7 @@
     <div
       class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
     >
-      <div
-        class="d-flex side-menu align-center"
-      >
+      <div class="d-flex side-menu align-center">
         <div class="d-inline-flex">
           <img
             class="d-block mx-1 mx-md-2 avatar"
@@ -123,7 +121,10 @@
           </v-slide-group>
         </v-sheet>
       </div>
-      <div class="d-flex side-menu-right"></div>
+      <div class="d-flex side-menu-right">
+        <v-icon v-if="isSoundActive" @click="() => toggleMusic(false)">mdi-volume-high</v-icon>
+        <v-icon v-else @click="() => toggleMusic(true)">mdi-volume-off</v-icon>
+      </div>
     </div>
 
     <div class="d-flex justify-space-between copyright">
@@ -144,6 +145,7 @@
   </v-footer>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import wGOLD from "@/lib/eth/wGOLD";
 
@@ -236,6 +238,10 @@ export default {
     Amount,
   },
   computed: {
+    ...mapState({
+      isPlaying: (state) => state.music.isPlaying,
+      isSoundActive: (state) => state.music.isSoundActive,
+    }),
     appVersion() {
       return this.$store.getters.appVersion;
     },
@@ -274,6 +280,9 @@ export default {
     this.loadData();
   },
   methods: {
+    ...mapActions({
+      toggleMusic: "music/toggleMusic",
+    }),
     async loadData() {
       if (!this.isConnected) {
         return;
@@ -300,34 +309,34 @@ export default {
 <style scoped lang="scss">
 .menu-main {
   width: 60%;
-  @media only screen and (max-width: 1264px){
+  @media only screen and (max-width: 1264px) {
     width: 55%;
   }
 
-  @media only screen and (max-width: 1150px){
+  @media only screen and (max-width: 1150px) {
     width: 65%;
   }
 
-  @media only screen and (max-width: 960px){
+  @media only screen and (max-width: 960px) {
     width: 100%;
   }
 
-  @media only screen and (max-width: 730px){
+  @media only screen and (max-width: 730px) {
     width: 80%;
   }
 
-  @media only screen and (max-width: 650px){
+  @media only screen and (max-width: 650px) {
     width: 70%;
   }
 }
 
 .side-menu {
   width: 20%;
-  @media only screen and (max-width: 1264px){
+  @media only screen and (max-width: 1264px) {
     width: 30%;
   }
 
-  @media only screen and (max-width: 960px){
+  @media only screen and (max-width: 960px) {
     width: 80%;
     justify-content: center;
   }
@@ -335,15 +344,15 @@ export default {
 
 .side-menu-right {
   width: 20%;
-  @media only screen and (max-width: 1264px){
+  @media only screen and (max-width: 1264px) {
     width: 20%;
   }
 
-  @media only screen and (max-width: 1150px){
+  @media only screen and (max-width: 1150px) {
     width: 10%;
   }
 
-  @media only screen and (max-width: 730px){
+  @media only screen and (max-width: 730px) {
     width: 0%;
   }
 }

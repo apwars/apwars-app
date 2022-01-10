@@ -22,6 +22,7 @@ export default {
     },
     checkPlayerEnlistment({ dispatch, rootGetters }) {
         const playerEnlistment = rootGetters['war/playerEnlistment'];
+        console.log(playerEnlistment)
         if (playerEnlistment) {
             const value = FORMATIONS[playerEnlistment.formation.name.toUpperCase()];
             const raceId = RACES[playerEnlistment.race.toUpperCase()];

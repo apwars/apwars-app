@@ -13,5 +13,9 @@ export default {
   },
   stopMusic({ commit }) {
     commit('stopMusic');
+  },
+  toggleMusic({commit, dispatch}, isActive) {
+    dispatch('stopMusic');
+    commit('toggleMusic', isActive);
   }
 };
