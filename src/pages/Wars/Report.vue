@@ -22,8 +22,18 @@
               v-if="phase === 'finished'"
               type="wprimary"
               icon="swords"
-              text="Claim prizes and restore survivors"
-            />
+              :handleClick="bringhome"
+              :disabled="isLoadingBringhome"
+            >
+              Claim prizes and restore survivors
+              <v-progress-circular
+                class="ml-1"
+                indeterminate
+                size="16"
+                width="2"
+                v-if="isLoadingBringhome"
+              />
+            </Button>
           </v-col>
         </v-row>
 
@@ -135,25 +145,33 @@
                     <span class="d-block unit-name">{{
                       unit.displayName
                     }}</span>
-                    <template v-if="report.soldiers[unit.name].accountReport.enlisted">
+                    <template
+                      v-if="report.soldiers[unit.name].accountReport.enlisted"
+                    >
                       <span class="d-block mt-1"
                         >Enlisted units:
                         <Amount
-                          :amount="report.soldiers[unit.name].accountReport.enlisted"
+                          :amount="
+                            report.soldiers[unit.name].accountReport.enlisted
+                          "
                           compact
                           formatted
                       /></span>
                       <span class="d-block"
                         >Deads units:
                         <Amount
-                          :amount="report.soldiers[unit.name].accountReport.dead"
+                          :amount="
+                            report.soldiers[unit.name].accountReport.dead
+                          "
                           compact
                           formatted
                       /></span>
                       <span class="d-block mb-2"
                         >Survivors:
                         <Amount
-                          :amount="report.soldiers[unit.name].accountReport.survivors"
+                          :amount="
+                            report.soldiers[unit.name].accountReport.survivors
+                          "
                           compact
                           formatted
                       /></span>
@@ -195,20 +213,28 @@
                     />
                     <div style="font-size: 14px">
                       <span class="d-block bold">{{ weapon.title }}</span>
-                      <span class="d-block">Global: <Amount
-                        :amount="
-                          report.gameItems.globalReport.find(w => w.id === weapon.id).amount
-                        "
-                        compact
-                        formatted
-                    /></span>
-                      <span class="d-block">My Qty: <Amount
-                        :amount="
-                          report.gameItems.accountReport.find(w => w.id === weapon.id).amount
-                        "
-                        compact
-                        formatted
-                    /></span>
+                      <span class="d-block"
+                        >Global:
+                        <Amount
+                          :amount="
+                            report.gameItems.globalReport.find(
+                              (w) => w.id === weapon.id
+                            ).amount
+                          "
+                          compact
+                          formatted
+                      /></span>
+                      <span class="d-block"
+                        >My Qty:
+                        <Amount
+                          :amount="
+                            report.gameItems.accountReport.find(
+                              (w) => w.id === weapon.id
+                            ).amount
+                          "
+                          compact
+                          formatted
+                      /></span>
                     </div>
                   </div>
                 </v-col>
@@ -251,9 +277,18 @@
             <v-col>
               <div class="rewards-title">Rewarded spots</div>
               <div class="rewards-container mt-2">
-                <div class="spot-info" v-for="reward in report.rewards" :key="`${reward.spot.x}-${reward.spot.y}`">
-                  <div class="unit-name">{{ reward.spot.x }}, {{ reward.spot.y }}</div>
-                  <div class="winner">Winner: {{ reward.winner }} {{ account.toLowerCase === reward.winner ? '(YOU)' : ''}}</div>
+                <div
+                  class="spot-info"
+                  v-for="reward in report.rewards"
+                  :key="`${reward.spot.x}-${reward.spot.y}`"
+                >
+                  <div class="unit-name">
+                    {{ reward.spot.x }}, {{ reward.spot.y }}
+                  </div>
+                  <div class="winner">
+                    Winner: {{ reward.winner }}
+                    {{ account.toLowerCase === reward.winner ? "(YOU)" : "" }}
+                  </div>
                 </div>
               </div>
             </v-col>
@@ -282,6 +317,7 @@ import Countdown from "@/lib/components/ui/Utils/Countdown";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Reward from "@/lib/components/ui/Reward";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import { RACE_DESCRIPTION, ENLISTMENT_OPTIONS } from "@/data/Races";
 import { MONSTERS } from "@/data/Monsters";
@@ -302,6 +338,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      isLoadingBringhome: false,
       contractWar: this.$route.params.contractWar,
       globalTroops: [],
       isEnlistment: false,
@@ -472,6 +509,23 @@ export default {
     isEnabled(name) {
       this.selectedRace = name;
     },
+
+    bringhome() {
+      try {
+        this.isLoadingBringhome = true;
+        const controller = new WarsController();
+        const warId = this.$route.params.contractWar;
+        await controller.bringhome(
+          warId
+        );
+        ToastSnackbar.success('Your troops and prizes are safe at Home');
+      } catch (error) {
+        ToastSnackbar.success('Something went wrong while trying to bring troops and prizes Home, try again later.');
+        console.log(error);
+      } finally {
+        this.isLoadingBringhome = false;
+      }
+    }
   },
 };
 </script>

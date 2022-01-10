@@ -46,4 +46,12 @@ export default class WarsController {
       console.error('Error while trying to enlist', JSON.stringify(error));
     }
   }
+
+  bringhome(warId) {
+    try {
+      return this.base._postSignature(`/wars/${warId}/bringhome`);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
