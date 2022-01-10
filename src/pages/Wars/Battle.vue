@@ -360,7 +360,6 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
-    console.log(to.path.includes('/wars'));
     if (!to.path.includes('/wars')) {
       this.stopMusic();
     }
