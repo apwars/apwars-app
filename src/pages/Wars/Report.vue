@@ -510,7 +510,7 @@ export default {
       this.selectedRace = name;
     },
 
-    bringhome() {
+    async bringhome() {
       try {
         this.isLoadingBringhome = true;
         const controller = new WarsController();
