@@ -170,8 +170,9 @@
                 <Reward
                   class="reward-container"
                   v-for="reward in slotData.rewards"
-                  :key="reward.id"
-                  :rewardId="reward.id"
+                  :key="reward.prize"
+                  :prize="reward.prize"
+                  :type="reward.type"
                   :amount="reward.amount"
                 />
               </div>
@@ -471,6 +472,8 @@ export default {
 }
 .rewards-container {
   display: flex;
+  overflow-x: auto;
+  padding-top: 8px;
 }
 .text-yellow {
   color: yellow;

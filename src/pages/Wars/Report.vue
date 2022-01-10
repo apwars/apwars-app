@@ -146,7 +146,10 @@
                       unit.displayName
                     }}</span>
                     <template
-                      v-if="report.soldiers[unit.name].accountReport && report.soldiers[unit.name].accountReport.enlisted"
+                      v-if="
+                        report.soldiers[unit.name].accountReport &&
+                          report.soldiers[unit.name].accountReport.enlisted
+                      "
                     >
                       <span class="d-block mt-1"
                         >Enlisted units:
@@ -276,7 +279,7 @@
           <v-row>
             <v-col>
               <div class="rewards-title">Rewarded spots</div>
-              <div class="rewards-container mt-2">
+              <div class="mt-2">
                 <div
                   class="spot-info"
                   v-for="reward in report.rewards"
@@ -288,6 +291,16 @@
                   <div class="winner">
                     Winner: {{ reward.winner }}
                     {{ account.toLowerCase === reward.winner ? "(YOU)" : "" }}
+                  </div>
+                  <div class="rewards-container">
+                    <Reward
+                      class="reward-container"
+                      v-for="prize in reward.prizes"
+                      :key="prize.prize"
+                      :prize="prize.prize"
+                      :type="prize.type"
+                      :amount="prize.amount"
+                    />
                   </div>
                 </div>
               </div>
@@ -516,17 +529,17 @@ export default {
         this.isLoadingBringhome = true;
         const controller = new WarsController();
         const warId = this.$route.params.contractWar;
-        await controller.bringhome(
-          warId
-        );
-        ToastSnackbar.success('Your troops and prizes are safe at Home');
+        await controller.bringhome(warId);
+        ToastSnackbar.success("Your troops and prizes are safe at Home");
       } catch (error) {
-        ToastSnackbar.error('Something went wrong while trying to bring troops and prizes Home, try again later.');
+        ToastSnackbar.error(
+          "Something went wrong while trying to bring troops and prizes Home, try again later."
+        );
         console.log(error);
       } finally {
         this.isLoadingBringhome = false;
       }
-    }
+    },
   },
 };
 </script>
@@ -571,6 +584,12 @@ export default {
   color: #ffb800;
   font-weight: bold;
   font-size: 16px;
+}
+
+.rewards-container {
+  display: flex;
+  overflow-x: auto;
+  padding-top: 8px;
 }
 
 .disabled {

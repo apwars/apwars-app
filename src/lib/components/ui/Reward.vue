@@ -2,16 +2,20 @@
   <div class="reward-container" v-if="reward">
     <img height="64" :src="reward.image" :alt="reward.title" />
     <div class="reward-title mt-1">{{ reward.title }}</div>
-    <div class="reward-amount">{{ amount }}</div>
+    <div class="reward-amount"><Amount :amount="amount" compact formatted /></div>
   </div>
 </template>
 <script>
 import { getCollectibleById } from "@/data/Collectibles";
+import { TOKENS } from "@/data/Tokens";
+
+import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
+  components: { Amount },
   props: {
-    rewardId: {
-      type: Number,
+    prize: {
+      type: [Number, String],
       default: null,
       required: true,
     },
@@ -26,7 +30,14 @@ export default {
     };
   },
   mounted() {
-    this.reward = getCollectibleById(this.rewardId);
+    if (this.prize.includes('GameItem')) {
+      const id = Number(this.prize.replace(/\D/g, ""));
+      this.reward = getCollectibleById(id);
+      this.type = "game-item";
+      return
+    }
+    this.reward = TOKENS.find(t => t.id === this.prize);
+    this.type = "token";
   },
 };
 </script>
