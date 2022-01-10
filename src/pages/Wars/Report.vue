@@ -289,7 +289,7 @@
                     {{ reward.slot.x }}, {{ reward.slot.y }}
                   </div>
                   <div class="winner">
-                    Winner: {{ reward.winner }}
+                    <span v-if="reward.winner === '0x0'">No Winner</span><span v-else>Winner: {{ reward.winner }}</span>
                     <span class="unit-name">{{ account.toLowerCase() === reward.winner ? "(YOU)" : "" }}</span>
                   </div>
                   <div class="rewards-container mt-1">
@@ -492,7 +492,6 @@ export default {
           raceName,
           this.account
         );
-        console.log(report);
         this.report = report;
       } catch (error) {
         console.log(error);

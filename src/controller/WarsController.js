@@ -23,7 +23,6 @@ export default class WarsController {
   }
 
   getReport(warId, raceName, account) {
-    console.log(account)
     try {
       return this.base._get(`/wars/${warId}/${raceName}/report/${account}`);
     } catch (error) {
