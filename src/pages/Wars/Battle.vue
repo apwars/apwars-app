@@ -38,7 +38,7 @@
               hideEnd
             />
             <div class="prizepool">
-              <img width="158" src="/images/battle/fed-round-2.png" />
+              <img src="/images/battle/treasure-fed.webp" />
               <div class="prize">
                 <div class="brown-info">
                   <img src="/images/wgold.png" width="28" />
