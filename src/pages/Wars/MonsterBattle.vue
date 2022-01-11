@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <v-container class="main" v-if="isConnected">
+    <v-container class="main" v-if="account">
       <v-row dense no-gutters>
         <v-col>
           <Button
@@ -275,9 +275,6 @@ export default {
       getRaceEnlisted: "war/getRaceEnlisted",
       totalStakedWeapon: "enlistment/totalStakedWeapon",
     }),
-    isConnected() {
-      return this.$store.getters["user/isConnected"];
-    },
     account() {
       return this.$store.getters["user/account"];
     },
@@ -419,9 +416,6 @@ export default {
     },
   },
   watch: {
-    isConnected() {
-      this.fetchData();
-    },
     account() {
       this.fetchData();
       if (!this.isPlaying) {

@@ -59,7 +59,7 @@
             :class="[selectedRace === 4 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Elves <span class="arrow-down" v-if="userEnlistedRace === 1"></span>
+              Elves <span class="arrow-down" v-if="userEnlistedRace === 4"></span>
             </h2>
             <v-img
               class="race-image"
@@ -77,7 +77,7 @@
             :class="[selectedRace === 2 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Orcs <span class="arrow-down" v-if="userEnlistedRace === 1"></span>
+              Orcs <span class="arrow-down" v-if="userEnlistedRace === 2"></span>
             </h2>
             <v-img
               class="race-image invert-image"
@@ -94,7 +94,7 @@
             :class="[selectedRace === 3 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Undead <span class="arrow-down" v-if="userEnlistedRace === 1"></span>
+              Undead <span class="arrow-down" v-if="userEnlistedRace === 3"></span>
             </h2>
             <v-img
               class="race-image invert-image"
@@ -382,13 +382,7 @@ export default {
   },
 
   mounted() {
-    if (!this.isConnected) {
-      return;
-    }
-    this.$refs.raceSelect.scrollLeft =
-      this.$refs.raceSelect.scrollWidth / 2 - 125;
-    this.getWar(this.$route.params.contractWar);
-    this.loadData();
+    this.$refs.raceSelect.scrollLeft = this.$refs.raceSelect.scrollWidth / 2 - 125;
   },
 
   computed: {
@@ -397,7 +391,7 @@ export default {
       userEnlistedRace: "war/userEnlistedRace",
     }),
     ...mapState({
-      war: (state) => state.war,
+      war: (state) => state.war.war,
       phase: (state) => state.war.phase,
       isPlaying: (state) => state.music.isPlaying,
     }),
@@ -461,7 +455,6 @@ export default {
   watch: {
     isConnected() {
       this.getWar(this.$route.params.contractWar);
-      this.loadData();
     },
 
     account() {
