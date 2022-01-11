@@ -1,7 +1,7 @@
 <template>
   <div class="color-bg">
     <div class="background">
-      <v-container v-if="isConnected">
+      <v-container v-if="account">
         <v-row dense no-gutters>
           <v-col>
             <Button
@@ -13,9 +13,9 @@
             />
           </v-col>
         </v-row>
-        <v-row dense no-gutters>
+        <v-row dense no-gutters v-if="war">
           <v-col col="12" sm="4">
-            <Title :text="war.title" subtitle="Report" />
+            <Title :text="war.name" subtitle="Report" />
           </v-col>
           <v-col col="12" sm="4" offset-sm="4">
             <Button
@@ -43,7 +43,7 @@
             :class="[selectedRace === 1 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Humans <span class="arrow-down" v-if="userEnlistedRace === 1"></span>
+              Humans <span class="arrow-down" v-if="userEnlistedRace === 'Humans'"></span>
             </h2>
             <v-img
               class="race-image"
@@ -59,7 +59,7 @@
             :class="[selectedRace === 4 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Elves <span class="arrow-down" v-if="userEnlistedRace === 4"></span>
+              Elves <span class="arrow-down" v-if="userEnlistedRace === 'Elves'"></span>
             </h2>
             <v-img
               class="race-image"
@@ -77,7 +77,7 @@
             :class="[selectedRace === 2 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Orcs <span class="arrow-down" v-if="userEnlistedRace === 2"></span>
+              Orcs <span class="arrow-down" v-if="userEnlistedRace === 'Orcs'"></span>
             </h2>
             <v-img
               class="race-image invert-image"
@@ -94,7 +94,7 @@
             :class="[selectedRace === 3 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Undead <span class="arrow-down" v-if="userEnlistedRace === 3"></span>
+              Undead <span class="arrow-down" v-if="userEnlistedRace === 'Undead'"></span>
             </h2>
             <v-img
               class="race-image invert-image"
@@ -268,6 +268,9 @@
                   </div>
                 </div>
               </div>
+              <div class="d-flex align-center mb-1" v-if="hasPrizes">
+               <img width="24" class="mr-1" :src="`/images/${report.prizes.monster.prize.toLowerCase()}.png`" /> <Amount :amount="report.prizes.monster.amount" :symbol="report.prizes.monster.prize" formatted /> <div class="ml-1">Earned</div>
+              </div>
               <Button
                 type="wprimary"
                 text="Go to the Monster Battle"
@@ -280,7 +283,7 @@
             <v-col>
               <div class="rewards-title">Prize</div>
               <div class="d-flex align-center">
-              <img width="48" :src="`/images/${report.prizes.war.prize.toLowerCase()}.png`" /> <span class="rewards-title"><Amount :amount="report.prizes.war.amount" formatted /></span>
+              <img width="48" :src="`/images/${report.prizes.war.prize.toLowerCase()}.png`" /> <span class="rewards-title"><Amount :amount="report.prizes.war.amount" :symbol="report.prizes.war.prize" formatted /></span>
               </div>
             </v-col>
           </v-row>
@@ -300,7 +303,7 @@
                     <span v-if="reward.winner === '0x0'">No Winner</span><span v-else>Winner: {{ reward.winner }}</span>
                     <span class="unit-name">{{ account.toLowerCase() === reward.winner ? " (YOU)" : "" }}</span>
                   </div>
-                  <div class="rewards-container mt-1">
+                  <div class="rewards-display mt-1">
                     <Reward
                       class="reward-container"
                       v-for="prize in reward.prizes"
@@ -381,8 +384,10 @@ export default {
     this.setHeader(false);
   },
 
-  mounted() {
-    this.$refs.raceSelect.scrollLeft = this.$refs.raceSelect.scrollWidth / 2 - 125;
+  updated() {
+    if (this.war){
+      this.$refs.raceSelect.scrollLeft = this.$refs.raceSelect.scrollWidth / 2 - 125;
+    }
   },
 
   computed: {
@@ -395,9 +400,6 @@ export default {
       phase: (state) => state.war.phase,
       isPlaying: (state) => state.music.isPlaying,
     }),
-    isConnected() {
-      return this.$store.getters["user/isConnected"];
-    },
 
     account() {
       return this.$store.getters["user/account"];
@@ -453,10 +455,6 @@ export default {
   },
 
   watch: {
-    isConnected() {
-      this.getWar(this.$route.params.contractWar);
-    },
-
     account() {
       if (!this.isPlaying){
         this.startMusic({ musicKey: 'WAR', isLoop: true });
@@ -601,9 +599,8 @@ export default {
   font-size: 16px;
 }
 
-.rewards-container {
+.rewards-display {
   display: flex;
-  overflow-x: auto;
   padding-top: 8px;
 }
 
