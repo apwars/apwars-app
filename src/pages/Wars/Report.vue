@@ -15,7 +15,7 @@
         </v-row>
         <v-row dense no-gutters>
           <v-col col="12" sm="4">
-            <Title text="WAR IV" subtitle="Report" />
+            <Title :text="war.title" subtitle="Report" />
           </v-col>
           <v-col col="12" sm="4" offset-sm="4">
             <Button
