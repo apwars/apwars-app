@@ -74,6 +74,7 @@ export default {
 }
 .reward-description {
   font-size: 12px;
+  height: 28px;
   font-weight: bold;
   line-height: 1.2;
   width: 100%;
