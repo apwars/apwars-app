@@ -27,9 +27,13 @@ export default {
     dispatch("drawFullBoard");
   },
   async getBoard({ commit, state, dispatch }, { warId, raceName }) {
-    const controller = new WarsController();
-    const board = await controller.getBoard(warId, raceName);
-    commit("setBoard", { raceName, board });
+    try {
+      const controller = new WarsController();
+      const board = await controller.getBoard(warId, raceName);
+      commit("setBoard", { raceName, board });
+    } catch (error) {
+      console.error(error);
+    }
   },
   drawFullBoard({ state, commit }) {
     let upperBoard = [];
@@ -65,7 +69,7 @@ export default {
       setTimeout(() => {
         dispatch("checkWarCountdown", countdown);
       });
-      return
+      return;
     }
     countdown = Math.max(
       Date.parse(state.war.deadlines.endEnlistment) - now,
@@ -76,13 +80,13 @@ export default {
       setTimeout(() => {
         dispatch("checkWarCountdown", countdown);
       });
-      return
+      return;
     }
     countdown = Math.max(
       Date.parse(state.war.deadlines.endClaimPrize) - now,
       0
     );
     commit("setWarPhase", { countdown: 0, phase: "finished" });
-    return
+    return;
   },
 };

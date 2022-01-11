@@ -1,7 +1,6 @@
 export default {
   startMusic(state, { path, isLoop }) {
     state.track = new Audio(path);
-    state.track.volume = 0.1;
     state.track.loop = isLoop;
   },
   playMusic(state) {

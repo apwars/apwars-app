@@ -1,6 +1,6 @@
 <template>
   <div class="reward-container" v-if="reward">
-    <img height="64" :src="reward.image" :alt="reward.title" />
+    <img :height="size === 'small' ? 48 : 64" :src="reward.image" :alt="reward.title" />
     <div class="reward-title mt-1">{{ reward.title }}</div>
     <div class="reward-amount"><Amount :amount="amount" compact formatted /></div>
   </div>
@@ -23,6 +23,10 @@ export default {
       type: Number,
       default: 0,
     },
+    size: {
+      type: String,
+      default: '',
+    }
   },
   data() {
     return {
@@ -44,15 +48,14 @@ export default {
 <style lang="scss" scoped>
 .reward-container {
   position: relative;
-  display: inline-block;
-  margin-right: 8px;
   text-align: center;
+  margin: 0 4px;
 }
 .reward-title {
   font-size: 12px;
   font-weight: bold;
   padding: 0 12px;
-  width: 120px;
+  max-width: 120px;
   text-align: center;
   height: 28px;
 }

@@ -261,12 +261,128 @@
             </div>
           </v-col>
         </v-row>
+        <template v-if="warHasRewards">
+          <v-row no-gutters>
+            <v-col col="12" md="12">
+              <div class="war-prizes">War prizes</div>
+            </v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col>
+              <div class="prizes-container">
+                <div
+                  class="prize-container text-center"
+                  v-for="(prize, index) in humansPrize"
+                  :key="`humans-${index}`"
+                >
+                <template v-if="prize">
+                  <div class="slot-text">
+                    Human {{ prize.slot.x }}, {{ prize.slot.y }}
+                  </div>
+                  <div class="slot-text mb-2">
+                    {{ compactWallet(prize.winner) }}
+                  </div>
+                  <Reward
+                    :prize="prize.prize"
+                    :type="prize.type"
+                    :amount="prize.amount"
+                    size="small"
+                  />
+                </template>
+                </div>
+                <div
+                  class="prize-container text-center"
+                  v-for="(prize, index) in elvesPrize"
+                  :key="`elves-${index}`"
+                >
+                  <template v-if="prize">
+                  <div class="slot-text">
+                    Elven {{ prize.slot.x }}, {{ prize.slot.y }}
+                  </div>
+                  <div class="slot-text mb-2">
+                    {{ compactWallet(prize.winner) }}
+                  </div>
+                  <Reward
+                    :prize="prize.prize"
+                    :type="prize.type"
+                    :amount="prize.amount"
+                    size="small"
+                  /></template>
+                </div>
+                <div
+                  class="prize-container text-center"
+                  v-for="(prize, index) in orcsPrize"
+                  :key="`orcs-${index}`"
+                >
+                  <template v-if="prize">
+                  <div class="slot-text">
+                    Orc {{ prize.slot.x }}, {{ prize.slot.y }}
+                  </div>
+                  <div class="slot-text mb-2">
+                    {{ compactWallet(prize.winner) }}
+                  </div>
+                  <Reward
+                    :prize="prize.prize"
+                    :type="prize.type"
+                    :amount="prize.amount"
+                    size="small"
+                  />
+                  </template>
+                </div>
+                <div
+                  class="prize-container text-center"
+                  v-for="(prize, index) in undeadPrize"
+                  :key="`undead-${index}`"
+                >
+                  <template v-if="prize">
+                  <div class="slot-text">
+                    Undead {{ prize.slot.x }}, {{ prize.slot.y }}
+                  </div>
+                  <div class="slot-text mb-2">
+                    {{ compactWallet(prize.winner) }}
+                  </div>
+                  <Reward
+                    :prize="prize.prize"
+                    :type="prize.type"
+                    :amount="prize.amount"
+                    size="small"
+                  />
+                  </template>
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+        </template>
+        <template v-if="playerPrizes.length > 0">
+          <v-row no-gutters>
+            <v-col col="12" md="12">
+              <div class="war-prizes">
+                Your prizes ({{ compactWallet(account) }})
+              </div>
+            </v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col>
+              <div class="prizes-container">
+                <Reward
+                  v-for="(prize, index) in playerPrizes"
+                  :key="index"
+                  :prize="prize.prize"
+                  :type="prize.type"
+                  :amount="prize.amount"
+                  size="small"
+                />
+              </div>
+            </v-col>
+          </v-row>
+        </template>
       </template>
     </v-container>
   </div>
 </template>
 <script>
-import { mapMutations, mapActions, mapState } from "vuex";
+import { mapMutations, mapActions, mapState, mapGetters } from "vuex";
+import { RACES } from "@/data/Races";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
@@ -275,9 +391,19 @@ import Versus from "@/lib/components/ui/Versus";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 import BattleLoading from "./BattleLoading";
+import Reward from "@/lib/components/ui/Reward";
 
 export default {
-  components: { Title, Button, Versus, FullBoard, Amount, Countdown, BattleLoading },
+  components: {
+    Title,
+    Button,
+    Versus,
+    FullBoard,
+    Amount,
+    Countdown,
+    BattleLoading,
+    Reward,
+  },
   computed: {
     ...mapState({
       war: (state) => state.war.war,
@@ -286,6 +412,11 @@ export default {
       countdownTimer: (state) => state.war.countdown,
       phase: (state) => state.war.phase,
       isPlaying: (state) => state.music.isPlaying,
+    }),
+    ...mapGetters({
+      getRacePrizes: "war/getRacePrizes",
+      playerEnlistment: "war/playerEnlistment",
+      warHasRewards: "war/warHasRewards",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -300,7 +431,7 @@ export default {
     },
     countdownTitle() {
       if (this.phase === "not-started") {
-        return 'Starts in'
+        return "Starts in";
       } else if (this.phase === "enlistment") {
         return "Enlistment ends in";
       }
@@ -308,6 +439,25 @@ export default {
     },
     isWarFinished() {
       return this.war.status === "finished";
+    },
+    humansPrize() {
+      return this.getRacePrizes(RACES.HUMANS);
+    },
+    elvesPrize() {
+      return this.getRacePrizes(RACES.ELVES);
+    },
+    orcsPrize() {
+      return this.getRacePrizes(RACES.ORCS);
+    },
+    undeadPrize() {
+      return this.getRacePrizes(RACES.UNDEAD);
+    },
+    playerPrizes() {
+      if (!this.playerEnlistment) {
+        return [];
+      }
+      console.log(this.playerEnlistment);
+      return this.playerEnlistment.rewards;
     },
   },
   methods: {
@@ -337,6 +487,13 @@ export default {
         await this.getWar(this.$route.params.contractWar);
       }
     },
+    compactWallet(wallet) {
+      if (wallet === "0x0") {
+        return "No winner";
+      }
+      const end = wallet.length;
+      return `${wallet.substring(0, 3)}...${wallet.substring(end - 3, end)}`;
+    },
   },
   watch: {
     isConnected() {
@@ -344,8 +501,8 @@ export default {
     },
     account() {
       this.fetchData();
-      if (!this.isPlaying){
-        this.startMusic({ musicKey: 'WAR', isLoop: true });
+      if (!this.isPlaying) {
+        this.startMusic({ musicKey: "WAR", isLoop: true });
       }
     },
   },
@@ -360,7 +517,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
-    if (!to.path.includes('/wars')) {
+    if (!to.path.includes("/wars")) {
       this.stopMusic();
     }
     next();
@@ -374,6 +531,7 @@ export default {
   background-size: cover;
   background-image: url("/images/background/battle.png");
 }
+
 .battle-header {
   display: flex;
   flex-direction: column;
@@ -382,11 +540,13 @@ export default {
     justify-content: space-between;
   }
 }
+
 .big-text {
   font-weight: bold;
   font-size: 40px;
   line-height: 53px;
 }
+
 .board-label {
   font-size: 12px;
   font-weight: bold;
@@ -417,6 +577,7 @@ export default {
     transform: scaleX(-1);
   }
 }
+
 .prize-share {
   position: relative;
   display: flex;
@@ -442,6 +603,7 @@ export default {
     }
   }
 }
+
 .prize {
   position: absolute;
   bottom: -8px;
@@ -472,21 +634,51 @@ export default {
     line-height: 16px;
   }
 }
+
 .race-board {
   width: 100%;
   overflow-x: auto;
   display: flex;
   flex-direction: column;
 }
+
 .board-info {
   display: inline-block;
   min-height: 0;
   margin: 0 auto;
 }
+
 .button-container {
   width: 50%;
 }
+
 .mirror {
   transform: scaleX(-1);
+}
+
+.prizes-container {
+  display: flex;
+  width: 100%;
+}
+
+.prize-container {
+  width: 98px;
+}
+.war-prizes {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 21px;
+  margin-bottom: 12px;
+}
+
+.race-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffb800;
+}
+
+.slot-text {
+  font-size: 12px;
+  font-weight: bold;
 }
 </style>

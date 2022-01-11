@@ -122,7 +122,7 @@
         </v-sheet>
       </div>
       <div class="d-flex side-menu-right">
-        <div class="text-center">
+        <div class="text-center" v-if="track">
         <v-menu :close-on-content-click="false"
       :nudge-height="200">
           <template v-slot:activator="{ on, attrs }">
@@ -132,7 +132,7 @@
           v-bind="attrs"
           v-on="on"
         >
-            <v-icon v-if="isSoundActive"
+            <v-icon v-if="volume !== 0"
               >mdi-volume-high</v-icon
             >
             <v-icon v-else
@@ -275,7 +275,7 @@ export default {
   computed: {
     ...mapState({
       isPlaying: (state) => state.music.isPlaying,
-      isSoundActive: (state) => state.music.isSoundActive,
+      track: (state) => state.music.track,
       volume: (state) => state.music.volume,
     }),
     appVersion() {

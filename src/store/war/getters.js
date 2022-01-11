@@ -37,4 +37,25 @@ export default {
   getRaceEnlisted: (state, getters) => {
       return getters.userEnlistedRace;
   },
+  getRacePrizes: (state) => (race) => {
+    if (race === RACES.HUMANS) {
+      return state.war.races.find(r => r.name === RACE_DESCRIPTION[RACES.HUMANS]).rewards || [];
+    }
+    if (race === RACES.ORCS) {
+      return state.war.races.find(r => r.name === RACE_DESCRIPTION[RACES.ORCS]).rewards || [];
+    }
+    if (race === RACES.ELVES) {
+      return state.war.races.find(r => r.name === RACE_DESCRIPTION[RACES.ELVES]).rewards || [];
+    }
+    return state.war.races.find(r => r.name === RACE_DESCRIPTION[RACES.UNDEAD]).rewards || [];
+  },
+  warHasRewards: (state, getters) => {
+    let rewards = [];
+    rewards = rewards.concat(getters.getRacePrizes(1).rewards);
+    rewards = rewards.concat(getters.getRacePrizes(2).rewards);
+    rewards = rewards.concat(getters.getRacePrizes(3).rewards);
+    rewards = rewards.concat(getters.getRacePrizes(4).rewards);
+
+    return rewards.length > 0;
+  }
 };

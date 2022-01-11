@@ -25,7 +25,7 @@
               :handleClick="bringhome"
               :disabled="isLoadingBringhome"
             >
-              Claim prizes and restore survivors
+              Claim prizes and bring home
               <v-progress-circular
                 class="ml-1"
                 indeterminate
@@ -290,7 +290,7 @@
                   </div>
                   <div class="winner">
                     <span v-if="reward.winner === '0x0'">No Winner</span><span v-else>Winner: {{ reward.winner }}</span>
-                    <span class="unit-name">{{ account.toLowerCase() === reward.winner ? "(YOU)" : "" }}</span>
+                    <span class="unit-name">{{ account.toLowerCase() === reward.winner ? " (YOU)" : "" }}</span>
                   </div>
                   <div class="rewards-container mt-1">
                     <Reward

@@ -10,6 +10,7 @@ export default {
       return;
     }
     commit("startMusic", { path, isLoop });
+    dispatch("setVolume", 0.1);
     dispatch("playMusic");
   },
   playMusic({ commit }) {
