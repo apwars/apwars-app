@@ -464,6 +464,9 @@ export default {
 .monster-container {
   width: 100%;
   position: relative;
+  @media screen and (min-width: 1024px) {
+    margin-top: -160px;
+  }
 }
 
 .progress {
