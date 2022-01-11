@@ -245,6 +245,27 @@
                   </div>
                 </div>
               </div>
+              <div class="war-rules mb-1" v-if="!userEnlistedRace && phase === 'enlistment' && isEnlistmentValid()">
+                <p>
+              What will happen when you send your troops to the War Contract:<br />
+              - You'll not be able to withdraw them from the contract until the
+              war is over.
+              <br />
+              - The majority of them will die in the war, even if you win the
+              battle! <br />
+            </p>
+            <v-checkbox
+              v-model="agreement"
+              class="stake-modal-input ma-0 pa-0"
+              color="primary"
+            >
+              <template v-slot:label>
+                <div class="text-white">
+                  I have read and agreed with the battle rules
+                </div>
+              </template>
+            </v-checkbox>
+              </div>
               <Button
                 class="mt-1"
                 type="wprimary"
@@ -416,7 +437,7 @@ export default {
       }
     },
     isEnlistButtonDisabled() {
-      return this.phase === 'not-started' || !this.userEnlistedRace && (!this.formation || !this.isEnlistmentValid())
+      return this.phase === 'not-started' || !this.userEnlistedRace && (!this.isEnlistmentValid() || !this.agreement)
     },
 
     stakedTroop: {
@@ -452,8 +473,7 @@ export default {
         autoDecimalMode: false,
         allowNegative: false,
       },
-      buyURL:
-        "https://exchange.apwars.farm/#/swap?showFarms=true&outputCurrency",
+      agreement: false,
     };
   },
   methods: {
@@ -513,6 +533,9 @@ export default {
     },
     isEnlistmentValid() {
       let isValid = true;
+      if (!this.formation) {
+        isValid = false;
+      }
       for (let unit of this.unitsFromRace) {
         if (
           !this.validateAmount(unit.amount, this.getTroopBalance(unit.name)) ||
@@ -788,6 +811,14 @@ export default {
 .text-alert {
   color: yellow;
   font-size: 12px;
+}
+
+.war-rules {
+  font-size: 12px;
+}
+
+.text-white {
+  color: #FFF;
 }
 
 @keyframes weapon-fall {

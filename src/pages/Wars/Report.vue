@@ -276,6 +276,14 @@
             </v-col>
           </v-row>
 
+          <v-row v-if="phase === 'claim' || phase === 'finished'">
+            <v-col>
+              <div class="rewards-title">Prize</div>
+              <div class="d-flex align-center">
+              <img width="48" :src="`/images/${report.prizes.war.prize.toLowerCase()}.png`" /> <span class="rewards-title"><Amount :amount="report.prizes.war.amount" formatted /></span>
+              </div>
+            </v-col>
+          </v-row>
           <v-row>
             <v-col>
               <div class="rewards-title">Rewarded slots</div>
@@ -493,6 +501,7 @@ export default {
           raceName,
           this.account
         );
+        console.log(report);
         this.report = report;
       } catch (error) {
         console.log(error);

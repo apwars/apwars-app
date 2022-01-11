@@ -58,7 +58,4 @@ export default {
 
     return rewards.filter(i => i).length > 0;
   },
-  isWarEnded: (state) => {
-    return state.war.phase === 'claim' || state.war.phase === 'finished';
-  }
 };
