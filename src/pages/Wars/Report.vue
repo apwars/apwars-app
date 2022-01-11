@@ -276,7 +276,7 @@
             </v-col>
           </v-row>
 
-          <v-row v-if="phase === 'claim' || phase === 'finished'">
+          <v-row v-if="hasPrizes">
             <v-col>
               <div class="rewards-title">Prize</div>
               <div class="d-flex align-center">
@@ -284,7 +284,7 @@
               </div>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row v-if="hasPrizes">
             <v-col>
               <div class="rewards-title">Rewarded slots</div>
               <div class="mt-2">
@@ -452,6 +452,10 @@ export default {
     isWarNotStarted() {
       return this.phase === "not-started";
     },
+
+    hasPrizes() {
+      return (phase === 'claim' || phase === 'finished') && Object.keys(report.prizes).length > 0;
+    }
   },
 
   watch: {

@@ -53,4 +53,12 @@ export default class WarsController {
       throw error;
     }
   }
+
+  getFormation(formation) {
+    try {
+      return this.base._get(`/wars/formation/${formation}`);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

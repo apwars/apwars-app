@@ -27,5 +27,8 @@ export default {
   setWarPhase(state, { countdown, phase }) {
     state.countdown = countdown;
     state.phase = phase;
+  },
+  setFormationOptions(state, formation) {
+    state.formationOptions = [formation];
   }
 };
