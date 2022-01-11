@@ -58,7 +58,12 @@
                 v-if="!userEnlistedRace || phase === 'not-started'"
                 type="wprimary"
                 :handleClick="handleEnlistment"
-                :disabled="!formation || isLoadingEnlistment || phase === 'not-started' || !selectedSlot"
+                :disabled="
+                  !formation ||
+                    isLoadingEnlistment ||
+                    phase === 'not-started' ||
+                    !selectedSlot
+                "
               >
                 Enlist
                 <v-progress-circular
@@ -83,8 +88,30 @@
                 <template v-if="selectedSlot">
                   <div class="monster-name">
                     <span v-if="slotData">
-                    Enlistment at Slot {{ selectedSlot.y }},
-                    {{ selectedSlot.x }}
+                      Enlistment at Slot {{ selectedSlot.y }},
+                      {{ selectedSlot.x }}
+                      <div class="troop-status mr-2">
+                        <div class="status-icon">
+                          <img
+                            src="/images/icons/attack.png"
+                            alt="Attack points"
+                          />
+                        </div>
+                        <div class="force-text">
+                          <Amount :amount="slotData.power.strength" compact formatted />
+                        </div>
+                      </div>
+                      <div class="troop-status mr-2">
+                        <div class="status-icon">
+                          <img
+                            src="/images/icons/defense.png"
+                            alt="Attack points"
+                          />
+                        </div>
+                        <div class="force-text">
+                          <Amount :amount="slotData.power.defense" compact formatted />
+                        </div>
+                      </div>
                     </span>
                     <span v-else>Free Slot</span>
                   </div>
@@ -246,7 +273,7 @@ export default {
       getRaceData: "war/getRaceData",
       userEnlistedRace: "war/userEnlistedRace",
       getRaceEnlisted: "war/getRaceEnlisted",
-      totalStakedWeapon: "enlistment/totalStakedWeapon"
+      totalStakedWeapon: "enlistment/totalStakedWeapon",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -295,7 +322,11 @@ export default {
       return RACE_DESCRIPTION[Number(this.$route.params.raceId)];
     },
     isEnlistedWithAnotherRace() {
-      return this.getRaceEnlisted && this.getRaceEnlisted !== RACE_DESCRIPTION[Number(this.$route.params.raceId)];
+      return (
+        this.getRaceEnlisted &&
+        this.getRaceEnlisted !==
+          RACE_DESCRIPTION[Number(this.$route.params.raceId)]
+      );
     },
   },
   methods: {
@@ -316,9 +347,10 @@ export default {
     async handleSlotSelection(key) {
       const [y, x] = key.split("-");
       this.selectedSlot = { x, y };
-      const slotData = this.board[y].find(
-        (e) => e && e.slot.x === Number(x) && e.slot.y === Number(y)
-      );
+      const slotData =
+        this.board[y].find(
+          (e) => e && e.slot.x === Number(x) && e.slot.y === Number(y)
+        ) || null;
       this.slotData = slotData;
     },
     async handleEnlistment() {
@@ -338,9 +370,18 @@ export default {
           slot: this.selectedSlot,
         });
         await this.getWar(warId);
+        this.handleSlotSelection(
+          `${this.selectedSlot.y}-${this.selectedSlot.x}`
+        );
         ToastSnackbar.success("Successfully enlisted at war!");
       } catch (error) {
-        ToastSnackbar.error(error.code);
+        let msg =
+          error.message ||
+          "Something went wrong while trying to enlist, try again later.";
+        if (error.code === 4001) {
+          msg = "Player denied the signature";
+        }
+        ToastSnackbar.error(msg);
         console.error(error);
       } finally {
         this.isLoadingEnlistment = false;
@@ -351,7 +392,7 @@ export default {
     },
     getUnitAmount(troopName) {
       if (!this.slotData) {
-        return this.troopList.find(t => t.name === troopName).amount;
+        return this.troopList.find((t) => t.name === troopName).amount;
       } else if (this.slotData) {
         return this.slotData.formation.soldiers[troopName].amount;
       } else {
@@ -360,7 +401,9 @@ export default {
     },
     getGameItemAmount(gameItemId) {
       if (!this.slotData) {
-        const weaponTier = Number(Object.keys(TIER_WEAPONS).find(k => TIER_WEAPONS[k] === gameItemId));
+        const weaponTier = Number(
+          Object.keys(TIER_WEAPONS).find((k) => TIER_WEAPONS[k] === gameItemId)
+        );
         return this.totalStakedWeapon(weaponTier);
       } else {
         return (
@@ -381,8 +424,8 @@ export default {
     },
     account() {
       this.fetchData();
-      if (!this.isPlaying){
-        this.startMusic({ musicKey: 'WAR', isLoop: true });
+      if (!this.isPlaying) {
+        this.startMusic({ musicKey: "WAR", isLoop: true });
       }
     },
   },
@@ -392,7 +435,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
-    if (!to.path.includes('/wars')) {
+    if (!to.path.includes("/wars")) {
       this.stopMusic();
     }
     next();
@@ -489,5 +532,25 @@ export default {
 }
 .slot-info-container {
   min-height: 56px;
+}
+.troop-status {
+  display: inline-flex;
+  align-items: center;
+  .status-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 21px;
+    width: 21px;
+    margin-right: 4px;
+    background-image: url("/images/icons/slot.png");
+    background-size: contain;
+    >img {
+      height: 60%;
+    }
+  }
+  .force-text {
+    font-size: 12px;
+  }
 }
 </style>

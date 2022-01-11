@@ -3,7 +3,7 @@
     <div class="phase-title">
       <div>{{ title }}</div>
       <Button
-        :text="`Go to War Report ${phase === 'finished' ? 'and Claim Prizes' : ''}`"
+        :text="`Go to War Report ${phase === 'claim' ? 'and Claim Prizes' : ''}`"
         type="wtertiary"
         :handleClick="goToReport"
       />

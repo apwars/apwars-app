@@ -67,8 +67,8 @@ export default {
     if (countdown > 0) {
       commit("setWarPhase", { countdown, phase: "not-started" });
       setTimeout(() => {
-        dispatch("checkWarCountdown", countdown);
-      });
+        dispatch("checkWarCountdown");
+      }, countdown);
       return;
     }
     countdown = Math.max(
@@ -78,14 +78,21 @@ export default {
     if (countdown > 0) {
       commit("setWarPhase", { countdown, phase: "enlistment" });
       setTimeout(() => {
-        dispatch("checkWarCountdown", countdown);
-      });
+        dispatch("checkWarCountdown");
+      }, countdown);
       return;
     }
     countdown = Math.max(
       Date.parse(state.war.deadlines.endClaimPrize) - now,
       0
     );
+    if (countdown > 0) {
+      commit("setWarPhase", { countdown, phase: "claim" });
+      setTimeout(() => {
+        dispatch("checkWarCountdown");
+      }, countdown);
+      return;
+    }
     commit("setWarPhase", { countdown: 0, phase: "finished" });
     return;
   },

@@ -19,7 +19,7 @@
           </v-col>
           <v-col col="12" sm="4" offset-sm="4">
             <Button
-              v-if="phase === 'finished'"
+              v-if="phase === 'claim'"
               type="wprimary"
               icon="swords"
               :handleClick="bringhome"
@@ -43,7 +43,7 @@
             :class="[selectedRace === 1 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Humans
+              Humans <span class="arrow-down" v-if="userEnlistedRace === 1"></span>
             </h2>
             <v-img
               class="race-image"
@@ -59,7 +59,7 @@
             :class="[selectedRace === 4 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Elves
+              Elves <span class="arrow-down" v-if="userEnlistedRace === 1"></span>
             </h2>
             <v-img
               class="race-image"
@@ -77,7 +77,7 @@
             :class="[selectedRace === 2 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Orcs
+              Orcs <span class="arrow-down" v-if="userEnlistedRace === 1"></span>
             </h2>
             <v-img
               class="race-image invert-image"
@@ -94,7 +94,7 @@
             :class="[selectedRace === 3 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Undead
+              Undead <span class="arrow-down" v-if="userEnlistedRace === 1"></span>
             </h2>
             <v-img
               class="race-image invert-image"
@@ -386,6 +386,7 @@ export default {
   computed: {
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
+      userEnlistedRace: "war/userEnlistedRace",
     }),
     ...mapState({
       war: (state) => state.war,
@@ -709,5 +710,28 @@ export default {
 .bold {
   font-weight: bold;
   font-size: 16px;
+}
+
+.arrow-down {
+  display: inline-block;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 8px solid yellow;
+  animation: flutuation 1s linear forwards infinite;
+  transition: all ease;
+}
+
+@keyframes flutuation {
+  0% {
+    transform: translateY(-50%);
+  }
+
+  50% {
+    transform: translateY(-80%);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
 }
 </style>

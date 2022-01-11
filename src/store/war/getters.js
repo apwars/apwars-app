@@ -56,6 +56,9 @@ export default {
     rewards = rewards.concat(getters.getRacePrizes(3).rewards);
     rewards = rewards.concat(getters.getRacePrizes(4).rewards);
 
-    return rewards.length > 0;
+    return rewards.filter(i => i).length > 0;
+  },
+  isWarEnded: (state) => {
+    return state.war.phase === 'claim' || state.war.phase === 'finished';
   }
 };
