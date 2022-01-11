@@ -454,7 +454,7 @@ export default {
     },
 
     hasPrizes() {
-      return (phase === 'claim' || phase === 'finished') && Object.keys(report.prizes).length > 0;
+      return (this.phase === 'claim' || this.phase === 'finished') && Object.keys(this.report.prizes).length > 0;
     }
   },
 
