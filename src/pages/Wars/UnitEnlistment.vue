@@ -245,26 +245,34 @@
                   </div>
                 </div>
               </div>
-              <div class="war-rules mb-1" v-if="!userEnlistedRace && phase === 'enlistment' && isEnlistmentValid()">
+              <div
+                class="war-rules mb-1"
+                v-if="
+                  !userEnlistedRace &&
+                    phase === 'enlistment' &&
+                    isEnlistmentValid()
+                "
+              >
                 <p>
-              What will happen when you send your troops to the War Contract:<br />
-              - You'll not be able to withdraw them from the contract until the
-              war is over.
-              <br />
-              - The majority of them will die in the war, even if you win the
-              battle! <br />
-            </p>
-            <v-checkbox
-              v-model="agreement"
-              class="stake-modal-input ma-0 pa-0"
-              color="primary"
-            >
-              <template v-slot:label>
-                <div class="text-white">
-                  I have read and agreed with the battle rules
-                </div>
-              </template>
-            </v-checkbox>
+                  What will happen when you send your troops to the War
+                  Contract:<br />
+                  - You'll not be able to withdraw them from the contract until
+                  the war is over.
+                  <br />
+                  - The majority of them will die in the war, even if you win
+                  the battle! <br />
+                </p>
+                <v-checkbox
+                  v-model="agreement"
+                  class="stake-modal-input ma-0 pa-0"
+                  color="primary"
+                >
+                  <template v-slot:label>
+                    <div class="text-white">
+                      I have read and agreed with the battle rules
+                    </div>
+                  </template>
+                </v-checkbox>
               </div>
               <Button
                 class="mt-1"
@@ -292,8 +300,7 @@
 import { mapMutations, mapGetters, mapActions, mapState } from "vuex";
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
-import { RACE_FORMATIONS, FORMATIONS_NAMES } from "@/data/Enlistment";
-import { RACE_DESCRIPTION } from "@/data/Races";
+import { RACES, RACE_DESCRIPTION } from "@/data/Races";
 
 import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
@@ -316,12 +323,13 @@ export default {
   computed: {
     ...mapState({
       formation: (state) => state.enlistment.formation,
-      currentEnlistment: (state) => state.enlistment.raceId,
+      currentEnlistment: (state) => state.enlistment.raceName,
       isLoadingBalances: (state) => state.user.isLoadingBalances,
       balances: (state) => state.user.balances,
       isLoadingWar: (state) => state.war.isLoading,
       phase: (state) => state.war.phase,
       isPlaying: (state) => state.music.isPlaying,
+      formationConfig: (state) => state.war.formationConfig,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
@@ -391,10 +399,16 @@ export default {
       return MONSTERS.find((m) => m.id === this.enlistmentOptions.monsterId);
     },
     formationOptions() {
-      return Object.keys(RACE_FORMATIONS[this.troop.race]).map((key) => ({
-        text: FORMATIONS_NAMES[key],
-        value: Number(key),
-      }));
+      if (!this.formationConfig) {
+        return [];
+      }
+      return Object.keys(this.formationConfig).map((key) => {
+        const text = key[0].toUpperCase() + key.substring(1, key.length);
+        return {
+          text: text,
+          value: key,
+        };
+      });
     },
     troopBalance() {
       return this.getTroopBalance(this.troop.name);
@@ -428,16 +442,20 @@ export default {
       );
     },
     enlistButtonText() {
-      if (this.phase === 'not-started') {
-        return 'Not started';
-      } else if (this.userEnlistedRace || !this.phase === 'enlistment') {
-        return `View slots (${this.totalEnlistment}/${this.totalSlots})`
+      if (this.phase === "not-started") {
+        return "Not started";
+      } else if (this.userEnlistedRace || !this.phase === "enlistment") {
+        return `View slots (${this.totalEnlistment}/${this.totalSlots})`;
       } else {
-        return `Choose a slot (${this.totalEnlistment}/${this.totalSlots})`
+        return `Choose a slot (${this.totalEnlistment}/${this.totalSlots})`;
       }
     },
     isEnlistButtonDisabled() {
-      return this.phase === 'not-started' || !this.userEnlistedRace && (!this.isEnlistmentValid() || !this.agreement)
+      return (
+        this.phase === "not-started" ||
+        (!this.userEnlistedRace &&
+          (!this.isEnlistmentValid() || !this.agreement))
+      );
     },
 
     stakedTroop: {
@@ -445,7 +463,7 @@ export default {
         return this.troop.amount;
       },
       set(value) {
-        this.stakeTroop({ amount: value, troopId: this.troop.id });
+        this.stakeTroop({ amount: value, troopName: this.troop.name });
       },
     },
 
@@ -523,7 +541,7 @@ export default {
         .focus();
     },
     handleFormationChange(value) {
-      this.changeFormation({ raceId: this.troop.race, value });
+      this.changeFormation({ raceName: this.troop.raceDesc, value });
     },
     getTroopBalance(troopName) {
       return this.balances?.[troopName] || 0;
@@ -568,8 +586,8 @@ export default {
       this.fetchData();
     },
     account() {
-      if (!this.isPlaying){
-        this.startMusic({ musicKey: 'WAR', isLoop: true });
+      if (!this.isPlaying) {
+        this.startMusic({ musicKey: "WAR", isLoop: true });
       }
       this.fetchData();
     },
@@ -578,13 +596,13 @@ export default {
     this.setHeader(false);
     this.troopSelected = this.unitsFromRace[0].name;
     this.fetchData();
-    if (this.currentEnlistment !== Number(this.$route.params.raceId)) {
+    if (this.currentEnlistment !== RACE_DESCRIPTION[Number(this.$route.params.raceId)]) {
       this.clearEnlistment();
     }
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
-    if (!to.path.includes('/wars')) {
+    if (!to.path.includes("/wars")) {
       this.stopMusic();
     }
     next();
@@ -818,7 +836,7 @@ export default {
 }
 
 .text-white {
-  color: #FFF;
+  color: #fff;
 }
 
 @keyframes weapon-fall {

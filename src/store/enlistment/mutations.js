@@ -1,7 +1,7 @@
 export default {
-  setAmount(state, { amount, troopId }) {
+  setAmount(state, { amount, troopName }) {
     state.troops = state.troops.map((t) => {
-      if (t.id === troopId) {
+      if (t.name === troopName) {
         return { ...t, amount };
       } else {
         return t;
@@ -17,9 +17,9 @@ export default {
       }
     })
   },
-  setFormation(state, { raceId, value }) {
+  setFormation(state, { raceName, value }) {
     state.formation = value;
-    state.raceId = raceId;
+    state.raceName = raceName;
   },
   clearEnlistment(state) {
     state.troops = state.troops.map((t) => {

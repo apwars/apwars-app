@@ -63,8 +63,7 @@ export default {
     try {
       const controller = new WarsController();
       const f = await controller.getFormation(formation);
-      console.log(f)
-      commit("setFormationOptions", f);
+      commit("setFormationConfig", {squadron: f });
     } catch (error) {
       console.error(error);
     }

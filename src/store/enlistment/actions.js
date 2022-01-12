@@ -1,21 +1,19 @@
-import { RACES } from "@/data/Races";
-import { FORMATIONS, RACE_FORMATIONS, FORMATIONS_NAMES } from "@/data/Enlistment";
 import WarsController from "@/controller/WarsController";
 
 export default {
-    stakeTroop({ commit }, { amount, troopId }) {
-        commit('setAmount', { amount, troopId });
+    stakeTroop({ commit }, { amount, troopName }) {
+        commit('setAmount', { amount, troopName });
     },
     stakeWeapon({ commit }, { troopName, amount }) {
         commit('setWeaponAmount', { troopName, amount })
     },
-    async changeFormation({ commit, dispatch }, { raceId, value }) {
-        const formationData = RACE_FORMATIONS[raceId][value];
-        const troopsIds = Object.keys(formationData);
-        for (const troopId of troopsIds) {
-            dispatch('stakeTroop', { troopId: Number(troopId), amount: formationData[troopId] });
+    async changeFormation({ commit, dispatch, rootState }, { raceName, value }) {
+        const formationData = rootState.war.formationConfig[value][raceName];
+        const troopNames = Object.keys(formationData);
+        for (const troopName of troopNames) {
+            dispatch('stakeTroop', { troopName: troopName, amount: formationData[troopName].amount });
         }
-        commit('setFormation', { raceId, value });
+        commit('setFormation', { raceName, value });
     },
     clearEnlistment({ commit }) {
         commit('clearEnlistment');
@@ -23,9 +21,9 @@ export default {
     checkPlayerEnlistment({ dispatch, rootGetters }) {
         const playerEnlistment = rootGetters['war/playerEnlistment'];
         if (playerEnlistment) {
-            const value = FORMATIONS[playerEnlistment.formation.name.toUpperCase()];
-            const raceId = RACES[playerEnlistment.race.toUpperCase()];
-            dispatch('changeFormation', { raceId, value});
+            const value = playerEnlistment.formation.name;
+            const raceName = playerEnlistment.race;
+            dispatch('changeFormation', { raceName, value});
             for (let gameItem of playerEnlistment.gameItems) {
                 dispatch('stakeWeapon', { troopName: gameItem.token, amount: gameItem.amount });
             }
@@ -45,7 +43,7 @@ export default {
             }
         }
         const controller = new WarsController();
-        const formation = { name: FORMATIONS_NAMES[rootState.enlistment.formation].toLowerCase() };
+        const formation = { name: rootState.enlistment.formation };
         await controller.enlist(warId, faction, race, rootState.user.account, formation, gameItems, slot);
     }
 };

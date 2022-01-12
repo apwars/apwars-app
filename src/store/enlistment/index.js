@@ -13,7 +13,7 @@ const state = {
   })),
   weapons: getWeapons().map((w) => ({ ...w })),
   formation: null,
-  raceId: null,
+  raceName: null,
 };
 
 export default {
