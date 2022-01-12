@@ -199,7 +199,7 @@
           <v-row no-gutters class="mt-1">
             <v-col cols="12" class="d-flex justify-start align-center mt-2">
               <div class="d-flex" v-if="slotData">
-                <span>Total force: {{ slotData.power.total }}</span>
+                <span>Total force: {{ slotData.power.total }} Power Units</span>
                 <span class="ml-2"
                   >Faction share: {{ (slotData.percentagePowerFaction * 100).toFixed(2) }}%</span
                 >
