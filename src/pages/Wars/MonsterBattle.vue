@@ -197,12 +197,16 @@
             </v-col>
           </v-row>
           <v-row no-gutters class="mt-1">
-            <v-col
-              cols="12"
-              class="d-flex justify-start align-center mt-2"
-            >
-              <div class="d-flex">
-                <span>Total force: {{ slotData.power.total }}</span> <span class="ml-2">Faction share: {{ slotData.percentagePowerFaction }}%</span> <span class="ml-2">Race Share: {{ slotData.percentagePowerRace }}%</span></div>
+            <v-col cols="12" class="d-flex justify-start align-center mt-2">
+              <div class="d-flex" v-if="slotData">
+                <span>Total force: {{ slotData.power.total }}</span>
+                <span class="ml-2"
+                  >Faction share: {{ slotData.percentagePowerFaction }}%</span
+                >
+                <span class="ml-2"
+                  >Race Share: {{ slotData.percentagePowerRace }}%</span
+                >
+              </div>
             </v-col>
           </v-row>
           <v-row v-if="slotData && slotData.rewards.length > 0">
@@ -430,7 +434,6 @@ export default {
     async fetchData() {
       if (this.account && !this.war && !this.isLoadingWar) {
         await this.getWar(this.$route.params.contractWar);
-        
       }
     },
   },
@@ -442,10 +445,10 @@ export default {
       }
     },
     playerEnlistment(value) {
-          this.handleSlotSelection(
-            `${this.playerEnlistment.slot.y}-${this.playerEnlistment.slot.x}`
-          );
-    }
+      this.handleSlotSelection(
+        `${this.playerEnlistment.slot.y}-${this.playerEnlistment.slot.x}`
+      );
+    },
   },
   async mounted() {
     this.setHeader(false);
