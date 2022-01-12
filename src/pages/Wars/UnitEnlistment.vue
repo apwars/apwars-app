@@ -254,12 +254,11 @@
                 "
               >
                 <p>
-                  What will happen when you send your troops to the War
-                  Contract:<br />
-                  - You'll not be able to withdraw them from the contract until
+                  What will happen when you send your troops to the War:<br />
+                  - You'll not be able to bring them to home until
                   the war is over.
                   <br />
-                  - The majority of them will die in the war, even if you win
+                  - The majority of them can die in the war, even if you win
                   the battle! <br />
                 </p>
                 <v-checkbox

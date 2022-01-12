@@ -201,10 +201,10 @@
               <div class="d-flex" v-if="slotData">
                 <span>Total force: {{ slotData.power.total }}</span>
                 <span class="ml-2"
-                  >Faction share: {{ slotData.percentagePowerFaction }}%</span
+                  >Faction share: {{ (slotData.percentagePowerFaction * 100).toFixed(2) }}%</span
                 >
                 <span class="ml-2"
-                  >Race Share: {{ slotData.percentagePowerRace }}%</span
+                  >Race Share: {{ (slotData.percentagePowerRace * 100).toFixed(2) }}%</span
                 >
               </div>
             </v-col>
@@ -240,6 +240,9 @@
             <div class="d-flex align-items-center justify-center">
               <div class="reward-description text-center pr-2">
                 Monster Prize Pool
+              </div>
+              <div class="" v-if="playerEnlistment">
+                <span v-if="!(phase === 'claim' || phase === 'finished')">Current</span> Monster prize ~<Amount :amount="playerEnlistment.percentagePowerRace * 40000" symbol="wGOLD" formatted compact/>
               </div>
               <div class="treasure-progress">
                 <div class="text">
