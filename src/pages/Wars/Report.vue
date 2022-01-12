@@ -19,7 +19,7 @@
           </v-col>
           <v-col col="12" sm="4" offset-sm="4">
             <Button
-              v-if="phase === 'claim'"
+              v-if="phase === 'claim' && (report && !report.bringHome)"
               type="wprimary"
               icon="swords"
               :handleClick="bringhome"
@@ -34,6 +34,7 @@
                 v-if="isLoadingBringhome"
               />
             </Button>
+            <div class="unit-name" v-if="report && report.bringHome">Your prizes are claimed!</div>
           </v-col>
         </v-row>
 
@@ -384,6 +385,12 @@ export default {
     this.setHeader(false);
   },
 
+  mounted() {
+    if (this.war && this.account) {
+      this.loadData();
+    }
+  },
+
   updated() {
     if (this.war){
       this.$refs.raceSelect.scrollLeft = this.$refs.raceSelect.scrollWidth / 2 - 125;
@@ -496,10 +503,9 @@ export default {
           raceName,
           this.account
         );
-        console.log(report);
         this.report = report;
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         this.isLoading = false;
       }
@@ -548,7 +554,7 @@ export default {
         ToastSnackbar.error(
           "Something went wrong while trying to bring troops and prizes Home, try again later."
         );
-        console.log(error);
+        console.error(error);
       } finally {
         this.isLoadingBringhome = false;
       }
