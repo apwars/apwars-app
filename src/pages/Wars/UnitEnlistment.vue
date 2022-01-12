@@ -819,7 +819,7 @@ export default {
 }
 
 .error-color {
-  color: var(--v-error-darken1);
+  color: #ffb800;
 }
 .amount-error {
   @extend .error-color;
