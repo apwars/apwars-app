@@ -264,7 +264,7 @@ export default {
 
   data() {
     return {
-      showModal: true,
+      showModal: false,
       showChatBox: false,
       playerName: sessionStorage.getItem("playerName"),
       tmpPlayerName: "",
@@ -340,11 +340,12 @@ export default {
   mounted() {
     this.watchBlockchain();
 
-    this.listRouterNoShowMetamask.map((path) => {
-      if (path === this.$router.history.current.path) {
-        this.showModal = false;
-      }
-    });
+    this.connectToMetaMask();
+    // this.listRouterNoShowMetamask.map((path) => {
+    //   if (path === this.$router.history.current.path) {
+    //     this.showModal = false;
+    //   }
+    // });
 
     socket.on("messages", (items) => {
       this.messages = items;

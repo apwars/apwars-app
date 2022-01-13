@@ -13,15 +13,18 @@
       <div v-if="isLoadingUnit" class="ml-1 align-self-start info-container">
         <div class="title">Necessary Resources</div>
         <div class="d-flex qty ml-at-mobile">
-          <v-img class="mr-1"
+          <v-img
+            class="mr-1"
             :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
             :max-width="$vuetify.breakpoint.mobile ? 28 : 36"
-            src="/images/wcourage.png" />
+            src="/images/wcourage.png"
+          />
           <div class="mt-token-text">
             <amount
-            :amount="getTokenAConfig.amount"
-            decimals="2"
-            symbol="wCOURAGE"/>
+              :amount="getTokenAConfig.amount"
+              decimals="2"
+              symbol="wCOURAGE"
+            />
           </div>
         </div>
         <div class="d-flex qty ml-at-mobile">
@@ -36,13 +39,16 @@
             <amount
               :amount="getTokenBConfig.amount"
               decimals="2"
-              :symbol="unit.name"/>
+              :symbol="unit.name"
+            />
           </div>
         </div>
         <div class="d-flex align-center my-1 qty ml-at-mobile">
-          <v-img class="mr-1" 
+          <v-img
+            class="mr-1"
             :max-width="$vuetify.breakpoint.mobile ? 32 : 40"
-            src="/images/icons/hourglass.png" />
+            src="/images/icons/hourglass.png"
+          />
 
           <div class="d-flex flex-column">
             <span>
@@ -76,22 +82,24 @@
           </span>
         </div>
 
-        <wButton
-          v-if="!isApproved"
+        <div v-if="!isApproved">
+          <!-- <wButton
           class="mt-1"
           :disabled="!getGeneralConfig.isEnabled"
           @click="openModalArimedesApproval()"
         >
           Approve Research
-        </wButton>
-        <wButton
-          v-else-if="combinators.combinatorId === '0'"
-          :disabled="!getGeneralConfig.isEnabled"
-          @click="openModalArimedesNewResearch"
-          class="mt-1"
-        >
-          New Research
-        </wButton>
+        </wButton> -->
+        </div>
+        <div v-else-if="combinators.combinatorId === '0'">
+          <!-- <wButton
+            :disabled="!getGeneralConfig.isEnabled"
+            @click="openModalArimedesNewResearch"
+            class="mt-1"
+          >
+            New Research
+          </wButton> -->
+        </div>
         <wButton
           v-else-if="combinators.combinatorId !== '0' && isClaim"
           @click="openModalClaim()"
@@ -338,7 +346,7 @@ export default {
       this.tokenBContract = new Troops(this.tokenB);
       this.combinatorContract = new Combinator(this.combinatorAddress);
       await this.combinatorContract.getContractManager();
-      this.isContractsLoaded = true
+      this.isContractsLoaded = true;
     },
     async loadData() {
       if (!this.isConnected || !this.isContractsLoaded) {
@@ -574,7 +582,6 @@ export default {
         },
       };
       this.modalArimedesNewResearch = true;
-
     },
     async combineTokens() {
       try {
@@ -682,9 +689,7 @@ export default {
   filter: grayscale(100%);
 }
 
-
-
-@media screen and (min-width:1024px) {
+@media screen and (min-width: 1024px) {
   .info-container {
     width: 280px;
   }
