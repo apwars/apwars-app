@@ -41,22 +41,6 @@
         <div ref="raceSelect" class="race-select">
           <div
             class="race-container"
-            :class="[selectedRace === 1 ? 'is-selected' : '']"
-          >
-            <h2 class="text-center mb-1">
-              Humans <span class="arrow-down" v-if="userEnlistedRace === 'Humans'"></span>
-            </h2>
-            <v-img
-              class="race-image"
-              src="/images/troops/wwizard-portrait.png"
-              alt="Humans"
-              @click="() => handleRaceChange(1)"
-            >
-            </v-img>
-          </div>
-
-          <div
-            class="race-container"
             :class="[selectedRace === 4 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
@@ -67,6 +51,22 @@
               src="/images/troops/wferal-spirit-portrait.png"
               alt="Elves"
               @click="() => handleRaceChange(4)"
+            >
+            </v-img>
+          </div>
+
+          <div
+            class="race-container"
+            :class="[selectedRace === 1 ? 'is-selected' : '']"
+          >
+            <h2 class="text-center mb-1">
+              Humans <span class="arrow-down" v-if="userEnlistedRace === 'Humans'"></span>
+            </h2>
+            <v-img
+              class="race-image"
+              src="/images/troops/wwizard-portrait.png"
+              alt="Humans"
+              @click="() => handleRaceChange(1)"
             >
             </v-img>
           </div>
