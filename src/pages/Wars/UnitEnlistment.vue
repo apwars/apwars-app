@@ -287,7 +287,7 @@
                 class="text-center mt-1"
                 v-if="!getRaceEnlisted && formation && !isEnlistmentValid()"
               >
-                Please, check your troops balance to enlist.
+                Please, check your troops and equipments balance to enlist.
               </div>
             </div>
           </v-col>
@@ -558,12 +558,11 @@ export default {
         isValid = false;
       }
       for (let unit of this.unitsFromRace) {
+        const stakedAmount = this.getTotalStakedWeapon(unit.tier);
+        const weaponBalance = this.getWeaponBalance(this.getWeaponByTier(unit.tier).id);
         if (
           !this.validateAmount(unit.amount, this.getTroopBalance(unit.name)) ||
-          !this.validateAmount(
-            this.getTotalStakedWeapon(unit.tier),
-            this.getWeaponBalance(this.getWeaponByTier(unit.tier).id)
-          )
+          !this.validateAmount(stakedAmount, weaponBalance) || !this.validateAmount(stakedAmount, unit.amount)
         ) {
           isValid = false;
         }
