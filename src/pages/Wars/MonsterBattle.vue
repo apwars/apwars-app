@@ -59,7 +59,7 @@
                 type="wprimary"
                 :handleClick="handleEnlistment"
                 :disabled="
-                  !formation ||
+                  slotData || !formation ||
                     isLoadingEnlistment ||
                     phase === 'not-started' ||
                     !selectedSlot
