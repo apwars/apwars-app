@@ -211,7 +211,7 @@
               <div class="d-flex" v-if="slotData">
                 <span>Total force: {{ slotData.power.total }} Power Units</span>
                 <span class="ml-2"
-                  >Race Share:
+                  >Race share:
                   {{ getPercentage(slotData.percentagePowerRace) }}%</span
                 >
                 <span class="ml-2"
@@ -265,10 +265,10 @@
               </div>
             </div>
             <div
-              class="text-small"
+              class="text-small text-yellow"
               v-if="playerEnlistment && !isEnlistedWithAnotherRace"
             >
-              <span v-if="!isWarOver">Current</span> Monster prize ~<Amount
+              Your <span v-if="!isWarOver">Current</span> prize ~<Amount
                 :amount="playerCurrentMonsterPrize"
                 symbol="wGOLD"
                 formatted
@@ -592,7 +592,7 @@ export default {
   padding-top: 8px;
 }
 .text-yellow {
-  color: yellow;
+  color: #ffb800;
 }
 .slot-info-container {
   min-height: 56px;
