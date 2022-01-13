@@ -704,6 +704,7 @@ export default {
   filter: grayscale(100%);
 }
 
+.info-card {
 @media screen and (min-width: 1024px) {
   width: 250px;
   .info-container {
