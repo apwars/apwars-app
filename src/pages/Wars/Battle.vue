@@ -492,7 +492,7 @@ export default {
         return "No winner";
       }
       const end = wallet.length;
-      return `${wallet.substring(2, 5)}...${wallet.substring(end - 3, end)}`;
+      return `${wallet.substring(0, 5)}...${wallet.substring(end - 3, end)}`;
     },
   },
   watch: {
