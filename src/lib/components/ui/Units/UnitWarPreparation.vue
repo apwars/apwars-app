@@ -58,9 +58,11 @@
           </div>
         </div>
         <div class="d-flex align-center my-1 qty ml-at-mobile">
-          <v-img class="mr-1" 
+          <v-img
+            class="mr-1"
             :max-width="$vuetify.breakpoint.mobile ? 32 : 40"
-            src="/images/icons/hourglass.png" />
+            src="/images/icons/hourglass.png"
+          />
 
           <div class="d-flex flex-column">
             <span>
@@ -94,22 +96,24 @@
           </span>
         </div>
 
-        <wButton
-          v-if="!isApproved"
+        <div v-if="!isApproved">
+          <!-- <wButton
           class="mt-1"
           :disabled="!getGeneralConfig.isEnabled"
           @click="openModalArimedesApproval()"
         >
           Approve Research
-        </wButton>
-        <wButton
-          v-else-if="combinators.combinatorId === '0'"
-          :disabled="!getGeneralConfig.isEnabled"
-          @click="openModalArimedesNewResearch"
-          class="mt-1"
-        >
-          New Research
-        </wButton>
+        </wButton> -->
+        </div>
+        <div v-else-if="combinators.combinatorId === '0'">
+          <!-- <wButton
+            :disabled="!getGeneralConfig.isEnabled"
+            @click="openModalArimedesNewResearch"
+            class="mt-1"
+          >
+            New Research
+          </wButton> -->
+        </div>
         <wButton
           v-else-if="combinators.combinatorId !== '0' && isClaim"
           @click="openModalClaim()"
@@ -356,7 +360,7 @@ export default {
       this.tokenBContract = new Troops(this.tokenB);
       this.combinatorContract = new Combinator(this.combinatorAddress);
       await this.combinatorContract.getContractManager();
-      this.isContractsLoaded = true
+      this.isContractsLoaded = true;
     },
     async loadData() {
       if (!this.isConnected || !this.isContractsLoaded) {
@@ -592,7 +596,6 @@ export default {
         },
       };
       this.modalArimedesNewResearch = true;
-
     },
     async combineTokens() {
       try {
@@ -701,9 +704,9 @@ export default {
   filter: grayscale(100%);
 }
 
-.info-card {
+@media screen and (min-width: 1024px) {
   width: 250px;
-  @media only screen and (min-width: 600px){
+  .info-container {
     width: 280px;
   }
 }

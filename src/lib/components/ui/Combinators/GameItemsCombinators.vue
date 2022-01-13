@@ -103,22 +103,24 @@
             {{ gameItems.title }}
           </span>
         </div>
-        <wButton
-          v-if="!isApproved"
-          class="mt-1"
-          :disabled="!getGeneralConfig.isEnabled"
-          @click="openModalArimedesApproval()"
-        >
-          Approve Research
-        </wButton>
-        <wButton
-          v-else-if="combinators.combinatorId === '0'"
+        <div v-if="!isApproved">
+          <!-- <wButton
+            class="mt-1"
+            :disabled="!getGeneralConfig.isEnabled"
+            @click="openModalArimedesApproval()"
+          >
+            Approve Research
+          </wButton> -->
+        </div>
+        <div v-else-if="combinators.combinatorId === '0'">
+          <!-- <wButton
           :disabled="!getGeneralConfig.isEnabled"
           @click="openModalArimedesNewResearch"
           class="mt-1"
         >
           New Research
-        </wButton>
+        </wButton> -->
+        </div>
         <wButton
           v-else-if="combinators.combinatorId !== '0' && isClaim"
           @click="openModalClaim()"

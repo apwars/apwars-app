@@ -5,7 +5,7 @@
       id="gameArcadia"
       width="100%"
       :src="
-        `/Game/Arcadia/?worldManager=${getWorldManager}&landMap=${getLandMap}&treasureHunt=${getTreasureHunt}&treasureHuntId=${getTreasureHuntId}&expectedVersion=1.1.1.3&baseUrl=${getBaseUrl}`
+        `/Game/Arcadia/?worldManager=${getWorldManager}&landMap=${getLandMap}&treasureHunt=${getTreasureHunt}&treasureHuntId=${getTreasureHuntId}&expectedVersion=1.1.3.3&baseUrl=${getBaseUrl}`
       "
       frameborder="0"
       scrolling="no"
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   components: {},
 
@@ -73,6 +74,7 @@ export default {
   },
 
   mounted() {
+    this.setHeader(false);
     if (!this.isConnected) {
       return;
     }
@@ -84,6 +86,10 @@ export default {
   },
 
   methods: {
+    ...mapMutations({
+      setHeader: "app/setMenuDisplay",
+    }),
+
     initData() {
       this.$nextTick(() => {
         this.resizeIframe();
@@ -94,8 +100,7 @@ export default {
 
     resizeIframe() {
       const footer = document.querySelector(".v-footer").clientHeight;
-      const appBar = document.querySelector(".v-app-bar").clientHeight;
-      const reduceHeight = footer + appBar;
+      const reduceHeight = footer;
       document.querySelector("#gameArcadia").height =
         document.getElementsByTagName("html")[0].clientHeight - reduceHeight;
     },
