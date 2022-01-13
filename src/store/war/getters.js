@@ -1,4 +1,4 @@
-import { RACES, RACE_DESCRIPTION } from "@/data/Races";
+import { RACES } from "@/data/Races";
 
 export default {
   getRaceData: (state) => (race) => {

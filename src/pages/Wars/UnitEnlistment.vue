@@ -58,7 +58,7 @@
                       stakedWeapon > stakedTroop ||
                         !validateAmount(stakedWeapon, weaponBalance)
                     "
-                    :disabled="isEnlistedWithRace"
+                    :disabled="isEnlistedWithRace || isWarOver"
                   />
                   <div
                     class="amount-error"
@@ -161,7 +161,8 @@
                   src="/images/icons/battle-shield.png"
                   alt="Enlistment resume"
                 />
-                <span v-if="!isEnlistedWithRace">Select your formation</span>
+                <span v-if="isWarOver">Enlistment period is Over</span>
+                <span v-else-if="!isEnlistedWithRace">Select your formation</span>
                 <span v-else>Your enlistment</span>
               </div>
               <v-select
@@ -172,7 +173,7 @@
                 @change="handleFormationChange"
                 :loading="isLoadingWar || isLoadingBalances"
                 :disabled="
-                  isLoadingWar || isLoadingBalances || isEnlistedWithRace
+                  isLoadingWar || isLoadingBalances || isEnlistedWithRace || isWarOver
                 "
               ></v-select>
             </template>
@@ -330,7 +331,7 @@ export default {
       isLoadingWar: (state) => state.war.isLoading,
       phase: (state) => state.war.phase,
       isPlaying: (state) => state.music.isPlaying,
-      formationConfig: (state) => state.war.formationConfig,
+      formationConfig: (state) => state.war.war.formationConfig,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
@@ -341,6 +342,7 @@ export default {
       userEnlistedRace: "war/userEnlistedRace",
       getRaceEnlisted: "war/getRaceEnlisted",
       getTotalStakedWeapon: "enlistment/totalStakedWeapon",
+      isWarOver: "war/isWarOver",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -454,8 +456,8 @@ export default {
     isEnlistButtonDisabled() {
       return (
         this.phase === "not-started" ||
-        (!this.userEnlistedRace &&
-          (this.phase === "enlistment" && !this.isEnlistmentValid() || !this.agreement))
+        (!this.userEnlistedRace && this.phase === "enlistment" &&
+          (!this.isEnlistmentValid() || !this.agreement))
       );
     },
 

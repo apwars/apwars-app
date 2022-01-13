@@ -22,7 +22,6 @@ const initialState = () => ({
     isLoading: false,
     data: null,
   },
-  formationConfig: null,
   countdown: 0,
   phase: 'not-started',
 });

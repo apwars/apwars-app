@@ -274,6 +274,27 @@
             </div>
           </v-col>
         </v-row>
+        <template v-if="war.prizesDistributed.length > 0">
+          <v-row no-gutters>
+            <v-col col="12" md="12">
+              <div class="war-prizes">Distributed prizes</div>
+            </v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col>
+              <div class="prizes-container">
+                <Reward
+                  v-for="(prize, index) in war.prizesDistributed"
+                  :key="index"
+                  :prize="prize.prize"
+                  :type="prize.type"
+                  :amount="prize.amount"
+                  size="small"
+                />
+              </div>
+            </v-col>
+          </v-row>
+        </template>
         <template v-if="warHasRewards">
           <v-row no-gutters>
             <v-col col="12" md="12">
@@ -379,27 +400,6 @@
               <div class="prizes-container">
                 <Reward
                   v-for="(prize, index) in playerPrizes"
-                  :key="index"
-                  :prize="prize.prize"
-                  :type="prize.type"
-                  :amount="prize.amount"
-                  size="small"
-                />
-              </div>
-            </v-col>
-          </v-row>
-        </template>
-        <template v-if="war.prizesDistributed.length > 0">
-          <v-row no-gutters>
-            <v-col col="12" md="12">
-              <div class="war-prizes">All prizes distributed</div>
-            </v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-col>
-              <div class="prizes-container">
-                <Reward
-                  v-for="(prize, index) in war.prizesDistributed"
                   :key="index"
                   :prize="prize.prize"
                   :type="prize.type"

@@ -229,17 +229,21 @@
                     <div style="font-size: 14px">
                       <span class="d-block bold">{{ weapon.title }}</span>
                       <span class="d-block"
-                        >Global:
+                        v-if="Object.keys(report.gameItems.globalReport).length > 0"
+                        >Global Qty:
                         <Amount
                           :amount="
-                            report.gameItems.globalReport.find(
-                              (w) => w.id === weapon.id
-                            ).amount
+                            getWeaponGlobalAmount(weapon.id)
                           "
                           compact
                           formatted
-                      /></span>
+                      />
+                      </span>
+                      <span v-else>
+                        Not staked
+                      </span>
                       <span class="d-block"
+                      v-if="Object.keys(report.gameItems.accountReport).length > 0"
                         >My Qty:
                         <Amount
                           :amount="
@@ -375,18 +379,6 @@ export default {
     return {
       isLoading: false,
       isLoadingBringhome: false,
-      contractWar: this.$route.params.contractWar,
-      globalTroops: [],
-      isEnlistment: false,
-      warMachine: {
-        isLoading: true,
-      },
-      isWar: { test: false },
-      isCountdown: false,
-      countdownTime: 0,
-      countdownTimeEnd: 0,
-      weapons: [],
-      monsterToView: [{ id: "" }, { name: "" }],
       selectedRace: 1,
       report: null,
     };
@@ -419,6 +411,7 @@ export default {
       war: (state) => state.war.war,
       phase: (state) => state.war.phase,
       isPlaying: (state) => state.music.isPlaying,
+      weapons: (state) => state.enlistment.weapons,
     }),
 
     account() {
@@ -558,6 +551,10 @@ export default {
 
     isEnabled(name) {
       this.selectedRace = name;
+    },
+
+    getWeaponGlobalAmount(weaponId) {
+      return this.report.gameItems.globalReport.find(w => w.id === weaponId).amount;
     },
 
     async bringhome() {

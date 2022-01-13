@@ -55,7 +55,7 @@
           <v-row no-gutters>
             <v-col class="d-flex justify-center">
               <Button
-                v-if="!userEnlistedRace || phase === 'not-started'"
+                v-if="(!userEnlistedRace || phase === 'not-started') && !isWarOver"
                 type="wprimary"
                 :handleClick="handleEnlistment"
                 :disabled="
