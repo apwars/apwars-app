@@ -569,7 +569,7 @@ export default {
       return isValid;
     },
     async fetchData() {
-      if (this.account && !this.war && !this.isLoadingWar) {
+      if (this.account && !this.isLoadingWar) {
         await this.getWar(this.$route.params.contractWar);
         await this.fetchUserWallet(this.account);
       }
