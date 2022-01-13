@@ -161,42 +161,53 @@
                           compact
                           formatted
                       /></span>
-                      <span class="d-block"
-                        >Deads units:
+                      <template v-if="isWarOver">
+                        <span class="d-block"
+                          >Deads units:
+                          <Amount
+                            :amount="
+                              report.soldiers[unit.name].accountReport.dead
+                            "
+                            compact
+                            formatted
+                        /></span>
+                        <span class="d-block mb-2"
+                          >Survivors:
+                          <Amount
+                            :amount="
+                              report.soldiers[unit.name].accountReport.survivors
+                            "
+                            compact
+                            formatted
+                        /></span>
+                      </template>
+                    </template>
+                    <span v-else>Not staked</span>
+                    <span class="d-block" style="color: #FFB800;"
+                      >Global Enlisted Units:
+                      <Amount
+                        :amount="report.soldiers[unit.name].globalReport.enlisted"
+                        compact
+                        formatted
+                    /></span>
+                    <template v-if="isWarOver">
+                      <span class="d-block" style="color: #FFB800;"
+                        >Global Dead Units:
                         <Amount
-                          :amount="
-                            report.soldiers[unit.name].accountReport.dead
-                          "
+                          :amount="report.soldiers[unit.name].globalReport.dead"
                           compact
                           formatted
                       /></span>
-                      <span class="d-block mb-2"
-                        >Survivors:
+                      <span class="d-block" style="color: #FFB800;"
+                        >Global Survivors:
                         <Amount
                           :amount="
-                            report.soldiers[unit.name].accountReport.survivors
+                            report.soldiers[unit.name].globalReport.survivors
                           "
                           compact
                           formatted
                       /></span>
                     </template>
-                    <span v-else>Not staked</span>
-                    <span class="d-block" style="color: #FFB800;"
-                      >Global Dead Units:
-                      <Amount
-                        :amount="report.soldiers[unit.name].globalReport.dead"
-                        compact
-                        formatted
-                    /></span>
-                    <span class="d-block" style="color: #FFB800;"
-                      >Global Survivors:
-                      <Amount
-                        :amount="
-                          report.soldiers[unit.name].globalReport.survivors
-                        "
-                        compact
-                        formatted
-                    /></span>
                   </div>
                 </v-col>
               </v-row>
@@ -262,7 +273,7 @@
                 </div>
                 <div class="treasure-progress">
                   <div class="text">
-                    <Amount :amount="40000" compact formatted />
+                    <Amount :amount="monsterPrizeValue" compact formatted />
                   </div>
                   <div class="treasure">
                     <v-img src="/images/battle/treasure.png" />
@@ -401,6 +412,8 @@ export default {
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
       userEnlistedRace: "war/userEnlistedRace",
+      isWarOver: "war/isWarOver",
+      getRaceMonsterPrizeValue: "war/getRaceMonsterPrizeValue",
     }),
     ...mapState({
       war: (state) => state.war.war,
@@ -457,7 +470,11 @@ export default {
     },
 
     hasPrizes() {
-      return (this.phase === 'claim' || this.phase === 'finished') && Object.keys(this.report.prizes).length > 0;
+      return (this.isWarOver) && Object.keys(this.report.prizes).length > 0;
+    },
+
+    monsterPrizeValue() {
+      return this.getRaceMonsterPrizeValue(RACE_DESCRIPTION[this.selectedRace]);
     }
   },
 
@@ -549,6 +566,7 @@ export default {
         const controller = new WarsController();
         const warId = this.$route.params.contractWar;
         await controller.bringhome(warId, this.account);
+        await this.loadData();
         ToastSnackbar.success("Your troops and prizes are safe at Home");
       } catch (error) {
         ToastSnackbar.error(

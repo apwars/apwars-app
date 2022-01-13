@@ -15,7 +15,7 @@
       <v-row dense no-gutters>
         <v-col>
           <div class="name-container d-flex justify-start">
-            <Title text="WAR IV" subtitle="Monster Battle" />
+            <Title :text="war ? war.name : 'WAR'" subtitle="Monster Battle" />
           </div>
         </v-col>
       </v-row>
@@ -131,6 +131,16 @@
                     This slot is available!
                   </div>
                 </template>
+                <div
+                  v-else-if="!isEnlistedWithAnotherRace && formation"
+                  class="monster-name"
+                >
+                  Your current troops and equipments
+                </div>
+
+                <div v-else-if="!isEnlisted && !formation && !isWarOver" class="monster-name">
+                  Go to enlistment screen to select a formation
+                </div>
               </div>
             </v-col>
           </v-row>
@@ -201,11 +211,15 @@
               <div class="d-flex" v-if="slotData">
                 <span>Total force: {{ slotData.power.total }} Power Units</span>
                 <span class="ml-2"
-                  >Faction share: {{ (slotData.percentagePowerFaction * 100).toFixed(2) }}%</span
+                  >Race Share:
+                  {{ getPercentage(slotData.percentagePowerRace) }}%</span
                 >
                 <span class="ml-2"
-                  >Race Share: {{ (slotData.percentagePowerRace * 100).toFixed(2) }}%</span
-                >
+                  >Faction share:
+                  {{
+                    getPercentage(slotData.percentagePowerFaction)
+                  }}%</span
+                >  
               </div>
             </v-col>
           </v-row>
@@ -241,17 +255,25 @@
               <div class="reward-description text-center pr-2">
                 Monster Prize Pool
               </div>
-              <div class="" v-if="playerEnlistment">
-                <span v-if="!(phase === 'claim' || phase === 'finished')">Current</span> Monster prize ~<Amount :amount="playerEnlistment.percentagePowerRace * 40000" symbol="wGOLD" formatted compact/>
-              </div>
               <div class="treasure-progress">
                 <div class="text">
-                  <Amount :amount="40000" compact formatted />
+                  <Amount :amount="monsterPrizeValue" compact formatted />
                 </div>
                 <div class="treasure">
                   <v-img src="/images/battle/treasure.png" />
                 </div>
               </div>
+            </div>
+            <div
+              class="text-small"
+              v-if="playerEnlistment && !isEnlistedWithAnotherRace"
+            >
+              <span v-if="!isWarOver">Current</span> Monster prize ~<Amount
+                :amount="playerCurrentMonsterPrize"
+                symbol="wGOLD"
+                formatted
+                compact
+              />
             </div>
           </div>
         </v-col>
@@ -286,6 +308,7 @@ export default {
   },
   computed: {
     ...mapState({
+      war: (state) => state.war.war,
       weapons: (state) => state.enlistment.weapons,
       formation: (state) => state.enlistment.formation,
       phase: (state) => state.war.phase,
@@ -299,6 +322,9 @@ export default {
       getRaceEnlisted: "war/getRaceEnlisted",
       totalStakedWeapon: "enlistment/totalStakedWeapon",
       playerEnlistment: "war/playerEnlistment",
+      playerCurrentMonsterPrize: "war/playerCurrentMonsterPrize",
+      isWarOver: "war/isWarOver",
+      getRaceMonsterPrizeValue: "war/getRaceMonsterPrizeValue",
     }),
     account() {
       return this.$store.getters["user/account"];
@@ -343,11 +369,19 @@ export default {
     raceName() {
       return RACE_DESCRIPTION[Number(this.$route.params.raceId)];
     },
+    isEnlisted() {
+      return this.getRaceEnlisted;
+    },
     isEnlistedWithAnotherRace() {
       return (
         this.getRaceEnlisted &&
         this.getRaceEnlisted !==
           RACE_DESCRIPTION[Number(this.$route.params.raceId)]
+      );
+    },
+    monsterPrizeValue() {
+      return this.getRaceMonsterPrizeValue(
+        RACE_DESCRIPTION[Number(this.$route.params.raceId)]
       );
     },
   },
@@ -439,6 +473,9 @@ export default {
         await this.getWar(this.$route.params.contractWar);
       }
     },
+    getPercentage(value) {
+      return Math.floor(value * 100);
+    }
   },
   watch: {
     account() {
@@ -469,8 +506,9 @@ export default {
 <style lang="scss" scoped>
 .background {
   height: 100%;
-  width: 100%;
+  width: 100vw;
   background-size: cover;
+  background-position: fixed;
   background-image: url("/images/background/battle-zoomed.png");
 }
 .main {
@@ -578,5 +616,9 @@ export default {
   .force-text {
     font-size: 12px;
   }
+}
+.text-small {
+  font-size: 12px;
+  text-align: center;
 }
 </style>

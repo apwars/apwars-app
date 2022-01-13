@@ -42,7 +42,7 @@
     <div :class="['prizes', degenForce > corpForce ? 'invert' : '']">
       <div :class="['winner-prize', degenForce > corpForce ? 'invert' : '']">
         <div class="d-sm-none">Winner Prize</div>
-        <IconInfo iconPath="/images/wgold.png" title="Unlocked Prize">
+        <IconInfo iconPath="/images/wgold.png" :title="isWarFinished ? 'Unlocked Prize' : 'Locked Prize'">
           <span class="prize-text"
             >~<Amount :amount="winnerAmount" formatted compact />
             <span class="game-text">wGOLD</span></span
@@ -112,6 +112,9 @@ export default {
     totalFactionForces() {
       return this.corpForce + this.degenForce;
     },
+    isWarFinished() {
+      return this.phase === 'claim' || this.phase === 'finished';
+    }
   },
   methods: {
     goToReport() {

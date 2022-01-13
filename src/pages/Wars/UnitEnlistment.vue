@@ -3,7 +3,7 @@
     class="background"
     :style="`background-image: url(${enlistmentOptions.background})`"
   >
-    <v-container v-if="isConnected">
+    <v-container v-if="account">
       <v-row dense no-gutters>
         <v-col>
           <Button
@@ -26,7 +26,7 @@
         <v-row dense>
           <v-col md="4">
             <div class="name-container d-flex justify-space-between">
-              <Title text="WAR IV" subtitle="Enlistment" />
+              <Title :text="war ? war.name : 'WAR'" subtitle="Enlistment" />
             </div>
             <div class="form-container mt-3 mb-2">
               <v-skeleton-loader type="text, button" v-if="isLoadingBalances" />
@@ -260,6 +260,7 @@
                   <br />
                   - The majority of them can die in the war, even if you win
                   the battle! <br />
+                  - When war is over, you'll have 48 hours to claim your prizes. <br />
                 </p>
                 <v-checkbox
                   v-model="agreement"
@@ -321,6 +322,7 @@ export default {
   },
   computed: {
     ...mapState({
+      war: (state) => state.war.war,
       formation: (state) => state.enlistment.formation,
       currentEnlistment: (state) => state.enlistment.raceName,
       isLoadingBalances: (state) => state.user.isLoadingBalances,

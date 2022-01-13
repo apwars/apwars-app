@@ -58,4 +58,13 @@ export default {
 
     return rewards.filter(i => i).length > 0;
   },
+  isWarOver: (state) => {
+    return state.phase === 'claim' || state.phase === 'finished';
+  },
+  getRaceMonsterPrizeValue: (state) => (race) => {
+    return state.war.races.find(r => r.name === race).monsterPrizeAmount || 0;
+  },
+  playerCurrentMonsterPrize: (state, getters) => {
+    return getters.playerEnlistment.percentagePowerRace * getters.getRaceMonsterPrizeValue(getters.playerEnlistment.race);
+  }
 };
