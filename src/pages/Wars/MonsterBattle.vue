@@ -27,7 +27,7 @@
             <v-col>
               <div class="monster-name">
                 <span v-if="isEnlistedWithAnotherRace">
-                  {{ raceName }} Strategy Board
+                  {{ raceName }} Strategic Board
                 </span>
                 <span v-else-if="userEnlistedRace">
                   Your slot is indicated with yellow arrow
