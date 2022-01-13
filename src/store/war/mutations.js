@@ -28,7 +28,4 @@ export default {
     state.countdown = countdown;
     state.phase = phase;
   },
-  setFormationConfig(state, formation) {
-    state.formationConfig = formation;
-  }
 };

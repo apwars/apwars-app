@@ -11,7 +11,6 @@ export default {
       const war = await controller.getOne(warId);
       commit("setWar", war);
       await dispatch("getFullBoard", warId);
-      await dispatch("getFormation", "squadron");
       dispatch("checkWarCountdown");
       dispatch("enlistment/checkPlayerEnlistment", null, { root: true });
     } catch (error) {
@@ -58,15 +57,6 @@ export default {
 
     const fullBoard = [].concat(upperBoard, bottomBoard);
     commit("setFullBoard", fullBoard);
-  },
-  async getFormation({ commit }, formation) {
-    try {
-      const controller = new WarsController();
-      const f = await controller.getFormation(formation);
-      commit("setFormationConfig", {squadron: f });
-    } catch (error) {
-      console.error(error);
-    }
   },
   checkWarCountdown({ state, commit, dispatch }) {
     const now = new Date().getTime();
