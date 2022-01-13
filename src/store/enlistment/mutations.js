@@ -26,6 +26,6 @@ export default {
         return { ...t, amount: 0 };
     });
     state.formation = null;
-    state.raceId = null;
+    state.raceName = null;
   },
 };

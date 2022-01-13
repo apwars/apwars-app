@@ -300,7 +300,7 @@
 import { mapMutations, mapGetters, mapActions, mapState } from "vuex";
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
-import { RACES, RACE_DESCRIPTION } from "@/data/Races";
+import { RACE_DESCRIPTION } from "@/data/Races";
 
 import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
@@ -445,7 +445,7 @@ export default {
     enlistButtonText() {
       if (this.phase === "not-started") {
         return "Not started";
-      } else if (this.userEnlistedRace || !this.phase === "enlistment") {
+      } else if (this.phase !== "enlistment" || this.userEnlistedRace) {
         return `View slots (${this.totalEnlistment}/${this.totalSlots})`;
       } else {
         return `Choose a slot (${this.totalEnlistment}/${this.totalSlots})`;
