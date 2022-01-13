@@ -455,7 +455,7 @@ export default {
       return (
         this.phase === "not-started" ||
         (!this.userEnlistedRace &&
-          (!this.isEnlistmentValid() || !this.agreement))
+          (this.phase === "enlistment" && !this.isEnlistmentValid() || !this.agreement))
       );
     },
 
