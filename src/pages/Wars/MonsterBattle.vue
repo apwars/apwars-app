@@ -212,11 +212,11 @@
                 <span>Total force: {{ slotData.power.total }} Power Units</span>
                 <span class="ml-2"
                   >Race share:
-                  {{ getPercentage(slotData.percentagePowerRace) }}%</span
+                  ~{{ getPercentage(slotData.percentagePowerRace) }}%</span
                 >
                 <span class="ml-2"
                   >Faction share:
-                  {{
+                  ~{{
                     getPercentage(slotData.percentagePowerFaction)
                   }}%</span
                 >  
@@ -474,7 +474,7 @@ export default {
       }
     },
     getPercentage(value) {
-      return Math.floor(value * 100);
+      return Math.round(value * 100, 2);
     }
   },
   watch: {
