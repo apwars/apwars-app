@@ -284,7 +284,7 @@
               />
               <div
                 class="text-center mt-1"
-                v-if="formation && !isEnlistmentValid()"
+                v-if="!getRaceEnlisted && formation && !isEnlistmentValid()"
               >
                 Please, check your troops balance to enlist.
               </div>
