@@ -65,7 +65,7 @@
                     !selectedSlot
                 "
               >
-                Enlist
+                {{ enlistButtonText }}
                 <v-progress-circular
                   class="ml-1"
                   indeterminate
@@ -384,6 +384,13 @@ export default {
         RACE_DESCRIPTION[Number(this.$route.params.raceId)]
       );
     },
+    enlistButtonText() {
+      if (this.phase === 'not-started') {
+        return "Not started"
+      } else {
+        return "Enlist"
+      }
+    }
   },
   methods: {
     ...mapMutations({

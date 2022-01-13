@@ -38,7 +38,7 @@
               hideEnd
             />
             <div class="prizepool">
-              <img src="/images/battle/treasure-fed.webp" />
+              <img width="158" height="158" src="/images/battle/treasure-fed.webp" />
               <div class="prize">
                 <div class="brown-info">
                   <img src="/images/wgold.png" width="28" />
@@ -109,20 +109,26 @@
                         />
                       </div>
                     </div>
+                    <div class="fixed-container">
                     <Button
                       type="wsecondary"
                       icon="swords"
                       text="Humans"
                       :handleClick="() => goToEnlistment(1)"
+                      isBlock
                     />
+                    </div>
                   </div>
                   <div class="enlistment-resume d-flex">
+                    <div class="fixed-container">
                     <Button
                       type="wsecondary"
                       icon="swords"
                       text="Orcs"
                       :handleClick="() => goToEnlistment(2)"
+                      isBlock
                     />
+                    </div>
                     <div class="brown-info ml-2">
                       <div class="power-text">
                         <Amount
@@ -166,6 +172,7 @@
                   :cols="40"
                   :board="fullBoard"
                   rotate="30deg"
+                  @clickFaction="(faction) => handleClickFaction(faction)"
                 />
                 <div class="d-flex justify-space-between">
                   <div class="enlistment-resume d-flex">
@@ -205,20 +212,26 @@
                         />
                       </div>
                     </div>
+                    <div class="fixed-container">
                     <Button
                       type="wsecondary"
                       icon="swords"
                       text="Elves"
                       :handleClick="() => goToEnlistment(4)"
+                      isBlock
                     />
+                    </div>
                   </div>
                   <div class="enlistment-resume d-flex">
+                    <div class="fixed-container">
                     <Button
                       type="wsecondary"
                       icon="swords"
                       text="Undead"
                       :handleClick="() => goToEnlistment(3)"
+                      isBlock
                     />
+                    </div>
                     <div class="brown-info ml-2">
                       <div class="power-text">
                         <Amount
@@ -376,6 +389,27 @@
             </v-col>
           </v-row>
         </template>
+        <template v-if="war.prizesDistributed.length > 0">
+          <v-row no-gutters>
+            <v-col col="12" md="12">
+              <div class="war-prizes">All prizes distributed</div>
+            </v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col>
+              <div class="prizes-container">
+                <Reward
+                  v-for="(prize, index) in war.prizesDistributed"
+                  :key="index"
+                  :prize="prize.prize"
+                  :type="prize.type"
+                  :amount="prize.amount"
+                  size="small"
+                />
+              </div>
+            </v-col>
+          </v-row>
+        </template>
       </template>
     </v-container>
   </div>
@@ -441,22 +475,21 @@ export default {
       return this.war.status === "finished";
     },
     humansPrize() {
-      return this.getRacePrizes(RACES.HUMANS);
+      return this.getRacePrizes('Humans');
     },
     elvesPrize() {
-      return this.getRacePrizes(RACES.ELVES);
+      return this.getRacePrizes('Elves');
     },
     orcsPrize() {
-      return this.getRacePrizes(RACES.ORCS);
+      return this.getRacePrizes('Orcs');
     },
     undeadPrize() {
-      return this.getRacePrizes(RACES.UNDEAD);
+      return this.getRacePrizes('Undead');
     },
     playerPrizes() {
       if (!this.playerEnlistment) {
         return [];
       }
-      console.log(this.playerEnlistment);
       return this.playerEnlistment.rewards;
     },
   },
@@ -494,6 +527,9 @@ export default {
       const end = wallet.length;
       return `${wallet.substring(0, 5)}...${wallet.substring(end - 3, end)}`;
     },
+    handleClickFaction(faction) {
+      this.$router.push(`/wars/${this.$route.params.contractWar}/enlistment/${faction}/battle`);
+    }
   },
   watch: {
     isConnected() {
@@ -613,11 +649,13 @@ export default {
 
 .brown-info {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #3a2720;
   border: 1px solid #ffeebc;
   padding: 4px 12px;
+  width: 132px;
+  text-align: center;
   .prize-text {
     display: block;
     white-space: nowrap;
@@ -680,5 +718,9 @@ export default {
 .slot-text {
   font-size: 12px;
   font-weight: bold;
+}
+
+.fixed-container {
+  width: 124px;
 }
 </style>

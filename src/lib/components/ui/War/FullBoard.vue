@@ -19,6 +19,7 @@
           ]"
           v-for="(col, colIndex) in row"
           :key="colIndex"
+          @click="() => handleClick(getFaction(rowIndex, colIndex))"
         >
           <div
             class="arrow-down"
@@ -101,6 +102,17 @@ export default {
         return '/images/troops/wgrunt.webp';
       }
       return '/images/troops/wwarrior.webp';
+    },
+    handleClick(factionImage) {
+      let faction = 1;
+      if (factionImage.includes('skeleton')) {
+        faction = 4;
+      } else if (factionImage.includes('elf')) {
+        faction = 3;
+      } else if (factionImage.includes('grunt')) {
+        faction = 2;
+      }
+      this.$emit('clickFaction', faction);
     }
   },
 };
@@ -141,6 +153,9 @@ export default {
   background-size: contain;
   box-sizing: border-box;
   margin-right: 1px;
+  &:hover {
+    cursor: zoom-in;
+  }
   &:nth-child(n+20) {
     margin-right: 52px;
   }
