@@ -148,15 +148,14 @@
                     }}</span>
                     <template
                       v-if="
-                        report.soldiers[unit.name].accountReport &&
-                          report.soldiers[unit.name].accountReport.enlisted
+                        getTroopAmount(unit.name, 'accountReport', 'enlisted')
                       "
                     >
                       <span class="d-block mt-1"
                         >Enlisted units:
                         <Amount
                           :amount="
-                            report.soldiers[unit.name].accountReport.enlisted
+                            getTroopAmount(unit.name, 'accountReport', 'enlisted')
                           "
                           compact
                           formatted
@@ -166,7 +165,7 @@
                           >Deads units:
                           <Amount
                             :amount="
-                              report.soldiers[unit.name].accountReport.dead
+                              getTroopAmount(unit.name, 'accountReport', 'dead')
                             "
                             compact
                             formatted
@@ -175,7 +174,7 @@
                           >Survivors:
                           <Amount
                             :amount="
-                              report.soldiers[unit.name].accountReport.survivors
+                              getTroopAmount(unit.name, 'accountReport', 'survivors')
                             "
                             compact
                             formatted
@@ -186,7 +185,7 @@
                     <span class="d-block" style="color: #FFB800;"
                       >Global Enlisted Units:
                       <Amount
-                        :amount="report.soldiers[unit.name].globalReport.enlisted"
+                        :amount="getTroopAmount(unit.name, 'globalReport', 'enlisted')"
                         compact
                         formatted
                     /></span>
@@ -194,7 +193,7 @@
                       <span class="d-block" style="color: #FFB800;"
                         >Global Dead Units:
                         <Amount
-                          :amount="report.soldiers[unit.name].globalReport.dead"
+                          :amount="getTroopAmount(unit.name, 'globalReport', 'dead')"
                           compact
                           formatted
                       /></span>
@@ -202,7 +201,7 @@
                         >Global Survivors:
                         <Amount
                           :amount="
-                            report.soldiers[unit.name].globalReport.survivors
+                            getTroopAmount(unit.name, 'globalReport', 'survivors')
                           "
                           compact
                           formatted
@@ -358,11 +357,10 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import Reward from "@/lib/components/ui/Reward";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
-import { RACE_DESCRIPTION, ENLISTMENT_OPTIONS } from "@/data/Races";
+import { RACES, RACE_DESCRIPTION, ENLISTMENT_OPTIONS } from "@/data/Races";
 import { MONSTERS } from "@/data/Monsters";
 
 export default {
-  name: "Enlistment",
   components: {
     Title,
     Button,
@@ -389,6 +387,9 @@ export default {
 
   mounted() {
     if (this.war && this.account) {
+      if (this.userEnlistedRace) {
+        this.handleRaceChange(RACES[this.userEnlistedRace.toUpperCase()]);
+      }
       this.loadData();
     }
   },
@@ -429,13 +430,6 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    teamA() {
-      return this.globalTroops.filter((trooper) => trooper.team === 1);
-    },
-
-    teamB() {
-      return this.globalTroops.filter((trooper) => trooper.team === 2);
-    },
     troopList() {
       return this.getAllFromRace(this.selectedRace);
     },
@@ -548,12 +542,15 @@ export default {
       });
     },
 
-    isEnabled(name) {
-      this.selectedRace = name;
+    getTroopAmount(troopName, report, info) {
+      if (!this.report || !this.report.soldiers[troopName][report]) {
+        return 0;
+      }
+      return this.report.soldiers[troopName][report][info];
     },
 
     getWeaponAmount(weaponId, report) {
-      const weapons = this.report.gameItems[report].filter(w => w.id === weaponId);
+      const weapons = this.report.gameItems[report] && this.report.gameItems[report].filter(w => w.id === weaponId);
       if (!weapons.length > 0) {
         return 0;
       }
