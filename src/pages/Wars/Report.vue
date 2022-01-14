@@ -409,7 +409,7 @@ export default {
     ...mapState({
       war: (state) => state.war.war,
       phase: (state) => state.war.phase,
-      isPlaying: (state) => state.music.isPlaying,
+      track: (state) => state.music.track,
       weapons: (state) => state.enlistment.weapons,
     }),
 
@@ -472,8 +472,8 @@ export default {
 
   watch: {
     account() {
-      if (!this.isPlaying){
-        this.startMusic({ musicKey: 'WAR', isLoop: true });
+      if (!this.track){
+        this.setupMusic({ musicKey: 'WAR', isLoop: true });
       }
       this.getWar(this.$route.params.contractWar);
       this.loadData();
@@ -483,7 +483,7 @@ export default {
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
     if (!to.path.includes('/wars')) {
-      this.stopMusic();
+      this.clearMusic();
     }
     next();
   },
@@ -494,8 +494,8 @@ export default {
     }),
     ...mapActions({
       getWar: "war/getWar",
-      startMusic: "music/startMusic",
-      stopMusic: "music/stopMusic",
+      setupMusic: "music/setupMusic",
+      clearMusic: "music/clearMusic",
     }),
 
     async loadData() {

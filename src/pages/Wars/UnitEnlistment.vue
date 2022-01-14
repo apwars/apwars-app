@@ -161,7 +161,7 @@
                   src="/images/icons/battle-shield.png"
                   alt="Enlistment resume"
                 />
-                <span v-if="isWarOver">Enlistment period is Over</span>
+                <span v-if="isWarOver">Enlistment period is over</span>
                 <span v-else-if="!isEnlistedWithRace">Select your formation</span>
                 <span v-else>Your enlistment</span>
               </div>
@@ -330,7 +330,7 @@ export default {
       balances: (state) => state.user.balances,
       isLoadingWar: (state) => state.war.isLoading,
       phase: (state) => state.war.phase,
-      isPlaying: (state) => state.music.isPlaying,
+      track: (state) => state.music.track,
       formationConfig: (state) => state.war.war.formationConfig,
     }),
     ...mapGetters({
@@ -505,8 +505,8 @@ export default {
       changeFormation: "enlistment/changeFormation",
       fetchUserWallet: "user/fetchUserWallet",
       clearEnlistment: "enlistment/clearEnlistment",
-      startMusic: "music/startMusic",
-      stopMusic: "music/stopMusic",
+      setupMusic: "music/setupMusic",
+      clearMusic: "music/clearMusic",
     }),
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
@@ -588,8 +588,8 @@ export default {
       this.fetchData();
     },
     account() {
-      if (!this.isPlaying) {
-        this.startMusic({ musicKey: "WAR", isLoop: true });
+      if (!this.track) {
+        this.setupMusic({ musicKey: "WAR", isLoop: true });
       }
       this.fetchData();
     },
@@ -605,7 +605,7 @@ export default {
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
     if (!to.path.includes("/wars")) {
-      this.stopMusic();
+      this.clearMusic();
     }
     next();
   },

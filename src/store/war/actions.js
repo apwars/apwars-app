@@ -36,7 +36,7 @@ export default {
       console.error(error);
     }
   },
-  async getAccountPrizes({ commit, rootState, dispatch }, { warId }) {
+  async getAccountPrizes({ commit, rootState, dispatch }, warId) {
     try {
       const controller = new WarsController();
       const prizes = await controller.getAccountPrizes(warId, rootState.user.account);

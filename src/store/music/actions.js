@@ -3,15 +3,14 @@ const supportedMusics = {
 };
 
 export default {
-  startMusic({ commit, dispatch }, { musicKey, isLoop }) {
+  setupMusic({ commit, dispatch }, { musicKey, isLoop }) {
     const path = supportedMusics[musicKey];
     if (!path) {
       console.error('The music requested was not found.');
       return;
     }
-    commit("startMusic", { path, isLoop });
-    dispatch("setVolume", 0.1);
-    dispatch("playMusic");
+    commit("setupMusic", { path, isLoop });
+    dispatch("setVolume", 0);
   },
   playMusic({ commit }) {
     commit("playMusic");
@@ -26,5 +25,9 @@ export default {
       dispatch('playMusic');
     }
     commit('setVolume', value);
+  },
+  clearMusic({ commit, dispatch }) {
+    dispatch('stopMusic');
+    commit('clearMusic');
   }
 };
