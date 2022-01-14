@@ -12,6 +12,7 @@ export default {
       commit("setWar", war);
       await dispatch("getFullBoard", warId);
       dispatch("checkWarCountdown");
+      dispatch('getAccountPrizes', warId);
       dispatch("enlistment/checkPlayerEnlistment", null, { root: true });
     } catch (error) {
       console.error(error);
@@ -31,6 +32,15 @@ export default {
       const controller = new WarsController();
       const board = await controller.getBoard(warId, raceName);
       commit("setBoard", { raceName, board });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  async getAccountPrizes({ commit, rootState, dispatch }, { warId }) {
+    try {
+      const controller = new WarsController();
+      const prizes = await controller.getAccountPrizes(warId, rootState.user.account);
+      commit("setPrizes", prizes);
     } catch (error) {
       console.error(error);
     }

@@ -40,14 +40,24 @@ export default {
   getRacePrizes: (state) => (raceName) => {
     return state.war.races.find(r => r.name === raceName).rewards || [];
   },
-  warHasRewards: (state, getters) => {
+  warRewards: (state, getters) => {
     let rewards = [];
-    rewards = rewards.concat(getters.getRacePrizes('Humans'));
-    rewards = rewards.concat(getters.getRacePrizes('Orcs'));
-    rewards = rewards.concat(getters.getRacePrizes('Elves'));
-    rewards = rewards.concat(getters.getRacePrizes('Undead'));
+    rewards = rewards.concat(getters.getRacePrizes('Humans').map(p => ({...p, raceName: "Humans"})));
+    rewards = rewards.concat(getters.getRacePrizes('Orcs').map(p => ({...p, raceName: "Orcs"})));
+    rewards = rewards.concat(getters.getRacePrizes('Elves').map(p => ({...p, raceName: "Elves"})));
+    rewards = rewards.concat(getters.getRacePrizes('Undead').map(p => ({...p, raceName: "Undead"})));
+    rewards = rewards.filter(i => i)
 
-    return rewards.filter(i => i).length > 0;
+    if (rewards.length) {
+      const importanceOrder = ['wGOLD', 'wCOURAGE', 'Worker'];
+      rewards = rewards.sort((a, b) => b.amount - a.amount);
+      rewards = rewards.sort((a, b) => importanceOrder.indexOf(a.prize) - importanceOrder.indexOf(b.prize));
+    }
+
+    return rewards;
+  },
+  warHasRewards: (state, getters) => {
+    return getters.warRewards.length > 0;
   },
   isWarOver: (state) => {
     return state.phase === 'claim' || state.phase === 'finished';
@@ -57,5 +67,12 @@ export default {
   },
   playerCurrentMonsterPrize: (state, getters) => {
     return getters.playerEnlistment.percentagePowerRace * getters.getRaceMonsterPrizeValue(getters.playerEnlistment.race);
+  },
+  hasPrizes: (state) => {
+    if (!state.war) {
+      return false;
+    }
+    const totalAmount = state.accountPrizes.reduce((total, p) => total += p.amount, 0);
+    return totalAmount > 0;
   }
 };

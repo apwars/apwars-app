@@ -1,7 +1,12 @@
 <template>
   <div class="reward-container" v-if="reward">
-    <img :height="size === 'small' ? 48 : 64" :src="reward.image" :alt="reward.title" />
-    <div class="reward-title mt-1">{{ reward.title }}</div>
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+    <img :height="size === 'small' ? 48 : 64" :src="reward.image" :alt="reward.title" v-bind="attrs" v-on="on" />
+      </template>
+      <span>{{ reward.title }}</span>
+    </v-tooltip>
+    <div class="reward-title mt-1" v-if="label">{{ label }}</div>
     <div class="reward-amount"><Amount :amount="amount" compact formatted /></div>
   </div>
 </template>
@@ -24,6 +29,10 @@ export default {
       default: 0,
     },
     size: {
+      type: String,
+      default: '',
+    },
+    label: {
       type: String,
       default: '',
     }
@@ -49,15 +58,16 @@ export default {
 .reward-container {
   position: relative;
   text-align: center;
-  margin: 0 4px;
+  margin: 0 8px;
 }
 .reward-title {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: bold;
-  padding: 0 12px;
-  max-width: 120px;
+  padding: 0 4px;
+  max-width: 148px;
   text-align: center;
   height: 28px;
+  color: #FFB800;
 }
 .reward-amount {
   position: absolute;

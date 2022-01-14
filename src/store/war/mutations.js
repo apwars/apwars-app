@@ -28,4 +28,7 @@ export default {
     state.countdown = countdown;
     state.phase = phase;
   },
+  setPrizes(state, prizes) {
+    state.accountPrizes = prizes;
+  }
 };

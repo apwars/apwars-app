@@ -13,12 +13,7 @@
         </v-col>
       </v-row>
       <BattleLoading v-if="isLoadingWar" />
-      <v-row v-else-if="!war">
-        <v-col>
-          The war was not found
-        </v-col>
-      </v-row>
-      <template v-else>
+      <template v-else-if="war">
         <v-row dense no-gutters>
           <v-col class="battle-header">
             <Title
@@ -306,12 +301,11 @@
               <div class="prizes-container">
                 <div
                   class="prize-container text-center"
-                  v-for="(prize, index) in humansPrize"
-                  :key="`humans-${index}`"
+                  v-for="(prize, index) in warRewards"
+                  :key="`warPrize-${index}`"
                 >
-                <template v-if="prize">
                   <div class="slot-text">
-                    Human {{ prize.slot.x }}, {{ prize.slot.y }}
+                    {{prize.raceName}} {{ prize.slot.x }}, {{ prize.slot.y }}
                   </div>
                   <div class="slot-text mb-2">
                     {{ compactWallet(prize.winner) }}
@@ -320,74 +314,15 @@
                     :prize="prize.prize"
                     :type="prize.type"
                     :amount="prize.amount"
+                    :label="prize.label"
                     size="small"
                   />
-                </template>
-                </div>
-                <div
-                  class="prize-container text-center"
-                  v-for="(prize, index) in elvesPrize"
-                  :key="`elves-${index}`"
-                >
-                  <template v-if="prize">
-                  <div class="slot-text">
-                    Elven {{ prize.slot.x }}, {{ prize.slot.y }}
-                  </div>
-                  <div class="slot-text mb-2">
-                    {{ compactWallet(prize.winner) }}
-                  </div>
-                  <Reward
-                    :prize="prize.prize"
-                    :type="prize.type"
-                    :amount="prize.amount"
-                    size="small"
-                  /></template>
-                </div>
-                <div
-                  class="prize-container text-center"
-                  v-for="(prize, index) in orcsPrize"
-                  :key="`orcs-${index}`"
-                >
-                  <template v-if="prize">
-                  <div class="slot-text">
-                    Orc {{ prize.slot.x }}, {{ prize.slot.y }}
-                  </div>
-                  <div class="slot-text mb-2">
-                    {{ compactWallet(prize.winner) }}
-                  </div>
-                  <Reward
-                    :prize="prize.prize"
-                    :type="prize.type"
-                    :amount="prize.amount"
-                    size="small"
-                  />
-                  </template>
-                </div>
-                <div
-                  class="prize-container text-center"
-                  v-for="(prize, index) in undeadPrize"
-                  :key="`undead-${index}`"
-                >
-                  <template v-if="prize">
-                  <div class="slot-text">
-                    Undead {{ prize.slot.x }}, {{ prize.slot.y }}
-                  </div>
-                  <div class="slot-text mb-2">
-                    {{ compactWallet(prize.winner) }}
-                  </div>
-                  <Reward
-                    :prize="prize.prize"
-                    :type="prize.type"
-                    :amount="prize.amount"
-                    size="small"
-                  />
-                  </template>
                 </div>
               </div>
             </v-col>
           </v-row>
         </template>
-        <template v-if="playerPrizes.length > 0">
+        <template v-if="isWarOver">
           <v-row no-gutters>
             <v-col col="12" md="12">
               <div class="war-prizes">
@@ -399,7 +334,7 @@
             <v-col>
               <div class="prizes-container">
                 <Reward
-                  v-for="(prize, index) in playerPrizes"
+                  v-for="(prize, index) in accountPrizes"
                   :key="index"
                   :prize="prize.prize"
                   :type="prize.type"
@@ -416,7 +351,6 @@
 </template>
 <script>
 import { mapMutations, mapActions, mapState, mapGetters } from "vuex";
-import { RACES } from "@/data/Races";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
@@ -446,11 +380,15 @@ export default {
       countdownTimer: (state) => state.war.countdown,
       phase: (state) => state.war.phase,
       isPlaying: (state) => state.music.isPlaying,
+      accountPrizes: (state) => state.war.accountPrizes,
     }),
     ...mapGetters({
       getRacePrizes: "war/getRacePrizes",
       playerEnlistment: "war/playerEnlistment",
       warHasRewards: "war/warHasRewards",
+      hasPrizes: "war/hasPrizes",
+      warRewards: "war/warRewards",
+      isWarOver: "war/isWarOver",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];

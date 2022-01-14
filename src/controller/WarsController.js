@@ -61,4 +61,12 @@ export default class WarsController {
       throw error;
     }
   }
+
+  getAccountPrizes(warId, account) {
+    try {
+      return this.base._get(`/wars/${warId}/prizes/${account}`);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

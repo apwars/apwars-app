@@ -229,20 +229,6 @@
                     <div style="font-size: 14px">
                       <span class="d-block bold">{{ weapon.title }}</span>
                       <span class="d-block"
-                        v-if="Object.keys(report.gameItems.globalReport).length > 0"
-                        >Global Qty:
-                        <Amount
-                          :amount="
-                            getWeaponAmount(weapon.id, 'globalReport')
-                          "
-                          compact
-                          formatted
-                      />
-                      </span>
-                      <span v-else>
-                        Not staked
-                      </span>
-                      <span class="d-block"
                       v-if="Object.keys(report.gameItems.accountReport).length > 0"
                         >My Qty:
                         <Amount
@@ -252,6 +238,21 @@
                           compact
                           formatted
                       /></span>
+                      <span v-else>
+                        Not staked
+                      </span>
+                      <span class="d-block"
+                        v-if="Object.keys(report.gameItems.globalReport).length > 0"
+                        style="color: #FFB800;"
+                        >Global Qty:
+                        <Amount
+                          :amount="
+                            getWeaponAmount(weapon.id, 'globalReport')
+                          "
+                          compact
+                          formatted
+                      />
+                      </span>
                     </div>
                   </div>
                 </v-col>
