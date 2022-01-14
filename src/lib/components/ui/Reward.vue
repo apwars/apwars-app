@@ -1,5 +1,5 @@
 <template>
-  <div class="reward-container" v-if="reward">
+  <div :class="['reward-container', [size]]" v-if="reward">
     <v-tooltip bottom>
       <template v-slot:activator="{ on, attrs }">
     <img :height="size === 'small' ? 48 : 64" :src="reward.image" :alt="reward.title" v-bind="attrs" v-on="on" />
@@ -59,6 +59,9 @@ export default {
   position: relative;
   text-align: center;
   margin: 0 8px;
+  &.small {
+    width: 81px;
+  }
 }
 .reward-title {
   font-size: 10px;
