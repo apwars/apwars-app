@@ -227,7 +227,7 @@
                         !validateAmount(
                           getTotalStakedWeapon(unit.tier),
                           getWeaponBalance(getWeaponByTier(unit.tier).id)
-                        )
+                        ) || !validateAmount(unit.weaponAmount, unit.amount)
                           ? 'error-color'
                           : '',
                       ]"

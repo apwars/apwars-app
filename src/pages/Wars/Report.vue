@@ -233,7 +233,7 @@
                         >Global Qty:
                         <Amount
                           :amount="
-                            getWeaponGlobalAmount(weapon.id)
+                            getWeaponAmount(weapon.id, 'globalReport')
                           "
                           compact
                           formatted
@@ -247,9 +247,7 @@
                         >My Qty:
                         <Amount
                           :amount="
-                            report.gameItems.accountReport.find(
-                              (w) => w.id === weapon.id
-                            ).amount
+                            getWeaponAmount(weapon.id, 'accountReport')
                           "
                           compact
                           formatted
@@ -335,7 +333,7 @@
           </v-row>
         </template>
         <div class="no-data" v-else-if="isWarNotStarted">
-          This war did not started yet, come back later.
+          This war has not started yet, come back later.
         </div>
         <div class="no-data" v-else>
           There is no data for this race yet, come back later.
@@ -553,8 +551,12 @@ export default {
       this.selectedRace = name;
     },
 
-    getWeaponGlobalAmount(weaponId) {
-      return this.report.gameItems.globalReport.find(w => w.id === weaponId).amount;
+    getWeaponAmount(weaponId, report) {
+      const weapons = this.report.gameItems[report].filter(w => w.id === weaponId);
+      if (!weapons.length > 0) {
+        return 0;
+      }
+      return weapons.reduce((total, w) => total += w.amount, 0);
     },
 
     async bringhome() {
