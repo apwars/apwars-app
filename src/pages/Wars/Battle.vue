@@ -456,7 +456,7 @@ export default {
         .focus();
     },
     async fetchData() {
-      if (this.account && !this.war && !this.isLoadingWar) {
+      if (this.account && !this.isLoadingWar) {
         await this.getWar();
       }
     },
@@ -472,9 +472,6 @@ export default {
     },
   },
   watch: {
-    isConnected() {
-      this.fetchData();
-    },
     account() {
       this.fetchData();
       if (!this.track) {

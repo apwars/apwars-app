@@ -404,7 +404,7 @@ export default {
     }),
     backToEnlistment() {
       this.$router.push(
-        `/wars/enlistment/${this.$route.params.raceId}`
+        `/war/enlistment/${this.$route.params.raceId}`
       );
     },
     async handleSlotSelection(key) {
@@ -474,7 +474,7 @@ export default {
       }
     },
     async fetchData() {
-      if (this.account && !this.war && !this.isLoadingWar) {
+      if (this.account && !this.isLoadingWar) {
         await this.getWar();
       }
     },

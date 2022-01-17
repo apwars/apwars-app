@@ -331,7 +331,7 @@ export default {
       isLoadingWar: (state) => state.war.isLoading,
       phase: (state) => state.war.phase,
       track: (state) => state.music.track,
-      formationConfig: (state) => state.war.war.formationConfig,
+      formationConfig: (state) => state.war?.war?.formationConfig || null,
     }),
     ...mapGetters({
       getAllFromRace: "enlistment/byRace",
