@@ -14,6 +14,7 @@ export default {
       await dispatch("getFullBoard", currentWar.id);
       dispatch("checkWarCountdown");
       dispatch('getAccountPrizes', currentWar.id);
+      dispatch("user/fetchUserWallet", null, { root: true });
       dispatch("enlistment/checkPlayerEnlistment", null, { root: true });
     } catch (error) {
       console.error(error);
@@ -21,14 +22,14 @@ export default {
       commit("setLoading", false);
     }
   },
-  async getFullBoard({ state, dispatch }, warId) {
+  async getFullBoard({ dispatch }, warId) {
     const races = ["Humans", "Orcs", "Elves", "Undead"];
     for (let raceName of races) {
       await dispatch("getBoard", { warId, raceName });
     }
     dispatch("drawFullBoard");
   },
-  async getBoard({ commit, state, dispatch }, { warId, raceName }) {
+  async getBoard({ commit }, { warId, raceName }) {
     try {
       const controller = new WarsController();
       const board = await controller.getBoard(warId, raceName);
@@ -37,7 +38,7 @@ export default {
       console.error(error);
     }
   },
-  async getAccountPrizes({ commit, rootState, dispatch }, warId) {
+  async getAccountPrizes({ commit, rootState }, warId) {
     try {
       const controller = new WarsController();
       const prizes = await controller.getAccountPrizes(warId, rootState.user.account);

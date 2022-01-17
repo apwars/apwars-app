@@ -503,7 +503,6 @@ export default {
       stakeTroop: "enlistment/stakeTroop",
       stakeWeapon: "enlistment/stakeWeapon",
       changeFormation: "enlistment/changeFormation",
-      fetchUserWallet: "user/fetchUserWallet",
       clearEnlistment: "enlistment/clearEnlistment",
       setupMusic: "music/setupMusic",
       clearMusic: "music/clearMusic",
@@ -572,7 +571,6 @@ export default {
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
         await this.getWar();
-        await this.fetchUserWallet(this.account);
       }
     },
     validateAmount(amount, balance) {
