@@ -171,6 +171,7 @@
                   :cols="40"
                   :board="fullBoard"
                   rotate="30deg"
+                  :isClickable="phase !== 'not-started'"
                   @clickFaction="(faction) => handleClickFaction(faction)"
                 />
                 <div class="d-flex justify-space-between">

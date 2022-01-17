@@ -1,12 +1,7 @@
 <template>
   <div class="board-perspective">
     <div class="versus">VS</div>
-    <div
-      class="board-container"
-      :style="
-        `--rotate: ${rotate};`
-      "
-    >
+    <div class="board-container" :style="`--rotate: ${rotate};`">
       <div
         :class="['board-row', isVerticalHalf(rowIndex) ? 'vertical-space' : '']"
         v-for="(row, rowIndex) in board"
@@ -15,11 +10,15 @@
         <div
           :class="[
             'slot',
-            col && col.rewards.length ? 'is-awarded' : ''
+            col && col.rewards.length ? 'is-awarded' : '',
+            isClickable ? 'is-clickable' : '',
           ]"
           v-for="(col, colIndex) in row"
           :key="colIndex"
-          @click="() => handleClick(getFaction(rowIndex, colIndex))"
+          @click="
+            () =>
+              isClickable ? handleClick(getFaction(rowIndex, colIndex)) : null
+          "
         >
           <div
             class="arrow-down"
@@ -45,26 +44,440 @@ export default {
     },
     rotate: {
       type: String,
-      default: '0',
+      default: "0",
     },
     board: {
       type: Array,
       default: () => [
-        [0,0,1,0,0,1,0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,0,1,1,0,0,1,1,0,1,0,0,1,1,0,1,0,1,1,0],
-        [0,0,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,0,1,0,1,0,0,1,0,1,1,0,0,1,1,0,1,0,1,0,1],
-        [0,0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,1,1,1,0,0,1,0,1,1,0,0,1,1,1,1,0,1,1,0,1,0,1,1,0],
-        [0,0,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,1,0,0,1,1,0,1,0,1,0,0],
-        [0,0,1,0,0,1,0,1,1,0,0,0,0,0,1,0,1,1,0,1,0,0,1,1,0,0,1,1,1,1,0,1,1,1,0,1,0,1,0,1],
-        [0,0,1,0,0,1,0,1,1,0,0,0,0,1,0,0,1,1,0,1,0,1,1,1,0,0,1,1,0,1,0,1,1,1,0,1,0,1,1,0],
-        [0,0,1,0,0,1,0,1,1,0,1,0,1,0,0,1,1,1,0,1,0,1,0,1,0,0,1,1,0,1,0,0,1,1,0,1,0,1,0,1],
-        [0,0,1,0,0,1,0,1,1,0,0,1,0,1,0,0,1,1,0,1,0,0,1,1,0,0,0,1,1,1,0,0,1,1,0,1,0,1,1,0],
-        [0,0,1,0,0,1,0,1,1,1,0,1,0,0,0,0,1,1,0,1,0,1,0,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,0,1],
-        [0,0,1,0,0,1,0,1,1,0,0,0,1,0,1,0,1,1,0,1,0,1,0,1,0,0,1,0,1,1,0,0,1,1,0,1,0,1,1,1],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+        ],
       ],
     },
     currentUserAddress: {
       type: String,
       default: "",
+    },
+    isClickable: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -82,38 +495,47 @@ export default {
       return rowIndex + "" + colIndex;
     },
     isVerticalHalf(rowIndex) {
-      const half = Math.floor(this.board.length/2);
+      const half = Math.floor(this.board.length / 2);
       return rowIndex === half;
     },
     isGreaterOrEqualVerticalHalf(rowIndex) {
-      const half = Math.floor(this.board.length/2);
+      const half = Math.floor(this.board.length / 2);
       return rowIndex >= half;
     },
     isGreaterOrEqualHorizontalHalf(colIndex) {
-      const half = Math.floor(this.board[0].length/2);
+      const half = Math.floor(this.board[0].length / 2);
       return colIndex >= half;
     },
     getFaction(rowIndex, colIndex) {
-      if (this.isGreaterOrEqualVerticalHalf(rowIndex) && this.isGreaterOrEqualHorizontalHalf(colIndex)) {
-        return '/images/troops/wskeleton-warrior.webp';
-      } else if (this.isGreaterOrEqualVerticalHalf(rowIndex) && !this.isGreaterOrEqualHorizontalHalf(colIndex)) {
-        return '/images/troops/warmoured-elf.webp';
-      } else if (!this.isGreaterOrEqualVerticalHalf(rowIndex) && this.isGreaterOrEqualHorizontalHalf(colIndex)) {
-        return '/images/troops/wgrunt.webp';
+      if (
+        this.isGreaterOrEqualVerticalHalf(rowIndex) &&
+        this.isGreaterOrEqualHorizontalHalf(colIndex)
+      ) {
+        return "/images/troops/wskeleton-warrior.webp";
+      } else if (
+        this.isGreaterOrEqualVerticalHalf(rowIndex) &&
+        !this.isGreaterOrEqualHorizontalHalf(colIndex)
+      ) {
+        return "/images/troops/warmoured-elf.webp";
+      } else if (
+        !this.isGreaterOrEqualVerticalHalf(rowIndex) &&
+        this.isGreaterOrEqualHorizontalHalf(colIndex)
+      ) {
+        return "/images/troops/wgrunt.webp";
       }
-      return '/images/troops/wwarrior.webp';
+      return "/images/troops/wwarrior.webp";
     },
     handleClick(factionImage) {
       let faction = 1;
-      if (factionImage.includes('skeleton')) {
+      if (factionImage.includes("skeleton")) {
         faction = 4;
-      } else if (factionImage.includes('elf')) {
+      } else if (factionImage.includes("elf")) {
         faction = 3;
-      } else if (factionImage.includes('grunt')) {
+      } else if (factionImage.includes("grunt")) {
         faction = 2;
       }
-      this.$emit('clickFaction', faction);
-    }
+      this.$emit("clickFaction", faction);
+    },
   },
 };
 </script>
@@ -134,7 +556,7 @@ export default {
   left: 49.5%;
   top: 45%;
   transform: translate(-49%, -45.5%, 0);
-  box-sizing:content-box;
+  box-sizing: content-box;
 }
 .board-row {
   height: 24px;
@@ -153,13 +575,15 @@ export default {
   background-size: contain;
   box-sizing: border-box;
   margin-right: 1px;
-  &:hover {
-    cursor: zoom-in;
+  &.is-clickable {
+    &:hover {
+      cursor: zoom-in;
+    }
   }
-  &:nth-child(n+20) {
+  &:nth-child(n + 20) {
     margin-right: 52px;
   }
-  &:nth-child(n+21) {
+  &:nth-child(n + 21) {
     margin-right: 0;
     > .unit {
       transform: scaleX(-1);
