@@ -1,18 +1,19 @@
 import WarsController from "@/controller/WarsController";
 
 export default {
-  async getWar({ state, commit, dispatch }, warId) {
+  async getWar({ state, commit, dispatch }) {
     if (state.isLoading) {
       return;
     }
     try {
       commit("setLoading", true);
       const controller = new WarsController();
-      const war = await controller.getOne(warId);
+      const currentWar = await controller.getLastId();
+      const war = await controller.getOne(currentWar.id);
       commit("setWar", war);
-      await dispatch("getFullBoard", warId);
+      await dispatch("getFullBoard", currentWar.id);
       dispatch("checkWarCountdown");
-      dispatch('getAccountPrizes', warId);
+      dispatch('getAccountPrizes', currentWar.id);
       dispatch("enlistment/checkPlayerEnlistment", null, { root: true });
     } catch (error) {
       console.error(error);

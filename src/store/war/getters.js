@@ -63,6 +63,9 @@ export default {
     return state.phase === 'claim' || state.phase === 'finished';
   },
   getRaceMonsterPrizeValue: (state) => (race) => {
+    if (!state.war) {
+      return 0;
+    }
     return state.war.races.find(r => r.name === race).monsterPrizeAmount || 0;
   },
   playerCurrentMonsterPrize: (state, getters) => {

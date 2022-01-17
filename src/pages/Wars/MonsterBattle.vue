@@ -404,7 +404,7 @@ export default {
     }),
     backToEnlistment() {
       this.$router.push(
-        `/wars/${this.$route.params.contractWar}/enlistment/${this.$route.params.raceId}`
+        `/wars/enlistment/${this.$route.params.raceId}`
       );
     },
     async handleSlotSelection(key) {
@@ -425,9 +425,7 @@ export default {
             ? "The Corporation"
             : "The Degenerate";
         const raceName = RACE_DESCRIPTION[Number(this.$route.params.raceId)];
-        const warId = this.$route.params.contractWar;
         await this.enlist({
-          warId: this.$route.params.contractWar,
           faction,
           race: raceName,
           slot: this.selectedSlot,
@@ -451,7 +449,7 @@ export default {
       }
     },
     goToReport() {
-      this.$router.push(`/wars/${this.$route.params.contractWar}/report`);
+      this.$router.push(`/war/report`);
     },
     getUnitAmount(troopName) {
       if (!this.slotData) {
@@ -477,7 +475,7 @@ export default {
     },
     async fetchData() {
       if (this.account && !this.war && !this.isLoadingWar) {
-        await this.getWar(this.$route.params.contractWar);
+        await this.getWar();
       }
     },
     getPercentage(value) {
@@ -503,7 +501,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
-    if (!to.path.includes("/wars")) {
+    if (!to.path.includes("/war")) {
       this.clearMusic();
     }
     next();

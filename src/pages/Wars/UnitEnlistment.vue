@@ -513,7 +513,7 @@ export default {
     }),
     backToWar() {
       this.$router.push({
-        path: `/wars/${this.$route.params.contractWar}`,
+        path: `/war`,
       });
     },
     goToUnit(unitIndex) {
@@ -524,7 +524,7 @@ export default {
     },
     goToMonsterBattle() {
       this.$router.push({
-        path: `/wars/${this.$route.params.contractWar}/enlistment/${this.$route.params.raceId}/battle`,
+        path: `/war/enlistment/${this.$route.params.raceId}/battle`,
       });
     },
     getUnitName(position) {
@@ -571,7 +571,7 @@ export default {
     },
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
-        await this.getWar(this.$route.params.contractWar);
+        await this.getWar();
         await this.fetchUserWallet(this.account);
       }
     },
@@ -604,7 +604,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
-    if (!to.path.includes("/wars")) {
+    if (!to.path.includes("/war")) {
       this.clearMusic();
     }
     next();

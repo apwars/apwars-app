@@ -14,6 +14,15 @@ export default class WarsController {
       throw error;
     }
   }
+
+  getLastId() {
+    try {
+      return this.base._get(`/wars/lastId`);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   getBoard(warId, raceName) {
     try {
       return this.base._get(`/wars/${warId}/slots/${raceName}`);

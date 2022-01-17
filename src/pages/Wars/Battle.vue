@@ -445,7 +445,7 @@ export default {
     },
     goToEnlistment(raceId) {
       this.$router.push(
-        `/wars/${this.$route.params.contractWar}/enlistment/${raceId}`
+        `/war/enlistment/${raceId}`
       );
     },
     redirectToDoc() {
@@ -455,7 +455,7 @@ export default {
     },
     async fetchData() {
       if (this.account && !this.war && !this.isLoadingWar) {
-        await this.getWar(this.$route.params.contractWar);
+        await this.getWar();
       }
     },
     compactWallet(wallet) {
@@ -466,7 +466,7 @@ export default {
       return `${wallet.substring(0, 5)}...${wallet.substring(end - 3, end)}`;
     },
     handleClickFaction(faction) {
-      this.$router.push(`/wars/${this.$route.params.contractWar}/enlistment/${faction}/battle`);
+      this.$router.push(`/war/enlistment/${faction}/battle`);
     }
   },
   watch: {
@@ -491,7 +491,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
-    if (!to.path.includes("/wars")) {
+    if (!to.path.includes("/war")) {
       this.clearMusic();
     }
     next();

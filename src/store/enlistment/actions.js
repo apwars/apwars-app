@@ -29,7 +29,8 @@ export default {
             }
         }
     },
-    async enlist({ rootState, getters }, { warId, faction, race, slot }) {
+    async enlist({ state, rootState, getters }, { faction, race, slot }) {
+        const warId = state.war.id;
         const tiers = [1, 2, 3, 4];
         let gameItems = [];
         for (let t of tiers) {

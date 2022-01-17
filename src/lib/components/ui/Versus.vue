@@ -118,7 +118,7 @@ export default {
   },
   methods: {
     goToReport() {
-      this.$router.push(`/wars/${this.$route.params.contractWar}/report`);
+      this.$router.push(`/war/report`);
     },
     getPercent(amount) {
       return (100 * amount) / this.totalFactionForces;

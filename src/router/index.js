@@ -75,23 +75,23 @@ export const routes = [
         component: TrainingCenter
       },
       {
-        path: "/wars/:contractWar",
+        path: "/war",
         name: "war-resume",
         component: Battle
       },
       {
-        path: "/wars/:contractWar/enlistment/:raceId",
+        path: "/war/enlistment/:raceId",
         name: "unit-enlistment",
         component: UnitEnlistment
       },
       {
-        path: "/wars/:contractWar/enlistment/:raceId/battle",
+        path: "/war/enlistment/:raceId/battle",
         name: "monster-battle",
         component: MonsterBattle
       },
       {
-        path: "/wars/:contractWar/report",
-        name: "/wars-report",
+        path: "/war/report",
+        name: "/war-report",
         component: Report
       },
       {

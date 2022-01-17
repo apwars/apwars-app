@@ -469,14 +469,14 @@ export default {
       if (!this.track){
         this.setupMusic({ musicKey: 'WAR', isLoop: true });
       }
-      this.getWar(this.$route.params.contractWar);
+      this.getWar();
       this.loadData();
     },
   },
 
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
-    if (!to.path.includes('/wars')) {
+    if (!to.path.includes('/war')) {
       this.clearMusic();
     }
     next();
@@ -499,7 +499,7 @@ export default {
       try {
         this.isLoading = true;
         const controller = new WarsController();
-        const warId = this.$route.params.contractWar;
+        const warId = this.war.id;
         const raceName = RACE_DESCRIPTION[this.selectedRace];
         const report = await controller.getReport(
           warId,
@@ -526,19 +526,19 @@ export default {
 
     backToWar() {
       this.$router.push({
-        path: `/wars/${this.$route.params.contractWar}`,
+        path: `/war`,
       });
     },
 
     goToEnlistment(raceId) {
       this.$router.push({
-        path: `/wars/${this.$route.params.contractWar}/enlistment/${raceId}`,
+        path: `/war/enlistment/${raceId}`,
       });
     },
 
     goToMonsterBattle() {
       this.$router.push({
-        path: `/wars/${this.$route.params.contractWar}/enlistment/${this.selectedRace}/battle`,
+        path: `/war/enlistment/${this.selectedRace}/battle`,
       });
     },
 
@@ -561,7 +561,7 @@ export default {
       try {
         this.isLoadingBringhome = true;
         const controller = new WarsController();
-        const warId = this.$route.params.contractWar;
+        const warId = this.war.id;
         await controller.bringhome(warId, this.account);
         await this.loadData();
         ToastSnackbar.success("Your troops and prizes are safe at Home");

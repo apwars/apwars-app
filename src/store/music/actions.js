@@ -26,8 +26,10 @@ export default {
     }
     commit('setVolume', value);
   },
-  clearMusic({ commit, dispatch }) {
-    dispatch('stopMusic');
+  clearMusic({ state, commit, dispatch }) {
+    if (state.isPlaying) {
+      dispatch('stopMusic');
+    }
     commit('clearMusic');
   }
 };
