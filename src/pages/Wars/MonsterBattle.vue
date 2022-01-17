@@ -38,8 +38,6 @@
               </div>
               <Board
                 :board="board"
-                :rows="5"
-                :cols="20"
                 rotate="40deg"
                 :unitImage="
                   `/images/troops/${troopList[0].name.toLowerCase()}.webp`
@@ -511,8 +509,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .background {
-  height: 100%;
-  width: 100vw;
+  top: 0;
+  left: 0;
+  right: 0;
+  left: 0;
+  position: fixed;
   background-size: cover;
   background-position: fixed;
   background-image: url("/images/background/battle-zoomed.png");

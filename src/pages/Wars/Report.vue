@@ -258,7 +258,6 @@
                       <span v-else>
                         Not staked
                       </span>
-                      <template v-if="Object.keys(report.gameItems.globalReport).length > 0">
                       <span class="d-block text-primary"
                         >Global Qty:
                         <Amount
@@ -286,7 +285,6 @@
                             compact
                             formatted
                         /></span>
-                      </template>
                       </template>
                     </div>
                   </div>
@@ -587,7 +585,7 @@ export default {
 
     getWeaponAmount(weaponId, report, info) {
       const weapons = this.report.gameItems[report] && this.report.gameItems[report].filter(w => w.id === weaponId);
-      if (!weapons.length > 0) {
+      if (!weapons?.length > 0) {
         return 0;
       }
       return weapons.reduce((total, w) => total += w[info], 0);
