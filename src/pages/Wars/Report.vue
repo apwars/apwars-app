@@ -182,7 +182,7 @@
                       </template>
                     </template>
                     <span v-else>Not staked</span>
-                    <span class="d-block" style="color: #FFB800;"
+                    <span class="d-block text-primary"
                       >Global Enlisted Units:
                       <Amount
                         :amount="getTroopAmount(unit.name, 'globalReport', 'enlisted')"
@@ -190,14 +190,14 @@
                         formatted
                     /></span>
                     <template v-if="isWarOver">
-                      <span class="d-block" style="color: #FFB800;"
+                      <span class="d-block text-primary"
                         >Global Dead Units:
                         <Amount
                           :amount="getTroopAmount(unit.name, 'globalReport', 'dead')"
                           compact
                           formatted
                       /></span>
-                      <span class="d-block" style="color: #FFB800;"
+                      <span class="d-block text-primary"
                         >Global Survivors:
                         <Amount
                           :amount="
@@ -227,31 +227,67 @@
                     />
                     <div style="font-size: 14px">
                       <span class="d-block bold">{{ weapon.title }}</span>
-                      <span class="d-block"
-                      v-if="Object.keys(report.gameItems.accountReport).length > 0"
-                        >My Qty:
+                      <template v-if="Object.keys(report.gameItems.accountReport).length > 0">
+                      <span class="d-block">My Qty:
                         <Amount
                           :amount="
-                            getWeaponAmount(weapon.id, 'accountReport')
+                            getWeaponAmount(weapon.id, 'accountReport', 'amount')
                           "
                           compact
                           formatted
                       /></span>
+                      <template v-if="isWarOver">
+                        <span class="d-block">Recovered:
+                          <Amount
+                            :amount="
+                              getWeaponAmount(weapon.id, 'accountReport', 'recovered')
+                            "
+                            compact
+                            formatted
+                        /></span>
+                        <span class="d-block">Destroyed:
+                          <Amount
+                            :amount="
+                              getWeaponAmount(weapon.id, 'accountReport', 'destroyed')
+                            "
+                            compact
+                            formatted
+                        /></span>
+                      </template>
+                      </template>
                       <span v-else>
                         Not staked
                       </span>
-                      <span class="d-block"
-                        v-if="Object.keys(report.gameItems.globalReport).length > 0"
-                        style="color: #FFB800;"
+                      <template v-if="Object.keys(report.gameItems.globalReport).length > 0">
+                      <span class="d-block text-primary"
                         >Global Qty:
                         <Amount
                           :amount="
-                            getWeaponAmount(weapon.id, 'globalReport')
+                            getWeaponAmount(weapon.id, 'globalReport', 'amount')
                           "
                           compact
                           formatted
                       />
                       </span>
+                      <template v-if="isWarOver">
+                        <span class="d-block text-primary">Recovered:
+                          <Amount
+                            :amount="
+                              getWeaponAmount(weapon.id, 'globalReport', 'recovered')
+                            "
+                            compact
+                            formatted
+                        /></span>
+                        <span class="d-block text-primary">Destroyed:
+                          <Amount
+                            :amount="
+                              getWeaponAmount(weapon.id, 'globalReport', 'destroyed')
+                            "
+                            compact
+                            formatted
+                        /></span>
+                      </template>
+                      </template>
                     </div>
                   </div>
                 </v-col>
@@ -549,12 +585,12 @@ export default {
       return this.report.soldiers[troopName][report][info];
     },
 
-    getWeaponAmount(weaponId, report) {
+    getWeaponAmount(weaponId, report, info) {
       const weapons = this.report.gameItems[report] && this.report.gameItems[report].filter(w => w.id === weaponId);
       if (!weapons.length > 0) {
         return 0;
       }
-      return weapons.reduce((total, w) => total += w.amount, 0);
+      return weapons.reduce((total, w) => total += w[info], 0);
     },
 
     async bringhome() {
@@ -743,6 +779,10 @@ export default {
   border-top: 8px solid yellow;
   animation: flutuation 1s linear forwards infinite;
   transition: all ease;
+}
+
+.text-primary {
+  color: #FFB800;
 }
 
 @keyframes flutuation {
