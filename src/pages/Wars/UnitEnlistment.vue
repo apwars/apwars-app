@@ -589,6 +589,7 @@ export default {
       if (!this.track) {
         this.setupMusic({ musicKey: "WAR", isLoop: true });
       }
+      this.clearEnlistment();
       this.fetchData();
     },
   },
