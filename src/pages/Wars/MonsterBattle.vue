@@ -430,19 +430,20 @@ export default {
           race: raceName,
           slot: this.selectedSlot,
         });
-        await this.getWar(warId);
+        await this.getWar();
         this.handleSlotSelection(
           `${this.selectedSlot.y}-${this.selectedSlot.x}`
         );
         ToastSnackbar.success("Successfully enlisted at war!");
       } catch (error) {
         let msg =
-          error.message ||
+          error.messageError || error.message ||
           "Something went wrong while trying to enlist, try again later.";
         if (error.code === 4001) {
           msg = "Player denied the signature";
         }
         ToastSnackbar.error(msg);
+        await this.getWar();
         console.error(error);
       } finally {
         this.isLoadingEnlistment = false;
