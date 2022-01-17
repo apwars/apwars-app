@@ -41,6 +41,7 @@
                 :rows="5"
                 :cols="20"
                 rotate="40deg"
+                :invertUnitDirection="isUnitInvert"
                 :unitImage="
                   `/images/troops/${troopList[0].name.toLowerCase()}.webp`
                 "
@@ -390,6 +391,10 @@ export default {
       } else {
         return "Enlist"
       }
+    },
+    isUnitInvert() {
+      const invert = [2, 3];
+      return invert.includes(Number(this.$route.params.raceId));
     }
   },
   methods: {
