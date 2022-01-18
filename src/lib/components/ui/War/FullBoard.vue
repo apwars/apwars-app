@@ -528,7 +528,7 @@ export default {
     handleClick(factionImage) {
       let faction = 1;
       if (factionImage.includes("skeleton")) {
-        faction = 4;
+        faction = 3;
       } else if (factionImage.includes("elf")) {
         faction = 4;
       } else if (factionImage.includes("grunt")) {
