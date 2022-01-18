@@ -509,11 +509,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .background {
-  top: 0;
-  left: 0;
-  right: 0;
-  left: 0;
-  position: fixed;
+  height: 100%;
+  width: 100vw;
   background-size: cover;
   background-position: fixed;
   background-image: url("/images/background/battle-zoomed.png");
