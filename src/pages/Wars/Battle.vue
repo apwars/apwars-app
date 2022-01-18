@@ -469,7 +469,11 @@ export default {
       return `${wallet.substring(0, 5)}...${wallet.substring(end - 3, end)}`;
     },
     handleClickFaction(faction) {
-      this.$router.push(`/war/enlistment/${faction}/battle`);
+      if (this.playerEnlistment) {
+        this.$router.push(`/war/enlistment/${faction}/battle`);
+      } else {
+        this.$router.push(`/war/enlistment/${faction}`);
+      }
     },
   },
   watch: {
