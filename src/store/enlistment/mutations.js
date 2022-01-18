@@ -25,8 +25,8 @@ export default {
     state.troops = state.troops.map((t) => {
       return { ...t, amount: 0 };
     });
-    state.weapons = state.weapons.map((w) => {
-      return { ...w, amount: 0 };
+    state.troops = state.troops.map((w) => {
+      return { ...w, weaponAmount: 0 };
     });
     state.formation = null;
     state.raceName = null;

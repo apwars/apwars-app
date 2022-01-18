@@ -217,7 +217,7 @@
                         type="wsecondary"
                         icon="swords"
                         text="Elves"
-                        :handleClick="() => goToEnlistment(4)"
+                        :handleClick="() => goToEnlistment(3)"
                         isBlock
                       />
                     </div>
@@ -228,7 +228,7 @@
                         type="wsecondary"
                         icon="swords"
                         text="Undead"
-                        :handleClick="() => goToEnlistment(3)"
+                        :handleClick="() => goToEnlistment(4)"
                         isBlock
                       />
                     </div>

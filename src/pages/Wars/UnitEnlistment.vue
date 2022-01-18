@@ -561,7 +561,7 @@ export default {
         const weaponBalance = this.getWeaponBalance(this.getWeaponByTier(unit.tier).id);
         if (
           !this.validateAmount(unit.amount, this.getTroopBalance(unit.name)) ||
-          !this.validateAmount(stakedAmount, weaponBalance) || !this.validateAmount(stakedAmount, unit.amount)
+          !this.validateAmount(stakedAmount, weaponBalance) || !this.validateAmount(unit.weaponAmount, unit.amount)
         ) {
           isValid = false;
         }
