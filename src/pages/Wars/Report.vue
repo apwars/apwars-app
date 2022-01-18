@@ -402,9 +402,9 @@
             </v-col>
           </v-row>
           <template v-if="war.prizesDistributed.length > 0">
-          <v-row no-gutters>
+          <v-row>
             <v-col col="12" md="12">
-              <div class="rewards-title mt-2 mb-2">Distributed prizes</div>
+              <div class="rewards-title mb-2">Distributed prizes</div>
             </v-col>
           </v-row>
           <v-row no-gutters>
@@ -423,7 +423,7 @@
           </v-row>
         </template>
           <template v-if="warHasRewards">
-            <v-row no-gutters>
+            <v-row>
               <v-col col="12" md="12">
                 <div class="rewards-title mb-1">War prizes</div>
               </v-col>
