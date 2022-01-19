@@ -101,7 +101,7 @@ export default {
     if (countdown > 0) {
       commit("setWarPhase", { countdown, phase: "claim" });
       setTimeout(() => {
-        await dispatch('getWar');
+        dispatch('getWar');
       }, countdown);
       return;
     }
