@@ -291,7 +291,7 @@
                 </v-col>
               </v-row>
             </v-col>
-            <v-col class="d-flex flex-column align-center" cols="12" md="4">
+            <v-col class="d-flex flex-column align-center mb-8" cols="12" md="4">
               <div class="monster-viewport">
                 <v-img
                   :src="`/images/monsters/${monsterData.id}.webp`"

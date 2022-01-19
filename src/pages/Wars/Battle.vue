@@ -644,6 +644,7 @@ export default {
 .prizes-container {
   display: flex;
   width: 100%;
+  overflow-x: auto;
 }
 
 .prize-container {

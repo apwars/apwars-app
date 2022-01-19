@@ -532,7 +532,7 @@ export default {
       } else if (factionImage.includes("elf")) {
         faction = 4;
       } else if (factionImage.includes("grunt")) {
-        faction = 3;
+        faction = 2;
       }
       this.$emit("clickFaction", faction);
     },

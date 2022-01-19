@@ -239,7 +239,7 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="12" sm="3">
+        <v-col cols="12" sm="3" class="d-flex justify-center">
           <div class="monster-container">
             <v-img
               :src="`/images/monsters/${monsterData.id}.webp`"
@@ -530,8 +530,11 @@ export default {
 .monster-container {
   width: 100%;
   position: relative;
+  margin-top: -102px;
+  margin-bottom: 102px;
   @media screen and (min-width: 1024px) {
     margin-top: -160px;
+    margin-bottom: 0;
   }
 }
 

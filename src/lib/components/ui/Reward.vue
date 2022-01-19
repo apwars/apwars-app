@@ -58,7 +58,7 @@ export default {
 .reward-container {
   position: relative;
   text-align: center;
-  margin: 0 8px;
+  margin: 8px;
   &.small {
     width: 81px;
   }
