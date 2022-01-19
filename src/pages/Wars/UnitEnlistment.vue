@@ -151,7 +151,7 @@
               />
             </div>
           </v-col>
-          <v-col md="4">
+          <v-col md="4" class="enlistment-data-container">
             <template v-if="!isEnlistedWithAnotherRace">
               <div class="enlistment-title d-flex">
                 <img
@@ -838,6 +838,13 @@ export default {
 
 .text-white {
   color: #fff;
+}
+
+.enlistment-data-container {
+  margin-bottom: 102px;
+  @media screen and (min-width: 1024px) {
+    margin-bottom: 0;
+  }
 }
 
 @keyframes weapon-fall {
