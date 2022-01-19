@@ -59,8 +59,8 @@
             ><Versus
               :title="phase === 'finished' ? 'Result' : 'Parcial Result'"
               :phase="phase"
-              :corpForce="war.factions[0].power.total"
-              :degenForce="war.factions[1].power.total"
+              :corpForce="war.factions.find(f => f.name === 'The Corporation').power.total"
+              :degenForce="war.factions.find(f => f.name === 'The Degenerate').power.total"
               :winnerAmount="war.prizes.winner.unlocked"
               :loserAmount="war.prizes.loser.amount"
               :burnAmount="war.prizes.winner.locked"
