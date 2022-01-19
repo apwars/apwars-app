@@ -79,7 +79,7 @@ export default {
     if (countdown > 0) {
       commit("setWarPhase", { countdown, phase: "not-started" });
       setTimeout(() => {
-        dispatch("checkWarCountdown");
+        dispatch('getWar');
       }, countdown);
       return;
     }
@@ -90,7 +90,7 @@ export default {
     if (countdown > 0) {
       commit("setWarPhase", { countdown, phase: "enlistment" });
       setTimeout(() => {
-        dispatch("checkWarCountdown");
+        dispatch('getWar');
       }, countdown);
       return;
     }
@@ -101,7 +101,7 @@ export default {
     if (countdown > 0) {
       commit("setWarPhase", { countdown, phase: "claim" });
       setTimeout(() => {
-        dispatch("checkWarCountdown");
+        await dispatch('getWar');
       }, countdown);
       return;
     }
