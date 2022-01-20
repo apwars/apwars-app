@@ -196,6 +196,8 @@
                     <span v-if="isOwner || !slotData">My </span> Qty:
                     <Amount
                       :amount="getGameItemAmount(weapon.id)"
+                      decimals="1"
+                      :ignoreThousand="true"
                       compact
                       formatted
                     />
@@ -466,10 +468,12 @@ export default {
         );
         return this.totalStakedWeapon(weaponTier);
       } else {
-        return (
-          this.slotData?.gameItems?.find((g) => g.id === gameItemId)?.amount ||
-          0
-        );
+        const weapons = this.slotData?.gameItems?.filter((g) => g.id === gameItemId);
+        if (!weapons?.length > 0) {
+          return 0;
+        }
+        const total = weapons.reduce((total, w) => (total += w.amount), 0);
+        return total;
       }
     },
     async fetchData() {
