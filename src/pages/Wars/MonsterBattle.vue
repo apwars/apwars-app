@@ -463,6 +463,9 @@ export default {
     },
     getGameItemAmount(gameItemId) {
       if (!this.slotData) {
+        if (!(this.userEnlistedRace === RACE_DESCRIPTION[Number(this.$route.params.raceId)])) {
+          return 0;
+        }
         const weaponTier = Number(
           Object.keys(TIER_WEAPONS).find((k) => TIER_WEAPONS[k] === gameItemId)
         );
