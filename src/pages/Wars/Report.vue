@@ -19,7 +19,7 @@
           </v-col>
           <v-col col="12" sm="4" offset-sm="4">
             <Button
-              v-if="phase === 'claim' && (report && !report.bringHome)"
+              v-if="phase === 'claim' && report && !report.bringHome"
               type="wprimary"
               icon="swords"
               :handleClick="bringhome"
@@ -34,7 +34,9 @@
                 v-if="isLoadingBringhome"
               />
             </Button>
-            <div class="unit-name" v-if="report && report.bringHome">Your prizes are claimed!</div>
+            <div class="unit-name" v-if="report && report.bringHome">
+              Your prizes are claimed!
+            </div>
           </v-col>
         </v-row>
 
@@ -44,7 +46,11 @@
             :class="[selectedRace === 4 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Elves <span class="arrow-down" v-if="userEnlistedRace === 'Elves'"></span>
+              Elves
+              <span
+                class="arrow-down"
+                v-if="userEnlistedRace === 'Elves'"
+              ></span>
             </h2>
             <v-img
               class="race-image"
@@ -60,7 +66,11 @@
             :class="[selectedRace === 1 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Humans <span class="arrow-down" v-if="userEnlistedRace === 'Humans'"></span>
+              Humans
+              <span
+                class="arrow-down"
+                v-if="userEnlistedRace === 'Humans'"
+              ></span>
             </h2>
             <v-img
               class="race-image"
@@ -78,7 +88,11 @@
             :class="[selectedRace === 2 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Orcs <span class="arrow-down" v-if="userEnlistedRace === 'Orcs'"></span>
+              Orcs
+              <span
+                class="arrow-down"
+                v-if="userEnlistedRace === 'Orcs'"
+              ></span>
             </h2>
             <v-img
               class="race-image invert-image"
@@ -95,7 +109,11 @@
             :class="[selectedRace === 3 ? 'is-selected' : '']"
           >
             <h2 class="text-center mb-1">
-              Undead <span class="arrow-down" v-if="userEnlistedRace === 'Undead'"></span>
+              Undead
+              <span
+                class="arrow-down"
+                v-if="userEnlistedRace === 'Undead'"
+              ></span>
             </h2>
             <v-img
               class="race-image invert-image"
@@ -155,8 +173,14 @@
                         >Enlisted units:
                         <Amount
                           :amount="
-                            getTroopAmount(unit.name, 'accountReport', 'enlisted')
+                            getTroopAmount(
+                              unit.name,
+                              'accountReport',
+                              'enlisted'
+                            )
                           "
+                          decimals="1"
+                          :ignoreThousand="true"
                           compact
                           formatted
                       /></span>
@@ -167,6 +191,8 @@
                             :amount="
                               getTroopAmount(unit.name, 'accountReport', 'dead')
                             "
+                            decimals="1"
+                            :ignoreThousand="true"
                             compact
                             formatted
                         /></span>
@@ -174,8 +200,14 @@
                           >Survivors:
                           <Amount
                             :amount="
-                              getTroopAmount(unit.name, 'accountReport', 'survivors')
+                              getTroopAmount(
+                                unit.name,
+                                'accountReport',
+                                'survivors'
+                              )
                             "
+                            decimals="1"
+                            :ignoreThousand="true"
                             compact
                             formatted
                         /></span>
@@ -185,7 +217,11 @@
                     <span class="d-block text-primary"
                       >Global Enlisted Units:
                       <Amount
-                        :amount="getTroopAmount(unit.name, 'globalReport', 'enlisted')"
+                        :amount="
+                          getTroopAmount(unit.name, 'globalReport', 'enlisted')
+                        "
+                        decimals="1"
+                        :ignoreThousand="true"
                         compact
                         formatted
                     /></span>
@@ -193,16 +229,26 @@
                       <span class="d-block text-primary"
                         >Global Dead Units:
                         <Amount
-                          :amount="getTroopAmount(unit.name, 'globalReport', 'dead')"
+                          :amount="
+                            getTroopAmount(unit.name, 'globalReport', 'dead')
+                          "
                           compact
+                          decimals="1"
+                          :ignoreThousand="true"
                           formatted
                       /></span>
                       <span class="d-block text-primary"
                         >Global Survivors:
                         <Amount
                           :amount="
-                            getTroopAmount(unit.name, 'globalReport', 'survivors')
+                            getTroopAmount(
+                              unit.name,
+                              'globalReport',
+                              'survivors'
+                            )
                           "
+                          decimals="1"
+                          :ignoreThousand="true"
                           compact
                           formatted
                       /></span>
@@ -227,33 +273,58 @@
                     />
                     <div style="font-size: 14px">
                       <span class="d-block bold">{{ weapon.title }}</span>
-                      <template v-if="Object.keys(report.gameItems.accountReport).length > 0">
-                      <span class="d-block">My Qty:
-                        <Amount
-                          :amount="
-                            getWeaponAmount(weapon.id, 'accountReport', 'amount')
-                          "
-                          compact
-                          formatted
-                      /></span>
-                      <template v-if="isWarOver">
-                        <span class="d-block">Recovered:
+                      <template
+                        v-if="
+                          Object.keys(report.gameItems.accountReport).length > 0
+                        "
+                      >
+                        <span class="d-block"
+                          >My Qty:
                           <Amount
                             :amount="
-                              getWeaponAmount(weapon.id, 'accountReport', 'recovered')
+                              getWeaponAmount(
+                                weapon.id,
+                                'accountReport',
+                                'amount'
+                              )
                             "
+                            decimals="1"
+                            :ignoreThousand="true"
                             compact
                             formatted
                         /></span>
-                        <span class="d-block">Destroyed:
-                          <Amount
-                            :amount="
-                              getWeaponAmount(weapon.id, 'accountReport', 'destroyed')
-                            "
-                            compact
-                            formatted
-                        /></span>
-                      </template>
+                        <template v-if="isWarOver">
+                          <span class="d-block"
+                            >Recovered:
+                            <Amount
+                              :amount="
+                                getWeaponAmount(
+                                  weapon.id,
+                                  'accountReport',
+                                  'recovered'
+                                )
+                              "
+                              decimals="1"
+                              :ignoreThousand="true"
+                              compact
+                              formatted
+                          /></span>
+                          <span class="d-block"
+                            >Destroyed:
+                            <Amount
+                              :amount="
+                                getWeaponAmount(
+                                  weapon.id,
+                                  'accountReport',
+                                  'destroyed'
+                                )
+                              "
+                              decimals="1"
+                              :ignoreThousand="true"
+                              compact
+                              formatted
+                          /></span>
+                        </template>
                       </template>
                       <span v-else>
                         Not staked
@@ -264,24 +335,40 @@
                           :amount="
                             getWeaponAmount(weapon.id, 'globalReport', 'amount')
                           "
+                          decimals="1"
+                          :ignoreThousand="true"
                           compact
                           formatted
-                      />
+                        />
                       </span>
                       <template v-if="isWarOver">
-                        <span class="d-block text-primary">Recovered:
+                        <span class="d-block text-primary"
+                          >Recovered:
                           <Amount
                             :amount="
-                              getWeaponAmount(weapon.id, 'globalReport', 'recovered')
+                              getWeaponAmount(
+                                weapon.id,
+                                'globalReport',
+                                'recovered'
+                              )
                             "
+                            decimals="1"
+                            :ignoreThousand="true"
                             compact
                             formatted
                         /></span>
-                        <span class="d-block text-primary">Destroyed:
+                        <span class="d-block text-primary"
+                          >Destroyed:
                           <Amount
                             :amount="
-                              getWeaponAmount(weapon.id, 'globalReport', 'destroyed')
+                              getWeaponAmount(
+                                weapon.id,
+                                'globalReport',
+                                'destroyed'
+                              )
                             "
+                            decimals="1"
+                            :ignoreThousand="true"
                             compact
                             formatted
                         /></span>
@@ -291,7 +378,11 @@
                 </v-col>
               </v-row>
             </v-col>
-            <v-col class="d-flex flex-column align-center mb-8" cols="12" md="4">
+            <v-col
+              class="d-flex flex-column align-center mb-8"
+              cols="12"
+              md="4"
+            >
               <div class="monster-viewport">
                 <v-img
                   :src="`/images/monsters/${monsterData.id}.webp`"
@@ -317,7 +408,19 @@
                 </div>
               </div>
               <div class="d-flex align-center mb-1" v-if="hasPrizes">
-               <img width="24" class="mr-1" :src="`/images/${report.prizes.monster.prize.toLowerCase()}.png`" /> <Amount :amount="report.prizes.monster.amount" :symbol="report.prizes.monster.prize" formatted /> <div class="ml-1">Earned</div>
+                <img
+                  width="24"
+                  class="mr-1"
+                  :src="
+                    `/images/${report.prizes.monster.prize.toLowerCase()}.png`
+                  "
+                />
+                <Amount
+                  :amount="report.prizes.monster.amount"
+                  :symbol="report.prizes.monster.prize"
+                  formatted
+                />
+                <div class="ml-1">Earned</div>
               </div>
               <Button
                 type="wprimary"
@@ -331,7 +434,16 @@
             <v-col>
               <div class="rewards-title">Prize</div>
               <div class="d-flex align-center">
-              <img width="48" :src="`/images/${report.prizes.war.prize.toLowerCase()}.png`" /> <span class="rewards-title"><Amount :amount="report.prizes.war.amount" :symbol="report.prizes.war.prize" formatted /></span>
+                <img
+                  width="48"
+                  :src="`/images/${report.prizes.war.prize.toLowerCase()}.png`"
+                />
+                <span class="rewards-title"
+                  ><Amount
+                    :amount="report.prizes.war.amount"
+                    :symbol="report.prizes.war.prize"
+                    formatted
+                /></span>
               </div>
             </v-col>
           </v-row>
@@ -348,8 +460,11 @@
                     {{ reward.slot.x }}, {{ reward.slot.y }}
                   </div>
                   <div class="winner">
-                    <span v-if="reward.winner === '0x0'">No Winner</span><span v-else>Winner: {{ reward.winner }}</span>
-                    <span class="unit-name">{{ account.toLowerCase() === reward.winner ? " (YOU)" : "" }}</span>
+                    <span v-if="reward.winner === '0x0'">No Winner</span
+                    ><span v-else>Winner: {{ reward.winner }}</span>
+                    <span class="unit-name">{{
+                      account.toLowerCase() === reward.winner ? " (YOU)" : ""
+                    }}</span>
                   </div>
                   <div class="rewards-display mt-1">
                     <Reward
@@ -420,17 +535,15 @@ export default {
   },
 
   mounted() {
-    if (this.war && this.account) {
-      if (this.userEnlistedRace) {
-        this.handleRaceChange(RACES[this.userEnlistedRace.toUpperCase()]);
-      }
+    if (this.account) {
       this.loadData();
     }
   },
 
   updated() {
-    if (this.war){
-      this.$refs.raceSelect.scrollLeft = this.$refs.raceSelect.scrollWidth / 2 - 125;
+    if (this.war) {
+      this.$refs.raceSelect.scrollLeft =
+        this.$refs.raceSelect.scrollWidth / 2 - 125;
     }
   },
 
@@ -490,27 +603,27 @@ export default {
     },
 
     hasPrizes() {
-      return (this.isWarOver) && Object.keys(this.report.prizes).length > 0;
+      return this.isWarOver && Object.keys(this.report.prizes).length > 0;
     },
 
     monsterPrizeValue() {
       return this.getRaceMonsterPrizeValue(RACE_DESCRIPTION[this.selectedRace]);
-    }
+    },
   },
 
   watch: {
     account() {
-      if (!this.track){
-        this.setupMusic({ musicKey: 'WAR', isLoop: true });
+      if (!this.track) {
+        this.setupMusic({ musicKey: "WAR", isLoop: true });
       }
-      this.getWar();
+      this.fetchWar();
       this.loadData();
     },
   },
 
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
-    if (!to.path.includes('/war')) {
+    if (!to.path.includes("/war")) {
       this.clearMusic();
     }
     next();
@@ -527,7 +640,7 @@ export default {
     }),
 
     async loadData() {
-      if (!this.account || this.isLoading) {
+      if (!this.account || !this.war || this.isLoading) {
         return;
       }
       try {
@@ -580,15 +693,18 @@ export default {
       if (!this.report || !this.report.soldiers[troopName][report]) {
         return 0;
       }
-      return this.report.soldiers[troopName][report][info];
+      return Math.round(this.report.soldiers[troopName][report][info], 0);
     },
 
     getWeaponAmount(weaponId, report, info) {
-      const weapons = this.report.gameItems[report] && this.report.gameItems[report].filter(w => w.id === weaponId);
+      const weapons =
+        this.report.gameItems[report] &&
+        this.report.gameItems[report].filter((w) => w.id === weaponId);
       if (!weapons?.length > 0) {
         return 0;
       }
-      return weapons.reduce((total, w) => total += w[info], 0);
+      const total = weapons.reduce((total, w) => (total += w[info]), 0);
+      return total;
     },
 
     async bringhome() {
@@ -608,6 +724,13 @@ export default {
         this.isLoadingBringhome = false;
       }
     },
+
+    async fetchWar() {
+      await this.getWar();
+      if (this.userEnlistedRace) {
+        this.handleRaceChange(RACES[this.userEnlistedRace.toUpperCase()]);
+      }
+    }
   },
 };
 </script>
@@ -780,7 +903,7 @@ export default {
 }
 
 .text-primary {
-  color: #FFB800;
+  color: #ffb800;
 }
 
 @keyframes flutuation {

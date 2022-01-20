@@ -26,7 +26,7 @@
 import Convert from "@/lib/helpers/Convert";
 
 export default {
-  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'attribute', 'unitsColor'],
+  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'attribute', 'unitsColor', 'ignoreThousand'],
 
   computed: {
     computedAmount() {
@@ -38,7 +38,7 @@ export default {
       }
 
       if (this.compact !== undefined) {
-        numberAmount = Convert.compactNumber(numberAmount, this.getDecimals);
+        numberAmount = Convert.compactNumber(numberAmount, this.getDecimals, this.ignoreThousand);
       } else {
         numberAmount = Convert.roundDown(numberAmount, this.getDecimals);
         numberAmount = Convert.formatString(numberAmount, this.getDecimals);
