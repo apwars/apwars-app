@@ -832,6 +832,15 @@ export default {
     },
 
     getImage(token) {
+      if (token === 'wGOLD') {
+        return '/images/wgold.png';
+      }
+      if (token === 'wCOURAGE') {
+        return '/images/wcourage.png';
+      }
+      if (token === 'wLAND') {
+        return '/images/wLAND.png';
+      }
       if (token.includes("GameItem")) {
         const id = Number(token.replace(/\D/g, ""));
         return `/images/icons/${getCollectibleById(id).icon}.png`;
