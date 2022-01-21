@@ -162,7 +162,9 @@
                   alt="Enlistment resume"
                 />
                 <span v-if="isWarOver">Enlistment period is over</span>
-                <span v-else-if="!isEnlistedWithRace">Select your formation</span>
+                <span v-else-if="!isEnlistedWithRace"
+                  >Select your formation</span
+                >
                 <span v-else>Your enlistment</span>
               </div>
               <v-select
@@ -173,7 +175,10 @@
                 @change="handleFormationChange"
                 :loading="isLoadingWar || isLoadingBalances"
                 :disabled="
-                  isLoadingWar || isLoadingBalances || isEnlistedWithRace || isWarOver
+                  isLoadingWar ||
+                    isLoadingBalances ||
+                    isEnlistedWithRace ||
+                    isWarOver
                 "
               ></v-select>
             </template>
@@ -256,12 +261,13 @@
               >
                 <p>
                   What will happen when you send your troops to the War:<br />
-                  - You'll not be able to bring them to home until
-                  the war is over.
+                  - You'll not be able to bring them to home until the war is
+                  over.
                   <br />
-                  - The majority of them can die in the war, even if you win
-                  the battle! <br />
-                  - When war is over, you'll have 48 hours to claim your prizes. <br />
+                  - The majority of them can die in the war, even if you win the
+                  battle! <br />
+                  - When war is over, you'll have 48 hours to claim your prizes.
+                  <br />
                 </p>
                 <v-checkbox
                   v-model="agreement"
@@ -456,7 +462,8 @@ export default {
     isEnlistButtonDisabled() {
       return (
         this.phase === "not-started" ||
-        (!this.userEnlistedRace && this.phase === "enlistment" &&
+        (!this.userEnlistedRace &&
+          this.phase === "enlistment" &&
           (!this.isEnlistmentValid() || !this.agreement))
       );
     },
@@ -513,6 +520,7 @@ export default {
     backToWar() {
       this.$router.push({
         path: `/war`,
+        query: { warId: this.$route.query.warId },
       });
     },
     goToUnit(unitIndex) {
@@ -524,6 +532,7 @@ export default {
     goToMonsterBattle() {
       this.$router.push({
         path: `/war/enlistment/${this.$route.params.raceId}/battle`,
+        query: { warId: this.$route.query.warId },
       });
     },
     getUnitName(position) {
@@ -558,10 +567,13 @@ export default {
       }
       for (let unit of this.unitsFromRace) {
         const stakedAmount = this.getTotalStakedWeapon(unit.tier);
-        const weaponBalance = this.getWeaponBalance(this.getWeaponByTier(unit.tier).id);
+        const weaponBalance = this.getWeaponBalance(
+          this.getWeaponByTier(unit.tier).id
+        );
         if (
           !this.validateAmount(unit.amount, this.getTroopBalance(unit.name)) ||
-          !this.validateAmount(stakedAmount, weaponBalance) || !this.validateAmount(unit.weaponAmount, unit.amount)
+          !this.validateAmount(stakedAmount, weaponBalance) ||
+          !this.validateAmount(unit.weaponAmount, unit.amount)
         ) {
           isValid = false;
         }
@@ -570,7 +582,7 @@ export default {
     },
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
-        await this.getWar();
+        await this.getWar(this.$route.query.warId);
       }
     },
     validateAmount(amount, balance) {
@@ -597,7 +609,10 @@ export default {
     this.setHeader(false);
     this.troopSelected = this.unitsFromRace[0].name;
     this.fetchData();
-    if (this.currentEnlistment !== RACE_DESCRIPTION[Number(this.$route.params.raceId)]) {
+    if (
+      this.currentEnlistment !==
+      RACE_DESCRIPTION[Number(this.$route.params.raceId)]
+    ) {
       this.clearEnlistment();
     }
   },

@@ -1,14 +1,21 @@
 import WarsController from "@/controller/WarsController";
 
 export default {
-  async getWar({ state, commit, dispatch }) {
+  async getWar({ state, commit, dispatch }, warId) {
     if (state.isLoading) {
       return;
     }
     try {
       commit("setLoading", true);
       const controller = new WarsController();
-      const currentWar = await controller.getLastId();
+
+      let currentWar = '';
+      if (warId) {
+        currentWar = { id: warId };
+      } else {
+        currentWar = await controller.getLastId();
+      }
+
       const war = await controller.getOne(currentWar.id);
       commit("setWar", war);
       await dispatch("getFullBoard", currentWar.id);

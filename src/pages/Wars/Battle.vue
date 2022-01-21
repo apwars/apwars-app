@@ -59,8 +59,14 @@
             ><Versus
               :title="phase === 'finished' ? 'Result' : 'Parcial Result'"
               :phase="phase"
-              :corpForce="war.factions.find(f => f.name === 'The Corporation').power.total"
-              :degenForce="war.factions.find(f => f.name === 'The Degenerate').power.total"
+              :corpForce="
+                war.factions.find((f) => f.name === 'The Corporation').power
+                  .total
+              "
+              :degenForce="
+                war.factions.find((f) => f.name === 'The Degenerate').power
+                  .total
+              "
               :winnerAmount="war.prizes.winner.unlocked"
               :loserAmount="war.prizes.loser.amount"
               :burnAmount="war.prizes.winner.locked"
@@ -449,7 +455,10 @@ export default {
       this.$router.push("/");
     },
     goToEnlistment(raceId) {
-      this.$router.push(`/war/enlistment/${raceId}`);
+      this.$router.push({
+        path: `/war/enlistment/${raceId}`,
+        query: { warId: this.$route.query.warId },
+      });
     },
     redirectToDoc() {
       window
@@ -458,7 +467,7 @@ export default {
     },
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
-        await this.getWar();
+        await this.getWar(this.$route.query.warId);
       }
     },
     compactWallet(wallet) {
@@ -470,9 +479,15 @@ export default {
     },
     handleClickFaction(faction) {
       if (this.playerEnlistment) {
-        this.$router.push(`/war/enlistment/${faction}/battle`);
+        this.$router.push({
+          path: `/war/enlistment/${faction}/battle`,
+          query: { warId: this.$route.query.warId },
+        });
       } else {
-        this.$router.push(`/war/enlistment/${faction}`);
+        this.$router.push({
+          path: `/war/enlistment/${faction}`,
+          query: { warId: this.$route.query.warId },
+        });
       }
     },
   },

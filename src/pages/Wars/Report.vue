@@ -480,6 +480,12 @@
               </div>
             </v-col>
           </v-row>
+          <v-row>
+            <v-col>
+              <div class="rewards-title">Transfers</div>
+              <div class="mt-2"></div>
+            </v-col>
+          </v-row>
         </template>
         <div class="no-data" v-else-if="isWarNotStarted">
           This war has not started yet, come back later.
@@ -674,18 +680,21 @@ export default {
     backToWar() {
       this.$router.push({
         path: `/war`,
+        query: { warId: this.$route.query.warId },
       });
     },
 
     goToEnlistment(raceId) {
       this.$router.push({
         path: `/war/enlistment/${raceId}`,
+        query: { warId: this.$route.query.warId },
       });
     },
 
     goToMonsterBattle() {
       this.$router.push({
         path: `/war/enlistment/${this.selectedRace}/battle`,
+        query: { warId: this.$route.query.warId },
       });
     },
 
@@ -726,11 +735,11 @@ export default {
     },
 
     async fetchWar() {
-      await this.getWar();
+      await this.getWar(this.$route.query.warId);
       if (this.userEnlistedRace) {
         this.handleRaceChange(RACES[this.userEnlistedRace.toUpperCase()]);
       }
-    }
+    },
   },
 };
 </script>

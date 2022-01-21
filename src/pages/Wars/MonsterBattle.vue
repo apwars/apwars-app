@@ -53,11 +53,14 @@
           <v-row no-gutters>
             <v-col class="d-flex justify-center">
               <Button
-                v-if="(!userEnlistedRace || phase === 'not-started') && !isWarOver"
+                v-if="
+                  (!userEnlistedRace || phase === 'not-started') && !isWarOver
+                "
                 type="wprimary"
                 :handleClick="handleEnlistment"
                 :disabled="
-                  Boolean(slotData) || !formation ||
+                  Boolean(slotData) ||
+                    !formation ||
                     isLoadingEnlistment ||
                     phase === 'not-started' ||
                     !selectedSlot
@@ -136,7 +139,10 @@
                   Your current troops and equipments
                 </div>
 
-                <div v-else-if="!isEnlisted && !formation && !isWarOver" class="monster-name">
+                <div
+                  v-else-if="!isEnlisted && !formation && !isWarOver"
+                  class="monster-name"
+                >
                   Go to enlistment screen to select a formation
                 </div>
               </div>
@@ -211,15 +217,15 @@
               <div class="d-flex" v-if="slotData">
                 <span>Total force: {{ slotData.power.total }} Power Units</span>
                 <span class="ml-2"
-                  >Race share:
-                  ~{{ getPercentage(slotData.percentagePowerRace) }}%</span
+                  >Race share: ~{{
+                    getPercentage(slotData.percentagePowerRace)
+                  }}%</span
                 >
                 <span class="ml-2"
-                  >Faction share:
-                  ~{{
+                  >Faction share: ~{{
                     getPercentage(slotData.percentagePowerFaction)
                   }}%</span
-                >  
+                >
               </div>
             </v-col>
           </v-row>
@@ -385,12 +391,12 @@ export default {
       );
     },
     enlistButtonText() {
-      if (this.phase === 'not-started') {
-        return "Not started"
+      if (this.phase === "not-started") {
+        return "Not started";
       } else {
-        return "Enlist"
+        return "Enlist";
       }
-    }
+    },
   },
   methods: {
     ...mapMutations({
@@ -403,9 +409,10 @@ export default {
       clearMusic: "music/clearMusic",
     }),
     backToEnlistment() {
-      this.$router.push(
-        `/war/enlistment/${this.$route.params.raceId}`
-      );
+      this.$router.push({
+        path: `/war/enlistment/${this.$route.params.raceId}`,
+        query: { warId: this.$route.query.warId },
+      });
     },
     async handleSlotSelection(key) {
       const [y, x] = key.split("-");
@@ -437,20 +444,24 @@ export default {
         ToastSnackbar.success("Successfully enlisted at war!");
       } catch (error) {
         let msg =
-          error.messageError || error.message ||
+          error.messageError ||
+          error.message ||
           "Something went wrong while trying to enlist, try again later.";
         if (error.code === 4001) {
           msg = "Player denied the signature";
         }
         ToastSnackbar.error(msg);
-        await this.getWar();
+        await this.getWar(this.$route.query.warId);
         console.error(error);
       } finally {
         this.isLoadingEnlistment = false;
       }
     },
     goToReport() {
-      this.$router.push(`/war/report`);
+      this.$router.push({
+        path: `/war/report`,
+        query: { warId: this.$route.query.warId },
+      });
     },
     getUnitAmount(troopName) {
       if (!this.slotData) {
@@ -463,7 +474,13 @@ export default {
     },
     getGameItemAmount(gameItemId) {
       if (!this.slotData) {
-        if (this.userEnlistedRace && !(this.userEnlistedRace === RACE_DESCRIPTION[Number(this.$route.params.raceId)])) {
+        if (
+          this.userEnlistedRace &&
+          !(
+            this.userEnlistedRace ===
+            RACE_DESCRIPTION[Number(this.$route.params.raceId)]
+          )
+        ) {
           return 0;
         }
         const weaponTier = Number(
@@ -471,7 +488,9 @@ export default {
         );
         return this.totalStakedWeapon(weaponTier);
       } else {
-        const weapons = this.slotData?.gameItems?.filter((g) => g.id === gameItemId);
+        const weapons = this.slotData?.gameItems?.filter(
+          (g) => g.id === gameItemId
+        );
         if (!weapons?.length > 0) {
           return 0;
         }
@@ -481,12 +500,12 @@ export default {
     },
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
-        await this.getWar();
+        await this.getWar(this.$route.query.warId);
       }
     },
     getPercentage(value) {
       return Math.round(value * 100, 2);
-    }
+    },
   },
   watch: {
     account() {
