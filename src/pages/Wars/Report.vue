@@ -584,6 +584,7 @@ export default {
           filterable: true
         },
         { sortable: false, text: "To", value: "data.to", filterable: true },
+        { sortable: false, text: "Description", value: "description", filterable: false },
         { text: "Date", value: "createdOn" },
       ],
     };
