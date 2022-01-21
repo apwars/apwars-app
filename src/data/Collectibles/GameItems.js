@@ -292,6 +292,7 @@ export function getGameItems() {
       title: "Worker",
       description: "Workers are essential in Arcadia. They will carry on working effortlessly and effectively for as long as necessary in order to clean up the lands and build up strong foundations for generations to come.",
       image: "/images/nfts/worker.png",
+      icon: 'worker',
     },
     // {
     //   id: 63,
