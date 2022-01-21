@@ -78,4 +78,12 @@ export default class WarsController {
       throw error;
     }
   }
+
+  getTransfers(warId) {
+    try {
+      return this.base._get(`/wars/${warId}/transactions`);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

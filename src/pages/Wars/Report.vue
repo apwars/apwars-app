@@ -480,12 +480,6 @@
               </div>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col>
-              <div class="rewards-title">Transfers</div>
-              <div class="mt-2"></div>
-            </v-col>
-          </v-row>
         </template>
         <div class="no-data" v-else-if="isWarNotStarted">
           This war has not started yet, come back later.
@@ -493,6 +487,47 @@
         <div class="no-data" v-else>
           There is no data for this race yet, come back later.
         </div>
+        <v-row v-if="transfers.length">
+          <v-col>
+            <div class="rewards-title">Transfers</div>
+            <template>
+              <div class="search-container">
+                <v-text-field
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  single-line
+                  hide-details
+                ></v-text-field>
+              </div>
+              <v-data-table
+                :headers="headers"
+                :items="transfers"
+                :search="search"
+              >
+                <template v-slot:item.image="{ item }">
+                  <img
+                    :src="getImage(item.token)"
+                    height="32"
+                    :alt="item.token"
+                  />
+                </template>
+                <template v-slot:item.token="{ item }">
+                  {{ getName(item.token) }}
+                </template>
+                <template v-slot:item.account="{ item }">
+                  {{ compactWallet(item.account) }}
+                </template>
+                <template v-slot:item.data.to="{ item }">
+                  {{ compactWallet(item.data.to) }}
+                </template>
+                <template v-slot:item.createdOn="{ item }">
+                  {{ new Date(item.createdOn).toLocaleString("en-US") }}
+                </template>
+              </v-data-table>
+            </template>
+          </v-col>
+        </v-row>
       </v-container>
     </div>
   </div>
@@ -511,6 +546,7 @@ import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import Reward from "@/lib/components/ui/Reward";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
+import { getCollectibleById } from "@/data/Collectibles";
 
 import { RACES, RACE_DESCRIPTION, ENLISTMENT_OPTIONS } from "@/data/Races";
 import { MONSTERS } from "@/data/Monsters";
@@ -533,6 +569,23 @@ export default {
       isLoadingBringhome: false,
       selectedRace: 1,
       report: null,
+      isLoadingTransfers: false,
+      transfers: [],
+      search: "",
+      headers: [
+        { sortable: false, text: "", value: "image", width: '36px', filterable: false },
+        { sortable: false, text: "Amount", value: "amount", align: "center", width: '112px', filterable: false },
+        { sortable: false, text: "Game Item", value: "token", filterable: true },
+        {
+          text: "Account",
+          align: "start",
+          sortable: false,
+          value: "account",
+          filterable: true
+        },
+        { sortable: false, text: "To", value: "data.to", filterable: true },
+        { text: "Date", value: "createdOn" },
+      ],
     };
   },
 
@@ -542,6 +595,7 @@ export default {
 
   mounted() {
     if (this.account) {
+      this.fetchWar();
       this.loadData();
     }
   },
@@ -667,6 +721,20 @@ export default {
       }
     },
 
+    async loadTransfers() {
+      try {
+        this.isLoadingTransfers = true;
+        const controller = new WarsController();
+        const warId = this.war.id;
+        const transfers = await controller.getTransfers(warId);
+        this.transfers = transfers;
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoadingTransfers = false;
+      }
+    },
+
     async handleRaceChange(selectedRace) {
       if (this.selectedRace === selectedRace) {
         return;
@@ -738,6 +806,36 @@ export default {
       await this.getWar(this.$route.query.warId);
       if (this.userEnlistedRace) {
         this.handleRaceChange(RACES[this.userEnlistedRace.toUpperCase()]);
+      }
+      await this.loadTransfers();
+    },
+
+    compactWallet(wallet) {
+      if (!wallet) {
+        return "";
+      }
+      if (wallet.includes("war-id")) {
+        return "War Off-chain";
+      }
+      const end = wallet.length;
+      return `${wallet.substring(0, 5)}...${wallet.substring(end - 3, end)}`;
+    },
+
+    getName(token) {
+      if (token.includes("GameItem")) {
+        const id = Number(token.replace(/\D/g, ""));
+        return getCollectibleById(id).title;
+      } else {
+        return token;
+      }
+    },
+
+    getImage(token) {
+      if (token.includes("GameItem")) {
+        const id = Number(token.replace(/\D/g, ""));
+        return `/images/icons/${getCollectibleById(id).icon}.png`;
+      } else {
+        return `/images/icons/${token}-coin.png`;
       }
     },
   },
@@ -913,6 +1011,13 @@ export default {
 
 .text-primary {
   color: #ffb800;
+}
+
+.search-container {
+  width: 100%;
+  @media screen and (min-width: 1024px) {
+    width: 30%;
+  }
 }
 
 @keyframes flutuation {
