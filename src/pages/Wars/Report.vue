@@ -506,11 +506,7 @@
                 :search="search"
               >
                 <template v-slot:item.image="{ item }">
-                  <img
-                    :src="item.image"
-                    height="32"
-                    :alt="item.title"
-                  />
+                  <img :src="item.image" height="32" :alt="item.title" />
                 </template>
                 <template v-slot:item.data.from="{ item }">
                   {{ compactWallet(item.data.from) }}
@@ -570,18 +566,41 @@ export default {
       transfers: [],
       search: "",
       headers: [
-        { sortable: false, text: "", value: "image", width: '36px', filterable: false },
-        { sortable: false, text: "Amount", value: "amount", align: "center", width: '112px', filterable: false },
-        { sortable: false, text: "Game Item", value: "title", filterable: true },
+        {
+          sortable: false,
+          text: "",
+          value: "image",
+          width: "36px",
+          filterable: false,
+        },
+        {
+          sortable: false,
+          text: "Amount",
+          value: "amount",
+          align: "center",
+          width: "112px",
+          filterable: false,
+        },
+        {
+          sortable: false,
+          text: "Game Item",
+          value: "title",
+          filterable: true,
+        },
         {
           text: "Account",
           align: "start",
           sortable: false,
           value: "data.from",
-          filterable: true
+          filterable: true,
         },
         { sortable: false, text: "To", value: "data.to", filterable: true },
-        { sortable: false, text: "Description", value: "description", filterable: false },
+        {
+          sortable: false,
+          text: "Description",
+          value: "description",
+          filterable: false,
+        },
         { text: "Date", value: "createdOn" },
       ],
     };
@@ -725,7 +744,11 @@ export default {
         const controller = new WarsController();
         const warId = this.war.id;
         let transfers = await controller.getTransfers(warId);
-        transfers = transfers.map(t => ({...t, title: this.getName(t.token), image: this.getImage(t.token)}));
+        transfers = transfers.map((t) => ({
+          ...t,
+          title: this.getName(t.token),
+          image: this.getImage(t.token),
+        }));
         this.transfers = transfers;
       } catch (error) {
         console.error(error);
@@ -830,14 +853,14 @@ export default {
     },
 
     getImage(token) {
-      if (token === 'wGOLD') {
-        return '/images/wgold.png';
+      if (token === "wGOLD") {
+        return "/images/wgold.png";
       }
-      if (token === 'wCOURAGE') {
-        return '/images/wcourage.png';
+      if (token === "wCOURAGE") {
+        return "/images/wcourage.png";
       }
-      if (token === 'wLAND') {
-        return '/images/wLAND.png';
+      if (token === "wLAND") {
+        return "/images/wLAND.png";
       }
       if (token.includes("GameItem")) {
         const id = Number(token.replace(/\D/g, ""));
