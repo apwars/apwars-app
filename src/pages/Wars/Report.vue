@@ -507,13 +507,10 @@
               >
                 <template v-slot:item.image="{ item }">
                   <img
-                    :src="getImage(item.token)"
+                    :src="item.image"
                     height="32"
-                    :alt="item.token"
+                    :alt="item.title"
                   />
-                </template>
-                <template v-slot:item.token="{ item }">
-                  {{ getName(item.token) }}
                 </template>
                 <template v-slot:item.data.from="{ item }">
                   {{ compactWallet(item.data.from) }}
@@ -575,7 +572,7 @@ export default {
       headers: [
         { sortable: false, text: "", value: "image", width: '36px', filterable: false },
         { sortable: false, text: "Amount", value: "amount", align: "center", width: '112px', filterable: false },
-        { sortable: false, text: "Game Item", value: "token", filterable: true },
+        { sortable: false, text: "Game Item", value: "title", filterable: true },
         {
           text: "Account",
           align: "start",
@@ -727,7 +724,8 @@ export default {
         this.isLoadingTransfers = true;
         const controller = new WarsController();
         const warId = this.war.id;
-        const transfers = await controller.getTransfers(warId);
+        let transfers = await controller.getTransfers(warId);
+        transfers = transfers.map(t => ({...t, title: this.getName(t.token), image: this.getImage(t.token)}));
         this.transfers = transfers;
       } catch (error) {
         console.error(error);
