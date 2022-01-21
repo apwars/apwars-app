@@ -75,6 +75,9 @@ export default {
 
   mounted() {
     this.setHeader(false);
+    document.getElementsByTagName("footer")[0].style.display = 'none';
+    document.getElementsByClassName("btn-chat")[0].style.display = 'none';
+
     if (!this.isConnected) {
       return;
     }
@@ -82,6 +85,8 @@ export default {
   },
 
   beforeDestroy() {
+    document.getElementsByTagName("footer")[0].style.display = 'block';
+    document.getElementsByClassName("btn-chat")[0].style.display = 'block';
     document.getElementsByTagName("html")[0].style.overflow = "auto";
   },
 
