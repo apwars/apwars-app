@@ -515,8 +515,8 @@
                 <template v-slot:item.token="{ item }">
                   {{ getName(item.token) }}
                 </template>
-                <template v-slot:item.account="{ item }">
-                  {{ compactWallet(item.account) }}
+                <template v-slot:item.data.from="{ item }">
+                  {{ compactWallet(item.data.from) }}
                 </template>
                 <template v-slot:item.data.to="{ item }">
                   {{ compactWallet(item.data.to) }}
@@ -580,7 +580,7 @@ export default {
           text: "Account",
           align: "start",
           sortable: false,
-          value: "account",
+          value: "data.from",
           filterable: true
         },
         { sortable: false, text: "To", value: "data.to", filterable: true },
