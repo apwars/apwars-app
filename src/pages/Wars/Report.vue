@@ -816,7 +816,7 @@ export default {
         return "";
       }
       if (wallet.includes("war-id")) {
-        return "War Off-chain";
+        return "War";
       }
       const end = wallet.length;
       return `${wallet.substring(0, 5)}...${wallet.substring(end - 3, end)}`;
