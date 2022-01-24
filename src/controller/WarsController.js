@@ -55,9 +55,9 @@ export default class WarsController {
     }
   }
 
-  bringhome(warId, account) {
+  bringhome(warId, account, magicalItems) {
     try {
-      return this.base._postSignature(`/wars/${warId}/bringhome`, { account });
+      return this.base._postSignature(`/wars/${warId}/bringhome`, { account, magicalItems });
     } catch (error) {
       throw error;
     }

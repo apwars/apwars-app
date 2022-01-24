@@ -17,27 +17,6 @@
           <v-col col="12" sm="4">
             <Title :text="war.name" subtitle="Report" />
           </v-col>
-          <v-col col="12" sm="4" offset-sm="4">
-            <Button
-              v-if="phase === 'claim' && report && !report.bringHome"
-              type="wprimary"
-              icon="swords"
-              :handleClick="bringhome"
-              :disabled="isLoadingBringhome"
-            >
-              Claim prizes and bring home
-              <v-progress-circular
-                class="ml-1"
-                indeterminate
-                size="16"
-                width="2"
-                v-if="isLoadingBringhome"
-              />
-            </Button>
-            <div class="unit-name" v-if="report && report.bringHome">
-              Your prizes are claimed!
-            </div>
-          </v-col>
         </v-row>
 
         <div ref="raceSelect" class="race-select">
@@ -430,6 +409,77 @@
             </v-col>
           </v-row>
 
+          <v-row v-if="phase === 'claim'">
+            <v-col>
+              <div class="rewards-title">Claim</div>
+              <div class="unit-name" v-if="report && report.bringHome">
+                Your prizes are claimed!
+              </div>
+              <div v-else-if="phase === 'finished' && report && !report.bringHome">
+                The claim phase has ended.
+              </div>
+              <div v-else-if="phase === 'claim' && report && !report.bringHome" class="d-flex flex-column align-items-center">
+                <div class="d-flex justify-center">
+                  <div
+                    class="elixir-container"
+                  >
+                    <img :src="getImage('GameItem40')" :alt="getName('GameItem40')" height="86" />
+                    <div class="game-item-name"> {{ getName('GameItem40') }} </div>
+                    <div class="balance-info" v-if="!getItemBalance('GameItem40')">Not available</div>
+                    <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem40') }}</div>
+                    <div class="claim-action">
+                      <v-checkbox v-if="getItemBalance('GameItem40') > 0" @change="(value) => toggleGameItem(value, 'GameItem40')" :value="magicalItems.find(m => m === 'GameItem40') || false" label="Use?"></v-checkbox>
+                    </div>
+                  </div>
+                  <div class="elixir-container">
+                    <img :src="getImage('GameItem41')" :alt="getName('GameItem41')" height="86" />
+                    <div class="game-item-name"> {{ getName('GameItem41') }} </div>
+                    <div class="balance-info" v-if="!getItemBalance('GameItem41')">Not available</div>
+                    <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem41') }}</div>
+                    <div class="claim-action">
+                      <v-checkbox v-if="getItemBalance('GameItem41') > 0" @change="(value) => toggleGameItem(value, 'GameItem41')" :value="magicalItems.find(m => m === 'GameItem41') || false" label="Use?"></v-checkbox>
+                    </div>
+                  </div>
+                  <div class="elixir-container">
+                    <img :src="getImage('GameItem42')" :alt="getName('GameItem42')" height="86" />
+                    <div class="game-item-name"> {{ getName('GameItem42') }} </div>
+                    <div class="balance-info" v-if="!getItemBalance('GameItem42')">Not available</div>
+                    <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem42') }}</div>
+                    <div class="claim-action">
+                      <v-checkbox v-if="getItemBalance('GameItem42') > 0" @change="(value) => toggleGameItem(value, 'GameItem42')" :value="magicalItems.find(m => m === 'GameItem42') || false" label="Use?"></v-checkbox>
+                    </div>
+                  </div>
+                  <div class="elixir-container">
+                    <img :src="getImage('GameItem43')" :alt="getName('GameItem43')" height="86" />
+                    <div class="game-item-name"> {{ getName('GameItem43') }} </div>
+                    <div class="balance-info" v-if="!getItemBalance('GameItem43')">Not available</div>
+                    <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem43') }}</div>
+                    <div class="claim-action">
+                      <v-checkbox v-if="getItemBalance('GameItem43') > 0" @change="(value) => toggleGameItem(value, 'GameItem43')" :value="magicalItems.find(m => m === 'GameItem43') || false" label="Use?"></v-checkbox>
+                    </div>
+                  </div>
+                </div>
+                <div class="claim-button d-flex justify-center mt-4">
+                <Button
+                  type="wprimary"
+                  icon="swords"
+                  :handleClick="bringhome"
+                  :disabled="isLoadingBringhome"
+                >
+                  Claim prizes and bring home
+                  <v-progress-circular
+                    class="ml-1"
+                    indeterminate
+                    size="16"
+                    width="2"
+                    v-if="isLoadingBringhome"
+                  />
+                </Button>
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+
           <v-row v-if="hasPrizes">
             <v-col>
               <div class="rewards-title">Prize</div>
@@ -565,6 +615,7 @@ export default {
       isLoadingTransfers: false,
       transfers: [],
       search: "",
+      magicalItems: [],
       headers: [
         {
           sortable: false,
@@ -613,7 +664,6 @@ export default {
   mounted() {
     if (this.account) {
       this.fetchWar();
-      this.loadData();
     }
   },
 
@@ -636,6 +686,7 @@ export default {
       phase: (state) => state.war.phase,
       track: (state) => state.music.track,
       weapons: (state) => state.enlistment.weapons,
+      balances: (state) => state.user.balances
     }),
 
     account() {
@@ -694,7 +745,6 @@ export default {
         this.setupMusic({ musicKey: "WAR", isLoop: true });
       }
       this.fetchWar();
-      this.loadData();
     },
   },
 
@@ -811,7 +861,8 @@ export default {
         this.isLoadingBringhome = true;
         const controller = new WarsController();
         const warId = this.war.id;
-        await controller.bringhome(warId, this.account);
+        const magicalItems = this.magicalItems;
+        await controller.bringhome(warId, this.account, magicalItems);
         await this.loadData();
         ToastSnackbar.success("Your troops and prizes are safe at Home");
       } catch (error) {
@@ -829,6 +880,7 @@ export default {
       if (this.userEnlistedRace) {
         this.handleRaceChange(RACES[this.userEnlistedRace.toUpperCase()]);
       }
+      await this.loadData();
       await this.loadTransfers();
     },
 
@@ -869,6 +921,20 @@ export default {
         return `/images/icons/${token}-coin.png`;
       }
     },
+
+    getItemBalance(token) {
+      return this.balances[token] || 0;
+    },
+
+    toggleGameItem(value, token) {
+      console.log(value, token);
+      console.log(this.magicalItems);
+      if (value) {
+        this.magicalItems = this.magicalItems.concat(token);
+      } else {
+        this.magicalItems = this.magicalItems.filter(m => m !== token);
+      }
+    }
   },
 };
 </script>
@@ -1044,11 +1110,39 @@ export default {
   color: #ffb800;
 }
 
+.game-item-name {
+  @extend .text-primary;
+  font-size: 10px;
+  padding: 0 6px;
+  width: 91px;
+  text-align: center;
+}
+
 .search-container {
   width: 100%;
   @media screen and (min-width: 1024px) {
     width: 30%;
   }
+}
+
+.elixir-container {
+  padding: 4px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  > img {
+    margin-bottom: 8px;
+  }
+}
+
+.balance-info {
+  font-size: 10px;
+  text-align: center;
+}
+
+.claim-action {
+  height: 34px;
 }
 
 @keyframes flutuation {

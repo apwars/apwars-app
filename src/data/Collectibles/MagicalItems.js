@@ -84,6 +84,7 @@ export function getMagicalItems() {
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/elixir10-spendable.png",
+      icon: 'elixir10-spendable',
       combinators: {
         warPreparation: {
           name: "The Elixir (10%) (Spendable)",
@@ -124,6 +125,7 @@ export function getMagicalItems() {
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/elixir15-spendable.png",
+      icon: 'elixir15-spendable',
       combinators: {
         warPreparation: {
           name: "The Elixir (15%) (Spendable)",
@@ -164,6 +166,7 @@ export function getMagicalItems() {
       description:
         '"The elixir is like a refreshing waterfall of magical stream that goes directly to the soul, once you drink you forget about the weariness of the body."<br />-	Medicinal Alchemy, vol 3<br /><small><b>The Elixir saves a % of your troops from death in a combat. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/elixir20-spendable.png",
+      icon: 'elixir20-spendable',
       combinators: {
         warPreparation: {
           name: "The Elixir (20%) (Spendable)",
@@ -204,6 +207,7 @@ export function getMagicalItems() {
       description:
         '"The Arcane Book is more than a magical grimorium, it is a map for the Arcanarium planar helm. Those who master its pages can travel effortlessly between both places and be protected from mundane interferences." <br/><small><b>It can save 25% of all your magical units from perishing in a battle.</b> WARNING: This is a spendable item.</small>',
       image: "/images/nfts/arcanes-book-spendable.png",
+      icon: 'arcanes-book-spendable',
       combinators: {
         warPreparation: {
           name: "The Arcane's Book (Spendable)",
