@@ -428,7 +428,7 @@
                     <div class="balance-info" v-if="!getItemBalance('GameItem40')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem40') }}</div>
                     <div class="claim-action">
-                      <v-checkbox v-if="getItemBalance('GameItem40') > 0" @change="(value) => toggleGameItem(value, 'GameItem40')" :value="magicalItems.find(m => m === 'GameItem40') || false" label="Use?"></v-checkbox>
+                      <v-checkbox v-if="getItemBalance('GameItem40') > 0" @change="(value) => toggleGameItem(value, 'GameItem40')" :value="magicalItems.find(m => m === 'GameItem40') || false" label="Spend 1"></v-checkbox>
                     </div>
                   </div>
                   <div class="elixir-container">
@@ -437,7 +437,7 @@
                     <div class="balance-info" v-if="!getItemBalance('GameItem41')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem41') }}</div>
                     <div class="claim-action">
-                      <v-checkbox v-if="getItemBalance('GameItem41') > 0 > 0" @change="(value) => toggleGameItem(value, 'GameItem41')" :value="magicalItems.find(m => m === 'GameItem41') || false" label="Use?"></v-checkbox>
+                      <v-checkbox v-if="getItemBalance('GameItem41') > 0 > 0" @change="(value) => toggleGameItem(value, 'GameItem41')" :value="magicalItems.find(m => m === 'GameItem41') || false" label="Spend 1"></v-checkbox>
                     </div>
                   </div>
                   <div class="elixir-container">
@@ -446,7 +446,7 @@
                     <div class="balance-info" v-if="!getItemBalance('GameItem42')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem42') }}</div>
                     <div class="claim-action">
-                      <v-checkbox v-if="getItemBalance('GameItem42') > 0" @change="(value) => toggleGameItem(value, 'GameItem42')" :value="magicalItems.find(m => m === 'GameItem42') || false" label="Use?"></v-checkbox>
+                      <v-checkbox v-if="getItemBalance('GameItem42') > 0" @change="(value) => toggleGameItem(value, 'GameItem42')" :value="magicalItems.find(m => m === 'GameItem42') || false" label="Spend 1"></v-checkbox>
                     </div>
                   </div>
                   <div class="elixir-container">
@@ -455,7 +455,7 @@
                     <div class="balance-info" v-if="!getItemBalance('GameItem43')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem43') }}</div>
                     <div class="claim-action">
-                      <v-checkbox v-if="getItemBalance('GameItem43') > 0" @change="(value) => toggleGameItem(value, 'GameItem43')" :value="magicalItems.find(m => m === 'GameItem43') || false" label="Use?"></v-checkbox>
+                      <v-checkbox v-if="getItemBalance('GameItem43') > 0" @change="(value) => toggleGameItem(value, 'GameItem43')" :value="magicalItems.find(m => m === 'GameItem43') || false" label="Spend 1"></v-checkbox>
                     </div>
                   </div>
                 </div>
