@@ -423,7 +423,7 @@
                   <div
                     class="elixir-container"
                   >
-                    <img :src="getImage('GameItem40')" :alt="getName('GameItem40')" height="86" />
+                    <img :class="[!getItemBalance('GameItem40') ? 'grayscale' : '']" :src="getImage('GameItem40')" :alt="getName('GameItem40')" height="86" />
                     <div class="game-item-name"> {{ getName('GameItem40') }} </div>
                     <div class="balance-info" v-if="!getItemBalance('GameItem40')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem40') }}</div>
@@ -432,16 +432,16 @@
                     </div>
                   </div>
                   <div class="elixir-container">
-                    <img :src="getImage('GameItem41')" :alt="getName('GameItem41')" height="86" />
+                    <img :class="[!getItemBalance('GameItem41') ? 'grayscale' : '']" :src="getImage('GameItem41')" :alt="getName('GameItem41')" height="86" />
                     <div class="game-item-name"> {{ getName('GameItem41') }} </div>
                     <div class="balance-info" v-if="!getItemBalance('GameItem41')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem41') }}</div>
                     <div class="claim-action">
-                      <v-checkbox v-if="getItemBalance('GameItem41') > 0" @change="(value) => toggleGameItem(value, 'GameItem41')" :value="magicalItems.find(m => m === 'GameItem41') || false" label="Use?"></v-checkbox>
+                      <v-checkbox v-if="getItemBalance('GameItem41') > 0 > 0" @change="(value) => toggleGameItem(value, 'GameItem41')" :value="magicalItems.find(m => m === 'GameItem41') || false" label="Use?"></v-checkbox>
                     </div>
                   </div>
                   <div class="elixir-container">
-                    <img :src="getImage('GameItem42')" :alt="getName('GameItem42')" height="86" />
+                    <img :class="[!getItemBalance('GameItem42') ? 'grayscale' : '']" :src="getImage('GameItem42')" :alt="getName('GameItem42')" height="86" />
                     <div class="game-item-name"> {{ getName('GameItem42') }} </div>
                     <div class="balance-info" v-if="!getItemBalance('GameItem42')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem42') }}</div>
@@ -450,7 +450,7 @@
                     </div>
                   </div>
                   <div class="elixir-container">
-                    <img :src="getImage('GameItem43')" :alt="getName('GameItem43')" height="86" />
+                    <img :class="[!getItemBalance('GameItem43') ? 'grayscale' : '']" :src="getImage('GameItem43')" :alt="getName('GameItem43')" height="86" />
                     <div class="game-item-name"> {{ getName('GameItem43') }} </div>
                     <div class="balance-info" v-if="!getItemBalance('GameItem43')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem43') }}</div>
@@ -1143,6 +1143,10 @@ export default {
 
 .claim-action {
   height: 34px;
+}
+
+.grayscale {
+  filter: grayscale(1);
 }
 
 @keyframes flutuation {
