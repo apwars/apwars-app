@@ -579,6 +579,7 @@
 <script>
 import { mapMutations, mapGetters, mapState, mapActions } from "vuex";
 import WarsController from "@/controller/WarsController";
+import errorHandler from "@/helpers/errorHandler";
 
 import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
@@ -866,9 +867,8 @@ export default {
         await this.loadData();
         ToastSnackbar.success("Your troops and prizes are safe at Home");
       } catch (error) {
-        ToastSnackbar.error(
-          "Something went wrong while trying to bring troops and prizes Home, try again later."
-        );
+        const errorMessage = errorHandler(error.code);
+        ToastSnackbar.error(errorMessage);
         console.error(error);
       } finally {
         this.isLoadingBringhome = false;
@@ -927,8 +927,6 @@ export default {
     },
 
     toggleGameItem(value, token) {
-      console.log(value, token);
-      console.log(this.magicalItems);
       if (value) {
         this.magicalItems = this.magicalItems.concat(token);
       } else {

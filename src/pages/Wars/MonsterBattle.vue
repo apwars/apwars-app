@@ -289,6 +289,7 @@
 </template>
 <script>
 import { mapMutations, mapGetters, mapState, mapActions } from "vuex";
+import errorHandler from "@/helpers/errorHandler";
 
 import { RACE_DESCRIPTION } from "@/data/Races";
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
@@ -443,14 +444,11 @@ export default {
         );
         ToastSnackbar.success("Successfully enlisted at war!");
       } catch (error) {
-        let msg =
-          error.messageError ||
-          error.message ||
-          "Something went wrong while trying to enlist, try again later.";
+        let errorMessage = errorHandler(error.code);
         if (error.code === 4001) {
-          msg = "Player denied the signature";
+          errorMessage = "Player denied the signature";
         }
-        ToastSnackbar.error(msg);
+        ToastSnackbar.error(errorMessage);
         await this.getWar(this.$route.query.warId);
         console.error(error);
       } finally {
