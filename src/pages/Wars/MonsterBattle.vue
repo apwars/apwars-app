@@ -285,6 +285,29 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-overlay :value="isRewardOverlayActive">
+      <div class="rewards" v-click-outside="handleClickOutside">
+        <div class="reward-list" v-if="isChestOpen">
+          <Reward
+            class="reward-container"
+            v-for="reward in playerSlotRewards"
+            :key="reward.prize"
+            :prize="reward.prize"
+            :type="reward.type"
+            :amount="reward.amount"
+          />
+        </div>
+        <Chest title="Enlistment rewards" :isOpen="isChestOpen" />
+        <div class="d-flex justify-center">
+          <Button
+            text="Wow!"
+            type="wprimary"
+            :handleClick="handleClickOutside"
+            v-if="isChestOpen"
+          />
+        </div>
+      </div>
+    </v-overlay>
   </div>
 </template>
 <script>
@@ -296,21 +319,25 @@ import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
 import { TIER_WEAPONS } from "@/data/Collectibles/Weapons";
 
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+
 import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
 import Progress from "@/lib/components/ui/Progress";
 import Board from "@/lib/components/ui/War/Board";
 import Reward from "@/lib/components/ui/Reward";
 import Amount from "@/lib/components/ui/Utils/Amount";
-import ToastSnackbar from "@/plugins/ToastSnackbar";
+import Chest from "@/lib/components/ui/animations/Chest";
 
 export default {
-  components: { Title, Button, Progress, Board, Reward, Amount },
+  components: { Title, Button, Progress, Board, Reward, Amount, Chest },
   data() {
     return {
       selectedSlot: null,
       isLoadingEnlistment: false,
       slotData: null,
+      isRewardOverlayActive: false,
+      isChestOpen: false,
     };
   },
   computed: {
@@ -332,6 +359,7 @@ export default {
       playerCurrentMonsterPrize: "war/playerCurrentMonsterPrize",
       isWarOver: "war/isWarOver",
       getRaceMonsterPrizeValue: "war/getRaceMonsterPrizeValue",
+      playerSlotRewards: "war/playerSlotRewards",
     }),
     account() {
       return this.$store.getters["user/account"];
@@ -427,6 +455,7 @@ export default {
     async handleEnlistment() {
       try {
         this.isLoadingEnlistment = true;
+        this.isRewardOverlayActive = true;
         const faction =
           Number(this.$route.params.raceId) === 1 ||
           Number(this.$route.params.raceId) === 4
@@ -442,8 +471,10 @@ export default {
         this.handleSlotSelection(
           `${this.selectedSlot.y}-${this.selectedSlot.x}`
         );
+        this.isChestOpen = true;
         ToastSnackbar.success("Successfully enlisted at war!");
       } catch (error) {
+        this.isRewardOverlayActive = false;
         let errorMessage = errorHandler(error.code);
         if (error.code === 4001) {
           errorMessage = "Player denied the signature";
@@ -503,6 +534,11 @@ export default {
     },
     getPercentage(value) {
       return Math.round(value * 100, 2);
+    },
+    handleClickOutside() {
+      if (this.isChestOpen) {
+        this.isRewardOverlayActive = false;
+      }
     },
   },
   watch: {
@@ -651,5 +687,28 @@ export default {
 .text-small {
   font-size: 12px;
   text-align: center;
+}
+.rewards {
+  position: relative;
+}
+
+.reward-list {
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -60%);
+  display: flex;
+  z-index: 10;
+  animation: reward-appear 2s linear forwards;
+}
+
+@keyframes reward-appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 </style>

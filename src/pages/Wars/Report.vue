@@ -420,6 +420,9 @@
               </div>
               <div v-else-if="phase === 'claim' && report && !report.bringHome" class="d-flex flex-column align-items-center">
                 <div class="d-flex justify-center">
+                <div class="text-half mb-2">You can use your spendables magical items to bring an amount of your troops back from the dead. Select which items you want to use for this claim:</div>
+                </div>
+                <div class="d-flex justify-center">
                   <div
                     class="elixir-container"
                   >
@@ -428,7 +431,7 @@
                     <div class="balance-info" v-if="!getItemBalance('GameItem40')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem40') }}</div>
                     <div class="claim-action">
-                      <v-checkbox v-if="getItemBalance('GameItem40') > 0" @change="(value) => toggleGameItem(value, 'GameItem40')" :value="magicalItems.find(m => m === 'GameItem40') || false" label="Spend 1"></v-checkbox>
+                      <v-checkbox v-if="getItemBalance('GameItem40') > 0" color="blue" @change="(value) => toggleGameItem(value, 'GameItem40')" :value="magicalItems.find(m => m === 'GameItem40') || false" hide-details></v-checkbox>
                     </div>
                   </div>
                   <div class="elixir-container">
@@ -437,7 +440,7 @@
                     <div class="balance-info" v-if="!getItemBalance('GameItem41')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem41') }}</div>
                     <div class="claim-action">
-                      <v-checkbox v-if="getItemBalance('GameItem41') > 0 > 0" @change="(value) => toggleGameItem(value, 'GameItem41')" :value="magicalItems.find(m => m === 'GameItem41') || false" label="Spend 1"></v-checkbox>
+                      <v-checkbox v-if="getItemBalance('GameItem41') > 0 > 0" color="blue" @change="(value) => toggleGameItem(value, 'GameItem41')" :value="magicalItems.find(m => m === 'GameItem41') || false" hide-details></v-checkbox>
                     </div>
                   </div>
                   <div class="elixir-container">
@@ -446,7 +449,7 @@
                     <div class="balance-info" v-if="!getItemBalance('GameItem42')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem42') }}</div>
                     <div class="claim-action">
-                      <v-checkbox v-if="getItemBalance('GameItem42') > 0" @change="(value) => toggleGameItem(value, 'GameItem42')" :value="magicalItems.find(m => m === 'GameItem42') || false" label="Spend 1"></v-checkbox>
+                      <v-checkbox v-if="getItemBalance('GameItem42') > 0" color="blue" @change="(value) => toggleGameItem(value, 'GameItem42')" :value="magicalItems.find(m => m === 'GameItem42') || false" hide-details></v-checkbox>
                     </div>
                   </div>
                   <div class="elixir-container">
@@ -455,7 +458,7 @@
                     <div class="balance-info" v-if="!getItemBalance('GameItem43')">Not available</div>
                     <div class="balance-info" v-else>Balance: {{ getItemBalance('GameItem43') }}</div>
                     <div class="claim-action">
-                      <v-checkbox v-if="getItemBalance('GameItem43') > 0" @change="(value) => toggleGameItem(value, 'GameItem43')" :value="magicalItems.find(m => m === 'GameItem43') || false" label="Spend 1"></v-checkbox>
+                      <v-checkbox v-if="getItemBalance('GameItem43') > 0" color="blue" @change="(value) => toggleGameItem(value, 'GameItem43')" :value="magicalItems.find(m => m === 'GameItem43') || false" hide-details></v-checkbox>
                     </div>
                   </div>
                 </div>
@@ -1124,6 +1127,7 @@ export default {
 }
 
 .elixir-container {
+  position: relative;
   padding: 4px 12px;
   display: flex;
   flex-direction: column;
@@ -1141,10 +1145,20 @@ export default {
 
 .claim-action {
   height: 34px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -16px;
 }
 
 .grayscale {
   filter: grayscale(1);
+}
+
+.text-half {
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
 }
 
 @keyframes flutuation {

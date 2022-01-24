@@ -77,5 +77,8 @@ export default {
     }
     const totalAmount = state.accountPrizes.reduce((total, p) => total += p.amount, 0);
     return totalAmount > 0;
+  },
+  playerSlotRewards: (state, getters) => {
+    return getters.playerEnlistment?.rewards || [];
   }
 };

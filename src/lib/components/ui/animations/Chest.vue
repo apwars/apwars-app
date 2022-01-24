@@ -1,5 +1,8 @@
 <template>
-  <img :src="frame" :alt="title" />
+  <div class="chest-container">
+    <img class="mist" alt="mist" :src="`/images/animations/chest/chest-mist-${currentFrame}.png`" />
+    <img class="chest" :src="frame" :alt="title" />
+  </div>
 </template>
 <script>
 export default {
@@ -55,3 +58,18 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.chest-container {
+  position: relative;
+  height: 300px;
+  width: 400px;
+}
+.mist {
+  position: absolute;
+  z-index: 5;
+}
+.chest {
+  position: absolute;
+  z-index: 8;
+}
+</style>
