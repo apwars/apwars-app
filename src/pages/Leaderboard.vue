@@ -254,14 +254,14 @@
 
           <div class="leaderboard">
             <div
-              v-for="(player, index) in leaderboards"
+              v-for="(player, index) in listWeek"
               v-bind:key="player.account"
               class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
             >
               <div class="d-flex d-lg-box">
                 <v-avatar
                   class="list-leaderboard-avatar d-flex justify-center"
-                  :address="'0x0'"
+                  :address="player.account"
                   tooltip
                 />
                 <div class="d-flex d-md-none align-center justify-center">
@@ -280,7 +280,7 @@
 
                   <v-address
                     class="text-center mx-1"
-                    :address="'0x0'"
+                    :address="player.account"
                     link
                     tooltip
                   >
@@ -311,25 +311,25 @@
 
                 <v-address
                   class="d-none d-sm-none d-md-flex text-center mx-1"
-                  :address="'0x0'"
+                  :address="player.account"
                   link
                   tooltip
                 >
                 </v-address>
 
                 <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Average time</div>
-                  <div>1’22’’22</div>
+                  <div class="text-subtitle-2 primary--text">Best time</div>
+                  <div>{{player.time}}s</div>
                 </div>
 
                 <div class="d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Points</div>
-                  <div>1800</div>
+                  <div>{{player.points}}</div>
                 </div>
 
                 <div class="d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Score</div>
-                  <div>2550</div>
+                  <div>{{player.score}}</div>
                 </div>
               </div>
             </div>
@@ -432,7 +432,7 @@
                 </v-address>
 
                 <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Average time</div>
+                  <div class="text-subtitle-2 primary--text">Best time</div>
                   <div>1’22’’22</div>
                 </div>
 
@@ -677,8 +677,11 @@ export default {
     }),
 
     initData() {
-      this.listWeek = this.getListWeek(1);
-      this.listMonths = this.getListMonths();
+      setTimeout(() => {
+        this.listWeek = this.getListWeek(1);
+        this.listMonths = this.getListMonths();
+      }, 2000);
+
     },
 
     async loadData() {
@@ -692,7 +695,7 @@ export default {
     async getListWeek(_page) {
       const leaderboardController = new LeaderboardController();
       this.listWeekLoading = true;
-      this.listWeek = await leaderboardController.getWeek(1, this.limit*(_page-1));
+      this.listWeek = await leaderboardController.getWeek('TMJ', this.limit, this.limit*(_page-1));
       this.listWeekLoading = false;
     },
 
