@@ -36,6 +36,7 @@
                 </div>
                 <template v-if="!isEnlistedWithAnotherRace">
                   <v-text-field
+                    id="troops"
                     outlined
                     v-bind="currencyConfig"
                     v-model="stakedTroop"
@@ -48,6 +49,7 @@
                     {{ weapon.title }}
                   </div>
                   <v-currency-field
+                    id="weapons"
                     color="#FFF"
                     outlined
                     :hint="`Available: ${weaponBalance - totalStakedWeapon}`"
@@ -130,7 +132,7 @@
             </div>
           </v-col>
           <v-col md="4">
-            <div class="troop-viewport">
+            <div class="troop-viewport" id="troop-view">
               <img
                 class="aura"
                 :src="enlistmentOptions.aura"
@@ -179,6 +181,7 @@
                 <span v-else>Your enlistment</span>
               </div>
               <v-select
+                id="formation"
                 :items="formationOptions"
                 label="Select"
                 single-line
@@ -193,7 +196,7 @@
                 "
               ></v-select>
             </template>
-            <div class="troop-list mt-2">
+            <div class="troop-list mt-2" id="enlistment-resume">
               <div
                 class="d-flex align-center mb-1"
                 v-for="(unit, index) in unitsFromRace"
@@ -294,6 +297,7 @@
                 </v-checkbox>
               </div>
               <Button
+                id="enlist-button"
                 class="mt-1"
                 type="wprimary"
                 :text="enlistButtonText"
@@ -312,6 +316,7 @@
         </v-row>
       </template>
     </v-container>
+    <v-tour name="enlistment" :steps="steps" :callbacks="callbacks" />
   </div>
 </template>
 
@@ -514,6 +519,42 @@ export default {
         allowNegative: false,
       },
       agreement: false,
+      showTour: true,
+      steps: [
+          {
+            target: '#troop-view',  // We're using document.querySelector() under the hood
+            header: {
+              title: 'Configure your enlistment!',
+            },
+            content: `Here you see the troop looks and can go back and forward.`
+          },
+          {
+            target: '#formation',
+            content: 'On this field you can choose the formation you will enlist. There is no way to set troop amounts without formation change.'
+          },
+          {
+            target: '#troops',
+            content: 'Here you see the amount of the troop'
+          },
+          {
+            target: '#weapons',
+            content: '...and this is the place where you set weapons for it, if you have weapons balance.'
+          },
+          {
+            target: '#enlistment-resume',
+            content: 'On this list you see the overall state of your enlistment with formation amounts and weapons staked.',
+            params: {
+              placement: 'left'
+            }
+          },
+          {
+            target: '#enlist-button',
+            content: 'When everything is right and set, and you are ready to go for war, this button will take you to slot selection.'
+          },
+      ],
+      callbacks: {
+        onFinish: this.handleTourDone, onSkip: this.handleTourDone, onStop: this.handleTourDone
+      }
     };
   },
   methods: {
@@ -595,6 +636,9 @@ export default {
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
         await this.getWar(this.$route.query.warId);
+        if (this.showTour) {
+          this.$tours['enlistment'].start();
+        }
       }
     },
     validateAmount(amount, balance) {
@@ -603,6 +647,18 @@ export default {
         isValid = false;
       }
       return isValid;
+    },
+    handleTourDone() {
+      if (this.showTour) {
+        window.localStorage.setItem('enlistment-tour', 'done');
+        this.showTour = false;
+      }
+    },
+    checkTour() {
+      const tour = window.localStorage.getItem('enlistment-tour');
+      if (tour) {
+        this.showTour = false;
+      }
     },
   },
   watch: {
@@ -619,6 +675,7 @@ export default {
   },
   async mounted() {
     this.setHeader(false);
+    this.checkTour();
     this.troopSelected = this.unitsFromRace[0].name;
     this.fetchData();
     if (
