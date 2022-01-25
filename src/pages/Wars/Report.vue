@@ -373,13 +373,15 @@
               <div class="monster-name text-center mb-2">
                 {{ monsterData.name }}
               </div>
-              <div class="d-flex align-items-center justify-center mb-1">
+              <div class="d-flex align-center justify-center mb-1">
                 <div class="reward-description text-center pr-2">
                   Monster Prize Pool
                 </div>
                 <div class="treasure-progress">
                   <div class="text">
-                    <Amount :amount="monsterPrizeValue" compact formatted />
+                    <Amount :amount="monsterPrizeRange.p0" approximate compact formatted />
+                    to
+                    <Amount :amount="monsterPrizeRange.K" compact formatted />
                   </div>
                   <div class="treasure">
                     <v-img src="/images/battle/treasure.png" />
@@ -684,6 +686,7 @@ export default {
       userEnlistedRace: "war/userEnlistedRace",
       isWarOver: "war/isWarOver",
       getRaceMonsterPrizeValue: "war/getRaceMonsterPrizeValue",
+      getRaceMonsterPrizeRange: "war/getRaceMonsterPrizeRange",
     }),
     ...mapState({
       war: (state) => state.war.war,
@@ -736,6 +739,10 @@ export default {
 
     hasPrizes() {
       return this.isWarOver && Object.keys(this.report.prizes).length > 0;
+    },
+
+    monsterPrizeRange() {
+      return this.getRaceMonsterPrizeRange(RACE_DESCRIPTION[this.selectedRace]);
     },
 
     monsterPrizeValue() {

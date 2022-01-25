@@ -530,7 +530,7 @@ export default {
           },
           {
             target: '#formation',
-            content: 'On this field you can choose the formation you will enlist. There is no way to set troop amounts without formation change.'
+            content: 'On this field you can choose the formation you will enlist based on your Soldier`s level. There is no way to set troop amounts without formation change.'
           },
           {
             target: '#troops',

@@ -43,8 +43,9 @@
                 <div class="fed-prize">
                   <img src="/images/wgold.png" width="28" />
                   <div class="prize-text">
+                    Up to
                     <Amount
-                      :amount="war.prizes.winner.amount"
+                      :amount="war.prizes.winner.logisticsFunctionPrize.K"
                       compact
                       formatted
                     />
@@ -87,14 +88,26 @@
                         width="32"
                       />
                       <div class="prize-info">
+                        <div>
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Humans')
-                              .monsterPrizeAmount
+                              .logisticsFunctionPrize.p0
+                          "
+                          approximate
+                          compact
+                          formatted
+                        />
+                        to
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Humans')
+                              .logisticsFunctionPrize.K
                           "
                           compact
                           formatted
                         />
+                        </div>
                         <div class="prize-description">
                           {{
                             war.races.find((r) => r.name === "Humans")
@@ -110,6 +123,7 @@
                             war.races.find((r) => r.name === 'Humans').power
                               .total
                           "
+                          approximate
                           compact
                           formatted
                           symbol="Power Units"
@@ -142,6 +156,7 @@
                           :amount="
                             war.races.find((r) => r.name === 'Orcs').power.total
                           "
+                          approximate
                           compact
                           formatted
                           symbol="Power Units"
@@ -155,14 +170,26 @@
                         width="32"
                       />
                       <div class="prize-info">
+                        <div>
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Orcs')
-                              .monsterPrizeAmount
+                              .logisticsFunctionPrize.p0
+                          "
+                          approximate
+                          compact
+                          formatted
+                        />
+                        to
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Orcs')
+                              .logisticsFunctionPrize.K
                           "
                           compact
                           formatted
                         />
+                        </div>
                         <div class="prize-description">
                           {{
                             war.races.find((r) => r.name === "Orcs")
@@ -192,14 +219,26 @@
                         width="32"
                       />
                       <div class="prize-info">
+                        <div>
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Elves')
-                              .monsterPrizeAmount
+                              .logisticsFunctionPrize.p0
+                          "
+                          approximate
+                          compact
+                          formatted
+                        />
+                        to
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Elves')
+                              .logisticsFunctionPrize.K
                           "
                           compact
                           formatted
                         />
+                        </div>
                         <div class="prize-description">
                           {{
                             war.races.find((r) => r.name === "Elves")
@@ -215,6 +254,7 @@
                             war.races.find((r) => r.name === 'Elves').power
                               .total
                           "
+                          approximate
                           compact
                           formatted
                           symbol="Power Units"
@@ -248,6 +288,7 @@
                             war.races.find((r) => r.name === 'Undead').power
                               .total
                           "
+                          approximate
                           compact
                           formatted
                           symbol="Power Units"
@@ -261,14 +302,26 @@
                         width="32"
                       />
                       <div class="prize-info">
+                        <div>
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Undead')
-                              .monsterPrizeAmount
+                              .logisticsFunctionPrize.p0
+                          "
+                          approximate
+                          compact
+                          formatted
+                        />
+                        to
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Undead')
+                              .logisticsFunctionPrize.K
                           "
                           compact
                           formatted
                         />
+                        </div>
                         <div class="prize-description">
                           {{
                             war.races.find((r) => r.name === "Undead")
@@ -317,6 +370,38 @@
                   class="prize-container text-center"
                   v-for="(prize, index) in warRewards"
                   :key="`warPrize-${index}`"
+                >
+                  <div class="slot-text">
+                    {{ prize.raceName }} {{ prize.slot.x }}, {{ prize.slot.y }}
+                  </div>
+                  <div class="slot-text mb-2">
+                    {{ compactWallet(prize.winner) }}
+                  </div>
+                  <Reward
+                    :prize="prize.prize"
+                    :type="prize.type"
+                    :amount="prize.amount"
+                    :label="prize.label"
+                    size="small"
+                  />
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+        </template>
+        <template v-if="warHasRewards">
+          <v-row no-gutters>
+            <v-col col="12" md="12">
+              <div class="war-prizes">Legendary Relics</div>
+            </v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col>
+              <div class="prizes-container">
+                <div
+                  class="prize-container text-center"
+                  v-for="(prize, index) in legendaryRelics"
+                  :key="`warRelic-${index}`"
                 >
                   <div class="slot-text">
                     {{ prize.raceName }} {{ prize.slot.x }}, {{ prize.slot.y }}
@@ -404,6 +489,7 @@ export default {
       hasPrizes: "war/hasPrizes",
       warRewards: "war/warRewards",
       isWarOver: "war/isWarOver",
+      legendaryRelics: "war/legendaryRelics",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];

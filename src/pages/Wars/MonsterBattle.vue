@@ -266,7 +266,9 @@
               </div>
               <div id="monster-prize" class="treasure-progress">
                 <div class="text">
-                  <Amount :amount="monsterPrizeValue" compact formatted />
+                  <Amount :amount="monsterPrizeRange.p0" approximate compact formatted />
+                  to
+                  <Amount :amount="monsterPrizeRange.K" compact formatted />
                 </div>
                 <div class="treasure">
                   <v-img src="/images/battle/treasure.png" />
@@ -396,6 +398,7 @@ export default {
       playerCurrentMonsterPrize: "war/playerCurrentMonsterPrize",
       isWarOver: "war/isWarOver",
       getRaceMonsterPrizeValue: "war/getRaceMonsterPrizeValue",
+      getRaceMonsterPrizeRange: "war/getRaceMonsterPrizeRange",
       playerSlotRewards: "war/playerSlotRewards",
     }),
     account() {
@@ -450,6 +453,9 @@ export default {
         this.getRaceEnlisted !==
           RACE_DESCRIPTION[Number(this.$route.params.raceId)]
       );
+    },
+    monsterPrizeRange() {
+      return this.getRaceMonsterPrizeRange(RACE_DESCRIPTION[Number(this.$route.params.raceId)]);
     },
     monsterPrizeValue() {
       return this.getRaceMonsterPrizeValue(
@@ -697,7 +703,8 @@ export default {
   > .text {
     z-index: 1;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 18px;
+    white-space: nowrap;
     text-shadow: 1px 1px 2px #000;
   }
   > .treasure {
