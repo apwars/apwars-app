@@ -3,6 +3,7 @@ import App from "./App.vue";
 import VueApexCharts from "vue-apexcharts";
 import VueCodeHighlight from "vue-code-highlight";
 import VueCountdown from '@chenfengyuan/vue-countdown';
+import VueTour from 'vue-tour'
 
 Vue.component(VueCountdown.name, VueCountdown);
 
@@ -33,6 +34,10 @@ import "./filters/uppercase";
 import "./assets/scss/theme.scss";
 
 import currency from "v-currency-field";
+
+require('vue-tour/dist/vue-tour.css')
+
+Vue.use(VueTour);
 Vue.use(currency);
 
 Vue.config.productionTip = false;

@@ -12,7 +12,7 @@
     <div class="versus-bar">
       <div class="corp" :style="`--corp:${getPercent(corpForce)}%`">
         <div class="standart">
-          <img class="faction-icon left" src="/images/icons/corp.png" />
+          <img id="corp-flag" class="faction-icon left" src="/images/icons/corp.png" />
           <div class="crown" v-show="corpForce > 0 && corpForce >= degenForce">
             <v-img src="/images/icons/crown.png" />
             <div class="winner" v-if="isWarFinished">Winner!</div>
@@ -30,7 +30,7 @@
       </div>
       <div class="degen" :style="`--degen:${getPercent(degenForce)}%`">
         <div class="standart">
-          <img class="faction-icon right" src="/images/icons/degen.png" />
+          <img id="degen-flag" class="faction-icon right" src="/images/icons/degen.png" />
           <div class="crown" v-show="degenForce > 0 && degenForce > corpForce">
             <v-img src="/images/icons/crown.png" />
             <div class="winner" v-if="isWarFinished">Winner!</div>
@@ -44,7 +44,7 @@
     <div :class="['prizes', degenForce > corpForce ? 'invert' : '']">
       <div :class="['winner-prize', degenForce > corpForce ? 'invert' : '']">
         <div class="d-sm-none">Winner Prize</div>
-        <IconInfo iconPath="/images/wgold.png" :title="isWarFinished ? 'Unlocked Prize' : 'Locked Prize'">
+        <IconInfo id="wgold-prize" iconPath="/images/wgold.png" :title="isWarFinished ? 'Unlocked Prize' : 'Locked Prize'">
           <span class="prize-text"
             >~<Amount :amount="winnerAmount" formatted compact />
             <span class="game-text">wGOLD</span></span
@@ -63,7 +63,7 @@
       </div>
       <div class="loser-prize">
         <div class="d-sm-none">Loser Prize</div>
-        <IconInfo iconPath="/images/wcourage.png" title="Prize">
+        <IconInfo id="wcourage-prize" iconPath="/images/wcourage.png" title="Prize">
           <span class="prize-text"
             >~<Amount :amount="loserAmount" formatted compact />
             <span class="game-text-purple">wCOURAGE</span></span

@@ -26,13 +26,14 @@
               War ended!
             </div>
             <countdown
+              id="countdown"
               v-else
               :time="countdownTimer"
               :title="countdownTitle"
               titleColor="#FFF"
               hideEnd
             />
-            <div class="prizepool">
+            <div class="prizepool" id="fed-prize">
               <img
                 width="158"
                 height="158"
@@ -57,6 +58,7 @@
         <v-row no-gutters>
           <v-col
             ><Versus
+              id="versus"
               :title="isWarOver ? 'Result' : 'Partial Result'"
               :phase="phase"
               :corpForce="
@@ -172,6 +174,7 @@
                   </div>
                 </div>
                 <FullBoard
+                  id="board"
                   :currentUserAddress="account.toLowerCase()"
                   :rows="10"
                   :cols="40"
@@ -358,6 +361,7 @@
         </template>
       </template>
     </v-container>
+  <v-tour name="battle" :steps="steps" :callbacks="callbacks" />
   </div>
 </template>
 <script>
@@ -442,6 +446,55 @@ export default {
       return this.playerEnlistment.rewards;
     },
   },
+  data() {
+    return {
+      showTour: true,
+      steps: [
+          {
+            target: '#countdown',  // We're using document.querySelector() under the hood
+            header: {
+              title: 'Get Ready for War!',
+            },
+            content: `This is the countdown with phase and duration, always keep an eye on it to execute your moves at War.`
+          },
+          {
+            target: '#corp-flag',
+            content: 'This is The Corporation Standart...'
+          },
+          {
+            target: '#degen-flag',
+            content: '...and of course, The Degenerates.'
+          },
+          {
+            target: '#versus',
+            content: 'Here you can see who is winning the war, it shows the amount of power units staked for each side.'
+          },
+          {
+            target: '#wgold-prize',
+            content: 'That is the prize for the winners, to be split among all warriors that won the war.'
+          },
+          {
+            target: '#fed-prize',
+            content: 'It is also displayed with the FED.'
+          },
+          {
+            target: '#wcourage-prize',
+            content: 'And this is the prize of the ones that had been defeated at the battle. It is important for them to build more weapons and come back stronger next time.'
+          },
+          {
+            target: '#board',
+            content: 'This is the Strategy Board for each race that takes part on the War. It shows the prize to be split among the enlistments of each race and the current power units staked for them.'
+          },
+          {
+            target: '#board',
+            content: 'So choose your side wisely, because its one enlistment per account. Whenever you are ready to fight for a side, click the button with race name to go for enlistment.'
+          },
+      ],
+      callbacks: {
+        onFinish: this.handleTourDone, onSkip: this.handleTourDone, onStop: this.handleTourDone
+      }
+    }
+  },
   methods: {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
@@ -468,6 +521,9 @@ export default {
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
         await this.getWar(this.$route.query.warId);
+        if (this.showTour) {
+          this.$tours['battle'].start();
+        }
       }
     },
     compactWallet(wallet) {
@@ -490,6 +546,18 @@ export default {
         });
       }
     },
+    handleTourDone() {
+      if (this.showTour) {
+        window.localStorage.setItem('battle-tour', 'done');
+        this.showTour = false;
+      }
+    },
+    checkTour() {
+      const tour = window.localStorage.getItem('battle-tour');
+      if (tour) {
+        this.showTour = false;
+      }
+    }
   },
   watch: {
     account() {
@@ -501,6 +569,7 @@ export default {
   },
   async mounted() {
     this.setHeader(false);
+    this.checkTour();
     this.fetchData();
   },
   updated() {
