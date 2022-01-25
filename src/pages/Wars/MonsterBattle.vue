@@ -291,6 +291,7 @@
       </v-row>
     </v-container>
     <v-overlay :value="isRewardOverlayActive">
+      <div class="chest-title text-center"><span v-if="!isChestOpen">Waiting for Monster drops...</span><span v-else>You have won awesome drops!</span></div>
       <div class="rewards" v-click-outside="handleClickOutside">
         <div class="reward-list" v-if="isChestOpen">
           <Reward
@@ -760,6 +761,17 @@ export default {
   display: flex;
   z-index: 10;
   animation: reward-appear 2s linear forwards;
+}
+
+.chest-title {
+  font-size: 32px;
+  font-weight: bold;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-shadow: 1px 1px 2px #000;
+  white-space: nowrap;
 }
 
 @keyframes reward-appear {
