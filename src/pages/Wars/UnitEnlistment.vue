@@ -101,20 +101,31 @@
             </div>
             <div class="status-container mt-2">
               <div class="troop-status mr-2">
-                <div class="status-icon">
-                  <img src="/images/icons/attack.png" alt="Attack points" />
-                </div>
-                <div class="force-text">
-                  {{ troop.strength }}
+                <div class="d-flex align-center">
+                  <div class="icon-container mr-1">
+                  <div class="status-icon">
+                    <img src="/images/icons/attack.png" alt="Attack points" />
+                  </div>
+                  <div class="status-description">Strength</div>
+                  </div>
+                  <div class="force-text">
+                    {{ troop.strength }}
+                  </div>
                 </div>
               </div>
               <div class="troop-status">
-                <div class="status-icon">
-                  <img src="/images/icons/defense.png" alt="Defense points" />
+                <div class="d-flex align-center">
+                  <div class="icon-container mr-1">
+                  <div class="status-icon">
+                    <img src="/images/icons/defense.png" alt="Defense points" />
+                  </div>
+                  <div class="status-description">Defense</div>
+                  </div>
+                  <div class="force-text">
+                    {{ troop.defense }}
+                  </div>
                 </div>
-                <div class="force-text">
-                  {{ troop.defense }}
-                </div>
+                
               </div>
             </div>
           </v-col>
@@ -184,12 +195,12 @@
             </template>
             <div class="troop-list mt-2">
               <div
-                class="troop-status mb-1"
+                class="d-flex align-center mb-1"
                 v-for="(unit, index) in unitsFromRace"
                 :key="unit.name"
               >
                 <div
-                  class="status-icon clickable"
+                  class="status-icon mr-1 clickable"
                   @click="() => goToUnit(index)"
                 >
                   <img
@@ -261,12 +272,13 @@
               >
                 <p>
                   What will happen when you send your troops to the War:<br />
-                  - You'll not be able to bring them to home until the war is
-                  over.
+                  - You won’t be able to bring them back home until the war is
+                  over,
                   <br />
-                  - The majority of them can die in the war, even if you win the
-                  battle! <br />
-                  - When war is over, you'll have 48 hours to claim your prizes.
+                  - The majority of them might die in the war, even if you win
+                  the battle, <br />
+                  - When the war is over, you’ll have 48 hours to claim your
+                  prizes.
                   <br />
                 </p>
                 <v-checkbox
@@ -276,7 +288,7 @@
                 >
                   <template v-slot:label>
                     <div class="text-white">
-                      I have read and agreed with the battle rules
+                      I have read and agreed with the war rules
                     </div>
                   </template>
                 </v-checkbox>
@@ -689,8 +701,6 @@ export default {
   }
 }
 .troop-status {
-  display: flex;
-  align-items: center;
   margin-top: 8px;
 }
 .status-icon {
@@ -700,7 +710,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 8px;
   > img {
     max-width: 60px;
     max-height: 60px;
@@ -853,6 +862,11 @@ export default {
 
 .text-white {
   color: #fff;
+}
+
+.status-description {
+  text-align: center;
+  font-size: 12px;
 }
 
 .enlistment-data-container {

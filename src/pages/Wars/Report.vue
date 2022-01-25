@@ -158,19 +158,19 @@
                               'enlisted'
                             )
                           "
-                          decimals="1"
+                          decimals="2"
                           :ignoreThousand="true"
                           compact
                           formatted
                       /></span>
                       <template v-if="isWarOver">
                         <span class="d-block"
-                          >Deads units:
+                          >Dead units:
                           <Amount
                             :amount="
                               getTroopAmount(unit.name, 'accountReport', 'dead')
                             "
-                            decimals="1"
+                            decimals="2"
                             :ignoreThousand="true"
                             compact
                             formatted
@@ -185,7 +185,7 @@
                                 'survivors'
                               )
                             "
-                            decimals="1"
+                            decimals="2"
                             :ignoreThousand="true"
                             compact
                             formatted
@@ -199,7 +199,7 @@
                         :amount="
                           getTroopAmount(unit.name, 'globalReport', 'enlisted')
                         "
-                        decimals="1"
+                        decimals="2"
                         :ignoreThousand="true"
                         compact
                         formatted
@@ -212,7 +212,7 @@
                             getTroopAmount(unit.name, 'globalReport', 'dead')
                           "
                           compact
-                          decimals="1"
+                          decimals="2"
                           :ignoreThousand="true"
                           formatted
                       /></span>
@@ -226,7 +226,7 @@
                               'survivors'
                             )
                           "
-                          decimals="1"
+                          decimals="2"
                           :ignoreThousand="true"
                           compact
                           formatted
@@ -267,7 +267,7 @@
                                 'amount'
                               )
                             "
-                            decimals="1"
+                            decimals="2"
                             :ignoreThousand="true"
                             compact
                             formatted
@@ -283,7 +283,7 @@
                                   'recovered'
                                 )
                               "
-                              decimals="1"
+                              decimals="2"
                               :ignoreThousand="true"
                               compact
                               formatted
@@ -298,7 +298,7 @@
                                   'destroyed'
                                 )
                               "
-                              decimals="1"
+                              decimals="2"
                               :ignoreThousand="true"
                               compact
                               formatted
@@ -314,7 +314,7 @@
                           :amount="
                             getWeaponAmount(weapon.id, 'globalReport', 'amount')
                           "
-                          decimals="1"
+                          decimals="2"
                           :ignoreThousand="true"
                           compact
                           formatted
@@ -331,7 +331,7 @@
                                 'recovered'
                               )
                             "
-                            decimals="1"
+                            decimals="2"
                             :ignoreThousand="true"
                             compact
                             formatted
@@ -346,7 +346,7 @@
                                 'destroyed'
                               )
                             "
-                            decimals="1"
+                            decimals="2"
                             :ignoreThousand="true"
                             compact
                             formatted

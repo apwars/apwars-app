@@ -57,7 +57,7 @@
         <v-row no-gutters>
           <v-col
             ><Versus
-              :title="phase === 'finished' ? 'Result' : 'Parcial Result'"
+              :title="isWarOver ? 'Result' : 'Partial Result'"
               :phase="phase"
               :corpForce="
                 war.factions.find((f) => f.name === 'The Corporation').power

@@ -30,10 +30,10 @@
                   {{ raceName }} Strategic Board
                 </span>
                 <span v-else-if="userEnlistedRace">
-                  Your slot is indicated with yellow arrow
+                  Your slot is indicated by the yellow arrow
                 </span>
                 <span v-else>
-                  Choose your slot to enlist the troops
+                  Choose a slot to enlist your troops
                 </span>
               </div>
               <Board

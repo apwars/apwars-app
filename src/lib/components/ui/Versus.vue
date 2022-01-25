@@ -15,6 +15,7 @@
           <img class="faction-icon left" src="/images/icons/corp.png" />
           <div class="crown" v-show="corpForce > 0 && corpForce >= degenForce">
             <v-img src="/images/icons/crown.png" />
+            <div class="winner" v-if="isWarFinished">Winner!</div>
           </div>
         </div>
         <img
@@ -32,6 +33,7 @@
           <img class="faction-icon right" src="/images/icons/degen.png" />
           <div class="crown" v-show="degenForce > 0 && degenForce > corpForce">
             <v-img src="/images/icons/crown.png" />
+            <div class="winner" v-if="isWarFinished">Winner!</div>
           </div>
         </div>
         <div class="total-amount d-none d-sm-flex">
@@ -175,10 +177,19 @@ export default {
     top: -48px;
     left: -10px;
     width: 71px;
+    > .winner {
+      position: absolute;
+      top: 12px;
+      font-weight: bold;
+      color: yellow;
+    }
     @media screen and (min-width: 768px) {
       width: 75px;
       top: -54px;
       left: -2px;
+      > .winner {
+        left: 80px;
+      }
     }
   }
 }
@@ -205,10 +216,19 @@ export default {
     top: -48px;
     right: -10px;
     width: 71px;
+    > .winner {
+      position: absolute;
+      top: 12px;
+      font-weight: bold;
+      color: yellow;
+    }
     @media screen and (min-width: 768px) {
       width: 75px;
       top: -52px;
       right: -16px;
+      > .winner {
+        right: 80px;
+      }
     }
   }
 }
