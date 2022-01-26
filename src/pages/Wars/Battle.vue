@@ -20,7 +20,7 @@
               :text="war.name"
               subtitle="Battlefield"
               tip="How to play?"
-              tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
+              :tipHandler="resetTour"
             />
             <div class="big-text text-center" v-if="!countdownTimer">
               War ended!
@@ -335,6 +335,29 @@
             </div>
           </v-col>
         </v-row>
+        <template v-if="isWarOver && playerEnlistment">
+          <v-row no-gutters>
+            <v-col col="12" md="12">
+              <div class="war-prizes">
+                Your prizes ({{ compactWallet(account) }})
+              </div>
+            </v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col>
+              <div class="prizes-container">
+                <Reward
+                  v-for="(prize, index) in accountPrizes"
+                  :key="index"
+                  :prize="prize.prize"
+                  :type="prize.type"
+                  :amount="prize.amount"
+                  size="small"
+                />
+              </div>
+            </v-col>
+          </v-row>
+        </template>
         <template v-if="war.prizesDistributed.length > 0">
           <v-row no-gutters>
             <v-col col="12" md="12">
@@ -371,8 +394,9 @@
                   :key="`warPrize-${index}`"
                 >
                   <div class="slot-text">
-                    {{ prize.raceName }} {{ prize.slot.x }}, {{ prize.slot.y }}
+                    {{ prize.raceName }}
                   </div>
+                  <div class="slot-data">Slot {{ prize.slot.x }}, {{ prize.slot.y }}</div>
                   <div class="slot-text mb-2">
                     {{ compactWallet(prize.winner) }}
                   </div>
@@ -403,8 +427,9 @@
                   :key="`warRelic-${index}`"
                 >
                   <div class="slot-text">
-                    {{ prize.raceName }} {{ prize.slot.x }}, {{ prize.slot.y }}
+                    {{ prize.raceName }} 
                   </div>
+                  <div class="slot-data">Slot {{ prize.slot.x }}, {{ prize.slot.y }}</div>
                   <div class="slot-text mb-2">
                     {{ compactWallet(prize.winner) }}
                   </div>
@@ -420,32 +445,9 @@
             </v-col>
           </v-row>
         </template>
-        <template v-if="isWarOver">
-          <v-row no-gutters>
-            <v-col col="12" md="12">
-              <div class="war-prizes">
-                Your prizes ({{ compactWallet(account) }})
-              </div>
-            </v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-col>
-              <div class="prizes-container">
-                <Reward
-                  v-for="(prize, index) in accountPrizes"
-                  :key="index"
-                  :prize="prize.prize"
-                  :type="prize.type"
-                  :amount="prize.amount"
-                  size="small"
-                />
-              </div>
-            </v-col>
-          </v-row>
-        </template>
       </template>
     </v-container>
-  <v-tour name="battle" :steps="steps" :callbacks="callbacks" />
+  <v-tour name="battle" :steps="steps" :callbacks="callbacks" :options="{ highlight: true, enabledButtons: { 'buttonSkip': tourSkip } }" />
   </div>
 </template>
 <script>
@@ -560,7 +562,7 @@ export default {
           },
           {
             target: '#fed-prize',
-            content: 'There’s also a prize with the FED that can vary depending on the amount of enlistment. The more players that enlist, the greater the distribution of the prize.'
+            content: 'The FED’s prize can vary depending on the amount of enlistments. The more players enlisting, the greater the prize distribution.'
           },
           {
             target: '#wcourage-prize',
@@ -642,6 +644,11 @@ export default {
       if (tour) {
         this.showTour = false;
       }
+    },
+    resetTour() {
+      this.tourSkip = true;
+      this.showTour = true;
+      this.$tours['battle'].start();
     }
   },
   watch: {
@@ -835,6 +842,10 @@ export default {
 .slot-text {
   font-size: 12px;
   font-weight: bold;
+}
+
+.slot-data {
+  font-size: 10px;
 }
 
 .fixed-container {

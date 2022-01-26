@@ -403,11 +403,6 @@
                 />
                 <div class="ml-1">Earned</div>
               </div>
-              <Button
-                type="wprimary"
-                text="Go to the Monster Battle"
-                :handleClick="goToMonsterBattle"
-              />
             </v-col>
           </v-row>
 
@@ -838,13 +833,6 @@ export default {
     goToEnlistment(raceId) {
       this.$router.push({
         path: `/war/enlistment/${raceId}`,
-        query: { warId: this.$route.query.warId },
-      });
-    },
-
-    goToMonsterBattle() {
-      this.$router.push({
-        path: `/war/enlistment/${this.selectedRace}/battle`,
         query: { warId: this.$route.query.warId },
       });
     },

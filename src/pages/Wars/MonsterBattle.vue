@@ -15,7 +15,12 @@
       <v-row dense no-gutters>
         <v-col>
           <div class="name-container d-flex justify-start">
-            <Title :text="war ? war.name : 'WAR'" subtitle="Monster Battle" />
+            <Title
+              :text="war ? war.name : 'WAR'"
+              subtitle="Monster Battle"
+              tip="How to play?"
+              :tipHandler="resetTour"
+            />
           </div>
         </v-col>
       </v-row>
@@ -150,7 +155,12 @@
               </div>
             </v-col>
           </v-row>
-          <v-row no-gutters id="enlistment-resume" class="enlistment-resume" v-if="troopList.length">
+          <v-row
+            no-gutters
+            id="enlistment-resume"
+            class="enlistment-resume"
+            v-if="troopList.length"
+          >
             <v-col
               cols="12"
               sm="6"
@@ -266,7 +276,12 @@
               </div>
               <div id="monster-prize" class="treasure-progress">
                 <div class="text">
-                  <Amount :amount="monsterPrizeValue" approximate compact formatted />
+                  <Amount
+                    :amount="monsterPrizeValue"
+                    approximate
+                    compact
+                    formatted
+                  />
                   to
                   <Amount :amount="monsterPrizeRange.K" compact formatted />
                 </div>
@@ -291,7 +306,10 @@
       </v-row>
     </v-container>
     <v-overlay :value="isRewardOverlayActive">
-      <div class="chest-title text-center"><span v-if="!isChestOpen">Waiting for Monster drops...</span><span v-else>You have won awesome drops!</span></div>
+      <div class="chest-title text-center">
+        <span v-if="!isChestOpen">Waiting for Monster drops...</span
+        ><span v-else>You have won awesome drops!</span>
+      </div>
       <div class="rewards" v-click-outside="handleClickOutside">
         <div class="reward-list" v-if="isChestOpen">
           <Reward
@@ -314,7 +332,7 @@
         </div>
       </div>
     </v-overlay>
-    <v-tour name="slot-selection" :steps="steps" :callbacks="callbacks" />
+    <v-tour name="slot-selection" :steps="steps" :callbacks="callbacks" :options="{ highlight: true, enabledButtons: { buttonSkip: tourSkip } }" />
   </div>
 </template>
 <script>
@@ -346,38 +364,45 @@ export default {
       isRewardOverlayActive: false,
       isChestOpen: false,
       showTour: true,
+      skipTour: false,
       steps: [
-          {
-            target: '#board-title', 
-            header: {
-              title: 'Slot selection',
-            },
-            content: `This is the last part of the new War experience, the monster battle!`
+        {
+          target: "#board-title",
+          header: {
+            title: "Slot selection",
           },
-          {
-            target: '#monster',
-            content: 'Your troops will fight the monster before enlist to train your troops and prove that you are a fighter worth to have a slot in War.'
-          },
-          {
-            target: '#monster-prize',
-            content: 'The Monster can`t kill your troops, and if you did well it can drop awesome rewards.'
-          },
-          {
-            target: '#board',
-            content: 'Here you select your slot, be strategic about it.'
-          },
-          {
-            target: '#enlistment-resume',
-            content: 'And here you see your enlistment resume, or else, you can click a slot on board to see what are the content of it.'
-          },
-          {
-            target: '#enlistment-button',
-            content: 'When everything is ready, you can enlist at this button, the last action will be sign the action with your account.'
-          },
+          content: `This is the last part of our new War experience, the Monster Battle!`,
+        },
+        {
+          target: "#monster",
+          content:
+            "To prove that you are a fighter worthy to have a slot in the War, your troops must train by fighting the monster before the enlistment!.",
+        },
+        {
+          target: "#monster-prize",
+          content:
+            "The Monster can’t kill your troops, but he can grant awesome rewards if you perform well.",
+        },
+        {
+          target: "#board",
+          content: "Here you select your slot. Be very strategic about it.",
+        },
+        {
+          target: "#enlistment-resume",
+          content:
+            "Here you see your complete enlistment, or else, you can click a slot on board to see what are the content of it.",
+        },
+        {
+          target: "#enlistment-button",
+          content:
+            "When everything is ready, you can enlist at this button, the last action will be sign the action with your account.",
+        },
       ],
       callbacks: {
-        onFinish: this.handleTourDone, onSkip: this.handleTourDone, onStop: this.handleTourDone
-      }
+        onFinish: this.handleTourDone,
+        onSkip: this.handleTourDone,
+        onStop: this.handleTourDone,
+      },
     };
   },
   computed: {
@@ -456,7 +481,9 @@ export default {
       );
     },
     monsterPrizeRange() {
-      return this.getRaceMonsterPrizeRange(RACE_DESCRIPTION[Number(this.$route.params.raceId)]);
+      return this.getRaceMonsterPrizeRange(
+        RACE_DESCRIPTION[Number(this.$route.params.raceId)]
+      );
     },
     monsterPrizeValue() {
       return this.getRaceMonsterPrizeValue(
@@ -575,7 +602,7 @@ export default {
       if (this.account && !this.isLoadingWar) {
         await this.getWar(this.$route.query.warId);
         if (this.showTour) {
-          this.$tours['slot-selection'].start()
+          this.$tours["slot-selection"].start();
         }
       }
     },
@@ -589,16 +616,21 @@ export default {
     },
     handleTourDone() {
       if (this.showTour) {
-        window.localStorage.setItem('slot-selection-tour', 'done');
+        window.localStorage.setItem("slot-selection-tour", "done");
         this.showTour = false;
       }
     },
     checkTour() {
-      const tour = window.localStorage.getItem('slot-selection-tour');
+      const tour = window.localStorage.getItem("slot-selection-tour");
       if (tour) {
         this.showTour = false;
       }
-    }
+    },
+    resetTour() {
+      this.tourSkip = true;
+      this.showTour = true;
+      this.$tours["slot-selection"].start();
+    },
   },
   watch: {
     account() {
