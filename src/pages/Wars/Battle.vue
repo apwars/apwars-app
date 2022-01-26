@@ -59,7 +59,6 @@
         <v-row no-gutters>
           <v-col
             ><Versus
-              id="versus"
               :title="isWarOver ? 'Result' : 'Partial Result'"
               :phase="phase"
               :corpForce="
@@ -92,7 +91,7 @@
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Humans')
-                              .logisticsFunctionPrize.p0
+                              .monsterPrizeAmount
                           "
                           approximate
                           compact
@@ -174,7 +173,7 @@
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Orcs')
-                              .logisticsFunctionPrize.p0
+                              .monsterPrizeAmount
                           "
                           approximate
                           compact
@@ -223,7 +222,7 @@
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Elves')
-                              .logisticsFunctionPrize.p0
+                              .monsterPrizeAmount
                           "
                           approximate
                           compact
@@ -306,7 +305,7 @@
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Undead')
-                              .logisticsFunctionPrize.p0
+                              .monsterPrizeAmount
                           "
                           approximate
                           compact
@@ -537,23 +536,23 @@ export default {
       showTour: true,
       steps: [
           {
-            target: '#countdown',  // We're using document.querySelector() under the hood
+            target: '#countdown',
             header: {
               title: 'Get Ready for War!',
             },
-            content: `This is the countdown with phase and duration, always keep an eye on it to execute your moves at War.`
+            content: `This is the phase countdown. Keep an eye on it and prepare for your invasion.`
           },
           {
             target: '#corp-flag',
-            content: 'This is The Corporation Standart...'
+            content: 'This is The Corporation faction...'
           },
           {
             target: '#degen-flag',
-            content: '...and of course, The Degenerates.'
+            content: '...and of course, this is The Degenerates.'
           },
           {
             target: '#versus',
-            content: 'Here you can see who is winning the war, it shows the amount of power units staked for each side.'
+            content: 'Here you can see who is winning the war. It shows the amount of power units staked for each side.'
           },
           {
             target: '#wgold-prize',
@@ -561,19 +560,19 @@ export default {
           },
           {
             target: '#fed-prize',
-            content: 'It is also displayed with the FED.'
+            content: 'There’s also a prize with the FED that can vary depending on the amount of enlistment. The more players that enlist, the greater the distribution of the prize.'
           },
           {
             target: '#wcourage-prize',
-            content: 'And this is the prize of the ones that had been defeated at the battle. It is important for them to build more weapons and come back stronger next time.'
+            content: 'This is the prize for the defeated side at the end of the battle. The more players that enlist, the greater the distribution of the prize.'
           },
           {
             target: '#board',
-            content: 'This is the Strategy Board for each race that takes part on the War. It shows the prize to be split among the enlistments of each race and the current power units staked for them.'
+            content: 'Here is the Strategy Board of each race that takes part in the War. It shows the prize to be split among the enlistments of each race and the current power units staked.'
           },
           {
             target: '#board',
-            content: 'So choose your side wisely, because its one enlistment per account. Whenever you are ready to fight for a side, click the button with race name to go for enlistment.'
+            content: 'Choose your side wisely- it’s one enlistment per wallet! Whenever you are ready to pick a side, click on the race name button and next on the enlistment.'
           },
       ],
       callbacks: {

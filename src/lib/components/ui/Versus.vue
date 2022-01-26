@@ -9,7 +9,7 @@
       />
     </div>
 
-    <div class="versus-bar">
+    <div class="versus-bar" id="versus">
       <div class="corp" :style="`--corp:${getPercent(corpForce)}%`">
         <div class="standart">
           <img id="corp-flag" class="faction-icon left" src="/images/icons/corp.png" />

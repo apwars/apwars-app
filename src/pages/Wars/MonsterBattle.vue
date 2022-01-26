@@ -266,7 +266,7 @@
               </div>
               <div id="monster-prize" class="treasure-progress">
                 <div class="text">
-                  <Amount :amount="monsterPrizeRange.p0" approximate compact formatted />
+                  <Amount :amount="monsterPrizeValue" approximate compact formatted />
                   to
                   <Amount :amount="monsterPrizeRange.K" compact formatted />
                 </div>
