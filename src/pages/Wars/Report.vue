@@ -747,6 +747,7 @@ export default {
 
   watch: {
     account() {
+      this.magicalItems = [];
       if (!this.track) {
         this.setupMusic({ musicKey: "WAR", isLoop: true });
       }
@@ -862,6 +863,7 @@ export default {
         const warId = this.war.id;
         const magicalItems = this.magicalItems;
         await controller.bringhome(warId, this.account, magicalItems);
+        this.magicalItems = [];
         await this.loadData();
         ToastSnackbar.success("Your troops and prizes are safe at Home");
       } catch (error) {
