@@ -1,6 +1,6 @@
 export const HUMANS = [{
     id: 1,
-    theme: 'blue',
+    theme: 'blue-theme',
     race: 1,
     title: 'Full Pack',
     price: 50000,
@@ -23,7 +23,7 @@ export const HUMANS = [{
 },
 {
     id: 2,
-    theme: 'blue',
+    theme: 'blue-theme',
     race: 1,
     title: 'Refill Pack',
     price: 50000,
@@ -48,7 +48,7 @@ export const HUMANS = [{
 
 export const ORCS = [{
     id: 3,
-    theme: 'green',
+    theme: 'green-theme',
     race: 2,
     title: 'Full Pack',
     price: 50000,
@@ -71,7 +71,7 @@ export const ORCS = [{
 },
 {
     id: 4,
-    theme: 'green',
+    theme: 'green-theme',
     race: 2,
     title: 'Refill Pack',
     price: 50000,
@@ -95,7 +95,7 @@ export const ORCS = [{
 
 export const UNDEAD = [{
     id: 5,
-    theme: 'red',
+    theme: 'red-theme',
     race: 3,
     title: 'Full Pack',
     price: 50000,
@@ -118,7 +118,7 @@ export const UNDEAD = [{
 },
 {
     id: 6,
-    theme: 'red',
+    theme: 'red-theme',
     race: 3,
     title: 'Refill Pack',
     price: 50000,
@@ -142,7 +142,7 @@ export const UNDEAD = [{
 
 export const ELVES = [{
     id: 6,
-    theme: 'light-green',
+    theme: 'light-green-theme',
     race: 4,
     title: 'Full Pack',
     price: 50000,

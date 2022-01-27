@@ -135,19 +135,19 @@ export default {
   background-size: cover;
   background-origin: border-box;
 }
-.blue {
+.blue-theme {
   background: #002B4C;
   border: 2px solid #FFEEBC;
 }
-.green {
+.green-theme {
   background: #194B29;
   border: 2px solid #FFEEBC;
 }
-.red {
+.red-theme {
   background: #300A00;
   border: 2px solid #FFEEBC;
 }
-.light-green {
+.light-green-theme {
   background: #006F4D;
   border: 2px solid #FFEEBC;
 }
@@ -162,25 +162,25 @@ export default {
   padding: 0 32px;
   justify-content: flex-end;
   margin-bottom: 36px;
-  &.blue {
-    @extend .blue;
+  &.blue-theme {
+    @extend .blue-theme;
   }
-  &.green {
-    @extend .green;
+  &.green-theme {
+    @extend .green-theme;
   }
-  &.red {
-    @extend .red;
+  &.red-theme {
+    @extend .red-theme;
   }
 }
 .bonus-info {
-  &.blue {
-    @extend .blue;
+  &.blue-theme {
+    @extend .blue-theme;
   }
-  &.green {
-    @extend .green;
+  &.green-theme {
+    @extend .green-theme;
   }
-  &.red {
-    @extend .red;
+  &.red-theme {
+    @extend .red-theme;
   }
 }
 .gem-container {
@@ -232,14 +232,14 @@ export default {
 .pack-title {
   font-weight: bold;
   font-size: 36px;
-  line-height: 1.1;
+  line-height: 1;
   position: absolute;
   border-radius: 10px;
-  top: -32px;
+  top: -26px;
   left: 50%;
   transform: translateX(-50%);
   width: 360px;
-  padding: 6px 0;
+  padding: 4px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -276,7 +276,9 @@ export default {
   justify-content: space-between;
 }
 .unit-name {
-  font-size: 8px;
+  font-weight: bold;
+  font-size: 10px;
+  text-transform: uppercase;
 }
 .total-power-value {
   font-size: 36px;
@@ -318,8 +320,9 @@ export default {
 }
 .amount {
   font-weight: bold;
-  font-size: 30px;
-  line-height: 40px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
   text-align: center;
   color: #ffffff;
 }
