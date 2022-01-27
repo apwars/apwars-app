@@ -24,7 +24,7 @@
         </v-col>
     </v-row>
     <v-row>
-        <v-col>
+        <v-col col="12" md="10" offset-md="1">
             <PackCard class="pack" v-for="pack in packs" :key="pack.id" :pack="pack" />
         </v-col>
     </v-row>

@@ -16,7 +16,7 @@
               :alt="unit.name"
               width="112"
             />
-            <div class="unit-name text-center mt-1">{{ unit.name }}</div>
+            <div class="unit-name text-center mt-1">{{ unit.displayName }}</div>
             <div class="amount">x{{ pack.units[unit.id] || 0}}</div>
           </div>
           </div>
