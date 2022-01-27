@@ -43,14 +43,14 @@
             </countdown>
           </v-progress-linear>
         </div>
-        <div v-else
+        <!-- <div v-else
           :class="$vuetify.breakpoint.mdAndUp ?
             'd-flex align-center justify-center' :
             'd-flex align-center justify-center mt-6'">
           <wButton @click="openModalWorker()">
             Get Worker
           </wButton>
-        </div>
+        </div> -->
       </div>
     </div>
     <worker-modal

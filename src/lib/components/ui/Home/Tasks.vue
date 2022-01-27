@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12" md="5">
+  <v-col cols="12" lg="">
     <v-badge
       class="badge-large"
       color="red"

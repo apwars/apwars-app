@@ -1,12 +1,14 @@
 [build.environment]
     VUE_APP_BSC_NETWORK="56"
-    VUE_APP_SERVERLESS="https://api.apwars.farm"
+    VUE_APP_SERVERLESS_56="https://api.apwars.farm"
+    VUE_APP_API_ARCADIA_56="https://apiv2.apwars.farm/v1"
 [context.develop.environment]
     VUE_APP_BSC_NETWORK="97"
-    VUE_APP_SERVERLESS="https://api-dev.apwars.farm"
-    VUE_APP_API_ARCADIA_97="https://api-qa.apwars.farm"
+    VUE_APP_SERVERLESS_97="https://api-dev.apwars.farm"
+    VUE_APP_API_ARCADIA_97="https://api-qa.apwars.farm/v1"
 [context.deploy-preview.environment]
     VUE_APP_BSC_NETWORK="ALL"
-    VUE_APP_SERVERLESS="https://api-dev.apwars.farm"
+    VUE_APP_SERVERLESS_97="https://api-dev.apwars.farm"
+    VUE_APP_SERVERLESS_56="https://api.apwars.farm"
     VUE_APP_API_ARCADIA_97="https://api-qa.apwars.farm/v1"
     VUE_APP_API_ARCADIA_56="https://apiv2.apwars.farm/v1"
