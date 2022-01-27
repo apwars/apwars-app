@@ -373,13 +373,15 @@
               <div class="monster-name text-center mb-2">
                 {{ monsterData.name }}
               </div>
-              <div class="d-flex align-items-center justify-center mb-1">
+              <div class="d-flex align-center justify-center mb-1">
                 <div class="reward-description text-center pr-2">
                   Monster Prize Pool
                 </div>
                 <div class="treasure-progress">
                   <div class="text">
-                    <Amount :amount="monsterPrizeValue" compact formatted />
+                    <Amount :amount="monsterPrizeValue" approximate compact formatted />
+                    to
+                    <Amount :amount="monsterPrizeRange.K" compact formatted />
                   </div>
                   <div class="treasure">
                     <v-img src="/images/battle/treasure.png" />
@@ -401,11 +403,6 @@
                 />
                 <div class="ml-1">Earned</div>
               </div>
-              <Button
-                type="wprimary"
-                text="Go to the Monster Battle"
-                :handleClick="goToMonsterBattle"
-              />
             </v-col>
           </v-row>
 
@@ -684,6 +681,7 @@ export default {
       userEnlistedRace: "war/userEnlistedRace",
       isWarOver: "war/isWarOver",
       getRaceMonsterPrizeValue: "war/getRaceMonsterPrizeValue",
+      getRaceMonsterPrizeRange: "war/getRaceMonsterPrizeRange",
     }),
     ...mapState({
       war: (state) => state.war.war,
@@ -736,6 +734,10 @@ export default {
 
     hasPrizes() {
       return this.isWarOver && Object.keys(this.report.prizes).length > 0;
+    },
+
+    monsterPrizeRange() {
+      return this.getRaceMonsterPrizeRange(RACE_DESCRIPTION[this.selectedRace]);
     },
 
     monsterPrizeValue() {
@@ -831,13 +833,6 @@ export default {
     goToEnlistment(raceId) {
       this.$router.push({
         path: `/war/enlistment/${raceId}`,
-        query: { warId: this.$route.query.warId },
-      });
-    },
-
-    goToMonsterBattle() {
-      this.$router.push({
-        path: `/war/enlistment/${this.selectedRace}/battle`,
         query: { warId: this.$route.query.warId },
       });
     },

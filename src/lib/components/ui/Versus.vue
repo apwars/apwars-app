@@ -1,15 +1,17 @@
 <template>
   <div class="mt-1">
     <div class="phase-title">
-      <div>{{ title }}</div>
+      <div class="mb-1">{{ title }}</div>
       <Button
         :text="`Go to War Report ${phase === 'claim' ? 'and Claim Prizes' : ''}`"
-        type="wtertiary"
+        type="wsecondary"
+        size="small"
+        class="mb-1"
         :handleClick="goToReport"
       />
     </div>
 
-    <div class="versus-bar">
+    <div class="versus-bar" id="versus">
       <div class="corp" :style="`--corp:${getPercent(corpForce)}%`">
         <div class="standart">
           <img id="corp-flag" class="faction-icon left" src="/images/icons/corp.png" />
@@ -41,7 +43,8 @@
         </div>
       </div>
     </div>
-    <div :class="['prizes', degenForce > corpForce ? 'invert' : '']">
+    <div :class="['prizes', degenForce > corpForce ? 'invert' : '']" >
+      <template v-if="phase !== 'not-started'">
       <div :class="['winner-prize', degenForce > corpForce ? 'invert' : '']">
         <div class="d-sm-none">Winner Prize</div>
         <IconInfo id="wgold-prize" iconPath="/images/wgold.png" :title="isWarFinished ? 'Unlocked Prize' : 'Locked Prize'">
@@ -70,6 +73,7 @@
           >
         </IconInfo>
       </div>
+      </template>
     </div>
   </div>
 </template>
@@ -240,6 +244,7 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 0 68px;
+  min-height: 48px;
   @media screen and (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;

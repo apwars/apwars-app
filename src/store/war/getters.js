@@ -40,7 +40,7 @@ export default {
   getRacePrizes: (state) => (raceName) => {
     return state.war.races.find(r => r.name === raceName).rewards || [];
   },
-  warRewards: (state, getters) => {
+  rewards: (state, getters) => {
     let rewards = [];
     rewards = rewards.concat(getters.getRacePrizes('Humans').map(p => ({...p, raceName: "Humans"})));
     rewards = rewards.concat(getters.getRacePrizes('Orcs').map(p => ({...p, raceName: "Orcs"})));
@@ -56,6 +56,12 @@ export default {
 
     return rewards;
   },
+  warRewards: (state, getters) => {
+    return getters.rewards.filter(r => r.type !== 'legendaryRelics');
+  },
+  legendaryRelics: (state, getters) => {
+    return getters.rewards.filter(r => r.type === 'legendaryRelics');
+  },
   warHasRewards: (state, getters) => {
     return getters.warRewards.length > 0;
   },
@@ -67,6 +73,12 @@ export default {
       return 0;
     }
     return state.war.races.find(r => r.name === race).monsterPrizeAmount || 0;
+  },
+  getRaceMonsterPrizeRange: (state) => (race) => {
+    if (!state.war) {
+      return 0;
+    }
+    return state.war.races.find(r => r.name === race).logisticsFunctionPrize || { p0: 0, K: 0 };
   },
   playerCurrentMonsterPrize: (state, getters) => {
     return getters.playerEnlistment.percentagePowerRace * getters.getRaceMonsterPrizeValue(getters.playerEnlistment.race);

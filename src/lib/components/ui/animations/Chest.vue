@@ -1,8 +1,10 @@
 <template>
+<div class="mist-container">
+    <img class="mist" alt="mist" width="100%" :src="`/images/animations/chest/chest-mist-${currentFrame}.png`" />
   <div class="chest-container">
-    <img class="mist" alt="mist" :src="`/images/animations/chest/chest-mist-${currentFrame}.png`" />
     <img class="chest" :src="frame" :alt="title" />
   </div>
+</div>
 </template>
 <script>
 export default {
@@ -59,6 +61,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.mist-container {
+  position: relative;
+  height: 500px;
+  width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .chest-container {
   position: relative;
   height: 300px;
@@ -67,6 +77,7 @@ export default {
 .mist {
   position: absolute;
   z-index: 5;
+  opacity: 0.2;
 }
 .chest {
   position: absolute;

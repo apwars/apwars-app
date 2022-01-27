@@ -26,7 +26,12 @@
         <v-row dense>
           <v-col md="4">
             <div class="name-container d-flex justify-space-between">
-              <Title :text="war ? war.name : 'WAR'" subtitle="Enlistment" />
+              <Title
+                :text="war ? war.name : 'WAR'"
+                subtitle="Enlistment"
+                tip="How to play?"
+                :tipHandler="resetTour"
+              />
             </div>
             <div class="form-container mt-3 mb-2">
               <v-skeleton-loader type="text, button" v-if="isLoadingBalances" />
@@ -105,10 +110,10 @@
               <div class="troop-status mr-2">
                 <div class="d-flex align-center">
                   <div class="icon-container mr-1">
-                  <div class="status-icon">
-                    <img src="/images/icons/attack.png" alt="Attack points" />
-                  </div>
-                  <div class="status-description">Strength</div>
+                    <div class="status-icon">
+                      <img src="/images/icons/attack.png" alt="Attack points" />
+                    </div>
+                    <div class="status-description">Strength</div>
                   </div>
                   <div class="force-text">
                     {{ troop.strength }}
@@ -118,16 +123,18 @@
               <div class="troop-status">
                 <div class="d-flex align-center">
                   <div class="icon-container mr-1">
-                  <div class="status-icon">
-                    <img src="/images/icons/defense.png" alt="Defense points" />
-                  </div>
-                  <div class="status-description">Defense</div>
+                    <div class="status-icon">
+                      <img
+                        src="/images/icons/defense.png"
+                        alt="Defense points"
+                      />
+                    </div>
+                    <div class="status-description">Defense</div>
                   </div>
                   <div class="force-text">
                     {{ troop.defense }}
                   </div>
                 </div>
-                
               </div>
             </div>
           </v-col>
@@ -316,7 +323,12 @@
         </v-row>
       </template>
     </v-container>
-    <v-tour name="enlistment" :steps="steps" :callbacks="callbacks" />
+    <v-tour
+      name="enlistment"
+      :steps="steps"
+      :callbacks="callbacks"
+      :options="{ highlight: true, enabledButtons: { buttonSkip: tourSkip } }"
+    />
   </div>
 </template>
 
@@ -520,41 +532,48 @@ export default {
       },
       agreement: false,
       showTour: true,
+      tourSkip: false,
       steps: [
-          {
-            target: '#troop-view',  // We're using document.querySelector() under the hood
-            header: {
-              title: 'Configure your enlistment!',
-            },
-            content: `Here you see the troop looks and can go back and forward.`
+        {
+          target: "#troop-view",
+          header: {
+            title: "Assemble your troops and enlist!",
           },
-          {
-            target: '#formation',
-            content: 'On this field you can choose the formation you will enlist. There is no way to set troop amounts without formation change.'
+          content: `Here you see your troops and can go back and forth.`,
+        },
+        {
+          target: "#formation",
+          content:
+            "You choose the formation to be enlisted in this field. You cannot set troop amounts without changing the formation.",
+        },
+        {
+          target: "#troops",
+          content: "Here you see the troop’s amount",
+        },
+        {
+          target: "#weapons",
+          content:
+            "...and this is the place where you pair weapons with each troop. If you have weapons available.",
+        },
+        {
+          target: "#enlistment-resume",
+          content:
+            "This list shows your complete enlistment - with formation amounts and weapons staked.",
+          params: {
+            placement: "left",
           },
-          {
-            target: '#troops',
-            content: 'Here you see the amount of the troop'
-          },
-          {
-            target: '#weapons',
-            content: '...and this is the place where you set weapons for it, if you have weapons balance.'
-          },
-          {
-            target: '#enlistment-resume',
-            content: 'On this list you see the overall state of your enlistment with formation amounts and weapons staked.',
-            params: {
-              placement: 'left'
-            }
-          },
-          {
-            target: '#enlist-button',
-            content: 'When everything is right and set, and you are ready to go for war, this button will take you to slot selection.'
-          },
+        },
+        {
+          target: "#enlist-button",
+          content:
+            "When you finish your troops assembly and are ready to go to War, this button will take you to slot selection.",
+        },
       ],
       callbacks: {
-        onFinish: this.handleTourDone, onSkip: this.handleTourDone, onStop: this.handleTourDone
-      }
+        onFinish: this.handleTourDone,
+        onSkip: this.handleTourDone,
+        onStop: this.handleTourDone,
+      },
     };
   },
   methods: {
@@ -637,7 +656,7 @@ export default {
       if (this.account && !this.isLoadingWar) {
         await this.getWar(this.$route.query.warId);
         if (this.showTour) {
-          this.$tours['enlistment'].start();
+          this.$tours["enlistment"].start();
         }
       }
     },
@@ -650,15 +669,20 @@ export default {
     },
     handleTourDone() {
       if (this.showTour) {
-        window.localStorage.setItem('enlistment-tour', 'done');
+        window.localStorage.setItem("enlistment-tour", "done");
         this.showTour = false;
       }
     },
     checkTour() {
-      const tour = window.localStorage.getItem('enlistment-tour');
+      const tour = window.localStorage.getItem("enlistment-tour");
       if (tour) {
         this.showTour = false;
       }
+    },
+    resetTour() {
+      this.tourSkip = true;
+      this.showTour = true;
+      this.$tours["enlistment"].start();
     },
   },
   watch: {

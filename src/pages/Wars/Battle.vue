@@ -20,7 +20,7 @@
               :text="war.name"
               subtitle="Battlefield"
               tip="How to play?"
-              tipRedirect="https://apwars.farm/docs/war/combat-dynamics"
+              :tipHandler="resetTour"
             />
             <div class="big-text text-center" v-if="!countdownTimer">
               War ended!
@@ -43,8 +43,9 @@
                 <div class="fed-prize">
                   <img src="/images/wgold.png" width="28" />
                   <div class="prize-text">
+                    Up to
                     <Amount
-                      :amount="war.prizes.winner.amount"
+                      :amount="war.prizes.winner.logisticsFunctionPrize.K"
                       compact
                       formatted
                     />
@@ -58,7 +59,6 @@
         <v-row no-gutters>
           <v-col
             ><Versus
-              id="versus"
               :title="isWarOver ? 'Result' : 'Partial Result'"
               :phase="phase"
               :corpForce="
@@ -87,14 +87,26 @@
                         width="32"
                       />
                       <div class="prize-info">
+                        <div>
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Humans')
                               .monsterPrizeAmount
                           "
+                          approximate
                           compact
                           formatted
                         />
+                        to
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Humans')
+                              .logisticsFunctionPrize.K
+                          "
+                          compact
+                          formatted
+                        />
+                        </div>
                         <div class="prize-description">
                           {{
                             war.races.find((r) => r.name === "Humans")
@@ -110,6 +122,7 @@
                             war.races.find((r) => r.name === 'Humans').power
                               .total
                           "
+                          approximate
                           compact
                           formatted
                           symbol="Power Units"
@@ -142,6 +155,7 @@
                           :amount="
                             war.races.find((r) => r.name === 'Orcs').power.total
                           "
+                          approximate
                           compact
                           formatted
                           symbol="Power Units"
@@ -155,14 +169,26 @@
                         width="32"
                       />
                       <div class="prize-info">
+                        <div>
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Orcs')
                               .monsterPrizeAmount
                           "
+                          approximate
                           compact
                           formatted
                         />
+                        to
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Orcs')
+                              .logisticsFunctionPrize.K
+                          "
+                          compact
+                          formatted
+                        />
+                        </div>
                         <div class="prize-description">
                           {{
                             war.races.find((r) => r.name === "Orcs")
@@ -192,14 +218,26 @@
                         width="32"
                       />
                       <div class="prize-info">
+                        <div>
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Elves')
                               .monsterPrizeAmount
                           "
+                          approximate
                           compact
                           formatted
                         />
+                        to
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Elves')
+                              .logisticsFunctionPrize.K
+                          "
+                          compact
+                          formatted
+                        />
+                        </div>
                         <div class="prize-description">
                           {{
                             war.races.find((r) => r.name === "Elves")
@@ -215,6 +253,7 @@
                             war.races.find((r) => r.name === 'Elves').power
                               .total
                           "
+                          approximate
                           compact
                           formatted
                           symbol="Power Units"
@@ -248,6 +287,7 @@
                             war.races.find((r) => r.name === 'Undead').power
                               .total
                           "
+                          approximate
                           compact
                           formatted
                           symbol="Power Units"
@@ -261,14 +301,26 @@
                         width="32"
                       />
                       <div class="prize-info">
+                        <div>
                         <Amount
                           :amount="
                             war.races.find((r) => r.name === 'Undead')
                               .monsterPrizeAmount
                           "
+                          approximate
                           compact
                           formatted
                         />
+                        to
+                        <Amount
+                          :amount="
+                            war.races.find((r) => r.name === 'Undead')
+                              .logisticsFunctionPrize.K
+                          "
+                          compact
+                          formatted
+                        />
+                        </div>
                         <div class="prize-description">
                           {{
                             war.races.find((r) => r.name === "Undead")
@@ -283,6 +335,29 @@
             </div>
           </v-col>
         </v-row>
+        <template v-if="isWarOver && playerEnlistment">
+          <v-row no-gutters>
+            <v-col col="12" md="12">
+              <div class="war-prizes">
+                Your prizes ({{ compactWallet(account) }})
+              </div>
+            </v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col>
+              <div class="prizes-container">
+                <Reward
+                  v-for="(prize, index) in accountPrizes"
+                  :key="index"
+                  :prize="prize.prize"
+                  :type="prize.type"
+                  :amount="prize.amount"
+                  size="small"
+                />
+              </div>
+            </v-col>
+          </v-row>
+        </template>
         <template v-if="war.prizesDistributed.length > 0">
           <v-row no-gutters>
             <v-col col="12" md="12">
@@ -319,8 +394,9 @@
                   :key="`warPrize-${index}`"
                 >
                   <div class="slot-text">
-                    {{ prize.raceName }} {{ prize.slot.x }}, {{ prize.slot.y }}
+                    {{ prize.raceName }}
                   </div>
+                  <div class="slot-data">Slot {{ prize.slot.x }}, {{ prize.slot.y }}</div>
                   <div class="slot-text mb-2">
                     {{ compactWallet(prize.winner) }}
                   </div>
@@ -336,32 +412,42 @@
             </v-col>
           </v-row>
         </template>
-        <template v-if="isWarOver">
+        <template v-if="warHasRewards">
           <v-row no-gutters>
             <v-col col="12" md="12">
-              <div class="war-prizes">
-                Your prizes ({{ compactWallet(account) }})
-              </div>
+              <div class="war-prizes">Legendary Relics</div>
             </v-col>
           </v-row>
           <v-row no-gutters>
             <v-col>
               <div class="prizes-container">
-                <Reward
-                  v-for="(prize, index) in accountPrizes"
-                  :key="index"
-                  :prize="prize.prize"
-                  :type="prize.type"
-                  :amount="prize.amount"
-                  size="small"
-                />
+                <div
+                  class="prize-container text-center"
+                  v-for="(prize, index) in legendaryRelics"
+                  :key="`warRelic-${index}`"
+                >
+                  <div class="slot-text">
+                    {{ prize.raceName }} 
+                  </div>
+                  <div class="slot-data">Slot {{ prize.slot.x }}, {{ prize.slot.y }}</div>
+                  <div class="slot-text mb-2">
+                    {{ compactWallet(prize.winner) }}
+                  </div>
+                  <Reward
+                    :prize="prize.prize"
+                    :type="prize.type"
+                    :amount="prize.amount"
+                    :label="prize.label"
+                    size="small"
+                  />
+                </div>
               </div>
             </v-col>
           </v-row>
         </template>
       </template>
     </v-container>
-  <v-tour name="battle" :steps="steps" :callbacks="callbacks" />
+  <v-tour name="battle" :steps="steps" :callbacks="callbacks" :options="{ highlight: true, enabledButtons: { 'buttonSkip': tourSkip } }" />
   </div>
 </template>
 <script>
@@ -404,6 +490,7 @@ export default {
       hasPrizes: "war/hasPrizes",
       warRewards: "war/warRewards",
       isWarOver: "war/isWarOver",
+      legendaryRelics: "war/legendaryRelics",
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -451,23 +538,23 @@ export default {
       showTour: true,
       steps: [
           {
-            target: '#countdown',  // We're using document.querySelector() under the hood
+            target: '#countdown',
             header: {
               title: 'Get Ready for War!',
             },
-            content: `This is the countdown with phase and duration, always keep an eye on it to execute your moves at War.`
+            content: `This is the phase countdown. Keep an eye on it and prepare for your invasion.`
           },
           {
             target: '#corp-flag',
-            content: 'This is The Corporation Standart...'
+            content: 'This is The Corporation faction...'
           },
           {
             target: '#degen-flag',
-            content: '...and of course, The Degenerates.'
+            content: '...and of course, this is The Degenerates.'
           },
           {
             target: '#versus',
-            content: 'Here you can see who is winning the war, it shows the amount of power units staked for each side.'
+            content: 'Here you can see who is winning the war. It shows the amount of power units staked for each side.'
           },
           {
             target: '#wgold-prize',
@@ -475,19 +562,19 @@ export default {
           },
           {
             target: '#fed-prize',
-            content: 'It is also displayed with the FED.'
+            content: 'The FED’s prize can vary depending on the amount of enlistments. The more players enlisting, the greater the prize distribution.'
           },
           {
             target: '#wcourage-prize',
-            content: 'And this is the prize of the ones that had been defeated at the battle. It is important for them to build more weapons and come back stronger next time.'
+            content: 'This is the prize for the defeated side at the end of the battle. The more players that enlist, the greater the distribution of the prize.'
           },
           {
             target: '#board',
-            content: 'This is the Strategy Board for each race that takes part on the War. It shows the prize to be split among the enlistments of each race and the current power units staked for them.'
+            content: 'Here is the Strategy Board of each race that takes part in the War. It shows the prize to be split among the enlistments of each race and the current power units staked.'
           },
           {
             target: '#board',
-            content: 'So choose your side wisely, because its one enlistment per account. Whenever you are ready to fight for a side, click the button with race name to go for enlistment.'
+            content: 'Choose your side wisely- it’s one enlistment per wallet! Whenever you are ready to pick a side, click on the race name button and next on the enlistment.'
           },
       ],
       callbacks: {
@@ -557,6 +644,11 @@ export default {
       if (tour) {
         this.showTour = false;
       }
+    },
+    resetTour() {
+      this.tourSkip = true;
+      this.showTour = true;
+      this.$tours['battle'].start();
     }
   },
   watch: {
@@ -750,6 +842,10 @@ export default {
 .slot-text {
   font-size: 12px;
   font-weight: bold;
+}
+
+.slot-data {
+  font-size: 10px;
 }
 
 .fixed-container {
