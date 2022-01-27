@@ -4,7 +4,7 @@
       <div :class="['gem-container', [variant]]">
         <img class="gem" :src="gem" :alt="variant" />
       </div>
-      <div class="pack-title">{{ pack.title }}</div>
+      <div :class="['pack-title', [variant]]">{{ pack.title }}</div>
       <div class="pack-content">
         <div class="units-container">
           <div class="tier-container" v-for="tier in tiers" :key="tier">
@@ -17,7 +17,7 @@
               width="112"
             />
             <div class="unit-name text-center mt-1">{{ unit.displayName }}</div>
-            <div class="amount">x{{ pack.units[unit.id] || 0}}</div>
+            <div class="amount">x{{ pack.units[unit.name] || 0}}</div>
           </div>
           </div>
         </div>
@@ -25,12 +25,14 @@
           <div :class="['bonus-container']">
             <div class="bonus-text mr-4">Bonus:</div>
             <div class="items-container">
-            <GameItem size="large" :rewardId="29" :amount="1" />
-            <GameItem size="large" :rewardId="34" :amount="1" />
+            <Reward v-for="item in Object.keys(pack.items)" :key="item" size="large" :prize="item" :amount="pack.items[item]" />
           </div>
-          <div class="total-power ml-4">
-            <div>TOTAL POWER</div>
-            <div>480.000,00</div>
+          <div class="d-flex align-center ml-4">
+            <img src="/images/icons/wars.png" width="64" height="64" alt="Power units"/>
+          <div class="ml-1">
+            <div class="total-power-title">TOTAL POWER UNITS</div>
+            <div class="total-power-value">480.000,00</div>
+          </div>
           </div>
           </div>
         </div>
@@ -53,13 +55,13 @@
   </div>
 </template>
 <script>
-import { getTroops } from "@/data/Troops";
+import { getTroopByName } from "@/data/Troops";
 
 import Button from "@/lib/components/ui/Buttons/Button";
-import GameItem from "@/lib/components/ui/GameItem";
+import Reward from "@/lib/components/ui/Reward";
 
 export default {
-  components: { Button, GameItem },
+  components: { Button, Reward },
   props: {
     pack: {
       type: Object,
@@ -101,7 +103,7 @@ export default {
       return "/images/icons/blue-chest.webp";
     },
     raceUnits() {
-      return getTroops().filter((t) => t.race === this.pack.race);
+      return Object.keys(this.pack.units).map(troopName => getTroopByName(troopName));
     },
     variant() {
       return this.pack.theme || "blue";
@@ -129,21 +131,25 @@ export default {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border: 1px solid #ffeebc;
-  padding: 8px 80px;
+  padding: 32px 80px;
   background-size: cover;
   background-origin: border-box;
 }
 .blue {
-  background: linear-gradient(to top, #1e2126 0%, #006fc4 100%);
+  background: #002B4C;
+  border: 2px solid #FFEEBC;
 }
 .green {
-  background: linear-gradient(to top, #205330 0%, #192417 100%);
+  background: #194B29;
+  border: 2px solid #FFEEBC;
 }
 .red {
-  background: linear-gradient(to top, #1b0500 0%, #3b180d 100%);
+  background: #300A00;
+  border: 2px solid #FFEEBC;
 }
 .light-green {
-  background: linear-gradient(to top, #093952 0%, #028E64 100%);
+  background: #006F4D;
+  border: 2px solid #FFEEBC;
 }
 .pack-price-container {
   position: relative;
@@ -183,16 +189,13 @@ export default {
   left: -36px;
   height: 72px;
   width: 72px;
-  border: 2px solid #ffeebc;
+  border: 2px solid #FFEEBC;
   box-sizing: border-box;
   border-radius: 10px;
   transform: rotate(45deg);
   display: flex;
   justify-content: center;
   align-items: center;
-  > img {
-    transform: rotate(-45deg);
-  }
   &.blue {
     @extend .blue;
   }
@@ -202,6 +205,11 @@ export default {
   &.red {
     @extend .red;
   }
+}
+.gem {
+  transform: rotate(-45deg);
+  position: absolute;
+  animation: 3s ease-in-out gem-floating infinite;
 }
 .chest {
   position: absolute;
@@ -224,8 +232,17 @@ export default {
 .pack-title {
   font-weight: bold;
   font-size: 36px;
-  line-height: 1.4;
-  text-transform: uppercase;
+  line-height: 1.1;
+  position: absolute;
+  border-radius: 10px;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  padding: 6px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .pack-subtitle {
   font-weight: normal;
@@ -261,10 +278,20 @@ export default {
 .unit-name {
   font-size: 8px;
 }
-.total-power {
-  font-size: 22px;
+.total-power-value {
+  font-size: 36px;
   color: #FFB800;
   font-weight: 700;
+  text-align: center;
+  text-align: center;
+}
+
+.total-power-title {
+  font-size: 16px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
   text-align: center;
 }
 .bonus-container {
@@ -295,5 +322,24 @@ export default {
   line-height: 40px;
   text-align: center;
   color: #ffffff;
+}
+
+@keyframes gem-floating {
+  0% {
+    transform: rotate(-45deg) translateY(0);
+  }
+
+  25% {
+    transform: rotate(-45deg) translateY(4px);
+  }
+
+  75% {
+    transform: rotate(-45deg) translateY(-4px);
+  }
+
+  100% {
+    transform: rotate(-45deg) translateY(0);
+  }
+
 }
 </style>

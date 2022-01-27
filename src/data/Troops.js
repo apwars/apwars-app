@@ -622,7 +622,7 @@ export function getTroops() {
       defense: 25,
     },
     {
-      id: 20,
+      id: 21,
       team: 1,
       teamDesc: 'The Corporation',
       race: 4,
@@ -671,7 +671,7 @@ export function getTroops() {
       }
     },
     {
-      id: 21,
+      id: 22,
       team: 1,
       teamDesc: 'The Corporation',
       race: 4,
@@ -691,7 +691,7 @@ export function getTroops() {
       defense: 20,
     },
     {
-      id: 22,
+      id: 23,
       team: 1,
       teamDesc: 'The Corporation',
       race: 4,
@@ -711,4 +711,8 @@ export function getTroops() {
       defense: 90,
     },
   ];
+}
+
+export function getTroopByName(troopName) {
+  return getTroops().find(t => t.name === troopName);
 }
