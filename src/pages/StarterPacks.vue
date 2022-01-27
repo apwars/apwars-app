@@ -7,21 +7,53 @@
     </v-row>
     <v-row>
         <v-col>
-            <PackCard class="pack" v-for="pack in humanPacks" :key="pack.id" :pack="pack" />
+            <div class="buttons-container">
+                <div class="race-button">
+            <Button text="Humans" :type="selectedRace === 1 ? 'wprimary' : 'wsecondary'" :handleClick="() => selectRace(1)" isBlock />
+                </div>
+                <div class="race-button">
+                <Button text="Orcs" :type="selectedRace === 2 ? 'wprimary' : 'wsecondary'" :handleClick="() => selectRace(2)" isBlock />
+                    </div>
+                <div class="race-button">
+                    <Button text="Undead" :type="selectedRace === 3 ? 'wprimary' : 'wsecondary'" :handleClick="() => selectRace(3)" isBlock />
+                        </div>
+                <div class="race-button">
+                        <Button text="Elves" :type="selectedRace === 4 ? 'wprimary' : 'wsecondary'" :handleClick="() => selectRace(4)" isBlock />
+                            </div>
+            </div>
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col>
+            <PackCard class="pack" v-for="pack in packs" :key="pack.id" :pack="pack" />
         </v-col>
     </v-row>
 </v-container>
     
 </template>
 <script>
-import { HUMANS, ORCS } from "@/data/UnitPacks";
+import { HUMANS, ORCS, UNDEAD, ELVES } from "@/data/UnitPacks";
+import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
 import PackCard from "@/lib/components/ui/PackCard";
 export default {
-    components: { Title, PackCard },
+    components: { Title, PackCard, Button },
     computed: {
-        humanPacks() {
-            return HUMANS;
+        packsData() {
+            return [].concat(HUMANS, ORCS, UNDEAD, ELVES);
+        },
+        packs() {
+            return this.packsData.filter(p => p.race === this.selectedRace);
+        }
+    },
+    data() {
+        return {
+            selectedRace: 1
+        }
+    },
+    methods: {
+        selectRace(raceId) {
+            this.selectedRace = raceId;
         }
     }
 }
@@ -34,5 +66,12 @@ export default {
     &:not(:first-child) {
         margin-top: 120px;
     }
+}
+.buttons-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+.race-button {
+    width: 180px;
 }
 </style>

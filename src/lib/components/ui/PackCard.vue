@@ -4,24 +4,13 @@
       <div :class="['gem-container', [variant]]">
         <img class="gem" :src="gem" :alt="variant" />
       </div>
-      <div class="pack-info text-center">
-        <div class="pack-title">{{ pack.title }}</div>
-        <div class="pack-subtitle">{{ pack.subtitle }}</div>
-        <img
-          class="mt-2"
-          :src="
-            pack.nft.type === 'HUMAN_SOLDIER'
-              ? '/images/troops/wwarrior-nft.png'
-              : '/images/troops/wgrunt-nft.png'
-          "
-          :alt="pack.nft.type"
-        />
-        <div class="amount">x{{ pack.nft.amount }}</div>
-      </div>
-      <div class="divider"></div>
+      <div class="pack-title">{{ pack.title }}</div>
       <div class="pack-content">
         <div class="units-container">
-          <div class="unit-container" v-for="unit in raceUnits" :key="unit.id">
+          <div class="tier-container" v-for="tier in tiers" :key="tier">
+
+          
+          <div class="unit-container" v-for="unit in getTierUnits(tier)" :key="unit.id">
             <v-img
               :src="`/images/troops/${unit.name.toLowerCase()}-portrait.png`"
               :alt="unit.name"
@@ -30,28 +19,19 @@
             <div class="unit-name text-center mt-1">{{ unit.name }}</div>
             <div class="amount">x{{ pack.units[unit.id] || 0}}</div>
           </div>
+          </div>
         </div>
         <div class="additional-info mt-3">
-          <div class="items-container">
+          <div :class="['bonus-container']">
+            <div class="bonus-text mr-4">Bonus:</div>
+            <div class="items-container">
             <GameItem size="large" :rewardId="29" :amount="1" />
             <GameItem size="large" :rewardId="34" :amount="1" />
           </div>
-          <div :class="['bonus-container', [variant]]">
-            <div class="bonus-text mr-2">Bonus:</div>
-            <div class="tokens">
-              <div class="d-flex align-center">
-                <img src="/images/wcourage.png" alt="wcourage" width="48" />
-                <div class="token-text ml-1">
-                  {{ format(pack.bonus.wCOURAGE) }} wCOURAGE
-                </div>
-              </div>
-              <div class="d-flex align-center mt-2">
-                <img src="/images/wgold.png" alt="wgold" width="48" />
-                <div class="token-text ml-1">
-                  {{ format(pack.bonus.wGOLD) }} wGOLD
-                </div>
-              </div>
-            </div>
+          <div class="total-power ml-4">
+            <div>TOTAL POWER</div>
+            <div>480.000,00</div>
+          </div>
           </div>
         </div>
       </div>
@@ -94,6 +74,9 @@ export default {
       if (this.variant === "green") {
         return "/images/icons/stone-green.png";
       }
+      if (this.variant === "light-green") {
+        return "/images/icons/stone-light-green.png";
+      }
 
       return "/images/icons/stone-blue.png";
     },
@@ -124,10 +107,18 @@ export default {
       return this.pack.theme || "blue";
     },
   },
+  data() {
+    return {
+      tiers: [1, 2, 3, 4],
+    }
+  },
   methods: {
     format(value) {
       return new Intl.NumberFormat("en-US").format(value);
     },
+    getTierUnits(tier) {
+      return this.raceUnits.filter(u => u.tier === tier);
+    }
   },
 };
 </script>
@@ -138,25 +129,21 @@ export default {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border: 1px solid #ffeebc;
-  padding: 18px 50px;
+  padding: 8px 80px;
   background-size: cover;
-  display: flex;
-  justify-content: space-between;
+  background-origin: border-box;
 }
 .blue {
   background: linear-gradient(to top, #1e2126 0%, #006fc4 100%);
-  background-origin: border-box;
-  border: 1px solid #ffeebc;
 }
 .green {
   background: linear-gradient(to top, #205330 0%, #192417 100%);
-  background-origin: border-box;
-  border: 1px solid #ffeebc;
 }
 .red {
   background: linear-gradient(to top, #1b0500 0%, #3b180d 100%);
-  background-origin: border-box;
-  border: 1px solid #ffeebc;
+}
+.light-green {
+  background: linear-gradient(to top, #093952 0%, #028E64 100%);
 }
 .pack-price-container {
   position: relative;
@@ -222,15 +209,28 @@ export default {
   top: 50%;
   transform: translateY(-50%);
 }
+.pack-info {
+  margin-right: 16px;
+}
+
+.pack-content {
+  width: 100%;
+}
+
+.tier-container {
+  display: flex;
+}
+
 .pack-title {
   font-weight: bold;
   font-size: 36px;
-  line-height: 48px;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 .pack-subtitle {
   font-weight: normal;
-  font-size: 28px;
-  line-height: 37px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 .remaining-text {
   font-weight: bold;
@@ -256,12 +256,16 @@ export default {
 }
 .units-container {
   display: flex;
+  justify-content: space-between;
 }
 .unit-name {
   font-size: 8px;
 }
-.divider {
-  border-right: 2px solid #ffeebc;
+.total-power {
+  font-size: 22px;
+  color: #FFB800;
+  font-weight: 700;
+  text-align: center;
 }
 .bonus-container {
   display: inline-flex;
@@ -277,8 +281,9 @@ export default {
 }
 .additional-info {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 .items-container {
   display: flex;

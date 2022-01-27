@@ -2,14 +2,9 @@ export const HUMANS = [{
     id: 1,
     theme: 'blue',
     race: 1,
-    title: 'Warrior Pack',
-    subtitle: 'Starter Pack',
+    title: 'FULL PACK',
     price: 50000,
     token: 'wGOLD',
-    nft: {
-        type: 'HUMAN_SOLDIER',
-        amount: 1
-    },
     units: {
         0: 150,
         1: 150,
@@ -22,24 +17,15 @@ export const HUMANS = [{
         13: 1,
         7: 2,
     },
-    bonus: {
-        'wGOLD': 200,
-        'wCOURAGE': 1000,
-    },
     remaining: 100,
 },
 {
     id: 2,
-    theme: 'green',
+    theme: 'blue',
     race: 1,
-    title: 'Conqueror',
-    subtitle: 'Starter Pack',
+    title: 'Refill Pack',
     price: 50000,
     token: 'wGOLD',
-    nft: {
-        type: 'HUMAN_SOLDIER',
-        amount: 1
-    },
     units: {
         0: 150,
         1: 150,
@@ -51,67 +37,134 @@ export const HUMANS = [{
     items: {
         13: 1,
         7: 1,
-    },
-    bonus: {
-        'wGOLD': 200,
-        'wCOURAGE': 1000,
     },
     remaining: 88,
 },
-{
-    id: 3,
-    theme: 'red',
-    race: 1,
-    title: 'Commander',
-    subtitle: 'Starter Pack',
-    price: 50000,
-    token: 'wGOLD',
-    nft: {
-        type: 'HUMAN_SOLDIER',
-        amount: 1
-    },
-    units: {
-        0: 150,
-        1: 150,
-        2: 100,
-        3: 100,
-        4: 50,
-        15: 25,
-    },
-    items: {
-        13: 1,
-        7: 1,
-    },
-    bonus: {
-        'wGOLD': 200,
-        'wCOURAGE': 1000,
-    },
-    remaining: 44,
-}];
+];
 
 export const ORCS = [{
-    id: 1,
-    theme: 'blue',
+    id: 3,
+    theme: 'green',
     race: 2,
+    title: 'Full Pack',
     price: 50000,
     token: 'wGOLD',
-    nft: {
-        type: 'ORC_SOLDIER',
-        amount: 1
-    },
     units: {
         5: 150,
         6: 150,
         7: 100,
         8: 100,
+        9: 75,
+        16: 50,
     },
     items: {
         26: 1,
         31: 2,
     },
-    bonus: {
-        'wGOLD': 200,
-        'wCOURAGE': 1000,
+    remaining: 100,
+},
+{
+    id: 4,
+    theme: 'green',
+    race: 2,
+    title: 'Refill Pack',
+    price: 50000,
+    token: 'wGOLD',
+    units: {
+        5: 150,
+        6: 150,
+        7: 100,
+        8: 100,
+        9: 75,
+        16: 50,
+    },
+    items: {
+        26: 1,
+        31: 2,
+    },
+    remaining: 100,
+}];
+
+export const UNDEAD = [{
+    id: 5,
+    theme: 'red',
+    race: 3,
+    title: 'Full Pack',
+    price: 50000,
+    token: 'wGOLD',
+    units: {
+        10: 150,
+        11: 150,
+        12: 100,
+        13: 100,
+        14: 100,
+        17: 100,
+    },
+    items: {
+        26: 1,
+        31: 2,
+    },
+    remaining: 100,
+},
+{
+    id: 6,
+    theme: 'red',
+    race: 3,
+    title: 'Refill Pack',
+    price: 50000,
+    token: 'wGOLD',
+    units: {
+        10: 150,
+        11: 150,
+        12: 100,
+        13: 100,
+        14: 100,
+        17: 100,
+    },
+    items: {
+        26: 1,
+        31: 2,
+    },
+    remaining: 100,
+}];
+
+export const ELVES = [{
+    id: 6,
+    theme: 'light-green',
+    race: 4,
+    title: 'Full Pack',
+    price: 50000,
+    token: 'wGOLD',
+    units: {
+        18: 150,
+        19: 150,
+        20: 100,
+        21: 100,
+        22: 100,
+    },
+    items: {
+        26: 1,
+        31: 2,
+    },
+    remaining: 100,
+},
+{
+    id: 7,
+    theme: 'light-green',
+    race: 4,
+    title: 'Refill Pack',
+    price: 50000,
+    token: 'wGOLD',
+    units: {
+        18: 150,
+        19: 150,
+        20: 100,
+        21: 100,
+        22: 100,
+    },
+    items: {
+        26: 1,
+        31: 2,
     },
     remaining: 100,
 }];
