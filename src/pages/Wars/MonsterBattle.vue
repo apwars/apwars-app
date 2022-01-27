@@ -307,8 +307,8 @@
     </v-container>
     <v-overlay :value="isRewardOverlayActive">
       <div class="chest-title text-center">
-        <span v-if="!isChestOpen">Waiting for Monster drops...</span
-        ><span v-else>You have won awesome drops!</span>
+        <span v-if="!isChestOpen">Waiting for the Monster rewards...</span
+        ><span v-else>You have won awesome rewards!</span>
       </div>
       <div class="rewards" v-click-outside="handleClickOutside">
         <div class="reward-list" v-if="isChestOpen">
@@ -390,7 +390,7 @@ export default {
         {
           target: "#enlistment-resume",
           content:
-            "Here you see your complete enlistment, or else, you can click a slot on board to see what are the content of it.",
+            "Here you see your complete enlistment! Also, you can click on any slot on the board to see others enlistments.",
         },
         {
           target: "#enlistment-button",

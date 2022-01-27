@@ -281,7 +281,7 @@
                 "
               >
                 <p>
-                  What will happen when you send your troops to the War:<br />
+                  What will happen when you send troops to War:<br />
                   - You won’t be able to bring them back home until the war is
                   over,
                   <br />
