@@ -70,33 +70,33 @@ export default {
   },
   computed: {
     gem() {
-      if (this.variant === "red") {
+      if (this.variant === "red-theme") {
         return "/images/icons/stone-red.png";
       }
-      if (this.variant === "green") {
+      if (this.variant === "green-theme") {
         return "/images/icons/stone-green.png";
       }
-      if (this.variant === "light-green") {
+      if (this.variant === "light-green-theme") {
         return "/images/icons/stone-light-green.png";
       }
 
       return "/images/icons/stone-blue.png";
     },
     bg() {
-      if (this.variant === "red") {
+      if (this.variant === "red-theme") {
         return "/images/background/red-desert.jpg";
       }
-      if (this.variant === "green") {
+      if (this.variant === "green-theme") {
         return "/images/background/green-swamp.jpg";
       }
 
       return "/images/background/blue-woods.png";
     },
     chest() {
-      if (this.variant === "red") {
+      if (this.variant === "red-theme") {
         return "/images/icons/red-chest.webp";
       }
-      if (this.variant === "green") {
+      if (this.variant === "green-theme") {
         return "/images/icons/green-chest.png";
       }
 
