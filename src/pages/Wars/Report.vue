@@ -410,7 +410,7 @@
             <v-col>
               <div class="rewards-title">Claim</div>
               <div class="unit-name" v-if="report && report.bringHome">
-                Your prizes are claimed!
+                Your prizes were claimed!
               </div>
               <div v-else-if="phase === 'finished' && report && !report.bringHome">
                 The claim phase has ended.
@@ -532,7 +532,7 @@
           </v-row>
         </template>
         <div class="no-data" v-else-if="isWarNotStarted">
-          This war has not started yet, come back later.
+          There's no data for this war yet. Come back later, would you?
         </div>
         <div class="no-data" v-else>
           There is no data for this race yet, come back later.
