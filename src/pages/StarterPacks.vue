@@ -15,8 +15,7 @@
       <v-col>
         <Title
           class="mt-1"
-          text="Packs to play"
-          subtitle="We try to be transparent, just like Blockchain, here is all the data you need to make your decisions."
+          text="wUNITs Starter Packs"
         />
       </v-col>
     </v-row>
@@ -196,7 +195,7 @@ export default {
   created() {
     this.setHeader(false);
     if (this.isConnected && !this.selectedRace) {
-      this.selectRace("Elves");
+      this.selectRace("Humans");
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -205,7 +204,7 @@ export default {
   },
   watch: {
     isConnected() {
-      this.selectRace("Elves");
+      this.selectRace("Humans");
     },
   }
 };
