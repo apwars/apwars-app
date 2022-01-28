@@ -25,6 +25,14 @@
         <div class="buttons-container">
           <div class="race-button">
             <Button
+              text="Elves"
+              :type="selectedRace === 4 ? 'wprimary' : 'wsecondary'"
+              :handleClick="() => selectRace(4)"
+              isBlock
+            />
+          </div>
+          <div class="race-button">
+            <Button
               text="Humans"
               :type="selectedRace === 1 ? 'wprimary' : 'wsecondary'"
               :handleClick="() => selectRace(1)"
@@ -44,14 +52,6 @@
               text="Undead"
               :type="selectedRace === 3 ? 'wprimary' : 'wsecondary'"
               :handleClick="() => selectRace(3)"
-              isBlock
-            />
-          </div>
-          <div class="race-button">
-            <Button
-              text="Elves"
-              :type="selectedRace === 4 ? 'wprimary' : 'wsecondary'"
-              :handleClick="() => selectRace(4)"
               isBlock
             />
           </div>
