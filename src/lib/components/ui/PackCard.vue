@@ -128,13 +128,15 @@ export default {
     },
     totalForce() {
       let totalUnitsForce = this.raceUnits.reduce((t, unit) => {
-        t = t + unit.strength;
-        t = t + unit.defense;
+        const amount = this.pack.units[unit.name] || 0;
+        t = t + (unit.strength * amount);
+        t = t + (unit.defense * amount);
         return t;
       }, 0);
       const totalForce = this.gameItems.reduce((t, gameItem) => {
-        t = t + gameItem.strength;
-        t = t + gameItem.defense;
+        const amount = this.pack.items[gameItem.title] || 0;
+        t = t + (gameItem.strength * amount);
+        t = t + (gameItem.defense * amount);
         return t;
       }, totalUnitsForce);
       return totalForce;
