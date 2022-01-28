@@ -165,7 +165,7 @@ export const ELVES = [{
 },
 {
     id: 7,
-    theme: 'light-green',
+    theme: 'light-green-theme',
     race: 4,
     title: 'Refill Pack',
     price: 50000,
