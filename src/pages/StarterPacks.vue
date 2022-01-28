@@ -6,6 +6,7 @@
               text="Go back to Home"
               icon="arrow-back"
               type="wtertiary"
+              no-padding
               :handleClick="backToHome"
             />
       </v-col>
