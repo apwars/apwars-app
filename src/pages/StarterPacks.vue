@@ -91,6 +91,9 @@ import PackCard from "@/lib/components/ui/PackCard";
 export default {
   components: { Title, PackCard, Button },
   computed: {
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
     theme() {
       const mappedThemes = {
         Humans: "blue-theme",
@@ -124,7 +127,7 @@ export default {
       this.getPacks();
     },
     async getPacks() {
-      if (!this.selectedRace) {
+      if (!this.selectedRace || !this.isConnected) {
         return
       }
       try {
@@ -192,11 +195,19 @@ export default {
   },
   created() {
     this.setHeader(false);
-    this.selectRace("Elves");
+    if (this.isConnected && !this.selectedRace) {
+      this.selectRace("Elves");
+    }
   },
-  beforeRouteLeave() {
+  beforeRouteLeave(to, from, next) {
     this.setHeader(true);
+    next();
   },
+  watch: {
+    isConnected() {
+      this.selectRace("Elves");
+    },
+  }
 };
 </script>
 <style lang="scss" scoped>
