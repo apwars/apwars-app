@@ -136,7 +136,6 @@ export default {
     border: 1px solid white;
     color: white;
     cursor: not-allowed;
-    opacity: 0.6;
   }
 }
 </style>
