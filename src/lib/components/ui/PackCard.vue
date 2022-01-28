@@ -132,12 +132,12 @@ export default {
   min-height: 420px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  border: 1px solid #ffeebc;
+  border: 2px solid #ffeebc;
   padding: 12px;
   background-size: cover;
   background-origin: border-box;
   @media screen and (min-width: 1024px) {
-    padding: 32px 80px;
+    padding: 42px 80px;
   }
 }
 .blue-theme {
