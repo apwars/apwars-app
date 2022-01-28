@@ -23,11 +23,11 @@
         </div>
         <div class="additional-info mt-3">
           <div :class="['bonus-container']">
-            <div class="bonus-text mr-4">Bonus:</div>
+            <div class="bonus-text">Bonus:</div>
             <div class="items-container">
             <Reward v-for="item in Object.keys(pack.items)" :key="item" size="large" :prize="item" :amount="pack.items[item]" />
           </div>
-          <div class="d-flex align-center ml-4">
+          <div class="total-power d-flex align-center">
             <img src="/images/icons/wars.png" width="64" height="64" alt="Power units"/>
           <div class="ml-1">
             <div class="total-power-title">TOTAL POWER UNITS</div>
@@ -40,14 +40,16 @@
     </div>
     <div :class="['pack-price-container', [variant]]">
       <img class="chest" :src="chest" :alt="variant" />
+      <div class="price-container d-flex align-center">
       <div class="price-text mr-1">{{ format(pack.price) }}</div>
       <img
         :src="`/images/${pack.token.toLowerCase()}.png`"
         :alt="pack.token"
         height="32"
       />
-      <div class="token-text mr-4">{{ pack.token }}</div>
-      <div class="remaining-text mr-2">
+      <div class="token-text">{{ pack.token }}</div>
+      </div>
+      <div class="remaining-text">
         Remaining Packs {{ pack.remaining }}
       </div>
       <Button type="whot" text="Buy this pack" />
@@ -131,9 +133,12 @@ export default {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border: 1px solid #ffeebc;
-  padding: 32px 80px;
+  padding: 12px;
   background-size: cover;
   background-origin: border-box;
+  @media screen and (min-width: 1024px) {
+    padding: 32px 80px;
+  }
 }
 .blue-theme {
   background: #002B4C;
@@ -151,6 +156,13 @@ export default {
   background: #006F4D;
   border: 2px solid #FFEEBC;
 }
+
+.price-container {
+  @media screen and (min-width: 1266px) {
+    margin-right: 36px;
+  }
+}
+
 .pack-price-container {
   position: relative;
   min-height: 80px;
@@ -158,10 +170,15 @@ export default {
   border-bottom-right-radius: 20px;
   width: 100%;
   display: flex;
+  padding: 8px;
+  flex-direction: column;
   align-items: center;
-  padding: 0 32px;
   justify-content: flex-end;
   margin-bottom: 36px;
+  @media screen and (min-width: 1266px) {
+    padding: 0 32px;
+    flex-direction: row;
+  }
   &.blue-theme {
     @extend .blue-theme;
   }
@@ -185,10 +202,10 @@ export default {
 }
 .gem-container {
   position: absolute;
-  top: -36px;
-  left: -36px;
-  height: 72px;
-  width: 72px;
+  top: -24px;
+  left: -24px;
+  height: 48px;
+  width: 48px;
   border: 2px solid #FFEEBC;
   box-sizing: border-box;
   border-radius: 10px;
@@ -196,6 +213,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (min-width: 1024px) {
+    top: -36px;
+    left: -36px;
+    height: 72px;
+    width: 72px;
+  }
   &.blue {
     @extend .blue;
   }
@@ -207,15 +230,29 @@ export default {
   }
 }
 .gem {
+  width: 34px;
+  height: 34px;;
   transform: rotate(-45deg);
   position: absolute;
   animation: 3s ease-in-out gem-floating infinite;
+  @media screen and (min-width: 1024px) {
+    height: 68px;
+    width: 68px;
+  }
 }
 .chest {
   position: absolute;
   left: 32px;
   top: 50%;
   transform: translateY(-50%);
+  height: 48px;
+  width: 48px;
+  display: none;
+  @media screen and (min-width: 768px) {
+    display: block;
+    height: 196px;
+    width: 196px;
+  }
 }
 .pack-info {
   margin-right: 16px;
@@ -231,18 +268,23 @@ export default {
 
 .pack-title {
   font-weight: bold;
-  font-size: 36px;
+  font-size: 21px;
   line-height: 1;
   position: absolute;
   border-radius: 10px;
   top: -26px;
   left: 50%;
   transform: translateX(-50%);
-  width: 360px;
   padding: 4px 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 6px 16px;
+  white-space: nowrap;
+  @media screen and (min-width: 1024px) {
+    font-size: 36px;
+    width: 360px;
+  }
 }
 .pack-subtitle {
   font-weight: normal;
@@ -254,26 +296,37 @@ export default {
   font-size: 14px;
   line-height: 19px;
   text-align: center;
-
   color: #ffffff;
+  margin: 6px 0;
+  @media screen and (min-width: 1266px) {
+    margin: 0 12px;
+  }
 }
 .price-text {
   font-weight: bold;
-  font-size: 48px;
+  font-size: 32px;
   line-height: 64px;
   text-align: center;
   color: #ffb800;
+  @media screen and (min-width: 1024px) {
+    font-size: 48px;
+  }
 }
 .token-text {
   font-weight: bold;
-  font-size: 22px;
-  line-height: 29px;
+  font-size: 14px;
+  line-height: 1;
   text-align: center;
   color: #ffffff;
+  @media screen and (min-width: 1024px) {
+    font-size: 22px;
+  }
 }
 .units-container {
   display: flex;
   justify-content: space-between;
+  overflow-x: auto;
+  width: 100%;
 }
 .unit-name {
   font-weight: bold;
@@ -298,10 +351,16 @@ export default {
 }
 .bonus-container {
   display: inline-flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  padding: 6px 12px;
+  
+  width: 100%;
+  @media screen and (min-width: 1266px) {
+    flex-direction: row;
+    padding: 6px 12px;
+  }
 }
 .bonus-text {
   font-weight: bold;
@@ -316,7 +375,14 @@ export default {
 }
 .items-container {
   display: flex;
+  justify-content: center;
   align-items: center;
+  width: 100%;
+  overflow-x: auto;
+  @media screen and (min-width: 1266px) {
+    width: auto;
+    margin: 0 12px;
+  }
 }
 .amount {
   font-weight: bold;

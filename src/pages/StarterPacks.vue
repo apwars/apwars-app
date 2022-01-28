@@ -121,9 +121,17 @@ export default {
 }
 .buttons-container {
   display: flex;
-  justify-content: space-evenly;
+  flex-wrap: wrap;
+  @media screen and (min-width: 1024px) {
+    justify-content: space-evenly;
+  }
 }
 .race-button {
-  width: 180px;
+  flex: 50%;
+  padding: 6px;
+  @media screen and (min-width: 1024px) {
+    flex: 25%;
+    justify-content: space-evenly;
+  }
 }
 </style>
