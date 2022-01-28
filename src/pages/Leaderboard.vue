@@ -542,7 +542,7 @@ export default {
           prize: "wGOLD",
         },
       ],
-      limit: 3,
+      limit: 6,
       pageDaily: 1,
       pageWeek: 1,
       pageMonth: 1,
