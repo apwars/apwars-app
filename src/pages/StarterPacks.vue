@@ -1,5 +1,14 @@
 <template>
   <v-container>
+    <v-row no-gutters>
+      <v-col>
+        <Button
+              text="Go back to Home"
+              type="wtertiary"
+              :handleClick="backToHome"
+            />
+      </v-col>
+    </v-row>
     <v-row>
       <v-col>
         <Title
@@ -59,6 +68,7 @@
   </v-container>
 </template>
 <script>
+import { mapMutations } from "vuex";
 import { HUMANS, ORCS, UNDEAD, ELVES } from "@/data/UnitPacks";
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
@@ -79,10 +89,22 @@ export default {
     };
   },
   methods: {
+    ...mapMutations({
+      setHeader: "app/setMenuDisplay",
+    }),
+    backToHome() {
+      this.$router.push('/');
+    },
     selectRace(raceId) {
       this.selectedRace = raceId;
     },
   },
+  created() {
+    this.setHeader(false);
+  },
+  beforeRouteLeave() {
+    this.setHeader(true);
+  }
 };
 </script>
 <style lang="scss" scoped>
