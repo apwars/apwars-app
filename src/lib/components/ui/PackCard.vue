@@ -201,6 +201,7 @@ export default {
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 36px;
+  border-top: none;
   @media screen and (min-width: 1266px) {
     padding: 0 32px;
     flex-direction: row;
