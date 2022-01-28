@@ -194,7 +194,7 @@ export default {
               href: "",
             },
             {
-              title: "Available Units",
+              title: "Packs",
               href: "/packs",
               image: "/images/icons/army.png",
             },
