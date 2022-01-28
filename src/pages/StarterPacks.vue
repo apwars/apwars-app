@@ -4,14 +4,16 @@
       <v-col>
         <Button
               text="Go back to Home"
+              icon="arrow-back"
               type="wtertiary"
               :handleClick="backToHome"
             />
       </v-col>
     </v-row>
-    <v-row>
+    <v-row no-gutters>
       <v-col>
         <Title
+        class="mt-1"
           text="Packs to play"
           subtitle="We try to be transparent, just like Blockchain, here is all the data you need to make your decisions."
         />
