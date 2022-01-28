@@ -31,7 +31,7 @@
             <img src="/images/icons/wars.png" width="64" height="64" alt="Power units"/>
           <div class="ml-1">
             <div class="total-power-title">TOTAL POWER UNITS</div>
-            <div class="total-power-value">480.000,00</div>
+            <div class="total-power-value"><Amount :amount="totalForce" formatted/></div>
           </div>
           </div>
           </div>
@@ -41,7 +41,7 @@
     <div :class="['pack-price-container', [theme]]">
       <img class="chest" :src="chest" :alt="theme" />
       <div class="price-container d-flex align-center">
-      <div class="price-text mr-1">{{ format(pack.price.amount) }}</div>
+      <div class="price-text mr-1"><Amount :amount="pack.price.amount" formatted/></div>
       <img
         :src="`/images/${pack.price.symbol.toLowerCase()}.png`"
         :alt="pack.price.symbol"
@@ -60,12 +60,14 @@
 </template>
 <script>
 import { getTroopByName } from "@/data/Troops";
+import { getCollectibleById } from "@/data/Collectibles";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Reward from "@/lib/components/ui/Reward";
+import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
-  components: { Button, Reward },
+  components: { Button, Reward, Amount },
   props: {
     pack: {
       type: Object,
@@ -118,9 +120,25 @@ export default {
 
       return "/images/icons/blue-chest.webp";
     },
+    gameItems() {
+      return Object.keys(this.pack.items).map(c => getCollectibleById(c.replace(/\D/g, ""))) || [];
+    },
     raceUnits() {
       return Object.keys(this.pack.units).map(troopName => getTroopByName(troopName)) || [];
-    }
+    },
+    totalForce() {
+      let totalUnitsForce = this.raceUnits.reduce((t, unit) => {
+        t = t + unit.strength;
+        t = t + unit.defense;
+        return t;
+      }, 0);
+      const totalForce = this.gameItems.reduce((t, gameItem) => {
+        t = t + gameItem.strength;
+        t = t + gameItem.defense;
+        return t;
+      }, totalUnitsForce);
+      return totalForce;
+    },
   },
   data() {
     return {
@@ -128,9 +146,6 @@ export default {
     }
   },
   methods: {
-    format(value) {
-      return new Intl.NumberFormat("en-US").format(value);
-    },
     getTierUnits(tier) {
       return this.raceUnits.filter(u => u.tier === tier);
     }
@@ -230,14 +245,17 @@ export default {
     height: 72px;
     width: 72px;
   }
-  &.blue {
-    @extend .blue;
+  &.blue-theme {
+    @extend .blue-theme;
   }
-  &.green {
-    @extend .green;
+  &.green-theme {
+    @extend .green-theme;
   }
-  &.red {
-    @extend .red;
+  &.light-green-theme {
+    @extend .green-theme;
+  }
+  &.red-theme {
+    @extend .red-theme;
   }
 }
 .gem {

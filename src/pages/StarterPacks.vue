@@ -124,6 +124,9 @@ export default {
       this.getPacks();
     },
     async getPacks() {
+      if (!this.selectedRace) {
+        return
+      }
       try {
         this.isLoading = true;
         const controller = new PacksController();
@@ -189,8 +192,6 @@ export default {
   },
   created() {
     this.setHeader(false);
-  },
-  mounted() {
     this.selectRace("Elves");
   },
   beforeRouteLeave() {
