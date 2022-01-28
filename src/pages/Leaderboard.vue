@@ -51,13 +51,14 @@
           class="d-flex align-center justify-center my-1 my-sm-6"
         >
           <img
-            class="mr-1"
-            height="35px"
+            class="mr-2"
+            height="60px"
             src="/images/game/trophy.png"
             alt="trophy"
           />
           <div class="page-subtitle">
-            Winners of the Week (01/01/22 - 01/09/22)
+            Winners of the Week - {{ getNumberWeek }} <br />
+            {{ getLabelWeek }}
           </div>
         </v-col>
       </v-row>
@@ -218,8 +219,8 @@
       <v-row>
         <v-col cols="12" md="8" offset-md="2" class="d-flex">
           <v-alert class="mx-auto d-inline-block" dense type="info" outlined>
-            Prizes are distributed weekly, points are counted from Sunday to
-            Saturday
+            Prizes are distributed weekly to the top 10. Points are counted from
+            Monday to Sunday according to the ISO week date.
           </v-alert>
         </v-col>
       </v-row>
@@ -248,13 +249,143 @@
               alt="trophy"
             />
             <div class="page-subtitle">
-              Weekly
+              Daily
             </div>
+          </div>
+
+          <div class="leaderboard">
+            <div v-if="listDailyLoading">
+              <h4 class="text-h4 text-center pt-9">Loading...</h4>
+            </div>
+            <div v-else-if="listDaily.total === '0'">
+              <h5 class="text-h5 text-center pt-9">
+                There is no data to display
+              </h5>
+            </div>
+            <div
+              v-else
+              v-for="(player, index) in listDaily"
+              v-bind:key="player.account"
+              class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
+            >
+              <div class="d-flex d-lg-box">
+                <v-avatar
+                  class="list-leaderboard-avatar d-flex justify-center"
+                  :address="player.account"
+                  tooltip
+                />
+                <div class="d-flex d-md-none align-center justify-center">
+                  <img
+                    v-if="index < 3"
+                    width="50px"
+                    class="ml-1"
+                    :src="
+                      `/images/game/icon-place-${
+                        index === 0 ? 1 : index === 1 ? 0 : 2
+                      }.png`
+                    "
+                    alt="icon-place"
+                  />
+                  <div v-else class="leaderboard-ranking">#{{ index }}</div>
+
+                  <v-address
+                    class="text-center mx-1"
+                    :address="player.account"
+                    link
+                    tooltip
+                  >
+                  </v-address>
+                </div>
+              </div>
+
+              <div
+                class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
+              >
+                <img
+                  v-if="index < 3 && pageDaily === 1"
+                  width="50px"
+                  class="d-none d-sm-none d-md-flex ml-1"
+                  :src="
+                    `/images/game/icon-place-${
+                      index === 0 ? 1 : index === 1 ? 0 : 2
+                    }.png`
+                  "
+                  alt="icon-place"
+                />
+                <div
+                  v-else
+                  class="d-none d-sm-none d-md-flex leaderboard-ranking"
+                >
+                  #{{ index + 1 + (pageDaily - 1) * limit }}
+                </div>
+
+                <v-address
+                  class="d-none d-sm-none d-md-flex text-center mx-1"
+                  :address="player.account"
+                  link
+                  tooltip
+                >
+                </v-address>
+
+                <div class="d-flex flex-column align-center mx-2">
+                  <div class="text-subtitle-2 primary--text">Score</div>
+                  <div>{{ player.score }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex align-center justify-space-between">
+            <div
+              @click="getListDaily(pageDaily - 1)"
+              class="d-flex align-center justify-center previous"
+            >
+              <v-icon large>
+                mdi-chevron-left
+              </v-icon>
+            </div>
+            <div class="pages">
+              <div class="text-h6 font-weight-bold">
+                {{ pageDaily }}/{{ getTotaPageDaily }}
+              </div>
+            </div>
+
+            <div
+              @click="getListDaily(pageDaily + 1)"
+              class="d-flex align-center justify-center next"
+            >
+              <v-icon large>
+                mdi-chevron-right
+              </v-icon>
+            </div>
+          </div>
+        </v-col>
+
+        <v-col cols="12" lg="6">
+          <div class="d-flex align-center mb-3">
+            <img
+              class="mr-1"
+              height="30px"
+              src="/images/icons/parchment2.png"
+              alt="trophy"
+            />
+            <div class="page-subtitle">Weekly - {{ getNumberWeek }}</div>
+            <img
+              class="ml-1"
+              height="35px"
+              src="/images/wGOLD.png"
+              alt="wGOLD"
+            />
           </div>
 
           <div class="leaderboard">
             <div v-if="listWeekLoading">
               <h4 class="text-h4 text-center pt-9">Loading...</h4>
+            </div>
+            <div v-else-if="listWeek.total === '0'">
+              <h5 class="text-h5 text-center pt-9">
+                There is no data to display
+              </h5>
             </div>
             <div
               v-else
@@ -296,7 +427,7 @@
                 class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
               >
                 <img
-                  v-if="index < 3  && pageWeek === 1"
+                  v-if="index < 3 && pageWeek === 1"
                   width="50px"
                   class="d-none d-sm-none d-md-flex ml-1"
                   :src="
@@ -310,7 +441,7 @@
                   v-else
                   class="d-none d-sm-none d-md-flex leaderboard-ranking"
                 >
-                  #{{ (index + 1) + ((pageWeek - 1) * limit) }}
+                  #{{ index + 1 + (pageWeek - 1) * limit }}
                 </div>
 
                 <v-address
@@ -320,16 +451,6 @@
                   tooltip
                 >
                 </v-address>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Best time</div>
-                  <div>{{ player.time }}s</div>
-                </div>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Points</div>
-                  <div>{{ player.points }}</div>
-                </div>
 
                 <div class="d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Score</div>
@@ -356,132 +477,6 @@
 
             <div
               @click="getListWeek(pageWeek + 1)"
-              class="d-flex align-center justify-center next"
-            >
-              <v-icon large>
-                mdi-chevron-right
-              </v-icon>
-            </div>
-          </div>
-        </v-col>
-
-        <v-col cols="12" lg="6">
-          <div class="d-flex align-center mb-3">
-            <img
-              class="mr-1"
-              height="30px"
-              src="/images/icons/parchment2.png"
-              alt="trophy"
-            />
-            <div class="page-subtitle">
-              Month
-            </div>
-          </div>
-
-          <div class="leaderboard">
-            <div v-if="listMonthLoading">
-              <h4 class="text-h4 text-center pt-9">Loading...</h4>
-            </div>
-            <div
-              v-else
-              v-for="(player, index) in listMonth"
-              v-bind:key="player.account"
-              class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
-            >
-              <div class="d-flex d-lg-box">
-                <v-avatar
-                  class="list-leaderboard-avatar d-flex justify-center"
-                  :address="player.account"
-                  tooltip
-                />
-                <div class="d-flex d-md-none align-center justify-center">
-                  <img
-                    v-if="index < 3"
-                    width="50px"
-                    class="ml-1"
-                    :src="
-                      `/images/game/icon-place-${
-                        index === 0 ? 1 : index === 1 ? 0 : 2
-                      }.png`
-                    "
-                    alt="icon-place"
-                  />
-                  <div v-else class="leaderboard-ranking">#{{ index }}</div>
-
-                  <v-address
-                    class="text-center mx-1"
-                    :address="player.account"
-                    link
-                    tooltip
-                  >
-                  </v-address>
-                </div>
-              </div>
-
-              <div
-                class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
-              >
-                <img
-                  v-if="index < 3 && pageMonth === 1"
-                  width="50px"
-                  class="d-none d-sm-none d-md-flex ml-1"
-                  :src="
-                    `/images/game/icon-place-${
-                      index === 0 ? 1 : index === 1 ? 0 : 2
-                    }.png`
-                  "
-                  alt="icon-place"
-                />
-                <div
-                  v-else
-                  class="d-none d-sm-none d-md-flex leaderboard-ranking"
-                >
-                  #{{ (index + 1) + ((pageMonth - 1) * limit) }}
-                </div>
-
-                <v-address
-                  class="d-none d-sm-none d-md-flex text-center mx-1"
-                  :address="player.account"
-                  link
-                  tooltip
-                >
-                </v-address>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Best time</div>
-                  <div>{{ player.time }}s</div>
-                </div>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Points</div>
-                  <div>{{ player.points }}</div>
-                </div>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Score</div>
-                  <div>{{ player.score }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex align-center justify-space-between">
-            <div
-              @click="getListMonth(pageMonth - 1)"
-              class="d-flex align-center justify-center previous"
-            >
-              <v-icon large>
-                mdi-chevron-left
-              </v-icon>
-            </div>
-            <div class="pages">
-              <div class="text-h6 font-weight-bold">
-                {{ pageMonth }}/{{ getTotaPageMonth }}
-              </div>
-            </div>
-
-            <div
-              @click="getListMonth(pageMonth + 1)"
               class="d-flex align-center justify-center next"
             >
               <v-icon large>
@@ -548,8 +543,10 @@ export default {
         },
       ],
       limit: 3,
+      pageDaily: 1,
       pageWeek: 1,
       pageMonth: 1,
+      listDaily: [],
       listWeek: [],
       listMonth: [],
       listGames: [
@@ -604,17 +601,44 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
+    getTotaPageDaily() {
+      if (this.limit > this.listDaily.total) {
+        return 1;
+      }
+      return parseFloat(this.listDaily.total / this.limit).toFixed();
+    },
+
     getTotaPageWeek() {
       if (this.limit > this.listWeek.total) {
         return 1;
       }
       return parseFloat(this.listWeek.total / this.limit).toFixed();
     },
+
     getTotaPageMonth() {
       if (this.limit > this.listMonth.total) {
         return 1;
       }
       return parseFloat(this.listMonth.total / this.limit).toFixed();
+    },
+    getNumberWeek() {
+      const today = moment();
+      return today.isoWeek();
+    },
+    getLabelWeek() {
+      const userLang = navigator.language || navigator.userLanguage;
+      let startDateWeek = moment().startOf("isoWeek");
+      let endDateWeek = moment().endOf("isoWeek");
+      startDateWeek = new Date(startDateWeek.toDate());
+      endDateWeek = new Date(endDateWeek.toDate());
+      if (startDateWeek.toLocaleString(userLang).search(",") > 0) {
+        startDateWeek = startDateWeek.toLocaleString(userLang).split(",")[0];
+        endDateWeek = endDateWeek.toLocaleString(userLang).split(",")[0];
+      } else {
+        startDateWeek = startDateWeek.toLocaleString(userLang).split(" ")[0];
+        endDateWeek = endDateWeek.toLocaleString(userLang).split(" ")[0];
+      }
+      return `${startDateWeek} - ${endDateWeek}`;
     },
   },
 
@@ -629,7 +653,6 @@ export default {
   },
 
   mounted() {
-
     this.setHeader(false);
     this.loadData();
   },
@@ -646,9 +669,24 @@ export default {
 
       await this.getListWeek(1);
       this.getListPodium(this.listWeek);
-      await this.getListMonth(1);
+      await this.getListDaily(1);
 
       this.isLoading = false;
+    },
+
+    async getListDaily(_page) {
+      if (this.listDailyLoading || _page < 1 || _page > this.getTotaPageDaily) {
+        return;
+      }
+      this.pageDaily = _page;
+      const leaderboardController = new LeaderboardController();
+      this.listDailyLoading = true;
+      this.listDaily = await leaderboardController.getDaily(
+        "TMJ",
+        this.limit,
+        this.limit * (_page - 1)
+      );
+      this.listDailyLoading = false;
     },
 
     async getListWeek(_page) {
