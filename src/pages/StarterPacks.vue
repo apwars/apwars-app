@@ -60,6 +60,10 @@
     </v-row>
     <v-row>
       <v-col col="12" md="10" offset-md="1">
+        <template v-if="isLoading">
+          <v-skeleton-loader type="image" height="280px" />
+          <v-skeleton-loader class="mt-2" type="image" height="280px" />
+        </template>
         <PackCard
           class="pack"
           v-for="pack in packs"
@@ -102,6 +106,7 @@ export default {
       selectedRace: null,
       packs: null,
       isLoadingBuy: null,
+      isLoading: false,
     };
   },
   methods: {
@@ -111,12 +116,16 @@ export default {
     backToHome() {
       this.$router.push("/");
     },
-    selectRace(raceId) {
-      this.selectedRace = raceId;
+    selectRace(race) {
+      if (this.selectedRace === race) {
+        return;
+      }
+      this.selectedRace = race;
       this.getPacks();
     },
     async getPacks() {
       try {
+        this.isLoading = true;
         const controller = new PacksController();
         const fullPackage = `ARMY_${this.selectedRace.toUpperCase()}_FULL_PACK`;
         const refillPackage = `ARMY_${this.selectedRace.toUpperCase()}_REFILL_PACK`;
@@ -146,6 +155,8 @@ export default {
           "There was an error trying to get packs list, try again later.",
           error
         );
+      } finally {
+        this.isLoading = false;
       }
     },
     buildPackObject(array) {
@@ -159,6 +170,7 @@ export default {
         this.isLoadingBuy = packageName;
         const controller = new PacksController();
         await controller.buyPack(this.account, packageName);
+        this.getPacks();
         ToastSnackbar.success("The pack was purchased successfully!");
       } catch (error) {
         const mappedErrors = {
@@ -179,7 +191,7 @@ export default {
     this.setHeader(false);
   },
   mounted() {
-    this.selectedRace = "Elves";
+    this.selectRace("Elves");
   },
   beforeRouteLeave() {
     this.setHeader(true);
