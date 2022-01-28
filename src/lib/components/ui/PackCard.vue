@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="pack-container" :style="`background-image: url('${bg}');`">
-      <div :class="['gem-container', [variant]]">
-        <img class="gem" :src="gem" :alt="variant" />
+      <div :class="['gem-container', [theme]]">
+        <img class="gem" :src="gem" :alt="theme" />
       </div>
-      <div :class="['pack-title', [variant]]">{{ pack.title }}</div>
+      <div :class="['pack-title', [theme]]">{{ pack.title }}</div>
       <div class="pack-content">
         <div class="units-container">
           <div class="tier-container" v-for="tier in tiers" :key="tier">
@@ -38,21 +38,21 @@
         </div>
       </div>
     </div>
-    <div :class="['pack-price-container', [variant]]">
-      <img class="chest" :src="chest" :alt="variant" />
+    <div :class="['pack-price-container', [theme]]">
+      <img class="chest" :src="chest" :alt="theme" />
       <div class="price-container d-flex align-center">
-      <div class="price-text mr-1">{{ format(pack.price) }}</div>
+      <div class="price-text mr-1">{{ format(pack.price.amount) }}</div>
       <img
-        :src="`/images/${pack.token.toLowerCase()}.png`"
-        :alt="pack.token"
+        :src="`/images/${pack.price.symbol.toLowerCase()}.png`"
+        :alt="pack.price.symbol"
         height="32"
       />
-      <div class="token-text">{{ pack.token }}</div>
+      <div class="token-text">{{ pack.price.symbol }}</div>
       </div>
       <div class="remaining-text">
-        Remaining Packs {{ pack.remaining }}
+        Remaining Packs {{ pack.remainingAmount }}
       </div>
-      <Button type="whot" text="Buy this pack" />
+      <Button type="whot" text="Buy this pack" :handleClick="() => handleBuy(pack.package)" />
     </div>
   </div>
 </template>
@@ -69,47 +69,52 @@ export default {
       type: Object,
       default: null,
     },
+    theme: {
+      type: String,
+      default: 'blue-theme',
+    },
+    handleBuy: {
+      type: Function,
+      default: () => {}
+    }
   },
   computed: {
     gem() {
-      if (this.variant === "red-theme") {
+      if (this.theme === "red-theme") {
         return "/images/icons/stone-red.png";
       }
-      if (this.variant === "green-theme") {
+      if (this.theme === "green-theme") {
         return "/images/icons/stone-green.png";
       }
-      if (this.variant === "light-green-theme") {
+      if (this.theme === "light-green-theme") {
         return "/images/icons/stone-light-green.png";
       }
 
       return "/images/icons/stone-blue.png";
     },
     bg() {
-      if (this.variant === "red-theme") {
+      if (this.theme === "red-theme") {
         return "/images/background/red-desert.jpg";
       }
-      if (this.variant === "green-theme") {
+      if (this.theme === "green-theme") {
         return "/images/background/green-swamp.jpg";
       }
 
       return "/images/background/blue-woods.png";
     },
     chest() {
-      if (this.variant === "red-theme") {
+      if (this.theme === "red-theme") {
         return "/images/icons/red-chest.webp";
       }
-      if (this.variant === "green-theme") {
+      if (this.theme === "green-theme") {
         return "/images/icons/green-chest.png";
       }
 
       return "/images/icons/blue-chest.webp";
     },
     raceUnits() {
-      return Object.keys(this.pack.units).map(troopName => getTroopByName(troopName));
-    },
-    variant() {
-      return this.pack.theme || "blue";
-    },
+      return Object.keys(this.pack.units).map(troopName => getTroopByName(troopName)) || [];
+    }
   },
   data() {
     return {
