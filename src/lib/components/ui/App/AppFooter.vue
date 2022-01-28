@@ -167,45 +167,6 @@ export default {
           href: "/black-market",
         },
         {
-          title: "Army",
-          image: "/images/icons/army.png",
-          href: "",
-          submenu: [
-            {
-              title: "Available Units",
-              href: "/war-stats",
-              image: "/images/icons/army.png",
-            },
-            {
-              title: "Training Center",
-              href: "/training-center",
-              image: "/images/icons/battle-shield.png",
-            },
-            {
-              title: "Worker",
-              href: "/worker",
-              image: "/Map/farm-worker/map/assets/worker.png",
-            },
-          ],
-        },
-        {
-          title: "Wars",
-          image: "/images/icons/wars.png",
-          href: "",
-          submenu: [
-            {
-              title: "War against FED",
-              image: "/images/icons/fed.png",
-              href: "/wars",
-            },
-            {
-              title: "War Preparation",
-              image: "/images/war-preparation/icon-war-preparation.png",
-              href: "/war-preparation",
-            },
-          ],
-        },
-        {
           title: "Inventory",
           image: "/images/icons/inventory.png",
           href: "",
@@ -222,10 +183,66 @@ export default {
             },
           ],
         },
+        // {
+        //   title: "Army",
+        //   image: "/images/icons/army.png",
+        //   href: "",
+        //   submenu: [
+        //     {
+        //       title: "Available Units",
+        //       href: "/war-stats",
+        //       image: "/images/icons/army.png",
+        //     },
+        //     {
+        //       title: "Training Center",
+        //       href: "/training-center",
+        //       image: "/images/icons/battle-shield.png",
+        //     },
+        //     {
+        //       title: "Worker",
+        //       href: "/worker",
+        //       image: "/Map/farm-worker/map/assets/worker.png",
+        //     },
+        //   ],
+        // },
+        {
+          title: "Wars",
+          image: "/images/icons/wars.png",
+          href: "",
+          submenu: [
+            {
+              title: "The Monstrous Journey - Coming soon",
+              image: "/images/icons/tmj.png",
+              href: "",
+            },
+            {
+              title: "War against FED",
+              image: "/images/icons/fed.png",
+              href: "/wars",
+            },
+            {
+              title: "War Preparation",
+              image: "/images/war-preparation/icon-war-preparation.png",
+              href: "/war-preparation",
+            },
+            {
+              title: "Training Center",
+              href: "/training-center",
+              image: "/images/icons/battle-shield.png",
+            },
+          ],
+        },
+
         {
           title: "Arcadia",
           image: "/images/icons/world.png",
           href: "/arcadia",
+        },
+
+        {
+          title: "Leaderboard - Coming soon",
+          image: "/images/icons/leaderboard.png",
+          href: "",
         },
       ],
       balance: 0,
