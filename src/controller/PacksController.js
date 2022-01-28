@@ -1,4 +1,4 @@
-import BaseController from './BaseController';
+import BaseController from "./BaseController";
 import store from "@/store";
 
 export default class PacksController {
@@ -17,11 +17,11 @@ export default class PacksController {
 
   buyPack(account, packageName) {
     try {
-        return this.base._postSignature(`/accounts/${account}/packs/${packageName}/purchases/v2`);
-      } catch (error) {
-        throw error;
-      }
+      return this.base._postSignature(
+        `/accounts/${account}/packs/${packageName}/purchases/v2`
+      );
+    } catch (error) {
+      throw error;
+    }
   }
-
-
 }

@@ -52,7 +52,9 @@
       <div class="remaining-text">
         Remaining Packs {{ pack.remainingAmount }}
       </div>
-      <Button type="whot" text="Buy this pack" :handleClick="() => handleBuy(pack.package)" />
+      <div class="buy-button-container">
+        <Button type="whot" text="Buy this pack" :handleClick="() => handleBuy(pack.package)" :isLoading="isLoadingBuy" isBlock/>
+      </div>
     </div>
   </div>
 </template>
@@ -76,6 +78,10 @@ export default {
     handleBuy: {
       type: Function,
       default: () => {}
+    },
+    isLoadingBuy: {
+      type: Boolean,
+      default: false,
     }
   },
   computed: {
@@ -396,6 +402,10 @@ export default {
   font-size: 24px;
   text-align: center;
   color: #ffffff;
+}
+
+.buy-button-container {
+  width: 138px;
 }
 
 @keyframes gem-floating {

@@ -3,18 +3,18 @@
     <v-row no-gutters>
       <v-col>
         <Button
-              text="Go back to Home"
-              icon="arrow-back"
-              type="wtertiary"
-              no-padding
-              :handleClick="backToHome"
-            />
+          text="Go back to Home"
+          icon="arrow-back"
+          type="wtertiary"
+          no-padding
+          :handleClick="backToHome"
+        />
       </v-col>
     </v-row>
     <v-row no-gutters>
       <v-col>
         <Title
-        class="mt-1"
+          class="mt-1"
           text="Packs to play"
           subtitle="We try to be transparent, just like Blockchain, here is all the data you need to make your decisions."
         />
@@ -67,6 +67,7 @@
           :pack="pack"
           :theme="theme"
           :handleBuy="buyPack"
+          :isLoadingBuy="isLoadingBuy === pack.package"
         />
       </v-col>
     </v-row>
@@ -76,6 +77,9 @@
 import { mapMutations } from "vuex";
 
 import PacksController from "@/controller/PacksController";
+
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
 import PackCard from "@/lib/components/ui/PackCard";
@@ -85,18 +89,19 @@ export default {
   computed: {
     theme() {
       const mappedThemes = {
-        'Humans': 'blue-theme',
-        'Elves': 'light-green-theme',
-        'Orcs': 'green-theme',
-        'Undead': 'red-theme',
-      }
+        Humans: "blue-theme",
+        Elves: "light-green-theme",
+        Orcs: "green-theme",
+        Undead: "red-theme",
+      };
       return mappedThemes[this.selectedRace];
-    }
+    },
   },
   data() {
     return {
       selectedRace: null,
       packs: null,
+      isLoadingBuy: null,
     };
   },
   methods: {
@@ -104,7 +109,7 @@ export default {
       setHeader: "app/setMenuDisplay",
     }),
     backToHome() {
-      this.$router.push('/');
+      this.$router.push("/");
     },
     selectRace(raceId) {
       this.selectedRace = raceId;
@@ -116,43 +121,69 @@ export default {
         const fullPackage = `ARMY_${this.selectedRace.toUpperCase()}_FULL_PACK`;
         const refillPackage = `ARMY_${this.selectedRace.toUpperCase()}_REFILL_PACK`;
         let full = await controller.getOne(fullPackage);
-        full.title = 'Full Pack';
-        const fullUnitsArray = full.content.filter(c => !c.symbol.includes('GameItem'));
+        full.title = "Full Pack";
+        const fullUnitsArray = full.content.filter(
+          (c) => !c.symbol.includes("GameItem")
+        );
         full.units = this.buildPackObject(fullUnitsArray);
-        const fullGameItemsArray = full.content.filter(c => c.symbol.includes('GameItem'));
+        const fullGameItemsArray = full.content.filter((c) =>
+          c.symbol.includes("GameItem")
+        );
         full.items = this.buildPackObject(fullGameItemsArray);
         let refill = await controller.getOne(refillPackage);
-        refill.title = 'Refill Pack';
-        const refillUnitsArray = refill.content.filter(c => !c.symbol.includes('GameItem'));
+        refill.title = "Refill Pack";
+        const refillUnitsArray = refill.content.filter(
+          (c) => !c.symbol.includes("GameItem")
+        );
         refill.units = this.buildPackObject(refillUnitsArray);
-        const refillGameItemsArray = refill.content.filter(c => c.symbol.includes('GameItem'));
+        const refillGameItemsArray = refill.content.filter((c) =>
+          c.symbol.includes("GameItem")
+        );
         refill.items = this.buildPackObject(refillGameItemsArray);
         this.packs = [].concat(full, refill);
       } catch (error) {
-        console.error('There was an error trying to get packs list, try again later.', error);
+        console.error(
+          "There was an error trying to get packs list, try again later.",
+          error
+        );
       }
     },
     buildPackObject(array) {
-      return array.reduce((obj, item) => Object.assign(obj, {[item.symbol]: item.amount}), {});
+      return array.reduce(
+        (obj, item) => Object.assign(obj, { [item.symbol]: item.amount }),
+        {}
+      );
     },
     async buyPack(packageName) {
       try {
+        this.isLoadingBuy = packageName;
         const controller = new PacksController();
-        const purchase = await controller.buyPack(this.account, packageName);
+        await controller.buyPack(this.account, packageName);
+        ToastSnackbar.success("The pack was purchased successfully!");
       } catch (error) {
-        console.error('Something went wrong while trying to buy this pack', error);
+        const mappedErrors = {
+          INVALID_AMOUNT: `We don't have any more from this pack to sell.`,
+          INVALID_BALANCE: `You don't have balance to buy this pack.`,
+        };
+        ToastSnackbar.error(mappedErrors[error.code] || error.message);
+        console.error(
+          "Something went wrong while trying to buy this pack",
+          error
+        );
+      } finally {
+        this.isLoadingBuy = null;
       }
-    }
+    },
   },
   created() {
     this.setHeader(false);
   },
   mounted() {
-    this.selectedRace = 'Elves';
+    this.selectedRace = "Elves";
   },
   beforeRouteLeave() {
     this.setHeader(true);
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
