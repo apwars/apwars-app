@@ -15,7 +15,7 @@
       <v-col>
         <Title
           class="mt-1"
-          text="wUNITs Starter Packs"
+          text="Units Starter Packs"
         />
       </v-col>
     </v-row>
