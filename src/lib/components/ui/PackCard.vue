@@ -25,7 +25,7 @@
           <div :class="['bonus-container']">
             <div class="bonus-text">Bonus:</div>
             <div class="items-container">
-            <Reward v-for="item in Object.keys(pack.items)" :key="item" size="large" :prize="item" :amount="pack.items[item]" />
+            <Reward v-for="item in Object.keys(pack.items)" :key="item" class="reward" size="large" :prize="item" :amount="pack.items[item]" />
           </div>
           <div class="total-power d-flex align-center">
             <img src="/images/icons/wars.png" width="64" height="64" alt="Power units"/>
@@ -357,6 +357,10 @@ export default {
   justify-content: space-between;
   overflow-x: auto;
   width: 100%;
+  animation: card-enter ease-in-out 1s;
+}
+.reward {
+  animation: card-enter ease-in-out 1s;
 }
 .unit-name {
   font-weight: bold;
@@ -444,5 +448,16 @@ export default {
     transform: rotate(-45deg) translateY(0);
   }
 
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateX(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
 }
 </style>
