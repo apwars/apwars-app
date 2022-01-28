@@ -134,7 +134,7 @@ export default {
         return t;
       }, 0);
       const totalForce = this.gameItems.reduce((t, gameItem) => {
-        const amount = this.pack.items[gameItem.title] || 0;
+        const amount = this.pack.items[`GameItem${gameItem.id}`] || 0;
         t = t + (gameItem.strength * amount);
         t = t + (gameItem.defense * amount);
         return t;
