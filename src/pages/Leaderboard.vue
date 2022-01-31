@@ -37,7 +37,7 @@
             </div>
             <div
               :class="`card-choose-game-button ${game.disabled && 'disabled'}`"
-              @click="game.actionButton('/game/the-monstrous-journey')"
+              @click="game.actionButton('/the-monstrous-journey')"
             >
               {{ game.nameButton }}
             </div>
