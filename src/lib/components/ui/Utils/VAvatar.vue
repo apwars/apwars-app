@@ -19,7 +19,7 @@
           />
         </span>
       </template>
-      <span>{{ account }}</span>
+      <span>{{ address }}</span>
     </v-tooltip>
   </span>
 </template>
