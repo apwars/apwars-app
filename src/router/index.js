@@ -18,6 +18,7 @@ import TrainingCenter from "@/pages/TrainingCenter.vue";
 import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
 import Arcadia from "@/pages/Arcadia/Arcadia.vue";
+import StarterPacks from "@/pages/StarterPacks.vue";
 import Leaderboard from "@/pages/Leaderboard.vue";
 import Bridge from "@/pages/Bridge.vue";
 
@@ -113,6 +114,11 @@ export const routes = [
         path: "/arcadia",
         name: "/arcadia",
         component: Arcadia
+      },
+      {
+        path: "/packs",
+        name: "/packs",
+        component: StarterPacks
       },
       {
         path: "/leaderboard",

@@ -10,6 +10,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wWARRIOR",
+      displayName: 'Warrior',
       lpAddresses: "0x6CABE6C94DC8BC63F8b71BBA7B2ed3381B1fe6e9",
       contractAddress: {
         "5777": "0x0b0e318f0DD8a99e863d84841D0E7dcF07F8e5dE",
@@ -59,6 +60,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wARCHER",
+      displayName: 'Archer',
       lpAddresses: "0x764A521590ebd2686cC629E47f3464E8fD53b0F0",
       contractAddress: {
         "5777": "0x4fC1251bBE24caEbe4a33956A32a11333f77fEBd",
@@ -78,6 +80,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wARMOURED-WARRIOR",
+      displayName: 'Armoured Warrior',
       lpAddresses: "0xcb7a7E4257ABC87745B40B5b51B82FFFBAa087A0",
       contractAddress: {
         "5777": "0xF234C4AF44D4345269d433ce74Bf0366eAD25067",
@@ -97,6 +100,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wCROSSBOWMAN",
+      displayName: 'Crossbowman',
       lpAddresses: "0xEd5D84185d0BB1d9fEAF7b59F38220Fc26F4FDD0",
       contractAddress: {
         "5777": "0x39597c82A835d0D4c1Fae84BCd2F142731088925",
@@ -144,6 +148,7 @@ export function getTroops() {
       tier: 3,
       tierDesc: 'Arcane Library',
       name: "wWIZARD",
+      displayName: 'Wizard',
       lpAddresses: "0x651E5fE33a17f39E65c94A4e4D6AA220C33C9b2B",
       contractAddress: {
         "5777": "0x14742bB55d8949Ee0DddF9136461514746b0b174",
@@ -163,6 +168,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wGRUNT",
+      displayName: 'Grunt',
       lpAddresses: "0x8C58f3aEe4924D0Ab0a8e0Ee680a6611296573FF",
       contractAddress: {
         "5777": "0xA161008870579B16A717360d8754f4C484e18183",
@@ -212,6 +218,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wORC-ARCHER",
+      displayName: 'Orc Archer',
       lpAddresses: "0x9e15154b80a68191E2D5C4B220a24bd99a422DeE",
       contractAddress: {
         "5777": "0x9BD4BD678286E99696024cBDEd857B83aE20058A",
@@ -231,6 +238,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wARMOURED-GRUNT",
+      displayName: 'Armoured Grunt',
       lpAddresses: "0xc0749fA16072c377B786213aCa2837D4Aa203c8A",
       contractAddress: {
         "5777": "0xbBe4AA52a30bC5d360d6497F5cf2Dcd17ee0a6F2",
@@ -250,6 +258,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wPIKE-ORC",
+      displayName: 'Pike Orc',
       lpAddresses: "0xC3Bc2A25C100fEf3A38f99543f89dCE330ceaBa0",
       contractAddress: {
         "5777": "0xF1b0d0a63D2D4497C598006c363904563485fa26",
@@ -297,6 +306,7 @@ export function getTroops() {
       tier: 3,
       tierDesc: 'Arcane Library',
       name: "wSHAMAN",
+      displayName: 'Shaman',
       lpAddresses: "0xA6Ab5C50F7db14b96d03e64AE3fe3B0041f6aE0C",
       contractAddress: {
         "5777": "0xA9747cd1701DD66dcBc6EA2671b0514cbb61E693",
@@ -316,6 +326,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wSKELETON-WARRIOR",
+      displayName: 'Skeleton Warrior',
       lpAddresses: "0xf101954d51ffc12640b006e9c951ffebbd6b7259",
       contractAddress: {
         "5777": "",
@@ -361,6 +372,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wHOUND",
+      displayName: 'Hound',
       lpAddresses: "0xe8eae2eac9e1d87932c4e94303894ac28304ee23",
       contractAddress: {
         "5777": "",
@@ -380,6 +392,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wUNDEAD-ARCHER",
+      displayName: 'Undead Archer',
       lpAddresses: "0xdf9aff48816e5e9930b050b7ab8ec2de04db2772",
       contractAddress: {
         "5777": "",
@@ -399,6 +412,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wUNDEAD-PIKEMAN",
+      displayName: 'Undead Pikeman',
       lpAddresses: "0xD6406A6b247436bbc07a5B021740746c0dc1081d",
       contractAddress: {
         "5777": "",
@@ -446,6 +460,7 @@ export function getTroops() {
       tier: 3,
       tierDesc: 'Arcane Library',
       name: "wWITCH",
+      displayName: 'Witch',
       lpAddresses: "0xc706987bfe6a81de045480772786c8d945d52b56",
       contractAddress: {
         "5777": "",
@@ -465,6 +480,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wHORSEMAN",
+      displayName: 'Horseman',
       lpAddresses: "0x205e51964a88ecfcfe0ee3516d0b4a952d1b2425",
       contractAddress: {
         "5777": "",
@@ -484,6 +500,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wWARG",
+      displayName: 'Warg',
       lpAddresses: "0xae387d80862bdbf818adf80885e1039db1739a34",
       contractAddress: {
         "5777": "",
@@ -503,6 +520,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wDEATH-KNIGHT",
+      displayName: 'Death Knight',
       lpAddresses: "0x65ede43524c68c5b7d14bc9d8792a46dda7f50ac",
       contractAddress: {
         "5777": "",
@@ -522,6 +540,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wPIKE-ELF",
+      displayName: 'Pike Elf',
       lpAddresses: "0x302eF0De472FA31aff1b52af943C425B6695d0F4",
       contractAddress: {
         "5777": "",
@@ -571,6 +590,7 @@ export function getTroops() {
       tier: 1,
       tierDesc: 'Barracks',
       name: "wELVEN-ARCHER",
+      displayName: 'Elven Archer',
       lpAddresses: "0x39F18435FfAc6d5bdE24551EfE166620DCc315B0",
       contractAddress: {
         "5777": "",
@@ -589,19 +609,20 @@ export function getTroops() {
       raceDesc: 'Elves',
       tier: 2,
       tierDesc: 'Armory',
-      name: "wARMORED-ELF",
+      name: "wARMOURED-ELF",
+      displayName: 'Armoured Elf',
       lpAddresses: "0xaf08fe199dd8abb88cb62526955956ee8784b3f7",
       contractAddress: {
         "5777": "",
         "56": "0xF35e1Bd15E49651ad76aB0A4B9ce93F6e9850f7F",
         "97": "0xeab81a541Dc97222894c16c8DA7DA301b464dd2E",
       },
-      image: "/images/troops/wARMORED-ELF.png",
+      image: "/images/troops/wARMOURED-ELF.png",
       strength: 25,
       defense: 25,
     },
     {
-      id: 20,
+      id: 21,
       team: 1,
       teamDesc: 'The Corporation',
       race: 4,
@@ -609,6 +630,7 @@ export function getTroops() {
       tier: 2,
       tierDesc: 'Armory',
       name: "wBLADEMASTER",
+      displayName: 'Blademaster',
       lpAddresses: "0x15548700a20ab8437a916b9e2c5f550c0fa645fd",
       contractAddress: {
         "5777": "",
@@ -649,7 +671,7 @@ export function getTroops() {
       }
     },
     {
-      id: 21,
+      id: 22,
       team: 1,
       teamDesc: 'The Corporation',
       race: 4,
@@ -657,6 +679,7 @@ export function getTroops() {
       tier: 3,
       tierDesc: 'Arcane Library',
       name: "wFERAL-SPIRIT",
+      displayName: 'Feral Spirit',
       lpAddresses: "0x9bE00135880c4db3D3759d370758bDc87443af36",
       contractAddress: {
         "5777": "",
@@ -668,7 +691,7 @@ export function getTroops() {
       defense: 20,
     },
     {
-      id: 22,
+      id: 23,
       team: 1,
       teamDesc: 'The Corporation',
       race: 4,
@@ -676,6 +699,7 @@ export function getTroops() {
       tier: 4,
       tierDesc: 'Stables',
       name: "wELK-RIDER",
+      displayName: 'Elk Rider',
       lpAddresses: "0xd6a89d10659895487e24d4a5f46baefdff4a7ea2",
       contractAddress: {
         "5777": "",
@@ -687,4 +711,8 @@ export function getTroops() {
       defense: 90,
     },
   ];
+}
+
+export function getTroopByName(troopName) {
+  return getTroops().find(t => t.name === troopName);
 }

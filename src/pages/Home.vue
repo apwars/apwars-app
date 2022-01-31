@@ -25,7 +25,7 @@
               </wButton>
             </div>
           </v-col> -->
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="4" class="mt-3">
             <v-img class="mx-auto" max-width="300" src="/images/wLANDS.png" />
             <div class="d-flex justify-center mt-1">
               <wButton
@@ -42,40 +42,29 @@
             <v-img class="mx-auto" max-width="300" src="/images/cards.png" />
             <div class="d-flex justify-center mt-1">
               <wButton @click="$router.push('/arcadia-expansion')" class="mt-1">
-                <span class="text-none text-center"
-                  >Buy Arcadia Foundations</span
-                >
+                <span class="text-none text-center">
+                  Buy Arcadia Foundations</span>
               </wButton>
             </div>
           </v-col>
           <v-col cols="12" md="4">
-            <game-text header="h3" class="text-center">
-              Last war winner
-            </game-text>
             <v-img
-              class="mx-auto mt-3"
-              max-width="400"
-              :src="`/images/battle/${imgWinnerLastWar}`"
+              class="mx-auto my-4"
+              max-width="170"
+              src="/images/bridge.png"
             />
             <div class="d-flex justify-center">
-              <wButton
-                v-if="nextWar && lastWar && nextWar.id !== lastWar.id"
-                @click="
-                  $router.push(
-                    `/wars/${lastWar.contractAddress[networkInfo.id]}/report`
-                  )
-                "
-              >
-                War Report
+              <wButton @click="$router.push('/bridge')">
+                <span class="text-none">Go to Bridge</span>
               </wButton>
             </div>
           </v-col>
         </v-row>
       </v-container>
 
-      <v-container fluid>
+      <v-container>
         <v-row dense>
-          <v-col cols="12" md="7">
+          <!-- <v-col cols="12" md="7">
             <game-text header="h3">
               New Technologies - Coming soon
             </game-text>
@@ -93,7 +82,7 @@
                 </div>
               </v-slide-item>
             </v-slide-group>
-          </v-col>
+          </v-col> -->
           <tasks />
         </v-row>
       </v-container>
