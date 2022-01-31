@@ -57,7 +57,7 @@
             alt="trophy"
           />
           <div class="page-subtitle">
-            Winners of the Week - {{ getNumberWeek }} <br />
+            Winners of the Week - #{{ getNumberWeek }} <br />
             {{ getLabelWeek }}
           </div>
         </v-col>
@@ -99,7 +99,7 @@
                   alt="trophy-gold"
                 />
                 <div :class="`${index === 1 ? 'text-h2' : 'text-h4'}`">
-                  {{ player.score }}
+                  {{ player.score }} pts
                 </div>
               </div>
               <v-address
@@ -181,7 +181,7 @@
                   alt="trophy-gold"
                 />
                 <div :class="`${index === 0 ? 'text-h4' : 'text-h5'}`">
-                  {{ player.score }}
+                  {{ player.score }} pts
                 </div>
               </div>
               <v-address
@@ -329,7 +329,7 @@
 
                 <div class="d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Score</div>
-                  <div>{{ player.score }}</div>
+                  <div>{{ player.score }} pts</div>
                 </div>
               </div>
             </div>
@@ -369,7 +369,7 @@
               src="/images/icons/parchment2.png"
               alt="trophy"
             />
-            <div class="page-subtitle">Weekly - {{ getNumberWeek }}</div>
+            <div class="page-subtitle">Weekly - #{{ getNumberWeek }}</div>
             <img
               class="ml-1"
               height="35px"
@@ -454,7 +454,7 @@
 
                 <div class="d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Score</div>
-                  <div>{{ player.score }}</div>
+                  <div>{{ player.score }} pts</div>
                 </div>
               </div>
             </div>
