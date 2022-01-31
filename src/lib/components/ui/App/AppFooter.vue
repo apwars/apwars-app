@@ -183,28 +183,6 @@ export default {
             },
           ],
         },
-        // {
-        //   title: "Army",
-        //   image: "/images/icons/army.png",
-        //   href: "",
-        //   submenu: [
-        //     {
-        //       title: "Available Units",
-        //       href: "/war-stats",
-        //       image: "/images/icons/army.png",
-        //     },
-        //     {
-        //       title: "Training Center",
-        //       href: "/training-center",
-        //       image: "/images/icons/battle-shield.png",
-        //     },
-        //     {
-        //       title: "Worker",
-        //       href: "/worker",
-        //       image: "/Map/farm-worker/map/assets/worker.png",
-        //     },
-        //   ],
-        // },
         {
           title: "Wars",
           image: "/images/icons/wars.png",
@@ -214,6 +192,11 @@ export default {
               title: "The Monstrous Journey - Coming soon",
               image: "/images/icons/tmj.png",
               href: "",
+            },
+            {
+              title: "Packs",
+              href: "/packs",
+              image: "/images/icons/army.png",
             },
             {
               title: "War against FED",
