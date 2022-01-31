@@ -526,19 +526,19 @@ export default {
         {
           account: "0x2",
           score: 0,
-          prizeAmount: 1800,
+          prizeAmount: 3000,
           prize: "wGOLD",
         },
         {
           account: "0x1",
           score: 0,
-          prizeAmount: 3200,
+          prizeAmount: 5000,
           prize: "wGOLD",
         },
         {
           account: "0x3",
           score: 0,
-          prizeAmount: 1500,
+          prizeAmount: 1000,
           prize: "wGOLD",
         },
       ],
