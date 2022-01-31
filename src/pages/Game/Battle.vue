@@ -71,7 +71,7 @@ export default {
   beforeDestroy() {
     // document.getElementsByTagName("footer")[0].style.display = 'block';
     // document.getElementsByClassName("btn-chat")[0].style.display = 'block';
-    // document.getElementsByTagName("html")[0].style.overflow = "auto";
+    document.getElementsByTagName("html")[0].style.overflow = "auto";
   },
 
   methods: {
