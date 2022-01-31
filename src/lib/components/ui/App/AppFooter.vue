@@ -189,9 +189,9 @@ export default {
           href: "",
           submenu: [
             {
-              title: "The Monstrous Journey - Coming soon",
+              title: "The Monstrous Journey",
               image: "/images/icons/tmj.png",
-              href: "",
+              href: "/the-monstrous-journey",
             },
             {
               title: "Packs",
