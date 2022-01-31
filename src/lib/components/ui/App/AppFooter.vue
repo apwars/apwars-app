@@ -190,7 +190,7 @@ export default {
           submenu: [
             {
               title: "The Monstrous Journey",
-              image: "/images/icons/tmj.png",
+              image: "/images/icons/tmj.png?v=1",
               href: "/the-monstrous-journey",
             },
             {
@@ -224,7 +224,7 @@ export default {
 
         {
           title: "Leaderboard - Coming soon",
-          image: "/images/icons/leaderboard.png",
+          image: "/images/icons/leaderboard.png?v=1",
           href: "",
         },
       ],
