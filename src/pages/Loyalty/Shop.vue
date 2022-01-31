@@ -19,7 +19,7 @@
         <v-row no-gutters>
           <v-col>
               <div class="wallet-info mt-3">
-            <div class="default-text bold mr-2">You have:</div> <img src="/images/loyalty.png" alt="WarPoints" /> <div class="default-text bold ml-1">750.000 WarPoints</div>
+            <div class="default-text bold mr-2">You have:</div> <img src="/images/wscars.png" alt="WarPoints" /> <div class="default-text bold ml-1">750.000 WarPoints</div>
             </div>
             <div class="default-text">{{ truncate(account) }}</div>
           </v-col></v-row
@@ -31,10 +31,6 @@
     </v-row>
     <v-row>
       <v-col col="12">
-        <template v-if="isLoading">
-          <v-skeleton-loader type="image" height="280px" />
-          <v-skeleton-loader class="mt-2" type="image" height="280px" />
-        </template>
         <div class="section-title">
           <div class="text">Rewards Game Items</div>
           <div class="underline"></div>
@@ -43,13 +39,20 @@
     </v-row>
     <v-row>
       <v-col col="12">
+          <template v-if="isLoading">
+          <v-skeleton-loader type="image" height="200px" />
+          <v-skeleton-loader class="mt-2" type="image" height="200px" />
+        </template>
+        <div class="default-text" v-if="!items.length">We ran out of stock because everything was sold out, check back later.</div>
         <ShopCard
-          v-for="(item, index) in items"
-          :key="index"
-          :gameItem="item.id"
-          :priceAmount="item.priceAmount"
+          v-for="item in items"
+          :key="item.id"
+          :packageName="item.package"
+          :gameItem="item.content[0].symbol"
+          :priceValue="item.price.amount"
+          :token="item.price.symbol"
           :remainingAmount="item.remainingAmount"
-          :totalAmount="20"
+          :totalAmount="item.content[0].amount"
           :handleBuy="handleBuy"
         />
       </v-col>
@@ -58,6 +61,8 @@
 </template>
 <script>
 import { mapMutations } from "vuex";
+
+import PacksController from "@/controller/PacksController";
 
 import walletTruncate from "@/helpers/walletTruncate";
 
@@ -82,62 +87,7 @@ export default {
     return {
       isLoadingBuy: null,
       isLoading: false,
-      items: [
-        {
-          id: "GameItem39",
-          remainingAmount: 20,
-          totalAmount: 100,
-          priceValue: 200000,
-        },
-        {
-          id: "GameItem33",
-          remainingAmount: 20,
-          totalAmount: 100,
-          priceValue: 5656,
-        },
-        {
-          id: "GameItem22",
-          remainingAmount: 0,
-          totalAmount: 100,
-          priceValue: 35430,
-        },
-        {
-          id: "GameItem39",
-          remainingAmount: 20,
-          totalAmount: 100,
-          priceValue: 200000,
-        },
-        {
-          id: "GameItem33",
-          remainingAmount: 20,
-          totalAmount: 100,
-          priceValue: 5656,
-        },
-        {
-          id: "GameItem22",
-          remainingAmount: 0,
-          totalAmount: 100,
-          priceValue: 35430,
-        },
-        {
-          id: "GameItem39",
-          remainingAmount: 20,
-          totalAmount: 100,
-          priceValue: 200000,
-        },
-        {
-          id: "GameItem33",
-          remainingAmount: 20,
-          totalAmount: 100,
-          priceValue: 5656,
-        },
-        {
-          id: "GameItem22",
-          remainingAmount: 0,
-          totalAmount: 100,
-          priceValue: 35430,
-        },
-      ],
+      items: [],
     };
   },
   methods: {
@@ -147,22 +97,67 @@ export default {
     backToHome() {
       this.$router.push("/");
     },
-    handleBuy(gameItem) {
-      console.log(gameItem);
+    handleBuy(packageName) {
+      this.buyPack(packageName)
     },
     truncate(text) {
       return walletTruncate(text);
     },
+    async fetchItems() {
+      if (!this.isConnected) {
+        return
+      }
+      try {
+        this.isLoading = true;
+        const controller = new PacksController();
+        const packageType = 'LOYALT_SHOP'
+        let items = await controller.getByType(packageType);
+        this.items = items;
+      } catch (error) {
+        console.error(
+          "There was an error trying to get available items, try again later.",
+          error
+        );
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async buyPack(packageName) {
+      try {
+        this.isLoadingBuy = packageName;
+        const controller = new PacksController();
+        await controller.buyPack(this.account, packageName);
+        this.fetchItems();
+        ToastSnackbar.success("The pack was purchased successfully!");
+      } catch (error) {
+        const mappedErrors = {
+          INVALID_AMOUNT: `We don't have any more from this pack to sell.`,
+          INVALID_BALANCE: `You don't have balance to buy this pack.`,
+        };
+        ToastSnackbar.error(mappedErrors[error.code] || error.message);
+        console.error(
+          "Something went wrong while trying to buy this pack",
+          error
+        );
+      } finally {
+        this.isLoadingBuy = null;
+      }
+    },
   },
   created() {
     this.setHeader(false);
+    if (this.isConnected) {
+      this.fetchItems();
+    }
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
     next();
   },
   watch: {
-    isConnected() {},
+    account() {
+      this.fetchItems();
+    },
   },
 };
 </script>

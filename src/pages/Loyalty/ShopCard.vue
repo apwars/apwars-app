@@ -3,16 +3,16 @@
     <div class="item-viewport"><img :src="item.image" :alt="item.title" /></div>
     <div class="item-title">{{ item.title }}</div>
     <div class="item-price">
-      <img src="/images/loyalty.png" />
+      <img class="mr-1" :src="`/images/${token.toLowerCase()}.png`" :alt="token" />
       <div class="price">
-        300,000
-        <div class="token">WarPoints</div>
+        <Amount :amount="priceValue" formatted />
+        <div class="token">{{ token }}</div>
       </div>
     </div>
     <Button
       type="wsecondary"
       :text="!remainingAmount ? 'Sold Out' : 'Buy'"
-      :handleClick="() => handleBuy(gameItem)"
+      :handleClick="() => handleBuy(packageName)"
       :disabled="isLoadingBuy || !remainingAmount"
       isBlock
     />
@@ -27,17 +27,26 @@
 <script>
 import { getCollectibleById } from "@/data/Collectibles";
 
-
 import Button from "@/lib/components/ui/Buttons/Button";
+import Amount from "@/lib/components/ui/Utils/Amount";
+
 export default {
-  components: { Button },
+  components: { Button, Amount },
   props: {
     gameItem: {
       type: [String, Number],
     },
+    packageName: {
+      type: String,
+      default: "",
+    },
     priceValue: {
       type: Number,
       default: 0,
+    },
+    token: {
+      type: String,
+      default: "",
     },
     totalAmount: {
       type: Number,
