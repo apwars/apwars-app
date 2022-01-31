@@ -19,11 +19,26 @@ export default class LeaderboardController {
     }
   }
 
-  getWeek(game, limit, skip) {
+  getDaily(game, limit, skip) {
     try {
       const endDateWeek = moment(new Date().getTime());
-      const dayWeek = endDateWeek.format("d");
-      const startDateWeek = moment(endDateWeek).subtract(dayWeek, "days");
+      const startDateWeek = moment(endDateWeek).hours(0).minutes(0).seconds(0).milliseconds(0);
+      limit = limit || 10;
+      skip = skip || 0;
+
+      return this.getLeaderboard(game, {
+        startDate: startDateWeek.valueOf(),
+        endDate: endDateWeek.valueOf(),
+      }, limit, skip);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  getWeek(game, limit, skip) {
+    try {
+      const startDateWeek = moment().startOf("isoWeek");
+      const endDateWeek = moment().endOf("isoWeek");
       limit = limit || 10;
       skip = skip || 0;
 
