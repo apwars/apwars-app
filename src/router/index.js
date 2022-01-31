@@ -21,6 +21,7 @@ import Arcadia from "@/pages/Arcadia/Arcadia.vue";
 import StarterPacks from "@/pages/StarterPacks.vue";
 import Leaderboard from "@/pages/Leaderboard.vue";
 import Bridge from "@/pages/Bridge.vue";
+import Battle from "@/pages/Game/Battle.vue";
 
 Vue.use(Router);
 
@@ -114,6 +115,11 @@ export const routes = [
         path: "/arcadia",
         name: "/arcadia",
         component: Arcadia
+      },
+      {
+        path: "/the-monstrous-journey",
+        name: "/the-monstrous-journey",
+        component: Battle
       },
       {
         path: "/packs",
