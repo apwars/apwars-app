@@ -240,9 +240,9 @@ export default {
         },
 
         {
-          title: "Leaderboard - Coming soon",
+          title: "Leaderboard",
           image: "/images/icons/leaderboard.png",
-          href: "",
+          href: "/leaderboard",
         },
       ],
       balance: 0,
