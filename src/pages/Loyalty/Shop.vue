@@ -18,15 +18,17 @@
         ></v-row>
         <v-row no-gutters>
           <v-col>
-              <div class="wallet-info mt-3">
-            <div class="default-text bold mr-2">You have:</div> <img src="/images/wscars.png" alt="WarPoints" /> <div class="default-text bold ml-1">750.000 WarPoints</div>
+            <div class="wallet-info mt-3">
+              <div class="default-text bold mr-2">You have:</div>
+              <img src="/images/wscars.png" alt="WarPoints" />
+              <div class="default-text bold ml-1"><Amount :amount="balance" formatted /> WarPoints</div>
             </div>
             <div class="default-text">{{ truncate(account) }}</div>
           </v-col></v-row
         >
       </v-col>
       <v-col class="d-flex justify-end">
-        <img src="/images/icons/tent.png" alt="Loyalty Shop"/>
+        <img class="d-none d-sm-block" src="/images/icons/tent.png" alt="Loyalty Shop" />
       </v-col>
     </v-row>
     <v-row>
@@ -39,11 +41,13 @@
     </v-row>
     <v-row>
       <v-col col="12">
-          <template v-if="isLoading">
+        <template v-if="isLoading">
           <v-skeleton-loader type="image" height="200px" />
           <v-skeleton-loader class="mt-2" type="image" height="200px" />
         </template>
-        <div class="default-text" v-if="!items.length">We ran out of stock because everything was sold out, check back later.</div>
+        <div class="default-text" v-if="!items.length">
+          We ran out of stock because everything was sold out, check back later.
+        </div>
         <ShopCard
           v-for="item in items"
           :key="item.id"
@@ -62,6 +66,7 @@
 <script>
 import { mapMutations } from "vuex";
 
+import WalletController from "@/controller/WalletController";
 import PacksController from "@/controller/PacksController";
 
 import walletTruncate from "@/helpers/walletTruncate";
@@ -70,11 +75,12 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
+import Amount from "@/lib/components/ui/Utils/Amount";
 
 import ShopCard from "./ShopCard";
 
 export default {
-  components: { Title, Button, ShopCard },
+  components: { Title, Button, ShopCard, Amount },
   computed: {
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -88,6 +94,8 @@ export default {
       isLoadingBuy: null,
       isLoading: false,
       items: [],
+      isLoadingBalance: false,
+      balance: 0,
     };
   },
   methods: {
@@ -98,19 +106,19 @@ export default {
       this.$router.push("/");
     },
     handleBuy(packageName) {
-      this.buyPack(packageName)
+      this.buyPack(packageName);
     },
     truncate(text) {
       return walletTruncate(text);
     },
     async fetchItems() {
       if (!this.isConnected) {
-        return
+        return;
       }
       try {
         this.isLoading = true;
         const controller = new PacksController();
-        const packageType = 'LOYALT_SHOP'
+        const packageType = "LOYALT_SHOP";
         let items = await controller.getByType(packageType);
         this.items = items;
       } catch (error) {
@@ -127,6 +135,7 @@ export default {
         this.isLoadingBuy = packageName;
         const controller = new PacksController();
         await controller.buyPack(this.account, packageName);
+        await this.fetchBalance();
         this.fetchItems();
         ToastSnackbar.success("The pack was purchased successfully!");
       } catch (error) {
@@ -143,11 +152,22 @@ export default {
         this.isLoadingBuy = null;
       }
     },
+    async fetchBalance() {
+      try {
+        const controller = new WalletController();
+        const balance = await controller.wallets(this.account);
+        this.balance = balance.balances.wSCARS || 0;
+      } catch (error) {
+        console.error("Something went wrong while trying to get your balance.");
+      }
+    },
   },
+
   created() {
     this.setHeader(false);
     if (this.isConnected) {
       this.fetchItems();
+      this.fetchBalance();
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -157,6 +177,7 @@ export default {
   watch: {
     account() {
       this.fetchItems();
+      this.fetchBalance();
     },
   },
 };
@@ -178,8 +199,8 @@ export default {
   }
 }
 .wallet-info {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .default-text {
