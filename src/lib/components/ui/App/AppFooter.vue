@@ -189,9 +189,9 @@ export default {
           href: "",
           submenu: [
             {
-              title: "The Monstrous Journey - Coming soon",
-              image: "/images/icons/tmj.png",
-              href: "",
+              title: "The Monstrous Journey",
+              image: "/images/icons/tmj.png?v=1",
+              href: "/the-monstrous-journey",
             },
             {
               title: "Packs",
@@ -224,7 +224,7 @@ export default {
 
         {
           title: "Leaderboard - Coming soon",
-          image: "/images/icons/leaderboard.png",
+          image: "/images/icons/leaderboard.png?v=1",
           href: "",
         },
       ],

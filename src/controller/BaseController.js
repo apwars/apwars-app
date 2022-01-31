@@ -11,6 +11,11 @@ export default class BaseController {
       if (response.status !== 200 && response.status !== 201) {
         throw await response.json();
       }
+      if(response.headers.get('X-Total-Count')) {
+        const data = await response.json();
+        data.total = response.headers.get('X-Total-Count');
+        return data;
+      }
       return await response.json();
     } catch (error) {
       throw error;
