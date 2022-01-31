@@ -223,9 +223,9 @@ export default {
         },
 
         {
-          title: "Leaderboard - Coming soon",
-          image: "/images/icons/leaderboard.png?v=1",
-          href: "",
+          title: "Leaderboard",
+          image: "/images/icons/leaderboard.png?v=2",
+          href: "/leaderboard",
         },
       ],
       balance: 0,
