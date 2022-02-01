@@ -12,31 +12,16 @@
       </v-col>
     </v-row>
     <v-row no-gutters>
-      <v-col>
-        <v-row no-gutters>
-          <v-col> <Title class="mt-1" text="Loyalty Shop" /> </v-col
-        ></v-row>
-        <v-row no-gutters>
-          <v-col>
-            <div class="wallet-info mt-3">
-              <div class="default-text bold mr-2">You have:</div>
-              <img src="/images/wscars.png" alt="WarPoints" />
-              <div class="default-text bold ml-1"><Amount :amount="balance" formatted /> WarPoints</div>
-            </div>
-            <div class="default-text">{{ truncate(account) }}</div>
-          </v-col></v-row
-        >
-      </v-col>
-      <v-col class="d-flex justify-end">
-        <img class="d-none d-sm-block" src="/images/icons/tent.png" alt="Loyalty Shop" />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col col="12">
-        <div class="section-title">
-          <div class="text">Rewards Game Items</div>
-          <div class="underline"></div>
+      <v-col cols="12" sm="6"> <Title class="mt-1" text="Loyalty Shop" /> </v-col>
+      <v-col cols="12" sm="6" class="d-flex flex-column align-end">
+        <div class="wallet-info">
+          <div class="default-text bold mr-2">You have:</div>
+          <img src="/images/wscars.png" alt="WarScars" />
+          <div class="default-text bold ml-1">
+            <Amount :amount="balance" formatted /> WarScars
+          </div>
         </div>
+        <div class="default-text">{{ truncate(account) }}</div>
       </v-col>
     </v-row>
     <v-row>
@@ -52,11 +37,12 @@
           v-for="item in items"
           :key="item.id"
           :packageName="item.package"
+          :amount="item.content[0].amount"
           :gameItem="item.content[0].symbol"
           :priceValue="item.price.amount"
           :token="item.price.symbol"
           :remainingAmount="item.remainingAmount"
-          :totalAmount="item.content[0].amount"
+          :totalAmount="item.amount"
           :handleBuy="handleBuy"
         />
       </v-col>

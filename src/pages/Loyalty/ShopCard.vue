@@ -1,7 +1,7 @@
 <template>
   <div class="shop-item-container">
-    <div class="item-viewport"><img :src="item.image" :alt="item.title" /></div>
-    <div class="item-title">{{ item.title }}</div>
+    <div class="item-viewport" v-if="item"><img :src="item.image" :alt="item.title" /></div>
+    <div class="item-title" v-if="item">{{ amount }} {{ item.title }}</div>
     <div class="item-price">
       <img class="mr-1" :src="`/images/${token.toLowerCase()}.png`" :alt="token" />
       <div class="price">
@@ -44,6 +44,10 @@ export default {
       type: Number,
       default: 0,
     },
+    amount: {
+      type: Number,
+      default: 0,
+    },
     token: {
       type: String,
       default: "",
@@ -74,7 +78,8 @@ export default {
     if (this.gameItem.includes("GameItem")) {
       id = this.gameItem.replace(/\D/g, "");
     }
-    this.item = getCollectibleById(Number(id));
+    const i = getCollectibleById(Number(id));
+    this.item = i;
   },
 };
 </script>
