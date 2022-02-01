@@ -26,7 +26,13 @@
               />
               <div class="ml-2">
                 <h2 class="text-h2">
+                  <div v-if="isLoading">
+                    <template>
+                      <v-skeleton-loader type="image" height="50px" />
+                    </template>
+                  </div>
                   <amount
+                    v-else
                     :amount="balancewSCARS"
                     decimals="2"
                     formatted
@@ -40,7 +46,7 @@
         </v-col>
       </v-row>
 
-      <v-row>
+      <v-row v-if="!isLoading">
         <v-col>
           <div class="d-flex justify-center">
             <Button
@@ -53,9 +59,21 @@
         </v-col>
       </v-row>
 
-      <v-row v-if="!isLoading">
+      <v-row v-if="isLoading" class="my-6">
         <v-col v-for="lp in lpTokens" :key="lp.symbol" col="12" md="4">
-          <LPCard :lp="lp" :handleProvideLiquidity="provideLiquidity" />
+          <template>
+            <v-skeleton-loader type="image" height="600px" />
+          </template>
+        </v-col>
+      </v-row>
+
+      <v-row v-else>
+        <v-col v-for="lp in lpTokens" :key="lp.symbol" col="12" md="4">
+          <LPCard
+            :hasSoldier="hasSoldier"
+            :lp="lp"
+            :handleProvideLiquidity="provideLiquidity"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -70,6 +88,7 @@ import CakeLP from "@/lib/eth/CakeLP";
 
 import LPController from "@/controller/LPController";
 import WalletController from "@/controller/WalletController";
+import NFTsController from "@/controller/NFTsController";
 import Amount from "../lib/components/ui/Utils/Amount.vue";
 
 export default {
@@ -89,6 +108,7 @@ export default {
     return {
       isLoading: true,
       balancewSCARS: 0,
+      hasSoldier: false,
       lpTokens: [
         {
           symbol: "wGOLD/BUSD",
@@ -158,13 +178,23 @@ export default {
 
       return wallet.balances["wSCARS"];
     },
+    getHasSoldier() {
+      const controller = new NFTsController();
+      return controller.hasSoldier(this.account);
+    },
     provideLiquidity(lp) {
+      if (!this.hasSoldier) {
+        return;
+      }
+
       this.$router.push(`/add-liquidity/${lp.baseToken}/${lp.sideToken}`);
     },
     async loadData() {
       if (!this.isConnected) {
         return;
       }
+      this.hasSoldier = await this.getHasSoldier();
+      this.hasSoldier = this.hasSoldier.hasSoldier;
       const infoLP = await this.getInfoLp();
       this.balancewSCARS = await this.getBalancewSCARS(this.account);
       for (const lpToken of this.lpTokens) {

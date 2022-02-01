@@ -65,7 +65,9 @@
               width="32px"
               alt="pancakeswap"
             />
-            Provide Liquidity
+            {{
+              hasSoldier ? "Provide Liquidity" : "You don’t have the soldier"
+            }}
           </Button>
         </div>
 
@@ -95,7 +97,7 @@
         approximate
         symbol="wSCARS"
         decimals="2"
-      /> 
+      />
     </div>
   </div>
 </template>
@@ -110,6 +112,10 @@ export default {
     lp: {
       type: Object,
       default: null,
+    },
+    hasSoldier: {
+      type: Boolean,
+      default: false,
     },
     handleProvideLiquidity: {
       type: Function,
