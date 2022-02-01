@@ -31,7 +31,7 @@
           <v-skeleton-loader class="mt-2" type="image" height="200px" />
         </template>
         <div class="default-text" v-if="!items.length">
-          We ran out of stock because everything was sold out, check back later.
+          We ran out of stock because everything was sold out. How about checking again later?
         </div>
         <ShopCard
           v-for="item in items"
