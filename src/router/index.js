@@ -22,6 +22,7 @@ import StarterPacks from "@/pages/StarterPacks.vue";
 import Leaderboard from "@/pages/Leaderboard.vue";
 import Bridge from "@/pages/Bridge.vue";
 import Battle from "@/pages/Game/Battle.vue";
+import LoyaltyShop from "@/pages/Loyalty/Shop.vue";
 
 Vue.use(Router);
 
@@ -135,6 +136,11 @@ export const routes = [
         path: "/bridge",
         name: "/bridge",
         component: Bridge
+      },
+      {
+        path: "/loyalty-program/shop",
+        name: "loyalty-shop",
+        component: LoyaltyShop
       },
       {
         path: "/farms",
