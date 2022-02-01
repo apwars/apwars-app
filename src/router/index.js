@@ -138,7 +138,7 @@ export const routes = [
         component: Bridge
       },
       {
-        path: "/loyalty/shop",
+        path: "/loyalty-program/shop",
         name: "loyalty-shop",
         component: LoyaltyShop
       },

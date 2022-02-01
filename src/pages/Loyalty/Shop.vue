@@ -3,11 +3,11 @@
     <v-row no-gutters>
       <v-col>
         <Button
-          text="Go back to Home"
+          text="Go back to Loyalty Program"
           icon="arrow-back"
           type="wtertiary"
           no-padding
-          :handleClick="backToHome"
+          :handleClick="backToLoyalty"
         />
       </v-col>
     </v-row>
@@ -88,8 +88,8 @@ export default {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
     }),
-    backToHome() {
-      this.$router.push("/");
+    backToLoyalty() {
+      this.$router.push("/loyalty-program");
     },
     handleBuy(packageName) {
       this.buyPack(packageName);
