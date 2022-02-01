@@ -85,6 +85,7 @@ import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
 import LPCard from "@/lib/components/ui/LPCard";
 import CakeLP from "@/lib/eth/CakeLP";
+import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import LPController from "@/controller/LPController";
 import WalletController from "@/controller/WalletController";
@@ -190,25 +191,28 @@ export default {
       this.$router.push(`/add-liquidity/${lp.baseToken}/${lp.sideToken}`);
     },
     async loadData() {
-      if (!this.isConnected) {
-        return;
+      try {
+        if (!this.isConnected) {
+          return;
+        }
+        this.hasSoldier = await this.getHasSoldier();
+        this.hasSoldier = this.hasSoldier.hasSoldier;
+        const infoLP = await this.getInfoLp();
+        this.balancewSCARS = await this.getBalancewSCARS(this.account);
+        for (const lpToken of this.lpTokens) {
+          const balanceLP = await this.getBalanceLP(
+            lpToken.token[this.networkInfo.id]
+          );
+          lpToken.balanceLP = balanceLP;
+          lpToken.totalDistributionPerHour =
+            infoLP[lpToken.base].distributionPerHour;
+          lpToken.accountDistributionPerHour =
+            infoLP[lpToken.base].distributionPerHour * balanceLP.percentage;
+        }
+        this.isLoading = false;
+      } catch (error) {
+        ToastSnackbar.error(error.message);
       }
-      this.hasSoldier = await this.getHasSoldier();
-      this.hasSoldier = this.hasSoldier.hasSoldier;
-      const infoLP = await this.getInfoLp();
-      this.balancewSCARS = await this.getBalancewSCARS(this.account);
-      for (const lpToken of this.lpTokens) {
-        const balanceLP = await this.getBalanceLP(
-          lpToken.token[this.networkInfo.id]
-        );
-        lpToken.balanceLP = balanceLP;
-        lpToken.totalDistributionPerHour =
-          infoLP[lpToken.base].distributionPerHour;
-        lpToken.accountDistributionPerHour =
-          infoLP[lpToken.base].distributionPerHour * balanceLP.percentage;
-      }
-
-      this.isLoading = false;
     },
   },
 
