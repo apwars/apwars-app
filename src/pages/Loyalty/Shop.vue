@@ -118,7 +118,7 @@ export default {
       try {
         this.isLoading = true;
         const controller = new PacksController();
-        const packageType = "LOYALT_SHOP";
+        const packageType = "LOYALTY_SHOP";
         let items = await controller.getByType(packageType);
         this.items = items;
       } catch (error) {
