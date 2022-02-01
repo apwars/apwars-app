@@ -13,5 +13,5 @@
     VUE_APP_API_ARCADIA_97="https://api-qa.apwars.farm/v1"
     VUE_APP_API_ARCADIA_56="https://apiv2.apwars.farm/v1"
 
-[context."Feature/loyalt-program-v2"]
+[context."Feature/loyalt-program-v2".environment]
     VUE_APP_API_ARCADIA_56="https://api-qa.apwars.farm/v1"
