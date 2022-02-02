@@ -20,7 +20,7 @@
           <div class="d-flex flex-column">
             <div class="d-flex align-center justify-end">
               <Button
-                :handleClick="() => $router('/loyalty-program/shop')"
+                :handleClick="() => $router.push('/loyalty-program/shop')"
                 type="wsecondary"
                 class="mr-2"
               >
