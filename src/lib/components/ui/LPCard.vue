@@ -36,7 +36,7 @@
               <img
                 src="/images/icons/coins/wSCARS.png"
                 width="36px"
-                alt="wSCARS"
+                alt="War SCARS"
               />
             </div>
             <div class="d-flex flex-column align-end">
@@ -46,10 +46,10 @@
                   formatted
                   tooltip
                   approximate
-                  decimals="2"
+                  decimals="0"
                 />
               </h5>
-              <div class="text-caption mt-n1">wSCARS</div>
+              <div class="text-caption mt-n1">War SCARS</div>
             </div>
           </div>
         </div>
@@ -82,21 +82,21 @@
         </div>
       </div>
     </div>
-    <div class="d-flex justify-center align-center mt-3">
+    <div class="d-flex justify-center font-weight-bold text-caption align-center mt-3">
       Total rewards per hour:
       <img
         class="mx-1"
         src="/images/icons/coins/wSCARS.png"
         width="25px"
-        alt="wSCARS"
+        alt="War SCARS"
       />
       <amount
         :amount="lp.totalDistributionPerHour"
         formatted
         tooltip
         approximate
-        symbol="wSCARS"
-        decimals="2"
+        symbol="War SCARS"
+        decimals="0"
       />
     </div>
   </div>

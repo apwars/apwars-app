@@ -29,7 +29,7 @@
               <img
                 src="/images/icons/coins/wSCARS.png"
                 width="95px"
-                alt="wSCARS"
+                alt="War SCARS"
               />
               <div class="ml-2">
                 <h2 class="text-h2">
@@ -41,30 +41,17 @@
                   <amount
                     v-else
                     :amount="balancewSCARS"
-                    decimals="2"
+                    decimals="0"
                     formatted
                     tooltip
                   />
                 </h2>
-                <div class="mt-1">Your wSCARS</div>
+                <div class="mt-1">Your War SCARS</div>
               </div>
             </div>
           </div>
         </v-col>
       </v-row>
-
-      <!-- <v-row v-if="!isLoading">
-        <v-col>
-          <div class="d-flex justify-center">
-            <Button
-              :handleClick="() => $router('/loyalty-program/shop')"
-              type="wsecondary"
-            >
-              Go to Loyalty Shop
-            </Button>
-          </div>
-        </v-col>
-      </v-row> -->
 
       <v-row v-if="isLoading" class="my-6">
         <v-col v-for="lp in lpTokens" :key="lp.symbol" col="12" md="4">
