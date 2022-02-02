@@ -15,6 +15,14 @@ export default class PacksController {
     }
   }
 
+  getByType(packageType) {
+    try {
+      return this.base._get(`/packs/type/${packageType}`);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   buyPack(account, packageName) {
     try {
       return this.base._postSignature(
