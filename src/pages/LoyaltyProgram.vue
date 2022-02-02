@@ -19,6 +19,13 @@
         <v-col>
           <div class="d-flex flex-column">
             <div class="d-flex align-center justify-end">
+              <Button
+                :handleClick="() => $router('/loyalty-program/shop')"
+                type="wsecondary"
+                class="mr-2"
+              >
+                Go to Loyalty Shop
+              </Button>
               <img
                 src="/images/icons/coins/wSCARS.png"
                 width="95px"
@@ -46,7 +53,7 @@
         </v-col>
       </v-row>
 
-      <v-row v-if="!isLoading">
+      <!-- <v-row v-if="!isLoading">
         <v-col>
           <div class="d-flex justify-center">
             <Button
@@ -57,7 +64,7 @@
             </Button>
           </div>
         </v-col>
-      </v-row>
+      </v-row> -->
 
       <v-row v-if="isLoading" class="my-6">
         <v-col v-for="lp in lpTokens" :key="lp.symbol" col="12" md="4">
