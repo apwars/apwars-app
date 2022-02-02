@@ -21,7 +21,9 @@
           sm="6"
           class="d-flex flex-column align-center align-sm-end"
         >
-          <div class="wallet-info">
+          <div class="wallet-info d-flex flex-column flex-sm-row align-center justify-center">
+            <Button class="mr-sm-2 mt-2 mt-sm-0" type="wsecondary" text="Back to Loyalty Program" :handleClick="backToLoyalty" />
+            <div class="d-flex mt-2 mt-sm-0">
             <img src="/images/wscars.png" width="95" alt="War SCARS" />
             <div class="info-data ml-2">
               <v-skeleton-loader
@@ -33,6 +35,7 @@
                 <Amount :amount="balance" formatted tooltip />
               </h2>
               <div class="mt-1">Your War SCARS</div>
+            </div>
             </div>
           </div>
         </v-col>
