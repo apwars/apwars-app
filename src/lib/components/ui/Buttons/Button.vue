@@ -10,8 +10,22 @@
     @click="handleClick"
     :disabled="disabled"
   >
-    <img :src="`/images/icons/${icon}.png`" :alt="icon" v-if="icon" class="mr-1" />
-    <slot><game-text v-if="type === 'wtertiary'">{{ text }}</game-text><span v-else>{{ text }}</span></slot>
+    <img
+      :src="`/images/icons/${icon}.png`"
+      :alt="icon"
+      v-if="icon"
+      class="mr-1"
+    />
+    <slot
+      ><v-progress-circular
+        class="ml-1"
+        indeterminate
+        size="16"
+        width="2"
+        v-if="isLoading"
+      /><game-text v-else-if="type === 'wtertiary'">{{ text }}</game-text
+      ><span v-else>{{ text }}</span></slot
+    >
   </button>
 </template>
 <script>
@@ -50,6 +64,10 @@ export default {
       type: String,
       default: "",
     },
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -66,6 +84,7 @@ export default {
   font-size: 16px;
   line-height: 21px;
   height: 40px;
+  white-space: nowrap;
   > img {
     width: 24px;
   }
@@ -86,27 +105,17 @@ export default {
     background-color: #e5e5e5;
     border: 1px solid #3a2720;
   }
-  
   &.is-block {
     width: 100%;
   }
   &.wprimary {
     background-color: #3a2720;
     border: 1px solid #ffeebc;
-      color: #fff;
+    color: #fff;
     &:hover:enabled {
       background-color: #e5e5e5;
       border: 1px solid #3a2720;
       color: #3a2720;
-    }
-    &:focus:enabled {
-      filter: grayscale(100%);
-      > .btn-text {
-        color: #fff;
-      }
-      &:hover:enabled {
-        background-color: #3a2720;
-      }
     }
   }
   &.wsecondary {
@@ -125,8 +134,18 @@ export default {
       border: none;
       background-color: transparent;
       cursor: pointer;
-        font-size: 17px;
-        transition: all 0.4s;
+      font-size: 17px;
+      transition: all 0.4s;
+    }
+  }
+  &.whot {
+    background-color: #ffd600;
+    border: 1px solid black;
+    color: black;
+    &:hover:enabled {
+      background-color: #e4c000;
+      border: 1px solid black;
+      color: black;
     }
   }
   &:disabled {

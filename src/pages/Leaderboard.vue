@@ -37,7 +37,7 @@
             </div>
             <div
               :class="`card-choose-game-button ${game.disabled && 'disabled'}`"
-              @click="game.actionButton('/game/the-monstrous-journey')"
+              @click="game.actionButton('/the-monstrous-journey')"
             >
               {{ game.nameButton }}
             </div>
@@ -51,13 +51,14 @@
           class="d-flex align-center justify-center my-1 my-sm-6"
         >
           <img
-            class="mr-1"
-            height="35px"
+            class="mr-2"
+            height="60px"
             src="/images/game/trophy.png"
             alt="trophy"
           />
           <div class="page-subtitle">
-            Winners of the Week (15/11/21 - 11/12/21)
+            Winners of the Week - #{{ getNumberWeek }} <br />
+            {{ getLabelWeek }}
           </div>
         </v-col>
       </v-row>
@@ -98,7 +99,7 @@
                   alt="trophy-gold"
                 />
                 <div :class="`${index === 1 ? 'text-h2' : 'text-h4'}`">
-                  {{ player.score }}
+                  {{ player.score }} pts
                 </div>
               </div>
               <v-address
@@ -136,7 +137,7 @@
 
       <v-row v-else class="mt-8 d-flex align-end" dense>
         <v-col
-          v-for="(player, index) in leaderboards.slice(0, 3)"
+          v-for="(player, index) in podium"
           v-bind:key="player.account"
           :cols="index === 0 ? 10 : 6"
           :offset="index === 0 ? 1 : 0"
@@ -180,7 +181,7 @@
                   alt="trophy-gold"
                 />
                 <div :class="`${index === 0 ? 'text-h4' : 'text-h5'}`">
-                  {{ player.score }}
+                  {{ player.score }} pts
                 </div>
               </div>
               <v-address
@@ -218,8 +219,8 @@
       <v-row>
         <v-col cols="12" md="8" offset-md="2" class="d-flex">
           <v-alert class="mx-auto d-inline-block" dense type="info" outlined>
-            Prizes are distributed weekly, points are counted from Sunday to
-            Saturday
+            Prizes are distributed weekly to the top 10. Points are counted from
+            Monday to Sunday according to the ISO week date.
           </v-alert>
         </v-col>
       </v-row>
@@ -248,20 +249,29 @@
               alt="trophy"
             />
             <div class="page-subtitle">
-              Weekly
+              Daily
             </div>
           </div>
 
           <div class="leaderboard">
+            <div v-if="listDailyLoading">
+              <h4 class="text-h4 text-center pt-9">Loading...</h4>
+            </div>
+            <div v-else-if="listDaily.total === '0'">
+              <h5 class="text-h5 text-center pt-9">
+                There is no data to display
+              </h5>
+            </div>
             <div
-              v-for="(player, index) in leaderboards"
+              v-else
+              v-for="(player, index) in listDaily"
               v-bind:key="player.account"
               class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
             >
               <div class="d-flex d-lg-box">
                 <v-avatar
                   class="list-leaderboard-avatar d-flex justify-center"
-                  :address="'0x0'"
+                  :address="player.account"
                   tooltip
                 />
                 <div class="d-flex d-md-none align-center justify-center">
@@ -280,7 +290,7 @@
 
                   <v-address
                     class="text-center mx-1"
-                    :address="'0x0'"
+                    :address="player.account"
                     link
                     tooltip
                   >
@@ -292,7 +302,7 @@
                 class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
               >
                 <img
-                  v-if="index < 3"
+                  v-if="index < 3 && pageDaily === 1"
                   width="50px"
                   class="d-none d-sm-none d-md-flex ml-1"
                   :src="
@@ -306,46 +316,44 @@
                   v-else
                   class="d-none d-sm-none d-md-flex leaderboard-ranking"
                 >
-                  #{{ index }}
+                  #{{ index + 1 + (pageDaily - 1) * limit }}
                 </div>
 
                 <v-address
                   class="d-none d-sm-none d-md-flex text-center mx-1"
-                  :address="'0x0'"
+                  :address="player.account"
                   link
                   tooltip
                 >
                 </v-address>
 
                 <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Average time</div>
-                  <div>1’22’’22</div>
-                </div>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Points</div>
-                  <div>1800</div>
-                </div>
-
-                <div class="d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Score</div>
-                  <div>2550</div>
+                  <div>{{ player.score }} pts</div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="d-flex align-center justify-space-between">
-            <div class="d-flex align-center justify-center previous">
+            <div
+              @click="getListDaily(pageDaily - 1)"
+              class="d-flex align-center justify-center previous"
+            >
               <v-icon large>
                 mdi-chevron-left
               </v-icon>
             </div>
             <div class="pages">
-              <div class="text-h6 font-weight-bold">1/10</div>
+              <div class="text-h6 font-weight-bold">
+                {{ pageDaily }}/{{ getTotaPageDaily }}
+              </div>
             </div>
 
-            <div class="d-flex align-center justify-center next">
+            <div
+              @click="getListDaily(pageDaily + 1)"
+              class="d-flex align-center justify-center next"
+            >
               <v-icon large>
                 mdi-chevron-right
               </v-icon>
@@ -361,21 +369,34 @@
               src="/images/icons/parchment2.png"
               alt="trophy"
             />
-            <div class="page-subtitle">
-              Month
-            </div>
+            <div class="page-subtitle">Weekly - #{{ getNumberWeek }}</div>
+            <img
+              class="ml-1"
+              height="35px"
+              src="/images/wGOLD.png"
+              alt="wGOLD"
+            />
           </div>
 
           <div class="leaderboard">
+            <div v-if="listWeekLoading">
+              <h4 class="text-h4 text-center pt-9">Loading...</h4>
+            </div>
+            <div v-else-if="listWeek.total === '0'">
+              <h5 class="text-h5 text-center pt-9">
+                There is no data to display
+              </h5>
+            </div>
             <div
-              v-for="(player, index) in leaderboards"
+              v-else
+              v-for="(player, index) in listWeek"
               v-bind:key="player.account"
               class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
             >
               <div class="d-flex d-lg-box">
                 <v-avatar
                   class="list-leaderboard-avatar d-flex justify-center"
-                  :address="'0x0'"
+                  :address="player.account"
                   tooltip
                 />
                 <div class="d-flex d-md-none align-center justify-center">
@@ -394,7 +415,7 @@
 
                   <v-address
                     class="text-center mx-1"
-                    :address="'0x0'"
+                    :address="player.account"
                     link
                     tooltip
                   >
@@ -406,7 +427,7 @@
                 class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
               >
                 <img
-                  v-if="index < 3"
+                  v-if="index < 3 && pageWeek === 1"
                   width="50px"
                   class="d-none d-sm-none d-md-flex ml-1"
                   :src="
@@ -420,46 +441,44 @@
                   v-else
                   class="d-none d-sm-none d-md-flex leaderboard-ranking"
                 >
-                  #{{ index }}
+                  #{{ index + 1 + (pageWeek - 1) * limit }}
                 </div>
 
                 <v-address
                   class="d-none d-sm-none d-md-flex text-center mx-1"
-                  :address="'0x0'"
+                  :address="player.account"
                   link
                   tooltip
                 >
                 </v-address>
 
                 <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Average time</div>
-                  <div>1’22’’22</div>
-                </div>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Points</div>
-                  <div>1800</div>
-                </div>
-
-                <div class="d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Score</div>
-                  <div>2550</div>
+                  <div>{{ player.score }} pts</div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="d-flex align-center justify-space-between">
-            <div class="d-flex align-center justify-center previous">
+            <div
+              @click="getListWeek(pageWeek - 1)"
+              class="d-flex align-center justify-center previous"
+            >
               <v-icon large>
                 mdi-chevron-left
               </v-icon>
             </div>
             <div class="pages">
-              <div class="text-h6 font-weight-bold">1/10</div>
+              <div class="text-h6 font-weight-bold">
+                {{ pageWeek }}/{{ getTotaPageWeek }}
+              </div>
             </div>
 
-            <div class="d-flex align-center justify-center next">
+            <div
+              @click="getListWeek(pageWeek + 1)"
+              class="d-flex align-center justify-center next"
+            >
               <v-icon large>
                 mdi-chevron-right
               </v-icon>
@@ -503,103 +522,31 @@ export default {
   data() {
     return {
       isLoading: true,
-      leaderboards: [
-        {
-          ranking: 1,
-          account: "0x35E7097DAeEb621057293c64288337ED5170AAaf",
-          game: "Monstrous Journey",
-          time: 63000,
-          stage: "Start",
-          points: 2200,
-          score: 2200,
-          prizeAmount: 3800,
-          prize: "wGOLD",
-        },
-        {
-          ranking: 2,
-          account: "0x64F5E89350eEf65c3fCe69d6cBF7fdd1eC61Aa00",
-          game: "Monstrous Journey",
-          time: 65000,
-          stage: "Start",
-          points: 1800,
-          score: 1800,
-          prizeAmount: 2500,
-          prize: "wGOLD",
-        },
-        {
-          ranking: 3,
-          account: "0xF80783C375f6F34999Cc16Fce2d326f597aeF38b",
-          game: "Monstrous Journey",
-          time: 66000,
-          stage: "Start",
-          points: 1560,
-          score: 1560,
-          prizeAmount: 1800,
-          prize: "wGOLD",
-        },
-        {
-          ranking: 4,
-          account: "0xFC9A805C4CE604711FA18d663CaccBef2965E667",
-          game: "Monstrous Journey",
-          time: 65000,
-          stage: "Start",
-          points: 1000,
-          score: 1000,
-        },
-        {
-          ranking: 5,
-          account: "0x2d4bb1bcE02E1c0ec6cf08f585924F82707BEF89",
-          game: "Monstrous Journey",
-          time: 64000,
-          stage: "Start",
-          points: 900,
-          score: 900,
-        },
-        {
-          ranking: 6,
-          account: "0xF7AE8490eb37973A4bb5797C3F193e1A5b721dA9",
-          game: "Monstrous Journey",
-          time: 67000,
-          stage: "Start",
-          points: 870,
-          score: 870,
-        },
-      ],
       podium: [
         {
-          account: "0x64F5E89350eEf65c3fCe69d6cBF7fdd1eC61Aa00",
-          game: "Monstrous Journey",
-          time: 65000,
-          stage: "Start",
-          points: 1800,
-          score: 1800,
-          prizeAmount: 1800,
+          account: "0x2",
+          score: 0,
+          prizeAmount: 3000,
           prize: "wGOLD",
         },
         {
-          account: "0x35E7097DAeEb621057293c64288337ED5170AAaf",
-          game: "Monstrous Journey",
-          time: 63000,
-          stage: "Start",
-          points: 2200,
-          score: 2200,
-          prizeAmount: 3200,
+          account: "0x1",
+          score: 0,
+          prizeAmount: 5000,
           prize: "wGOLD",
         },
         {
-          account: "0xF80783C375f6F34999Cc16Fce2d326f597aeF38b",
-          game: "Monstrous Journey",
-          time: 66000,
-          stage: "Start",
-          points: 1560,
-          score: 1560,
-          prizeAmount: 1500,
+          account: "0x3",
+          score: 0,
+          prizeAmount: 1000,
           prize: "wGOLD",
         },
       ],
-      limit: 10,
+      limit: 6,
+      pageDaily: 1,
       pageWeek: 1,
       pageMonth: 1,
+      listDaily: [],
       listWeek: [],
       listMonth: [],
       listGames: [
@@ -653,6 +600,46 @@ export default {
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
+
+    getTotaPageDaily() {
+      if (this.limit > this.listDaily.total) {
+        return 1;
+      }
+      return parseFloat(this.listDaily.total / this.limit).toFixed();
+    },
+
+    getTotaPageWeek() {
+      if (this.limit > this.listWeek.total) {
+        return 1;
+      }
+      return parseFloat(this.listWeek.total / this.limit).toFixed();
+    },
+
+    getTotaPageMonth() {
+      if (this.limit > this.listMonth.total) {
+        return 1;
+      }
+      return parseFloat(this.listMonth.total / this.limit).toFixed();
+    },
+    getNumberWeek() {
+      const today = moment();
+      return today.isoWeek();
+    },
+    getLabelWeek() {
+      const userLang = navigator.language || navigator.userLanguage;
+      let startDateWeek = moment().startOf("isoWeek");
+      let endDateWeek = moment().endOf("isoWeek");
+      startDateWeek = new Date(startDateWeek.toDate());
+      endDateWeek = new Date(endDateWeek.toDate());
+      if (startDateWeek.toLocaleString(userLang).search(",") > 0) {
+        startDateWeek = startDateWeek.toLocaleString(userLang).split(",")[0];
+        endDateWeek = endDateWeek.toLocaleString(userLang).split(",")[0];
+      } else {
+        startDateWeek = startDateWeek.toLocaleString(userLang).split(" ")[0];
+        endDateWeek = endDateWeek.toLocaleString(userLang).split(" ")[0];
+      }
+      return `${startDateWeek} - ${endDateWeek}`;
+    },
   },
 
   watch: {
@@ -667,7 +654,6 @@ export default {
 
   mounted() {
     this.setHeader(false);
-    this.initData();
     this.loadData();
   },
 
@@ -676,45 +662,75 @@ export default {
       setHeader: "app/setMenuDisplay",
     }),
 
-    initData() {
-      this.listWeek = this.getListWeek(1);
-      this.listMonths = this.getListMonths();
-    },
-
     async loadData() {
       if (!this.isConnected) {
         return;
       }
 
+      await this.getListWeek(1);
+      this.getListPodium(this.listWeek);
+      await this.getListDaily(1);
+
       this.isLoading = false;
     },
 
+    async getListDaily(_page) {
+      if (this.listDailyLoading || _page < 1 || _page > this.getTotaPageDaily) {
+        return;
+      }
+      this.pageDaily = _page;
+      const leaderboardController = new LeaderboardController();
+      this.listDailyLoading = true;
+      this.listDaily = await leaderboardController.getDaily(
+        "TMJ",
+        this.limit,
+        this.limit * (_page - 1)
+      );
+      this.listDailyLoading = false;
+    },
+
     async getListWeek(_page) {
+      if (this.listWeekLoading || _page < 1 || _page > this.getTotaPageWeek) {
+        return;
+      }
+      this.pageWeek = _page;
       const leaderboardController = new LeaderboardController();
       this.listWeekLoading = true;
-      this.listWeek = await leaderboardController.getWeek(1, this.limit*(_page-1));
+      this.listWeek = await leaderboardController.getWeek(
+        "TMJ",
+        this.limit,
+        this.limit * (_page - 1)
+      );
       this.listWeekLoading = false;
     },
 
-    getListMonths(limit, skip) {
-      const listMonths = [];
-      const limitSelect = 9;
-      const getTime = moment(new Date().getTime());
-      listMonths.push({
-        date: getTime,
-        label: `Current month`,
-      });
+    async getListMonth(_page) {
+      if (this.listMonthLoading || _page < 1 || _page > this.getTotaPageMonth) {
+        return;
+      }
+      this.pageMonth = _page;
+      const leaderboardController = new LeaderboardController();
+      this.listMonthLoading = true;
+      this.listMonth = await leaderboardController.getMonth(
+        "TMJ",
+        this.limit,
+        this.limit * (_page - 1)
+      );
+      this.listMonthLoading = false;
+    },
 
-      for (let index = 1; index < limitSelect; index++) {
-        const lastDate = listMonths[index - 1].date;
-        const startDate = moment(lastDate).subtract(1, "month");
-        listMonths.push({
-          date: startDate,
-          label: `${startDate.format("MMMM YYYY")}`,
-        });
+    getListPodium(listWeek) {
+      if (listWeek[0] !== undefined) {
+        this.podium[1] = { ...this.podium[1], ...listWeek[0] };
+      }
+      if (listWeek[1] !== undefined) {
+        this.podium[0] = { ...this.podium[0], ...listWeek[1] };
+      }
+      if (listWeek[2] !== undefined) {
+        this.podium[2] = { ...this.podium[2], ...listWeek[2] };
       }
 
-      return listMonths;
+      return this.podium;
     },
   },
 };

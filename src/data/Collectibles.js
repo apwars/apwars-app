@@ -15,5 +15,5 @@ export function getGameItemTypesOptions() {
 }
 
 export function getCollectibleById(id) {
-  return getCollectibles().find(c => c.id === id);
+  return getCollectibles().find(c => c.id === Number(id));
 }

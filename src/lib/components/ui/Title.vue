@@ -39,6 +39,7 @@ export default {
   font-weight: bold;
   font-size: 21px;
   line-height: 1.1;
+  max-width: 70%;
 }
 .decoration {
   margin-top: 12px;

@@ -18,8 +18,12 @@ import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
 import Arcadia from "@/pages/Arcadia/Arcadia.vue";
 import Battle from "@/pages/Wars/Battle.vue";
+import StarterPacks from "@/pages/StarterPacks.vue";
 import Leaderboard from "@/pages/Leaderboard.vue";
 import Bridge from "@/pages/Bridge.vue";
+import Battle from "@/pages/Game/Battle.vue";
+import LoyaltyProgram from "@/pages/LoyaltyProgram.vue";
+import LoyaltyShop from "@/pages/Loyalty/Shop.vue";
 
 Vue.use(Router);
 
@@ -115,6 +119,16 @@ export const routes = [
         component: Arcadia
       },
       {
+        path: "/the-monstrous-journey",
+        name: "/the-monstrous-journey",
+        component: Battle
+      },
+      {
+        path: "/packs",
+        name: "/packs",
+        component: StarterPacks
+      },
+      {
         path: "/leaderboard",
         name: "/leaderboard",
         component: Leaderboard
@@ -123,6 +137,16 @@ export const routes = [
         path: "/bridge",
         name: "/bridge",
         component: Bridge
+      },
+      {
+        path: "/loyalty-program",
+        name: "/loyalty-program",
+        component: LoyaltyProgram
+      },
+      {
+        path: "/loyalty-program/shop",
+        name: "loyalty-shop",
+        component: LoyaltyShop
       },
       {
         path: "/farms",
@@ -148,6 +172,13 @@ export const routes = [
           redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56");
         }
       },
+      {
+        path: "/add-liquidity/:baseToken/:sideToken",
+        beforeEnter(to) {
+          redirectBlank(`https://pancakeswap.finance/add/${to.params.baseToken}/${to.params.sideToken}`);
+        }
+      },
+      
     ]
   }
 ];

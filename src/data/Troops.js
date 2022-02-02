@@ -1099,3 +1099,7 @@ export function getAllFromRace(race) {
 
   return troops.filter((t) => t.race === race);
 }
+
+export function getTroopByName(troopName) {
+  return getTroops().find(t => t.name === troopName);
+}
