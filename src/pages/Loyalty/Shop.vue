@@ -15,7 +15,7 @@
       <v-col cols="12" sm="6"> <Title class="mt-1" text="Loyalty Shop" /> </v-col>
       <v-col cols="12" sm="6" class="d-flex flex-column align-end">
         <div class="wallet-info">
-          <div class="default-text bold mr-2">You have:</div>
+          <div class="default-text bold mr-2">Balance:</div>
           <img src="/images/wscars.png" alt="WarScars" />
           <div class="default-text bold ml-1">
             <Amount :amount="balance" formatted /> WarScars
