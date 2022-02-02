@@ -5,7 +5,6 @@ import CreateOrders from "@/pages/Market/CreateOrders.vue";
 import GameItems from "@/pages/GameItems.vue";
 import Inventory from "@/pages/Inventory.vue";
 import Units from "@/pages/Units.vue";
-import Wars from "@/pages/Wars.vue";
 import Report from "@/pages/Wars/Report.vue";
 import UnitEnlistment from "@/pages/Wars/UnitEnlistment.vue";
 import MonsterBattle from "@/pages/Wars/MonsterBattle.vue";
@@ -17,7 +16,7 @@ import TrainingCenter from "@/pages/TrainingCenter.vue";
 import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
 import Arcadia from "@/pages/Arcadia/Arcadia.vue";
-import Battle from "@/pages/Wars/Battle.vue";
+import WarBattle from "@/pages/Wars/Battle.vue";
 import StarterPacks from "@/pages/StarterPacks.vue";
 import Leaderboard from "@/pages/Leaderboard.vue";
 import Bridge from "@/pages/Bridge.vue";
@@ -64,11 +63,6 @@ export const routes = [
         component: Units
       },
       {
-        path: "/wars",
-        name: "/wars",
-        component: Wars
-      },
-      {
         path: "/war-preparation",
         name: "/war-preparation",
         component: WarPreparation
@@ -81,7 +75,7 @@ export const routes = [
       {
         path: "/war",
         name: "war-resume",
-        component: Battle
+        component: WarBattle
       },
       {
         path: "/war/enlistment/:raceId",

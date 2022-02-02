@@ -32,7 +32,7 @@ export function getWeapons() {
       id: 64,
       type: "weapons",
       typeDesc: "Weapons",
-      contractAddress: addresses.collectibles,
+      contractAddress: Addresses.collectibles,
       title: "Simple Spear",
       description: 'The Simple Spear is sharp and can be used from a distance causing great damage to the enemy team.',
       image: "/images/nfts/weapon-simple-spear.png",
