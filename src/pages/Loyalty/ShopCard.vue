@@ -1,12 +1,14 @@
 <template>
   <div class="shop-item-container">
-    <div class="item-viewport" v-if="item"><img :src="item.image" :alt="item.title" /></div>
+    <div class="item-viewport" v-if="item">
+      <img :src="item.image" :alt="item.title" />
+    </div>
     <div class="item-title" v-if="item">{{ amount }} {{ item.title }}</div>
     <div class="item-price">
-      <img class="mr-1" :src="`/images/${token.toLowerCase()}.png`" :alt="token" />
+      <img class="mr-1" :src="`/images/wSCARS.png`" alt="War SCARS" />
       <div class="price">
         <Amount :amount="priceValue" formatted />
-        <div class="token">{{ token }}</div>
+        <div class="token">War SCARS</div>
       </div>
     </div>
     <Button

@@ -1,53 +1,71 @@
 <template>
-  <v-container>
-    <v-row no-gutters>
-      <v-col>
-        <Button
-          text="Go back to Loyalty Program"
-          icon="arrow-back"
-          type="wtertiary"
-          no-padding
-          :handleClick="backToLoyalty"
-        />
-      </v-col>
-    </v-row>
-    <v-row no-gutters>
-      <v-col cols="12" sm="6"> <Title class="mt-1" text="Loyalty Shop" /> </v-col>
-      <v-col cols="12" sm="6" class="d-flex flex-column align-end">
-        <div class="wallet-info">
-          <div class="default-text bold mr-2">Balance:</div>
-          <img src="/images/wscars.png" alt="WarScars" />
-          <div class="default-text bold ml-1">
-            <Amount :amount="balance" formatted /> WarScars
+  <div class="page-background">
+    <v-container>
+      <v-row no-gutters>
+        <v-col>
+          <Button
+            text="Go back to Loyalty Program"
+            icon="arrow-back"
+            type="wtertiary"
+            no-padding
+            :handleClick="backToLoyalty"
+          />
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col cols="12" sm="6">
+          <Title class="mt-1" text="Loyalty Shop" />
+        </v-col>
+        <v-col
+          cols="12"
+          sm="6"
+          class="d-flex flex-column align-center align-sm-end"
+        >
+          <div class="wallet-info d-flex flex-column flex-sm-row align-center justify-center">
+            <Button class="mr-sm-2 mt-2 mt-sm-0" type="wsecondary" text="Back to Loyalty Program" :handleClick="backToLoyalty" />
+            <div class="d-flex mt-2 mt-sm-0">
+            <img src="/images/wscars.png" width="95" alt="War SCARS" />
+            <div class="info-data ml-2">
+              <v-skeleton-loader
+                type="image"
+                height="50px"
+                v-if="isLoadingBalance"
+              />
+              <h2 class="scars text-h2" v-else>
+                <Amount :amount="balance" formatted tooltip />
+              </h2>
+              <div class="mt-1">Your War SCARS</div>
+            </div>
+            </div>
           </div>
-        </div>
-        <div class="default-text">{{ truncate(account) }}</div>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col col="12">
-        <template v-if="isLoading">
-          <v-skeleton-loader type="image" height="200px" />
-          <v-skeleton-loader class="mt-2" type="image" height="200px" />
-        </template>
-        <div class="default-text" v-if="!items.length">
-          We ran out of stock because everything was sold out. How about checking again later?
-        </div>
-        <ShopCard
-          v-for="item in items"
-          :key="item.id"
-          :packageName="item.package"
-          :amount="item.content[0].amount"
-          :gameItem="item.content[0].symbol"
-          :priceValue="item.price.amount"
-          :token="item.price.symbol"
-          :remainingAmount="item.remainingAmount"
-          :totalAmount="item.amount"
-          :handleBuy="handleBuy"
-        />
-      </v-col>
-    </v-row>
-  </v-container>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col col="12">
+          <template v-if="isLoading">
+            <v-skeleton-loader type="image" height="200px" />
+            <v-skeleton-loader class="mt-2" type="image" height="200px" />
+          </template>
+          <div class="default-text" v-if="!items.length">
+            We ran out of stock because everything was sold out. How about
+            checking again later?
+          </div>
+          <ShopCard
+            v-for="item in items"
+            :key="item.id"
+            :packageName="item.package"
+            :amount="item.content[0].amount"
+            :gameItem="item.content[0].symbol"
+            :priceValue="item.price.amount"
+            token="War SCARS"
+            :remainingAmount="item.remainingAmount"
+            :totalAmount="item.amount"
+            :handleBuy="handleBuy"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 <script>
 import { mapMutations } from "vuex";
@@ -140,11 +158,14 @@ export default {
     },
     async fetchBalance() {
       try {
+        this.isLoadingBalance = true;
         const controller = new WalletController();
         const balance = await controller.wallets(this.account);
         this.balance = balance.balances.wSCARS || 0;
       } catch (error) {
         console.error("Something went wrong while trying to get your balance.");
+      } finally {
+        this.isLoadingBalance = false;
       }
     },
   },
@@ -169,6 +190,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.page-background {
+  background-image: url("/images/background/blue-mountains.png");
+  background-size: cover;
+  background-position: top;
+}
 .section-title {
   display: inline-block;
   .text {
@@ -187,6 +213,10 @@ export default {
 .wallet-info {
   display: flex;
   align-items: center;
+}
+
+.scars {
+  text-align: right;
 }
 
 .default-text {
