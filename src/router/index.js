@@ -22,6 +22,8 @@ import StarterPacks from "@/pages/StarterPacks.vue";
 import Leaderboard from "@/pages/Leaderboard.vue";
 import Bridge from "@/pages/Bridge.vue";
 import Battle from "@/pages/Game/Battle.vue";
+import LoyaltyProgram from "@/pages/LoyaltyProgram.vue";
+import LoyaltyShop from "@/pages/Loyalty/Shop.vue";
 
 Vue.use(Router);
 
@@ -137,6 +139,16 @@ export const routes = [
         component: Bridge
       },
       {
+        path: "/loyalty-program",
+        name: "/loyalty-program",
+        component: LoyaltyProgram
+      },
+      {
+        path: "/loyalty-program/shop",
+        name: "loyalty-shop",
+        component: LoyaltyShop
+      },
+      {
         path: "/farms",
         beforeEnter() {
           redirectBlank("https://farms.apwars.farm?showFarms=true");
@@ -160,6 +172,13 @@ export const routes = [
           redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56");
         }
       },
+      {
+        path: "/add-liquidity/:baseToken/:sideToken",
+        beforeEnter(to) {
+          redirectBlank(`https://pancakeswap.finance/add/${to.params.baseToken}/${to.params.sideToken}`);
+        }
+      },
+      
     ]
   }
 ];
