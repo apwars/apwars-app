@@ -19,6 +19,16 @@
         />
       </v-col>
     </v-row>
+    <v-row no-gutters v-if="isEnlistment">
+      <v-col class="d-flex justify-center">
+        <Button
+          text="Back to War"
+          type="wsecondary"
+          size="small"
+          :handleClick="backToWar"
+        />
+      </v-col>
+    </v-row>
     <v-row>
       <v-col>
         <div class="buttons-container">
@@ -102,6 +112,9 @@ export default {
       };
       return mappedThemes[this.selectedRace];
     },
+    isEnlistment() {
+      return Boolean(this.$route.query.isEnlistment);
+    }
   },
   data() {
     return {
@@ -117,6 +130,9 @@ export default {
     }),
     backToHome() {
       this.$router.push("/");
+    },
+    backToWar() {
+      this.$router.push("/war/intro");
     },
     selectRace(race) {
       if (this.selectedRace === race) {

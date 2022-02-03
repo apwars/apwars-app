@@ -305,7 +305,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-overlay :value="isRewardOverlayActive">
+    <v-overlay :value="isRewardOverlayActive" :opacity="0.8">
       <div class="chest-title text-center">
         <span v-if="!isChestOpen">Waiting for the Monster rewards...</span
         ><span v-else>You have won awesome rewards!</span>

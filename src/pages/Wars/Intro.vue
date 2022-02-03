@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <v-container>
+    <v-container class="complete">
       <v-row dense no-gutters>
         <v-col>
           <Button
@@ -12,14 +12,14 @@
           />
         </v-col>
       </v-row>
-      <v-row v-if="!war || !nftCheck || isLoadingWar">
-        <v-col>
+      <v-row v-if="!war || !nftCheck || isLoadingWar" class="complete">
+        <v-col class="complete d-flex flex-column justify-center align-center">
           <div class="prize-pool text-center">Loading War data...</div>
         </v-col>
       </v-row>
-      <v-row v-else-if="phase === 'not-started'">
-        <v-col>
-          <div class="prize-pool text-center">War is coming soon...</div>
+      <v-row v-else-if="phase === 'not-started'" class="complete">
+        <v-col class="complete d-flex flex-column justify-center align-center">
+          <div class="prize-pool">War is coming soon...</div>
           <countdown
               id="countdown"
               :time="countdownTimer"
@@ -323,7 +323,7 @@ export default {
       this.$router.push("/the-monstrous-journey");
     },
     goToPacks(race) {
-      this.$router.push({ path: "/packs", query: { race } });
+      this.$router.push({ path: "/packs", query: { race, isEnlistment: true } });
     },
     goToEnlistment(raceId) {
       this.$router.push({ path: `/war/enlistment/${raceId}`});
@@ -347,6 +347,7 @@ export default {
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
         await this.getWar();
+        await this.checkSoldier();
         if (!this.introWar) {
           this.$router.push('/war');
         }
@@ -373,8 +374,7 @@ export default {
   },
   async mounted() {
     this.setHeader(false);
-    await this.fetchData();
-    await this.checkSoldier();
+    await this.fetchData(); 
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
@@ -435,5 +435,9 @@ export default {
   justify-content: center;
   align-items: center;
   color: #ffb800;
+}
+
+.complete {
+  height: 100%;
 }
 </style>
