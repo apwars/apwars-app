@@ -17,6 +17,16 @@
           <div class="prize-pool text-center">Loading War data...</div>
         </v-col>
       </v-row>
+      <v-row v-else-if="phase === 'not-started'">
+        <v-col>
+          <div class="prize-pool text-center">War is coming soon...</div>
+          <countdown
+              id="countdown"
+              :time="countdownTimer"
+              hideEnd
+            />
+        </v-col>
+      </v-row>
       <template v-else>
       <v-row dense no-gutters>
         <v-col md="3" class="battle-header">
@@ -271,14 +281,17 @@ import { NFT } from "@/data/NFTs";
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
 import Amount from "@/lib/components/ui/Utils/Amount";
+import Countdown from "@/lib/components/ui/Utils/Countdown";
 
 export default {
-  components: { Title, Button, Amount },
+  components: { Title, Button, Amount, Countdown },
   computed: {
     ...mapState({
       isLoadingWar: (state) => state.war.isLoading,
       completeFormations: (state) => state.war.completeFormations,
       war: (state) => state.war.war,
+      phase: (state) => state.war.phase,
+      countdownTimer: (state) => state.war.countdown,
     }),
     ...mapGetters({
       introWar: "war/introWar"
