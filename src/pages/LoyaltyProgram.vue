@@ -199,9 +199,9 @@ export default {
           );
           lpToken.balanceLP = balanceLP;
           lpToken.totalDistributionPerHour =
-            infoLP[lpToken.base].distributionPerHour;
+            infoLP[lpToken.base].lastDistributionPerHour;
           lpToken.accountDistributionPerHour =
-            infoLP[lpToken.base].distributionPerHour * balanceLP.percentage;
+            infoLP[lpToken.base].lastDistributionPerHour * balanceLP.percentage;
         }
         this.isLoading = false;
       } catch (error) {
