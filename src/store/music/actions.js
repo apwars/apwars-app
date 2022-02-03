@@ -1,5 +1,5 @@
 const supportedMusics = {
-  WAR: "/sound/war.webm",
+  WAR: "/sound/war.mp3",
 };
 
 export default {
