@@ -9,7 +9,7 @@ export default class SoldierController {
 
   wallets(account) {
     try {
-      return this.base._get(`/v1/wallets/${account}`);
+      return this.base._get(`/wallets/${account}`);
     } catch (error) {
       throw error;
     }
@@ -17,7 +17,7 @@ export default class SoldierController {
 
   getNFTByType(account, type) {
     try {
-      return this.base._get(`/v1/accounts/${account}/nfts/${type}`);
+      return this.base._get(`/accounts/${account}/nfts/${type}`);
     } catch (error) {
       if (error.status === 404) {
         return null;
@@ -28,7 +28,7 @@ export default class SoldierController {
 
   unlockNFT(account, type) {
     try {
-      return this.base._postSignature(`/v1/nfts/${type}`, { account });
+      return this.base._postSignature(`/nfts/${type}`, { account });
     } catch (error) {
       throw error;
     }
@@ -36,7 +36,7 @@ export default class SoldierController {
 
   changeName(account, type, name) {
     try {
-      return this.base._put(`/v1/accounts/${account}/nfts/${type}`, { account, name });
+      return this.base._put(`/accounts/${account}/nfts/${type}`, { account, name });
     } catch (error) {
       throw error;
     }
@@ -44,7 +44,7 @@ export default class SoldierController {
 
   rechargeToken(account, type, token) {
     try {
-      return this.base._postSignature(`/v1/accounts/${account}/nfts/${type}/recharges/${token}`, { account });
+      return this.base._postSignature(`/accounts/${account}/nfts/${type}/recharges/${token}`, { account });
     } catch (error) {
       throw error;
     }
@@ -52,7 +52,7 @@ export default class SoldierController {
 
   upgradeSkill(account, type, skills) {
     try {
-      return this.base._put(`/v1/accounts/${account}/nfts/${type}`, { account, skills });
+      return this.base._put(`/accounts/${account}/nfts/${type}`, { account, skills });
     } catch (error) {
       throw error;
     }

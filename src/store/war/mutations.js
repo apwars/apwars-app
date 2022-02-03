@@ -30,5 +30,8 @@ export default {
   },
   setPrizes(state, prizes) {
     state.accountPrizes = prizes;
+  },
+  setCompleteFormations(state, races) {
+    state.completeFormations = races;
   }
 };

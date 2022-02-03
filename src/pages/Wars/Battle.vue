@@ -536,6 +536,7 @@ export default {
   data() {
     return {
       showTour: true,
+      tourSkip: false,
       steps: [
           {
             target: '#countdown',

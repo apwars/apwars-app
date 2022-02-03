@@ -5,7 +5,7 @@ export default {
         commit('setAmount', { amount, troopName });
     },
     stakeWeapon({ commit }, { troopName, amount }) {
-        commit('setWeaponAmount', { troopName, amount })
+        commit('setWeaponAmount', { troopName, amount });
     },
     async changeFormation({ commit, dispatch, rootState }, { raceName, value }) {
         const formationData = rootState.war.war.formationConfig[value][raceName];

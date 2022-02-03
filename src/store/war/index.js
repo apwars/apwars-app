@@ -25,6 +25,7 @@ const initialState = () => ({
   countdown: 0,
   phase: 'not-started',
   accountPrizes: [],
+  completeFormations: {},
 });
 
 export default {

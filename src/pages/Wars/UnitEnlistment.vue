@@ -106,6 +106,7 @@
                 />
               </div>
             </div>
+            <Button class="mt-2" type="wprimary" icon="blue-chest-closed" text="Buy Refill Pack" :handleClick="goBuyPack" />
             <div class="status-container mt-2">
               <div class="troop-status mr-2">
                 <div class="d-flex align-center">
@@ -684,6 +685,10 @@ export default {
       this.showTour = true;
       this.$tours["enlistment"].start();
     },
+    goBuyPack() {
+      const race = RACE_DESCRIPTION[Number(this.$route.params.raceId)];
+      this.$router.push({ path: `/packs`, query: {race}});
+    }
   },
   watch: {
     isConnected() {

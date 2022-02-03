@@ -21,7 +21,8 @@ export default {
       await dispatch("getFullBoard", currentWar.id);
       dispatch("checkWarCountdown");
       dispatch('getAccountPrizes', currentWar.id);
-      dispatch("user/fetchUserWallet", null, { root: true });
+      await dispatch("user/fetchUserWallet", null, { root: true });
+      dispatch("checkCompleteFormations");
       dispatch("enlistment/checkPlayerEnlistment", null, { root: true });
     } catch (error) {
       console.error(error);
@@ -115,4 +116,23 @@ export default {
     commit("setWarPhase", { countdown: 0, phase: "finished" });
     return;
   },
+  checkCompleteFormations({state, rootState, commit}) {
+    const formations = ['squadron'];
+    const races = ['Humans', 'Orcs', 'Elves', 'Undead'];
+
+    let completeFormations = races.reduce((o, r) => Object.assign(o, {[r]: true}), {});
+    for (let formation of formations) {
+      for (let race of races) {
+        const formationData = state.war.formationConfig[formation][race];
+        const troopNames = Object.keys(formationData);
+        for (const troopName of troopNames) {
+          const troopBalance = rootState.user.balances[troopName] || 0;
+            if (troopBalance < formationData[troopName].amount) {
+              completeFormations[race] = false;
+            };
+        }
+      }
+    }
+    commit('setCompleteFormations', completeFormations);
+  }
 };

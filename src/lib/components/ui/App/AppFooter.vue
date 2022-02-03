@@ -238,7 +238,7 @@ export default {
             {
               title: "War against FED",
               image: "/images/icons/fed.png",
-              href: "/war",
+              href: "/war/intro",
             },
             {
               title: "War Preparation",

@@ -195,7 +195,7 @@ export default {
   created() {
     this.setHeader(false);
     if (this.isConnected && !this.selectedRace) {
-      this.selectRace("Humans");
+      this.selectRace(this.$route.query.race || 'Humans');
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -204,7 +204,7 @@ export default {
   },
   watch: {
     isConnected() {
-      this.selectRace("Humans");
+      this.selectRace(this.$route.query.race || 'Humans');
     },
   }
 };

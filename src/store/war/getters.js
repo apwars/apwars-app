@@ -65,6 +65,9 @@ export default {
   warHasRewards: (state, getters) => {
     return getters.warRewards.length > 0;
   },
+  introWar: (state, getters) => {
+    return !getters.userEnlistedRace && (state.phase === 'not-started' || state.phase === 'enlistment');
+  },
   isWarOver: (state) => {
     return state.phase === 'claim' || state.phase === 'finished';
   },
