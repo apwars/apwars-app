@@ -91,36 +91,6 @@ export const HUMANS = [
     strength: 15,
     defense: 15,
     improvementFactor: 0,
-    combinators: {
-      warPreparation: {
-        name: "Simple Potion",
-        image: "/images/icons/simple-potion.png",
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 4,
-          "97": 4,
-        },
-        imageNft: "/images/nfts/weapon-simple-potion.png",
-        imageIcon: "/images/nfts/weapon-simple-potion.png",
-        necessaryResources: {
-          tokenA: {
-            name: "wcourage",
-            title: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          tokenB: {
-            name: "wWIZARD",
-            title: `wWIZARD`,
-            image: "/images/icons/coins/wWIZARD.png",
-          },
-        },
-      },
-    },
   },
   {
     id: 3,
@@ -212,36 +182,6 @@ export const HUMANS = [
     strength: 150,
     defense: 50,
     improvementFactor: 0,
-    combinators: {
-      warPreparation: {
-        name: "Simple Spear",
-        image: "/images/icons/simple-spear.png",
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 4,
-          "97": 4,
-        },
-        imageNft: "/images/nfts/weapon-simple-spear.png",
-        imageIcon: "/images/nfts/weapon-simple-spear.png",
-        necessaryResources: {
-          tokenA: {
-            name: "wcourage",
-            title: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          tokenB: {
-            name: "wHORSEMAN",
-            title: `wHORSEMAN`,
-            image: "/images/icons/coins/wHORSEMAN.png",
-          },
-        },
-      },
-    },
   },
 ];
 
@@ -335,39 +275,9 @@ export const ORCS = [
       "97": "0xC2d75018Cd8c2e87794d5839B80c35a09EeeA1BB",
     },
     image: "/images/troops/wARMOURED-GRUNT.png",
-    strength: 15,
-    defense: 15,
+    strength: 25,
+    defense: 5,
     improvementFactor: 0,
-    combinators: {
-      warPreparation: {
-        name: "Simple Sword",
-        image: "/images/icons/simple-sword.png",
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 6,
-          "97": 6,
-        },
-        imageNft: "/images/nfts/weapon-simple-sword.png",
-        imageIcon: "/images/nfts/weapon-simple-sword.png",
-        necessaryResources: {
-          tokenA: {
-            name: "wcourage",
-            title: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          tokenB: {
-            name: "wARMOURED-GRUNT",
-            title: `wARMOURED-GRUNT`,
-            image: "/images/icons/coins/wARMOURED-GRUNT.png",
-          },
-        },
-      },
-    },
   },
   {
     id: 8,
@@ -438,36 +348,6 @@ export const ORCS = [
     strength: 70,
     defense: 20,
     improvementFactor: 0.1,
-    combinators: {
-      warPreparation: {
-        name: "Simple Potion",
-        image: "/images/icons/simple-potion.png",
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 4,
-          "97": 4,
-        },
-        imageNft: "/images/nfts/weapon-simple-potion.png",
-        imageIcon: "/images/nfts/weapon-simple-potion.png",
-        necessaryResources: {
-          tokenA: {
-            name: "wcourage",
-            title: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          tokenB: {
-            name: "wSHAMAN",
-            title: `wSHAMAN`,
-            image: "/images/icons/coins/wSHAMAN.png",
-          },
-        },
-      },
-    },
   },
   {
     id: 16,
@@ -489,36 +369,6 @@ export const ORCS = [
     strength: 150,
     defense: 50,
     improvementFactor: 0,
-    combinators: {
-      warPreparation: {
-        name: "Simple Spear",
-        image: "/images/icons/simple-spear.png",
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 4,
-          "97": 4,
-        },
-        imageNft: "/images/nfts/weapon-simple-spear.png",
-        imageIcon: "/images/nfts/weapon-simple-spear.png",
-        necessaryResources: {
-          tokenA: {
-            name: "wcourage",
-            title: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          tokenB: {
-            name: "wWARG",
-            title: `wWARG`,
-            image: "/images/icons/coins/wWARG.png",
-          },
-        },
-      },
-    },
   },
 ];
 
@@ -613,34 +463,6 @@ export const UNDEAD = [
     strength: 35,
     defense: 8,
     improvementFactor: 0,
-    combinators: {
-      warPreparation: {
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 8,
-          "97": 8,
-        },
-        name: "Simple Sword",
-        imageNft: "/images/nfts/weapon-simple-sword.png",
-        imageIcon: "/images/nfts/weapon-simple-sword.png",
-        image: "/images/icons/simple-sword.png",
-        inputs: [
-          {
-            name: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          {
-            name: "wUNDEAD-ARCHER",
-            image: "/images/icons/coins/wUNDEAD-ARCHER.png",
-          },
-        ],
-      },
-    },
   },
   {
     id: 13,
@@ -711,36 +533,6 @@ export const UNDEAD = [
     strength: 70,
     defense: 20,
     improvementFactor: 0.1,
-    combinators: {
-      warPreparation: {
-        name: "Simple Potion",
-        image: "/images/icons/simple-potion.png",
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 4,
-          "97": 4,
-        },
-        imageNft: "/images/nfts/weapon-simple-potion.png",
-        imageIcon: "/images/nfts/weapon-simple-potion.png",
-        necessaryResources: {
-          tokenA: {
-            name: "wcourage",
-            title: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          tokenB: {
-            name: "wWITCH",
-            title: `wWITCH`,
-            image: "/images/icons/coins/wWITCH.png",
-          },
-        },
-      },
-    },
   },
 
   {
@@ -763,36 +555,6 @@ export const UNDEAD = [
     strength: 200,
     defense: 60,
     improvementFactor: 0,
-    combinators: {
-      warPreparation: {
-        name: "Simple Spear",
-        image: "/images/icons/simple-spear.png",
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 11,
-          "97": 11,
-        },
-        imageNft: "/images/nfts/weapon-simple-spear.png",
-        imageIcon: "/images/nfts/weapon-simple-spear.png",
-        necessaryResources: {
-          tokenA: {
-            name: "wcourage",
-            title: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          tokenB: {
-            name: "wDEATH-KNIGHT",
-            title: `wDEATH-KNIGHT`,
-            image: "/images/icons/coins/wDEATH-KNIGHT.png",
-          },
-        },
-      },
-    },
   },
 ];
 
@@ -889,36 +651,6 @@ export const ELVES = [
     strength: 25,
     defense: 25,
     improvementFactor: 0,
-    combinators: {
-      warPreparation: {
-        name: "Simple Sword",
-        image: "/images/icons/simple-sword.png",
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 11,
-          "97": 11,
-        },
-        imageNft: "/images/nfts/weapon-simple-sword.png",
-        imageIcon: "/images/nfts/weapon-simple-sword.png",
-        necessaryResources: {
-          tokenA: {
-            name: "wcourage",
-            title: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          tokenB: {
-            name: "wARMORED-ELF",
-            title: `wARMORED-ELF`,
-            image: "/images/icons/coins/wARMORED-ELF.png",
-          },
-        },
-      },
-    },
   },
   {
     id: 21,
@@ -990,36 +722,6 @@ export const ELVES = [
     strength: 70,
     defense: 20,
     improvementFactor: 0.1,
-    combinators: {
-      warPreparation: {
-        name: "Simple Potion",
-        image: "/images/icons/simple-potion.png",
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 4,
-          "97": 4,
-        },
-        imageNft: "/images/nfts/weapon-simple-potion.png",
-        imageIcon: "/images/nfts/weapon-simple-potion.png",
-        necessaryResources: {
-          tokenA: {
-            name: "wcourage",
-            title: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          tokenB: {
-            name: "wFERAL-SPIRIT",
-            title: `wFERAL-SPIRIT`,
-            image: "/images/icons/coins/wFERAL-SPIRIT.png",
-          },
-        },
-      },
-    },
   },
   {
     id: 23,
@@ -1041,36 +743,6 @@ export const ELVES = [
     strength: 250,
     defense: 90,
     improvementFactor: 0,
-    combinators: {
-      warPreparation: {
-        name: "Simple Spear",
-        image: "/images/icons/simple-spear.png",
-        combinatorAddress: {
-          "56": "0x4311C6e36FaAD6B3Cd5bf4A73fc273A02b32Ec46",
-          "97": "0xCAE00ce5282CF2b559BC45f17c47b2f5d3E20244",
-        },
-        claimRouter: "/war-preparation",
-        idCombinator: {
-          "5777": 0,
-          "56": 4,
-          "97": 4,
-        },
-        imageNft: "/images/nfts/weapon-simple-spear.png",
-        imageIcon: "/images/nfts/weapon-simple-spear.png",
-        necessaryResources: {
-          tokenA: {
-            name: "wcourage",
-            title: "wCOURAGE",
-            image: "/images/wcourage.png",
-          },
-          tokenB: {
-            name: "wELK-RIDER",
-            title: `wELK-RIDER`,
-            image: "/images/icons/coins/wELK-RIDER.png",
-          },
-        },
-      },
-    },
   },
 ];
 
