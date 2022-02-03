@@ -21,21 +21,28 @@
           sm="6"
           class="d-flex flex-column align-center align-sm-end"
         >
-          <div class="wallet-info d-flex flex-column flex-sm-row align-center justify-center">
-            <Button class="mr-sm-2 mt-2 mt-sm-0" type="wsecondary" text="Back to Loyalty Program" :handleClick="backToLoyalty" />
+          <div
+            class="wallet-info d-flex flex-column flex-sm-row align-center justify-center"
+          >
+            <Button
+              class="mr-sm-2 mt-2 mt-sm-0"
+              type="wsecondary"
+              text="Back to Loyalty Program"
+              :handleClick="backToLoyalty"
+            />
             <div class="d-flex mt-2 mt-sm-0">
-            <img src="/images/wscars.png" width="95" alt="War SCARS" />
-            <div class="info-data ml-2">
-              <v-skeleton-loader
-                type="image"
-                height="50px"
-                v-if="isLoadingBalance"
-              />
-              <h2 class="scars text-h2" v-else>
-                <Amount :amount="balance" formatted tooltip />
-              </h2>
-              <div class="mt-1">Your War SCARS</div>
-            </div>
+              <img src="/images/wscars.png" width="95" alt="War SCARS" />
+              <div class="info-data ml-2">
+                <v-skeleton-loader
+                  type="image"
+                  height="50px"
+                  v-if="isLoadingBalance"
+                />
+                <h2 class="scars text-h2" v-else>
+                  <Amount :amount="balance" formatted tooltip />
+                </h2>
+                <div class="mt-1">Your War SCARS</div>
+              </div>
             </div>
           </div>
         </v-col>
@@ -55,6 +62,7 @@
             :key="item.id"
             :packageName="item.package"
             :amount="item.content[0].amount"
+            :balanceGameItem="allBalances[item.content[0].symbol]"
             :gameItem="item.content[0].symbol"
             :priceValue="item.price.amount"
             token="War SCARS"
@@ -100,6 +108,7 @@ export default {
       items: [],
       isLoadingBalance: false,
       balance: 0,
+      allBalances: {},
     };
   },
   methods: {
@@ -162,6 +171,7 @@ export default {
         const controller = new WalletController();
         const balance = await controller.wallets(this.account);
         this.balance = balance.balances.wSCARS || 0;
+        this.allBalances = balance.balances;
       } catch (error) {
         console.error("Something went wrong while trying to get your balance.");
       } finally {
@@ -173,8 +183,8 @@ export default {
   created() {
     this.setHeader(false);
     if (this.isConnected) {
-      this.fetchItems();
       this.fetchBalance();
+      this.fetchItems();
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -182,9 +192,9 @@ export default {
     next();
   },
   watch: {
-    account() {
-      this.fetchItems();
+    async account() {
       this.fetchBalance();
+      this.fetchItems();
     },
   },
 };

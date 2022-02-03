@@ -3,7 +3,13 @@
     <div class="item-viewport" v-if="item">
       <img :src="item.image" :alt="item.title" />
     </div>
-    <div class="item-title" v-if="item">{{ amount }} {{ item.title }}</div>
+    <div class="item-title d-flex align-center" v-if="item">
+      {{ item.title }}<br />
+    </div>
+    <div class="item-package-amount" v-if="item">
+      This package contains: <br />
+      {{ amount }} units
+    </div>
     <div class="item-price">
       <img class="mr-1" :src="`/images/wSCARS.png`" alt="War SCARS" />
       <div class="price">
@@ -24,6 +30,9 @@
         {{ totalAmount ? `/${totalAmount}` : "remaining" }}</template
       >
     </div>
+    <div class="qty-balance">
+      Your balance: <Amount :amount="balanceGameItem" formatted decimals="0" />
+    </div>
   </div>
 </template>
 <script>
@@ -43,6 +52,10 @@ export default {
       default: "",
     },
     priceValue: {
+      type: Number,
+      default: 0,
+    },
+    balanceGameItem: {
       type: Number,
       default: 0,
     },
@@ -80,7 +93,8 @@ export default {
     if (this.gameItem.includes("GameItem")) {
       id = this.gameItem.replace(/\D/g, "");
     }
-    const i = getCollectibleById(Number(id));
+
+    const i = getCollectibleById(id);
     this.item = i;
   },
 };
@@ -98,7 +112,6 @@ export default {
   margin: 12px;
   width: 250px;
   .item-viewport {
-    width: 122px;
     height: 200px;
     > img {
       height: 100%;
@@ -106,11 +119,27 @@ export default {
     }
   }
   .item-title {
+    text-align: center;
     font-weight: bold;
     font-size: 16px;
     line-height: 1.3;
     color: #ffffff;
-    margin-top: 4px;
+    margin: 6px 0px;
+    background-image: url(/images/gold-background.png);
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: normal !important;
+    height: 45px;
+  }
+
+  .item-package-amount {
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #ffffff;
+    margin: 3px 0px;
   }
 
   .item-price {
@@ -140,7 +169,8 @@ export default {
     }
   }
 
-  .qty-info {
+  .qty-info,
+  .qty-balance {
     height: 13px;
     font-weight: bold;
     font-size: 10px;
@@ -149,6 +179,10 @@ export default {
     width: 100%;
     color: #11d300;
     margin-top: 2px;
+  }
+
+  .qty-balance {
+    color: #ffffff;
   }
 }
 </style>
