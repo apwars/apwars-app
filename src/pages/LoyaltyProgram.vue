@@ -84,7 +84,7 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 import LPController from "@/controller/LPController";
 import WalletController from "@/controller/WalletController";
 import NFTsController from "@/controller/NFTsController";
-import Amount from "../lib/components/ui/Utils/Amount.vue";
+import Amount from "@/lib/components/ui/Utils/Amount.vue";
 
 export default {
   components: { Title, LPCard, Button, Amount },
