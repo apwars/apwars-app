@@ -106,7 +106,7 @@
                 />
               </div>
             </div>
-            <Button class="mt-2" type="wprimary" icon="blue-chest-closed" text="Buy Refill Pack" :handleClick="goBuyPack" />
+            <Button class="mt-2" type="wprimary" icon="blue-chest-closed" text="Buy Refill Pack" color="#162438" :handleClick="goBuyPack" />
             <div class="status-container mt-2">
               <div class="troop-status mr-2">
                 <div class="d-flex align-center">

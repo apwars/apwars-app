@@ -12,7 +12,7 @@
           />
         </v-col>
       </v-row>
-      <v-row v-if="!nftCheck || isLoadingWar">
+      <v-row v-if="!war || !nftCheck || isLoadingWar">
         <v-col>
           <div class="prize-pool text-center">Loading War data...</div>
         </v-col>
@@ -91,6 +91,7 @@
                     type="wprimary"
                     text="Buy Pack"
                     icon="blue-chest-closed"
+                    color="#162438"
                     :handleClick="() => goToPacks('Elves')"
                     isBlock
                   />
@@ -140,6 +141,7 @@
                     type="wprimary"
                     text="Buy Pack"
                     icon="blue-chest-closed"
+                    color="#162438"
                     :handleClick="() => goToPacks('Humans')"
                     isBlock
                   />
@@ -195,6 +197,7 @@
                     type="wprimary"
                     text="Buy Pack"
                     icon="blue-chest-closed"
+                    color="#162438"
                     :handleClick="() => goToPacks('Orcs')"
                     isBlock
                   />
@@ -244,6 +247,7 @@
                     type="wprimary"
                     text="Buy Pack"
                     icon="blue-chest-closed"
+                    color="#162438"
                     :handleClick="() => goToPacks('Undead')"
                     isBlock
                   />
