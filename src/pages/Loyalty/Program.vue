@@ -61,7 +61,8 @@
         </v-col>
       </v-row>
 
-      <v-row v-else>
+      <template v-else>
+      <v-row >
         <v-col v-for="lp in lpTokens" :key="lp.symbol" col="12" md="4">
           <LPCard
             :hasSoldier="hasSoldier"
@@ -70,6 +71,23 @@
           />
         </v-col>
       </v-row>
+      <v-row v-if="transactions.length > 0">
+          <v-col>
+              <v-data-table
+                :headers="headers"
+                :items="transactions"
+              >
+                <template v-slot:item.data.tokenSymbol="{ item }">
+                  {{ item.data.tokenSymbol }}/BUSD
+                </template>
+                <template v-slot:item.createdOn="{ item }">
+                  {{ new Date(item.createdOn).toLocaleString(userLocale) }}
+                </template>
+              </v-data-table>
+              <div class="small-text">Showing transactions from the last 48h</div>
+          </v-col>
+      </v-row>
+      </template>
     </v-container>
   </div>
 </template>
@@ -98,6 +116,9 @@ export default {
     networkInfo() {
       return this.$store.getters["user/networkInfo"];
     },
+    userLocale() {
+        return window.navigator.userLanguage || window.navigator.language
+    }
   },
   data() {
     return {
@@ -138,6 +159,38 @@ export default {
           sideToken: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           balanceLP: {},
         },
+      ],
+      transactions: [],
+      headers: [
+        {
+          sortable: false,
+          text: "Reward",
+          value: "reward",
+          align: "center",
+          filterable: false,
+        },
+        {
+          sortable: false,
+          text: "Amount",
+          value: "amount",
+          align: "center",
+          filterable: true,
+        },
+        {
+          text: "Pool",
+          align: "center",
+          sortable: false,
+          value: "data.tokenSymbol",
+          filterable: true,
+        },
+        {
+          sortable: false,
+          text: "Pool Share",
+          value: "share",
+          align: "center",
+          filterable: false,
+        },
+        { text: "Date", value: "createdOn" },
       ],
     };
   },
@@ -208,10 +261,20 @@ export default {
         ToastSnackbar.error(error.message);
       }
     },
+
+    async loadTransactions() {
+        if (!this.account) {
+            return
+        }
+        const controller = new LPController();
+        const transfers  = await controller.transactions(this.account);
+        this.transactions = transfers.map(t => ({ ...t, reward: 'War SCARS', share: `${(t.data.proportion * 100).toFixed(2)}%` }));
+    }
   },
 
   mounted() {
     this.loadData();
+    this.loadTransactions();
   },
   created() {
     this.setHeader(false);
@@ -223,6 +286,7 @@ export default {
   watch: {
     async account() {
       await this.loadData();
+      this.loadTransactions();
     },
   },
 };
@@ -250,5 +314,11 @@ export default {
     height: 2px;
     width: auto;
   }
+}
+.small-text {
+    width: 100%;
+    font-size: 12px;
+    text-align: right;
+    margin-top: 4px;
 }
 </style>

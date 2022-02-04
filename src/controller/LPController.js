@@ -15,5 +15,13 @@ export default class LPController {
     }
   }
 
+  transactions(account) {
+    try {
+      return this.base._get(`/transfers/${account}/loyalty-program`);
+    } catch (error) {
+      throw error;
+    }
+  }
+
 
 }
