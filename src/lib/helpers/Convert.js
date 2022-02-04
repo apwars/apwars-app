@@ -28,8 +28,11 @@ export default {
     return Math.floor(amount * setDecimals) / setDecimals;
   },
 
-  compactNumber(value, decimals) {
+  compactNumber(value, decimals, ignoreThousand) {
     if (value < 1e3) {
+      if (ignoreThousand) {
+        return value;
+      }
       return this.formatString(value, decimals);
     } else if (value >= 1e3 && value < 1e6) {
       return `${this.formatString(value / 1e3, decimals)}K`;

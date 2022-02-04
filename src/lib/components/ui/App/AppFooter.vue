@@ -3,9 +3,7 @@
     <div
       class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
     >
-      <div
-        class="d-flex side-menu justify-center justify-md-start align-center"
-      >
+      <div class="d-flex side-menu align-center">
         <div class="d-inline-flex">
           <img
             class="d-block mx-1 mx-md-2 avatar"
@@ -15,7 +13,7 @@
             alt="avatar"
           />
         </div>
-        <div class="d-inline-flex align-center">
+        <div class="d-flex align-center">
           <img
             class="d-block mx-0 mx-md-1 i-coin"
             src="/images/wgold.png  "
@@ -35,7 +33,7 @@
         </div>
       </div>
       <div class="d-flex menu-main">
-        <v-sheet class="mx-auto menu-itens align-center" max-width="100%">
+        <v-sheet class="menu-itens mx-auto align-center" max-width="100%">
           <v-slide-group multiple show-arrows>
             <v-slide-item
               v-for="(item, index) in menu"
@@ -123,7 +121,45 @@
           </v-slide-group>
         </v-sheet>
       </div>
-      <div class="d-flex side-menu"></div>
+      <div class="d-flex side-menu-right">
+        <div class="text-center" v-if="track">
+        <v-menu :close-on-content-click="false"
+      :nudge-height="200">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+            <v-icon v-if="volume !== 0"
+              >mdi-volume-high</v-icon
+            >
+            <v-icon v-else
+              >mdi-volume-off</v-icon
+            >
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item>
+              <v-list-item-title @click="() => setVolume(0)" :class="['volume-button', volume === 0 ? 'text-yellow' : '']">Disable</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title @click="() => setVolume(0.1)" :class="['volume-button', volume === 0.1 ? 'text-yellow' : '']">25%</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title @click="() => setVolume(0.25)" :class="['volume-button', volume === 0.25 ? 'text-yellow' : '']">50%</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title @click="() => setVolume(0.4)" :class="['volume-button', volume === 0.4 ? 'text-yellow' : '']">75%</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title @click="() => setVolume(0.5)" :class="['volume-button', volume === 0.5 ? 'text-yellow' : '']">100%</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        </div>
+      </div>
     </div>
 
     <div class="d-flex justify-space-between copyright">
@@ -144,6 +180,7 @@
   </v-footer>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import wGOLD from "@/lib/eth/wGOLD";
 
@@ -198,11 +235,11 @@ export default {
               href: "/packs",
               image: "/images/icons/army.png",
             },
-            {
-              title: "War against FED",
-              image: "/images/icons/fed.png",
-              href: "/wars",
-            },
+            // {
+            //   title: "War against FED",
+            //   image: "/images/icons/fed.png",
+            //   href: "/war/intro",
+            // },
             {
               title: "War Preparation",
               image: "/images/war-preparation/icon-war-preparation.png",
@@ -236,6 +273,11 @@ export default {
     Amount,
   },
   computed: {
+    ...mapState({
+      isPlaying: (state) => state.music.isPlaying,
+      track: (state) => state.music.track,
+      volume: (state) => state.music.volume,
+    }),
     appVersion() {
       return this.$store.getters.appVersion;
     },
@@ -274,6 +316,9 @@ export default {
     this.loadData();
   },
   methods: {
+    ...mapActions({
+      setVolume: "music/setVolume",
+    }),
     async loadData() {
       if (!this.isConnected) {
         return;
@@ -297,22 +342,67 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .menu-main {
   width: 60%;
+  @media only screen and (max-width: 1264px) {
+    width: 55%;
+  }
+
+  @media only screen and (max-width: 1150px) {
+    width: 65%;
+  }
+
+  @media only screen and (max-width: 960px) {
+    width: 100%;
+  }
+
+  @media only screen and (max-width: 730px) {
+    width: 80%;
+  }
+
+  @media only screen and (max-width: 650px) {
+    width: 70%;
+  }
 }
+
 .side-menu {
   width: 20%;
+  @media only screen and (max-width: 1264px) {
+    width: 30%;
+  }
+
+  @media only screen and (max-width: 960px) {
+    width: 80%;
+    justify-content: center;
+  }
 }
+
+.side-menu-right {
+  width: 20%;
+  @media only screen and (max-width: 1264px) {
+    width: 20%;
+  }
+
+  @media only screen and (max-width: 1150px) {
+    width: 10%;
+  }
+
+  @media only screen and (max-width: 730px) {
+    width: 0%;
+  }
+}
+
 .menu-footer {
   width: 100%;
-  height: 70px;
+  min-height: 70px;
   border: 2px solid #bb7248;
   border-radius: 6px;
   background-image: url("/images/battle/bg-wars.png");
   background-repeat: repeat;
   margin: 0px 12px;
 }
+
 .menu-itens,
 .submenu-itens {
   box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.9);
@@ -321,16 +411,20 @@ export default {
   background-repeat: repeat;
   padding: 6px 9px;
 }
+
 .submenu-itens {
   box-shadow: none;
 }
+
 .menu-item {
   cursor: pointer;
   width: 80px;
 }
+
 .menu-item > img {
   height: 45px;
 }
+
 .menu-item > .divider {
   width: 3px;
   height: 45px;
@@ -342,12 +436,14 @@ export default {
   font-size: 18px !important;
   font-weight: bold !important;
 }
+
 .submenu {
   border: 2px solid rgb(154, 94, 60);
   background-image: url(/images/bg-pale-wood.png);
   contain: initial !important;
   overflow: initial;
 }
+
 .submenu::before {
   position: absolute;
   content: "";
@@ -357,13 +453,27 @@ export default {
   border-color: #9a5e3c transparent transparent transparent;
   right: calc(50% - 10px);
 }
+
 .avatar {
   width: 60px;
   border: 3px solid #bb7248;
   border-radius: 6px;
 }
+
 .i-coin {
   width: 50px;
+}
+
+.volume-button {
+  font-size: 12px;
+  height: 24px;
+  &:hover {
+    cursor: pointer;
+    color: yellow;
+  }
+}
+.text-yellow {
+  color: yellow;
 }
 
 @media only screen and (max-width: 600px) {
@@ -384,9 +494,7 @@ export default {
     width: 98%;
   }
 }
-</style>
 
-<style>
 @media only screen and (max-width: 600px) {
   .v-sheet.v-footer {
     padding: 10px 4px !important;

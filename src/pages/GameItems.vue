@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <div class="bg-library">
@@ -50,14 +49,15 @@
                 <v-col
                   v-for="item in itemsList"
                   :key="item.id"
-                  sm="12"
+                  cols="12"
                   md="6"
-                  :class="$vuetify.breakpoint.mdAndUp ? 'd-flex' : ''"
+                  :class="$vuetify.breakpoint.smAndUp ? 'd-flex px-1' : ''"
                 >
                   <nft-item :collectible="item" />
-                  <div :class="$vuetify.breakpoint.mdAndUp ? 'description' : 'text-center'">
+                  <div class="description">
                     <game-text>{{ item.title }}</game-text>
                     <p
+                    class="scrolbar"
                     :style="$vuetify.breakpoint.mdAndUp ?
                       'font-size: 12px' : 'font-size: 13px; text-align: justify;'"
                     v-html="item.description" />
@@ -161,7 +161,45 @@ export default {
   background-image: url('/images/black-market/Library.png');
   background-size: cover;
 }
+
 .description {
   padding-right: 48px;
+  @media only screen and (max-width: 1264px) {
+    padding: 0px;
+  }
+  @media only screen and (max-width: 599px) {
+    text-align: center !important;
+  }
+}
+
+.scrolbar {
+  padding-right: 0.3rem;
+  overflow-y: auto;
+  display: -webkit-box;
+  -webkit-line-clamp: 17;
+  -webkit-box-orient: vertical;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  background: #222222!important;
+}
+
+::-webkit-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 4px;
+  background: #f1e3b8;
+  opacity: 0;
+  cursor: default;
+  outline: none;
+  z-index: 1;
+  will-change: transform;
+}
+
+::-webkit-scrollbar-thumb:not(:hover) ::-webkit-scrollbar-thumb{
+  transition: opacity .1s .5s;
 }
 </style>

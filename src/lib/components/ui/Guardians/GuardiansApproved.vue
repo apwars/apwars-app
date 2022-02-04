@@ -14,31 +14,23 @@
             </div>
 
             <div class="d-flex">
-              <div v-if="!$vuetify.breakpoint.mobile">
-                <img
-                  :src="guardian.portrait"
-                  width="120px"
-                  :alt="guardian.name"
-                />
-              </div>
               <div class="ml-0 ml-md-2">
                 <img
-                  v-if="$vuetify.breakpoint.mobile"
                   :src="guardian.portrait"
-                  width="60px"
+                  :width="$vuetify.breakpoint.mdAndUp ? '120px' : '60px'"
                   :alt="guardian.name"
                 />
                 <div class="text-h6 text-md-h5 font-weight-bold">
                   {{ guardian.name }}
                 </div>
-                <p v-if="!$vuetify.breakpoint.mobile" class="mt-3 mr-0 mr-md-9">
+                <p v-if="$vuetify.breakpoint.mdAndUp" class="mt-3 mr-0 mr-md-9">
                   {{ guardian.description }}
                 </p>
               </div>
             </div>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <div class="mt-3 ml-0 ml-md-16">
+            <div class="mt-3 ml-0 ml-md-8 ml-lg-16">
               <div
                 v-for="item in guardian.addressApprove"
                 v-bind:key="item.name"

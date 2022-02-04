@@ -1,19 +1,16 @@
-import store from "@/store";
+import Addresses from '../Addresses';
+
+const { wGOLD, collectibles } = Addresses;
 
 export function getGameItems() {
-  const addresses = store.getters["user/addresses"];
-
-  if (!addresses) {
-    return [];
-  }
 
   return [
     {
       id: 0,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       title: "The Pioneer",
       description:
         '"1 In the beginning Satoshi created the heaven in earth. 2 Darkness was over the surface of the financial world, and the Spirit of Satoshi was hovering over the crisis of 2008. 3 And Satoshi said, “Let there be censorship resistant money,” and there was fairness. 4 Satoshi saw that the Bitcoin was good, and he separated the money from the state. 5 In the beginning of Descentraland the first races came to be. The pioneers of Corporations and Degenerates lived in peace until the first war was inevitable."<br />-Sacred Lore v1 <br /><small><b>No practical effects are known until this moment but tales about this souvenir states that it is a sleeping ring of power</b></small>',
@@ -31,8 +28,8 @@ export function getGameItems() {
       id: 1,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       description:
         '"The Fellowship between races was cherished in older ages before the first war. Until today there are bard songs that sing about a mythical secret society of powerful sages that gather from time to time to define the destinity of Decentraland."<br />- Bard Rumor<br /><small><b>Ticket for participating in a possible DAO.</b></small>',
       title: "The Society",
@@ -50,8 +47,8 @@ export function getGameItems() {
       id: 6,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       title: "Our first beloved hater",
       description:
         '"In the most challenging moment of the battle, in the obscurity of the warrior\'s heart and the blindness of his mind, the most profound hate awakens the strength necessary to triumph." - The Warrior Guide<br /><small><b>This furious item has a positive effect on attack power of your troops in 1%.</b></small>',
@@ -69,8 +66,8 @@ export function getGameItems() {
       id: 7,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       name: '7',
       title: "Gold Saver (10%)",
       description:
@@ -89,8 +86,8 @@ export function getGameItems() {
       id: 8,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       name: '8',
       title: "Gold Saver (15%)",
       description:
@@ -109,8 +106,8 @@ export function getGameItems() {
       id: 9,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       name: '9',
       title: "Gold Saver (20%)",
       description:
@@ -129,9 +126,9 @@ export function getGameItems() {
       id: 10,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
+      contractAddress: collectibles,
       isGift: true,
-      tokenAddress: addresses.wGOLD,
+      tokenAddress: wGOLD,
       title: "The Pionner 48h-Gold Saver (10%)",
       description:
         '"In the old ages the guilds were used to employ mercenaries to amass power, nowadays they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 10% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
@@ -142,8 +139,8 @@ export function getGameItems() {
       isGift: true,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       title: "The Society 48h-Gold Saver (20%)",
       description:
         '"In the old ages the guilds were used to employ mercenaries to amass power, nowadays they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The 48h-Gold Saver is an item that makes you save a 20% of wGOLD whenever staking to produce units for 48h when activated by the game.</b></small>',
@@ -155,8 +152,8 @@ export function getGameItems() {
       id: 12,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       title: "Corp Troop Saver (10%)",
       description:
         '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
@@ -174,8 +171,8 @@ export function getGameItems() {
       id: 13,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       title: "Corp Troop Saver (30%)",
       description:
         '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
@@ -193,8 +190,8 @@ export function getGameItems() {
       id: 14,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       title: "Corp Troop Saver (60%)",
       description:
         '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
@@ -212,8 +209,8 @@ export function getGameItems() {
       id: 15,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       title: "Degen Troop Saver (10%)",
       description:
         '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
@@ -231,8 +228,8 @@ export function getGameItems() {
       id: 16,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       title: "Degen Troop Saver (30%)",
       description:
         '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
@@ -250,8 +247,8 @@ export function getGameItems() {
       id: 17,
       type: "gameItem",
       typeDesc: "Game Items",
-      contractAddress: addresses.collectibles,
-      tokenAddress: addresses.wGOLD,
+      contractAddress: collectibles,
+      tokenAddress: wGOLD,
       title: "Degen Troop Saver (60%)",
       description:
         '"How many barbarian axe holders do you need to make a trained Armored Warrior? Depends on our reserves of wGOLD to throw into the military material. If the war budget is scarce, we get a bunch of soldiers fighting with each other in bare hands, the last men standing gets the job. If the coffers are full, we can get a chainmail for almost everyone." <br />– Chief of Military Training, Battle Diary - page 4.-The Orc Bookkeeper<br /><small><b>The Tropp Saver is an item that makes you save a % of wUNIT whenever staking to produce new units. There are three levels of modifiers 10%, 30% and 60%.</b></small>',
@@ -269,7 +266,7 @@ export function getGameItems() {
       id: 27,
       type: 'spendable',
       typeDesc: 'Transport',
-      contractAddress: addresses.collectibles,
+      contractAddress: collectibles,
       isGift: false,
       title: "Free Transport",
       description: "I am an active transporter. However, for some particular fellows, I can carry some items without charge my regular fee. WARNING: This is a spendable item.",
@@ -279,7 +276,7 @@ export function getGameItems() {
       id: 28,
       type: 'gameItem',
       typeDesc: 'Game Items',
-      contractAddress: addresses.collectibles,
+      contractAddress: collectibles,
       isGift: false,
       title: "Experience Ring",
       description: `And to you my youngest son I leave you this. This ring is for you to measure how much you already learned from life. As you get older it will change its appearance, in the moment you wear it its stone will turn to white, as you learn from difficulties it will get green, yellow, red, blue and eventually purple. I desire you were destined to a simpler life but with the responsibilities you heir I think your purple will be more intense than mine.
@@ -290,17 +287,18 @@ export function getGameItems() {
       id: 49,
       type: 'gameItem',
       typeDesc: 'Game Items',
-      contractAddress: addresses.collectibles,
+      contractAddress: collectibles,
       isGift: false,
       title: "Worker",
       description: "Workers are essential in Arcadia. They will carry on working effortlessly and effectively for as long as necessary in order to clean up the lands and build up strong foundations for generations to come.",
       image: "/images/nfts/worker.png",
+      icon: 'worker',
     },
     // {
     //   id: 63,
     //   type: "gameItem",
     //   typeDesc: "Game Items",
-    //   contractAddress: addresses.collectibles,
+    //   contractAddress: collectibles,
     //   title: "Gold Saver (10%) (Spendable)",
     //   description:
     //     '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
@@ -337,7 +335,7 @@ export function getGameItems() {
     //   id: 64,
     //   type: "gameItem",
     //   typeDesc: "Game Items",
-    //   contractAddress: addresses.collectibles,
+    //   contractAddress: collectibles,
     //   title: "Gold Saver (15%) (Spendable)",
     //   description:
     //     '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',
@@ -374,7 +372,7 @@ export function getGameItems() {
     //   id: 65,
     //   type: "gameItem",
     //   typeDesc: "Game Items",
-    //   contractAddress: addresses.collectibles,
+    //   contractAddress: collectibles,
     //   title: "Gold Saver (20%) (Spendable)",
     //   description:
     //     '"In the old ages the guilds were used to employ mercenaries to amass power, now a days they are tools of bargain."<br />-The Orc Bookkeeper<br /><small><b>The Gold Saver is an item that makes you save a % of wGOLD whenever staking to produce units. There are three levels of modifiers 10%, 15% and 20%.</b> WARNING: This is a spendable item.</small>',

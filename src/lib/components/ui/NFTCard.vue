@@ -6,12 +6,26 @@
         class="cursor-pointer"
         @click="openInfo()"
         :src="collectible.image"
+        :lazy-src="collectible.image"
         :gradient="
           remaining === 0 && !myCollection
             ? `to top right, rgba(100,115,201,.10), rgba(25,32,72,.7)`
             : ''
         "
-      ></v-img>
+      >
+        <template v-slot:placeholder>
+          <v-row
+            class="fill-height ma-0"
+            align="center"
+            justify="center"
+          >
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+      </v-img>
       <div class="mt-1">
         <game-text>{{ collectible.title }}</game-text>
       </div>
@@ -353,7 +367,7 @@ export default {
       }
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
       this.collectiblesContract = new Collectibles(
-        this.collectible.contractAddress
+        this.collectible.contractAddress[this.networkInfo.id]
       );
     },
 
@@ -436,11 +450,11 @@ export default {
       try {
         const res = await wgold.approve(
           this.account,
-          this.collectible.contractAddress
+          this.collectible.contractAddress[this.networkInfo.id]
         );
         this.isApprovedwGOLD = await this.wGOLDContract.hasAllowance(
           this.account,
-          this.collectible.contractAddress
+          this.collectible.contractAddress[this.networkInfo.id]
         );
       } catch (e) {
         console.log(e);

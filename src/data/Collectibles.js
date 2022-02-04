@@ -1,4 +1,3 @@
-import store from "@/store";
 import { getGameItems } from "./Collectibles/GameItems";
 import { getLegendaryRelics } from "./Collectibles/LegendaryRelics";
 import { getWeapons } from "./Collectibles/Weapons";
@@ -7,12 +6,6 @@ import { getFoundations } from "./Collectibles/Foundations";
 import { getArcadia } from "./Collectibles/Arcadia";
 
 export function getCollectibles() {
-  const addresses = store.getters["user/addresses"];
-
-  if (!addresses) {
-    return [];
-  }
-
   return [].concat(getGameItems(), getLegendaryRelics(), getWeapons(), getMagicalItems(), getFoundations(), getArcadia());
 }
 

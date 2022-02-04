@@ -6,7 +6,7 @@
       >
     </div>
     <div v-else>
-      <v-container fluid>
+      <v-container>
         <v-row>
           <v-col cols="12" md="4" class="pr-0 pl-1">
             <game-text header="h3" class="text-center">
