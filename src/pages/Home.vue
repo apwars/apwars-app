@@ -67,7 +67,7 @@
               />
             </div>
             <div class="d-flex justify-center mt-1">
-              <wButton @click="buywLAND()" class="mt-1">
+              <wButton @click="$router.push('/buy-wland')" class="mt-1">
                 <span class="text-none text-center">
                   Buy wLAND
                 </span>
@@ -234,10 +234,6 @@ export default {
       return wallet.balances["wSCARS"];
     },
 
-    buywLAND() {
-      window.location.href =
-        "https://pancakeswap.finance/swap?outputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
-    },
   },
 };
 </script>
