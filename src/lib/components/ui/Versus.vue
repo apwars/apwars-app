@@ -47,7 +47,7 @@
       <template v-if="phase !== 'not-started'">
       <div :class="['winner-prize', degenForce > corpForce ? 'invert' : '']">
         <div class="d-sm-none">Winner Prize</div>
-        <IconInfo id="wgold-prize" iconPath="/images/wgold.png" :title="isWarFinished ? 'Unlocked Prize' : 'Locked Prize'">
+        <IconInfo id="wgold-prize" iconPath="/images/wgold.png" title="PRIZE">
           <span class="prize-text"
             >~<Amount :amount="winnerAmount" formatted compact />
             <span class="game-text">wGOLD</span></span
@@ -55,7 +55,7 @@
         </IconInfo>
         <IconInfo
           iconPath="/images/battle/burned.png"
-          title="Locked Prize"
+          title="BURNED PRIZE"
           v-if="burnAmount"
         >
           <span class="prize-text"

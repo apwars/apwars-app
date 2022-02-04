@@ -288,8 +288,7 @@
                   <br />
                   - The majority of them might die in the war, even if you win
                   the battle, <br />
-                  - When the war is over, you’ll have 48 hours to claim your
-                  prizes.
+                  - When the war is over, you'll have 48 hours to claim your prizes and bring soldiers home. After this period you will lose all of them (wUNITs and Prizes) if you don't.
                   <br />
                 </p>
                 <v-checkbox
