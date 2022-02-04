@@ -29,5 +29,13 @@ export default {
     state.avatar = avatar;
 
     localStorage.setItem("avatar", avatar);
+  },
+
+  setBalances(state, balances) {
+    state.balances = balances;
+  },
+
+  setLoadingBalances(state, loading) {
+    state.isLoadingBalances = loading;
   }
 };

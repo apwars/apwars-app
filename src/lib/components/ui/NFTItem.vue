@@ -87,12 +87,12 @@ export default {
     async loadData() {
       try {
         this.isLoading = true;
-        const collectibles = new Collectibles(this.collectible.contractAddress);
+        const collectibles = new Collectibles(this.collectible.contractAddress[this.networkInfo.id]);
         const wgold = new wGOLD(this.addresses.wGOLD);
 
         this.isApproved = await wgold.hasAllowance(
           this.account,
-          this.collectible.contractAddress
+          this.collectible.contractAddress[this.networkInfo.id]
         );
 
         if (!this.collectible.isGift) {

@@ -11,7 +11,9 @@ const state = {
   avatar: avatar ? avatar : "corp",
   networkInfo: { definedNetwork: process.env.VUE_APP_BSC_NETWORK },
   addresses: {},
-  currentBlockNumber: 0
+  currentBlockNumber: 0,
+  balances: null,
+  isLoadingBalances: false,
 };
 
 export default {

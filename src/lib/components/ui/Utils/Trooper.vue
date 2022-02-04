@@ -2,7 +2,23 @@
   <div>
     <div class="d-flex justify-center" v-bind:class="{ disabled: info.disabled }">
       <div class="align-self-center">
-        <v-img width="160" :src="`/images/troops/${info.name}.png`" />
+        <v-img
+          width="160"
+          :src="`/images/troops/${info.name}.png`"
+          :lazy-src="`/images/troops/${info.name}.png`">
+          <template v-slot:placeholder>
+            <v-row
+              class="fill-height ma-0"
+              align="center"
+              justify="center"
+            >
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
       </div>
       <div class="ml-1 align-self-center">
         <div :class="$vuetify.breakpoint.mobile ? 'stats mt-2' : 'stats mt-6'">Stats</div>
@@ -27,19 +43,18 @@
           </div>
         </div>
 
-        <div v-if="$vuetify.breakpoint.mobile"
+        <div v-if="$vuetify.breakpoint.smAndDown"
           class="d-flex flex-column justify-center mt-2">
           <v-img
             class="mb-1"
             max-width="86"
-            max-height="50"
             :src="`/images/tier-${info.tier}.png`"
           />
           <a
             :href="`${redirectTo}=${info.contractAddress[this.networkInfo.id]}`">
             <wButton
               style="color: #fff"
-              width="70px" height="40">
+              width="80px" height="40">
               <div class="d-flex justify-center">
                 <img
                   src="/images/buttons/btn-icon-buy.svg"
@@ -53,17 +68,16 @@
         </div>
 
         <div v-else
-          class="d-flex justify-center mt-3">
+          class="d-flex justify-center align-center mt-3">
           <v-img
             class="mr-1"
-            max-width="80"
-            max-height="40"
+            max-width="90"
             :src="`/images/tier-${info.tier}.png`"
           />
           <a :href="`${redirectTo}=${info.contractAddress[this.networkInfo.id]}`">
             <wButton
-              style="margin-top: -2px; color: #fff"
-              width="50px" height="40">
+              style="margin-top: 2.5px; color: #fff"
+              width="75px" height="55">
               <div class="d-flex justify-center">
                 <img
                   src="/images/buttons/btn-icon-buy.svg"

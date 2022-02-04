@@ -7,6 +7,7 @@
       isBlock ? 'is-block' : '',
       noPadding ? 'no-padding' : '',
     ]"
+    :style="`--color: ${color};`"
     @click="handleClick"
     :disabled="disabled"
   >
@@ -68,6 +69,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    color: {
+      type: String,
+      default: '#3a2720',
+    }
   },
 };
 </script>
@@ -78,7 +83,7 @@ export default {
   justify-content: center;
   align-items: center;
   border: 1px solid white;
-  color: #3a2720;
+  color: var(--color);
   text-align: center;
   font-weight: bold;
   font-size: 16px;
@@ -103,20 +108,19 @@ export default {
   &:hover:enabled {
     cursor: pointer;
     background-color: #e5e5e5;
-    border: 1px solid #3a2720;
+    border: 1px solid var(--color);
   }
-
   &.is-block {
     width: 100%;
   }
   &.wprimary {
-    background-color: #3a2720;
+    background-color: var(--color);
     border: 1px solid #ffeebc;
     color: #fff;
     &:hover:enabled {
       background-color: #e5e5e5;
-      border: 1px solid #3a2720;
-      color: #3a2720;
+      border: 1px solid var(--color);
+      color: var(--color);
     }
   }
   &.wsecondary {
@@ -125,8 +129,8 @@ export default {
     color: #ffeebc;
     &:hover:enabled {
       background-color: #e5e5e5 !important;
-      border: 1px solid #3a2720;
-      color: #3a2720;
+      border: 1px solid var(--color);
+      color: var(--color);
     }
   }
   &.wtertiary {

@@ -3,8 +3,7 @@
     <span class="text">{{ text }}</span><slot></slot>
     <div class="subtitle mt-1" v-if="subtitle">{{ subtitle }}</div>
     <div class="decoration"></div>
-    <a class="linked-tip mt-1" v-if="tipRedirect" :href="tipRedirect" target="_blank">{{ tip }}</a>
-    <div class="tip mt-1" v-else>{{ tip }}</div>
+    <a class="linked-tip mt-1" v-if="tipHandler" target="_blank" @click="() => tipHandler()">{{ tip }}</a>
   </div>
 </template>
 <script>
@@ -22,9 +21,9 @@ export default {
       type: String,
       default: "",
     },
-    tipRedirect: {
-      type: String,
-      default: "",
+    tipHandler: {
+      type: Function,
+      default: () => {},
     },
   },
 };

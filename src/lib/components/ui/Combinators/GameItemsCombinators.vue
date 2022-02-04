@@ -8,11 +8,25 @@
         <v-img
           :width="$vuetify.breakpoint.mobile ? 130 : 165"
           :src="gameItems.image"
-        />
+          :lazy-src="gameItems.image"
+        >
+          <template v-slot:placeholder>
+            <v-row
+              class="fill-height ma-0"
+              align="center"
+              justify="center"
+            >
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
       </div>
-      <div v-if="isLoadingUnit" class="ml-1 align-self-start">
+      <div v-if="isLoadingUnit" class="ml-1 align-self-start info-card">
         <div class="title">Necessary Resources</div>
-        <div class="d-flex qty">
+        <div class="d-flex align-center qty">
           <v-img
             class="mr-1"
             max-width="30px"
@@ -28,7 +42,7 @@
             :symbol="tokenAName"
           />
         </div>
-        <div class="d-flex mt-1 qty">
+        <div class="d-flex align-center mt-1 qty">
           <v-img
             class="mr-1"
             max-width="26px"
@@ -59,8 +73,8 @@
 
           <div class="d-flex flex-column">
             <span class="d-flex align-items-center justify-content-justify">
-              <span>
-                Working time:
+              <span style="white-space: nowrap;">
+                Working time: <br v-if="$vuetify.breakpoint.width < 401" />
                 <amount
                   :amount="getGeneralConfig.blocks"
                   decimals="0"
@@ -69,18 +83,17 @@
                 blocks
               </span>
             </span>
-            <span><time-block :blocks="getGeneralConfig.blocks"/></span>
+            <span style="white-space: nowrap;"><time-block :blocks="getGeneralConfig.blocks"/></span>
           </div>
         </div>
         <hr />
-        <div class="d-flex mt-1 qty" v-if="gameItems.image">
+        <div class="d-flex align-center mt-1 qty" v-if="gameItems.image">
           <img
             class="mr-1"
-            max-width="30px"
             height="40px"
             :src="gameItems.combinators.warPreparation.image"
           />
-          <span style="margin-top: -5px">
+          <span :style="$vuetify.breakpoint.lgAndUp ? 'white-space: nowrap;' : ''">
             Item conquered: <br />
             <amount
               :amount="getGameItemCConfig.amount"
@@ -744,24 +757,32 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.info-card {
+  width: 250px;
+  @media only screen and (min-width: 600px){
+    width: 280px;
+  }
+}
+
 .title {
   font-weight: bold;
   font-size: 28px;
 }
 .qty {
-  color: #ffb800;
+  /* color: #ffb800; */
   font-weight: bold;
   font-size: 16px;
 }
 .globalQty {
-  color: #f6ff00;
+  /* color: #f6ff00; */
   font-weight: bold;
   font-size: 16px;
 }
 .qty >>> span,
 .globalQty >>> span {
   color: #fff;
+  font-weight: bold;
 }
 .current-price {
   font-weight: bold;

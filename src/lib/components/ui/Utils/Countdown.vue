@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4 class="text-wGOLD text-center text-h4 text-md-h4 ma-0 mt-1">
+    <h4 :class="['title', 'text-center', 'text-h4', 'text-md-h4', 'ma-0', 'mt-1', titleColor ? 'custom-color' : 'text-wGOLD']" :style="`--color: ${titleColor}`">
       {{ title }}
     </h4>
     <div class="d-flex justify-center mt-2">
@@ -18,40 +18,52 @@
       >
         <template slot-scope="props">
           <div class="block-time">
-            <div class="title">Days</div>
-            <v-img
-              class="img"
-              src="/images/buttons/btn-countdown.png"
-              alt="countdown-days"
-            />
-            <div class="text-wGOLD text-center timer">{{ props.days }}</div>
+            <div class="timer-title">Days</div>
+            <div class="timer-slot">
+              <v-img
+                class="img"
+                src="/images/buttons/btn-countdown.png"
+                alt="countdown-days"
+              />
+              <div class="text-wGOLD text-center timer">{{ props.days }}</div>
+            </div>
           </div>
           <div class="block-time">
-            <div class="title">Hours</div>
-            <v-img
-              class="img"
-              src="/images/buttons/btn-countdown.png"
-              alt="countdown-hours"
-            />
-            <div class="text-wGOLD text-center timer">{{ props.hours }}</div>
+            <div class="timer-title">Hours</div>
+            <div class="timer-slot">
+              <v-img
+                class="img"
+                src="/images/buttons/btn-countdown.png"
+                alt="countdown-hours"
+              />
+              <div class="text-wGOLD text-center timer">{{ props.hours }}</div>
+            </div>
           </div>
           <div class="block-time">
-            <div class="title">Minutes</div>
-            <v-img
-              class="img"
-              src="/images/buttons/btn-countdown.png"
-              alt="countdown-minutes"
-            />
-            <div class="text-wGOLD text-center timer">{{ props.minutes }}</div>
+            <div class="timer-title">Minutes</div>
+            <div class="timer-slot">
+              <v-img
+                class="img"
+                src="/images/buttons/btn-countdown.png"
+                alt="countdown-minutes"
+              />
+              <div class="text-wGOLD text-center timer">
+                {{ props.minutes }}
+              </div>
+            </div>
           </div>
           <div class="block-time">
-            <div class="title">Seconds</div>
-            <v-img
-              class="img"
-              src="/images/buttons/btn-countdown.png"
-              alt="countdown-seconds"
-            />
-            <div class="text-wGOLD text-center timer">{{ props.seconds }}</div>
+            <div class="timer-title">Seconds</div>
+            <div class="timer-slot">
+              <v-img
+                class="img"
+                src="/images/buttons/btn-countdown.png"
+                alt="countdown-seconds"
+              />
+              <div class="text-wGOLD text-center timer">
+                {{ props.seconds }}
+              </div>
+            </div>
           </div>
         </template>
       </countdown>
@@ -66,8 +78,12 @@ export default {
     title: String,
     hideEnd: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
+    titleColor: {
+      type: String,
+      default: '',
+    },
   },
 
   computed: {
@@ -79,23 +95,28 @@ export default {
 </script>
 
 <style scoped>
+.title.custom-color {
+  color: var(--color);
+}
 .countdown >>> .block-time {
   position: relative;
   margin: 0px 10px;
 }
 
-.countdown >>> .block-time .title {
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translate(-50%, 0%);
+.timer-title {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 4px;
 }
 
 .countdown >>> .block-time .img {
   width: 80px;
 }
 
-.countdown >>> .block-time .timer {
+.timer-slot {
+  position: relative;
+}
+.timer {
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;

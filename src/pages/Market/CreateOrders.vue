@@ -451,7 +451,7 @@ export default {
       });
 
       this.collectibleContract = new Collectibles(
-        this.collectible.contractAddress
+        this.collectible.contractAddress[this.networkInfo.id]
       );
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
@@ -587,7 +587,7 @@ export default {
 
         const confirmTransaction = this.marketNFTS.createOrder(
           this.buyOrSell === "buy" ? "0" : "1",
-          this.collectible.contractAddress,
+          this.collectible.contractAddress[this.networkInfo.id],
           this.collectible.id,
           this.addresses.wGOLD,
           this.amount,

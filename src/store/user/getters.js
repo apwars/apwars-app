@@ -5,5 +5,5 @@ export default {
   avatar: state => state.avatar,
   networkInfo: state => state.networkInfo,
   addresses: state => state.addresses,
-  currentBlockNumber: state => state.currentBlockNumber
+  currentBlockNumber: state => state.currentBlockNumber,
 };

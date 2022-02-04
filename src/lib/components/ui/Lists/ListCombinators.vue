@@ -5,8 +5,8 @@
       v-if="isConnected && !isLoading"
     >
       <div v-if="type === 'weapons'">
-        <v-row :no-gutters="$vuetify.breakpoint.mobile">
-          <v-col cols="12" lg="3">
+        <v-row :no-gutters="$vuetify.breakpoint.smAndDown">
+          <v-col cols="12" md="3">
             <v-select
               v-model="select.teams"
               :items="filter.teamDesc"
@@ -18,7 +18,7 @@
             >
             </v-select>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" md="3">
             <v-select
               v-model="select.tiers"
               :items="filter.tierDesc"
@@ -30,7 +30,7 @@
             >
             </v-select>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" md="3">
             <v-select
               v-model="select.races"
               :items="filter.raceDesc"
@@ -42,7 +42,7 @@
             >
             </v-select>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" md="3">
             <v-select
               v-model="select.names"
               :items="filter.name"
@@ -65,7 +65,7 @@
         </v-row>
         <v-row class="mt-0 mt-lg-n5 mb-3">
           <v-col class="py-0 my-0" cols="12">
-            <div class="d-flex flex-column flex-md-row align-center">
+            <div class="d-flex flex-column flex-md-row align-left">
               <wButton @click="clearFilters()" class=" mr-3">
                 <div class="d-flex justify-center">
                   <v-icon class="mx-1">
@@ -87,8 +87,7 @@
       <v-row v-if="filterTroops.length > 0">
         <v-col
           cols="12"
-          lg="6"
-          xl="4"
+          md="6"
           v-for="trooper in filterTroops"
           v-bind:key="trooper.name"
         >
