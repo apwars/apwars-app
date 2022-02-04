@@ -622,17 +622,10 @@ export default {
       return `${wallet.substring(0, 5)}...${wallet.substring(end - 3, end)}`;
     },
     handleClickFaction(faction) {
-      if (this.playerEnlistment) {
-        this.$router.push({
-          path: `/war/enlistment/${faction}/battle`,
-          query: { warId: this.$route.query.warId },
-        });
-      } else {
-        this.$router.push({
-          path: `/war/enlistment/${faction}`,
-          query: { warId: this.$route.query.warId },
-        });
-      }
+      this.$router.push({
+        path: `/war/enlistment/${faction}/battle`,
+        query: { warId: this.$route.query.warId },
+      });
     },
     handleTourDone() {
       if (this.showTour) {
