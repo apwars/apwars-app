@@ -84,7 +84,7 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 import LPController from "@/controller/LPController";
 import WalletController from "@/controller/WalletController";
 import NFTsController from "@/controller/NFTsController";
-import Amount from "../lib/components/ui/Utils/Amount.vue";
+import Amount from "@/lib/components/ui/Utils/Amount.vue";
 
 export default {
   components: { Title, LPCard, Button, Amount },
@@ -199,9 +199,9 @@ export default {
           );
           lpToken.balanceLP = balanceLP;
           lpToken.totalDistributionPerHour =
-            infoLP[lpToken.base].distributionPerHour;
+            infoLP[lpToken.base].lastDistributionPerHour;
           lpToken.accountDistributionPerHour =
-            infoLP[lpToken.base].distributionPerHour * balanceLP.percentage;
+            infoLP[lpToken.base].lastDistributionPerHour * balanceLP.percentage;
         }
         this.isLoading = false;
       } catch (error) {

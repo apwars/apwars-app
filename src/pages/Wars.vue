@@ -77,8 +77,12 @@
           <h1 class="text-h1 text-wGOLD text-center">Wars</h1>
         </v-col>
 
-        <v-col v-for="war in wars" v-bind:key="war.name" cols="12">
+        <!-- <v-col v-for="war in wars" v-bind:key="war.name" cols="12">
           <war-info :war="war"></war-info>
+        </v-col> -->
+
+        <v-col cols="12">
+          <h1 class="text-h1 text-wGOLD text-center">Waiting next war</h1>
         </v-col>
       </v-row>
 

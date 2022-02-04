@@ -265,7 +265,7 @@
                     :balanceLand="balanceLand"
                     :supplyWland="supplyWland"
                   >
-                  </table-resources> 
+                  </table-resources>
                 </v-col>
               </v-row>
             </v-container>
@@ -276,7 +276,7 @@
             <v-container>
               <v-row>
                 <v-col>
-                  <table-troops />  
+                  <table-troops />
                 </v-col>
               </v-row>
             </v-container>
@@ -324,7 +324,7 @@ import GuardiansApproved from "@/lib/components/ui/Guardians/GuardiansApproved";
 
 import TableResources from "@/lib/components/ui/Utils/Tables/TableResources";
 import TableTroops from "@/lib/components/ui/Utils/Tables/TableTroops";
-import ListUnits from '../lib/components/ui/Lists/ListUnits.vue';
+import ListUnits from "../lib/components/ui/Lists/ListUnits.vue";
 
 export default {
   components: {
@@ -340,7 +340,7 @@ export default {
     GuardiansApproved,
     TableResources,
     TableTroops,
-    ListUnits
+    ListUnits,
   },
   data() {
     return {
@@ -435,6 +435,7 @@ export default {
         this.collectibleContract = new Collectibles(
           this.addresses.collectibles
         );
+
         const wgold = new wGOLD(this.addresses.wGOLD);
         const wcourage = new wCOURAGE(this.addresses.wCOURAGE);
         const wland = new wLAND(this.addresses.wLAND);
@@ -449,6 +450,11 @@ export default {
         this.supplyWland = await wland.totalSupply();
 
         this.collectibles = getCollectibles();
+                this.collectibles = this.collectibles.filter(
+          (collectible) => {
+            return !collectible.hideBlackMarket;
+          }
+        );
         this.balances = await Promise.all(
           this.collectibles.map((item) => {
             const collectibles = new Collectibles(item.contractAddress[this.networkInfo.id]);
