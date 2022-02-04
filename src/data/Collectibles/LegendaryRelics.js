@@ -315,6 +315,7 @@ export function getLegendaryRelics() {
       title: "Memorable Victory",
       description: "I can forget a lot of things but not the great war. It is like if I lived to expect it and then to remember it - War veteran",
       image: "/images/nfts/war-memorable-victory.png",
+      icon: "memorable-victory",
     },
     {
       id: 71,
