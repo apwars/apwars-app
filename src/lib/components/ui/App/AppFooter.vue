@@ -235,11 +235,11 @@ export default {
               href: "/packs",
               image: "/images/icons/army.png",
             },
-            {
-              title: "War against FED",
-              image: "/images/icons/fed.png",
-              href: "/war/intro",
-            },
+            // {
+            //   title: "War against FED",
+            //   image: "/images/icons/fed.png",
+            //   href: "/war/intro",
+            // },
             {
               title: "War Preparation",
               image: "/images/war-preparation/icon-war-preparation.png",

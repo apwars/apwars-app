@@ -267,6 +267,11 @@
           </div>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col class="d-flex justify-center">
+          <Button type="wsecondary" text="Skip enlistment and go to War" :handleClick="skipEnlistment" />
+        </v-col>
+      </v-row>
       </template>
     </v-container>
   </div>
@@ -328,6 +333,9 @@ export default {
     goToEnlistment(raceId) {
       this.$router.push({ path: `/war/enlistment/${raceId}`});
     },
+    skipEnlistment() {
+      this.$router.push('/war');
+    },
     async checkSoldier() {
       const controller = new SoldierController();
       try {
@@ -348,9 +356,9 @@ export default {
       if (this.account && !this.isLoadingWar) {
         await this.getWar();
         await this.checkSoldier();
-        if (!this.introWar) {
-          this.$router.push('/war');
-        }
+        // if (!this.introWar) {
+        //   this.$router.push('/war');
+        // }
       }
     },
     hasCompleteFormation(race) {
