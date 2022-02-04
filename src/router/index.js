@@ -22,7 +22,7 @@ import StarterPacks from "@/pages/StarterPacks.vue";
 import Leaderboard from "@/pages/Leaderboard.vue";
 import Bridge from "@/pages/Bridge.vue";
 import Battle from "@/pages/Game/Battle.vue";
-import LoyaltyProgram from "@/pages/LoyaltyProgram.vue";
+import LoyaltyProgram from "@/pages/Loyalty/Program.vue";
 import LoyaltyShop from "@/pages/Loyalty/Shop.vue";
 
 Vue.use(Router);
