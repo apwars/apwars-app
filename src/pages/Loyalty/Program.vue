@@ -84,6 +84,7 @@
                   {{ new Date(item.createdOn).toLocaleString(userLocale) }}
                 </template>
               </v-data-table>
+              <div class="small-text">Showing transactions from the last 48h</div>
           </v-col>
       </v-row>
       </template>
@@ -313,5 +314,11 @@ export default {
     height: 2px;
     width: auto;
   }
+}
+.small-text {
+    width: 100%;
+    font-size: 12px;
+    text-align: right;
+    margin-top: 4px;
 }
 </style>
