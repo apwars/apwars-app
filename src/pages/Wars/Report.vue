@@ -565,7 +565,7 @@
                   {{ compactWallet(item.data.to) }}
                 </template>
                 <template v-slot:item.createdOn="{ item }">
-                  {{ new Date(item.createdOn).toLocaleString("en-US") }}
+                  {{ new Date(item.createdOn).toLocaleString(userLocale) }}
                 </template>
               </v-data-table>
             </template>
@@ -743,6 +743,10 @@ export default {
     monsterPrizeValue() {
       return this.getRaceMonsterPrizeValue(RACE_DESCRIPTION[this.selectedRace]);
     },
+
+    userLocale() {
+        return window.navigator.userLanguage || window.navigator.language
+    }
   },
 
   watch: {
