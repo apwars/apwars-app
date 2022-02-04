@@ -364,7 +364,7 @@ export default {
       isRewardOverlayActive: false,
       isChestOpen: false,
       showTour: true,
-      skipTour: false,
+      tourSkip: false,
       steps: [
         {
           target: "#board-title",
