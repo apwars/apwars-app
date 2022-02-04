@@ -356,9 +356,9 @@ export default {
       if (this.account && !this.isLoadingWar) {
         await this.getWar();
         await this.checkSoldier();
-        // if (!this.introWar) {
-        //   this.$router.push('/war');
-        // }
+        if (!this.introWar) {
+          this.$router.push('/war');
+        }
       }
     },
     hasCompleteFormation(race) {
