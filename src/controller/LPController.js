@@ -24,4 +24,12 @@ export default class LPController {
   }
 
 
+  report() {
+    try {
+      return this.base._get(`/lp/report`);
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
