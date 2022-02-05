@@ -56,7 +56,9 @@
               :src="nftCollectible.image"
             />
             <div class="text-center">
-              <p class="remaining" @click="getQuantity()">You have: {{ userAmount }} units</p>
+              <p class="remaining" @click="getQuantity()">
+                You have: {{ userAmount }} units
+              </p>
             </div>
           </v-col>
           <v-col class="mt-n6 mt-md-0" cols="12" lg="9" md="9">
@@ -342,7 +344,7 @@ export default {
       waitingStage: 0,
       alert: false,
       fillItemsQuantity: 0,
-      countClicks: 0
+      countClicks: 0,
     };
   },
 
@@ -353,6 +355,10 @@ export default {
 
     account() {
       return this.$store.getters["user/account"];
+    },
+
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
     },
 
     addresses() {
@@ -644,13 +650,13 @@ export default {
 
     getQuantity() {
       if (this.userAmount === 0) {
-        return
+        return;
       } else {
         this.quantity = this.userAmount;
         this.fillItemsQuantity = this.userAmount;
-        this.countClicks ++;
+        this.countClicks++;
       }
-    }
+    },
   },
 };
 </script>
