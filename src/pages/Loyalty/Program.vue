@@ -84,7 +84,7 @@
         <v-row>
           <v-col>
             <div class="medium-text">
-              Showing transactions from the last 48h
+              Your rewards in the last 48h
             </div>
             <v-data-table :headers="headers" :items="transactions">
               <template v-slot:[`item.data.tokenSymbol`]="{ item }">
