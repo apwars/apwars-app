@@ -16,7 +16,7 @@
               <countdown class="mt-3" :time="nextWar" hideEnd />
             </div>
             <div class="d-flex justify-center mt-1">
-              <wButton @click="$router.push('/wars')" class="mt-1">
+              <wButton @click="$router.push('/war')" class="mt-1">
                 <span class="text-none text-center">Go to War</span>
               </wButton>
             </div>
