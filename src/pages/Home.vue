@@ -84,7 +84,7 @@
               <img
                 src="/images/tmj.png"
                 height="90px"
-                class="mt-5 m-2"
+                class="mt-5 mb-2"
                 alt="the monstrous journey"
               />
             </div>
