@@ -16,7 +16,7 @@
               <countdown class="mt-3" :time="nextWar" hideEnd />
             </div>
             <div class="d-flex justify-center mt-1">
-              <wButton @click="$router.push('/wars')" class="mt-1" disabled="true">
+              <wButton @click="$router.push('/wars')" class="mt-1">
                 <span class="text-none text-center">Go to War</span>
               </wButton>
             </div>
@@ -84,7 +84,7 @@
               <img
                 src="/images/tmj.png"
                 height="90px"
-                class="mt-5 mb-2"
+                class="mt-5 m-2"
                 alt="the monstrous journey"
               />
             </div>
