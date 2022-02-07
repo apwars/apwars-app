@@ -24,6 +24,7 @@ import Bridge from "@/pages/Bridge.vue";
 import Battle from "@/pages/Game/Battle.vue";
 import LoyaltyProgram from "@/pages/Loyalty/Program.vue";
 import LoyaltyShop from "@/pages/Loyalty/Shop.vue";
+import StartSwap from "@/pages/StartSwap.vue";
 
 Vue.use(Router);
 
@@ -147,6 +148,11 @@ export const routes = [
         path: "/loyalty-program/shop",
         name: "loyalty-shop",
         component: LoyaltyShop
+      },
+      {
+        path: "/start-swap",
+        name: "start-swap",
+        component: StartSwap
       },
       {
         path: "/farms",
