@@ -331,6 +331,28 @@
                   <div class="text-subtitle-2 primary--text">Score</div>
                   <div>{{ player.score }} pts</div>
                 </div>
+
+                <div
+                  class="d-flex flex-column justify-center align-center mx-2"
+                >
+                  <div class="text-subtitle-2 primary--text">Prize</div>
+                  <div
+                    v-if="
+                      prizeDaily[index + (pageDaily - 1) * limit] === undefined
+                    "
+                  >
+                    No Prize
+                  </div>
+                  <div v-else class="d-flex justify-center align-center">
+                    {{ prizeDaily[index + (pageDaily - 1) * limit] }}
+                    <img
+                      class="ml-1"
+                      height="25px"
+                      src="/images/wSCARS.png"
+                      alt="wSCARS"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -456,6 +478,27 @@
                   <div class="text-subtitle-2 primary--text">Score</div>
                   <div>{{ player.score }} pts</div>
                 </div>
+                <div
+                  class="d-flex flex-column justify-center align-center mx-2"
+                >
+                  <div class="text-subtitle-2 primary--text">Prize</div>
+                  <div
+                    v-if="
+                      prizeWeekly[index + (pageWeek - 1) * limit] === undefined
+                    "
+                  >
+                    No Prize
+                  </div>
+                  <div v-else class="d-flex justify-center align-center">
+                    {{ prizeWeekly[index + (pageWeek - 1) * limit] }}
+                    <img
+                      class="ml-1"
+                      height="25px"
+                      src="/images/wGOLD.png"
+                      alt="wGOLD"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -541,6 +584,30 @@ export default {
           prizeAmount: 1000,
           prize: "wGOLD",
         },
+      ],
+      prizeDaily: [
+        "10000",
+        "6000",
+        "2000",
+        "500",
+        "500",
+        "500",
+        "500",
+        "500",
+        "500",
+        "500",
+      ],
+      prizeWeekly: [
+        "5000",
+        "2000",
+        "1000",
+        "250",
+        "250",
+        "250",
+        "250",
+        "250",
+        "250",
+        "250",
       ],
       limit: 6,
       pageDaily: 1,
