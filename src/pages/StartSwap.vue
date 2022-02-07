@@ -94,12 +94,12 @@
               >
               to this wallet in BSC
             </div>
-            <div class="wallet">0x888259858492818961a847B5194091e484e7b786</div>
+            <div class="wallet d-flex align-center justify-center"><div class="wallet">{{ wallet }}</div> <v-icon class="ml-1 icon" @click="() => copyToClipboard(wallet)">mdi-content-copy</v-icon></div>
             <div>
               <div class="step-title mt-2">
                 Paste the transaction hash in the field below
               </div>
-              <v-text-field v-model="txHash" full-width></v-text-field>
+              <v-text-field v-model="txHash" full-width><template v-slot:append><v-icon class="ml-1 icon" @click="pasteFromClipboard">mdi-transfer-down</v-icon></template></v-text-field>
             </div>
             <div class="step-title mt-2">Select your Soldier NFT on APWARS</div>
             <div class="swap-options-container mt-2">
@@ -241,6 +241,7 @@ export default {
       swapOptions: [],
       txHash: "",
       isLoadingSwap: false,
+      wallet: '0x888259858492818961a847B5194091e484e7b786',
     };
   },
   methods: {
@@ -258,6 +259,23 @@ export default {
     },
     handleLink(link) {
       window.open(link, "_blank");
+    },
+    async copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        ToastSnackbar.success('Copied!');
+      } catch (error) {
+        ToastSnackbar.error('Not Copied, please manually select and copy!');
+      }
+    },
+    async pasteFromClipboard() {
+      try {
+        const text = await navigator.clipboard.readText();
+        this.txHash = text;
+        ToastSnackbar.success('Pasted!');
+      } catch (error) {
+        ToastSnackbar.error('Not Pasted, please manually select and paste!');
+      }
     },
     async fetchOptions() {
       this.isLoading = true;
@@ -471,6 +489,14 @@ export default {
       cursor: pointer;
       text-decoration: underline;
     }
+  }
+}
+
+.icon {
+  color: inherit;
+  &:hover {
+    color: white;
+    cursor: pointer;
   }
 }
 </style>
