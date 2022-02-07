@@ -73,7 +73,8 @@
           </div>
           <div class="swap-container">
             <div class="step-title">Select where you are coming from</div>
-            <div class="swap-options-container mt-2">
+            <v-skeleton-loader v-if="isLoading" type="image" height="64px" width="80px" />
+            <div v-else class="swap-options-container mt-2">
               <div
                 :class="[
                   'swap-option',
@@ -160,6 +161,38 @@
               allowfullscreen
             ></iframe>
           </div>
+          <div class="footer mt-3">
+            <div
+              class="link d-flex align-center"
+              @click="() => handleLink('https://t.me/apwars')"
+            >
+              <img
+                class="mr-1"
+                alt="Telegram"
+                src="/images/icons/telegram.png"
+              />
+              Join our telegram group to learn more about the project.
+            </div>
+            <div
+              class="link d-flex align-center"
+              @click="() => handleLink('https://medium.com/apwars')"
+            >
+              <img class="mr-1" alt="Medium" src="/images/icons/medium.png" />
+              You can keep up with all the news on Medium too.
+            </div>
+            <div
+              class="link d-flex align-center"
+              @click="
+                () =>
+                  handleLink(
+                    'https://www.youtube.com/channel/UCyOXhEunVlQMxKRJcwsF_5w'
+                  )
+              "
+            >
+              <img class="mr-1" alt="YouTube" src="/images/icons/youtube.png" />
+              Watch the gameplay on Youtube.
+            </div>
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -181,6 +214,9 @@ export default {
   computed: {
     isConnected() {
       return this.$store.getters["user/isConnected"];
+    },
+    addresses() {
+      return this.$store.getters["user/addresses"];
     },
   },
   computed: {
@@ -218,31 +254,44 @@ export default {
       this.selectedSwap = id;
     },
     selectNFT(id) {
-      console.log(id);
       this.selectedNFT = id;
     },
+    handleLink(link) {
+      window.open(link, "_blank");
+    },
     async fetchOptions() {
-      const controller = new SwapController();
-      const opts = await controller.getOptions();
-      const mappedTokens = {
-        CryptoCars: {
-          image: "/images/icons/swap/ccars.png",
-          title: "CryptoCars",
-          token: "CCAR",
-        },
-        SquidGame: {
-          image: "/images/icons/swap/squid.png",
-          title: "Squid Game",
-          token: "SQUID",
-        },
-      };
-      this.swapOptions = opts.map((o) => ({ ...o, ...mappedTokens[o.name] }));
-      this.selectedSwap = opts[0].name;
+      this.isLoading = true;
+      try {
+        const controller = new SwapController(
+          process.env.VUE_APP_API_ARCADIA_56
+        );
+        const opts = await controller.getOptions();
+        const mappedTokens = {
+          CryptoCars: {
+            image: "/images/icons/swap/ccars.png",
+            title: "CryptoCars",
+            token: "CCAR",
+          },
+          SquidGame: {
+            image: "/images/icons/swap/squid.png",
+            title: "Squid Game",
+            token: "SQUID",
+          },
+        };
+        this.swapOptions = opts.map((o) => ({ ...o, ...mappedTokens[o.name] }));
+        this.selectedSwap = opts[0].name;
+      } catch (error) {
+        ToastSnackbar.error("Something went wrong while getting swap options.");
+      } finally {
+        this.isLoading = false;
+      }
     },
     async handleSwap() {
       try {
         this.isLoadingSwap = true;
-        const controller = new SwapController();
+        const controller = new SwapController(
+          process.env.VUE_APP_API_ARCADIA_56
+        );
         await controller.swap(this.txHash, this.selectedSwap, this.selectedNFT);
         ToastSnackbar.success("Successfully swapped, welcome to APWars!");
       } catch (error) {
@@ -265,7 +314,9 @@ export default {
     next();
   },
   watch: {
-    isConnected() {},
+    addresses() {
+      this.fetchOptions();
+    },
   },
 };
 </script>
@@ -289,10 +340,13 @@ export default {
   position: relative;
   z-index: 1;
 }
-.swap-container {
+.brown-box {
   background-color: #0d0600;
   border: 2px solid #ffeebc;
   padding: 24px;
+}
+.swap-container {
+  @extend .brown-box;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -400,5 +454,23 @@ export default {
 .rounded-nft {
   border-radius: 5px;
   border: 1px solid #ffeebc;
+}
+
+.footer {
+  @extend .brown-box;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  > img {
+    height: 64px;
+    width: 64px;
+  }
+  > .link {
+    padding-right: 12px;
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
 }
 </style>

@@ -1,10 +1,8 @@
 import BaseController from './BaseController';
-import store from "@/store";
 
 export default class SwapController {
-  constructor() {
-    const addresses = store.getters["user/addresses"];
-    this.base = new BaseController(addresses.apiArcadia);
+  constructor(api) {
+    this.base = new BaseController(api);
   }
 
   getOptions() {
