@@ -77,24 +77,28 @@
               <div
                 :class="[
                   'swap-option',
-                  selectedSwap === option.id ? 'is-selected' : '',
+                  selectedSwap === option.name ? 'is-selected' : '',
                 ]"
                 v-for="option in swapOptions"
                 :key="option.id"
-                @click="() => selectSwap(option.id)"
+                @click="() => selectSwap(option.name)"
               >
                 <img width="64" height="64" :src="option.image" />
               </div>
             </div>
             <div class="transfer-instruction mt-2">
-              Transfer <span class="value">100 CCAR</span> to this wallet in BSC
+              Transfer
+              <span class="value"
+                >{{ selectedAmount }} {{ selectedToken }}</span
+              >
+              to this wallet in BSC
             </div>
             <div class="wallet">0x888259858492818961a847B5194091e484e7b786</div>
             <div>
               <div class="step-title mt-2">
                 Paste the transaction hash in the field below
               </div>
-              <v-text-field full-width></v-text-field>
+              <v-text-field v-model="txHash" full-width></v-text-field>
             </div>
             <div class="step-title mt-2">Select your Soldier NFT on APWARS</div>
             <div class="swap-options-container mt-2">
@@ -126,7 +130,14 @@
               </div>
             </div>
             <div class="swap-button-container mt-2">
-              <Button type="whot" text="Swap" isBlock />
+              <Button
+                type="whot"
+                text="Swap"
+                :isLoading="isLoadingSwap"
+                :disabled="!txHash || isLoadingSwap"
+                :handleClick="handleSwap"
+                isBlock
+              />
             </div>
           </div>
           <div class="d-flex justify-center">
@@ -157,6 +168,10 @@
 <script>
 import { mapMutations } from "vuex";
 
+import SwapController from "@/controller/SwapController";
+
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
 import PackCard from "@/lib/components/ui/PackCard";
@@ -168,25 +183,28 @@ export default {
       return this.$store.getters["user/isConnected"];
     },
   },
+  computed: {
+    selectedAmount() {
+      if (!this.selectedSwap) {
+        return "";
+      }
+      return this.swapOptions.find((s) => s.name === this.selectedSwap).prize;
+    },
+    selectedToken() {
+      if (!this.selectedSwap) {
+        return "";
+      }
+      return this.swapOptions.find((s) => s.name === this.selectedSwap).token;
+    },
+  },
   data() {
     return {
       isLoading: false,
       selectedSwap: null,
       selectedNFT: "HUMAN_SOLDIER",
-      swapOptions: [
-        {
-          id: "CCARS",
-          image: "/images/icons/swap/ccars.png",
-          title: "CryptoCars",
-          amount: 50,
-        },
-        {
-          id: "SQUID",
-          image: "/images/icons/swap/squid.png",
-          title: "Squid Game",
-          amount: 110,
-        },
-      ],
+      swapOptions: [],
+      txHash: "",
+      isLoadingSwap: false,
     };
   },
   methods: {
@@ -203,9 +221,44 @@ export default {
       console.log(id);
       this.selectedNFT = id;
     },
+    async fetchOptions() {
+      const controller = new SwapController();
+      const opts = await controller.getOptions();
+      const mappedTokens = {
+        CryptoCars: {
+          image: "/images/icons/swap/ccars.png",
+          title: "CryptoCars",
+          token: "CCAR",
+        },
+        SquidGame: {
+          image: "/images/icons/swap/squid.png",
+          title: "Squid Game",
+          token: "SQUID",
+        },
+      };
+      this.swapOptions = opts.map((o) => ({ ...o, ...mappedTokens[o.name] }));
+      this.selectedSwap = opts[0].name;
+    },
+    async handleSwap() {
+      try {
+        this.isLoadingSwap = true;
+        const controller = new SwapController();
+        await controller.swap(this.txHash, this.selectedSwap, this.selectedNFT);
+        ToastSnackbar.success("Successfully swapped, welcome to APWars!");
+      } catch (error) {
+        ToastSnackbar.error(
+          "Something went wrong while swapping, try again later."
+        );
+      } finally {
+        this.isLoadingSwap = false;
+      }
+    },
   },
   created() {
     this.setHeader(false);
+  },
+  mounted() {
+    this.fetchOptions();
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
