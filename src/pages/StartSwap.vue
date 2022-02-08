@@ -33,38 +33,36 @@
               <div class="cycle-illustration">
                 <img
                   class="rounded-nft mr-1"
-                  width="64"
-                  height="64"
+                  height="100%"
                   src="/images/troops/wwarrior-nft.png"
                 />
                 <img
                   class="rounded-nft"
-                  width="64"
-                  height="64"
+                  height="100%"
                   src="/images/troops/wgrunt-nft.png"
                 />
               </div>
               <div class="cycle-title">Unlock your Soldier</div>
             </div>
-            <img src="/images/icons/arrow-left.png" alt="Arrow Left" />
+            <img class="d-none" src="/images/icons/arrow-left.png" alt="Arrow Left" />
             <div class="cycle-step">
-              <div class="cycle-n">2</div>
+              <div class="cycle-n mb-1">2</div>
               <div class="cycle-illustration">
                 <img src="/images/tmj.png" height="50%" />
               </div>
               <div class="cycle-title">Play TMJ</div>
             </div>
-            <img src="/images/icons/arrow-left.png" alt="Arrow Left" />
+            <img class="d-none" src="/images/icons/arrow-left.png" alt="Arrow Left" />
             <div class="cycle-step">
-              <div class="cycle-n">3</div>
+              <div class="cycle-n mb-1">3</div>
               <div class="cycle-illustration">
                 <img src="/images/icons/swords.png" height="70%" />
               </div>
               <div class="cycle-title">Join The War</div>
             </div>
-            <img src="/images/icons/arrow-left.png" alt="Arrow Left" />
+            <img class="d-none" src="/images/icons/arrow-left.png" alt="Arrow Left" />
             <div class="cycle-step">
-              <div class="cycle-n">4</div>
+              <div class="cycle-n mb-1">4</div>
               <div class="cycle-illustration">
                 <img src="/images/icons/blue-chest.png" height="100%" />
               </div>
@@ -106,6 +104,19 @@
                 <img width="64" height="64" :src="option.image" />
               </div>
             </div>
+            <v-checkbox
+                  v-model="agreement"
+                  class="mt-1"
+                  color="primary"
+                  v-if="selectedSwap"
+                >
+                  <template v-slot:label>
+                    <div class="text-white">
+                      I understand that the wallet i will transfer from cannot already contain an NFT Soldier.
+                    </div>
+                  </template>
+                </v-checkbox>
+            <template v-if="agreement">
             <div class="transfer-instruction mt-2">
               Transfer
               <span class="value"
@@ -120,6 +131,8 @@
               </div>
               <v-text-field v-model="txHash" full-width :error="isNotHash(txHash)" :error-messages="isNotHash(txHash) ? `This does'nt look like a hash` : ''"><template v-slot:append><v-icon class="ml-1 icon" @click="pasteFromClipboard">mdi-transfer-down</v-icon></template></v-text-field>
             </div>
+            </template>
+            <template v-if="txHash && !isNotHash(txHash)">
             <div class="step-title mt-2">Select your Soldier NFT on APWARS</div>
             <div class="swap-options-container mt-2">
               <div
@@ -149,6 +162,7 @@
                 />
               </div>
             </div>
+            </template>
             <div class="swap-button-container mt-2">
               <Button
                 type="whot"
@@ -251,9 +265,10 @@ export default {
   },
   data() {
     return {
+      agreement: false,
       isLoading: false,
       selectedSwap: null,
-      selectedNFT: "HUMAN_SOLDIER",
+      selectedNFT: null,
       swapOptions: [],
       txHash: "",
       isLoadingSwap: false,
@@ -311,7 +326,6 @@ export default {
           },
         };
         this.swapOptions = opts.data.map((o) => ({ ...o, ...mappedTokens[o.name] }));
-        this.selectedSwap = opts.data[0].name;
       } catch (error) {
         ToastSnackbar.error("Something went wrong while getting swap options.");
       } finally {
@@ -478,23 +492,36 @@ export default {
 }
 
 .cycle-title {
-  padding: 0px 18px;
+  padding: 0px 4px;
   text-align: center;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 10px;
+  min-height: 48px;
+  @media screen and (min-width: 768px) {
+    font-size: 24px;
+    padding: 0px 18px;
+  }
+
 }
 
 .cycle-illustration {
-  height: 112px;
+  height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px;
+  padding: 2px;
+  @media screen and (min-width: 768px) {
+    height: 112px;
+    padding: 8px;
+  }
 }
 
 .cycle-step {
   display: block;
-  margin: 18px;
+  margin: 8px;
+  @media screen and (min-width: 768px) {
+    margin: 18px;
+  }
 }
 
 .video-title {
