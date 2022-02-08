@@ -27,7 +27,7 @@
           src="/images/battle/battle-icon.png"
         />
         <div class="total-amount d-none d-sm-flex">
-          <Amount :amount="corpForce" formatted compact symbol="Power Units" v-if="getPercent(corpForce) > 10" />
+          <Amount :amount="corpForce" formatted compact decimals="2" symbol="Power Units" v-if="getPercent(corpForce) > 10" />
         </div>
       </div>
       <div class="degen" :style="`--degen:${getPercent(degenForce)}%`">
@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="total-amount d-none d-sm-flex">
-          <Amount :amount="degenForce" formatted compact symbol="Power Units" v-if="getPercent(degenForce) > 10" />
+          <Amount :amount="degenForce" formatted compact decimals="2" symbol="Power Units" v-if="getPercent(degenForce) > 10" />
         </div>
       </div>
     </div>
