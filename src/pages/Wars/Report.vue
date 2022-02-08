@@ -406,7 +406,7 @@
             </v-col>
           </v-row>
 
-          <v-row v-if="phase === 'claim'">
+          <v-row v-if="userEnlistedRace && phase === 'claim'">
             <v-col>
               <div class="rewards-title">Claim</div>
               <div class="unit-name" v-if="report && report.bringHome">

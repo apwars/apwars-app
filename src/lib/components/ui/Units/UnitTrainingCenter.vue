@@ -6,8 +6,7 @@
     >
       <div class="align-self-center">
         <v-img
-          :width="$vuetify.breakpoint.smAndDown ? 130 : 160"
-          :height="$vuetify.breakpoint.smAndDown ? 250 : 307.47"
+          :width="$vuetify.breakpoint.smAndDown ? 81 : 160"
           :src="`/images/troops/${unit.combinators.trainingCenter.name}.png`"
         />
       </div>

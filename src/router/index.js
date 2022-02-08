@@ -176,7 +176,7 @@ export const routes = [
       {
         path: "/buy-wland",
         beforeEnter() {
-          redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56");
+          redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&inputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f");
         }
       },
       {

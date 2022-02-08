@@ -9,7 +9,7 @@
           image="/images/war-preparation/icon-war-preparation.png"
         />
       </v-container>
-      <div v-if="tab === 0" class="d-flex text-center justify-center">
+      <div v-if="tab === 1" class="d-flex text-center justify-center">
         <v-img
           class="mx-auto weapon-research-image"
           src="/images/war-preparation/weapon-research.png"
@@ -29,24 +29,24 @@
       <v-row class="d-flex">
         <v-col cols="12" md="12" lg="12" class="d-flex">
           <v-tabs v-model="tab">
-            <v-tab>Weapons</v-tab>
             <v-tab>Magical Items</v-tab>
+            <v-tab>Weapons</v-tab>
           </v-tabs>
         </v-col>
       </v-row>
-      
+
       <v-tabs-items v-model="tab">
-        <v-tab-item>
-          <v-card flat>
-            <list-combinators type="weapons" />
-          </v-card>
-        </v-tab-item>
         <v-tab-item>
           <v-card flat>
             <list-combinators type="magical-items" />
           </v-card>
         </v-tab-item>
       </v-tabs-items>
+      <v-tab-item>
+        <v-card flat>
+          <list-combinators type="weapons" />
+        </v-card>
+      </v-tab-item>
     </v-container>
   </div>
 </template>
@@ -58,12 +58,12 @@ import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 import ListCombinators from "@/lib/components/ui/Lists/ListCombinators";
 
 export default {
-  name: 'war-preparation',
+  name: "war-preparation",
   components: {
     PageTitle,
     wButton,
     ListUnits,
-    ListCombinators
+    ListCombinators,
   },
 
   data() {

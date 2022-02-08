@@ -9,14 +9,15 @@
       <v-container>
         <v-row>
           <v-col cols="12" md="4" class="pr-0 pl-1">
-            <game-text header="h3" class="text-center">
-              Next War
+            <div class="mt-1"></div>
+            <game-text header="h4" class="text-center mt-2">
+              Enlistment ends in
             </game-text>
             <div class="card-body-home d-flex justify-center align-center">
-              <countdown class="mt-3" :time="nextWar" hideEnd />
+              <countdown class="mt-0" :time="nextWar" hideEnd />
             </div>
             <div class="d-flex justify-center mt-1">
-              <wButton @click="$router.push('/wars')" class="mt-1" disabled="true">
+              <wButton @click="$router.push('/war/intro')" class="mt-1">
                 <span class="text-none text-center">Go to War</span>
               </wButton>
             </div>
@@ -67,7 +68,7 @@
               />
             </div>
             <div class="d-flex justify-center mt-1">
-              <wButton @click="buywLAND()" class="mt-1">
+              <wButton @click="$router.push('/buy-wland')" class="mt-1">
                 <span class="text-none text-center">
                   Buy wLAND
                 </span>
@@ -162,7 +163,7 @@ export default {
         { image: "/images/weapons/catapult-elves.png" },
       ],
       nextWar: 0,
-      dateNextWar: 1644235200000,
+      dateNextWar: 1644408000000,
     };
   },
 
@@ -234,10 +235,6 @@ export default {
       return wallet.balances["wSCARS"];
     },
 
-    buywLAND() {
-      window.location.href =
-        "https://pancakeswap.finance/swap?outputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
-    },
   },
 };
 </script>

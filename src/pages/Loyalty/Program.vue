@@ -54,39 +54,87 @@
       </v-row>
 
       <v-row v-if="isLoading" class="my-6">
-        <v-col v-for="lp in lpTokens" :key="lp.symbol" col="12" md="4">
+        <v-col cols="12" v-for="lp in lpTokens" :key="lp.symbol" col="12" md="4">
           <template>
-            <v-skeleton-loader type="image" height="600px" />
+            <v-skeleton-loader type="image" />
+          </template>
+        </v-col>
+        <v-col cols="12">
+          <template>
+            <v-skeleton-loader type="image" />
+          </template>
+        </v-col>
+        <v-col cols="12">
+          <template>
+            <v-skeleton-loader type="image" />
           </template>
         </v-col>
       </v-row>
 
       <template v-else>
-      <v-row >
-        <v-col v-for="lp in lpTokens" :key="lp.symbol" col="12" md="4">
-          <LPCard
-            :hasSoldier="hasSoldier"
-            :lp="lp"
-            :handleProvideLiquidity="provideLiquidity"
-          />
-        </v-col>
-      </v-row>
-      <v-row v-if="transactions.length > 0">
-          <v-col>
-              <v-data-table
-                :headers="headers"
-                :items="transactions"
-              >
-                <template v-slot:item.data.tokenSymbol="{ item }">
-                  {{ item.data.tokenSymbol }}/BUSD
-                </template>
-                <template v-slot:item.createdOn="{ item }">
-                  {{ new Date(item.createdOn).toLocaleString(userLocale) }}
-                </template>
-              </v-data-table>
-              <div class="small-text">Showing transactions from the last 48h</div>
+        <v-row>
+          <v-col v-for="lp in lpTokens" :key="lp.symbol" col="12" md="4">
+            <LPCard
+              :hasSoldier="hasSoldier"
+              :lp="lp"
+              :handleProvideLiquidity="provideLiquidity"
+            />
           </v-col>
-      </v-row>
+        </v-row>
+        <v-row>
+          <v-col>
+            <div class="medium-text">
+              Your rewards in the last 48h
+            </div>
+            <v-data-table :headers="headers" :items="transactions">
+              <template v-slot:[`item.data.tokenSymbol`]="{ item }">
+                {{ item.data.tokenSymbol }}/BUSD
+              </template>
+              <template v-slot:[`item.createdOn`]="{ item }">
+                {{ new Date(item.createdOn).toLocaleString(userLocale) }}
+              </template>
+            </v-data-table>
+          </v-col>
+        </v-row>
+        <v-row dense>
+          <v-col>
+            <div class="medium-text">
+              Report
+            </div>
+          </v-col>
+        </v-row>
+        <v-row dense align="center">
+          <v-col justify="center" cols="12" md="4" offset-md="2">
+            <div class="medium-text report-title">Distributed Amount</div>
+            <div class="report-info">
+              <amount
+                :amount="this.report.totalDistributed"
+                decimals="0"
+                formatted
+                symbol="War SCARS"
+              />
+            </div>
+
+            <div class="medium-text report-title mt-3">
+              Total Loyalty Members
+            </div>
+            <div class="report-info">
+              {{ this.report.totalAwardedAccounts }}
+            </div>
+          </v-col>
+          <v-col justify="center" cols="12" md="4">
+            <div class="medium-text report-title">Top 10 Loyalty Members</div>
+
+            <div id="chart">
+              <apexchart
+                type="pie"
+                width="380"
+                :options="chartOptions"
+                :series="series"
+              ></apexchart>
+            </div>
+          </v-col>
+        </v-row>
       </template>
     </v-container>
   </div>
@@ -104,8 +152,10 @@ import WalletController from "@/controller/WalletController";
 import NFTsController from "@/controller/NFTsController";
 import Amount from "@/lib/components/ui/Utils/Amount.vue";
 
+import VueApexCharts from "vue-apexcharts";
+
 export default {
-  components: { Title, LPCard, Button, Amount },
+  components: { Title, LPCard, Button, Amount, apexchart: VueApexCharts },
   computed: {
     isConnected() {
       return this.$store.getters["user/isConnected"];
@@ -117,8 +167,8 @@ export default {
       return this.$store.getters["user/networkInfo"];
     },
     userLocale() {
-        return window.navigator.userLanguage || window.navigator.language
-    }
+      return window.navigator.userLanguage || window.navigator.language;
+    },
   },
   data() {
     return {
@@ -161,6 +211,7 @@ export default {
         },
       ],
       transactions: [],
+      report: {},
       headers: [
         {
           sortable: false,
@@ -192,6 +243,30 @@ export default {
         },
         { text: "Date", value: "createdOn" },
       ],
+      series: [],
+      chartOptions: {
+        chart: {
+          type: "pie",
+          width: 300,
+        },
+        legend: {
+          show: false,
+        },
+        labels: [],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      },
     };
   },
   methods: {
@@ -262,19 +337,30 @@ export default {
       }
     },
 
-    async loadTransactions() {
-        if (!this.account) {
-            return
-        }
-        const controller = new LPController();
-        const transfers  = await controller.transactions(this.account);
-        this.transactions = transfers.map(t => ({ ...t, reward: 'War SCARS', share: `${(t.data.proportion * 100).toFixed(2)}%` }));
-    }
+    async loadTransactionsAndReport() {
+      if (!this.account) {
+        return;
+      }
+      const controller = new LPController();
+      const transfers = await controller.transactions(this.account);
+      this.transactions = transfers.map((t) => ({
+        ...t,
+        reward: "War SCARS",
+        share: `${(t.data.proportion * 100).toFixed(2)}%`,
+      }));
+
+      this.report = await controller.report();
+
+      this.report.top10LPAccount.map((top10) => {
+        this.series.push(top10.total);
+        this.chartOptions.labels.push(top10.account);
+      });
+    },
   },
 
   mounted() {
     this.loadData();
-    this.loadTransactions();
+    this.loadTransactionsAndReport();
   },
   created() {
     this.setHeader(false);
@@ -286,7 +372,7 @@ export default {
   watch: {
     async account() {
       await this.loadData();
-      this.loadTransactions();
+      this.loadTransactionsAndReport();
     },
   },
 };
@@ -315,10 +401,28 @@ export default {
     width: auto;
   }
 }
-.small-text {
-    width: 100%;
-    font-size: 12px;
-    text-align: right;
-    margin-top: 4px;
+.medium-text {
+  width: 100%;
+  font-size: 22px;
+  margin: 12px 0px;
+  font-weight: bold;
+}
+.report-title {
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 41px;
+  background: linear-gradient(180deg, #faff00 0%, #ffb800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.report-info {
+  font-weight: bold;
+  font-size: 28px;
+  font-family: PT Serif;
+  text-align: center;
 }
 </style>
