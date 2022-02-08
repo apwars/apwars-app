@@ -199,9 +199,8 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 import { mapMutations } from "vuex";
-
-import SwapController from "@/controller/SwapController";
 
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
@@ -274,10 +273,8 @@ export default {
     async fetchOptions() {
       this.isLoading = true;
       try {
-        const controller = new SwapController(
-          process.env.VUE_APP_API_ARCADIA_56
-        );
-        const opts = await controller.getOptions();
+        const opts = await axios.get(`${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/list-swap`);
+        console.log(opts)
         const mappedTokens = {
           CryptoCars: {
             image: "/images/icons/swap/ccars.png",
@@ -290,8 +287,8 @@ export default {
             token: "SQUID",
           },
         };
-        this.swapOptions = opts.map((o) => ({ ...o, ...mappedTokens[o.name] }));
-        this.selectedSwap = opts[0].name;
+        this.swapOptions = opts.data.map((o) => ({ ...o, ...mappedTokens[o.name] }));
+        this.selectedSwap = opts.data[0].name;
       } catch (error) {
         ToastSnackbar.error("Something went wrong while getting swap options.");
       } finally {
@@ -301,10 +298,7 @@ export default {
     async handleSwap() {
       try {
         this.isLoadingSwap = true;
-        const controller = new SwapController(
-          process.env.VUE_APP_API_ARCADIA_56
-        );
-        await controller.swap(this.txHash, this.selectedSwap, this.selectedNFT);
+        await axios.post(`${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/${this.txHash}/${this.selectedSwap}/${this.selectedNFT}`);
         ToastSnackbar.success("Successfully swapped, welcome to APWars!");
       } catch (error) {
         ToastSnackbar.error(

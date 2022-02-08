@@ -152,7 +152,8 @@ export const routes = [
       {
         path: "/start-swap",
         name: "start-swap",
-        component: StartSwap
+        component: StartSwap,
+        meta: { noConnect: true }
       },
       {
         path: "/farms",

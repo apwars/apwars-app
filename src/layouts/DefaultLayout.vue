@@ -340,12 +340,9 @@ export default {
   mounted() {
     this.watchBlockchain();
 
-    this.connectToMetaMask();
-    // this.listRouterNoShowMetamask.map((path) => {
-    //   if (path === this.$router.history.current.path) {
-    //     this.showModal = false;
-    //   }
-    // });
+    if (!this.$route.meta.noConnect) {
+      this.connectToMetaMask();
+    }
 
     socket.on("messages", (items) => {
       this.messages = items;
