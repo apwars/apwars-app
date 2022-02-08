@@ -179,8 +179,8 @@
 
     <v-container>
       <v-row class="d-flex">
-        <v-col cols="12" lg="7" xl="4" class="d-flex">
-          <v-tabs v-model="tab">
+        <v-col cols="12" class="d-flex">
+          <v-tabs v-model="tab" show-arrows>
             <v-tab>Game Items</v-tab>
             <v-tab>Resources </v-tab>
             <v-tab>Military Units</v-tab>
