@@ -89,6 +89,9 @@
               ">playing TMJ</span> to evolve the Soldier who will command your army in the War?</div>
             </template>
             <template v-else>
+              <div class="full-cycle-title">
+            Unlock your NFT Soldier swapping from another game
+          </div>
             <div class="step-title">Select where you are coming from</div>
             <v-skeleton-loader v-if="isLoading" type="image" height="64px" width="80px" />
             <div v-else class="swap-options-container mt-2">
@@ -104,19 +107,6 @@
                 <img width="64" height="64" :src="option.image" />
               </div>
             </div>
-            <v-checkbox
-                  v-model="agreement"
-                  class="mt-1"
-                  color="primary"
-                  v-if="selectedSwap"
-                >
-                  <template v-slot:label>
-                    <div class="text-white">
-                      I understand that the wallet i will transfer from cannot already contain an NFT Soldier.
-                    </div>
-                  </template>
-                </v-checkbox>
-            <template v-if="agreement">
             <div class="transfer-instruction mt-2">
               Transfer
               <span class="value"
@@ -131,8 +121,6 @@
               </div>
               <v-text-field v-model="txHash" full-width :error="isNotHash(txHash)" :error-messages="isNotHash(txHash) ? `This does'nt look like a hash` : ''"><template v-slot:append><v-icon class="ml-1 icon" @click="pasteFromClipboard">mdi-transfer-down</v-icon></template></v-text-field>
             </div>
-            </template>
-            <template v-if="txHash && !isNotHash(txHash)">
             <div class="step-title mt-2">Select your Soldier NFT on APWARS</div>
             <div class="swap-options-container mt-2">
               <div
@@ -162,11 +150,10 @@
                 />
               </div>
             </div>
-            </template>
             <div class="swap-button-container mt-2">
               <Button
                 type="whot"
-                text="Swap"
+                text="Get NFT Soldier"
                 :isLoading="isLoadingSwap"
                 :disabled="!txHash || isLoadingSwap || isNotHash(txHash)"
                 :handleClick="handleSwap"
