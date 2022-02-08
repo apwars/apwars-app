@@ -322,7 +322,7 @@ export default {
     async handleSwap() {
       try {
         this.isLoadingSwap = true;
-        await axios.post(`${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/${this.txHash}/${this.selectedSwap}/${this.selectedNFT}`);
+        await axios.post(`${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/${this.txHash.trim()}/${this.selectedSwap}/${this.selectedNFT}`);
         this.swapDone = true;
         ToastSnackbar.success("Successfully swapped, welcome to APWars!");
       } catch (error) {
@@ -340,10 +340,10 @@ export default {
       if (!hash) {
         return false;
       }
-      if (!hash.length > 1 || hash.substring(0,2) !== '0x') {
+      if (!hash.trim().length > 1 || hash.substring(0,2) !== '0x') {
         return true;
       }
-      if (hash.length !== 66) {
+      if (hash.trim().length !== 66) {
         return true;
       }
       return false;
