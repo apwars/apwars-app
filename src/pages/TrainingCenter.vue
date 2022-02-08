@@ -17,33 +17,36 @@
       </div>
       <div class="gradient"></div>
     </div>
-
-    <list-units
-      class="mt-n6"
-      type="training-center"
-      :filter-rules="filters"
-    ></list-units>
+    <v-container>
+    <v-row>
+        <v-col cols="12" md="6" v-for="troop in troops" :key="troop.name">
+        <unit-training-center :unit="troop" />
+        </v-col>
+    </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
+import { getTroops } from "@/data/Troops";
+
 import PageTitle from "@/lib/components/ui/Utils/PageTitle.vue";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import ListUnits from "@/lib/components/ui/Lists/ListUnits";
+import UnitTrainingCenter from "@/lib/components/ui/Units/UnitTrainingCenter";
 
 export default {
   components: {
     PageTitle,
     wButton,
     ListUnits,
+    UnitTrainingCenter
   },
 
   data() {
     return {
       isLoading: true,
-      filters: {
-        name: ["wCROSSBOWMAN", "wPIKE-ORC", "wUNDEAD-PIKEMAN", "wBLADEMASTER"],
-      },
+      troops: [],
     };
   },
 
@@ -69,9 +72,9 @@ export default {
     },
   },
 
-  mounted() {},
-
-  methods: {},
+  async mounted() {
+    this.troops = getTroops().filter(t => t.combinators?.trainingCenter);
+  },
 };
 </script>
 
