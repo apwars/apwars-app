@@ -466,8 +466,13 @@ export default {
   width: 100%;
 }
 
-.text-village, .text-points, .text-treasure {
-  width: 130px;
+.text-village,
+.text-points {
+  width: 125px;
+  text-align: center;
+}
+.text-treasure {
+  width: 160px;
   text-align: center;
 }
 
