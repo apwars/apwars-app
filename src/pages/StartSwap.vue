@@ -223,6 +223,8 @@
 import axios from "axios";
 import { mapMutations } from "vuex";
 
+import errorHandler from "@/helpers/errorHandler";
+
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import walletTruncate from "@/helpers/walletTruncate";
@@ -296,7 +298,6 @@ export default {
       this.isLoading = true;
       try {
         const opts = await axios.get(`${process.env.VUE_APP_API_ARCADIA_97}/fresh-start-swap/list-swap`);
-        console.log(opts)
         const mappedTokens = {
           CryptoCars: {
             image: "/images/icons/swap/ccars.png",
@@ -324,9 +325,9 @@ export default {
         this.swapDone = true;
         ToastSnackbar.success("Successfully swapped, welcome to APWars!");
       } catch (error) {
-        ToastSnackbar.error(
-          "Something went wrong while swapping, try again later."
-        );
+        console.error(error.response.data);
+        const errorMessage = errorHandler(error.response.data.code);
+        ToastSnackbar.error(errorMessage);
       } finally {
         this.isLoadingSwap = false;
       }
