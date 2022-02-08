@@ -76,19 +76,19 @@
               <div class="highlight-text">
                 Congratulations and welcome to APWars!
               </div>
-              <div class="mt-1">Your new NFT Soldier is granted on the wallet that made the transfer, so now you can start to explore the world of Arcadia!</div>
-              <div class="mt-2">You can <span class="redirect" @click="
+              <div class="mt-1">Your new NFT Soldier is safe in the wallet you made the transfer. From now on, you can start exploring the world of Arcadia!!</div>
+              <div class="mt-2">You can also <span class="redirect" @click="
                 () =>
                   handleLink(
                     'https://www-v1.apwars.farm/docs'
                   )
-              ">visit the docs</span> to learn everything about our world.</div>
-              <div class="mt-2"> Start to <span class="redirect" @click="
+              ">visit the docs</span> to learn more about the Arcadia world.</div>
+              <div class="mt-2"> How about <span class="redirect" @click="
                 () =>
                   handleLink(
                     'https://app.apwars.farm/the-monstrous-journey'
                   )
-              ">play TMJ</span> to evolve the Soldier that will command your army on the War.</div>
+              ">playing TMJ</span> to evolve the Soldier who will command your army in the War?.</div>
             </template>
             <template v-else>
             <div class="step-title">Select where you are coming from</div>
