@@ -72,6 +72,25 @@
             </div>
           </div>
           <div class="swap-container">
+            <template v-if="swapDone">
+              <div class="highlight-text">
+                Congratulations and welcome to APWars!
+              </div>
+              <div class="mt-1">Your new NFT Soldier is granted on the wallet that made the transfer, so now you can start to explore the world of Arcadia!</div>
+              <div class="mt-2">You can <span class="redirect" @click="
+                () =>
+                  handleLink(
+                    'https://www-v1.apwars.farm/docs'
+                  )
+              ">visit the docs</span> to learn everything about our world.</div>
+              <div class="mt-2"> Start to <span class="redirect" @click="
+                () =>
+                  handleLink(
+                    'https://app.apwars.farm/the-monstrous-journey'
+                  )
+              ">play TMJ</span> to evolve the Soldier that will command your army on the War.</div>
+            </template>
+            <template v-else>
             <div class="step-title">Select where you are coming from</div>
             <v-skeleton-loader v-if="isLoading" type="image" height="64px" width="80px" />
             <div v-else class="swap-options-container mt-2">
@@ -140,6 +159,7 @@
                 isBlock
               />
             </div>
+            </template>
           </div>
           <div class="d-flex justify-center">
             <div class="wallet-info mt-1">
@@ -236,6 +256,7 @@ export default {
       txHash: "",
       isLoadingSwap: false,
       wallet: '0x888259858492818961a847B5194091e484e7b786',
+      swapDone: false,
     };
   },
   methods: {
@@ -300,6 +321,7 @@ export default {
       try {
         this.isLoadingSwap = true;
         await axios.post(`${process.env.VUE_APP_API_ARCADIA_97}/fresh-start-swap/${this.txHash}/${this.selectedSwap}/${this.selectedNFT}`);
+        this.swapDone = true;
         ToastSnackbar.success("Successfully swapped, welcome to APWars!");
       } catch (error) {
         ToastSnackbar.error(
@@ -396,6 +418,14 @@ export default {
   text-align: center;
   > .value {
     @extend .highlight-text;
+  }
+}
+
+.redirect {
+  @extend .highlight-text;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
   }
 }
 
