@@ -775,7 +775,6 @@ export default {
     },
 
     packQuantity(item) {
-      console.log(item);
       item.amountFrom = item.packQuantity * item.minimumPackage;
       item.amountTo = item.amountFrom - item.feeUnit * item.packQuantity;
       this.isDisabledLimitSelectList(item);
