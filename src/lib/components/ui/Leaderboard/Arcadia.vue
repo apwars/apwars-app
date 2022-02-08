@@ -96,7 +96,7 @@
 
                 <div class=" d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Coordinate</div>
-                  <div>{{ player.x }}/{{ player.y }}</div>
+                  <div>({{ player.x }},{{ player.y }})</div>
                 </div>
 
                 <div class=" d-flex flex-column align-center mx-2">
@@ -125,7 +125,7 @@
                 <div class=" d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Treasure</div>
                   <div class="text-treasure">
-                    SCARS:
+                    War Scars:
                     <amount
                       :amount="player.treasure.wSCARS"
                       formatted
@@ -234,7 +234,7 @@ export default {
       if (this.limit > this.listRanking.total) {
         return 1;
       }
-      return parseFloat(this.listRanking.total / this.limit).toFixed();
+      return Math.ceil(this.listRanking.total / this.limit);
     },
 
     getNumberRanking() {
@@ -466,8 +466,13 @@ export default {
   width: 100%;
 }
 
-.text-village, .text-points, .text-treasure {
-  width: 130px;
+.text-village,
+.text-points {
+  width: 125px;
+  text-align: center;
+}
+.text-treasure {
+  width: 160px;
   text-align: center;
 }
 

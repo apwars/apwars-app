@@ -442,21 +442,21 @@ export default {
       if (this.limit > this.listDaily.total) {
         return 1;
       }
-      return parseFloat(this.listDaily.total / this.limit).toFixed();
+      return Math.ceil(this.listDaily.total / this.limit);
     },
 
     getTotaPageWeek() {
       if (this.limit > this.listWeek.total) {
         return 1;
       }
-      return parseFloat(this.listWeek.total / this.limit).toFixed();
+      return Math.ceil(this.listWeek.total / this.limit);
     },
 
     getTotaPageMonth() {
       if (this.limit > this.listMonth.total) {
         return 1;
       }
-      return parseFloat(this.listMonth.total / this.limit).toFixed();
+      return Math.ceil(this.listMonth.total / this.limit);
     },
     getNumberWeek() {
       const today = moment();
