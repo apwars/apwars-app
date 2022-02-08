@@ -94,7 +94,7 @@
               >
               to this wallet in BSC
             </div>
-            <div class="wallet d-flex align-center justify-center"><div class="wallet">{{ wallet }}</div> <v-icon class="ml-1 icon" @click="() => copyToClipboard(wallet)">mdi-content-copy</v-icon></div>
+            <div class="wallet d-flex align-center justify-center"><div class="wallet">{{ truncate(wallet) }}</div> <v-icon class="ml-1 icon" @click="() => copyToClipboard(wallet)">mdi-content-copy</v-icon></div>
             <div>
               <div class="step-title mt-2">
                 Paste the transaction hash in the field below
@@ -163,7 +163,7 @@
           </div>
           <div class="footer mt-3">
             <div
-              class="link d-flex align-center"
+              class="link"
               @click="() => handleLink('https://t.me/apwars')"
             >
               <img
@@ -174,14 +174,14 @@
               Join our telegram group to learn more about the project.
             </div>
             <div
-              class="link d-flex align-center"
+              class="link"
               @click="() => handleLink('https://medium.com/apwars')"
             >
               <img class="mr-1" alt="Medium" src="/images/icons/medium.png" />
               You can keep up with all the news on Medium too.
             </div>
             <div
-              class="link d-flex align-center"
+              class="link"
               @click="
                 () =>
                   handleLink(
@@ -205,20 +205,14 @@ import SwapController from "@/controller/SwapController";
 
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
+import walletTruncate from "@/helpers/walletTruncate";
+
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
 import PackCard from "@/lib/components/ui/PackCard";
 
 export default {
   components: { Title, PackCard, Button },
-  computed: {
-    isConnected() {
-      return this.$store.getters["user/isConnected"];
-    },
-    addresses() {
-      return this.$store.getters["user/addresses"];
-    },
-  },
   computed: {
     selectedAmount() {
       if (!this.selectedSwap) {
@@ -320,6 +314,9 @@ export default {
         this.isLoadingSwap = false;
       }
     },
+    truncate(wallet) {
+      return walletTruncate(wallet);
+    }
   },
   created() {
     this.setHeader(false);
@@ -330,11 +327,6 @@ export default {
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
     next();
-  },
-  watch: {
-    addresses() {
-      this.fetchOptions();
-    },
   },
 };
 </script>
@@ -372,6 +364,7 @@ export default {
 .step-title {
   font-weight: bold;
   font-size: 14px;
+  text-align: center;
 }
 .swap-options-container {
   display: flex;
@@ -393,7 +386,8 @@ export default {
 }
 
 .swap-button-container {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
 }
 
 .highlight-text {
@@ -404,6 +398,7 @@ export default {
 
 .transfer-instruction {
   color: #ffb800;
+  text-align: center;
   > .value {
     @extend .highlight-text;
   }
@@ -426,6 +421,7 @@ export default {
   font-size: 32px;
   display: flex;
   justify-content: center;
+  text-align: center;
 }
 
 .cycle-container {
@@ -433,6 +429,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  overflow-y: auto;
 }
 
 .cycle-n {
@@ -477,17 +474,28 @@ export default {
 .footer {
   @extend .brown-box;
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+  }
   > img {
     height: 64px;
     width: 64px;
   }
   > .link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding-right: 12px;
+    text-align: center;
     &:hover {
       cursor: pointer;
       text-decoration: underline;
+    }
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
     }
   }
 }
