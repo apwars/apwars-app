@@ -15,7 +15,7 @@
       <div class="gradient"></div>
     </div>
 
-    <v-container v-if="isConnected && !isLoading">
+    <v-container v-if="isConnected">
       <v-row>
         <v-col cols="12" class="d-flex flex-column align-center justify-center">
           <div class="page-subtitle">
@@ -26,7 +26,13 @@
 
       <v-row>
         <v-col v-for="game in listGames" v-bind:key="game.id" cols="12" sm="4">
-          <v-card :class="`card-choose-game ${game.disabled && 'disabled'}`">
+          <v-card
+            @click="chooseTheGame(game)"
+            :class="
+              `card-choose-game ${game.disabled &&
+                'disabled'} ${game.selected && 'selected'}`
+            "
+          >
             <div
               class="card-choose-game-body d-flex align-center justify-center"
             >
@@ -34,12 +40,6 @@
                 mdi-lock-outline
               </v-icon>
               <img v-else width="70%" :src="game.image" />
-            </div>
-            <div
-              :class="`card-choose-game-button ${game.disabled && 'disabled'}`"
-              @click="game.actionButton('/the-monstrous-journey')"
-            >
-              {{ game.nameButton }}
             </div>
           </v-card>
         </v-col>
@@ -63,472 +63,8 @@
         </v-col>
       </v-row>
 
-      <v-row v-if="!$vuetify.breakpoint.xs" class="mt-8 d-flex align-end" dense>
-        <v-col
-          v-for="(player, index) in podium"
-          v-bind:key="player.account"
-          cols="12"
-          sm="4"
-        >
-          <v-card
-            :class="
-              `card-podium ${
-                index === 1 ? 'gold' : index === 0 ? 'silver' : 'bronze'
-              }`
-            "
-          >
-            <div
-              class="card-podium-body flex-column d-flex align-center justify-center"
-            >
-              <div class="d-flex flex-column align-center">
-                <v-avatar
-                  class="avatar d-flex justify-center"
-                  :address="player.account"
-                  tooltip
-                />
-                <img
-                  :class="`mt-n2 icon-place-${index}`"
-                  :src="`/images/game/icon-place-${index}.png`"
-                  alt="icon-place"
-                />
-              </div>
-              <div class="d-flex align-center my-5">
-                <img
-                  :width="`${index === 1 ? '85px' : '60px'}`"
-                  :src="`/images/game/trophy-${index}.png`"
-                  alt="trophy-gold"
-                />
-                <div :class="`${index === 1 ? 'text-h2' : 'text-h4'}`">
-                  {{ player.score }} pts
-                </div>
-              </div>
-              <v-address
-                class="text-center"
-                :address="player.account"
-                link
-                tooltip
-              >
-              </v-address>
-            </div>
-            <div
-              class="card-podium-footer d-flex align-center  justify-center mt-2 py-2"
-            >
-              <img
-                :width="`${index === 1 ? '65px' : '45px'}`"
-                :src="`/images/icons/chest-wgold.png`"
-                alt="chest-wgold"
-                class="mr-1"
-              />
-              <div
-                :class="
-                  `${
-                    index === 1
-                      ? 'black--text text-h4'
-                      : 'black--text text-h5 font-weight-bold'
-                  }`
-                "
-              >
-                {{ player.prizeAmount }} {{ player.prize }}
-              </div>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-
-      <v-row v-else class="mt-8 d-flex align-end" dense>
-        <v-col
-          v-for="(player, index) in podium"
-          v-bind:key="player.account"
-          :cols="index === 0 ? 10 : 6"
-          :offset="index === 0 ? 1 : 0"
-          :class="`${index !== 0 ? 'mt-4' : ''}`"
-        >
-          <v-card
-            :class="
-              `card-podium ${
-                index === 1 ? 'silver' : index === 0 ? 'gold' : 'bronze'
-              }`
-            "
-          >
-            <div
-              class="card-podium-body flex-column d-flex align-center justify-center"
-            >
-              <div class="d-flex flex-column align-center">
-                <v-avatar
-                  width="20px"
-                  class="avatar d-flex justify-center"
-                  :address="player.account"
-                  tooltip
-                />
-                <img
-                  :class="`mt-n1 icon-place-${index}`"
-                  :src="
-                    `/images/game/icon-place-${
-                      index === 0 ? 1 : index === 1 ? 0 : 2
-                    }.png`
-                  "
-                  alt="icon-place"
-                />
-              </div>
-              <div class="d-flex align-center my-2">
-                <img
-                  :width="`${index === 0 ? '40px' : '30px'}`"
-                  :src="
-                    `/images/game/trophy-${
-                      index === 0 ? 1 : index === 1 ? 0 : 2
-                    }.png`
-                  "
-                  alt="trophy-gold"
-                />
-                <div :class="`${index === 0 ? 'text-h4' : 'text-h5'}`">
-                  {{ player.score }} pts
-                </div>
-              </div>
-              <v-address
-                class="text-center text-overline"
-                :address="player.account"
-                link
-                tooltip
-              >
-              </v-address>
-            </div>
-            <div
-              class="card-podium-footer flex-column d-flex align-center justify-center py-1"
-            >
-              <img
-                :width="`${index === 0 ? '45px' : '35px'}`"
-                :src="`/images/icons/chest-wgold.png`"
-                alt="chest-wgold"
-              />
-              <div
-                :class="
-                  `${
-                    index === 0
-                      ? 'black--text text-h5 font-weight-bold'
-                      : 'black--text text-h6 font-weight-bold'
-                  }`
-                "
-              >
-                {{ player.prizeAmount }} {{ player.prize }}
-              </div>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12" md="8" offset-md="2" class="d-flex">
-          <v-alert class="mx-auto d-inline-block" dense type="info" outlined>
-            Prizes are distributed weekly to the top 10. Points are counted from
-            Monday to Sunday according to the ISO week date.
-          </v-alert>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12" class="d-flex align-center justify-center">
-          <img
-            class="mr-1"
-            height="35px"
-            src="/images/game/trophy.png"
-            alt="trophy"
-          />
-          <div class="page-subtitle">
-            Real Time Ranking
-          </div>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12" lg="6">
-          <div class="d-flex align-center mb-3">
-            <img
-              class="mr-1"
-              height="30px"
-              src="/images/icons/parchment2.png"
-              alt="trophy"
-            />
-            <div class="page-subtitle">
-              Daily
-            </div>
-          </div>
-
-          <div class="leaderboard">
-            <div v-if="listDailyLoading">
-              <h4 class="text-h4 text-center pt-9">Loading...</h4>
-            </div>
-            <div v-else-if="listDaily.total === '0'">
-              <h5 class="text-h5 text-center pt-9">
-                There is no data to display
-              </h5>
-            </div>
-            <div
-              v-else
-              v-for="(player, index) in listDaily"
-              v-bind:key="player.account"
-              class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
-            >
-              <div class="d-flex d-lg-box">
-                <v-avatar
-                  class="list-leaderboard-avatar d-flex justify-center"
-                  :address="player.account"
-                  tooltip
-                />
-                <div class="d-flex d-md-none align-center justify-center">
-                  <img
-                    v-if="index < 3"
-                    width="50px"
-                    class="ml-1"
-                    :src="
-                      `/images/game/icon-place-${
-                        index === 0 ? 1 : index === 1 ? 0 : 2
-                      }.png`
-                    "
-                    alt="icon-place"
-                  />
-                  <div v-else class="leaderboard-ranking">#{{ index }}</div>
-
-                  <v-address
-                    class="text-center mx-1"
-                    :address="player.account"
-                    link
-                    tooltip
-                  >
-                  </v-address>
-                </div>
-              </div>
-
-              <div
-                class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
-              >
-                <img
-                  v-if="index < 3 && pageDaily === 1"
-                  width="50px"
-                  class="d-none d-sm-none d-md-flex ml-1"
-                  :src="
-                    `/images/game/icon-place-${
-                      index === 0 ? 1 : index === 1 ? 0 : 2
-                    }.png`
-                  "
-                  alt="icon-place"
-                />
-                <div
-                  v-else
-                  class="d-none d-sm-none d-md-flex leaderboard-ranking"
-                >
-                  #{{ index + 1 + (pageDaily - 1) * limit }}
-                </div>
-
-                <v-address
-                  class="d-none d-sm-none d-md-flex text-center mx-1"
-                  :address="player.account"
-                  link
-                  tooltip
-                >
-                </v-address>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Score</div>
-                  <div>{{ player.score }} pts</div>
-                </div>
-
-                <div
-                  class="d-flex flex-column justify-center align-center mx-2"
-                >
-                  <div class="text-subtitle-2 primary--text">Prize</div>
-                  <div
-                    v-if="
-                      prizeDaily[index + (pageDaily - 1) * limit] === undefined
-                    "
-                  >
-                    No Prize
-                  </div>
-                  <div v-else class="d-flex justify-center align-center">
-                    {{ prizeDaily[index + (pageDaily - 1) * limit] }}
-                    <img
-                      class="ml-1"
-                      height="25px"
-                      src="/images/wSCARS.png"
-                      alt="wSCARS"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex align-center justify-space-between">
-            <div
-              @click="getListDaily(pageDaily - 1)"
-              class="d-flex align-center justify-center previous"
-            >
-              <v-icon large>
-                mdi-chevron-left
-              </v-icon>
-            </div>
-            <div class="pages">
-              <div class="text-h6 font-weight-bold">
-                {{ pageDaily }}/{{ getTotaPageDaily }}
-              </div>
-            </div>
-
-            <div
-              @click="getListDaily(pageDaily + 1)"
-              class="d-flex align-center justify-center next"
-            >
-              <v-icon large>
-                mdi-chevron-right
-              </v-icon>
-            </div>
-          </div>
-        </v-col>
-
-        <v-col cols="12" lg="6">
-          <div class="d-flex align-center mb-3">
-            <img
-              class="mr-1"
-              height="30px"
-              src="/images/icons/parchment2.png"
-              alt="trophy"
-            />
-            <div class="page-subtitle">Weekly - #{{ getNumberWeek }}</div>
-            <img
-              class="ml-1"
-              height="35px"
-              src="/images/wGOLD.png"
-              alt="wGOLD"
-            />
-          </div>
-
-          <div class="leaderboard">
-            <div v-if="listWeekLoading">
-              <h4 class="text-h4 text-center pt-9">Loading...</h4>
-            </div>
-            <div v-else-if="listWeek.total === '0'">
-              <h5 class="text-h5 text-center pt-9">
-                There is no data to display
-              </h5>
-            </div>
-            <div
-              v-else
-              v-for="(player, index) in listWeek"
-              v-bind:key="player.account"
-              class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
-            >
-              <div class="d-flex d-lg-box">
-                <v-avatar
-                  class="list-leaderboard-avatar d-flex justify-center"
-                  :address="player.account"
-                  tooltip
-                />
-                <div class="d-flex d-md-none align-center justify-center">
-                  <img
-                    v-if="index < 3"
-                    width="50px"
-                    class="ml-1"
-                    :src="
-                      `/images/game/icon-place-${
-                        index === 0 ? 1 : index === 1 ? 0 : 2
-                      }.png`
-                    "
-                    alt="icon-place"
-                  />
-                  <div v-else class="leaderboard-ranking">#{{ index }}</div>
-
-                  <v-address
-                    class="text-center mx-1"
-                    :address="player.account"
-                    link
-                    tooltip
-                  >
-                  </v-address>
-                </div>
-              </div>
-
-              <div
-                class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
-              >
-                <img
-                  v-if="index < 3 && pageWeek === 1"
-                  width="50px"
-                  class="d-none d-sm-none d-md-flex ml-1"
-                  :src="
-                    `/images/game/icon-place-${
-                      index === 0 ? 1 : index === 1 ? 0 : 2
-                    }.png`
-                  "
-                  alt="icon-place"
-                />
-                <div
-                  v-else
-                  class="d-none d-sm-none d-md-flex leaderboard-ranking"
-                >
-                  #{{ index + 1 + (pageWeek - 1) * limit }}
-                </div>
-
-                <v-address
-                  class="d-none d-sm-none d-md-flex text-center mx-1"
-                  :address="player.account"
-                  link
-                  tooltip
-                >
-                </v-address>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Score</div>
-                  <div>{{ player.score }} pts</div>
-                </div>
-                <div
-                  class="d-flex flex-column justify-center align-center mx-2"
-                >
-                  <div class="text-subtitle-2 primary--text">Prize</div>
-                  <div
-                    v-if="
-                      prizeWeekly[index + (pageWeek - 1) * limit] === undefined
-                    "
-                  >
-                    No Prize
-                  </div>
-                  <div v-else class="d-flex justify-center align-center">
-                    {{ prizeWeekly[index + (pageWeek - 1) * limit] }}
-                    <img
-                      class="ml-1"
-                      height="25px"
-                      src="/images/wGOLD.png"
-                      alt="wGOLD"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex align-center justify-space-between">
-            <div
-              @click="getListWeek(pageWeek - 1)"
-              class="d-flex align-center justify-center previous"
-            >
-              <v-icon large>
-                mdi-chevron-left
-              </v-icon>
-            </div>
-            <div class="pages">
-              <div class="text-h6 font-weight-bold">
-                {{ pageWeek }}/{{ getTotaPageWeek }}
-              </div>
-            </div>
-
-            <div
-              @click="getListWeek(pageWeek + 1)"
-              class="d-flex align-center justify-center next"
-            >
-              <v-icon large>
-                mdi-chevron-right
-              </v-icon>
-            </div>
-          </div>
-        </v-col>
-      </v-row>
+      <TheMonstrousJourney v-if="selectGame.id === 0" />
+      <Arcadia v-if="selectGame.id === 1" />
     </v-container>
 
     <v-container v-else>
@@ -547,11 +83,11 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import VAvatar from "@/lib/components/ui/Utils/VAvatar";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
+import TheMonstrousJourney from "@/lib/components/ui/Leaderboard/TheMonstrousJourney";
+import Arcadia from "@/lib/components/ui/Leaderboard/Arcadia";
 
 import { mapMutations } from "vuex";
 import moment from "moment";
-
-import LeaderboardController from "@/controller/LeaderboardController";
 
 export default {
   components: {
@@ -560,31 +96,13 @@ export default {
     VAvatar,
     VAddress,
     Medal,
+    TheMonstrousJourney,
+    Arcadia,
   },
 
   data() {
     return {
       isLoading: true,
-      podium: [
-        {
-          account: "0x2",
-          score: 0,
-          prizeAmount: 3000,
-          prize: "wGOLD",
-        },
-        {
-          account: "0x1",
-          score: 0,
-          prizeAmount: 5000,
-          prize: "wGOLD",
-        },
-        {
-          account: "0x3",
-          score: 0,
-          prizeAmount: 1000,
-          prize: "wGOLD",
-        },
-      ],
       prizeDaily: [
         "10000",
         "6000",
@@ -619,6 +137,7 @@ export default {
       listGames: [
         {
           id: 0,
+          selected: true,
           name: "The Monstrous Journey",
           image: "/images/game/the-monstrous-journey.png",
           nameButton: "Play Now",
@@ -629,14 +148,16 @@ export default {
         },
         {
           id: 1,
-          name: "Coming soon",
-          image: "",
+          selected: false,
+          name: "Arcandia Expansion",
+          image: "/images/arcadia-expansion.png",
           nameButton: "Coming soon",
           actionButton: () => {},
-          disabled: true,
+          disabled: false,
         },
         {
           id: 2,
+          selected: false,
           name: "Coming soon",
           image: "",
           nameButton: "Coming soon",
@@ -656,42 +177,11 @@ export default {
       return this.$store.getters["user/account"];
     },
 
-    addresses() {
-      return this.$store.getters["user/addresses"];
-    },
-
-    networkInfo() {
-      return this.$store.getters["user/networkInfo"];
-    },
-
-    currentBlockNumber() {
-      return this.$store.getters["user/currentBlockNumber"];
-    },
-
-    getTotaPageDaily() {
-      if (this.limit > this.listDaily.total) {
-        return 1;
-      }
-      return parseFloat(this.listDaily.total / this.limit).toFixed();
-    },
-
-    getTotaPageWeek() {
-      if (this.limit > this.listWeek.total) {
-        return 1;
-      }
-      return parseFloat(this.listWeek.total / this.limit).toFixed();
-    },
-
-    getTotaPageMonth() {
-      if (this.limit > this.listMonth.total) {
-        return 1;
-      }
-      return parseFloat(this.listMonth.total / this.limit).toFixed();
-    },
     getNumberWeek() {
       const today = moment();
       return today.isoWeek();
     },
+
     getLabelWeek() {
       const userLang = navigator.language || navigator.userLanguage;
       let startDateWeek = moment().startOf("isoWeek");
@@ -707,16 +197,10 @@ export default {
       }
       return `${startDateWeek} - ${endDateWeek}`;
     },
-  },
 
-  watch: {
-    isConnected() {
-      this.loadData();
-    },
-
-    account() {
-      this.loadData();
-    },
+    selectGame() {
+      return this.listGames.find(_game => _game.selected);
+    }
   },
 
   mounted() {
@@ -733,71 +217,20 @@ export default {
       if (!this.isConnected) {
         return;
       }
-
-      await this.getListWeek(1);
-      this.getListPodium(this.listWeek);
-      await this.getListDaily(1);
-
       this.isLoading = false;
     },
 
-    async getListDaily(_page) {
-      if (this.listDailyLoading || _page < 1 || _page > this.getTotaPageDaily) {
+    chooseTheGame(game) {
+      if (game.disabled) {
         return;
       }
-      this.pageDaily = _page;
-      const leaderboardController = new LeaderboardController();
-      this.listDailyLoading = true;
-      this.listDaily = await leaderboardController.getDaily(
-        "TMJ",
-        this.limit,
-        this.limit * (_page - 1)
-      );
-      this.listDailyLoading = false;
-    },
 
-    async getListWeek(_page) {
-      if (this.listWeekLoading || _page < 1 || _page > this.getTotaPageWeek) {
-        return;
-      }
-      this.pageWeek = _page;
-      const leaderboardController = new LeaderboardController();
-      this.listWeekLoading = true;
-      this.listWeek = await leaderboardController.getWeek(
-        "TMJ",
-        this.limit,
-        this.limit * (_page - 1)
-      );
-      this.listWeekLoading = false;
-    },
+      this.listGames = this.listGames.map((_game) => {
+        _game.selected = false;
+        return _game;
+      });
 
-    async getListMonth(_page) {
-      if (this.listMonthLoading || _page < 1 || _page > this.getTotaPageMonth) {
-        return;
-      }
-      this.pageMonth = _page;
-      const leaderboardController = new LeaderboardController();
-      this.listMonthLoading = true;
-      this.listMonth = await leaderboardController.getMonth(
-        "TMJ",
-        this.limit,
-        this.limit * (_page - 1)
-      );
-      this.listMonthLoading = false;
-    },
-
-    getListPodium(listWeek) {
-      if (listWeek[0] !== undefined) {
-        this.podium[1] = { ...this.podium[1], ...listWeek[0] };
-      }
-      if (listWeek[1] !== undefined) {
-        this.podium[0] = { ...this.podium[0], ...listWeek[1] };
-      }
-      if (listWeek[2] !== undefined) {
-        this.podium[2] = { ...this.podium[2], ...listWeek[2] };
-      }
-
-      return this.podium;
+      game.selected = true;
     },
   },
 };
@@ -845,7 +278,14 @@ export default {
   border: 2px solid #ffeebc;
   box-sizing: border-box;
   border-radius: 0px;
+  cursor: pointer;
 }
+
+.card-choose-game.selected {
+  border: 2px solid #fbec00;
+  box-shadow: #ffeebc 1px 0px 20px -2px;
+}
+
 .card-choose-game-body {
   height: 230px;
 }
@@ -868,6 +308,7 @@ export default {
 }
 .card-choose-game.disabled {
   border: 2px solid #c4c4c4;
+  cursor: not-allowed;
 }
 .card-choose-game-button.disabled {
   cursor: not-allowed;
@@ -880,68 +321,6 @@ export default {
 }
 .card-choose-game-button:hover {
   background: #423632;
-}
-
-.card-podium {
-  background: #000000;
-  border: 2px solid #ffeebc;
-  box-sizing: border-box;
-  border-radius: 0px;
-}
-
-.card-podium .icon-place-0 {
-  width: 50px;
-}
-.card-podium .icon-place-1 {
-  width: 60px;
-}
-.card-podium .icon-place-2 {
-  width: 40px;
-}
-
-.card-podium.gold {
-  border: 2px solid #ffb800;
-}
-.card-podium.silver {
-  border: 2px solid #c4c4c4;
-}
-.card-podium.bronze {
-  border: 2px solid #e95809;
-}
-
-.card-podium.gold .avatar >>> img {
-  margin-top: -50px;
-  border: 2px solid #ffb800;
-  border-radius: 8px;
-}
-.card-podium.silver .avatar >>> img {
-  margin-top: -50px;
-  border: 2px solid #c4c4c4;
-  border-radius: 8px;
-}
-.card-podium.bronze .avatar >>> img {
-  margin-top: -50px;
-  border: 2px solid #e95809;
-  border-radius: 8px;
-}
-
-.card-podium.gold .card-podium-footer {
-  background: linear-gradient(180deg, #f3a100 0%, #ffb800 100%);
-  border-top: 2px solid #ffb800;
-  box-sizing: border-box;
-  border-radius: 0px;
-}
-.card-podium.silver .card-podium-footer {
-  background: linear-gradient(180deg, #8e8e8e 0%, #c4c4c4 100%);
-  border-top: 2px solid #c4c4c4;
-  box-sizing: border-box;
-  border-radius: 0px;
-}
-.card-podium.bronze .card-podium-footer {
-  background: linear-gradient(180deg, #be4400 0%, #e95809 100%);
-  border-top: 2px solid #e95809;
-  box-sizing: border-box;
-  border-radius: 0px;
 }
 
 .leaderboard {
@@ -1017,34 +396,6 @@ export default {
   .page-subtitle {
     font-size: 26px;
     line-height: 32px;
-  }
-
-  .card-podium.gold .avatar >>> img {
-    width: 70px;
-    margin-top: -35px;
-    border: 2px solid #ffb800;
-    border-radius: 8px;
-  }
-  .card-podium.silver .avatar >>> img {
-    width: 70px;
-    margin-top: -35px;
-    border: 2px solid #c4c4c4;
-    border-radius: 8px;
-  }
-  .card-podium.bronze .avatar >>> img {
-    width: 70px;
-    margin-top: -35px;
-    border: 2px solid #e95809;
-    border-radius: 8px;
-  }
-  .card-podium .icon-place-0 {
-    width: 40px;
-  }
-  .card-podium .icon-place-1 {
-    width: 40px;
-  }
-  .card-podium .icon-place-2 {
-    width: 40px;
   }
   .list-leaderboard-avatar >>> img {
     border-radius: 6px 0px 0px 0px;
