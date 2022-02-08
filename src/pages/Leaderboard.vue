@@ -15,7 +15,7 @@
       <div class="gradient"></div>
     </div>
 
-    <v-container v-if="isConnected && !isLoading">
+    <v-container v-if="isConnected">
       <v-row>
         <v-col cols="12" class="d-flex flex-column align-center justify-center">
           <div class="page-subtitle">
@@ -63,7 +63,8 @@
         </v-col>
       </v-row>
 
-      <TheMonstrousJourney />
+      <TheMonstrousJourney v-if="selectGame.id === 0" />
+      <Arcadia v-if="selectGame.id === 1" />
     </v-container>
 
     <v-container v-else>
@@ -83,11 +84,10 @@ import VAvatar from "@/lib/components/ui/Utils/VAvatar";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
 import TheMonstrousJourney from "@/lib/components/ui/Leaderboard/TheMonstrousJourney";
+import Arcadia from "@/lib/components/ui/Leaderboard/Arcadia";
 
 import { mapMutations } from "vuex";
 import moment from "moment";
-
-import LeaderboardController from "@/controller/LeaderboardController";
 
 export default {
   components: {
@@ -97,6 +97,7 @@ export default {
     VAddress,
     Medal,
     TheMonstrousJourney,
+    Arcadia,
   },
 
   data() {
@@ -147,6 +148,7 @@ export default {
         },
         {
           id: 1,
+          selected: false,
           name: "Arcandia Expansion",
           image: "/images/arcadia-expansion.png",
           nameButton: "Coming soon",
@@ -155,6 +157,7 @@ export default {
         },
         {
           id: 2,
+          selected: false,
           name: "Coming soon",
           image: "",
           nameButton: "Coming soon",
@@ -172,39 +175,6 @@ export default {
 
     account() {
       return this.$store.getters["user/account"];
-    },
-
-    addresses() {
-      return this.$store.getters["user/addresses"];
-    },
-
-    networkInfo() {
-      return this.$store.getters["user/networkInfo"];
-    },
-
-    currentBlockNumber() {
-      return this.$store.getters["user/currentBlockNumber"];
-    },
-
-    getTotaPageDaily() {
-      if (this.limit > this.listDaily.total) {
-        return 1;
-      }
-      return parseFloat(this.listDaily.total / this.limit).toFixed();
-    },
-
-    getTotaPageWeek() {
-      if (this.limit > this.listWeek.total) {
-        return 1;
-      }
-      return parseFloat(this.listWeek.total / this.limit).toFixed();
-    },
-
-    getTotaPageMonth() {
-      if (this.limit > this.listMonth.total) {
-        return 1;
-      }
-      return parseFloat(this.listMonth.total / this.limit).toFixed();
     },
 
     getNumberWeek() {
@@ -227,16 +197,10 @@ export default {
       }
       return `${startDateWeek} - ${endDateWeek}`;
     },
-  },
 
-  watch: {
-    isConnected() {
-      this.loadData();
-    },
-
-    account() {
-      this.loadData();
-    },
+    selectGame() {
+      return this.listGames.find(_game => _game.selected);
+    }
   },
 
   mounted() {
@@ -253,69 +217,21 @@ export default {
       if (!this.isConnected) {
         return;
       }
-
-      await this.getListWeek(1);
-      await this.getListDaily(1);
-
       this.isLoading = false;
     },
 
-    async getListDaily(_page) {
-      if (this.listDailyLoading || _page < 1 || _page > this.getTotaPageDaily) {
-        return;
-      }
-      this.pageDaily = _page;
-      const leaderboardController = new LeaderboardController();
-      this.listDailyLoading = true;
-      this.listDaily = await leaderboardController.getDaily(
-        "TMJ",
-        this.limit,
-        this.limit * (_page - 1)
-      );
-      this.listDailyLoading = false;
-    },
-
-    async getListWeek(_page) {
-      if (this.listWeekLoading || _page < 1 || _page > this.getTotaPageWeek) {
-        return;
-      }
-      this.pageWeek = _page;
-      const leaderboardController = new LeaderboardController();
-      this.listWeekLoading = true;
-      this.listWeek = await leaderboardController.getWeek(
-        "TMJ",
-        this.limit,
-        this.limit * (_page - 1)
-      );
-      this.listWeekLoading = false;
-    },
-
-    async getListMonth(_page) {
-      if (this.listMonthLoading || _page < 1 || _page > this.getTotaPageMonth) {
-        return;
-      }
-      this.pageMonth = _page;
-      const leaderboardController = new LeaderboardController();
-      this.listMonthLoading = true;
-      this.listMonth = await leaderboardController.getMonth(
-        "TMJ",
-        this.limit,
-        this.limit * (_page - 1)
-      );
-      this.listMonthLoading = false;
-    },
-
     chooseTheGame(game) {
+      if (game.disabled) {
+        return;
+      }
 
-      console.log(game);
-
-      this.listGames = this.listGames.map(_game => {
+      this.listGames = this.listGames.map((_game) => {
         _game.selected = false;
-      }); 
+        return _game;
+      });
 
-      // game.selected = true;
-
-    }
+      game.selected = true;
+    },
   },
 };
 </script>
@@ -366,7 +282,7 @@ export default {
 }
 
 .card-choose-game.selected {
-  border: 3px solid #fbec00;
+  border: 2px solid #fbec00;
   box-shadow: #ffeebc 1px 0px 20px -2px;
 }
 
@@ -392,6 +308,7 @@ export default {
 }
 .card-choose-game.disabled {
   border: 2px solid #c4c4c4;
+  cursor: not-allowed;
 }
 .card-choose-game-button.disabled {
   cursor: not-allowed;

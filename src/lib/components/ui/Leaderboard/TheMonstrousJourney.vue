@@ -385,6 +385,7 @@ export default {
       listDaily: [],
       listWeek: [],
       listMonth: [],
+      listPodium: [],
       listGames: [
         {
           id: 0,
@@ -478,10 +479,21 @@ export default {
       return `${startDateWeek} - ${endDateWeek}`;
     },
     getListPodium() {
-      const listPodium = this.listWeek.slice(0, 3);  
+      if (!this.listPodium.length) {
+        return [];
+      }
+      const listPodium = this.listPodium.slice(0, 3);
       listPodium[0].position = 1;
+      listPodium[0].prizeAmount = 5000;
+      listPodium[0].prize = "wGOLD";
+
       listPodium[1].position = 2;
+      listPodium[1].prizeAmount = 3000;
+      listPodium[1].prize = "wGOLD";
+
       listPodium[2].position = 3;
+      listPodium[2].prizeAmount = 1000;
+      listPodium[2].prize = "wGOLD";
 
       return listPodium;
     },
@@ -514,6 +526,7 @@ export default {
 
       await this.getListWeek(1);
       await this.getListDaily(1);
+      this.listPodium = this.listWeek.slice(0,3);
 
       this.isLoading = false;
     },

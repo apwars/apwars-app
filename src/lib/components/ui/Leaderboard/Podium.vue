@@ -4,7 +4,7 @@
       <v-row v-if="!$vuetify.breakpoint.xs" class="mt-8 d-flex align-end" dense>
         <v-col
           v-for="(player, index) in getListPodium"
-          v-bind:key="player.account"
+          v-bind:key="index"
           cols="12"
           sm="4"
         >
@@ -49,6 +49,7 @@
               </v-address>
             </div>
             <div
+              v-if="player.prizeAmount"
               class="card-podium-footer d-flex align-center  justify-center mt-2 py-2"
             >
               <img
@@ -168,7 +169,7 @@ import Medal from "@/lib/components/ui/Utils/Medal";
 export default {
   props: {
     podium: {
-      type: Object,
+      type: Array,
       default: [],
     },
   },

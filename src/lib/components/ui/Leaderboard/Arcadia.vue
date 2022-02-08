@@ -4,15 +4,6 @@
       <Podium :podium="getListPodium" />
 
       <v-row>
-        <v-col cols="12" md="8" offset-md="2" class="d-flex">
-          <v-alert class="mx-auto d-inline-block" dense type="info" outlined>
-            Prizes are distributed weekly to the top 10. Points are counted from
-            Monday to Sunday according to the ISO week date.
-          </v-alert>
-        </v-col>
-      </v-row>
-
-      <v-row>
         <v-col cols="12" class="d-flex align-center justify-center">
           <img
             class="mr-1"
@@ -27,32 +18,20 @@
       </v-row>
 
       <v-row>
-        <v-col cols="12" lg="6">
-          <div class="d-flex align-center mb-3">
-            <img
-              class="mr-1"
-              height="30px"
-              src="/images/icons/parchment2.png"
-              alt="trophy"
-            />
-            <div class="page-subtitle">
-              Daily
-            </div>
-          </div>
-
+        <v-col cols="12">
           <div class="leaderboard">
-            <div v-if="listDailyLoading">
+            <div v-if="listRankingLoading">
               <h4 class="text-h4 text-center pt-9">Loading...</h4>
             </div>
-            <div v-else-if="listDaily.total === '0'">
+            <div v-else-if="listRanking.total === '0'">
               <h5 class="text-h5 text-center pt-9">
                 There is no data to display
               </h5>
             </div>
             <div
               v-else
-              v-for="(player, index) in listDaily"
-              v-bind:key="player.account"
+              v-for="(player, index) in listRanking"
+              v-bind:key="index"
               class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
             >
               <div class="d-flex d-lg-box">
@@ -88,131 +67,13 @@
               <div
                 class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
               >
-                <img
-                  v-if="index < 3 && pageDaily === 1"
-                  width="50px"
-                  class="d-none d-sm-none d-md-flex ml-1"
-                  :src="
-                    `/images/game/icon-place-${
-                      index === 0 ? 1 : index === 1 ? 0 : 2
-                    }.png`
-                  "
-                  alt="icon-place"
-                />
                 <div
-                  v-else
-                  class="d-none d-sm-none d-md-flex leaderboard-ranking"
+                  v-if="index < 3 && pageRanking === 1"
+                  class="leaderboard-ranking"
                 >
-                  #{{ index + 1 + (pageDaily - 1) * limit }}
-                </div>
-
-                <v-address
-                  class="d-none d-sm-none d-md-flex text-center mx-1"
-                  :address="player.account"
-                  link
-                  tooltip
-                >
-                </v-address>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Score</div>
-                  <div>{{ player.score }} pts</div>
-                </div>
-
-                <div
-                  class="d-flex flex-column justify-center align-center mx-2"
-                >
-                  <div class="text-subtitle-2 primary--text">Prize</div>
-                  <div
-                    v-if="
-                      prizeDaily[index + (pageDaily - 1) * limit] === undefined
-                    "
-                  >
-                    No Prize
-                  </div>
-                  <div v-else class="d-flex justify-center align-center">
-                    {{ prizeDaily[index + (pageDaily - 1) * limit] }}
-                    <img
-                      class="ml-1"
-                      height="25px"
-                      src="/images/wSCARS.png"
-                      alt="wSCARS"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex align-center justify-space-between">
-            <div
-              @click="getListDaily(pageDaily - 1)"
-              class="d-flex align-center justify-center previous"
-            >
-              <v-icon large>
-                mdi-chevron-left
-              </v-icon>
-            </div>
-            <div class="pages">
-              <div class="text-h6 font-weight-bold">
-                {{ pageDaily }}/{{ getTotaPageDaily }}
-              </div>
-            </div>
-
-            <div
-              @click="getListDaily(pageDaily + 1)"
-              class="d-flex align-center justify-center next"
-            >
-              <v-icon large>
-                mdi-chevron-right
-              </v-icon>
-            </div>
-          </div>
-        </v-col>
-
-        <v-col cols="12" lg="6">
-          <div class="d-flex align-center mb-3">
-            <img
-              class="mr-1"
-              height="30px"
-              src="/images/icons/parchment2.png"
-              alt="trophy"
-            />
-            <div class="page-subtitle">Weekly - #{{ getNumberWeek }}</div>
-            <img
-              class="ml-1"
-              height="35px"
-              src="/images/wGOLD.png"
-              alt="wGOLD"
-            />
-          </div>
-
-          <div class="leaderboard">
-            <div v-if="listWeekLoading">
-              <h4 class="text-h4 text-center pt-9">Loading...</h4>
-            </div>
-            <div v-else-if="listWeek.total === '0'">
-              <h5 class="text-h5 text-center pt-9">
-                There is no data to display
-              </h5>
-            </div>
-            <div
-              v-else
-              v-for="(player, index) in listWeek"
-              v-bind:key="player.account"
-              class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
-            >
-              <div class="d-flex d-lg-box">
-                <v-avatar
-                  class="list-leaderboard-avatar d-flex justify-center"
-                  :address="player.account"
-                  tooltip
-                />
-                <div class="d-flex d-md-none align-center justify-center">
                   <img
-                    v-if="index < 3"
                     width="50px"
-                    class="ml-1"
+                    class="d-none d-sm-none d-md-flex ml-1"
                     :src="
                       `/images/game/icon-place-${
                         index === 0 ? 1 : index === 1 ? 0 : 2
@@ -220,69 +81,55 @@
                     "
                     alt="icon-place"
                   />
-                  <div v-else class="leaderboard-ranking">#{{ index }}</div>
+                </div>
+                <div
+                  v-else
+                  class="d-none d-sm-none d-md-flex leaderboard-ranking"
+                >
+                  #{{ index + 1 + (pageRanking - 1) * limit }}
+                </div>
 
+                <div class=" d-flex flex-column align-center mx-2">
+                  <div class="text-subtitle-2 primary--text">World</div>
+                  <div>{{ player.worldId }}</div>
+                </div>
+
+                <div class=" d-flex flex-column align-center mx-2">
+                  <div class="text-subtitle-2 primary--text">Coordinate</div>
+                  <div>{{ player.x }}/{{ player.y }}</div>
+                </div>
+
+                <div class=" d-flex flex-column align-center mx-2">
+                  <div class="text-subtitle-2 primary--text">Owner</div>
                   <v-address
-                    class="text-center mx-1"
+                    class="d-none d-sm-none d-md-flex text-center mx-1"
                     :address="player.account"
                     link
                     tooltip
                   >
                   </v-address>
                 </div>
-              </div>
 
-              <div
-                class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
-              >
-                <img
-                  v-if="index < 3 && pageWeek === 1"
-                  width="50px"
-                  class="d-none d-sm-none d-md-flex ml-1"
-                  :src="
-                    `/images/game/icon-place-${
-                      index === 0 ? 1 : index === 1 ? 0 : 2
-                    }.png`
-                  "
-                  alt="icon-place"
-                />
-                <div
-                  v-else
-                  class="d-none d-sm-none d-md-flex leaderboard-ranking"
-                >
-                  #{{ index + 1 + (pageWeek - 1) * limit }}
+                <div class=" d-flex flex-column align-center mx-2">
+                  <div class="text-subtitle-2 primary--text">Points</div>
+                  <div class="text-points">{{ player.score }} pts</div>
                 </div>
-
-                <v-address
-                  class="d-none d-sm-none d-md-flex text-center mx-1"
-                  :address="player.account"
-                  link
-                  tooltip
-                >
-                </v-address>
 
                 <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Score</div>
-                  <div>{{ player.score }} pts</div>
-                </div>
-                <div
-                  class="d-flex flex-column justify-center align-center mx-2"
-                >
-                  <div class="text-subtitle-2 primary--text">Prize</div>
-                  <div
-                    v-if="
-                      prizeWeekly[index + (pageWeek - 1) * limit] === undefined
-                    "
-                  >
-                    No Prize
+                  <div class="text-subtitle-2 primary--text">Village</div>
+                  <div class="text-village text-truncate" :title="player.name">
+                    {{ player.name }}
                   </div>
-                  <div v-else class="d-flex justify-center align-center">
-                    {{ prizeWeekly[index + (pageWeek - 1) * limit] }}
-                    <img
-                      class="ml-1"
-                      height="25px"
-                      src="/images/wGOLD.png"
-                      alt="wGOLD"
+                </div>
+
+                <div class=" d-flex flex-column align-center mx-2">
+                  <div class="text-subtitle-2 primary--text">Treasure</div>
+                  <div class="text-treasure">
+                    SCARS:
+                    <amount
+                      :amount="player.treasure.wSCARS"
+                      formatted
+                      decimals="2"
                     />
                   </div>
                 </div>
@@ -292,7 +139,7 @@
 
           <div class="d-flex align-center justify-space-between">
             <div
-              @click="getListWeek(pageWeek - 1)"
+              @click="getListRanking(pageRanking - 1)"
               class="d-flex align-center justify-center previous"
             >
               <v-icon large>
@@ -301,12 +148,12 @@
             </div>
             <div class="pages">
               <div class="text-h6 font-weight-bold">
-                {{ pageWeek }}/{{ getTotaPageWeek }}
+                {{ pageRanking }}/{{ getTotaPageRanking }}
               </div>
             </div>
 
             <div
-              @click="getListWeek(pageWeek + 1)"
+              @click="getListRanking(pageRanking + 1)"
               class="d-flex align-center justify-center next"
             >
               <v-icon large>
@@ -349,90 +196,16 @@ export default {
     VAddress,
     Medal,
     Podium,
+    Amount,
   },
 
   data() {
     return {
       isLoading: true,
-      podium: [
-        {
-          account: "0x2",
-          score: 0,
-          prizeAmount: 3000,
-          prize: "wGOLD",
-        },
-        {
-          account: "0x1",
-          score: 0,
-          prizeAmount: 5000,
-          prize: "wGOLD",
-        },
-        {
-          account: "0x3",
-          score: 0,
-          prizeAmount: 1000,
-          prize: "wGOLD",
-        },
-      ],
-      prizeDaily: [
-        "10000",
-        "6000",
-        "2000",
-        "500",
-        "500",
-        "500",
-        "500",
-        "500",
-        "500",
-        "500",
-      ],
-      prizeWeekly: [
-        "5000",
-        "2000",
-        "1000",
-        "250",
-        "250",
-        "250",
-        "250",
-        "250",
-        "250",
-        "250",
-      ],
-      limit: 6,
-      pageDaily: 1,
-      pageWeek: 1,
-      pageMonth: 1,
-      listDaily: [],
-      listWeek: [],
-      listMonth: [],
-      listGames: [
-        {
-          id: 0,
-          name: "The Monstrous Journey",
-          image: "/images/game/the-monstrous-journey.png",
-          nameButton: "Play Now",
-          actionButton: (url) => {
-            this.$router.push(url);
-          },
-          disabled: false,
-        },
-        {
-          id: 1,
-          name: "Arcandia Expansion",
-          image: "/images/arcadia-expansion.png",
-          nameButton: "Coming soon",
-          actionButton: () => {},
-          disabled: false,
-        },
-        {
-          id: 2,
-          name: "Coming soon",
-          image: "",
-          nameButton: "Coming soon",
-          actionButton: () => {},
-          disabled: true,
-        },
-      ],
+      limit: 20,
+      pageRanking: 1,
+      listRanking: [],
+      listPodium: [],
     };
   },
 
@@ -457,48 +230,23 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    getTotaPageDaily() {
-      if (this.limit > this.listDaily.total) {
+    getTotaPageRanking() {
+      if (this.limit > this.listRanking.total) {
         return 1;
       }
-      return parseFloat(this.listDaily.total / this.limit).toFixed();
+      return parseFloat(this.listRanking.total / this.limit).toFixed();
     },
 
-    getTotaPageWeek() {
-      if (this.limit > this.listWeek.total) {
-        return 1;
-      }
-      return parseFloat(this.listWeek.total / this.limit).toFixed();
-    },
-
-    getTotaPageMonth() {
-      if (this.limit > this.listMonth.total) {
-        return 1;
-      }
-      return parseFloat(this.listMonth.total / this.limit).toFixed();
-    },
-    getNumberWeek() {
+    getNumberRanking() {
       const today = moment();
-      return today.isoWeek();
+      return today.isoRanking();
     },
 
-    getLabelWeek() {
-      const userLang = navigator.language || navigator.userLanguage;
-      let startDateWeek = moment().startOf("isoWeek");
-      let endDateWeek = moment().endOf("isoWeek");
-      startDateWeek = new Date(startDateWeek.toDate());
-      endDateWeek = new Date(endDateWeek.toDate());
-      if (startDateWeek.toLocaleString(userLang).search(",") > 0) {
-        startDateWeek = startDateWeek.toLocaleString(userLang).split(",")[0];
-        endDateWeek = endDateWeek.toLocaleString(userLang).split(",")[0];
-      } else {
-        startDateWeek = startDateWeek.toLocaleString(userLang).split(" ")[0];
-        endDateWeek = endDateWeek.toLocaleString(userLang).split(" ")[0];
-      }
-      return `${startDateWeek} - ${endDateWeek}`;
-    },
     getListPodium() {
-      const listPodium = this.listWeek.slice(0, 3);  
+      if (!this.listPodium.length) {
+        return [];
+      }
+      const listPodium = this.listPodium.slice(0, 3);
       listPodium[0].position = 1;
       listPodium[1].position = 2;
       listPodium[2].position = 3;
@@ -532,55 +280,42 @@ export default {
         return;
       }
 
-      await this.getListWeek(1);
-      await this.getListDaily(1);
+      await this.getListRanking(1);
+      this.listPodium = this.listRanking.slice(0, 3);
 
       this.isLoading = false;
     },
 
-    async getListDaily(_page) {
-      if (this.listDailyLoading || _page < 1 || _page > this.getTotaPageDaily) {
+    async getListRanking(_page) {
+      if (
+        this.listRankingLoading ||
+        _page < 1 ||
+        _page > this.getTotaPageRanking
+      ) {
         return;
       }
-      this.pageDaily = _page;
-      const leaderboardController = new LeaderboardController();
-      this.listDailyLoading = true;
-      this.listDaily = await leaderboardController.getDaily(
-        "TMJ",
-        this.limit,
-        this.limit * (_page - 1)
-      );
-      this.listDailyLoading = false;
-    },
 
-    async getListWeek(_page) {
-      if (this.listWeekLoading || _page < 1 || _page > this.getTotaPageWeek) {
-        return;
-      }
-      this.pageWeek = _page;
+      this.pageRanking = _page;
       const leaderboardController = new LeaderboardController();
-      this.listWeekLoading = true;
-      this.listWeek = await leaderboardController.getWeek(
-        "TMJ",
+      this.listRankingLoading = true;
+      const _listRanking = await leaderboardController.getArcadia(
+        "1",
         this.limit,
         this.limit * (_page - 1)
       );
-      this.listWeekLoading = false;
-    },
 
-    async getListMonth(_page) {
-      if (this.listMonthLoading || _page < 1 || _page > this.getTotaPageMonth) {
-        return;
-      }
-      this.pageMonth = _page;
-      const leaderboardController = new LeaderboardController();
-      this.listMonthLoading = true;
-      this.listMonth = await leaderboardController.getMonth(
-        "TMJ",
-        this.limit,
-        this.limit * (_page - 1)
-      );
-      this.listMonthLoading = false;
+      this.listRanking = _listRanking.map((_list) => {
+        _list.account = _list.owner;
+        _list.score = _list.points;
+        if (!_list.name || _list.name === "") {
+          _list.name = "Waiting for a badass name";
+        }
+        return _list;
+      });
+
+      this.listRanking.total = _listRanking.total;
+
+      this.listRankingLoading = false;
     },
   },
 };
@@ -665,68 +400,6 @@ export default {
   background: #423632;
 }
 
-.card-podium {
-  background: #000000;
-  border: 2px solid #ffeebc;
-  box-sizing: border-box;
-  border-radius: 0px;
-}
-
-.card-podium .icon-place-0 {
-  width: 50px;
-}
-.card-podium .icon-place-1 {
-  width: 60px;
-}
-.card-podium .icon-place-2 {
-  width: 40px;
-}
-
-.card-podium.gold {
-  border: 2px solid #ffb800;
-}
-.card-podium.silver {
-  border: 2px solid #c4c4c4;
-}
-.card-podium.bronze {
-  border: 2px solid #e95809;
-}
-
-.card-podium.gold .avatar >>> img {
-  margin-top: -50px;
-  border: 2px solid #ffb800;
-  border-radius: 8px;
-}
-.card-podium.silver .avatar >>> img {
-  margin-top: -50px;
-  border: 2px solid #c4c4c4;
-  border-radius: 8px;
-}
-.card-podium.bronze .avatar >>> img {
-  margin-top: -50px;
-  border: 2px solid #e95809;
-  border-radius: 8px;
-}
-
-.card-podium.gold .card-podium-footer {
-  background: linear-gradient(180deg, #f3a100 0%, #ffb800 100%);
-  border-top: 2px solid #ffb800;
-  box-sizing: border-box;
-  border-radius: 0px;
-}
-.card-podium.silver .card-podium-footer {
-  background: linear-gradient(180deg, #8e8e8e 0%, #c4c4c4 100%);
-  border-top: 2px solid #c4c4c4;
-  box-sizing: border-box;
-  border-radius: 0px;
-}
-.card-podium.bronze .card-podium-footer {
-  background: linear-gradient(180deg, #be4400 0%, #e95809 100%);
-  border-top: 2px solid #e95809;
-  box-sizing: border-box;
-  border-radius: 0px;
-}
-
 .leaderboard {
   min-height: 500px;
 }
@@ -789,6 +462,15 @@ export default {
   height: 130px;
 }
 
+.leaderboard-info {
+  width: 100%;
+}
+
+.text-village, .text-points, .text-treasure {
+  width: 130px;
+  text-align: center;
+}
+
 @media only screen and (max-width: 959px) {
   .page-title {
     font-size: 24px;
@@ -800,34 +482,6 @@ export default {
   .page-subtitle {
     font-size: 26px;
     line-height: 32px;
-  }
-
-  .card-podium.gold .avatar >>> img {
-    width: 70px;
-    margin-top: -35px;
-    border: 2px solid #ffb800;
-    border-radius: 8px;
-  }
-  .card-podium.silver .avatar >>> img {
-    width: 70px;
-    margin-top: -35px;
-    border: 2px solid #c4c4c4;
-    border-radius: 8px;
-  }
-  .card-podium.bronze .avatar >>> img {
-    width: 70px;
-    margin-top: -35px;
-    border: 2px solid #e95809;
-    border-radius: 8px;
-  }
-  .card-podium .icon-place-0 {
-    width: 40px;
-  }
-  .card-podium .icon-place-1 {
-    width: 40px;
-  }
-  .card-podium .icon-place-2 {
-    width: 40px;
   }
   .list-leaderboard-avatar >>> img {
     border-radius: 6px 0px 0px 0px;
