@@ -154,7 +154,7 @@
                 type="whot"
                 text="Swap"
                 :isLoading="isLoadingSwap"
-                :disabled="!txHash || isLoadingSwap || !isNotHash(txHash)"
+                :disabled="!txHash || isLoadingSwap || isNotHash(txHash)"
                 :handleClick="handleSwap"
                 isBlock
               />
