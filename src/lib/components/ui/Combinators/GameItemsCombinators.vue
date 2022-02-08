@@ -11,11 +11,7 @@
           :lazy-src="gameItems.image"
         >
           <template v-slot:placeholder>
-            <v-row
-              class="fill-height ma-0"
-              align="center"
-              justify="center"
-            >
+            <v-row class="fill-height ma-0" align="center" justify="center">
               <v-progress-circular
                 indeterminate
                 color="grey lighten-5"
@@ -83,7 +79,9 @@
                 blocks
               </span>
             </span>
-            <span style="white-space: nowrap;"><time-block :blocks="getGeneralConfig.blocks"/></span>
+            <span style="white-space: nowrap;"
+              ><time-block :blocks="getGeneralConfig.blocks"
+            /></span>
           </div>
         </div>
         <hr />
@@ -93,7 +91,9 @@
             height="40px"
             :src="gameItems.combinators.warPreparation.image"
           />
-          <span :style="$vuetify.breakpoint.lgAndUp ? 'white-space: nowrap;' : ''">
+          <span
+            :style="$vuetify.breakpoint.lgAndUp ? 'white-space: nowrap;' : ''"
+          >
             Item conquered: <br />
             <amount
               :amount="getGameItemCConfig.amount"
@@ -104,22 +104,22 @@
           </span>
         </div>
         <div v-if="!isApproved">
-          <!-- <wButton
+          <wButton
             class="mt-1"
             :disabled="!getGeneralConfig.isEnabled"
             @click="openModalArimedesApproval()"
           >
             Approve Research
-          </wButton> -->
+          </wButton>
         </div>
         <div v-else-if="combinators.combinatorId === '0'">
-          <!-- <wButton
-          :disabled="!getGeneralConfig.isEnabled"
-          @click="openModalArimedesNewResearch"
-          class="mt-1"
-        >
-          New Research
-        </wButton> -->
+          <wButton
+            :disabled="!getGeneralConfig.isEnabled"
+            @click="openModalArimedesNewResearch"
+            class="mt-1"
+          >
+            New Research
+          </wButton>
         </div>
         <wButton
           v-else-if="combinators.combinatorId !== '0' && isClaim"
@@ -760,7 +760,7 @@ export default {
 <style scoped lang="scss">
 .info-card {
   width: 250px;
-  @media only screen and (min-width: 600px){
+  @media only screen and (min-width: 600px) {
     width: 280px;
   }
 }
