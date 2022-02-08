@@ -121,7 +121,7 @@
               </div>
               <v-text-field v-model="txHash" full-width :error="isNotHash(txHash)" :error-messages="isNotHash(txHash) ? `This does'nt look like a hash` : ''"><template v-slot:append><v-icon class="ml-1 icon" @click="pasteFromClipboard">mdi-transfer-down</v-icon></template></v-text-field>
             </div>
-            <div class="step-title mt-2">Select your Soldier NFT on APWARS</div>
+            <div class="step-title mt-2">Select your NFT Soldier on APWars</div>
             <div class="swap-options-container mt-2">
               <div
                 :class="[
@@ -170,7 +170,7 @@
             </div>
           </div>
 
-          <div class="video-title mt-4 mb-1">Watch TMJ gameplay</div>
+          <div class="video-title mt-4 mb-1">Watch the TMJ gameplay</div>
           <div class="d-flex justify-center">
             <iframe
               width="560"
