@@ -125,7 +125,7 @@
                 <div class=" d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Treasure</div>
                   <div class="text-treasure">
-                    SCARS:
+                    War Scars:
                     <amount
                       :amount="player.treasure.wSCARS"
                       formatted
