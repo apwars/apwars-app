@@ -144,8 +144,8 @@
           <div class="d-flex justify-center">
             <div class="wallet-info mt-1">
               You don't need to approve anything or connect your wallet. We also
-              don't want you to expose yourself. Just copy and paste the address
-              to make the payment.
+              don't want you to expose yourself. Just copy and paste the transaction hash
+              to make the payment, the NFT will be granted on the wallet that transfered.
             </div>
           </div>
 
@@ -169,6 +169,7 @@
               <img
                 class="mr-1"
                 alt="Telegram"
+                width="48"
                 src="/images/icons/telegram.png"
               />
               Join our telegram group to learn more about the project.
@@ -177,7 +178,7 @@
               class="link"
               @click="() => handleLink('https://medium.com/apwars')"
             >
-              <img class="mr-1" alt="Medium" src="/images/icons/medium.png" />
+              <img class="mr-1" alt="Medium" width="48" src="/images/icons/medium.png" />
               You can keep up with all the news on Medium too.
             </div>
             <div
@@ -189,7 +190,7 @@
                   )
               "
             >
-              <img class="mr-1" alt="YouTube" src="/images/icons/youtube.png" />
+              <img class="mr-1" alt="YouTube" width="48" src="/images/icons/youtube.png" />
               Watch the gameplay on Youtube.
             </div>
           </div>
@@ -273,7 +274,7 @@ export default {
     async fetchOptions() {
       this.isLoading = true;
       try {
-        const opts = await axios.get(`${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/list-swap`);
+        const opts = await axios.get(`${process.env.VUE_APP_API_ARCADIA_97}/fresh-start-swap/list-swap`);
         console.log(opts)
         const mappedTokens = {
           CryptoCars: {
@@ -298,7 +299,7 @@ export default {
     async handleSwap() {
       try {
         this.isLoadingSwap = true;
-        await axios.post(`${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/${this.txHash}/${this.selectedSwap}/${this.selectedNFT}`);
+        await axios.post(`${process.env.VUE_APP_API_ARCADIA_97}/fresh-start-swap/${this.txHash}/${this.selectedSwap}/${this.selectedNFT}`);
         ToastSnackbar.success("Successfully swapped, welcome to APWars!");
       } catch (error) {
         ToastSnackbar.error(
@@ -484,6 +485,7 @@ export default {
     align-items: center;
     padding-right: 12px;
     text-align: center;
+    max-width: 320px;
     &:hover {
       cursor: pointer;
       text-decoration: underline;
