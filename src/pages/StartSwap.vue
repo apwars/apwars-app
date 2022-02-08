@@ -88,7 +88,7 @@
                   handleLink(
                     'https://app.apwars.farm/the-monstrous-journey'
                   )
-              ">playing TMJ</span> to evolve the Soldier who will command your army in the War?.</div>
+              ">playing TMJ</span> to evolve the Soldier who will command your army in the War?</div>
             </template>
             <template v-else>
             <div class="step-title">Select where you are coming from</div>
@@ -118,7 +118,7 @@
               <div class="step-title mt-2">
                 Paste the transaction hash in the field below
               </div>
-              <v-text-field v-model="txHash" full-width><template v-slot:append><v-icon class="ml-1 icon" @click="pasteFromClipboard">mdi-transfer-down</v-icon></template></v-text-field>
+              <v-text-field v-model="txHash" full-width :error="isNotHash(txHash)" :error-messages="isNotHash(txHash) ? `This does'nt look like a hash` : ''"><template v-slot:append><v-icon class="ml-1 icon" @click="pasteFromClipboard">mdi-transfer-down</v-icon></template></v-text-field>
             </div>
             <div class="step-title mt-2">Select your Soldier NFT on APWARS</div>
             <div class="swap-options-container mt-2">
@@ -154,7 +154,7 @@
                 type="whot"
                 text="Swap"
                 :isLoading="isLoadingSwap"
-                :disabled="!txHash || isLoadingSwap"
+                :disabled="!txHash || isLoadingSwap || !isNotHash(txHash)"
                 :handleClick="handleSwap"
                 isBlock
               />
@@ -297,7 +297,7 @@ export default {
     async fetchOptions() {
       this.isLoading = true;
       try {
-        const opts = await axios.get(`${process.env.VUE_APP_API_ARCADIA_97}/fresh-start-swap/list-swap`);
+        const opts = await axios.get(`${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/list-swap`);
         const mappedTokens = {
           CryptoCars: {
             image: "/images/icons/swap/ccars.png",
@@ -321,7 +321,7 @@ export default {
     async handleSwap() {
       try {
         this.isLoadingSwap = true;
-        await axios.post(`${process.env.VUE_APP_API_ARCADIA_97}/fresh-start-swap/${this.txHash}/${this.selectedSwap}/${this.selectedNFT}`);
+        await axios.post(`${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/${this.txHash}/${this.selectedSwap}/${this.selectedNFT}`);
         this.swapDone = true;
         ToastSnackbar.success("Successfully swapped, welcome to APWars!");
       } catch (error) {
@@ -334,6 +334,18 @@ export default {
     },
     truncate(wallet) {
       return walletTruncate(wallet);
+    },
+    isNotHash(hash) {
+      if (!hash) {
+        return false;
+      }
+      if (!hash.length > 1 || hash.substring(0,2) !== '0x') {
+        return true;
+      }
+      if (hash.length !== 66) {
+        return true;
+      }
+      return false;
     }
   },
   created() {
