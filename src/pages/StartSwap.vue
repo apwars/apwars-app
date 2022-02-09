@@ -238,7 +238,7 @@
             <div class="wallet-info mt-1">
               You don't need to approve anything or connect your wallet. We also
               don't want you to expose yourself. Just copy and paste the
-              transaction hash to make the payment, the NFT will be granted on
+              transaction hash to make the payment, the Soldier will be sent to
               the wallet that transfered.
             </div>
           </div>
