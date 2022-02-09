@@ -281,6 +281,7 @@ export function getLegendaryRelics() {
       description:
         "Sire, they spared my life to deliver this message to you. We are coming. - Weary soldier message",
       image: "/images/nfts/war-the-legend.png",
+      icon: "the-legend",
     },
     {
       id: 68,
@@ -304,6 +305,7 @@ export function getLegendaryRelics() {
       title: "War Hero",
       description: "All hail the a survivor from a great battle - War veterany",
       image: "/images/nfts/war-war-hero.png",
+      icon: "war-hero",
     },
     {
       id: 70,
