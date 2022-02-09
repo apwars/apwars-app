@@ -21,7 +21,7 @@ const mappedErrors = {
     INVALID_WALLET_DEPOSIT: 'Invalid wallet deposit',
     INVALID_SWAP_CONTRACT_METHOD: 'Invalid swap contract method',
     INVALID_SWAP_AMOUNT: 'Invalid swap amount',
-    ACCOUNT_HAS_SOLDIER: 'This account already has this NFT Soldier',
+    ACCOUNT_HAS_SOLDIER: 'This account already has Soldier',
     INVALID_PRIZE_SOLDIER: 'Invalid Soldier Prize',
 }
 
