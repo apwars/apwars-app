@@ -81,7 +81,7 @@
               <div class="cycle-title">Receive Rewards</div>
             </div>
           </div>
-          <div class="swap-container">
+          <div ref="form" class="swap-container">
             <template v-if="swapDone">
               <div class="highlight-text">
                 Congratulations and welcome to APWars!
@@ -419,6 +419,7 @@ export default {
           }`
         );
         this.swapDone = true;
+        this.$refs.form.focus();
         ToastSnackbar.success("Successfully swapped, welcome to APWars!");
       } catch (error) {
         const errorMessage = errorHandler(error.response.data.code);
