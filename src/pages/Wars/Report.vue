@@ -482,7 +482,7 @@
 
           <v-row v-if="hasPrizes">
             <v-col>
-              <div class="rewards-title">Prize</div>
+              <div class="rewards-title">FED’s Prize</div>
               <div class="d-flex align-center">
                 <img
                   width="48"
