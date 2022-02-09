@@ -11,7 +11,7 @@
           <v-col cols="12" md="4" class="pr-0 pl-1">
             <div class="mt-1"></div>
             <game-text header="h4" class="text-center mt-2">
-              Enlistment ends in
+              Countdown to collect prizes and wUNITS
             </game-text>
             <div class="card-body-home d-flex justify-center align-center">
               <countdown class="mt-0" :time="nextWar" hideEnd />
@@ -163,7 +163,7 @@ export default {
         { image: "/images/weapons/catapult-elves.png" },
       ],
       nextWar: 0,
-      dateNextWar: 1644408000000,
+      dateNextWar: 1644580800000,
     };
   },
 
