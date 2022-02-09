@@ -77,7 +77,7 @@
 
                 <div class=" d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Paticipations</div>
-                  <div>{{ player.participations }}</div>
+                  <div>{{ player.totalWars }}</div>
                 </div>
 
                 <div class=" d-flex flex-column align-center mx-2">
@@ -93,29 +93,7 @@
 
                 <div class=" d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Power Units</div>
-                  <div class="text-points">{{ player.score }} PU</div>
-                </div>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">wGOLD</div>
-                  <div class="text-village text-truncate" :title="player.wGOLD">
-                    <amount
-                      :amount="player.wGOLD"
-                      formatted
-                      decimals="2"
-                    />
-                  </div>
-                </div>
-
-                <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">wCOURAGE</div>
-                  <div class="text-treasure">
-                    <amount
-                      :amount="player.wCOURAGE"
-                      formatted
-                      decimals="2"
-                    />
-                  </div>
+                  <div class="text-points">{{ player.points }} PU</div>
                 </div>
               </div>
             </div>
@@ -276,14 +254,17 @@ export default {
       this.pageRanking = _page;
       const leaderboardController = new LeaderboardController();
       this.listRankingLoading = true;
-      let _listRanking = await leaderboardController.getLeaderboard(
-        2,
+      let _listRanking = await leaderboardController.getLeaderboardWar(
         null,
         this.limit,
         this.limit * (_page - 1)
       );
 
-      _listRanking.total = _listRanking.length;
+      const total = _listRanking.total;
+
+      _listRanking = _listRanking.map(r => ({...r, score: r.points }));
+
+      _listRanking.total = total;
 
       this.listRanking = _listRanking;
 
