@@ -18,7 +18,7 @@
           <Title class="mt-1" text="Fresh Start Swap" />
           <div>
             From now on, you can start a new sustainable game with rewards and
-            fun
+            fun (Exclusive for new players)
           </div>
         </v-col>
       </v-row>
@@ -44,7 +44,11 @@
               </div>
               <div class="cycle-title">Unlock your Soldier</div>
             </div>
-            <img class="d-none" src="/images/icons/arrow-left.png" alt="Arrow Left" />
+            <img
+              class="d-none"
+              src="/images/icons/arrow-left.png"
+              alt="Arrow Left"
+            />
             <div class="cycle-step">
               <div class="cycle-n mb-1">2</div>
               <div class="cycle-illustration">
@@ -52,7 +56,11 @@
               </div>
               <div class="cycle-title">Play TMJ</div>
             </div>
-            <img class="d-none" src="/images/icons/arrow-left.png" alt="Arrow Left" />
+            <img
+              class="d-none"
+              src="/images/icons/arrow-left.png"
+              alt="Arrow Left"
+            />
             <div class="cycle-step">
               <div class="cycle-n mb-1">3</div>
               <div class="cycle-illustration">
@@ -60,7 +68,11 @@
               </div>
               <div class="cycle-title">Join The War</div>
             </div>
-            <img class="d-none" src="/images/icons/arrow-left.png" alt="Arrow Left" />
+            <img
+              class="d-none"
+              src="/images/icons/arrow-left.png"
+              alt="Arrow Left"
+            />
             <div class="cycle-step">
               <div class="cycle-n mb-1">4</div>
               <div class="cycle-illustration">
@@ -74,99 +86,160 @@
               <div class="highlight-text">
                 Congratulations and welcome to APWars!
               </div>
-              <div class="mt-1">Your new NFT Soldier is safe in the wallet you made the transfer. From now on, you can start exploring the world of Arcadia!!</div>
-              <div class="mt-2">You can also <span class="redirect" @click="
-                () =>
-                  handleLink(
-                    'https://www-v1.apwars.farm/docs'
-                  )
-              ">visit the docs</span> to learn more about the Arcadia world.</div>
-              <div class="mt-2"> How about <span class="redirect" @click="
-                () =>
-                  handleLink(
-                    'https://app.apwars.farm/the-monstrous-journey'
-                  )
-              ">playing TMJ</span> to evolve the Soldier who will command your army in the War?</div>
+              <div class="mt-1">
+                Your new Soldier is safe in the wallet you made the transfer.
+                From now on, you can start exploring the world of Arcadia!!
+              </div>
+              <div class="mt-2">
+                You can also
+                <span
+                  class="redirect"
+                  @click="() => handleLink('https://www-v1.apwars.farm/docs')"
+                  >visit the docs</span
+                >
+                to learn more about the Arcadia world.
+              </div>
+              <div class="mt-2">
+                How about
+                <span
+                  class="redirect"
+                  @click="
+                    () =>
+                      handleLink(
+                        'https://app.apwars.farm/the-monstrous-journey'
+                      )
+                  "
+                  >playing TMJ</span
+                >
+                to evolve the Soldier who will command your army in the War?
+              </div>
             </template>
             <template v-else>
               <div class="full-cycle-title">
-            Unlock your NFT Soldier swapping from another game
-          </div>
-            <div class="step-title">Select where you are coming from</div>
-            <v-skeleton-loader v-if="isLoading" type="image" height="64px" width="80px" />
-            <div v-else class="swap-options-container mt-2">
-              <div
-                :class="[
-                  'swap-option',
-                  selectedSwap === option.name ? 'is-selected' : '',
-                ]"
-                v-for="option in swapOptions"
-                :key="option.id"
-                @click="() => selectSwap(option.name)"
-              >
-                <img width="64" height="64" :src="option.image" />
+                Unlock your Soldier swapping from another token game
               </div>
-            </div>
-            <div class="transfer-instruction mt-2">
-              Transfer
-              <span class="value"
-                >{{ selectedAmount }} {{ selectedToken }}</span
-              >
-              to this wallet in BSC
-            </div>
-            <div class="wallet d-flex align-center justify-center"><div class="wallet">{{ truncate(wallet) }}</div> <v-icon class="ml-1 icon" @click="() => copyToClipboard(wallet)">mdi-content-copy</v-icon></div>
-            <div>
-              <div class="step-title mt-2">
-                Paste the transaction hash in the field below
-              </div>
-              <v-text-field v-model="txHash" full-width :error="isNotHash(txHash)" :error-messages="isNotHash(txHash) ? `This does'nt look like a hash` : ''"><template v-slot:append><v-icon class="ml-1 icon" @click="pasteFromClipboard">mdi-transfer-down</v-icon></template></v-text-field>
-            </div>
-            <div class="step-title mt-2">Select your NFT Soldier on APWars</div>
-            <div class="swap-options-container mt-2">
-              <div
-                :class="[
-                  'swap-option',
-                  selectedNFT === 'HUMAN_SOLDIER' ? 'is-selected' : '',
-                ]"
-                @click="() => selectNFT('HUMAN_SOLDIER')"
-              >
-                <img
-                  width="64"
-                  height="64"
-                  src="/images/troops/wwarrior-nft.png"
-                />
-              </div>
-              <div
-                :class="[
-                  'swap-option',
-                  selectedNFT === 'ORC_SOLDIER' ? 'is-selected' : '',
-                ]"
-                @click="() => selectNFT('ORC_SOLDIER')"
-              >
-                <img
-                  width="64"
-                  height="64"
-                  src="/images/troops/wgrunt-nft.png"
-                />
-              </div>
-            </div>
-            <div class="swap-button-container mt-2">
-              <Button
-                type="whot"
-                text="Get NFT Soldier"
-                :isLoading="isLoadingSwap"
-                :disabled="!txHash || isLoadingSwap || isNotHash(txHash)"
-                :handleClick="handleSwap"
-                isBlock
+              <div class="step-title">Select where you are coming from</div>
+              <v-skeleton-loader
+                v-if="isLoading"
+                type="image"
+                height="64px"
+                width="80px"
               />
-            </div>
+              <div v-else class="swap-options-container mt-2">
+                <div
+                  :class="[
+                    'swap-option',
+                    selectedSwap === option.name ? 'is-selected' : '',
+                  ]"
+                  v-for="option in swapOptions"
+                  :key="option.id"
+                  @click="() => selectSwap(option.name)"
+                >
+                  <img width="64" height="64" :src="option.image" />
+                </div>
+              </div>
+              <div class="check-container">
+              <v-checkbox v-model="agreement1" class="mt-1" color="primary">
+                <template v-slot:label>
+                  <div class="text-white">
+                    I understand that in APWars all rewards are based on
+                    strategy, the dedication of time, and skills. Also, I
+                    understand that the entire game economy is organically based
+                    on entertainment purchases and not on financial return.
+                  </div>
+                </template>
+              </v-checkbox>
+              </div>
+              <div class="check-container">
+              <v-checkbox v-model="agreement2" class="mt-1" color="primary">
+                <template v-slot:label>
+                  <div class="text-white">
+                    I understand that all rewards have value exclusively within
+                    the game to improve my experience and performance in matches
+                    and that there is no need for any relevant financial
+                    investment.
+                  </div>
+                </template>
+              </v-checkbox>
+              </div>
+              <div class="transfer-instruction mt-2">
+                Transfer
+                <span class="value"
+                  >{{ selectedAmount }} {{ selectedToken }}</span
+                >
+                to this wallet in BSC
+              </div>
+              <div class="wallet d-flex align-center justify-center">
+                <div class="wallet">{{ wallet }}</div>
+                <v-icon class="ml-1 icon" @click="() => copyToClipboard(wallet)"
+                  >mdi-content-copy</v-icon
+                >
+              </div>
+              <div>
+                <div class="step-title mt-2">
+                  Paste the transaction hash in the field below
+                </div>
+                <v-text-field
+                  v-model="txHash"
+                  full-width
+                  :error="isNotHash(txHash)"
+                  :error-messages="
+                    isNotHash(txHash) ? `This does'nt look like a hash` : ''
+                  "
+                  ><template v-slot:append
+                    ><v-icon class="ml-1 icon" @click="pasteFromClipboard"
+                      >mdi-transfer-down</v-icon
+                    ></template
+                  ></v-text-field
+                >
+              </div>
+              <div class="step-title mt-2">Select your Soldier on APWars</div>
+              <div class="swap-options-container mt-2">
+                <div
+                  :class="[
+                    'swap-option',
+                    selectedNFT === 'HUMAN_SOLDIER' ? 'is-selected' : '',
+                  ]"
+                  @click="() => selectNFT('HUMAN_SOLDIER')"
+                >
+                  <img
+                    width="64"
+                    height="64"
+                    src="/images/troops/wwarrior-nft.png"
+                  />
+                </div>
+                <div
+                  :class="[
+                    'swap-option',
+                    selectedNFT === 'ORC_SOLDIER' ? 'is-selected' : '',
+                  ]"
+                  @click="() => selectNFT('ORC_SOLDIER')"
+                >
+                  <img
+                    width="64"
+                    height="64"
+                    src="/images/troops/wgrunt-nft.png"
+                  />
+                </div>
+              </div>
+              <div class="swap-button-container mt-2">
+                <Button
+                  type="whot"
+                  text="Get Soldier"
+                  :isLoading="isLoadingSwap"
+                  :disabled="!txHash || isLoadingSwap || isNotHash(txHash) || !isAgreed"
+                  :handleClick="handleSwap"
+                  isBlock
+                />
+              </div>
             </template>
           </div>
           <div class="d-flex justify-center">
             <div class="wallet-info mt-1">
               You don't need to approve anything or connect your wallet. We also
-              don't want you to expose yourself. Just copy and paste the transaction hash
-              to make the payment, the NFT will be granted on the wallet that transfered.
+              don't want you to expose yourself. Just copy and paste the
+              transaction hash to make the payment, the NFT will be granted on
+              the wallet that transfered.
             </div>
           </div>
 
@@ -183,10 +256,7 @@
             ></iframe>
           </div>
           <div class="footer mt-3">
-            <div
-              class="link"
-              @click="() => handleLink('https://t.me/apwars')"
-            >
+            <div class="link" @click="() => handleLink('https://t.me/apwars')">
               <img
                 class="mr-1"
                 alt="Telegram"
@@ -199,7 +269,12 @@
               class="link"
               @click="() => handleLink('https://medium.com/apwars')"
             >
-              <img class="mr-1" alt="Medium" width="48" src="/images/icons/medium.png" />
+              <img
+                class="mr-1"
+                alt="Medium"
+                width="48"
+                src="/images/icons/medium.png"
+              />
               You can keep up with all the news on Medium too.
             </div>
             <div
@@ -211,7 +286,12 @@
                   )
               "
             >
-              <img class="mr-1" alt="YouTube" width="48" src="/images/icons/youtube.png" />
+              <img
+                class="mr-1"
+                alt="YouTube"
+                width="48"
+                src="/images/icons/youtube.png"
+              />
               Watch the gameplay on Youtube.
             </div>
           </div>
@@ -249,17 +329,21 @@ export default {
       }
       return this.swapOptions.find((s) => s.name === this.selectedSwap).token;
     },
+    isAgreed() {
+      return this.agreement1 && this.agreement2;
+    }
   },
   data() {
     return {
-      agreement: false,
+      agreement1: false,
+      agreement2: false,
       isLoading: false,
       selectedSwap: null,
       selectedNFT: null,
       swapOptions: [],
       txHash: "",
       isLoadingSwap: false,
-      wallet: '0x888259858492818961a847B5194091e484e7b786',
+      wallet: "0x888259858492818961a847B5194091e484e7b786",
       swapDone: false,
     };
   },
@@ -282,24 +366,26 @@ export default {
     async copyToClipboard(text) {
       try {
         await navigator.clipboard.writeText(text);
-        ToastSnackbar.success('Copied!');
+        ToastSnackbar.success("Copied!");
       } catch (error) {
-        ToastSnackbar.error('Not Copied, please manually select and copy!');
+        ToastSnackbar.error("Not Copied, please manually select and copy!");
       }
     },
     async pasteFromClipboard() {
       try {
         const text = await navigator.clipboard.readText();
         this.txHash = text;
-        ToastSnackbar.success('Pasted!');
+        ToastSnackbar.success("Pasted!");
       } catch (error) {
-        ToastSnackbar.error('Not Pasted, please manually select and paste!');
+        ToastSnackbar.error("Not Pasted, please manually select and paste!");
       }
     },
     async fetchOptions() {
       this.isLoading = true;
       try {
-        const opts = await axios.get(`${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/list-swap`);
+        const opts = await axios.get(
+          `${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/list-swap`
+        );
         const mappedTokens = {
           CryptoCars: {
             image: "/images/icons/swap/ccars.png",
@@ -312,7 +398,10 @@ export default {
             token: "SQUID",
           },
         };
-        this.swapOptions = opts.data.map((o) => ({ ...o, ...mappedTokens[o.name] }));
+        this.swapOptions = opts.data.map((o) => ({
+          ...o,
+          ...mappedTokens[o.name],
+        }));
       } catch (error) {
         ToastSnackbar.error("Something went wrong while getting swap options.");
       } finally {
@@ -322,11 +411,16 @@ export default {
     async handleSwap() {
       try {
         this.isLoadingSwap = true;
-        await axios.post(`${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/${this.txHash.trim()}/${this.selectedSwap}/${this.selectedNFT}`);
+        await axios.post(
+          `${
+            process.env.VUE_APP_API_ARCADIA_56
+          }/fresh-start-swap/${this.txHash.trim()}/${this.selectedSwap}/${
+            this.selectedNFT
+          }`
+        );
         this.swapDone = true;
         ToastSnackbar.success("Successfully swapped, welcome to APWars!");
       } catch (error) {
-        console.error(error.response.data);
         const errorMessage = errorHandler(error.response.data.code);
         ToastSnackbar.error(errorMessage);
       } finally {
@@ -340,14 +434,14 @@ export default {
       if (!hash) {
         return false;
       }
-      if (!hash.trim().length > 1 || hash.substring(0,2) !== '0x') {
+      if (!hash.trim().length > 1 || hash.substring(0, 2) !== "0x") {
         return true;
       }
       if (hash.trim().length !== 66) {
         return true;
       }
       return false;
-    }
+    },
   },
   created() {
     this.setHeader(false);
@@ -445,6 +539,7 @@ export default {
 
 .wallet {
   @extend .highlight-text;
+  font-size: 12px;
 }
 
 .wallet-info {
@@ -488,7 +583,6 @@ export default {
     font-size: 24px;
     padding: 0px 18px;
   }
-
 }
 
 .cycle-illustration {
@@ -521,6 +615,11 @@ export default {
 .rounded-nft {
   border-radius: 5px;
   border: 1px solid #ffeebc;
+}
+
+.check-container {
+  width: 100%;
+  max-width: 420px;
 }
 
 .footer {
