@@ -132,7 +132,7 @@
             </div>
             <div class="pages">
               <div class="text-h6 font-weight-bold">
-                {{ pageRanking }}/{{ getTotaPageRanking }}
+                {{ pageRanking }}/{{ getTotalPageRanking }}
               </div>
             </div>
 
@@ -168,7 +168,6 @@ import Medal from "@/lib/components/ui/Utils/Medal";
 import Podium from "@/lib/components/ui/Leaderboard/Podium";
 
 import { mapMutations } from "vuex";
-import moment from "moment";
 
 import LeaderboardController from "@/controller/LeaderboardController";
 
@@ -214,16 +213,11 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    getTotaPageRanking() {
+    getTotalPageRanking() {
       if (this.limit > this.listRanking.total) {
         return 1;
       }
       return Math.ceil(this.listRanking.total / this.limit);
-    },
-
-    getNumberRanking() {
-      const today = moment();
-      return today.isoRanking();
     },
 
     getListPodium() {
@@ -274,7 +268,7 @@ export default {
       if (
         this.listRankingLoading ||
         _page < 1 ||
-        _page > this.getTotaPageRanking
+        _page > this.getTotalPageRanking
       ) {
         return;
       }

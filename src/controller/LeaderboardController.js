@@ -12,14 +12,14 @@ export default class LeaderboardController {
     if (game === 2) {
       return [{
         account: 'asasasas',
-        participations: 2,
+        participations: 5,
         score: 6005974,
         wGOLD: 554859697,
         wCOURAGE: 1247961
       },
       {
         account: 'asasasaascaeqs',
-        participations: 2,
+        participations: 3,
         score: 6005974,
         wGOLD: 554859697,
         wCOURAGE: 1247961
@@ -27,23 +27,58 @@ export default class LeaderboardController {
       {
         account: 'asdfdrasasas',
         participations: 2,
-        score: 6005974,
-        wGOLD: 554859697,
-        wCOURAGE: 1247961
+        score: 600597,
+        wGOLD: 55485969,
+        wCOURAGE: 124796
       },
       {
         account: 'asasasasdsac',
         participations: 2,
-        score: 6005974,
-        wGOLD: 554859697,
-        wCOURAGE: 1247961
+        score: 600597,
+        wGOLD: 55485969,
+        wCOURAGE: 124796
       },
       {
         account: 'asasasasgrhte',
         participations: 2,
-        score: 6005974,
-        wGOLD: 554859697,
-        wCOURAGE: 1247961
+        score: 600597,
+        wGOLD: 55485969,
+        wCOURAGE: 124796
+      },
+      {
+        account: 'errurgefgegrg',
+        participations: 2,
+        score: 600597,
+        wGOLD: 55485969,
+        wCOURAGE: 124796
+      },
+      {
+        account: 'jhkjghjfhgr',
+        participations: 2,
+        score: 60059,
+        wGOLD: 5548596,
+        wCOURAGE: 12479
+      },
+      {
+        account: 'vfbdnfghfghd',
+        participations: 2,
+        score: 60059,
+        wGOLD: 5548596,
+        wCOURAGE: 12479
+      },
+      {
+        account: 'tertegegerg',
+        participations: 1,
+        score: 60059,
+        wGOLD: 554859,
+        wCOURAGE: 1247
+      },
+      {
+        account: 'dfgvdsfgeryh',
+        participations: 1,
+        score: 60059,
+        wGOLD: 554859,
+        wCOURAGE: 1247
       }]
     };
 
