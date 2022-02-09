@@ -39,7 +39,7 @@
               <v-icon v-if="game.disabled">
                 mdi-lock-outline
               </v-icon>
-              <img v-else width="70%" :src="game.image" />
+              <img v-else :width="game.sizeImage" :src="game.image" />
             </div>
           </v-card>
         </v-col>
@@ -149,6 +149,7 @@ export default {
           },
           disabled: false,
           isWeekly: true,
+          sizeImage: '70%',
         },
         {
           id: 1,
@@ -159,16 +160,18 @@ export default {
           actionButton: () => {},
           disabled: false,
           isWeekly: false,
+          sizeImage: '70%',
         },
         {
           id: 2,
           selected: false,
           name: "War",
-          image: "/images/icons/fed.png",
+          image: "/images/game/wars.png",
           nameButton: "Coming soon",
           actionButton: () => {},
           disabled: false,
           isWeekly: false,
+          sizeImage: '45%',
         },
       ],
     };
