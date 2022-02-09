@@ -499,7 +499,7 @@
           </v-row>
           <v-row v-if="report.rewards.length > 0">
             <v-col>
-              <div class="rewards-title">Rewarded slots</div>
+              <div class="rewards-title">War Relics rewards</div>
               <div class="mt-2">
                 <div
                   class="spot-info"
