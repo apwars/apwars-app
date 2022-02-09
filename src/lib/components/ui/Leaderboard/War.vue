@@ -1,21 +1,7 @@
 <template>
   <div>
     <v-container v-if="isConnected && !isLoading">
-      <Podium :podium="getListPodium" />
-
-      <v-row>
-        <v-col cols="12" class="d-flex align-center justify-center">
-          <img
-            class="mr-1"
-            height="35px"
-            src="/images/game/trophy.png"
-            alt="trophy"
-          />
-          <div class="page-subtitle">
-            Real Time Ranking
-          </div>
-        </v-col>
-      </v-row>
+      <Podium :podium="getListPodium" scoreMetric="PU" />
 
       <v-row>
         <v-col cols="12">
@@ -39,7 +25,6 @@
                   class="list-leaderboard-avatar d-flex justify-center"
                   :address="player.account"
                   tooltip
-                  :propAvatar="player.faction"
                 />
                 <div class="d-flex d-md-none align-center justify-center">
                   <img
@@ -91,24 +76,8 @@
                 </div>
 
                 <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">World</div>
-                  <div>{{ player.worldId }}</div>
-                </div>
-
-                <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Coordinate</div>
-                  <div>({{ player.x }},{{ player.y }})</div>
-                </div>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Faction</div>
-                  <div class="text-village text-truncate">
-                    {{
-                      player.faction === "corp"
-                        ? "The Corporation"
-                        : "The Degenerate"
-                    }}
-                  </div>
+                  <div class="text-subtitle-2 primary--text">Paticipations</div>
+                  <div>{{ player.totalWars }}</div>
                 </div>
 
                 <div class=" d-flex flex-column align-center mx-2">
@@ -123,32 +92,8 @@
                 </div>
 
                 <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Points</div>
-                  <div class="text-points">{{ player.score }} pts</div>
-                </div>
-
-                <div class="d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Village</div>
-                  <div class="text-village text-truncate" :title="player.name">
-                    {{ player.name }}
-                  </div>
-                </div>
-
-                <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Treasure</div>
-                  <div class="text-treasure d-flex align-center justify-center">
-                    <amount
-                      :amount="player.treasure.wSCARS"
-                      formatted
-                      decimals="2"
-                    />
-                    <img
-                      class="ml-1"
-                      height="25px"
-                      src="/images/wSCARS.png"
-                      alt="wSCARS"
-                    />
-                  </div>
+                  <div class="text-subtitle-2 primary--text">Power Units</div>
+                  <div class="text-points">{{ player.points }} PU</div>
                 </div>
               </div>
             </div>
@@ -165,7 +110,7 @@
             </div>
             <div class="pages">
               <div class="text-h6 font-weight-bold">
-                {{ pageRanking }}/{{ getTotaPageRanking }}
+                {{ pageRanking }}/{{ getTotalPageRanking }}
               </div>
             </div>
 
@@ -201,7 +146,6 @@ import Medal from "@/lib/components/ui/Utils/Medal";
 import Podium from "@/lib/components/ui/Leaderboard/Podium";
 
 import { mapMutations } from "vuex";
-import moment from "moment";
 
 import LeaderboardController from "@/controller/LeaderboardController";
 
@@ -247,16 +191,11 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    getTotaPageRanking() {
+    getTotalPageRanking() {
       if (this.limit > this.listRanking.total) {
         return 1;
       }
       return Math.ceil(this.listRanking.total / this.limit);
-    },
-
-    getNumberRanking() {
-      const today = moment();
-      return today.isoRanking();
     },
 
     getListPodium() {
@@ -297,7 +236,7 @@ export default {
         return;
       }
 
-      await this.getListRanking(1);
+      await this.getListRanking(this.pageRanking);
       this.listPodium = this.listRanking.slice(0, 3);
 
       this.isLoading = false;
@@ -307,7 +246,7 @@ export default {
       if (
         this.listRankingLoading ||
         _page < 1 ||
-        _page > this.getTotaPageRanking
+        _page > this.getTotalPageRanking
       ) {
         return;
       }
@@ -315,22 +254,19 @@ export default {
       this.pageRanking = _page;
       const leaderboardController = new LeaderboardController();
       this.listRankingLoading = true;
-      const _listRanking = await leaderboardController.getArcadia(
-        "1",
+      let _listRanking = await leaderboardController.getLeaderboardWar(
+        null,
         this.limit,
         this.limit * (_page - 1)
       );
 
-      this.listRanking = _listRanking.map((_list) => {
-        _list.account = _list.owner;
-        _list.score = _list.points;
-        if (!_list.name || _list.name === "") {
-          _list.name = "Waiting for a badass name";
-        }
-        return _list;
-      });
+      const total = _listRanking.total;
 
-      this.listRanking.total = _listRanking.total;
+      _listRanking = _listRanking.map(r => ({...r, score: r.points }));
+
+      _listRanking.total = total;
+
+      this.listRanking = _listRanking;
 
       this.listRankingLoading = false;
     },

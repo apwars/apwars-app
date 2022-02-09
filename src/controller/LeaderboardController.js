@@ -88,4 +88,13 @@ export default class LeaderboardController {
     }
   }
 
+  getLeaderboardWar(filter, limit = 10, skip = 0) {
+    try {
+      const query = new URLSearchParams({ ...filter, ...{ limit: limit }, ...{ skip: skip } });
+      return this.base._get(`/wars/report/leaderboard?${query.toString()}`);
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
