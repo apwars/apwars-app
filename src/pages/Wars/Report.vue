@@ -497,7 +497,7 @@
               </div>
             </v-col>
           </v-row>
-          <v-row v-if="hasPrizes">
+          <v-row v-if="report.rewards.length > 0">
             <v-col>
               <div class="rewards-title">Rewarded slots</div>
               <div class="mt-2">
