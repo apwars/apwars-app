@@ -45,7 +45,7 @@
         </v-col>
       </v-row>
 
-      <v-row>
+      <v-row v-if="selectGame.isWeekly">
         <v-col
           cols="12"
           class="d-flex align-center justify-center my-1 my-sm-6"
@@ -56,7 +56,7 @@
             src="/images/game/trophy.png"
             alt="trophy"
           />
-          <div class="page-subtitle">
+          <div class="page-subtitle" >
             Winners of the Week - #{{ getNumberWeek }} <br />
             {{ getLabelWeek }}
           </div>
@@ -65,6 +65,7 @@
 
       <TheMonstrousJourney v-if="selectGame.id === 0" />
       <Arcadia v-if="selectGame.id === 1" />
+      <War v-if="selectGame.id === 2" />
     </v-container>
 
     <v-container v-else>
@@ -85,6 +86,7 @@ import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
 import TheMonstrousJourney from "@/lib/components/ui/Leaderboard/TheMonstrousJourney";
 import Arcadia from "@/lib/components/ui/Leaderboard/Arcadia";
+import War from "@/lib/components/ui/Leaderboard/War";
 
 import { mapMutations } from "vuex";
 import moment from "moment";
@@ -98,6 +100,7 @@ export default {
     Medal,
     TheMonstrousJourney,
     Arcadia,
+    War
   },
 
   data() {
@@ -145,6 +148,7 @@ export default {
             this.$router.push(url);
           },
           disabled: false,
+          isWeekly: true,
         },
         {
           id: 1,
@@ -154,15 +158,17 @@ export default {
           nameButton: "Coming soon",
           actionButton: () => {},
           disabled: false,
+          isWeekly: false,
         },
         {
           id: 2,
           selected: false,
-          name: "Coming soon",
-          image: "",
+          name: "War",
+          image: "/images/icons/fed.png",
           nameButton: "Coming soon",
           actionButton: () => {},
-          disabled: true,
+          disabled: false,
+          isWeekly: false,
         },
       ],
     };
