@@ -13,7 +13,7 @@
             v-if="account"
             class="d-block mx-1 mx-md-2 avatar"
             :src="
-              `https://avatar.apwars.farm/?seed=${getAccount}&avatar=${avatar}`
+              `https://avatar.apwars.farm/?seed=${getAccount}&avatar=${getAvatar}`
             "
             alt="avatar"
           />
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  props: ["address", "link", "tooltip"],
+  props: ["address", "link", "tooltip", "propAvatar"],
 
   computed: {
     account() {
@@ -46,6 +46,12 @@ export default {
         return this.address;
       }
       return this.account;
+    },
+    getAvatar() {
+      if (this.propAvatar) {
+        return this.propAvatar;
+      }
+      return this.avatar;
     },
   },
 
