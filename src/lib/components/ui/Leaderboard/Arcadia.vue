@@ -39,6 +39,7 @@
                   class="list-leaderboard-avatar d-flex justify-center"
                   :address="player.account"
                   tooltip
+                  :propAvatar="player.faction"
                 />
                 <div class="d-flex d-md-none align-center justify-center">
                   <img
@@ -99,6 +100,17 @@
                   <div>({{ player.x }},{{ player.y }})</div>
                 </div>
 
+                <div class="d-flex flex-column align-center mx-2">
+                  <div class="text-subtitle-2 primary--text">Faction</div>
+                  <div class="text-village text-truncate">
+                    {{
+                      player.faction === "corp"
+                        ? "The Corporation"
+                        : "The Degenerate"
+                    }}
+                  </div>
+                </div>
+
                 <div class=" d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Owner</div>
                   <v-address
@@ -124,12 +136,17 @@
 
                 <div class=" d-flex flex-column align-center mx-2">
                   <div class="text-subtitle-2 primary--text">Treasure</div>
-                  <div class="text-treasure">
-                    War Scars:
+                  <div class="text-treasure d-flex align-center justify-center">
                     <amount
                       :amount="player.treasure.wSCARS"
                       formatted
                       decimals="2"
+                    />
+                    <img
+                      class="ml-1"
+                      height="25px"
+                      src="/images/wSCARS.png"
+                      alt="wSCARS"
                     />
                   </div>
                 </div>
