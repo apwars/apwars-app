@@ -1,4 +1,5 @@
 const mappedErrors = {
+    /* War */
     WAR_NOT_FOUND: 'War not found',
     WAR_INVALID_STATUS: 'Invalid War Status',
     WAR_NEEDS_ENLISTMENT_STATUS: 'War needs to be in enlistment status',
@@ -13,8 +14,17 @@ const mappedErrors = {
     INSUFFICIENT_FUNDS: 'Without balance',
     WAR_NEEDS_FINISHED_STATUS: 'War has not ended',
     BRING_HOME_DONE: 'Bring Home already done',
+    INVALID_SWAP_TRANSACTION: 'Invalid Swap Transaction',
+    /* Start Swap */
+    NOT_FOUND_TOKEN_SWAP: 'The token for the swap was not found.',
+    INVALID_CONTRACT_TOKEN: 'Invalid token contract',
+    INVALID_WALLET_DEPOSIT: 'Invalid wallet deposit',
+    INVALID_SWAP_CONTRACT_METHOD: 'Invalid swap contract method',
+    INVALID_SWAP_AMOUNT: 'Invalid swap amount',
+    ACCOUNT_HAS_SOLDIER: 'This account already has Soldier',
+    INVALID_PRIZE_SOLDIER: 'Invalid Soldier Prize',
 }
 
-export default function errorHandler(code) {
+export default function errorHandler(code = '') {
     return mappedErrors[code.toString()] || 'Something went wrong while trying to execute the action.'
 }
