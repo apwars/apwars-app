@@ -37,7 +37,7 @@
                   alt="trophy-gold"
                 />
                 <div :class="`${index === 1 ? 'text-h2' : 'text-h4'}`">
-                  {{ player.score }} pts
+                  {{ player.score }} {{ scoreMetric }}
                 </div>
               </div>
               <v-address
@@ -120,7 +120,7 @@
                   alt="trophy-gold"
                 />
                 <div :class="`${index === 0 ? 'text-h4' : 'text-h5'}`">
-                  {{ player.score }} pts
+                  {{ player.score }} {{ scoreMetric }}
                 </div>
               </div>
               <v-address
@@ -172,6 +172,10 @@ export default {
       type: Array,
       default: [],
     },
+    scoreMetric: {
+      type: String,
+      default: 'pts'
+    }
   },
 
   components: {

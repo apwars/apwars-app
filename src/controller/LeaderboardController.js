@@ -9,6 +9,44 @@ export default class LeaderboardController {
   }
 
   getLeaderboard(game, filter, limit, skip) {
+    if (game === 2) {
+      return [{
+        account: 'asasasas',
+        participations: 2,
+        score: 6005974,
+        wGOLD: 554859697,
+        wCOURAGE: 1247961
+      },
+      {
+        account: 'asasasaascaeqs',
+        participations: 2,
+        score: 6005974,
+        wGOLD: 554859697,
+        wCOURAGE: 1247961
+      },
+      {
+        account: 'asdfdrasasas',
+        participations: 2,
+        score: 6005974,
+        wGOLD: 554859697,
+        wCOURAGE: 1247961
+      },
+      {
+        account: 'asasasasdsac',
+        participations: 2,
+        score: 6005974,
+        wGOLD: 554859697,
+        wCOURAGE: 1247961
+      },
+      {
+        account: 'asasasasgrhte',
+        participations: 2,
+        score: 6005974,
+        wGOLD: 554859697,
+        wCOURAGE: 1247961
+      }]
+    };
+
     try {
       skip = skip || 0;
       limit = limit || 10;
