@@ -8,7 +8,7 @@
       </v-row>
       <v-row>
         <v-col cols="6" class="soldier-container">
-          <div :class="['soldier-viewport', 'is-locked']">
+          <div :class="['soldier-viewport', hasHuman ? '' : 'is-locked']">
             <div class="ground-container">
               <img
                 class="soldier"
@@ -24,7 +24,8 @@
               />
             </div>
           </div>
-          <div class="buy-container d-flex flex-column align-center mt-1">
+          <v-skeleton-loader v-if="isChecking" type="image" height="36px" width="100%" />
+          <div class="buy-container d-flex flex-column align-center mt-1" v-else-if="!hasHuman">
             <Button type="whot"
               >Unlock <span class="d-none d-sm-block ml-1"> Human</span></Button
             >
@@ -40,7 +41,7 @@
           </div>
         </v-col>
         <v-col cols="6" class="soldier-container">
-          <div :class="['soldier-viewport', 'is-locked']">
+          <div :class="['soldier-viewport', hasOrc ? '' : 'is-locked']">
             <div class="ground-container">
               <img
                 class="soldier"
@@ -56,7 +57,8 @@
               />
             </div>
           </div>
-          <div class="buy-container d-flex flex-column align-center mt-1">
+          <v-skeleton-loader v-if="isChecking" type="image" height="36px" width="100%" />
+          <div class="buy-container d-flex flex-column align-center mt-1" v-else-if="!hasOrc">
             <Button type="whot"
               >Unlock <span class="d-none d-sm-block ml-1"> Orc</span></Button
             >
@@ -76,7 +78,9 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions, mapState } from "vuex";
+import { mapMutations } from "vuex";
+
+import SoldierController from "@/controller/SoldierController";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 
@@ -87,34 +91,52 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 export default {
   components: { Button },
   computed: {
-    ...mapState({
-      isLoadingBalances: (state) => state.user.isLoadingBalances,
-      balances: (state) => state.user.balances,
-    }),
     account() {
       return this.$store.getters["user/account"];
     },
+  },
+  data() {
+      return {
+          isChecking: true,
+          hasHuman: false,
+          hasOrc: false,
+      }
   },
   methods: {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
     }),
-    ...mapActions({
-      fetchUserWallet: "user/fetchUserWallet",
-    }),
     async checkSoldiers() {
-      await this.fetchUserWallet();
-      console.log(this.balances);
+        if (!this.account) {
+            return;
+        }
+        const constroller = new SoldierController();
+        this.isChecking = true;
+        try {
+            await constroller.getNFTByType(this.account, 'HUMAN_SOLDIER');
+            this.hasHuman = true;
+        } catch (error) {
+            console.error(error);
+            this.hasHuman = false;
+        }
+        try {
+            await constroller.getNFTByType(this.account, 'ORC_SOLDIER');
+            this.hasOrc = true;
+        } catch (error) {
+            console.error(error);
+            this.hasOrc = false;
+        }
+        this.isChecking = false;
     },
-    async fetchSoldier(type) {},
   },
   watch: {
     account() {
-      this.fetchWallet();
+      this.checkSoldiers();
     },
   },
   created() {
     this.setHeader(false);
+    this.checkSoldiers();
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);
