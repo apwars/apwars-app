@@ -75,6 +75,9 @@ export default {
     }
   },
   async fetchUserWallet({state, commit}) {
+    if (!state.account) {
+      return
+    }
     commit('setLoadingBalances', true);
     try {
       const controller = new WalletController();
