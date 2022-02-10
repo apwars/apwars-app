@@ -105,7 +105,7 @@ export default {
   data() {
     return {
       isLoadingBuy: null,
-      isLoading: false,
+      isLoading: true,
       items: [],
       isLoadingBalance: false,
       balance: 0,
