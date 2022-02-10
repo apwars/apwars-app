@@ -17,15 +17,14 @@
         <v-col>
           <Title class="mt-1" text="Fresh Start Swap" />
           <div>
-            From now on, you can start a new sustainable game with rewards and
-            fun (Exclusive for new players)
+            New Players! Now you will start in a new, sustainable game that gives you rewards and it's fun!
           </div>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <div class="full-cycle-title">
-            The full cycle of rewards and fun
+            A full cycle real game with solid economy
           </div>
           <div class="cycle-container">
             <div class="cycle-step">
@@ -84,23 +83,13 @@
           <div ref="form" class="swap-container">
             <template v-if="swapDone">
               <div class="highlight-text">
-                Congratulations and welcome to APWars!
+                Congratulations! You are ready to play in APWars!
               </div>
               <div class="mt-1">
-                Your new Soldier is safe in the wallet you made the transfer.
-                From now on, you can start exploring the world of Arcadia!!
+                It's war time! Your Soldier was recruited and he's prepared to battle against the FUD Alliance and the dragon Louis.
               </div>
               <div class="mt-2">
-                You can also
-                <span
-                  class="redirect"
-                  @click="() => handleLink('https://www-v1.apwars.farm/docs')"
-                  >visit the docs</span
-                >
-                to learn more about the Arcadia world.
-              </div>
-              <div class="mt-2">
-                How about
+                He's waiting for you to start your journey now by
                 <span
                   class="redirect"
                   @click="
@@ -109,16 +98,24 @@
                         'https://app.apwars.farm/the-monstrous-journey'
                       )
                   "
-                  >playing TMJ</span
+                  >playing The Monstrous Journey (TMJ)</span
                 >
-                to evolve the Soldier who will command your army in the War?
+                <br />Evolve your Soldier to win rewards and to command your army in the War!
+              </div>
+              <div class="mt-2">
+                <span
+                  class="redirect"
+                  @click="() => handleLink('https://www-v1.apwars.farm/docs')"
+                  >Visit the docs</span
+                >
+                to learn more about TMJ, the Wars and APWars.
               </div>
             </template>
             <template v-else>
               <div class="full-cycle-title">
-                Unlock your Soldier swapping from another token game
+                Unlock your Soldier by swapping for another game token
               </div>
-              <div class="step-title">Select where you are coming from</div>
+              <div class="step-title">Select the token you want to swap</div>
               <v-skeleton-loader
                 v-if="isLoading"
                 type="image"
@@ -162,12 +159,13 @@
                 </template>
               </v-checkbox>
               </div>
+              <div class="step-title">To receive your Soldier:</div>
               <div class="transfer-instruction mt-2">
-                Transfer
-                <span class="value"
+                1 - Transfer
+                <span class="value" v-if="selectedToken"
                   >{{ selectedAmount }} {{ selectedToken }}</span
-                >
-                to this wallet in BSC
+                ><span v-else>the token you want to swap </span>
+                from your wallet to this BSC wallet
               </div>
               <div class="wallet d-flex align-center justify-center">
                 <div class="wallet">{{ wallet }}</div>
@@ -177,7 +175,7 @@
               </div>
               <div>
                 <div class="step-title mt-2">
-                  Paste the transaction hash in the field below
+                  2 - Paste the transaction hash in the field below
                 </div>
                 <v-text-field
                   v-model="txHash"
@@ -193,7 +191,7 @@
                   ></v-text-field
                 >
               </div>
-              <div class="step-title mt-2">Select your Soldier on APWars</div>
+              <div class="step-title mt-2">3 - Select your Soldier from APWars!</div>
               <div class="swap-options-container mt-2">
                 <div
                   :class="[
@@ -234,12 +232,9 @@
               </div>
             </template>
           </div>
-          <div class="d-flex justify-center">
+          <div class="d-flex justify-center" v-if="!swapDone">
             <div class="wallet-info mt-1">
-              You don't need to approve anything or connect your wallet. We also
-              don't want you to expose yourself. Just copy and paste the
-              transaction hash to make the payment, the Soldier will be sent to
-              the wallet that transfered.
+              To receive your Soldier, there's no need to connect your wallet. We also don't want you to get exposed - just copy and paste the transaction hash to make the payment and the Soldier will be sent to the wallet that transferred!
             </div>
           </div>
 
