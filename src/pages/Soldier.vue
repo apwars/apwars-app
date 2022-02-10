@@ -184,8 +184,8 @@ export default {
 
 .soldier-name {
   position: absolute;
-  top: 30%;
-  width: 40%;
+  top: 35%;
+  width: 30%;
 }
 
 .buy-container {
