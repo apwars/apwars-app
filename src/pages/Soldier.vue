@@ -24,28 +24,30 @@
               />
             </div>
           </div>
-          <v-skeleton-loader
-            v-if="isChecking"
-            type="image"
-            height="36px"
-            width="100%"
-          />
-          <div
-            class="buy-container d-flex flex-column align-center mt-1"
-            v-else-if="!hasHuman"
-          >
-            <Button type="whot"
-              >Unlock <span class="d-none d-sm-block ml-1"> Human</span></Button
-            >
-            <div class="price d-flex">
-              <img
-                src="/images/wgold.png"
-                height="24px"
-                width="24px"
-                alt="wGOLD"
+          <div class="buy-container d-flex flex-column align-center mt-1">
+            <template v-if="!hasHuman">
+              <v-skeleton-loader
+                v-if="isChecking"
+                type="image"
+                height="36px"
+                width="100%"
               />
-              10.000
-            </div>
+              <template v-else>
+                <Button type="whot"
+                  >Unlock
+                  <span class="d-none d-sm-block ml-1"> Human</span></Button
+                >
+                <div class="price d-flex">
+                  <img
+                    src="/images/wgold.png"
+                    height="24px"
+                    width="24px"
+                    alt="wGOLD"
+                  />
+                  10.000
+                </div>
+              </template>
+            </template>
           </div>
         </v-col>
         <v-col cols="6" class="soldier-container">
@@ -65,34 +67,36 @@
               />
             </div>
           </div>
-          <v-skeleton-loader
-            v-if="isChecking"
-            type="image"
-            height="36px"
-            width="100%"
-          />
-          <div
-            class="buy-container d-flex flex-column align-center mt-1"
-            v-else-if="!hasOrc"
-          >
-            <Button type="whot"
-              >Unlock <span class="d-none d-sm-block ml-1"> Orc</span></Button
-            >
-            <div class="price d-flex">
-              <img
-                src="/images/wgold.png"
-                height="24px"
-                width="24px"
-                alt="wGOLD"
+          <div class="buy-container d-flex flex-column align-center mt-1">
+            <template v-if="!hasOrc">
+              <v-skeleton-loader
+                v-if="isChecking"
+                type="image"
+                height="36px"
+                width="100%"
               />
-              10.000
-            </div>
+              <template v-else>
+                <Button type="whot"
+                  >Unlock
+                  <span class="d-none d-sm-block ml-1"> Orc</span></Button
+                >
+                <div class="price d-flex">
+                  <img
+                    src="/images/wgold.png"
+                    height="24px"
+                    width="24px"
+                    alt="wGOLD"
+                  />
+                  10.000
+                </div>
+              </template>
+            </template>
           </div>
         </v-col>
       </v-row>
       <v-row no-gutters>
         <v-col>
-          <div class="d-flex flex-column justify-center align-center">
+          <div class="d-flex flex-column justify-center align-center mt-1">
             <img
               src="/images/game/the-monstrous-journey.png"
               alt="The Monstrous Journey"
@@ -140,7 +144,7 @@ export default {
       setHeader: "app/setMenuDisplay",
     }),
     goTMJ() {
-        this.$router.push('/the-monstrous-journey')
+      this.$router.push("/the-monstrous-journey");
     },
     async checkSoldiers() {
       if (!this.account) {
@@ -217,6 +221,10 @@ export default {
   z-index: 1;
   top: -160%;
   width: 100%;
+  @media screen and (min-width: 768px) {
+    width: 283px;
+    top: -230px;
+  }
 }
 
 .ground-container {
@@ -248,6 +256,7 @@ export default {
 
 .buy-container {
   width: 80%;
+  height: 70px;
 }
 .price {
   font-weight: bold;
