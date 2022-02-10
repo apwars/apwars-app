@@ -1,128 +1,133 @@
 <template>
-  <div class="bg-home">
+  <div class="d-flex justify-center align-center bg-home">
     <div v-if="isLoading">
       <game-text header="h2" class="text-center d-block py-9"
         >Loading...</game-text
       >
     </div>
-    <div v-else>
-      <v-container>
-        <v-row>
-          <v-col cols="12" md="4" class="pr-0 pl-1">
-            <div class="mt-1"></div>
-            <game-text header="h4" class="text-center mt-2">
-              Countdown to collect prizes and wUNITS
-            </game-text>
-            <div class="card-body-home d-flex justify-center align-center">
-              <countdown class="mt-0" :time="nextWar" hideEnd />
+    <v-container class="d-flex" v-else fluid>
+      <v-row justify="center" align="center" align-content="center">
+        <v-col cols="12" md="4" class="pr-0 pl-1">
+          <div class="mt-1"></div>
+          <game-text header="h4" class="text-center mt-2">
+            Collect prizes and wUNITS
+          </game-text>
+          <div class="card-body-home d-flex justify-center align-center">
+            <countdown class="mt-0" :time="nextWar" hideEnd />
+          </div>
+          <div class="d-flex justify-center mt-1">
+            <wButton @click="$router.push('/war/intro')" class="mt-1">
+              <span class="text-none text-center">Go to War</span>
+            </wButton>
+          </div>
+        </v-col>
+        <v-col cols="12" md="4">
+          <game-text header="h3" class="text-center">
+            Loyalt Program
+          </game-text>
+          <div class="card-body-home d-flex justify-center align-center">
+            <img
+              src="/images/icons/coins/wSCARS.png"
+              width="95px"
+              alt="War SCARS"
+            />
+            <div class="ml-2">
+              <h2 class="text-h2">
+                <amount
+                  :amount="balancewSCARS"
+                  decimals="0"
+                  formatted
+                  tooltip
+                />
+              </h2>
+              <div class="mt-1 font-weight-bold">Your War SCARS</div>
             </div>
-            <div class="d-flex justify-center mt-1">
-              <wButton @click="$router.push('/war/intro')" class="mt-1">
-                <span class="text-none text-center">Go to War</span>
+          </div>
+          <div class="d-flex justify-center mt-1">
+            <wButton @click="$router.push('/loyalty-program')" class="mt-1">
+              <span class="text-none text-center">Go to Loyalt Program</span>
+            </wButton>
+            <wButton
+              @click="$router.push('/loyalty-program/shop')"
+              class="ml-2 mt-1"
+            >
+              <span class="text-none text-center">Go to Shop</span>
+            </wButton>
+          </div>
+        </v-col>
+        <v-col cols="12" md="4">
+          <game-text header="h3" class="text-center">
+            Buy Resources
+          </game-text>
+          <div class="d-flex flex-column justify-center align-center">
+            <div class="d-flex justify-space-between align-center">
+              <img class="ml-1  mr-2" width="78px" src="/images/wGOLD.png" />
+              <wButton @click="$router.push('/buy-wgold')" class="mt-1">
+                <span class="text-none text-center text-buy">
+                  Buy wGOLD
+                </span>
               </wButton>
             </div>
-          </v-col>
-          <v-col cols="12" md="4">
-            <game-text header="h3" class="text-center">
-              Loyalt Program
-            </game-text>
-            <div class="card-body-home d-flex justify-center align-center">
-              <img
-                src="/images/icons/coins/wSCARS.png"
-                width="95px"
-                alt="War SCARS"
-              />
-              <div class="ml-2">
-                <h2 class="text-h2">
-                  <amount
-                    :amount="balancewSCARS"
-                    decimals="0"
-                    formatted
-                    tooltip
-                  />
-                </h2>
-                <div class="mt-1 font-weight-bold">Your War SCARS</div>
-              </div>
-            </div>
-            <div class="d-flex justify-center mt-1">
-              <wButton @click="$router.push('/loyalty-program')" class="mt-1">
-                <span class="text-none text-center">Go to Loyalt Program</span>
-              </wButton>
-              <wButton
-                @click="$router.push('/loyalty-program/shop')"
-                class="ml-2 mt-1"
-              >
-                <span class="text-none text-center">Go to Shop</span>
+            <div class="d-flex justify-space-between align-center">
+              <img class="mr-2" width="80px" src="/images/wCOURAGE.png" />
+              <wButton @click="$router.push('/buy-wcourage')" class="mt-1">
+                <span class="text-none text-center text-buy">
+                  Buy wCOURAGE
+                </span>
               </wButton>
             </div>
-          </v-col>
-          <v-col cols="12" md="4">
-            <game-text header="h3" class="text-center">
-              Buy wLAND
-            </game-text>
-            <div class="card-body-home d-flex justify-center align-center">
-              <v-img
-                class="mx-auto my-3"
-                max-width="200"
-                src="/images/wLANDS.png"
-              />
-            </div>
-            <div class="d-flex justify-center mt-1">
+            <div class="d-flex justify-space-between align-center">
+              <img class="mr-2" width="80px" src="/images/wLAND.png" />
               <wButton @click="$router.push('/buy-wland')" class="mt-1">
-                <span class="text-none text-center">
+                <span class="text-none text-center text-buy">
                   Buy wLAND
                 </span>
               </wButton>
             </div>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <v-container fluid>
-        <v-row dense>
-          <v-col cols="12" md="4">
-            <div class="d-flex justify-center">
-              <img
-                src="/images/tmj.png"
-                height="90px"
-                class="mt-5 mb-2"
-                alt="the monstrous journey"
-              />
-            </div>
-            <div class="d-flex justify-center mt-1">
-              <wButton
-                @click="$router.push('/the-monstrous-journey')"
-                class="mt-1"
-              >
-                <span class="text-none text-center">
-                  Play Now
-                </span>
-              </wButton>
-            </div>
-          </v-col>
-          <v-col cols="12" md="4">
-            <div class="d-flex justify-center">
-              <img
-                src="/images/arcadia-expansion.png"
-                height="90px"
-                class="mt-5 mb-2"
-                alt="arcadia-expansion"
-              />
-            </div>
-            <div class="d-flex justify-center mt-1">
-              <wButton @click="$router.push('/arcadia')" class="mt-1">
-                <span class="text-none text-center">
-                  Play Now
-                </span>
-              </wButton>
-            </div>
-          </v-col>
-          <v-col cols="12" md="4">
-            <tasks />
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
+          </div>
+        </v-col>
+        <v-col cols="12" md="4">
+          <div class="d-flex justify-center">
+            <img
+              src="/images/tmj.png"
+              height="90px"
+              class="mt-5 mb-2"
+              alt="the monstrous journey"
+            />
+          </div>
+          <div class="d-flex justify-center mt-1">
+            <wButton
+              @click="$router.push('/the-monstrous-journey')"
+              class="mt-1"
+            >
+              <span class="text-none text-center">
+                Play Now
+              </span>
+            </wButton>
+          </div>
+        </v-col>
+        <v-col cols="12" md="4">
+          <div class="d-flex justify-center">
+            <img
+              src="/images/arcadia-expansion.png"
+              height="90px"
+              class="mt-5 mb-2"
+              alt="arcadia-expansion"
+            />
+          </div>
+          <div class="d-flex justify-center mt-1">
+            <wButton @click="$router.push('/arcadia')" class="mt-1">
+              <span class="text-none text-center">
+                Play Now
+              </span>
+            </wButton>
+          </div>
+        </v-col>
+        <v-col cols="12" md="4">
+          <tasks />
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -234,7 +239,6 @@ export default {
 
       return wallet.balances["wSCARS"];
     },
-
   },
 };
 </script>
@@ -248,5 +252,8 @@ export default {
 }
 .card-body-home {
   height: 150px;
+}
+.text-buy {
+  width: 150px;
 }
 </style>

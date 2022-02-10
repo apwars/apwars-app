@@ -180,6 +180,18 @@ export const routes = [
         }
       },
       {
+        path: "/buy-wgold",
+        beforeEnter() {
+          redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&inputCurrency=0x7Ab6eedd9443e0e98E5Ea93667CA5B250b8ddA51");
+        }
+      },
+      {
+        path: "/buy-wcourage",
+        beforeEnter() {
+          redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&inputCurrency=0x5F51A3ce7f2233777328866F477E86a91CA9DdeC");
+        }
+      },
+      {
         path: "/add-liquidity/:baseToken/:sideToken",
         beforeEnter(to) {
           redirectBlank(`https://pancakeswap.finance/add/${to.params.baseToken}/${to.params.sideToken}`);
