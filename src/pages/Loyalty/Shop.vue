@@ -69,6 +69,7 @@
             :remainingAmount="item.remainingAmount"
             :totalAmount="item.amount"
             :handleBuy="handleBuy"
+            :isCelebration="item.isCelebration"
           />
         </v-col>
       </v-row>

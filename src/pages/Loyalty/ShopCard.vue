@@ -1,6 +1,9 @@
 <template>
   <div class="shop-item-container">
     <div class="item-viewport" v-if="item">
+      <div class="celebration-tag" v-if="isCelebration">
+      <img src="/images/icons/celebration.png" alt="Celebration Festival" />
+    </div>
       <img :src="item.image" :alt="item.title" />
     </div>
     <div class="item-title d-flex align-center" v-if="item">
@@ -82,6 +85,10 @@ export default {
       type: Function,
       default: () => {},
     },
+    isCelebration: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -112,6 +119,7 @@ export default {
   margin: 12px;
   width: 250px;
   .item-viewport {
+    position: relative;
     height: 200px;
     > img {
       height: 100%;
@@ -183,6 +191,20 @@ export default {
 
   .qty-balance {
     color: #ffffff;
+  }
+}
+
+.celebration-tag {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #11d300;
+  outline: 2px solid #ffeebc;
+  > img {
+    width: 100%;
   }
 }
 </style>
