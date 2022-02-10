@@ -26,7 +26,7 @@
           </div>
           <div class="buy-container d-flex flex-column align-center mt-1">
             <Button type="whot"
-              >Unlock <span class="d-xs-none ml-1"> Human</span></Button
+              >Unlock <span class="d-none d-sm-block ml-1"> Human</span></Button
             >
             <div class="price d-flex">
               <img
@@ -58,7 +58,7 @@
           </div>
           <div class="buy-container d-flex flex-column align-center mt-1">
             <Button type="whot"
-              >Unlock <span class="d-xs-none ml-1"> Orc</span></Button
+              >Unlock <span class="d-none d-sm-block ml-1"> Orc</span></Button
             >
             <div class="price d-flex">
               <img
