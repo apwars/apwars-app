@@ -13,7 +13,9 @@
 <script>
 import { getCollectibleById } from "@/data/Collectibles";
 import { TOKENS } from "@/data/Tokens";
+
 import Amount from "@/lib/components/ui/Utils/Amount";
+
 export default {
   components: { Amount },
   props: {

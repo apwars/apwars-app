@@ -15,6 +15,7 @@
             :amount="amount"
             decimals="2"        
             tooltip
+            compact
           />
           <span class="suffix">wGOLD</span>
         </span>

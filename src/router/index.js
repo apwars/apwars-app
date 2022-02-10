@@ -5,11 +5,9 @@ import CreateOrders from "@/pages/Market/CreateOrders.vue";
 import GameItems from "@/pages/GameItems.vue";
 import Inventory from "@/pages/Inventory.vue";
 import Units from "@/pages/Units.vue";
-import Wars from "@/pages/Wars.vue";
-import Enlistment from "@/pages/Wars/Enlistment.vue";
-import Round1 from "@/pages/Wars/Round1.vue";
-import Round2 from "@/pages/Wars/Round2.vue";
-import WarReport from "@/pages/Wars/WarReport.vue";
+import Report from "@/pages/Wars/Report.vue";
+import UnitEnlistment from "@/pages/Wars/UnitEnlistment.vue";
+import MonsterBattle from "@/pages/Wars/MonsterBattle.vue";
 import BlackMarket from "@/pages/BlackMarket.vue";
 import PrivateSale from "@/pages/Arcadia/PrivateSale.vue";
 import ArcadiaExpansion from "@/pages/Arcadia/Landing.vue";
@@ -18,11 +16,15 @@ import TrainingCenter from "@/pages/TrainingCenter.vue";
 import Worker from "@/pages/Worker.vue";
 import Home from "@/pages/Home.vue";
 import Arcadia from "@/pages/Arcadia/Arcadia.vue";
+import WarBattle from "@/pages/Wars/Battle.vue";
+import WarIntro from "@/pages/Wars/Intro.vue";
 import StarterPacks from "@/pages/StarterPacks.vue";
 import Leaderboard from "@/pages/Leaderboard.vue";
 import Bridge from "@/pages/Bridge.vue";
 import Battle from "@/pages/Game/Battle.vue";
+import LoyaltyProgram from "@/pages/Loyalty/Program.vue";
 import LoyaltyShop from "@/pages/Loyalty/Shop.vue";
+import StartSwap from "@/pages/StartSwap.vue";
 
 Vue.use(Router);
 
@@ -63,11 +65,6 @@ export const routes = [
         component: Units
       },
       {
-        path: "/wars",
-        name: "/wars",
-        component: Wars
-      },
-      {
         path: "/war-preparation",
         name: "/war-preparation",
         component: WarPreparation
@@ -78,24 +75,29 @@ export const routes = [
         component: TrainingCenter
       },
       {
-        path: "/wars/:contractWar/enlistment",
-        name: "/wars-enlistment",
-        component: Enlistment
+        path: "/war",
+        name: "war-resume",
+        component: WarBattle
       },
       {
-        path: "/wars/:contractWar/round-1",
-        name: "/wars-round-1",
-        component: Round1
+        path: "/war/intro",
+        name: "war-intro",
+        component: WarIntro
       },
       {
-        path: "/wars/:contractWar/round-2",
-        name: "/wars-round-2",
-        component: Round2
+        path: "/war/enlistment/:raceId",
+        name: "unit-enlistment",
+        component: UnitEnlistment
       },
       {
-        path: "/wars/:contractWar/report",
-        name: "/wars-report",
-        component: WarReport
+        path: "/war/enlistment/:raceId/battle",
+        name: "monster-battle",
+        component: MonsterBattle
+      },
+      {
+        path: "/war/report",
+        name: "/war-report",
+        component: Report
       },
       {
         path: "/private-sale",
@@ -138,9 +140,20 @@ export const routes = [
         component: Bridge
       },
       {
+        path: "/loyalty-program",
+        name: "/loyalty-program",
+        component: LoyaltyProgram
+      },
+      {
         path: "/loyalty-program/shop",
         name: "loyalty-shop",
         component: LoyaltyShop
+      },
+      {
+        path: "/start-swap",
+        name: "start-swap",
+        component: StartSwap,
+        meta: { noConnect: true }
       },
       {
         path: "/farms",
@@ -163,9 +176,28 @@ export const routes = [
       {
         path: "/buy-wland",
         beforeEnter() {
-          redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56");
+          redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&inputCurrency=0x2c6107c27a15d2c7f397d88d76257ea42c12f89f");
         }
       },
+      {
+        path: "/buy-wgold",
+        beforeEnter() {
+          redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&inputCurrency=0x7Ab6eedd9443e0e98E5Ea93667CA5B250b8ddA51");
+        }
+      },
+      {
+        path: "/buy-wcourage",
+        beforeEnter() {
+          redirectBlank("https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&inputCurrency=0x5F51A3ce7f2233777328866F477E86a91CA9DdeC");
+        }
+      },
+      {
+        path: "/add-liquidity/:baseToken/:sideToken",
+        beforeEnter(to) {
+          redirectBlank(`https://pancakeswap.finance/add/${to.params.baseToken}/${to.params.sideToken}`);
+        }
+      },
+      
     ]
   }
 ];

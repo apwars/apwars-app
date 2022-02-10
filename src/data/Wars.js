@@ -78,7 +78,7 @@ const wars = [
       "97": "0xC6e02dBa96977B6aA7E678ADCf15B45326B6D080",
     },
     countdown: {
-      enlistment: 1626361220000,
+      enlistment: 1626429080000,
       round1: 1626429080000,
       round2: 1626443480000,
     },
@@ -280,7 +280,7 @@ const wars = [
     dateStart: "2021-09-12",
     dateEnd: "2021-09-17",
     contractAddress: {
-      "97": "0x4544C8efb214830027306D68B29f0B5E37501D78",
+      "97": "0x4544C8efb214830027306D68B29f0B5E37501D78qwe",
     },
     countdown: {
       enlistment: 1626361220000,
@@ -346,6 +346,47 @@ const wars = [
     totalPrize: "800000000000000000000000",
     test: false,
     showTest: false,
+    showReedemPrize: true,
+    reportVersion: "2",
+    report: war3FinalReport,
+  },
+  {
+    id: 15,
+    name: "The TesteWar War",
+    description: `
+    blablablabla`,
+    dateStart: "2021-10-21",
+    dateEnd: "2021-10-25",
+    contractAddress: {
+      "5777": "",
+      "56": "",
+      "97": "0x4544C8efb214830027306D68B29f0B5E37501D78",
+    },
+    countdown: {
+      enlistment: 1634925600000,
+      round1: 1635012000000,
+      round2: 1635098400000,
+    },
+    phases: [{
+      title: 'Enlistments ends in',
+      endAt: 1634925600000,
+      button_label: 'Enlist',
+      redirect: '/wars/0x4544C8efb214830027306D68B29f0B5E37501D78/enlistment',
+    },
+    {
+      title: 'War ends in',
+      endAt: 1635098400000,
+      button_label: 'Round 1 Results',
+      redirect: '/wars/0x4544C8efb214830027306D68B29f0B5E37501D78/round-1'
+    },
+    {
+      title: 'The Elven War is over',
+      button_label: 'War Report',
+      redirect: '/wars/0x4544C8efb214830027306D68B29f0B5E37501D78/report'
+    }],
+    totalPrize: "800000000000000000000000",
+    test: true,
+    showTest: true,
     showReedemPrize: true,
     reportVersion: "2",
     report: war3FinalReport,

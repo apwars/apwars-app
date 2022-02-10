@@ -6,21 +6,20 @@
     >
       <div class="align-self-center">
         <v-img
-          :width="$vuetify.breakpoint.mobile ? 130 : 160"
-          :height="$vuetify.breakpoint.mobile ? 250 : 307.47"
+          :width="$vuetify.breakpoint.smAndDown ? 81 : 160"
           :src="`/images/troops/${unit.combinators.trainingCenter.name}.png`"
         />
       </div>
 
-      <div v-if="isLoadingUnit" class="ml-1 mt-1 align-self-start">
+      <div v-if="isLoadingUnit" class="ml-1 mt-1 align-self-start info-card">
         <div class="title">Necessary Resources</div>
-        <div class="d-flex qty">
+        <div class="d-flex align-center qty">
           <v-img class="mr-1"
             :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
             :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
             src="/images/wcourage.png"
             style="margin-left: -4px"/>
-          <div class="mt-token-text">
+          <div class="">
             <amount
             :amount="getTokenAConfig.amount"
             decimals="0"
@@ -28,7 +27,7 @@
           />
           </div>
         </div>
-        <div class="d-flex mt-1 qty">
+        <div class="d-flex align-center mt-1 qty">
           <v-img
             class="mr-1"
             :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
@@ -36,7 +35,7 @@
             :src="`/images/icons/coins/smallers/${unit.name}.png`"
             style="margin-left: -2px"
           />
-          <div class="mt-token-text">
+          <div>
             <amount
             :amount="getTokenBConfig.amount"
             decimals="0"
@@ -51,7 +50,7 @@
             :style="$vuetify.breakpoint.mobile ? 'margin-left: -4.5px; margin-right: 0.2rem;' : 'margin-left: -2px; margin-right: 0.5rem;'"/>
           <div class="d-flex flex-column">
             <span>
-              Working time:
+              Working time: <br v-if="$vuetify.breakpoint.width < 401" />
               <amount
                 :amount="getGeneralConfig.blocks"
                 decimals="0"
@@ -652,23 +651,32 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+.info-card {
+  width: 200px;
+  @media only screen and (min-width: 600px){
+    width: 280px;
+  }
+}
+
 .title {
   font-weight: bold;
   font-size: 28px;
 }
 .qty {
-  color: #ffb800;
+  /* color: #ffb800; */
   font-weight: bold;
   font-size: 16px;
 }
 .globalQty {
-  color: #f6ff00;
+  /* color: #f6ff00; */
   font-weight: bold;
   font-size: 16px;
 }
 .qty >>> span,
 .globalQty >>> span {
+  font-weight: bold;
   color: #fff;
 }
 .current-price {
@@ -698,9 +706,5 @@ export default {
   .current-price {
     font-size: 14px;
   }
-}
-
-.mt-token-text {
-  margin-top: 0.3rem;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bg-war">
-      <v-container fluid>
+      <v-container>
         <v-row class="d-none d-sm-none d-md-flex my-n6">
           <v-col cols="12" md="3">
             <v-img
@@ -71,14 +71,18 @@
       </v-row>
     </v-container>
 
-    <v-container fluid>
+    <v-container>
       <v-row v-if="isConnected && !isLoading">
         <v-col cols="12">
           <h1 class="text-h1 text-wGOLD text-center">Wars</h1>
         </v-col>
 
-        <v-col v-for="war in wars" v-bind:key="war.name" cols="12">
+        <!-- <v-col v-for="war in wars" v-bind:key="war.name" cols="12">
           <war-info :war="war"></war-info>
+        </v-col> -->
+
+        <v-col cols="12">
+          <h1 class="text-h1 text-wGOLD text-center">Waiting next war</h1>
         </v-col>
       </v-row>
 

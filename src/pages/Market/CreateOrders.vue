@@ -56,7 +56,9 @@
               :src="nftCollectible.image"
             />
             <div class="text-center">
-              <p class="remaining" @click="getQuantity()">You have: {{ userAmount }} units</p>
+              <p class="remaining" @click="getQuantity()">
+                You have: {{ userAmount }} units
+              </p>
             </div>
           </v-col>
           <v-col class="mt-n6 mt-md-0" cols="12" lg="9" md="9">
@@ -342,7 +344,7 @@ export default {
       waitingStage: 0,
       alert: false,
       fillItemsQuantity: 0,
-      countClicks: 0
+      countClicks: 0,
     };
   },
 
@@ -353,6 +355,10 @@ export default {
 
     account() {
       return this.$store.getters["user/account"];
+    },
+
+    networkInfo() {
+      return this.$store.getters["user/networkInfo"];
     },
 
     addresses() {
@@ -451,7 +457,7 @@ export default {
       });
 
       this.collectibleContract = new Collectibles(
-        this.collectible.contractAddress
+        this.collectible.contractAddress[this.networkInfo.id]
       );
       this.marketNFTS = new MarketNFTS(this.addresses.marketNFTS);
       this.wGOLDContract = new wGOLD(this.addresses.wGOLD);
@@ -587,7 +593,7 @@ export default {
 
         const confirmTransaction = this.marketNFTS.createOrder(
           this.buyOrSell === "buy" ? "0" : "1",
-          this.collectible.contractAddress,
+          this.collectible.contractAddress[this.networkInfo.id],
           this.collectible.id,
           this.addresses.wGOLD,
           this.amount,
@@ -644,13 +650,13 @@ export default {
 
     getQuantity() {
       if (this.userAmount === 0) {
-        return
+        return;
       } else {
         this.quantity = this.userAmount;
         this.fillItemsQuantity = this.userAmount;
-        this.countClicks ++;
+        this.countClicks++;
       }
-    }
+    },
   },
 };
 </script>

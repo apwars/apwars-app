@@ -5,52 +5,48 @@
       class="pa-3 pd-md-0"
       v-if="isConnected && !isLoading"
     >
-      <v-row :no-gutters="$vuetify.breakpoint.mobile">
-        <v-col cols="12" lg="3">
+      <v-row :no-gutters="$vuetify.breakpoint.smAndDown">
+        <v-col cols="12" md="3">
           <v-select
-            v-model="select.teams"
-            :items="filter.teamDesc"
+            v-model="selectedFactions"
+            :items="factionOptions"
             label="Select Factions"
             multiple
             chips
             solo
-            @change="updateTroopsFilters()"
           >
           </v-select>
         </v-col>
-        <v-col cols="12" lg="3">
+        <v-col cols="12" md="3">
           <v-select
-            v-model="select.tiers"
-            :items="filter.tierDesc"
+            v-model="selectedTiers"
+            :items="tierOptions"
             label="Select Tier"
             multiple
             chips
             solo
-            @change="updateTroopsFilters()"
           >
           </v-select>
         </v-col>
-        <v-col cols="12" lg="3">
+        <v-col cols="12" md="3">
           <v-select
-            v-model="select.races"
-            :items="filter.raceDesc"
+            v-model="selectedRaces"
+            :items="racesOptions"
             label="Select Races"
             multiple
             chips
             solo
-            @change="updateTroopsFilters()"
           >
           </v-select>
         </v-col>
-        <v-col cols="12" lg="3">
+        <v-col cols="12" md="3">
           <v-select
-            v-model="select.names"
-            :items="filter.name"
+            v-model="selectedTroops"
+            :items="troopsOptions"
             label="Select Units"
             multiple
             chips
             solo
-            @change="updateTroopsFilters()"
           >
             <template v-slot:selection="{ item, index }">
               <v-chip v-if="index === 0">
@@ -65,7 +61,7 @@
       </v-row>
       <v-row class="mt-0 mt-lg-n5 mb-3">
         <v-col class="py-0 my-0" cols="12">
-          <div class="d-flex flex-column flex-md-row align-center">
+          <div class="d-flex flex-column flex-md-row align-left">
             <wButton @click="clearFilters()" class=" mr-3">
               <div class="d-flex justify-center">
                 <v-icon class="mx-1">
@@ -76,7 +72,6 @@
             </wButton>
             <v-checkbox
               v-model="showMyUnits"
-              @change="updateTroopsFilters()"
               label="Show only my units"
               color="primary"
             ></v-checkbox>
@@ -89,14 +84,13 @@
       :fluid="$vuetify.breakpoint.md || $vuetify.breakpoint.mobile"
       v-if="isConnected && !isLoading"
     >
-      <v-row v-if="filterTroops.length > 0 ">
+      <v-row v-if="troopsFilter.length > 0 ">
         <v-col
-          :class="$vuetify.breakpoint.mobile ? 'remove-padding' : ''"
+          :class="$vuetify.breakpoint.mobile ? 'small-padding' : ''"
           cols="12"
-          lg="6"
-          xl="4"
-          v-for="trooper in filterTroops"
-          v-bind:key="trooper.name || trooper.title"
+          md="6"
+          v-for="trooper in troopsFilter"
+          :key="trooper.name || trooper.title"
         >
           <trooper v-if="getType(trooper) === 'trooper'" :info="trooper" />
 
@@ -130,7 +124,7 @@
           />
         </v-col>
       </v-row>
-      <v-row v-else-if="!filterTroops.length > 0">
+      <v-row v-else-if="!troopsFilter.length > 0">
         <v-col cols="12">
           <h1 class="text-center">No data available</h1>
         </v-col>
@@ -197,9 +191,12 @@ export default {
         raceDesc: [],
         name: [],
       },
+      selectedFactions: [],
+      selectedTiers: [],
+      selectedRaces: [],
+      selectedTroops: [],
       teams: [],
       globalTroops: [],
-      filterTroops: [],
     };
   },
 
@@ -223,6 +220,65 @@ export default {
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
+
+    troopsFilter() {
+      let troops = this.globalTroops;
+
+      if (this.selectedFactions.length > 0) {
+        troops = troops.filter(t => this.selectedFactions.includes(t.teamDesc));
+      }
+
+      if (this.selectedTiers.length > 0) {
+        troops = troops.filter(t => this.selectedTiers.includes(t.tierDesc));
+      }
+
+      if (this.selectedRaces.length > 0) {
+        troops = troops.filter(t => this.selectedRaces.includes(t.raceDesc));
+      }
+
+      if (this.selectedTroops.length > 0) {
+        troops = troops.filter(t => this.selectedTroops.includes(t.name));
+      }
+
+      if (this.showMyUnits) {
+        troops = troops.filter(t => t.myQty);
+      }
+
+      return troops;
+    },
+
+    factionOptions() {
+      return Array.from(new Set(this.globalTroops.map(t => t.teamDesc)));
+    },
+
+    tierOptions() {
+      return Array.from(new Set(this.globalTroops.map(t => t.tierDesc)));
+    },
+
+    racesOptions() {
+      const factionMap = {
+        'Humans': 'The Corporation',
+        'Elves': 'The Corporation',
+        'Orcs': 'The Degenerate',
+        'Undead': 'The Degenerate'
+      };
+      let races = Array.from(new Set(this.globalTroops.map(t => t.raceDesc)));
+      if (this.selectedFactions.length > 0) {
+        races = races.filter(r => this.selectedFactions.includes(factionMap[r]));
+      }
+      return races;
+    },
+
+    troopsOptions() {
+      let troops = Array.from(new Set(this.globalTroops.map(t => t.name)));
+      if (this.selectedRaces.length > 0) {
+        troops = troops.filter(t => {
+          const troopData = this.globalTroops.find(troop => troop.name === t);
+          return this.selectedRaces.includes(troopData.raceDesc);
+        })
+      }
+      return troops;
+    }
   },
 
   watch: {
@@ -237,10 +293,6 @@ export default {
     currentBlockNumber() {
       this.loadData();
     },
-
-    filterTroops() {
-      this.troopsFilter(this.filterTroops);
-    }
   },
 
   mounted() {
@@ -275,69 +327,9 @@ export default {
 
         this.globalTroops = await getTrooper(this.networkInfo.id, this.account);
 
-        /* this.globalTroops = await Promise.all(
-          troops.map((trooper) => {
-            return new Promise(async (resolve) => {
-              try {
-                if (trooper.contractAddress === "") {
-                  resolve({
-                    name: trooper.name,
-                    team: trooper.team,
-                    tier: trooper.tier,
-                    myQty: "0",
-                    globalQty: "0",
-                    pricewGOLD: "0",
-                    disabled: true,
-                  });
-                }
-                const getTropper = new Troops(
-                  trooper.contractAddress[this.networkInfo.id]
-                );
-                const myQty = await getTropper.balanceOf(this.account);
-                const globalQty = await getTropper.totalSupply();
-                const pricewGOLD = await getTropper.pricewGOLD(
-                  trooper.lpAddresses,
-                  this.networkInfo.id
-                );
-
-                resolve({
-                  ...trooper,
-                  ...{
-                    myQty: myQty,
-                    globalQty: globalQty,
-                    pricewGOLD: pricewGOLD,
-                    disabled: false,
-                  },
-                });
-              } catch (error) {
-                resolve({
-                  name: trooper.name,
-                  team: trooper.team,
-                  tier: trooper.tier,
-                  myQty: "0",
-                  globalQty: "0",
-                  pricewGOLD: "0",
-                  disabled: true,
-                });
-              }
-            });
-          })
-        );
-
-        this.globalTroops = this.globalTroops.map((trooper) => {
-          return {
-            ...trooper,
-            ...{ globalQty: trooper.globalQty, myQty: trooper.myQty },
-          };
-        }); */
-
         const gameItems = getGameItems().filter(g => g.combinators).map(g => ({...g, myQty: 0, teamDesc: '', raceDesc: '', tierDesc: '', name: g.title }));
 
-        this.globalTroops = this.globalTroops.concat(gameItems)
-
-        this.filterTroops = this.globalTroops;
-
-        this.updateTroopsFilters();
+        this.globalTroops = this.globalTroops.concat(gameItems);
 
       } catch (error) {
         if (error.message) {
@@ -405,48 +397,11 @@ export default {
       }
     },
 
-    async updateTroopsFilters() {
-      this.filterTroops = this.globalTroops.filter((trooper) => {
-        if (!this.select.teams.length) {
-          return trooper;
-        }
-        return this.select.teams.indexOf(trooper.teamDesc) !== -1;
-      });
-      this.filterTroops = this.filterTroops.filter((trooper) => {
-        if (!this.select.tiers.length) {
-          return trooper;
-        }
-        return this.select.tiers.indexOf(trooper.tierDesc) !== -1;
-      });
-      this.filterTroops = this.filterTroops.filter((trooper) => {
-        if (!this.select.races.length) {
-          return trooper;
-        }
-        return this.select.races.indexOf(trooper.raceDesc) !== -1;
-      });
-      this.filterTroops = this.filterTroops.filter((trooper) => {
-        if (!this.select.names.length) {
-          return trooper;
-        }
-        return this.select.names.indexOf(trooper.name) !== -1;
-      });
-
-      if (this.showMyUnits) {
-        this.filterTroops = this.filterTroops.filter((trooper) => {
-          return trooper.myQty != '0';
-        });
-      }
-      this.updateSelectFilters();
-    },
-
     clearFilters() {
-      this.select = {
-        teams: [],
-        tiers: [],
-        races: [],
-        names: [],
-      };
-      this.updateTroopsFilters();
+      this.selectedFactions = [];
+      this.selectedTiers = [];
+      this.selectedRaces = [];
+      this.selectedTroops = [];
     },
 
     getType(unit) {
@@ -505,7 +460,7 @@ export default {
   }
 }
 
-.remove-padding {
+.small-padding {
   padding-left: 0.1rem !important;
   padding-right: 0.1rem !important;
 }

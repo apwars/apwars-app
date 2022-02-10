@@ -177,7 +177,10 @@
                   <amount :amount="item.feeUnit" decimals="0" formatted />
                   per package
                   <br />
-                  <v-tooltip bottom>
+                  <v-tooltip
+                    v-if="bridgeNetwork.from.type === 'onChain'"
+                    bottom
+                  >
                     <template v-slot:activator="{ on, attrs }">
                       <span v-bind="attrs" v-on="on">
                         Off-chain limit:
@@ -188,6 +191,18 @@
                       in off-chain, <br />
                       if you already have this amount it is not possible to send
                       more units.
+                    </span>
+                  </v-tooltip>
+
+                  <v-tooltip v-else bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <span v-bind="attrs" v-on="on">
+                        On-chain limit:
+                      </span>
+                    </template>
+                    <span>
+                      The on-chain limit is the maximum amount you can withdraw
+                      within 28800 blocks
                     </span>
                   </v-tooltip>
 
@@ -207,7 +222,9 @@
                     dense
                     v-model="item.packQuantity"
                     @input="packQuantity(item)"
-                    :disabled="item.disabled || !item.isApproveOtto"
+                    :disabled="
+                      item.disabled || !item.isApproveOtto || item.packMax === 0
+                    "
                     :max="item.packMax"
                   ></number-field>
                   <v-currency-field
@@ -542,6 +559,10 @@ export default {
           title: "Oh oh, Not enough funds!",
           text: "You need more funds to make this transaction works!",
         },
+        BRIDGE_OFFCHAIN_LIMIT: {
+          title: "Oh oh, The limit is above the allowed!",
+          text: "Use the allowed limit to perform your operation!",
+        },
       },
     };
   },
@@ -615,14 +636,25 @@ export default {
           item.offChainLimit / item.minimumPackage
         );
 
-        const balanceOffChainLimit = parseInt(
+        let balanceOffChainLimit = parseInt(
           item.balanceFormattedFrom / item.minimumPackage
         );
 
-        item.packMax =
-          balanceOffChainLimit > packOffChainLimit
+        const packMaxFrom =
+          balanceOffChainLimit >= packOffChainLimit
             ? packOffChainLimit
             : balanceOffChainLimit;
+
+        let packMaxTo = 10;
+        if (item.offChainLimit > item.balanceFormattedTo) {
+          packMaxTo = parseInt(
+            (item.offChainLimit - item.balanceFormattedTo) / item.minimumPackage
+          );
+        }
+
+        item.packMax = packMaxTo > packMaxFrom ? packMaxFrom : packMaxTo;
+
+        item.packMax = item.packMax;
 
         return item;
       });
@@ -743,36 +775,55 @@ export default {
     },
 
     packQuantity(item) {
-      this.$nextTick(() => {
-        this.selectList = this.bridgeList.filter(
-          (itemFilter) => itemFilter.packQuantity > 0
-        ).length;
-        item.amountFrom = item.packQuantity * item.minimumPackage;
-        item.amountTo = item.amountFrom - item.feeUnit * item.packQuantity;
+      item.amountFrom = item.packQuantity * item.minimumPackage;
+      item.amountTo = item.amountFrom - item.feeUnit * item.packQuantity;
+      this.isDisabledLimitSelectList(item);
+      this.isDisabledItem(item);
+    },
 
-        if (
-          !item.isApproveOtto ||
-          this.selectList > this.limitSelectList ||
-          item.balanceFormattedFrom === 0
-        ) {
-          item.disabled = true;
-        }
+    isDisabledItem(item) {
+      item.amountFrom = item.packQuantity * item.minimumPackage;
+      item.amountTo = item.amountFrom - item.feeUnit * item.packQuantity;
 
-        if (this.selectList >= this.limitSelectList) {
-          this.bridgeList = this.bridgeList.map((list) => {
-            if (list.packQuantity === 0) {
-              list.disabled = true;
-            }
-            return list;
-          });
-        } else {
-          this.bridgeList = this.bridgeList.map((list) => {
-            list.disabled = false;
-            return list;
-          });
-        }
-        this.$forceUpdate();
-      });
+      let isLimitBalance = true;
+      if (
+        this.bridgeNetwork.from.type === "offChain" ||
+        item.offChainLimit >= item.balanceOffChain
+      ) {
+        isLimitBalance = false;
+      }
+
+      if (!item.isApproveOtto || isLimitBalance) {
+        item.disabled = true;
+      } else {
+        item.disabled = false;
+      }
+
+      this.$forceUpdate();
+    },
+
+    isDisabledLimitSelectList(item) {
+      this.selectList = this.bridgeList.filter(
+        (itemFilter) => itemFilter.packQuantity > 0
+      ).length;
+      item.amountFrom = item.packQuantity * item.minimumPackage;
+      item.amountTo = item.amountFrom - item.feeUnit * item.packQuantity;
+
+      if (this.selectList >= this.limitSelectList) {
+        this.bridgeList = this.bridgeList.map((list) => {
+          if (list.packQuantity === 0) {
+            list.disabled = true;
+          }
+          return list;
+        });
+      } else {
+        this.bridgeList = this.bridgeList.map((list) => {
+          list.disabled = false;
+          return list;
+        });
+      }
+
+      this.$forceUpdate();
     },
 
     async transfer() {
@@ -1182,7 +1233,6 @@ export default {
         balanceOffChain: 0,
         minimumPackage: minimumPackage,
         isApproveOtto: false,
-        packQuantity: 0,
         offChainLimit: offChainLimit,
         feeUnit: feeUnit,
         isLoading: true,
@@ -1203,6 +1253,8 @@ export default {
           bridge.balanceOffChain = balanceOffChain || 0;
           bridge.isApproveOtto = isApproveOtto;
           bridge.isLoading = false;
+          bridge.packQuantity = 0;
+          this.isDisabledItem(bridge);
         }
       }
     },
@@ -1230,7 +1282,6 @@ export default {
         balanceOffChain: 0,
         minimumPackage: minimumPackage,
         isApproveOtto: false,
-        packQuantity: 0,
         offChainLimit: offChainLimit,
         feeUnit: feeUnit,
         isLoading: true,
@@ -1253,6 +1304,8 @@ export default {
           bridge.balanceOffChain = balanceOffChain || 0;
           bridge.isApproveOtto = isApproveOtto;
           bridge.isLoading = false;
+          bridge.packQuantity = 0;
+          this.isDisabledItem(bridge);
         }
       }
     },

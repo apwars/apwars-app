@@ -8,39 +8,53 @@
         <v-img
           :width="$vuetify.breakpoint.mobile ? 130 : 165"
           :src="infoWeapon.imageNft"
-        />
+          :lazy-src="infoWeapon.imageNft"
+        >
+          <template v-slot:placeholder>
+            <v-row
+              class="fill-height ma-0"
+              align="center"
+              justify="center"
+            >
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
       </div>
-      <div v-if="isLoadingUnit" class="ml-1 align-self-start info-container">
+      <div v-if="isLoadingUnit" class="ml-1 align-self-start info-card">
         <div class="title">Necessary Resources</div>
-        <div class="d-flex qty ml-at-mobile">
-          <v-img
-            class="mr-1"
-            :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
+        <div class="d-flex align-center ml-at-mobile">
+          <v-img class="mr-1"
+            :max-height="$vuetify.breakpoint.mobile ? 25 : 33"
             :max-width="$vuetify.breakpoint.mobile ? 28 : 36"
-            src="/images/wcourage.png"
-          />
-          <div class="mt-token-text">
+            src="/images/wcourage.png" />
+          <div>
             <amount
               :amount="getTokenAConfig.amount"
               decimals="2"
-              symbol="wCOURAGE"
-            />
+              compact
+              symbol="wCOURAGE" />
           </div>
         </div>
-        <div class="d-flex qty ml-at-mobile">
+        <div class="d-flex align-cente qty ml-at-mobile mt-1">
           <v-img
             style="margin-left: 0.2rem;"
-            class="mr-1 mt-1"
+            class="mr-1"
             :max-height="$vuetify.breakpoint.mobile ? 25 : 32"
             :max-width="$vuetify.breakpoint.mobile ? 25 : 32"
             :src="`/images/icons/coins/smallers/${unit.name}.png`"
           />
-          <div class="mt-1">
+          <div :class="$vuetify.breakpoint.lgAndUp ? '' : 'hide-name-unit'">
             <amount
               :amount="getTokenBConfig.amount"
               decimals="2"
-              :symbol="unit.name"
-            />
+              compact
+              tooltip
+              :unitsColor="true"
+              :symbol="unit.name"/>
           </div>
         </div>
         <div class="d-flex align-center my-1 qty ml-at-mobile">
@@ -52,15 +66,15 @@
 
           <div class="d-flex flex-column">
             <span>
-              Working time:
+              Working time: <br v-if="$vuetify.breakpoint.width < 401" />
               <amount
                 :amount="getGeneralConfig.blocks"
                 decimals="0"
                 formatted
               />
-              blocks</span
-            >
-            <span><time-block :blocks="getGeneralConfig.blocks"/></span>
+              blocks
+            </span>
+            <span><time-block :blocks="getGeneralConfig.blocks" /></span>
           </div>
         </div>
         <hr />
@@ -656,24 +670,25 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .title {
   font-weight: bold;
   font-size: 28px;
 }
 .qty {
-  color: #ffb800;
+  /* color: #ffb800; */
   font-weight: bold;
   font-size: 16px;
 }
 .globalQty {
-  color: #f6ff00;
+  /* color: #f6ff00; */
   font-weight: bold;
   font-size: 16px;
 }
 .qty >>> span,
 .globalQty >>> span {
   color: #fff;
+  font-weight: bold;
 }
 .current-price {
   font-weight: bold;
@@ -689,10 +704,13 @@ export default {
   filter: grayscale(100%);
 }
 
+.info-card {
 @media screen and (min-width: 1024px) {
+  width: 250px;
   .info-container {
     width: 280px;
   }
+}
 }
 
 @media only screen and (max-width: 600px) {
@@ -705,14 +723,24 @@ export default {
   }
 }
 
-.mt-token-text {
-  margin-top: 0.3rem;
-}
-
 @media only screen and (max-width: 380px) {
   .ml-at-mobile {
     margin-left: -0.3rem;
     font-size: 0.8rem;
+  }
+}
+
+.hide-name-unit {
+  max-width: 25ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  @media only screen and (max-width: 416px) {
+    max-width: 20ch;
+  }
+
+  @media only screen and (max-width: 350px) {
+    max-width: 18ch;
   }
 }
 </style>

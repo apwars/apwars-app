@@ -9,30 +9,16 @@
           image="/images/war-preparation/icon-war-preparation.png"
         />
       </v-container>
-      <div v-if="tab === 0" class="d-flex text-center justify-center">
+      <div v-if="tab === 1" class="d-flex text-center justify-center">
         <v-img
-          v-if="$vuetify.breakpoint.mobile"
-          class="mx-auto"
-          max-width="90%"
-          src="/images/war-preparation/weapon-research.png"
-        />
-        <v-img
-          v-else
-          max-width="610px"
+          class="mx-auto weapon-research-image"
           src="/images/war-preparation/weapon-research.png"
         />
       </div>
 
       <div v-else class="d-flex text-center justify-center">
         <v-img
-          v-if="$vuetify.breakpoint.mobile"
-          class="mx-auto"
-          max-width="90%"
-          src="/images/war-preparation/spendables-research.png"
-        />
-        <v-img
-          v-else
-          max-width="610px"
+          class="mx-auto weapon-research-image"
           src="/images/war-preparation/spendables-research.png"
         />
       </div>
@@ -43,24 +29,24 @@
       <v-row class="d-flex">
         <v-col cols="12" md="12" lg="12" class="d-flex">
           <v-tabs v-model="tab">
-            <v-tab>Weapons</v-tab>
             <v-tab>Magical Items</v-tab>
+            <v-tab>Weapons</v-tab>
           </v-tabs>
         </v-col>
       </v-row>
-      
+
       <v-tabs-items v-model="tab">
-        <v-tab-item>
-          <v-card flat>
-            <list-combinators type="weapons" />
-          </v-card>
-        </v-tab-item>
         <v-tab-item>
           <v-card flat>
             <list-combinators type="magical-items" />
           </v-card>
         </v-tab-item>
       </v-tabs-items>
+      <v-tab-item>
+        <v-card flat>
+          <list-combinators type="weapons" />
+        </v-card>
+      </v-tab-item>
     </v-container>
   </div>
 </template>
@@ -72,12 +58,12 @@ import ListUnits from "@/lib/components/ui/Lists/ListUnits";
 import ListCombinators from "@/lib/components/ui/Lists/ListCombinators";
 
 export default {
-  name: 'war-preparation',
+  name: "war-preparation",
   components: {
     PageTitle,
     wButton,
     ListUnits,
-    ListCombinators
+    ListCombinators,
   },
 
   data() {
@@ -118,7 +104,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .bg-war-preparation {
   background-image: url("/images/war-preparation/bg-war-preparation.png");
   background-size: cover;
@@ -135,6 +121,24 @@ export default {
   .bg-war-preparation {
     background-size: contain;
     background-position: top;
+  }
+}
+
+.weapon-research-image {
+  @media only screen and (min-width: 0px) {
+    max-width: 90%;
+  }
+
+  @media only screen and (min-width: 600px) {
+    max-width: 70%;
+  }
+
+  @media only screen and (min-width: 960px) {
+    max-width: 55%;
+  }
+
+  @media only screen and (min-width: 1264px) {
+    max-width: 610px;
   }
 }
 </style>

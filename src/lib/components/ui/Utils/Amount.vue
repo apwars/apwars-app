@@ -1,8 +1,8 @@
 <template>
-  <v-tooltip top>
+  <v-tooltip :top="!unitsColor" :right="unitsColor" color="#111111">
     <template v-slot:activator="{ on, attrs }">
       <span class="amount" v-bind="attrs" v-on="isTooltip ? on : false">
-        <span>
+        <span :style="$vuetify.breakpoint.lgAndUp ? 'white-space: nowrap;': ''">
           <img
             v-if="isIcon"
             :src="`/images/${symbol.toLowerCase()}.png`"
@@ -18,7 +18,7 @@
         </span>
       </span>
     </template>
-    <span>{{ tooltipAmount }}</span>
+    <span style="color: #FFB800">{{ tooltipAmount }}</span>
   </v-tooltip>
 </template>
 
@@ -26,7 +26,7 @@
 import Convert from "@/lib/helpers/Convert";
 
 export default {
-  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'attribute'],
+  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'attribute', 'unitsColor', 'ignoreThousand'],
 
   computed: {
     computedAmount() {
@@ -38,7 +38,7 @@ export default {
       }
 
       if (this.compact !== undefined) {
-        numberAmount = Convert.compactNumber(numberAmount, this.getDecimals);
+        numberAmount = Convert.compactNumber(numberAmount, this.getDecimals, this.ignoreThousand);
       } else {
         numberAmount = Convert.roundDown(numberAmount, this.getDecimals);
         numberAmount = Convert.formatString(numberAmount, this.getDecimals);
@@ -49,6 +49,7 @@ export default {
       }
       return numberAmount;
     },
+
     tooltipAmount() {
       let numberAmount = this.amount || "0";
       return this.isFormatted

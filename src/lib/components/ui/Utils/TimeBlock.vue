@@ -1,6 +1,9 @@
 <template>
   <div>
-    <span>{{ getTime }}</span>
+    <span> Estimated time:
+      <br v-if="$vuetify.breakpoint.width < 404" /> 
+      {{ getTime }}
+    </span>
   </div>
 </template>
 
@@ -39,7 +42,7 @@ export default {
       } else if (seconds > 0) {
         time = `${seconds} seconds`;
       }
-      return `Estimated time: ~${time}`;
+      return ` ~${time}`;
     },
   },
 };

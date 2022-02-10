@@ -1,0 +1,22 @@
+@media screen and (min-width: 1024px) {
+  ::-webkit-scrollbar {
+    margin: 2px 0;
+    height: 2px;
+    width: 2px;
+    background: #111111!important;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    width: 2px;
+    border-radius: 4px;
+    background: #f1e3b8;
+    cursor: default;
+    outline: none;
+    z-index: 1;
+    will-change: transform;
+  }
+  
+  ::-webkit-scrollbar-thumb:not(:hover) ::-webkit-scrollbar-thumb{
+    transition: opacity .1s .5s;
+  }
+}

@@ -19,6 +19,16 @@ export default class LeaderboardController {
     }
   }
 
+  getLeaderboardArcadia(world, filter, limit, skip) {
+    try {
+      skip = skip || 0;
+      limit = limit || 10;
+      const query = new URLSearchParams({ ...filter, ...{ limit: limit }, ...{ skip: skip } });
+      return this.base._get(`/worlds/${world}/leaderboard?${query.toString()}`);
+    } catch (error) {
+      throw error;
+    }
+  }
   getDaily(game, limit, skip) {
     try {
       const endDateWeek = moment(new Date().getTime());
@@ -67,5 +77,24 @@ export default class LeaderboardController {
     }
   }
 
+  getArcadia(world, limit, skip) {
+    try {
+      limit = limit || 10;
+      skip = skip || 0;
+
+      return this.getLeaderboardArcadia(world, {}, limit, skip);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  getLeaderboardWar(filter, limit = 10, skip = 0) {
+    try {
+      const query = new URLSearchParams({ ...filter, ...{ limit: limit }, ...{ skip: skip } });
+      return this.base._get(`/wars/report/leaderboard?${query.toString()}`);
+    } catch (error) {
+      throw error;
+    }
+  }
 
 }

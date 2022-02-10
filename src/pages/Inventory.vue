@@ -13,175 +13,174 @@
       </v-container>
     </div>
 
-    <v-row v-if="$vuetify.breakpoint.mobile" class="war-info mb-4 text-center">
-      <v-col cols="12" md="6" xm="12" class="px-0">
-        <h2>Resources</h2>
-        <v-row class="mt-1">
-          <v-col class="d-flex py-0 justify-begin">
-            <img src="/images/wgold.png" class="resources ml-0 mr-1" />
-            <div class="text-left">
-              <amount
-                v-if="isConnected"
-                :amount="balance"
-                decimals="3"
-                compact
-                tooltip
-                :size="28"
-              />
-              <h4>wGOLD</h4>
-            </div>
-          </v-col>
-        </v-row>
-      </v-col>
+    <v-container>
+      <v-row v-if="$vuetify.breakpoint.name === 'xs'" class="war-info mb-4 text-center">
+        <v-col cols="12" class="px-0">
+          <h2>Resources</h2>
+          <v-row class="mt-1">
+            <v-col cols="12" class="d-flex py-0 justify-begin">
+              <img src="/images/wgold.png" class="resources mx-0 mr-1" />
+              <div class="text-left">
+                <amount
+                  v-if="isConnected"
+                  :amount="balance"
+                  decimals="3"
+                  compact
+                  tooltip
+                  :size="28"
+                />
+                <h4>wGOLD</h4>
+              </div>
+            </v-col>
 
-      <v-col cols="12" md="6" xm="12">
-        <v-row>
-          <v-col class="d-flex justify-begin px-0">
-            <img src="/images/wcourage.png" class="resources mx-0 mr-1" />
-            <div class="text-left">
-              <amount
-                v-if="isConnected"
-                :amount="balanceCOURAGE"
-                decimals="3"
-                compact
-                tooltip
-                :size="28"
-              />
-              <h4>wCOURAGE</h4>
-            </div>
-          </v-col>
-        </v-row>
-      </v-col>
+            <v-col color="12" class="d-flex justify-begin py-0">
+              <img src="/images/wcourage.png" class="resources mx-0 mr-1" />
+              <div class="text-left">
+                <amount
+                  v-if="isConnected"
+                  :amount="balanceCOURAGE"
+                  decimals="3"
+                  compact
+                  tooltip
+                  :size="28"
+                />
+                <h4>wCOURAGE</h4>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
 
-      <v-col cols="12" md="3" xm="12" class="px-0 ">
-        <h2>Game Items</h2>
-        <v-row class="mt-1 justify-space-between">
-          <v-col class="d-flex justify-begin" cols="12" md="3" xm="12">
-            <img src="/images/black-market/book.png" class="resources mx-0" />
-            <div class="text-left ml-2">
-              <h2>{{ itemsCount }} / {{ collectibles.length }}</h2>
-              <h4>Collectibles</h4>
-            </div>
-          </v-col>
-        </v-row>
-      </v-col>
+        <v-col cols="12" md="3" class="px-0 ">
+          <h2>Game Items</h2>
+          <v-row class="mt-1 justify-space-between">
+            <v-col class="d-flex justify-begin" cols="12" md="3" xm="12">
+              <img src="/images/black-market/book.png" class="resources mx-0" />
+              <div class="text-left ml-2">
+                <h2>{{ itemsCount }} / {{ collectibles.length }}</h2>
+                <h4>Collectibles</h4>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
 
-      <v-col cols="12" md="3" xm="12" class="mb-4 d-flex justify-center">
-        <v-row class="mt-1 justify-space-between d-block">
-          <a class="router-link" href="https://exchange.apwars.farm/">
-            <wButton width="250px" class="d-flex  justify-center mt-">
+        <v-col cols="12" md="3" class="mb-4 d-flex justify-center">
+          <v-row class="mt-1 justify-space-between d-block">
+            <a class="router-link" href="https://exchange.apwars.farm/">
+              <wButton width="250px" class="d-flex  justify-center mt-">
+                <div class="d-flex justify-center">
+                  <img
+                    src="/images/training-center/icon-training-center.png"
+                    class="align-self-center  mr-3"
+                    height="24"
+                  />
+                  <small class="align-self-center mr-1 ml-n1">Buy troops</small>
+                </div>
+              </wButton>
+            </a>
+
+            <wButton
+              width="250px"
+              class="d-flex  justify-center mt-1"
+              @click="goTo('/black-market')"
+            >
               <div class="d-flex justify-center">
                 <img
-                  src="/images/training-center/icon-training-center.png"
-                  class="align-self-center  mr-3"
+                  src="/images/black-market/black-market.png"
+                  class="align-self-center"
                   height="24"
                 />
-                <small class="align-self-center mr-1 ml-n1">Buy troops</small>
+                <small class="align-self-center ml-1">Black Market</small>
               </div>
             </wButton>
-          </a>
+          </v-row>
+        </v-col>
+      </v-row>
 
-          <wButton
-            width="250px"
-            class="d-flex  justify-center mt-1"
-            @click="goTo('/black-market')"
-          >
-            <div class="d-flex justify-center">
-              <img
-                src="/images/black-market/black-market.png"
-                class="align-self-center"
-                height="24"
-              />
-              <small class="align-self-center ml-1">Black Market</small>
-            </div>
-          </wButton>
-        </v-row>
-      </v-col>
-    </v-row>
+      <v-row v-else class="war-info mb-4">
+        <v-col cols="12" sm="7" md="6">
+          <h2>Resources</h2>
+          <v-row class="mt-1 ml-2">
+            <v-col cols="12" sm="6" lg="5" class="d-flex pa-0">
+              <img src="/images/wgold.png" class="resources" />
+              <div class="text-center">
+                <amount
+                  v-if="isConnected"
+                  :amount="balance"
+                  decimals="3"
+                  compact
+                  tooltip
+                  :size="28"
+                />
+                <h4>wGOLD</h4>
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" lg="5" class="d-flex pa-0">
+              <img src="/images/wcourage.png" class="resources" />
+              <div class="text-center">
+                <amount
+                  v-if="isConnected"
+                  :amount="balanceCOURAGE"
+                  decimals="3"
+                  compact
+                  tooltip
+                  :size="28"
+                />
+                <h4>wCOURAGE</h4>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
 
-    <v-row v-else class="war-info mb-4">
-      <v-col cols="12" md="6" sm="12">
-        <h2>Resources</h2>
-        <v-row class="mt-1 ml-4">
-          <div class="d-flex">
-            <img src="/images/wgold.png" class="resources" />
-            <div class="text-center">
-              <amount
-                v-if="isConnected"
-                :amount="balance"
-                decimals="3"
-                compact
-                tooltip
-                :size="28"
-              />
-              <h4>wGOLD</h4>
+        <v-col cols="12" sm="6" md="3">
+          <h2>Game Items</h2>
+          <v-row class="mt-1 ml-4 justify-space-between">
+            <div class="d-flex">
+              <img src="/images/black-market/book.png" class="resources" />
+              <div class="text-center ml-2">
+                <h2>{{ itemsCount }} / {{ collectibles.length }}</h2>
+                <h4>Collectibles</h4>
+              </div>
             </div>
-          </div>
-          <div class="d-flex ml-4">
-            <img src="/images/wcourage.png" class="resources" />
-            <div class="text-center">
-              <amount
-                v-if="isConnected"
-                :amount="balanceCOURAGE"
-                decimals="3"
-                compact
-                tooltip
-                :size="28"
-              />
-              <h4>wCOURAGE</h4>
-            </div>
-          </div>
-        </v-row>
-      </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="12" sm="6" md="3" class="mb-4">
+          <v-row class="mt-1 ml-4 justify-space-between d-block">
+            <a class="router-link" href="https://exchange.apwars.farm/">
+              <wButton width="180px" class="d-flex align-self-center mt-1">
+                <div class="d-flex justify-center">
+                  <img
+                    src="/images/training-center/icon-training-center.png"
+                    class="align-self-center mr-3"
+                    height="24"
+                  />
+                  <small class="align-self-center mr-1 ml-n1">Buy troops</small>
+                </div>
+              </wButton>
+            </a>
 
-      <v-col cols="12" md="3" sm="12">
-        <h2>Game Items</h2>
-        <v-row class="mt-1 ml-4 justify-space-between">
-          <div class="d-flex">
-            <img src="/images/black-market/book.png" class="resources" />
-            <div class="text-center ml-2">
-              <h2>{{ itemsCount }} / {{ collectibles.length }}</h2>
-              <h4>Collectibles</h4>
-            </div>
-          </div>
-        </v-row>
-      </v-col>
-      <v-col cols="12" md="3" class="mb-4">
-        <v-row class="mt-1 ml-4 justify-space-between d-block">
-          <a class="router-link" href="https://exchange.apwars.farm/">
-            <wButton width="180px" class="d-flex align-self-center mt-1">
+            <wButton
+              width="180px"
+              class="d-flex align-self-center mt-1"
+              @click="goTo('/black-market')"
+            >
               <div class="d-flex justify-center">
                 <img
-                  src="/images/training-center/icon-training-center.png"
-                  class="align-self-center mr-3"
+                  src="/images/black-market/black-market.png"
+                  class="align-self-center"
                   height="24"
                 />
-                <small class="align-self-center mr-1 ml-n1">Buy troops</small>
+                <small class="align-self-center ml-1">Black Market</small>
               </div>
             </wButton>
-          </a>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
 
-          <wButton
-            width="180px"
-            class="d-flex align-self-center mt-1"
-            @click="goTo('/black-market')"
-          >
-            <div class="d-flex justify-center">
-              <img
-                src="/images/black-market/black-market.png"
-                class="align-self-center"
-                height="24"
-              />
-              <small class="align-self-center ml-1">Black Market</small>
-            </div>
-          </wButton>
-        </v-row>
-      </v-col>
-    </v-row>
     <v-container>
       <v-row class="d-flex">
-        <v-col cols="12" lg="7" xl="4" class="d-flex">
-          <v-tabs v-model="tab">
+        <v-col cols="12" class="d-flex">
+          <v-tabs v-model="tab" show-arrows>
             <v-tab>Game Items</v-tab>
             <v-tab>Resources </v-tab>
             <v-tab>Military Units</v-tab>
@@ -266,7 +265,7 @@
                     :balanceLand="balanceLand"
                     :supplyWland="supplyWland"
                   >
-                  </table-resources> 
+                  </table-resources>
                 </v-col>
               </v-row>
             </v-container>
@@ -277,7 +276,7 @@
             <v-container>
               <v-row>
                 <v-col>
-                  <table-troops />  
+                  <table-troops />
                 </v-col>
               </v-row>
             </v-container>
@@ -325,7 +324,7 @@ import GuardiansApproved from "@/lib/components/ui/Guardians/GuardiansApproved";
 
 import TableResources from "@/lib/components/ui/Utils/Tables/TableResources";
 import TableTroops from "@/lib/components/ui/Utils/Tables/TableTroops";
-import ListUnits from '../lib/components/ui/Lists/ListUnits.vue';
+import ListUnits from "../lib/components/ui/Lists/ListUnits.vue";
 
 export default {
   components: {
@@ -341,7 +340,7 @@ export default {
     GuardiansApproved,
     TableResources,
     TableTroops,
-    ListUnits
+    ListUnits,
   },
   data() {
     return {
@@ -436,6 +435,7 @@ export default {
         this.collectibleContract = new Collectibles(
           this.addresses.collectibles
         );
+
         const wgold = new wGOLD(this.addresses.wGOLD);
         const wcourage = new wCOURAGE(this.addresses.wCOURAGE);
         const wland = new wLAND(this.addresses.wLAND);
@@ -450,9 +450,14 @@ export default {
         this.supplyWland = await wland.totalSupply();
 
         this.collectibles = getCollectibles();
+                this.collectibles = this.collectibles.filter(
+          (collectible) => {
+            return !collectible.hideBlackMarket;
+          }
+        );
         this.balances = await Promise.all(
           this.collectibles.map((item) => {
-            const collectibles = new Collectibles(item.contractAddress);
+            const collectibles = new Collectibles(item.contractAddress[this.networkInfo.id]);
             return collectibles.balanceOf(this.account, item.id);
           })
         );
@@ -470,7 +475,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .resources {
   width: 60px;
   height: 60px;
@@ -486,7 +491,6 @@ export default {
   border: 3px solid #966a3c;
   border-radius: 20px;
   padding: 0px 40px;
-  width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -558,5 +562,23 @@ export default {
   height: 98px;
   border-radius: 8px;
   border: 1px solid #ffb800;
+}
+
+
+.col-sm-7 {
+  @media only screen and (max-width: 880px) {
+    flex: 0 0 65%;
+    max-width: 65%;
+  }
+
+  @media only screen and (max-width: 750px) {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+
+  @media only screen and (max-width: 650px) {
+    flex: 0 0 85%;
+    max-width: 85%;
+  }
 }
 </style>

@@ -104,7 +104,7 @@
           </div>
           <div class="d-flex justify-start">
             <v-img
-              :max-height="$vuetify.breakpoint.mdAndUp ? '' : '88'"
+              :max-height="$vuetify.breakpoint.mdAndUp ? '108' : '88'"
               :max-width="$vuetify.breakpoint.mdAndUp ? '120' : '100'"
               :class="$vuetify.breakpoint.mdAndUp ? 'mr-2' : 'mr-1 ml-n1'"
               src="/images/battle/war-info/statistic-FED.png"

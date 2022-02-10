@@ -340,12 +340,9 @@ export default {
   mounted() {
     this.watchBlockchain();
 
-    this.connectToMetaMask();
-    // this.listRouterNoShowMetamask.map((path) => {
-    //   if (path === this.$router.history.current.path) {
-    //     this.showModal = false;
-    //   }
-    // });
+    if (!this.$route.meta.noConnect) {
+      this.connectToMetaMask();
+    }
 
     socket.on("messages", (items) => {
       this.messages = items;
@@ -496,6 +493,12 @@ export default {
 .btn-chat {
   bottom: 22px !important;
   right: 19px !important;
+}
+
+@media only screen and (max-width: 638px) {
+  .btn-chat {
+    bottom: 38px !important;
+  }
 }
 
 @media only screen and (max-width: 600px) {

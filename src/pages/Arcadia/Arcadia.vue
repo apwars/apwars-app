@@ -5,7 +5,7 @@
       id="gameArcadia"
       width="100%"
       :src="
-        `/Game/Arcadia/?worldManager=${getWorldManager}&landMap=${getLandMap}&treasureHunt=${getTreasureHunt}&treasureHuntId=${getTreasureHuntId}&expectedVersion=1.1.10.3&baseUrl=${getBaseUrl}`
+        `/Game/Arcadia/?worldManager=${getWorldManager}&landMap=${getLandMap}&treasureHunt=${getTreasureHunt}&treasureHuntId=${getTreasureHuntId}&expectedVersion=1.1.11.2&baseUrl=${getBaseUrl}`
       "
       frameborder="0"
       scrolling="no"
