@@ -53,11 +53,12 @@
             <v-skeleton-loader type="image" height="200px" />
             <v-skeleton-loader class="mt-2" type="image" height="200px" />
           </template>
-          <div class="default-text" v-if="!items.length">
+          <div class="default-text" v-else-if="!items.length">
             We ran out of stock because everything was sold out. How about
             checking again later?
           </div>
           <ShopCard
+            v-else
             v-for="item in items"
             :key="item.id"
             :packageName="item.package"
