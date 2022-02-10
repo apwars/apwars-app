@@ -25,6 +25,7 @@ import Battle from "@/pages/Game/Battle.vue";
 import LoyaltyProgram from "@/pages/Loyalty/Program.vue";
 import LoyaltyShop from "@/pages/Loyalty/Shop.vue";
 import StartSwap from "@/pages/StartSwap.vue";
+import Soldier from "@/pages/Soldier.vue";
 
 Vue.use(Router);
 
@@ -154,6 +155,11 @@ export const routes = [
         name: "start-swap",
         component: StartSwap,
         meta: { noConnect: true }
+      },
+      {
+        path: '/soldier',
+        name: 'soldier',
+        component: Soldier
       },
       {
         path: "/farms",
