@@ -24,8 +24,16 @@
               />
             </div>
           </div>
-          <v-skeleton-loader v-if="isChecking" type="image" height="36px" width="100%" />
-          <div class="buy-container d-flex flex-column align-center mt-1" v-else-if="!hasHuman">
+          <v-skeleton-loader
+            v-if="isChecking"
+            type="image"
+            height="36px"
+            width="100%"
+          />
+          <div
+            class="buy-container d-flex flex-column align-center mt-1"
+            v-else-if="!hasHuman"
+          >
             <Button type="whot"
               >Unlock <span class="d-none d-sm-block ml-1"> Human</span></Button
             >
@@ -57,8 +65,16 @@
               />
             </div>
           </div>
-          <v-skeleton-loader v-if="isChecking" type="image" height="36px" width="100%" />
-          <div class="buy-container d-flex flex-column align-center mt-1" v-else-if="!hasOrc">
+          <v-skeleton-loader
+            v-if="isChecking"
+            type="image"
+            height="36px"
+            width="100%"
+          />
+          <div
+            class="buy-container d-flex flex-column align-center mt-1"
+            v-else-if="!hasOrc"
+          >
             <Button type="whot"
               >Unlock <span class="d-none d-sm-block ml-1"> Orc</span></Button
             >
@@ -71,6 +87,23 @@
               />
               10.000
             </div>
+          </div>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col>
+          <div class="d-flex flex-column justify-center align-center">
+            <img
+              src="/images/game/the-monstrous-journey.png"
+              alt="The Monstrous Journey"
+            />
+            <Button
+              class="mt-1"
+              type="wprimary"
+              text="Play TMJ"
+              :handleClick="goTMJ"
+              :disabled="!hasHuman && !hasOrc"
+            />
           </div>
         </v-col>
       </v-row>
@@ -96,37 +129,40 @@ export default {
     },
   },
   data() {
-      return {
-          isChecking: true,
-          hasHuman: false,
-          hasOrc: false,
-      }
+    return {
+      isChecking: true,
+      hasHuman: false,
+      hasOrc: false,
+    };
   },
   methods: {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
     }),
+    goTMJ() {
+        this.$router.push('/the-monstrous-journey')
+    },
     async checkSoldiers() {
-        if (!this.account) {
-            return;
-        }
-        const constroller = new SoldierController();
-        this.isChecking = true;
-        try {
-            await constroller.getNFTByType(this.account, 'HUMAN_SOLDIER');
-            this.hasHuman = true;
-        } catch (error) {
-            console.error(error);
-            this.hasHuman = false;
-        }
-        try {
-            await constroller.getNFTByType(this.account, 'ORC_SOLDIER');
-            this.hasOrc = true;
-        } catch (error) {
-            console.error(error);
-            this.hasOrc = false;
-        }
-        this.isChecking = false;
+      if (!this.account) {
+        return;
+      }
+      const constroller = new SoldierController();
+      this.isChecking = true;
+      try {
+        await constroller.getNFTByType(this.account, "HUMAN_SOLDIER");
+        this.hasHuman = true;
+      } catch (error) {
+        console.error(error);
+        this.hasHuman = false;
+      }
+      try {
+        await constroller.getNFTByType(this.account, "ORC_SOLDIER");
+        this.hasOrc = true;
+      } catch (error) {
+        console.error(error);
+        this.hasOrc = false;
+      }
+      this.isChecking = false;
     },
   },
   watch: {
