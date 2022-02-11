@@ -23,7 +23,7 @@
         </v-col>
         <v-col cols="12" md="4">
           <game-text header="h3" class="text-center">
-            Loyalt Program
+            Loyalty Program
           </game-text>
           <div class="card-body-home d-flex justify-center align-center">
             <img
@@ -45,7 +45,7 @@
           </div>
           <div class="d-flex justify-center mt-1">
             <wButton @click="$router.push('/loyalty-program')" class="mt-1">
-              <span class="text-none text-center">Go to Loyalt Program</span>
+              <span class="text-none text-center">Go to Loyalty Program</span>
             </wButton>
             <wButton
               @click="$router.push('/loyalty-program/shop')"
