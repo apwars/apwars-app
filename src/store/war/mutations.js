@@ -39,7 +39,7 @@ export default {
   setSoldierLoading(state, loading) {
     state.isSoldierLoading = loading;
   },
-  setSoldier(state, type, soldier) {
+  setSoldier(state, { type, soldier }) {
     if (type === NFT.HUMAN) {
       state.humanSoldier = soldier;
     } else {

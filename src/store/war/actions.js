@@ -144,13 +144,13 @@ export default {
     try {
       const soldier = await controller.getNFTByType(rootState.user.account, NFT.HUMAN);
       console.log(soldier)
-      commit('setSoldier', NFT.HUMAN, soldier);
+      commit('setSoldier', {type: NFT.HUMAN, soldier });
     } catch (error) {
       console.error(error);
     }
     try {
       const soldier =  await controller.getNFTByType(rootState.user.account, NFT.ORC);
-      commit('setSoldier', NFT.ORC, soldier);
+      commit('setSoldier', {type: NFT.ORC, soldier });
     } catch (error) {
       console.error(error);
     }

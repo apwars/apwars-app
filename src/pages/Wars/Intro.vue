@@ -90,6 +90,25 @@
                     isBlock
                   />
                 </template>
+                <template v-if="humanSoldier && !humanCourage">
+                  <div class="validation mt-1">
+                    <img
+                      src="/images/icons/human-nft.png"
+                      alt="Human Soldier"
+                      class="mr-1"
+                    />
+                    You Soldier has no Courage!
+                  </div>
+                  <Button
+                    class="mt-1"
+                    icon="wcourage"
+                    type="wprimary"
+                    text="Recharge"
+                    color="#5c62eb"
+                    :handleClick="goToTMJ"
+                    isBlock
+                  />
+                </template>
                 <template v-if="!hasCompleteFormation('Elves')">
                   <div
                     class="validation mt-2"
@@ -138,6 +157,25 @@
                     class="mt-1"
                     type="whot"
                     text="Unlock Soldier"
+                    :handleClick="goToTMJ"
+                    isBlock
+                  />
+                </template>
+                <template v-if="humanSoldier && !humanCourage">
+                  <div class="validation mt-1">
+                    <img
+                      src="/images/icons/human-nft.png"
+                      alt="Human Soldier"
+                      class="mr-1"
+                    />
+                    You Soldier has no Courage!
+                  </div>
+                  <Button
+                    class="mt-1"
+                    icon="wcourage"
+                    type="wprimary"
+                    text="Recharge"
+                    color="#5c62eb"
                     :handleClick="goToTMJ"
                     isBlock
                   />
@@ -198,6 +236,25 @@
                     isBlock
                   />
                 </template>
+                <template v-if="orcSoldier && !orcCourage">
+                  <div class="validation mt-1">
+                    <img
+                      src="/images/icons/orc-nft.png"
+                      alt="Orc Soldier"
+                      class="mr-1"
+                    />
+                    You Soldier has no Courage!
+                  </div>
+                  <Button
+                    class="mt-1"
+                    icon="wcourage"
+                    type="wprimary"
+                    text="Recharge"
+                    color="#5c62eb"
+                    :handleClick="goToTMJ"
+                    isBlock
+                  />
+                </template>
                 <template v-if="!hasCompleteFormation('Orcs')">
                   <div class="validation mt-2">
                     You don't have a complete formation
@@ -244,6 +301,25 @@
                     class="mt-1"
                     type="whot"
                     text="Unlock Soldier"
+                    :handleClick="goToTMJ"
+                    isBlock
+                  />
+                </template>
+                <template v-if="orcSoldier && !orcCourage">
+                  <div class="validation mt-1">
+                    <img
+                      src="/images/icons/orc-nft.png"
+                      alt="Orc Soldier"
+                      class="mr-1"
+                    />
+                    You Soldier has no Courage!
+                  </div>
+                  <Button
+                    class="mt-1"
+                    icon="wcourage"
+                    type="wprimary"
+                    text="Recharge"
+                    color="#5c62eb"
                     :handleClick="goToTMJ"
                     isBlock
                   />
@@ -302,6 +378,12 @@ export default {
     account() {
       return this.$store.getters["user/account"];
     },
+    humanCourage() {
+      return this.humanSoldier?.data?.courage || 0;
+    },
+     orcCourage() {
+       return this.orcSoldier?.data?.courage || 0;
+     }
   },
   methods: {
     ...mapMutations({
