@@ -412,9 +412,9 @@ export default {
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
         await this.getWar();
-        // if (!this.introWar) {
-        //   this.$router.push('/war');
-        // }
+        if (!this.introWar) {
+          this.$router.push('/war');
+        }
       }
     },
     hasCompleteFormation(race) {
