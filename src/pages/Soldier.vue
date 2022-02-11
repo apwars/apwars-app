@@ -44,15 +44,9 @@
                 width="100%"
               />
               <template v-else>
-                <Button type="whot" text="Unlock" :isLoading="isLoadingUnlock === 'HUMAN_SOLDIER'" :handleClick="() => unlockSoldier('HUMAN_SOLDIER')"/>
+                <Button type="whot" text="Unlock" :isLoading="isLoadingUnlock === 'HUMAN_SOLDIER'" :handleClick="() => unlockSoldier('HUMAN_SOLDIER')" icon="wgold" />
                 <div class="price d-flex">
-                  <img
-                    src="/images/wgold.png"
-                    height="24px"
-                    width="24px"
-                    alt="wGOLD"
-                  />
-                  10.000
+                  10.000 wGOLD
                 </div>
               </template>
             </template>
@@ -84,15 +78,9 @@
                 width="100%"
               />
               <template v-else>
-                <Button type="whot" text="Unlock" :isLoading="isLoadingUnlock === 'ORC_SOLDIER'" :handleClick="() => unlockSoldier('ORC_SOLDIER')" />
+                <Button type="whot" text="Unlock" :isLoading="isLoadingUnlock === 'ORC_SOLDIER'" :handleClick="() => unlockSoldier('ORC_SOLDIER')" icon="wgold" />
                 <div class="price d-flex">
-                  <img
-                    src="/images/wgold.png"
-                    height="24px"
-                    width="24px"
-                    alt="wGOLD"
-                  />
-                  10.000
+                  10.000 wGOLD
                 </div>
               </template>
             </template>
@@ -249,7 +237,7 @@ export default {
   z-index: 1;
   top: -160%;
   width: 100%;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1440px) {
     width: 283px;
     top: -230px;
   }
@@ -262,7 +250,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1440px) {
     width: 80%;
   }
 }
