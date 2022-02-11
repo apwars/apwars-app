@@ -1,9 +1,20 @@
 <template>
   <div class="background">
     <v-container>
-      <v-row no-gutters>
-        <v-col class="screen-title">
-          Choose your Soldier
+      <v-row dense no-gutters>
+        <v-col>
+          <Button
+            icon="arrow-back"
+            type="wtertiary"
+            text="Back to Home"
+            :handleClick="backToHome"
+            noPadding
+          />
+        </v-col>
+      </v-row>
+      <v-row dense no-gutters>
+        <v-col>
+          <Title text="Choose your Soldier" />
         </v-col>
       </v-row>
       <v-row>
@@ -33,10 +44,7 @@
                 width="100%"
               />
               <template v-else>
-                <Button type="whot"
-                  >Unlock
-                  <span class="d-none d-sm-block ml-1"> Human</span></Button
-                >
+                <Button type="whot" text="Unlock" :isLoading="isLoadingUnlock === 'HUMAN_SOLDIER'" :handleClick="() => unlockSoldier('HUMAN_SOLDIER')"/>
                 <div class="price d-flex">
                   <img
                     src="/images/wgold.png"
@@ -76,10 +84,7 @@
                 width="100%"
               />
               <template v-else>
-                <Button type="whot"
-                  >Unlock
-                  <span class="d-none d-sm-block ml-1"> Orc</span></Button
-                >
+                <Button type="whot" text="Unlock" :isLoading="isLoadingUnlock === 'ORC_SOLDIER'" :handleClick="() => unlockSoldier('ORC_SOLDIER')" />
                 <div class="price d-flex">
                   <img
                     src="/images/wgold.png"
@@ -119,6 +124,7 @@ import { mapMutations } from "vuex";
 
 import SoldierController from "@/controller/SoldierController";
 
+import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
 
 import errorHandler from "@/helpers/errorHandler";
@@ -126,7 +132,7 @@ import errorHandler from "@/helpers/errorHandler";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 export default {
-  components: { Button },
+  components: { Button, Title },
   computed: {
     account() {
       return this.$store.getters["user/account"];
@@ -137,12 +143,16 @@ export default {
       isChecking: true,
       hasHuman: false,
       hasOrc: false,
+      isLoadingUnlock: false,
     };
   },
   methods: {
     ...mapMutations({
       setHeader: "app/setMenuDisplay",
     }),
+    backToHome() {
+      this.$router.push("/");
+    },
     goTMJ() {
       this.$router.push("/the-monstrous-journey");
     },
@@ -167,6 +177,24 @@ export default {
         this.hasOrc = false;
       }
       this.isChecking = false;
+    },
+    async unlockSoldier(type) {
+      const controller = new SoldierController();
+      this.isLoadingUnlock = type;
+      try {
+        await controller.unlockNFT(this.account, type);
+        await this.checkSoldiers();
+        ToastSnackbar.success("The soldier was successfully unlocked!");
+      } catch (error) {
+        console.error(error);
+        let msg = errorHandler(error.code);
+        if (error.code === 4001) {
+          msg = 'User denied the signature';
+        }
+        ToastSnackbar.error(msg);
+      } finally {
+        this.isLoadingUnlock = false;
+      }
     },
   },
   watch: {

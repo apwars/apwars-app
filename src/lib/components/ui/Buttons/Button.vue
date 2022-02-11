@@ -9,7 +9,7 @@
     ]"
     :style="`--color: ${color};`"
     @click="handleClick"
-    :disabled="disabled"
+    :disabled="disabled || isLoading"
   >
     <img
       :src="`/images/icons/${icon}.png`"
@@ -17,14 +17,16 @@
       v-if="icon"
       class="mr-1"
     />
-    <slot
-      ><v-progress-circular
-        class="ml-1"
-        indeterminate
-        size="16"
-        width="2"
-        v-if="isLoading"
-      /><game-text v-else-if="type === 'wtertiary'">{{ text }}</game-text
+    <slot>
+      <template v-if="isLoading"
+        >{{ text
+        }}<v-progress-circular
+          class="ml-1"
+          indeterminate
+          size="16"
+          width="2"
+        /> </template
+      ><game-text v-else-if="type === 'wtertiary'">{{ text }}</game-text
       ><span v-else>{{ text }}</span></slot
     >
   </button>
@@ -71,8 +73,8 @@ export default {
     },
     color: {
       type: String,
-      default: '#3a2720',
-    }
+      default: "#3a2720",
+    },
   },
 };
 </script>
