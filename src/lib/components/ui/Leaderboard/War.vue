@@ -95,6 +95,34 @@
                   <div class="text-subtitle-2 primary--text">Power Units</div>
                   <div class="text-points">{{ player.points }} PU</div>
                 </div>
+
+                <div class=" d-flex flex-column align-center mx-2">
+                  <div class="text-subtitle-2 primary--text">Total Earning wGOLD</div>
+                  <div class="text-treasure d-flex align-center justify-center">
+                    <amount :amount="player.wGOLD" formatted decimals="2" />
+                    <img
+                      class="ml-1"
+                      height="25px"
+                      src="/images/wGOLD.png"
+                      alt="wGOLD"
+                    />
+                  </div>
+                </div>
+
+                <div class=" d-flex flex-column align-center mx-2">
+                  <div class="text-subtitle-2 primary--text">
+                    Total Earning wCOURAGE
+                  </div>
+                  <div class="text-treasure d-flex align-center justify-center">
+                    <amount :amount="player.wCOURAGE" formatted decimals="2" />
+                    <img
+                      class="ml-1"
+                      height="25px"
+                      src="/images/wCOURAGE.png"
+                      alt="wCOURAGE"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -262,7 +290,7 @@ export default {
 
       const total = _listRanking.total;
 
-      _listRanking = _listRanking.map(r => ({...r, score: r.points }));
+      _listRanking = _listRanking.map((r) => ({ ...r, score: r.points }));
 
       _listRanking.total = total;
 
