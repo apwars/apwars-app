@@ -10,10 +10,18 @@
         <v-col cols="12" md="4" class="pr-0 pl-1">
           <div class="mt-1"></div>
           <game-text header="h4" class="text-center mt-2">
-            War is coming soon...
+            {{ this.stepWar.title }}
           </game-text>
-          <div class="card-body-home d-flex justify-center align-center">
-            <countdown class="mt-0" :time="nextWar" hideEnd />
+          <div
+            v-if="stepWar.dateTime > 0"
+            class="card-body-home d-flex justify-center align-center"
+          >
+            <countdown
+              class="mt-0"
+              :time="stepWar.dateTime"
+              hideEnd
+              @end="loadData()"
+            />
           </div>
           <div class="d-flex justify-center mt-1">
             <wButton @click="$router.push('/war/intro')" class="mt-1">
@@ -141,6 +149,7 @@ import Tasks from "@/lib/components/ui/Home/Tasks";
 import Amount from "@/lib/components/ui/Utils/Amount.vue";
 
 import WalletController from "@/controller/WalletController";
+import WarsController from "@/controller/WarsController";
 
 export default {
   components: {
@@ -167,8 +176,7 @@ export default {
         { image: "/images/weapons/catapult-undead.png" },
         { image: "/images/weapons/catapult-elves.png" },
       ],
-      nextWar: 0,
-      dateNextWar: 1644840000000,
+      stepWar: {},
     };
   },
 
@@ -192,13 +200,6 @@ export default {
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
     },
-
-    imgWinnerLastWar() {
-      if (this.warStats.winner == "2") {
-        return "the-degenerate-win.png";
-      }
-      return "the-corporation-win.png";
-    },
   },
 
   watch: {
@@ -220,13 +221,49 @@ export default {
       if (!this.isConnected) {
         return;
       }
-      const dateNow = new Date().getTime();
-      this.nextWar = 0;
-      if (this.dateNextWar > dateNow) {
-        this.nextWar = this.dateNextWar - dateNow;
-      }
+      this.stepWar = await this.getStepWar();
       this.balancewSCARS = await this.getBalancewSCARS(this.account);
       this.isLoading = false;
+    },
+
+    async getStepWar() {
+      const controller = new WarsController();
+      const lastId = await controller.getLastId();
+      const lastWar = await controller.getOne(lastId.id);
+
+      let step = {
+        title: "War is coming soon...",
+        dateTime: new Date(lastWar.deadlines.startEnlistment).getTime(),
+      };
+
+      const dateNow = new Date().getTime();
+      if (dateNow > new Date(lastWar.deadlines.endClaimPrize).getTime()) {
+        step = {
+          title: "War ended!",
+          dateTime: 0,
+        };
+      } else if (
+        dateNow > new Date(lastWar.deadlines.endEnlistment).getTime()
+      ) {
+        step = {
+          title: "Collect prizes and wUNITS",
+          dateTime: new Date(lastWar.deadlines.endClaimPrize).getTime(),
+        };
+      } else if (
+        dateNow > new Date(lastWar.deadlines.startEnlistment).getTime()
+      ) {
+        step = {
+          title: "Enlistment ends in",
+          dateTime: new Date(lastWar.deadlines.endEnlistment).getTime(),
+        };
+      }
+      step.dateTime -= dateNow;
+
+      if (step.dateTime < 0) {
+        step.dateTime = 0;
+      }
+
+      return step;
     },
 
     async getBalancewSCARS(account) {
