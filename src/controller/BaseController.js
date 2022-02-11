@@ -1,4 +1,5 @@
 import store from "@/store";
+import { ethers } from "ethers";
 export default class BaseController {
   constructor(_api) {
     this.api = _api;
@@ -11,7 +12,7 @@ export default class BaseController {
       if (response.status !== 200 && response.status !== 201) {
         throw await response.json();
       }
-      if(response.headers.get('X-Total-Count')) {
+      if (response.headers.get('X-Total-Count')) {
         const data = await response.json();
         data.total = response.headers.get('X-Total-Count');
         return data;
@@ -49,6 +50,38 @@ export default class BaseController {
       };
       const messageSignature = web3.utils.sha3(JSON.stringify(message));
       const signature = await window.web3.eth.personal.sign(messageSignature, message.wallet);
+      const response = await fetch(`${this.api}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'message-signature': messageSignature,
+          'message-nonce': message.nonce,
+          'signature': signature
+        },
+        body: JSON.stringify(body)
+      });
+      if (response.status !== 200 && response.status !== 201) {
+        throw await response.json();
+      }
+      return await response.json();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async _postSignatureEthers(endpoint, body) {
+    try {
+      const message = {
+        wallet: this.account.toLowerCase(),
+        nonce: new Date().getTime()
+      };
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const messageSignature = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(JSON.stringify(message)));
+      const signature = await signer.signMessage(ethers.utils.toUtf8Bytes(messageSignature));
       const response = await fetch(`${this.api}${endpoint}`, {
         method: 'POST',
         headers: {

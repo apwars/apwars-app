@@ -20,7 +20,7 @@ export default class SoldierController {
 
   unlockNFT(account, type) {
     try {
-      return this.base._postSignature(`/nfts/${type}`, { account });
+      return this.base._postSignatureEthers(`/nfts/${type}`, { account });
     } catch (error) {
       throw error;
     }
@@ -36,7 +36,7 @@ export default class SoldierController {
 
   rechargeToken(account, type, token) {
     try {
-      return this.base._postSignature(`/accounts/${account}/nfts/${type}/recharges/${token}`, { account });
+      return this.base._postSignatureEthers(`/accounts/${account}/nfts/${type}/recharges/${token}`, { account });
     } catch (error) {
       throw error;
     }
