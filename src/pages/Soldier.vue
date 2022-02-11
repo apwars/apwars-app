@@ -186,7 +186,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .background {
-  background-image: url("/images/background/world.png");
+  background-image: url("/images/background/world-dark.png");
   background-size: cover;
   height: 100%;
 }
