@@ -225,9 +225,12 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 200px;
+  padding-top: 100px;
   animation: 3s ease-in-out floating infinite;
   width: 80%;
+  @media screen and (min-width: 1440px) {
+    padding-top: 200px;
+  }
   &.is-locked {
     filter: grayscale(100);
   }
@@ -237,6 +240,10 @@ export default {
   z-index: 1;
   top: -160%;
   width: 100%;
+  @media screen and (min-width: 768px) {
+    width: 196px;
+    top: -150px;
+  }
   @media screen and (min-width: 1440px) {
     width: 283px;
     top: -230px;
@@ -250,7 +257,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 768px) {
     width: 80%;
   }
 }
