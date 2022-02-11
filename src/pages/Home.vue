@@ -10,7 +10,7 @@
         <v-col cols="12" md="4" class="pr-0 pl-1">
           <div class="mt-1"></div>
           <game-text header="h4" class="text-center mt-2">
-            Collect prizes and wUNITS
+            War is coming soon...
           </game-text>
           <div class="card-body-home d-flex justify-center align-center">
             <countdown class="mt-0" :time="nextWar" hideEnd />
@@ -23,7 +23,7 @@
         </v-col>
         <v-col cols="12" md="4">
           <game-text header="h3" class="text-center">
-            Loyalt Program
+            Loyalty Program
           </game-text>
           <div class="card-body-home d-flex justify-center align-center">
             <img
@@ -45,7 +45,7 @@
           </div>
           <div class="d-flex justify-center mt-1">
             <wButton @click="$router.push('/loyalty-program')" class="mt-1">
-              <span class="text-none text-center">Go to Loyalt Program</span>
+              <span class="text-none text-center">Go to Loyalty Program</span>
             </wButton>
             <wButton
               @click="$router.push('/loyalty-program/shop')"
@@ -168,7 +168,7 @@ export default {
         { image: "/images/weapons/catapult-elves.png" },
       ],
       nextWar: 0,
-      dateNextWar: 1644580800000,
+      dateNextWar: 1644840000000,
     };
   },
 
