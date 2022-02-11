@@ -1,4 +1,6 @@
 import WarsController from "@/controller/WarsController";
+import SoldierController from "@/controller/SoldierController";
+import { NFT } from "@/data/NFTs";
 
 export default {
   async getWar({ state, commit, dispatch }, warId) {
@@ -22,6 +24,7 @@ export default {
       dispatch("checkWarCountdown");
       dispatch('getAccountPrizes', currentWar.id);
       await dispatch("user/fetchUserWallet", null, { root: true });
+      await dispatch("checkSoldiers");
       dispatch("checkCompleteFormations");
       dispatch("enlistment/checkPlayerEnlistment", null, { root: true });
     } catch (error) {
@@ -134,5 +137,23 @@ export default {
       }
     }
     commit('setCompleteFormations', completeFormations);
-  }
+  },
+  async checkSoldiers({commit, rootState}) {
+    const controller = new SoldierController();
+    commit('setSoldierLoading', true);
+    try {
+      const soldier = await controller.getNFTByType(rootState.user.account, NFT.HUMAN);
+      console.log(soldier)
+      commit('setSoldier', NFT.HUMAN, soldier);
+    } catch (error) {
+      console.error(error);
+    }
+    try {
+      const soldier =  await controller.getNFTByType(rootState.user.account, NFT.ORC);
+      commit('setSoldier', NFT.ORC, soldier);
+    } catch (error) {
+      console.error(error);
+    }
+    commit('setSoldierLoading', false);
+  },
 };

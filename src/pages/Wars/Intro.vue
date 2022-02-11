@@ -12,7 +12,7 @@
           />
         </v-col>
       </v-row>
-      <v-row v-if="!war || !nftCheck || isLoadingWar" class="complete">
+      <v-row v-if="!war || isLoadingWar" class="complete">
         <v-col class="complete d-flex flex-column justify-center align-center">
           <div class="prize-pool text-center">Loading War data...</div>
         </v-col>
@@ -73,7 +73,7 @@
                   :disabled="isEnlistmentDisabled('Elves')"
                   isBlock
                 />
-                <template v-if="!hasHumanSoldier">
+                <template v-if="!humanSoldier">
                   <div class="validation mt-1">
                     <img
                       src="/images/icons/human-nft.png"
@@ -125,7 +125,7 @@
                   :disabled="isEnlistmentDisabled('Humans')"
                   isBlock
                 />
-                <template v-if="!hasHumanSoldier">
+                <template v-if="!humanSoldier">
                   <div class="validation mt-1">
                     <img
                       src="/images/icons/human-nft.png"
@@ -181,7 +181,7 @@
                   :disabled="isEnlistmentDisabled('Orcs')"
                   isBlock
                 />
-                <template v-if="!hasOrcSoldier">
+                <template v-if="!orcSoldier">
                   <div class="validation mt-1">
                     <img
                       src="/images/icons/orc-nft.png"
@@ -232,7 +232,7 @@
                   :disabled="isEnlistmentDisabled('Undead')"
                   isBlock
                 />
-                <template v-if="!hasOrcSoldier">
+                <template v-if="!orcSoldier">
                   <div class="validation mt-1">
                     <img
                       src="/images/icons/orc-nft.png"
@@ -279,10 +279,6 @@
 <script>
 import { mapMutations, mapState, mapActions, mapGetters } from "vuex";
 
-import SoldierController from "@/controller/SoldierController";
-
-import { NFT } from "@/data/NFTs";
-
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
 import Amount from "@/lib/components/ui/Utils/Amount";
@@ -297,6 +293,8 @@ export default {
       war: (state) => state.war.war,
       phase: (state) => state.war.phase,
       countdownTimer: (state) => state.war.countdown,
+      humanSoldier: (state) => state.war.humanSoldier,
+      orcSoldier: (state) => state.war.orcSoldier,
     }),
     ...mapGetters({
       introWar: "war/introWar"
@@ -304,13 +302,6 @@ export default {
     account() {
       return this.$store.getters["user/account"];
     },
-  },
-  data() {
-    return {
-      nftCheck: null,
-      hasHumanSoldier: false,
-      hasOrcSoldier: false,
-    };
   },
   methods: {
     ...mapMutations({
@@ -336,29 +327,12 @@ export default {
     skipEnlistment() {
       this.$router.push('/war');
     },
-    async checkSoldier() {
-      const controller = new SoldierController();
-      try {
-        await controller.getNFTByType(this.account, NFT.HUMAN);
-        this.hasHumanSoldier = true;
-      } catch (error) {
-        this.hasOrcSoldier = false;
-      }
-      try {
-        await controller.getNFTByType(this.account, NFT.ORC);
-        this.hasOrcSoldier = true;
-      } catch (error) {
-        this.hasOrcSoldier = false;
-      }
-      this.nftCheck = true;
-    },
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
         await this.getWar();
-        await this.checkSoldier();
-        if (!this.introWar) {
-          this.$router.push('/war');
-        }
+        // if (!this.introWar) {
+        //   this.$router.push('/war');
+        // }
       }
     },
     hasCompleteFormation(race) {
@@ -367,8 +341,8 @@ export default {
     isEnlistmentDisabled(race) {
       const hasSoldier =
         race === "Humans" || race === "Elves"
-          ? this.hasHumanSoldier
-          : this.hasOrcSoldier;
+          ? this.humanSoldier
+          : this.orcSoldier;
       return !this.hasCompleteFormation(race) || !hasSoldier;
     },
   },
