@@ -587,8 +587,6 @@ export default {
       this.distributedRewards.wSCARS = this.distributedRewards.find(
         (_distributed) => _distributed.token === "wSCARS"
       );
-
-      console.log(this.distributedRewards);
     },
 
     async getListDaily(_page) {
