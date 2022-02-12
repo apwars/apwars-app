@@ -45,10 +45,10 @@
         </v-col>
       </v-row>
 
-      <v-row v-if="selectGame.isWeekly">
+      <v-row dense v-if="selectGame.isWeekly">
         <v-col
           cols="12"
-          class="d-flex align-center justify-center my-1 my-sm-6"
+          class="d-flex align-center justify-center my-1"
         >
           <img
             class="mr-2"

@@ -1,6 +1,51 @@
 <template>
   <div>
     <v-container v-if="isConnected && !isLoading">
+      <div
+        class="d-flex justify-space-between align-center distributed-rewards"
+      >
+        <div class="distributed-text">
+          Distributed <br />
+          rewards so far:
+        </div>
+        <div class="d-flex align-center">
+          <img
+            class="mr-1"
+            height="90px"
+            src="/images/wGOLD-winner.png"
+            alt="wGOLD"
+          />
+          <div>
+            <div class="distributed-amount">
+              <amount
+                :amount="distributedRewards.wGOLD.total"
+                formatted
+                decimals="2"
+              />
+            </div>
+            <div class="distributed-label">wGOLD</div>
+          </div>
+        </div>
+        <div class="d-flex align-center">
+          <img
+            class="mr-1"
+            height="79px"
+            src="/images/wSCARS-winner.png"
+            alt="wSCARS"
+          />
+          <div>
+            <div class="distributed-amount">
+              <amount
+                :amount="distributedRewards.wSCARS.total"
+                formatted
+                decimals="2"
+              />
+            </div>
+            <div class="distributed-label">wSCARS</div>
+          </div>
+        </div>
+      </div>
+
       <Podium :podium="getListPodium" />
 
       <v-row>
@@ -526,9 +571,24 @@ export default {
 
       await this.getListWeek(1);
       await this.getListDaily(1);
+      await this.getDistributedRewards();
       this.listPodium = this.listWeek.slice(0,3);
 
       this.isLoading = false;
+    },
+
+    async getDistributedRewards() {
+      const leaderboardController = new LeaderboardController();
+      this.distributedRewards = await leaderboardController.getLeaderboardDistributedRewards();
+
+      this.distributedRewards.wGOLD = this.distributedRewards.find(
+        (_distributed) => _distributed.token === "wGOLD"
+      );
+      this.distributedRewards.wSCARS = this.distributedRewards.find(
+        (_distributed) => _distributed.token === "wSCARS"
+      );
+
+      console.log(this.distributedRewards);
     },
 
     async getListDaily(_page) {
@@ -718,6 +778,43 @@ export default {
 
 .page-title-icon {
   height: 130px;
+}
+
+.distributed-rewards {
+  background-image: url("/images/background/road-castle.png");
+  background-size: cover;
+  background-position: center;
+  padding: 15px;
+  border: 2px solid #ffeebc;
+  margin: 5px -24px;
+}
+
+.distributed-text {
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 31px;
+  color: #ffeebc;
+}
+
+.distributed-amount {
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 62px;
+  color: #ffeebc;
+}
+
+.distributed-label {
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffeebc;
+  text-align: right;
 }
 
 @media only screen and (max-width: 959px) {
