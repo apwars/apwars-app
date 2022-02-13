@@ -157,8 +157,8 @@ export const routes = [
         meta: { noConnect: true }
       },
       {
-        path: '/soldier',
-        name: 'soldier',
+        path: '/unlock-soldier',
+        name: 'unlock-soldier',
         component: Soldier
       },
       {

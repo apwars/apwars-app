@@ -18,7 +18,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="6" class="soldier-container">
+        <v-col cols="5" class="soldier-container">
           <div :class="['soldier-viewport', hasHuman ? '' : 'is-locked']">
             <div class="ground-container">
               <img
@@ -36,23 +36,71 @@
             </div>
           </div>
           <div class="buy-container d-flex flex-column align-center mt-1">
-            <template v-if="!hasHuman">
+            <template>
               <v-skeleton-loader
                 v-if="isChecking"
                 type="image"
                 height="36px"
                 width="100%"
               />
-              <template v-else>
-                <Button type="whot" text="Unlock" :isLoading="isLoadingUnlock === 'HUMAN_SOLDIER'" :handleClick="() => unlockSoldier('HUMAN_SOLDIER')" icon="wgold" />
+              <template v-else-if="!hasHuman">
+                <Button
+                  type="whot"
+                  text="Unlock"
+                  :isLoading="isLoadingUnlock === 'HUMAN_SOLDIER'"
+                  :handleClick="() => unlockSoldier('HUMAN_SOLDIER')"
+                  icon="wgold"
+                />
                 <div class="price d-flex">
                   10.000 wGOLD
+                </div>
+              </template>
+              <template v-else>
+                <div class="progress-wcourage">
+                  <v-progress-linear
+                    color="#4049c0"
+                    background-color="#3A2720"
+                    :value="soldierHuman.data.courage"
+                    height="30"
+                  >
+                    <span class="font-weight-black">
+                      Courage {{ soldierHuman.data.courage }}/100
+                    </span>
+                  </v-progress-linear>
+                </div>
+                <div
+                  class="d-flex flex-column justify-center"
+                  v-if="
+                    balancewCOURAGE >=
+                      this.wCOURAGERefill(soldierHuman.data.courage)
+                  "
+                >
+                  <Button
+                    type="wsecondary"
+                    text="100% REFILL"
+                    :isLoading="isLoadingRecharge"
+                    :handleClick="
+                      () => rechargeToken('HUMAN_SOLDIER', 'wCOURAGE')
+                    "
+                    icon="wcourage"
+                  />
+                  <div class="price d-flex">
+                    {{ this.wCOURAGERefill(soldierHuman.data.courage) }}
+                    wCOURAGE
+                  </div>
+                </div>
+                <div class="d-flex justify-center align-center" v-else>
+                  <div>
+                    You need
+                    {{ this.wCOURAGERefill(soldierHuman.data.courage) }}
+                    wCOURAGE to refill soldier courage
+                  </div>
                 </div>
               </template>
             </template>
           </div>
         </v-col>
-        <v-col cols="6" class="soldier-container">
+        <v-col cols="5" offset="2" class="soldier-container">
           <div :class="['soldier-viewport', hasOrc ? '' : 'is-locked']">
             <div class="ground-container">
               <img
@@ -70,40 +118,86 @@
             </div>
           </div>
           <div class="buy-container d-flex flex-column align-center mt-1">
-            <template v-if="!hasOrc">
+            <template>
               <v-skeleton-loader
                 v-if="isChecking"
                 type="image"
                 height="36px"
                 width="100%"
               />
-              <template v-else>
-                <Button type="whot" text="Unlock" :isLoading="isLoadingUnlock === 'ORC_SOLDIER'" :handleClick="() => unlockSoldier('ORC_SOLDIER')" icon="wgold" />
+              <template v-else-if="!hasOrc">
+                <Button
+                  type="whot"
+                  text="Unlock"
+                  :isLoading="isLoadingUnlock === 'ORC_SOLDIER'"
+                  :handleClick="() => unlockSoldier('ORC_SOLDIER')"
+                  icon="wgold"
+                />
                 <div class="price d-flex">
                   10.000 wGOLD
+                </div>
+              </template>
+              <template v-else>
+                <div class="progress-wcourage">
+                  <v-progress-linear
+                    color="#4049c0"
+                    background-color="#3A2720"
+                    :value="soldierOrc.data.courage"
+                    height="30"
+                  >
+                    <span class="font-weight-black">
+                      Courage {{ soldierOrc.data.courage }}/100
+                    </span>
+                  </v-progress-linear>
+                </div>
+                <div
+                  class="d-flex flex-column justify-center"
+                  v-if="
+                    balancewCOURAGE >=
+                      this.wCOURAGERefill(soldierOrc.data.courage)
+                  "
+                >
+                  <Button
+                    type="wsecondary"
+                    text="100% REFILL"
+                    :isLoading="isLoadingRecharge"
+                    :handleClick="
+                      () => rechargeToken('ORC_SOLDIER', 'wCOURAGE')
+                    "
+                    icon="wcourage"
+                  />
+                  <div class="price d-flex">
+                    {{ this.wCOURAGERefill(soldierOrc.data.courage) }}
+                    wCOURAGE
+                  </div>
+                </div>
+                <div class="d-flex justify-center align-center" v-else>
+                  <div>
+                    You need
+                    {{ this.wCOURAGERefill(soldierOrc.data.courage) }}
+                    wCOURAGE to refill soldier courage
+                  </div>
                 </div>
               </template>
             </template>
           </div>
         </v-col>
       </v-row>
-      <v-row no-gutters>
-        <v-col>
-          <div class="d-flex flex-column justify-center align-center mt-1">
-            <img
-              src="/images/game/the-monstrous-journey.png"
-              alt="The Monstrous Journey"
-            />
-            <Button
-              class="mt-1"
-              type="wprimary"
-              text="Play TMJ"
-              :handleClick="goTMJ"
-              :disabled="!hasHuman && !hasOrc"
-            />
-          </div>
-        </v-col>
-      </v-row>
+      <div class="d-flex justify-center btn-tmj">
+        <div class="d-flex flex-column justify-center align-center mt-1">
+          <img
+            src="/images/game/the-monstrous-journey.png"
+            alt="The Monstrous Journey"
+          />
+          <Button
+            class="mt-1"
+            type="wprimary"
+            text="Play Now"
+            :handleClick="goTMJ"
+            :disabled="!hasHuman && !hasOrc"
+          />
+        </div>
+      </div>
     </v-container>
   </div>
 </template>
@@ -111,6 +205,7 @@
 import { mapMutations } from "vuex";
 
 import SoldierController from "@/controller/SoldierController";
+import WalletController from "@/controller/WalletController";
 
 import Title from "@/lib/components/ui/Title";
 import Button from "@/lib/components/ui/Buttons/Button";
@@ -132,6 +227,10 @@ export default {
       hasHuman: false,
       hasOrc: false,
       isLoadingUnlock: false,
+      soldierHuman: false,
+      soldierOrc: false,
+      isLoadingRecharge: false,
+      balancewCOURAGE: 0,
     };
   },
   methods: {
@@ -148,17 +247,28 @@ export default {
       if (!this.account) {
         return;
       }
-      const constroller = new SoldierController();
+      const walletController = new WalletController();
+      const balance = await walletController.wallets(this.account);
+      this.balancewCOURAGE = balance.balances["wCOURAGE"] || 0;
+
+      const controller = new SoldierController();
       this.isChecking = true;
       try {
-        await constroller.getNFTByType(this.account, "HUMAN_SOLDIER");
+        this.soldierHuman = await controller.getNFTByType(
+          this.account,
+          "HUMAN_SOLDIER"
+        );
+
         this.hasHuman = true;
       } catch (error) {
         console.error(error);
         this.hasHuman = false;
       }
       try {
-        await constroller.getNFTByType(this.account, "ORC_SOLDIER");
+        this.soldierOrc = await controller.getNFTByType(
+          this.account,
+          "ORC_SOLDIER"
+        );
         this.hasOrc = true;
       } catch (error) {
         console.error(error);
@@ -177,11 +287,31 @@ export default {
         console.error(error);
         let msg = errorHandler(error.code);
         if (error.code === 4001) {
-          msg = 'User denied the signature';
+          msg = "User denied the signature";
         }
         ToastSnackbar.error(msg);
       } finally {
         this.isLoadingUnlock = false;
+      }
+    },
+    calc(i0, K, p0, t) {
+      return (p0 * K) / (p0 + (K - p0) * Math.exp(-i0 * t));
+    },
+    wCOURAGERefill(wCOURAGEBalance) {
+      return (
+        Math.round(this.calc(0.00001, 1, 5000, wCOURAGEBalance) / 100) * 100
+      );
+    },
+    async rechargeToken(type, token) {
+      try {
+        const controller = new SoldierController();
+        this.isLoadingRecharge = true;
+        await controller.rechargeToken(this.account, type, token);
+        await this.checkSoldiers();
+        this.isLoadingRecharge = false;
+      } catch (error) {
+        this.isLoadingRecharge = false;
+        ToastSnackbar.error(error.toString());
       }
     },
   },
@@ -265,6 +395,11 @@ export default {
   width: 100%;
 }
 
+.progress-wcourage {
+  width: 100%;
+  margin: 6px;
+}
+
 .flag {
   position: absolute;
   top: 25%;
@@ -284,6 +419,13 @@ export default {
 .price {
   font-weight: bold;
   font-size: 18px;
+}
+
+.btn-tmj {
+  margin-top: -115px;
+  @media screen and (max-width: 768px) {
+    margin-top: 30px;
+  }
 }
 
 @keyframes floating {
