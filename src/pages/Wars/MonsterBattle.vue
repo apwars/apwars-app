@@ -546,10 +546,7 @@ export default {
         ToastSnackbar.success("Successfully enlisted at war!");
       } catch (error) {
         this.isRewardOverlayActive = false;
-        let errorMessage = errorHandler(error.code);
-        if (error.code === 4001) {
-          errorMessage = "Player denied the signature";
-        }
+        const errorMessage = errorHandler(error.code);
         ToastSnackbar.error(errorMessage);
         await this.getWar(this.$route.query.warId);
         console.error(error);

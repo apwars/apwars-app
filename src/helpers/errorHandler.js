@@ -1,4 +1,6 @@
 const mappedErrors = {
+    /* MetaMask */
+    4001: 'User denied the signature.',
     /* War */
     WAR_NOT_FOUND: 'War not found',
     WAR_INVALID_STATUS: 'Invalid War Status',

@@ -1,7 +1,98 @@
 <template>
   <div>
     <v-container v-if="isConnected && !isLoading">
+      <div
+        class="d-flex justify-space-between align-center distributed-rewards"
+      >
+        <div class="distributed-text">
+          Distributed <br />
+          rewards so far:
+        </div>
+        <div class="d-flex align-center">
+          <img
+            class="mr-1"
+            height="90px"
+            src="/images/wGOLD-winner.png"
+            alt="wGOLD"
+          />
+          <div>
+            <div class="distributed-amount">
+              <amount
+                :amount="distributedRewards.wGOLD.total"
+                formatted
+                decimals="2"
+              />
+            </div>
+            <div class="distributed-label">wGOLD</div>
+          </div>
+        </div>
+        <div class="d-flex align-center">
+          <img
+            class="mr-1"
+            height="90px"
+            src="/images/wCOURAGE-winner.png"
+            alt="wCOURAGE"
+          />
+          <div>
+            <div class="distributed-amount">
+              <amount
+                :amount="distributedRewards.wCOURAGE.total"
+                formatted
+                decimals="2"
+              />
+            </div>
+            <div class="distributed-label">wCOURAGE</div>
+          </div>
+        </div>
+      </div>
+
       <Podium :podium="getListPodium" scoreMetric="PU" />
+
+      <!-- <div
+        class="d-flex mb-3 justify-space-between align-center distributed-rewards"
+      >
+        <div class="distributed-text">
+          Average Distributed <br />
+          rewards so far:
+        </div>
+
+        <div class="d-flex align-center">
+          <img
+            class="mr-1"
+            height="90px"
+            src="/images/wGOLD-winner.png"
+            alt="wGOLD"
+          />
+          <div>
+            <div class="distributed-amount">
+              <amount
+                :amount="distributedRewards.wGOLD.average"
+                formatted
+                decimals="2"
+              />
+            </div>
+            <div class="distributed-label">wGOLD</div>
+          </div>
+        </div>
+        <div class="d-flex align-center">
+          <img
+            class="mr-1"
+            height="90px"
+            src="/images/wCOURAGE-winner.png"
+            alt="wCOURAGE"
+          />
+          <div>
+            <div class="distributed-amount">
+              <amount
+                :amount="distributedRewards.wCOURAGE.average"
+                formatted
+                decimals="2"
+              />
+            </div>
+            <div class="distributed-label">wCOURAGE</div>
+          </div>
+        </div>
+      </div> -->
 
       <v-row>
         <v-col cols="12">
@@ -97,7 +188,9 @@
                 </div>
 
                 <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Total Earning wGOLD</div>
+                  <div class="text-subtitle-2 primary--text">
+                    Total Earning wGOLD
+                  </div>
                   <div class="text-treasure d-flex align-center justify-center">
                     <amount :amount="player.wGOLD" formatted decimals="2" />
                     <img
@@ -195,6 +288,7 @@ export default {
       pageRanking: 1,
       listRanking: [],
       listPodium: [],
+      distributedRewards: {},
     };
   },
 
@@ -295,6 +389,15 @@ export default {
       _listRanking.total = total;
 
       this.listRanking = _listRanking;
+
+      this.distributedRewards = await leaderboardController.getLeaderboardWarDistributedRewards();
+
+      this.distributedRewards.wGOLD = this.distributedRewards.distributed.find(
+        (_distributed) => _distributed.token === "wGOLD"
+      );
+      this.distributedRewards.wCOURAGE = this.distributedRewards.distributed.find(
+        (_distributed) => _distributed.token === "wCOURAGE"
+      );
 
       this.listRankingLoading = false;
     },
@@ -475,6 +578,43 @@ export default {
   .list-leaderboard-info {
     border-top: 2px solid #ffeebc;
   }
+}
+
+.distributed-rewards {
+  background-image: url("/images/background/road-castle.png");
+  background-size: cover;
+  background-position: center;
+  padding: 15px;
+  border: 2px solid #ffeebc;
+  margin: 5px -24px;
+}
+
+.distributed-text {
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 31px;
+  color: #ffeebc;
+}
+
+.distributed-amount {
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 62px;
+  color: #ffeebc;
+}
+
+.distributed-label {
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffeebc;
+  text-align: right;
 }
 @media only screen and (max-width: 1280px) {
   .dividing-line {

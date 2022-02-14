@@ -97,4 +97,21 @@ export default class LeaderboardController {
     }
   }
 
+  getLeaderboardWarDistributedRewards() {
+    try {
+      return this.base._get('/wars/report/leaderboard/distributed-rewards');
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+  getLeaderboardDistributedRewards() {
+    try {
+      return this.base._get('/leaderboard/tmj/distributed-rewards');
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
