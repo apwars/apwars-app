@@ -16,6 +16,14 @@
         <v-col>
           <Title text="Choose your Soldier" />
         </v-col>
+        <v-col cols="12" sm="3" class="d-flex justify-center justify-md-end" v-if="isEnlistment">
+          <Button
+          text="Back to War"
+          type="wsecondary"
+          size="small"
+          :handleClick="backToWar"
+        />
+        </v-col>
       </v-row>
       <v-row>
         <v-col cols="5" class="soldier-container">
@@ -220,6 +228,9 @@ export default {
     account() {
       return this.$store.getters["user/account"];
     },
+    isEnlistment() {
+      return Boolean(this.$route.query.isEnlistment);
+    },
   },
   data() {
     return {
@@ -239,6 +250,9 @@ export default {
     }),
     backToHome() {
       this.$router.push("/");
+    },
+    backToWar() {
+      this.$router.push("/war/intro");
     },
     goTMJ() {
       this.$router.push("/the-monstrous-journey");

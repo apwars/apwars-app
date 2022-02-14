@@ -398,7 +398,7 @@ export default {
       this.$router.push("/");
     },
     goToTMJ() {
-      this.$router.push("/unlock-soldier");
+      this.$router.push({ path: "/unlock-soldier", query: { isEnlistment: true } });
     },
     goToPacks(race) {
       this.$router.push({ path: "/packs", query: { race, isEnlistment: true } });
