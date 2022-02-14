@@ -2,7 +2,7 @@
   <div>
     <v-container v-if="isConnected && !isLoading">
       <div
-        class="d-flex justify-space-between align-center distributed-rewards"
+        class="d-flex mb-3 justify-space-around align-center distributed-rewards"
       >
         <div class="distributed-text">
           Distributed <br />
