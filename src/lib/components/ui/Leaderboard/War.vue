@@ -109,7 +109,16 @@
                 decimals="2"
               />
             </div>
-            <div class="distributed-label">wCOURAGE</div>
+            <div class="distributed-label">
+              Average prize:
+              <amount
+                v-if="distributedRewards.distributedLastWar.wCOURAGE"
+                :amount="distributedRewards.distributedLastWar.wCOURAGE.average"
+                formatted
+                decimals="2"
+              />
+              wCOURAGE
+            </div>
           </div>
         </div>
       </div>
