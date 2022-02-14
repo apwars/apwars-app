@@ -2,7 +2,7 @@
   <div>
     <v-container v-if="isConnected && !isLoading">
       <div
-        class="d-flex justify-space-between align-center distributed-rewards"
+        class="d-flex justify-space-around align-center distributed-rewards"
       >
         <div class="distributed-text">
           Distributed <br />
@@ -18,7 +18,8 @@
           <div>
             <div class="distributed-amount">
               <amount
-                :amount="distributedRewards.wGOLD.total"
+                v-if="distributedRewards.distributed.wGOLD"
+                :amount="distributedRewards.distributed.wGOLD.total"
                 formatted
                 decimals="2"
               />
@@ -36,7 +37,8 @@
           <div>
             <div class="distributed-amount">
               <amount
-                :amount="distributedRewards.wCOURAGE.total"
+                v-if="distributedRewards.distributed.wCOURAGE"
+                :amount="distributedRewards.distributed.wCOURAGE.total"
                 formatted
                 decimals="2"
               />
@@ -48,12 +50,18 @@
 
       <Podium :podium="getListPodium" scoreMetric="PU" />
 
-      <!-- <div
-        class="d-flex mb-3 justify-space-between align-center distributed-rewards"
+      <div
+        class="d-flex mb-3 justify-space-around align-center distributed-rewards"
       >
         <div class="distributed-text">
-          Average Distributed <br />
-          rewards so far:
+          <div>
+            Distributed in the last war:
+          </div>
+
+          <div class="mt-1">
+            Participants:
+            {{ distributedRewards.totalEnlistmentLastWar }}
+          </div>
         </div>
 
         <div class="d-flex align-center">
@@ -66,15 +74,55 @@
           <div>
             <div class="distributed-amount">
               <amount
-                :amount="distributedRewards.wGOLD.average"
+                v-if="distributedRewards.distributedLastWar.wGOLD"
+                :amount="distributedRewards.distributedLastWar.wGOLD.total"
                 formatted
                 decimals="2"
               />
             </div>
-            <div class="distributed-label">wGOLD</div>
+            <div class="distributed-label">
+              Average prize:
+              <amount
+                v-if="distributedRewards.distributedLastWar.wGOLD"
+                :amount="distributedRewards.distributedLastWar.wGOLD.average"
+                formatted
+                decimals="2"
+              />
+              wGOLD
+            </div>
           </div>
         </div>
+
         <div class="d-flex align-center">
+          <img
+            class="mr-1"
+            height="90px"
+            src="/images/wGOLD-winner.png"
+            alt="wGOLD"
+          />
+          <div>
+            <div class="distributed-amount">
+              <amount
+                v-if="distributedRewards.distributedLastWar.wGOLD"
+                :amount="distributedRewards.distributedLastWar.wGOLD.total"
+                formatted
+                decimals="2"
+              />
+            </div>
+            <div class="distributed-label">
+              Average prize:
+              <amount
+                v-if="distributedRewards.distributedLastWar.wGOLD"
+                :amount="distributedRewards.distributedLastWar.wGOLD.average"
+                formatted
+                decimals="2"
+              />
+              wGOLD
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="d-flex align-center">
           <img
             class="mr-1"
             height="90px"
@@ -84,15 +132,16 @@
           <div>
             <div class="distributed-amount">
               <amount
-                :amount="distributedRewards.wCOURAGE.average"
+                v-if="distributedRewards.distributedLastWar.wCOURAGE"
+                :amount="distributedRewards.distributedLastWar.wCOURAGE.total"
                 formatted
                 decimals="2"
               />
             </div>
             <div class="distributed-label">wCOURAGE</div>
           </div>
-        </div>
-      </div> -->
+        </div> -->
+      </div>
 
       <v-row>
         <v-col cols="12">
@@ -167,7 +216,9 @@
                 </div>
 
                 <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Paticipations</div>
+                  <div class="text-subtitle-2 primary--text">
+                    Participations
+                  </div>
                   <div>{{ player.totalWars }}</div>
                 </div>
 
@@ -220,7 +271,7 @@
             </div>
           </div>
 
-          <div class="d-flex align-center justify-space-between">
+          <div class="d-flex align-center justify-space-around">
             <div
               @click="getListRanking(pageRanking - 1)"
               class="d-flex align-center justify-center previous"
@@ -390,12 +441,24 @@ export default {
 
       this.listRanking = _listRanking;
 
-      this.distributedRewards = await leaderboardController.getLeaderboardWarDistributedRewards();
+      const _distributedRewards = await leaderboardController.getLeaderboardWarDistributedRewards();
 
-      this.distributedRewards.wGOLD = this.distributedRewards.distributed.find(
+      this.distributedRewards = {
+        distributed: {},
+        distributedLastWar: {},
+        totalEnlistmentLastWar: _distributedRewards.totalEnlistmentLastWar,
+      };
+      this.distributedRewards.distributed.wGOLD = _distributedRewards.distributed.find(
         (_distributed) => _distributed.token === "wGOLD"
       );
-      this.distributedRewards.wCOURAGE = this.distributedRewards.distributed.find(
+      this.distributedRewards.distributed.wCOURAGE = _distributedRewards.distributed.find(
+        (_distributed) => _distributed.token === "wCOURAGE"
+      );
+
+      this.distributedRewards.distributedLastWar.wGOLD = _distributedRewards.distributedLastWar.find(
+        (_distributed) => _distributed.token === "wGOLD"
+      );
+      this.distributedRewards.distributedLastWar.wCOURAGE = _distributedRewards.distributedLastWar.find(
         (_distributed) => _distributed.token === "wCOURAGE"
       );
 
@@ -605,6 +668,16 @@ export default {
   font-size: 48px;
   line-height: 62px;
   color: #ffeebc;
+}
+
+.distributed-participants {
+  font-family: PT Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 42px;
+  color: #ffeebc;
+  text-align: center;
 }
 
 .distributed-label {
