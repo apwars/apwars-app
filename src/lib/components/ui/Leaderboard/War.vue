@@ -48,7 +48,7 @@
 
       <Podium :podium="getListPodium" scoreMetric="PU" />
 
-      <div
+      <!-- <div
         class="d-flex mb-3 justify-space-between align-center distributed-rewards"
       >
         <div class="distributed-text">
@@ -92,7 +92,8 @@
             <div class="distributed-label">wCOURAGE</div>
           </div>
         </div>
-      </div>
+      </div> -->
+
       <v-row>
         <v-col cols="12">
           <div class="leaderboard">
