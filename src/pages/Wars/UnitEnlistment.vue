@@ -87,8 +87,7 @@
                   </div>
                 </template>
                 <div class="text-alert" v-else>
-                  You already enlisted with another race at this war, so you are
-                  in readonly mode.
+                  Oh oh! Only one enlistment per wallet is allowed.
                 </div>
               </div>
             </div>
