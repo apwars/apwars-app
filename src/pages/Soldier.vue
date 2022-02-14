@@ -299,10 +299,7 @@ export default {
         ToastSnackbar.success("The soldier was successfully unlocked!");
       } catch (error) {
         console.error(error);
-        let msg = errorHandler(error.code);
-        if (error.code === 4001) {
-          msg = "User denied the signature";
-        }
+        const msg = errorHandler(error.code);
         ToastSnackbar.error(msg);
       } finally {
         this.isLoadingUnlock = false;
@@ -324,8 +321,10 @@ export default {
         await this.checkSoldiers();
         this.isLoadingRecharge = false;
       } catch (error) {
+        console.error(error);
+        const msg = errorHandler(error.code);
+        ToastSnackbar.error(msg);
         this.isLoadingRecharge = false;
-        ToastSnackbar.error(error.toString());
       }
     },
   },
