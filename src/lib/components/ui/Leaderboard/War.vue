@@ -97,35 +97,6 @@
           <img
             class="mr-1"
             height="90px"
-            src="/images/wGOLD-winner.png"
-            alt="wGOLD"
-          />
-          <div>
-            <div class="distributed-amount">
-              <amount
-                v-if="distributedRewards.distributedLastWar.wGOLD"
-                :amount="distributedRewards.distributedLastWar.wGOLD.total"
-                formatted
-                decimals="2"
-              />
-            </div>
-            <div class="distributed-label">
-              Average prize:
-              <amount
-                v-if="distributedRewards.distributedLastWar.wGOLD"
-                :amount="distributedRewards.distributedLastWar.wGOLD.average"
-                formatted
-                decimals="2"
-              />
-              wGOLD
-            </div>
-          </div>
-        </div>
-
-        <!-- <div class="d-flex align-center">
-          <img
-            class="mr-1"
-            height="90px"
             src="/images/wCOURAGE-winner.png"
             alt="wCOURAGE"
           />
@@ -140,7 +111,7 @@
             </div>
             <div class="distributed-label">wCOURAGE</div>
           </div>
-        </div> -->
+        </div>
       </div>
 
       <v-row>
