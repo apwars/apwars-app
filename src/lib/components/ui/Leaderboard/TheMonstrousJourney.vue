@@ -2,7 +2,7 @@
   <div>
     <v-container v-if="isConnected && !isLoading">
       <div
-        class="d-flex mb-3 justify-space-around align-center distributed-rewards"
+        class="d-flex flex-column flex-sm-row mb-3 justify-space-around align-center distributed-rewards"
       >
         <div class="distributed-text">
           Distributed <br />
@@ -797,11 +797,9 @@ export default {
 }
 
 .distributed-amount {
-  font-family: PT Serif;
-  font-style: normal;
   font-weight: bold;
-  font-size: 48px;
-  line-height: 62px;
+  font-size: 36px;
+  line-height: 1.2;
   color: #ffeebc;
 }
 
