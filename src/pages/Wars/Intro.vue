@@ -29,10 +29,10 @@
       </v-row>
       <template v-else>
       <v-row dense no-gutters>
-        <v-col md="3" class="battle-header">
+        <v-col cols="12" md="3" class="battle-header">
           <Title text="Choose your race for War" />
         </v-col>
-        <v-col md="9" class="d-flex justify-end align-center">
+        <v-col cols="12" md="9" class="d-flex flex-column flex-sm-row justify-end align-center">
           <div>
             <div class="prize-pool">Battle to claim up to:</div>
             <div class="d-flex justify-center align-center">
@@ -344,7 +344,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="d-flex justify-center">
+        <v-col class="d-flex justify-center mb-6">
           <Button type="wsecondary" text="Skip enlistment and go to War" :handleClick="skipEnlistment" />
         </v-col>
       </v-row>
@@ -412,9 +412,9 @@ export default {
     async fetchData() {
       if (this.account && !this.isLoadingWar) {
         await this.getWar();
-        if (!this.introWar) {
-          this.$router.push('/war');
-        }
+        // if (!this.introWar) {
+        //   this.$router.push('/war');
+        // }
       }
     },
     hasCompleteFormation(race) {
@@ -446,6 +446,12 @@ export default {
       this.clearMusic();
     }
     next();
+  },
+  updated() {
+    if (this.war) {
+      this.$refs.raceSelect.scrollLeft =
+        (this.$refs.raceSelect.scrollWidth / 2) - 30;
+    }
   },
 };
 </script>

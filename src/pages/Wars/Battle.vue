@@ -122,6 +122,7 @@
                             war.races.find((r) => r.name === 'Humans').power
                               .total
                           "
+                          decimals="2"
                           approximate
                           compact
                           formatted
@@ -158,6 +159,7 @@
                           approximate
                           compact
                           formatted
+                          decimals="2"
                           symbol="Power Units"
                         />
                       </div>
@@ -256,6 +258,7 @@
                           approximate
                           compact
                           formatted
+                          decimals="2"
                           symbol="Power Units"
                         />
                       </div>
@@ -290,6 +293,7 @@
                           approximate
                           compact
                           formatted
+                          decimals="2"
                           symbol="Power Units"
                         />
                       </div>
