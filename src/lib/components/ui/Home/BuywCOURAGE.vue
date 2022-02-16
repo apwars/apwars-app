@@ -1,10 +1,13 @@
 <template>
   <div class="courage-container">
     <v-row no-gutters>
-        <v-col>
-      <game-text header="h3" class="text-center">
-        wCOURAGE Packs
-      </game-text>
+      <v-col>
+        <div class="d-flex align-center justify-center">
+          <img class="mr-1" width="32px" height="28px" src="/images/icons/chest.png" alt="chest" />
+          <game-text header="h4" class="text-center">
+            wCOURAGE Packs
+          </game-text>
+        </div>
       </v-col>
     </v-row>
     <v-row no-gutters>
@@ -23,10 +26,26 @@
               5,000 wCOURAGE
             </div>
             <div class="price">
-              <span class="d-flex align-center">Price: <span class="d-flex align-center ml-1"><v-img src="/images/wgold.png" height="18px" width="18px" alt="wGOLD" /> 1000 wGOLD</span></span>
+              <span class="d-flex align-center"
+                >Price:
+                <span class="d-flex align-center ml-1"
+                  ><v-img
+                    src="/images/wgold.png"
+                    height="18px"
+                    width="18px"
+                    alt="wGOLD"
+                  />
+                  1000 wGOLD</span
+                ></span
+              >
             </div>
             <div>
-              <wButton @click="buyPack" class="mt-1" size="small" :disabled="isLoadingBuy">
+              <wButton
+                @click="buyPack"
+                class="mt-1"
+                size="small"
+                :disabled="isLoadingBuy"
+              >
                 Buy this pack
               </wButton>
             </div>
@@ -49,12 +68,12 @@ export default {
   data() {
     return {
       isLoadingBuy: false,
-    }
+    };
   },
   methods: {
     async buyPack() {
       try {
-        const packageName = 'CELEBRATION_FESTIVAL_COURAGE'
+        const packageName = "CELEBRATION_FESTIVAL_COURAGE";
         this.isLoadingBuy = true;
         const controller = new PacksController();
         await controller.buyPack(this.account, packageName);
@@ -73,7 +92,7 @@ export default {
         this.isLoadingBuy = false;
       }
     },
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -86,7 +105,7 @@ export default {
   margin-right: 16px;
 }
 .qty {
-  font-size: 16px;
+  font-size: 21px;
   font-weight: bold;
   text-align: center;
 }
