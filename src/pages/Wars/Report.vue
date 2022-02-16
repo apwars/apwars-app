@@ -507,7 +507,7 @@
                   :key="`${reward.slot.y}-${reward.slot.x}`"
                 >
                   <div class="unit-name">
-                    {{ reward.slot.y }}, {{ reward.slot.x }} - {{ getPrizeName(reward) }}
+                    {{ reward.slot.y }}, {{ reward.slot.x }}
                   </div>
                   <div class="winner">
                     <span v-if="reward.winner === '0x0'">No Winner</span
@@ -523,7 +523,7 @@
                       :key="prize.prize"
                       :prize="prize.prize"
                       :type="prize.type"
-                      :label="reward.title"
+                      :label="prize.label"
                       :amount="prize.amount"
                     />
                   </div>
