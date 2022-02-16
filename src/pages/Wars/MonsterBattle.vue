@@ -241,7 +241,12 @@
               </div>
             </v-col>
           </v-row>
-          <v-row v-if="slotData && slotData.rewards.length > 0">
+          <v-row v-if="isLoadingSlot">
+            <v-col cols="12">
+              <v-skeleton-loader type="image" width="100%" height="48px" />
+            </v-col>
+          </v-row>
+          <v-row v-else-if="rewardsData.length > 0">
             <v-col cols="12">
               <div class="monster-name mb-2">
                 This slot was rewarded with:
@@ -249,7 +254,7 @@
               <div class="rewards-container">
                 <Reward
                   class="reward-container"
-                  v-for="reward in slotData.rewards"
+                  v-for="reward in rewardsData"
                   :key="reward.prize"
                   :prize="reward.prize"
                   :type="reward.type"
@@ -339,6 +344,8 @@
 import { mapMutations, mapGetters, mapState, mapActions } from "vuex";
 import errorHandler from "@/helpers/errorHandler";
 
+import WarsController from "@/controller/WarsController";
+
 import { RACE_DESCRIPTION } from "@/data/Races";
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
@@ -365,6 +372,8 @@ export default {
       isChestOpen: false,
       showTour: true,
       tourSkip: false,
+      isLoadingSlot: false,
+      rewardsData: [],
       steps: [
         {
           target: "#board-title",
@@ -516,12 +525,26 @@ export default {
     },
     async handleSlotSelection(key) {
       const [y, x] = key.split("-");
+      this.isLoadingSlot = true;
       this.selectedSlot = { x, y };
-      const slotData =
-        this.board[y].find(
+      try {
+        const slotData = this.board[y].find(
           (e) => e && e.slot.x === Number(x) && e.slot.y === Number(y)
         ) || null;
-      this.slotData = slotData;
+        this.slotData = slotData;
+        if (slotData && slotData.account) {
+          const controller = new WarsController();
+          const rewardsData = await controller.getAccountPrizes(this.war.id, slotData.account);
+          this.rewardsData = rewardsData;
+        } else {
+          this.rewardsData = [];
+        }
+      } catch (error) {
+        console.error(error);
+        this.rewardsData = [];
+      } finally {
+        this.isLoadingSlot = false;
+      }
     },
     async handleEnlistment() {
       try {
