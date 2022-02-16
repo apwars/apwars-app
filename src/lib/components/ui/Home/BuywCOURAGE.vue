@@ -26,7 +26,7 @@
               <span class="d-flex align-center">Price: <span class="d-flex align-center ml-1"><v-img src="/images/wgold.png" height="18px" width="18px" alt="wGOLD" /> 1000 wGOLD</span></span>
             </div>
             <div>
-              <wButton @click="() => {}" class="mt-1" size="small">
+              <wButton @click="buyPack" class="mt-1" size="small" :disabled="isLoadingBuy">
                 Buy this pack
               </wButton>
             </div>
@@ -37,11 +37,43 @@
   </div>
 </template>
 <script>
+import PacksController from "@/controller/PacksController";
+
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+
 import GameText from "@/lib/components/ui/Utils/GameText";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 
 export default {
   components: { GameText, wButton },
+  data() {
+    return {
+      isLoadingBuy: false,
+    }
+  },
+  methods: {
+    async buyPack() {
+      try {
+        const packageName = 'CELEBRATION_FESTIVAL_COURAGE'
+        this.isLoadingBuy = true;
+        const controller = new PacksController();
+        await controller.buyPack(this.account, packageName);
+        ToastSnackbar.success("The pack was purchased successfully!");
+      } catch (error) {
+        const mappedErrors = {
+          INVALID_AMOUNT: `We don't have any more from this pack to sell.`,
+          INVALID_BALANCE: `You don't have balance to buy this pack.`,
+        };
+        ToastSnackbar.error(mappedErrors[error.code] || error.message);
+        console.error(
+          "Something went wrong while trying to buy this pack",
+          error
+        );
+      } finally {
+        this.isLoadingBuy = false;
+      }
+    },
+  }
 };
 </script>
 <style lang="scss" scoped>
