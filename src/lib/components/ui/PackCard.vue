@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="pack-container" :style="`background-image: url('${bg}');`">
+      <div class="celebration-tag" v-if="pack.isCelebration">
+      <img src="/images/icons/celebration.png" alt="Celebration Festival" />
+    </div>
       <div :class="['gem-container', [theme]]">
         <img class="gem" :src="gem" :alt="theme" />
       </div>
@@ -460,6 +463,20 @@ export default {
   to {
     opacity: 1;
     transform: translateX(0px);
+  }
+}
+
+.celebration-tag {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #11d300;
+  outline: 2px solid #ffeebc;
+  > img {
+    width: 100%;
   }
 }
 </style>
