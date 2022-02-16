@@ -62,6 +62,10 @@
             Participants:
             {{ distributedRewards.totalEnlistmentLastWar }}
           </div>
+          <div class="mt-1">
+            Claimers:
+            {{ distributedRewards.totalClaimed }}
+          </div>
         </div>
 
         <div class="d-flex align-center">
@@ -427,6 +431,7 @@ export default {
         distributed: {},
         distributedLastWar: {},
         totalEnlistmentLastWar: _distributedRewards.totalEnlistmentLastWar,
+        totalClaimed: _distributedRewards.claimEnlistmentLastWar
       };
       this.distributedRewards.distributed.wGOLD = _distributedRewards.distributed.find(
         (_distributed) => _distributed.token === "wGOLD"
