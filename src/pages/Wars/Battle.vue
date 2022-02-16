@@ -400,7 +400,7 @@
                   <div class="slot-text">
                     {{ prize.raceName }}
                   </div>
-                  <div class="slot-data">Slot {{ prize.slot.x }}, {{ prize.slot.y }}</div>
+                  <div class="slot-data">Slot {{ prize.slot.y }}, {{ prize.slot.x }}</div>
                   <div class="slot-text mb-2">
                     {{ compactWallet(prize.winner) }}
                   </div>
@@ -433,7 +433,7 @@
                   <div class="slot-text">
                     {{ prize.raceName }} 
                   </div>
-                  <div class="slot-data">Slot {{ prize.slot.x }}, {{ prize.slot.y }}</div>
+                  <div class="slot-data">Slot {{ prize.slot.y }}, {{ prize.slot.x }}</div>
                   <div class="slot-text mb-2">
                     {{ compactWallet(prize.winner) }}
                   </div>
@@ -666,6 +666,7 @@ export default {
     if (this.$refs.board) {
       this.$refs.board.scrollLeft = this.$refs.board.scrollWidth / 2 - 125;
     }
+    console.log(this.war?.prizesDistributed)
   },
   beforeRouteLeave(to, from, next) {
     this.setHeader(true);

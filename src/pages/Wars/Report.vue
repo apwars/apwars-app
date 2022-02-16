@@ -504,10 +504,10 @@
                 <div
                   class="spot-info"
                   v-for="reward in report.rewards"
-                  :key="`${reward.slot.x}-${reward.slot.y}`"
+                  :key="`${reward.slot.y}-${reward.slot.x}`"
                 >
                   <div class="unit-name">
-                    {{ reward.slot.x }}, {{ reward.slot.y }}
+                    {{ reward.slot.y }}, {{ reward.slot.x }} - {{ getPrizeName(reward) }}
                   </div>
                   <div class="winner">
                     <span v-if="reward.winner === '0x0'">No Winner</span
@@ -523,6 +523,7 @@
                       :key="prize.prize"
                       :prize="prize.prize"
                       :type="prize.type"
+                      :label="reward.title"
                       :amount="prize.amount"
                     />
                   </div>
@@ -936,6 +937,11 @@ export default {
       } else {
         this.magicalItems = this.magicalItems.filter(m => m !== token);
       }
+    },
+
+    getPrizeName(reward) {
+      const r = reward.prizes.find(p => p.type === 'legendaryRelics');
+      return this.getName(r.prize);
     }
   },
 };
