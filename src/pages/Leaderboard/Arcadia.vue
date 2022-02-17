@@ -1,131 +1,21 @@
 <template>
   <div>
-    <v-container v-if="isConnected && !isLoading">
-      <div
-        class="d-flex justify-space-around align-center distributed-rewards"
-      >
-        <div class="distributed-text">
-          Distributed <br />
-          rewards so far:
-        </div>
-        <div class="d-flex align-center">
+    <template v-if="isConnected && !isLoading">
+      <Podium :podium="getListPodium" />
+
+      <v-row>
+        <v-col cols="12" class="d-flex align-center justify-center">
           <img
             class="mr-1"
-            height="90px"
-            src="/images/wGOLD-winner.png"
-            alt="wGOLD"
+            height="35px"
+            src="/images/game/trophy.png"
+            alt="trophy"
           />
-          <div>
-            <div class="distributed-amount">
-              <amount
-                v-if="distributedRewards.distributed.wGOLD"
-                :amount="distributedRewards.distributed.wGOLD.total"
-                formatted
-                decimals="2"
-              />
-            </div>
-            <div class="distributed-label">wGOLD</div>
+          <div class="page-subtitle">
+            Real Time Ranking
           </div>
-        </div>
-        <div class="d-flex align-center">
-          <img
-            class="mr-1"
-            height="90px"
-            src="/images/wCOURAGE-winner.png"
-            alt="wCOURAGE"
-          />
-          <div>
-            <div class="distributed-amount">
-              <amount
-                v-if="distributedRewards.distributed.wCOURAGE"
-                :amount="distributedRewards.distributed.wCOURAGE.total"
-                formatted
-                decimals="2"
-              />
-            </div>
-            <div class="distributed-label">wCOURAGE</div>
-          </div>
-        </div>
-      </div>
-
-      <Podium :podium="getListPodium" scoreMetric="PU" />
-
-      <div
-        class="d-flex mb-3 justify-space-around align-center distributed-rewards"
-      >
-        <div class="distributed-text">
-          <div>
-            Distributed in the last war:
-          </div>
-
-          <div class="mt-1">
-            Participants:
-            {{ distributedRewards.totalEnlistmentLastWar }}
-          </div>
-          <div class="mt-1">
-            Claimers:
-            {{ distributedRewards.totalClaimed }}
-          </div>
-        </div>
-
-        <div class="d-flex align-center">
-          <img
-            class="mr-1"
-            height="90px"
-            src="/images/wGOLD-winner.png"
-            alt="wGOLD"
-          />
-          <div>
-            <div class="distributed-amount">
-              <amount
-                v-if="distributedRewards.distributedLastWar.wGOLD"
-                :amount="distributedRewards.distributedLastWar.wGOLD.total"
-                formatted
-                decimals="2"
-              />
-            </div>
-            <div class="distributed-label">
-              Average prize:
-              <amount
-                v-if="distributedRewards.distributedLastWar.wGOLD"
-                :amount="distributedRewards.distributedLastWar.wGOLD.average"
-                formatted
-                decimals="2"
-              />
-              wGOLD
-            </div>
-          </div>
-        </div>
-
-        <div class="d-flex align-center">
-          <img
-            class="mr-1"
-            height="90px"
-            src="/images/wCOURAGE-winner.png"
-            alt="wCOURAGE"
-          />
-          <div>
-            <div class="distributed-amount">
-              <amount
-                v-if="distributedRewards.distributedLastWar.wCOURAGE"
-                :amount="distributedRewards.distributedLastWar.wCOURAGE.total"
-                formatted
-                decimals="2"
-              />
-            </div>
-            <div class="distributed-label">
-              Average prize:
-              <amount
-                v-if="distributedRewards.distributedLastWar.wCOURAGE"
-                :amount="distributedRewards.distributedLastWar.wCOURAGE.average"
-                formatted
-                decimals="2"
-              />
-              wCOURAGE
-            </div>
-          </div>
-        </div>
-      </div>
+        </v-col>
+      </v-row>
 
       <v-row>
         <v-col cols="12">
@@ -149,6 +39,7 @@
                   class="list-leaderboard-avatar d-flex justify-center"
                   :address="player.account"
                   tooltip
+                  :propAvatar="player.faction"
                 />
                 <div class="d-flex d-md-none align-center justify-center">
                   <img
@@ -175,7 +66,7 @@
               </div>
 
               <div
-                class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
+                class="list-leaderboard-info"
               >
                 <div
                   v-if="index < 3 && pageRanking === 1"
@@ -199,14 +90,28 @@
                   #{{ index + 1 + (pageRanking - 1) * limit }}
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">
-                    Participations
-                  </div>
-                  <div>{{ player.totalWars }}</div>
+                <div class="cell">
+                  <div class="text-subtitle-2 primary--text">World</div>
+                  <div>{{ player.worldId }}</div>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell">
+                  <div class="text-subtitle-2 primary--text">Coordinate</div>
+                  <div>({{ player.x }},{{ player.y }})</div>
+                </div>
+
+                <div class="cell">
+                  <div class="text-subtitle-2 primary--text">Faction</div>
+                  <div class="text-village text-truncate">
+                    {{
+                      player.faction === "corp"
+                        ? "The Corporation"
+                        : "The Degenerate"
+                    }}
+                  </div>
+                </div>
+
+                <div class="cell d-none d-sm-none d-md-inline-block">
                   <div class="text-subtitle-2 primary--text">Owner</div>
                   <v-address
                     class="d-none d-sm-none d-md-flex text-center mx-1"
@@ -217,37 +122,31 @@
                   </v-address>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">Power Units</div>
-                  <div class="text-points">{{ player.points }} PU</div>
+                <div class="cell">
+                  <div class="text-subtitle-2 primary--text">Points</div>
+                  <div class="text-points">{{ player.score }} pts</div>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">
-                    Total Earning wGOLD
+                <div class="cell">
+                  <div class="text-subtitle-2 primary--text">Village</div>
+                  <div class="text-village text-truncate" :title="player.name">
+                    {{ player.name }}
                   </div>
+                </div>
+
+                <div class="cell">
+                  <div class="text-subtitle-2 primary--text">Treasure</div>
                   <div class="text-treasure d-flex align-center justify-center">
-                    <amount :amount="player.wGOLD" formatted decimals="2" />
-                    <img
-                      class="ml-1"
-                      height="25px"
-                      src="/images/wGOLD.png"
-                      alt="wGOLD"
+                    <amount
+                      :amount="player.treasure.wSCARS"
+                      formatted
+                      decimals="2"
                     />
-                  </div>
-                </div>
-
-                <div class=" d-flex flex-column align-center mx-2">
-                  <div class="text-subtitle-2 primary--text">
-                    Total Earning wCOURAGE
-                  </div>
-                  <div class="text-treasure d-flex align-center justify-center">
-                    <amount :amount="player.wCOURAGE" formatted decimals="2" />
                     <img
                       class="ml-1"
                       height="25px"
-                      src="/images/wCOURAGE.png"
-                      alt="wCOURAGE"
+                      src="/images/wSCARS.png"
+                      alt="wSCARS"
                     />
                   </div>
                 </div>
@@ -255,7 +154,7 @@
             </div>
           </div>
 
-          <div class="d-flex align-center justify-space-around">
+          <div class="footer d-flex align-center justify-space-between">
             <div
               @click="getListRanking(pageRanking - 1)"
               class="d-flex align-center justify-center previous"
@@ -266,7 +165,7 @@
             </div>
             <div class="pages">
               <div class="text-h6 font-weight-bold">
-                {{ pageRanking }}/{{ getTotalPageRanking }}
+                {{ pageRanking }}/{{ getTotaPageRanking }}
               </div>
             </div>
 
@@ -281,15 +180,15 @@
           </div>
         </v-col>
       </v-row>
-    </v-container>
+    </template>
 
-    <v-container v-else>
+    <template v-else>
       <v-row>
         <v-col cols="12" class="d-flex justify-center">
           <h3 class="text-h3">Loading...</h3>
         </v-col>
       </v-row>
-    </v-container>
+    </template>
   </div>
 </template>
 
@@ -299,9 +198,10 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import VAvatar from "@/lib/components/ui/Utils/VAvatar";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
-import Podium from "@/lib/components/ui/Leaderboard/Podium";
+import Podium from "./Podium";
 
 import { mapMutations } from "vuex";
+import moment from "moment";
 
 import LeaderboardController from "@/controller/LeaderboardController";
 
@@ -323,7 +223,6 @@ export default {
       pageRanking: 1,
       listRanking: [],
       listPodium: [],
-      distributedRewards: {},
     };
   },
 
@@ -348,11 +247,16 @@ export default {
       return this.$store.getters["user/currentBlockNumber"];
     },
 
-    getTotalPageRanking() {
+    getTotaPageRanking() {
       if (this.limit > this.listRanking.total) {
         return 1;
       }
       return Math.ceil(this.listRanking.total / this.limit);
+    },
+
+    getNumberRanking() {
+      const today = moment();
+      return today.isoRanking();
     },
 
     getListPodium() {
@@ -393,7 +297,7 @@ export default {
         return;
       }
 
-      await this.getListRanking(this.pageRanking);
+      await this.getListRanking(1);
       this.listPodium = this.listRanking.slice(0, 3);
 
       this.isLoading = false;
@@ -403,7 +307,7 @@ export default {
       if (
         this.listRankingLoading ||
         _page < 1 ||
-        _page > this.getTotalPageRanking
+        _page > this.getTotaPageRanking
       ) {
         return;
       }
@@ -411,41 +315,22 @@ export default {
       this.pageRanking = _page;
       const leaderboardController = new LeaderboardController();
       this.listRankingLoading = true;
-      let _listRanking = await leaderboardController.getLeaderboardWar(
-        null,
+      const _listRanking = await leaderboardController.getArcadia(
+        "1",
         this.limit,
         this.limit * (_page - 1)
       );
 
-      const total = _listRanking.total;
+      this.listRanking = _listRanking.map((_list) => {
+        _list.account = _list.owner;
+        _list.score = _list.points;
+        if (!_list.name || _list.name === "") {
+          _list.name = "Waiting for a badass name";
+        }
+        return _list;
+      });
 
-      _listRanking = _listRanking.map((r) => ({ ...r, score: r.points }));
-
-      _listRanking.total = total;
-
-      this.listRanking = _listRanking;
-
-      const _distributedRewards = await leaderboardController.getLeaderboardWarDistributedRewards();
-
-      this.distributedRewards = {
-        distributed: {},
-        distributedLastWar: {},
-        totalEnlistmentLastWar: _distributedRewards.totalEnlistmentLastWar,
-        totalClaimed: _distributedRewards.claimEnlistmentLastWar
-      };
-      this.distributedRewards.distributed.wGOLD = _distributedRewards.distributed.find(
-        (_distributed) => _distributed.token === "wGOLD"
-      );
-      this.distributedRewards.distributed.wCOURAGE = _distributedRewards.distributed.find(
-        (_distributed) => _distributed.token === "wCOURAGE"
-      );
-
-      this.distributedRewards.distributedLastWar.wGOLD = _distributedRewards.distributedLastWar.find(
-        (_distributed) => _distributed.token === "wGOLD"
-      );
-      this.distributedRewards.distributedLastWar.wCOURAGE = _distributedRewards.distributedLastWar.find(
-        (_distributed) => _distributed.token === "wCOURAGE"
-      );
+      this.listRanking.total = _listRanking.total;
 
       this.listRankingLoading = false;
     },
@@ -544,6 +429,16 @@ export default {
 
 .list-leaderboard-info {
   width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cell {
+  display: inline-block;
+  padding-left: 12px;
+  padding-right: 12px;
+  text-align: center;
 }
 
 .leaderboard-ranking {
@@ -627,56 +522,13 @@ export default {
     border-top: 2px solid #ffeebc;
   }
 }
-
-.distributed-rewards {
-  background-image: url("/images/background/road-castle.png");
-  background-size: cover;
-  background-position: center;
-  padding: 15px;
-  border: 2px solid #ffeebc;
-  margin: 5px -24px;
-}
-
-.distributed-text {
-  font-family: PT Serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 31px;
-  color: #ffeebc;
-}
-
-.distributed-amount {
-  font-family: PT Serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 48px;
-  line-height: 62px;
-  color: #ffeebc;
-}
-
-.distributed-participants {
-  font-family: PT Serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 28px;
-  line-height: 42px;
-  color: #ffeebc;
-  text-align: center;
-}
-
-.distributed-label {
-  font-family: PT Serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 16px;
-  color: #ffeebc;
-  text-align: right;
-}
 @media only screen and (max-width: 1280px) {
   .dividing-line {
     background: none;
   }
+}
+
+.footer {
+  margin-bottom: 120px;
 }
 </style>

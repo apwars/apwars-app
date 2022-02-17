@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container v-if="isConnected && !isLoading">
+    <template v-if="isConnected && !isLoading">
       <div
         class="d-flex flex-column flex-sm-row mb-3 justify-space-around align-center distributed-rewards"
       >
@@ -11,37 +11,40 @@
         <div class="d-flex align-center">
           <img
             class="mr-1"
-            height="90px"
+            height="72px"
             src="/images/wGOLD-winner.png"
             alt="wGOLD"
           />
-          <div>
+          <div class="amount-container">
             <div class="distributed-amount">
               <amount
                 :amount="distributedRewards.wGOLD.total"
                 formatted
                 decimals="2"
               />
+              <div class="distributed-label">wGOLD</div>
             </div>
-            <div class="distributed-label">wGOLD</div>
+            
           </div>
         </div>
         <div class="d-flex align-center">
           <img
             class="mr-1"
-            height="79px"
+            height="72px"
+            width="72px"
             src="/images/wSCARS-winner.png"
             alt="wSCARS"
           />
-          <div>
+          <div class="amount-container">
             <div class="distributed-amount">
               <amount
                 :amount="distributedRewards.wSCARS.total"
                 formatted
                 decimals="2"
               />
+              <div class="distributed-label">wSCARS</div>
             </div>
-            <div class="distributed-label">wSCARS</div>
+            
           </div>
         </div>
       </div>
@@ -335,7 +338,7 @@
             </div>
           </div>
 
-          <div class="d-flex align-center justify-space-between">
+          <div class="footer d-flex align-center justify-space-between">
             <div
               @click="getListWeek(pageWeek - 1)"
               class="d-flex align-center justify-center previous"
@@ -361,15 +364,15 @@
           </div>
         </v-col>
       </v-row>
-    </v-container>
+    </template>
 
-    <v-container v-else>
+    <template v-else>
       <v-row>
         <v-col cols="12" class="d-flex justify-center">
           <h3 class="text-h3">Loading...</h3>
         </v-col>
       </v-row>
-    </v-container>
+    </template>
   </div>
 </template>
 
@@ -379,7 +382,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import VAvatar from "@/lib/components/ui/Utils/VAvatar";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
-import Podium from "@/lib/components/ui/Leaderboard/Podium";
+import Podium from "./Podium";
 
 import { mapMutations } from "vuex";
 import moment from "moment";
@@ -572,7 +575,7 @@ export default {
       await this.getListWeek(1);
       await this.getListDaily(1);
       await this.getDistributedRewards();
-      this.listPodium = this.listWeek.slice(0,3);
+      this.listPodium = this.listWeek.slice(0, 3);
 
       this.isLoading = false;
     },
@@ -801,6 +804,7 @@ export default {
   font-size: 36px;
   line-height: 1.2;
   color: #ffeebc;
+  display: inline-block;
 }
 
 .distributed-label {
@@ -811,6 +815,10 @@ export default {
   line-height: 16px;
   color: #ffeebc;
   text-align: right;
+}
+
+.amount-container {
+  min-width: 200px;
 }
 
 @media only screen and (max-width: 959px) {
@@ -836,5 +844,9 @@ export default {
   .dividing-line {
     background: none;
   }
+}
+
+.footer {
+  margin-bottom: 120px;
 }
 </style>

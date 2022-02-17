@@ -84,9 +84,9 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import VAvatar from "@/lib/components/ui/Utils/VAvatar";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
-import TheMonstrousJourney from "@/lib/components/ui/Leaderboard/TheMonstrousJourney";
-import Arcadia from "@/lib/components/ui/Leaderboard/Arcadia";
-import War from "@/lib/components/ui/Leaderboard/War";
+import TheMonstrousJourney from "./TheMonstrousJourney";
+import Arcadia from "./Arcadia";
+import War from "./War";
 
 import { mapMutations } from "vuex";
 import moment from "moment";

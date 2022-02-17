@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-container v-if="getListPodium.length === 3">
+  <div class="podium-container">
+    <template v-if="getListPodium.length === 3">
       <v-row v-if="!$vuetify.breakpoint.xs" class="mt-8 d-flex align-end" dense>
         <v-col
           v-for="(player, index) in getListPodium"
@@ -154,7 +154,7 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-container>
+    </template>
   </div>
 </template>
 
