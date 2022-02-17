@@ -7,7 +7,7 @@
       <span>{{ reward.title }}</span>
     </v-tooltip>
     <div class="reward-title mt-1" v-if="label">{{ label }}</div>
-    <div class="reward-amount"><Amount :amount="amount" compact formatted :approximate="amount && type === 'token'" /></div>
+    <div class="reward-amount"><Amount :amount="amount" compact formatted :approximate="baseType === 'token' && amount && approximate" /></div>
   </div>
 </template>
 <script>
@@ -32,6 +32,10 @@ export default {
       type: String,
       default: '',
     },
+    approximate: {
+      type: Boolean,
+      default: false,
+    },
     label: {
       type: String,
       default: '',
@@ -40,18 +44,18 @@ export default {
   data() {
     return {
       reward: null,
-      type: '',
+      baseType: '',
     };
   },
   mounted() {
     if (this.prize.includes('GameItem')) {
       const id = Number(this.prize.replace(/\D/g, ""));
       this.reward = getCollectibleById(id);
-      this.type = "game-item";
+      this.baseType = "game-item";
       return
     }
     this.reward = TOKENS.find(t => t.id === this.prize);
-    this.type = "token";
+    this.baseType = "token";
   },
 };
 </script>

@@ -492,6 +492,7 @@
                   ><Amount
                     :amount="report.prizes.war.amount"
                     :symbol="report.prizes.war.prize"
+                    approximate
                     formatted
                 /></span>
               </div>

@@ -258,6 +258,7 @@
                   :key="reward.prize"
                   :prize="reward.prize"
                   :type="reward.type"
+                  approximate
                   :amount="reward.amount"
                 />
               </div>

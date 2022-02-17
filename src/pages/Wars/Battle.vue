@@ -356,6 +356,7 @@
                   :prize="prize.prize"
                   :type="prize.type"
                   :amount="prize.amount"
+                  approximate
                   size="small"
                 />
               </div>
@@ -377,6 +378,7 @@
                   :prize="prize.prize"
                   :type="prize.type"
                   :amount="prize.amount"
+                  approximate
                   size="small"
                 />
               </div>
