@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{isLoading}}
     <v-container v-if="isConnected && !isLoading">
       <div class="d-flex justify-space-around align-center distributed-rewards">
         <div class="distributed-text">
@@ -68,7 +69,7 @@
       <Podium :podium="getListPodium" scoreMetric="PU" />
 
       <div
-        class="d-flex mb-3 justify-space-around align-center distributed-rewards"
+        class="d-flex flex-column flex-sm-row mb-3 justify-space-around align-center distributed-rewards mt-2"
       >
         <div class="distributed-text">
           <div>
@@ -213,9 +214,7 @@
                 </div>
               </div>
 
-              <div
-                class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
-              >
+              <div class="list-leaderboard-info">
                 <div
                   v-if="index < 3 && pageRanking === 1"
                   class="leaderboard-ranking"
@@ -238,17 +237,17 @@
                   #{{ index + 1 + (pageRanking - 1) * limit }}
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell">
                   <div class="text-subtitle-2 primary--text">
                     Participations
                   </div>
                   <div>{{ player.totalWars }}</div>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell d-none d-sm-none d-md-inline-block">
                   <div class="text-subtitle-2 primary--text">Owner</div>
                   <v-address
-                    class="d-none d-sm-none d-md-flex text-center mx-1"
+                    class=" d-flex text-center mx-1"
                     :address="player.account"
                     link
                     tooltip
@@ -256,14 +255,14 @@
                   </v-address>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell">
                   <div class="text-subtitle-2 primary--text">Power Units</div>
                   <div class="text-points">{{ player.points }} PU</div>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell">
                   <div class="text-subtitle-2 primary--text">
-                    Total Earning wGOLD
+                    wGOLD Earned
                   </div>
                   <div class="text-treasure d-flex align-center justify-center">
                     <amount :amount="player.wGOLD" formatted decimals="2" />
@@ -276,9 +275,9 @@
                   </div>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell">
                   <div class="text-subtitle-2 primary--text">
-                    Total Earning wCOURAGE
+                    wCOURAGE Earned
                   </div>
                   <div class="text-treasure d-flex align-center justify-center">
                     <amount :amount="player.wCOURAGE" formatted decimals="2" />
@@ -294,7 +293,7 @@
             </div>
           </div>
 
-          <div class="d-flex align-center justify-space-around">
+          <div class="footer d-flex align-center justify-space-around">
             <div
               @click="getListRanking(pageRanking - 1)"
               class="d-flex align-center justify-center previous"
@@ -320,15 +319,15 @@
           </div>
         </v-col>
       </v-row>
-    </v-container>
+    </template>
 
-    <v-container v-else>
+    <template v-else>
       <v-row>
         <v-col cols="12" class="d-flex justify-center">
           <h3 class="text-h3">Loading...</h3>
         </v-col>
       </v-row>
-    </v-container>
+    </template>
   </div>
 </template>
 
@@ -338,7 +337,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import VAvatar from "@/lib/components/ui/Utils/VAvatar";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
-import Podium from "@/lib/components/ui/Leaderboard/Podium";
+import Podium from "./Podium";
 
 import { mapMutations } from "vuex";
 
@@ -585,6 +584,16 @@ export default {
 
 .list-leaderboard-info {
   width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cell {
+  display: inline-block;
+  padding-left: 12px;
+  padding-right: 12px;
+  text-align: center;
 }
 
 .leaderboard-ranking {
@@ -679,8 +688,6 @@ export default {
 }
 
 .distributed-text {
-  font-family: PT Serif;
-  font-style: normal;
   font-weight: bold;
   font-size: 22px;
   line-height: 26px;
@@ -688,8 +695,6 @@ export default {
 }
 
 .distributed-amount {
-  font-family: PT Serif;
-  font-style: normal;
   font-weight: bold;
   font-size: 26px;
   line-height: 36px;
@@ -719,5 +724,9 @@ export default {
   .dividing-line {
     background: none;
   }
+}
+
+.footer {
+  margin-bottom: 120px;
 }
 </style>

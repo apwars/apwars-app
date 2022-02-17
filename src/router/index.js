@@ -19,7 +19,7 @@ import Arcadia from "@/pages/Arcadia/Arcadia.vue";
 import WarBattle from "@/pages/Wars/Battle.vue";
 import WarIntro from "@/pages/Wars/Intro.vue";
 import StarterPacks from "@/pages/StarterPacks.vue";
-import Leaderboard from "@/pages/Leaderboard.vue";
+import Leaderboard from "@/pages/Leaderboard/Leaderboard.vue";
 import Bridge from "@/pages/Bridge.vue";
 import Battle from "@/pages/Game/Battle.vue";
 import LoyaltyProgram from "@/pages/Loyalty/Program.vue";

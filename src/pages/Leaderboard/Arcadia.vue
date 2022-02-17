@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container v-if="isConnected && !isLoading">
+    <template v-if="isConnected && !isLoading">
       <Podium :podium="getListPodium" />
 
       <v-row>
@@ -66,7 +66,7 @@
               </div>
 
               <div
-                class="list-leaderboard-info d-flex align-center justify-space-around py-1 py-lg-0"
+                class="list-leaderboard-info"
               >
                 <div
                   v-if="index < 3 && pageRanking === 1"
@@ -90,17 +90,17 @@
                   #{{ index + 1 + (pageRanking - 1) * limit }}
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell">
                   <div class="text-subtitle-2 primary--text">World</div>
                   <div>{{ player.worldId }}</div>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell">
                   <div class="text-subtitle-2 primary--text">Coordinate</div>
                   <div>({{ player.x }},{{ player.y }})</div>
                 </div>
 
-                <div class="d-flex flex-column align-center mx-2">
+                <div class="cell">
                   <div class="text-subtitle-2 primary--text">Faction</div>
                   <div class="text-village text-truncate">
                     {{
@@ -111,7 +111,7 @@
                   </div>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell d-none d-sm-none d-md-inline-block">
                   <div class="text-subtitle-2 primary--text">Owner</div>
                   <v-address
                     class="d-none d-sm-none d-md-flex text-center mx-1"
@@ -122,19 +122,19 @@
                   </v-address>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell">
                   <div class="text-subtitle-2 primary--text">Points</div>
                   <div class="text-points">{{ player.score }} pts</div>
                 </div>
 
-                <div class="d-flex flex-column align-center mx-2">
+                <div class="cell">
                   <div class="text-subtitle-2 primary--text">Village</div>
                   <div class="text-village text-truncate" :title="player.name">
                     {{ player.name }}
                   </div>
                 </div>
 
-                <div class=" d-flex flex-column align-center mx-2">
+                <div class="cell">
                   <div class="text-subtitle-2 primary--text">Treasure</div>
                   <div class="text-treasure d-flex align-center justify-center">
                     <amount
@@ -154,7 +154,7 @@
             </div>
           </div>
 
-          <div class="d-flex align-center justify-space-between">
+          <div class="footer d-flex align-center justify-space-between">
             <div
               @click="getListRanking(pageRanking - 1)"
               class="d-flex align-center justify-center previous"
@@ -180,15 +180,15 @@
           </div>
         </v-col>
       </v-row>
-    </v-container>
+    </template>
 
-    <v-container v-else>
+    <template v-else>
       <v-row>
         <v-col cols="12" class="d-flex justify-center">
           <h3 class="text-h3">Loading...</h3>
         </v-col>
       </v-row>
-    </v-container>
+    </template>
   </div>
 </template>
 
@@ -198,7 +198,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import VAvatar from "@/lib/components/ui/Utils/VAvatar";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
-import Podium from "@/lib/components/ui/Leaderboard/Podium";
+import Podium from "./Podium";
 
 import { mapMutations } from "vuex";
 import moment from "moment";
@@ -429,6 +429,16 @@ export default {
 
 .list-leaderboard-info {
   width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cell {
+  display: inline-block;
+  padding-left: 12px;
+  padding-right: 12px;
+  text-align: center;
 }
 
 .leaderboard-ranking {
@@ -516,5 +526,9 @@ export default {
   .dividing-line {
     background: none;
   }
+}
+
+.footer {
+  margin-bottom: 120px;
 }
 </style>
