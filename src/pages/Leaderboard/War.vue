@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{isLoading}}
     <v-container v-if="isConnected && !isLoading">
       <div class="d-flex justify-space-around align-center distributed-rewards">
         <div class="distributed-text">
@@ -319,7 +318,7 @@
           </div>
         </v-col>
       </v-row>
-    </template>
+    </v-container>
 
     <template v-else>
       <v-row>
