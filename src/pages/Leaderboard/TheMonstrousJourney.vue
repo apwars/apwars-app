@@ -338,7 +338,7 @@
             </div>
           </div>
 
-          <div class="d-flex align-center justify-space-between">
+          <div class="footer d-flex align-center justify-space-between">
             <div
               @click="getListWeek(pageWeek - 1)"
               class="d-flex align-center justify-center previous"
@@ -844,5 +844,9 @@ export default {
   .dividing-line {
     background: none;
   }
+}
+
+.footer {
+  margin-bottom: 120px;
 }
 </style>
