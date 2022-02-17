@@ -1,9 +1,7 @@
 <template>
   <div>
-    <template v-if="isConnected && !isLoading">
-      <div
-        class="d-flex flex-column flex-sm-row mb-3 justify-space-around align-center distributed-rewards mt-4"
-      >
+    <v-container v-if="isConnected && !isLoading">
+      <div class="d-flex justify-space-around align-center distributed-rewards">
         <div class="distributed-text">
           Distributed <br />
           rewards so far:
@@ -11,7 +9,7 @@
         <div class="d-flex align-center">
           <img
             class="mr-1"
-            height="90px"
+            height="80px"
             src="/images/wGOLD-winner.png"
             alt="wGOLD"
           />
@@ -30,7 +28,7 @@
         <div class="d-flex align-center">
           <img
             class="mr-1"
-            height="90px"
+            height="80px"
             src="/images/wCOURAGE-winner.png"
             alt="wCOURAGE"
           />
@@ -44,6 +42,25 @@
               />
             </div>
             <div class="distributed-label">wCOURAGE</div>
+          </div>
+        </div>
+        <div class="d-flex align-center">
+          <img
+            class="mr-1"
+            height="80px"
+            src="/images/wGOLD-burned.png"
+            alt="wGOLD-burned"
+          />
+          <div>
+            <div class="distributed-amount">
+              <amount
+                v-if="distributedRewards.burned"
+                :amount="distributedRewards.burned"
+                formatted
+                decimals="2"
+              />
+            </div>
+            <div class="distributed-label">Burned wGOLD prize</div>
           </div>
         </div>
       </div>
@@ -71,7 +88,7 @@
         <div class="d-flex align-center">
           <img
             class="mr-1"
-            height="90px"
+            height="80px"
             src="/images/wGOLD-winner.png"
             alt="wGOLD"
           />
@@ -100,7 +117,7 @@
         <div class="d-flex align-center">
           <img
             class="mr-1"
-            height="90px"
+            height="80px"
             src="/images/wCOURAGE-winner.png"
             alt="wCOURAGE"
           />
@@ -122,6 +139,28 @@
                 decimals="2"
               />
               wCOURAGE
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-center">
+          <img
+            class="mr-1"
+            height="80px"
+            src="/images/wGOLD-burned.png"
+            alt="wGOLD-burned"
+          />
+          <div>
+            <div class="distributed-amount">
+              <amount
+                v-if="distributedRewards.burnedLastWar"
+                :amount="distributedRewards.burnedLastWar"
+                formatted
+                decimals="2"
+              />
+            </div>
+            <div class="distributed-label">
+              Burned wGOLD prize
             </div>
           </div>
         </div>
@@ -279,7 +318,7 @@
           </div>
         </v-col>
       </v-row>
-    </template>
+    </v-container>
 
     <template v-else>
       <v-row>
@@ -430,6 +469,8 @@ export default {
         distributedLastWar: {},
         totalEnlistmentLastWar: _distributedRewards.totalEnlistmentLastWar,
         totalClaimed: _distributedRewards.claimEnlistmentLastWar,
+        burned: _distributedRewards.burned[0].total,
+        burnedLastWar: _distributedRewards.burnedLastWar[0].total,
       };
       this.distributedRewards.distributed.wGOLD = _distributedRewards.distributed.find(
         (_distributed) => _distributed.token === "wGOLD"
@@ -647,15 +688,15 @@ export default {
 
 .distributed-text {
   font-weight: bold;
-  font-size: 18px;
-  line-height: 1.2;
+  font-size: 22px;
+  line-height: 26px;
   color: #ffeebc;
 }
 
 .distributed-amount {
   font-weight: bold;
-  font-size: 36px;
-  line-height: 1.2;
+  font-size: 26px;
+  line-height: 36px;
   color: #ffeebc;
 }
 
