@@ -132,7 +132,7 @@
           </div>
         </v-col>
         <v-col cols="12" md="4">
-          <tasks />
+          <BuywCOURAGE />
         </v-col>
       </v-row>
     </v-container>
@@ -145,7 +145,7 @@ import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
 import GameText from "@/lib/components/ui/Utils/GameText";
 import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
-import Tasks from "@/lib/components/ui/Home/Tasks";
+import BuywCOURAGE from "@/lib/components/ui/Home/BuywCOURAGE";
 import Amount from "@/lib/components/ui/Utils/Amount.vue";
 
 import WalletController from "@/controller/WalletController";
@@ -158,7 +158,7 @@ export default {
     wButton,
     GameText,
     CountdownBlock,
-    Tasks,
+    BuywCOURAGE,
     Amount,
   },
 
