@@ -44,7 +44,7 @@ export default {
         numberAmount = Convert.formatString(numberAmount, this.getDecimals);
       }
 
-      if (this.approximate !== undefined) {
+      if (this.approximate) {
         return `~${numberAmount}`;
       }
       return numberAmount;

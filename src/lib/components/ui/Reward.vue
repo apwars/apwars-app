@@ -7,7 +7,7 @@
       <span>{{ reward.title }}</span>
     </v-tooltip>
     <div class="reward-title mt-1" v-if="label">{{ label }}</div>
-    <div class="reward-amount"><Amount :amount="amount" compact formatted /></div>
+    <div class="reward-amount"><Amount :amount="amount" compact formatted :approximate="amount && type === 'token'" /></div>
   </div>
 </template>
 <script>
@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       reward: null,
+      type: '',
     };
   },
   mounted() {
