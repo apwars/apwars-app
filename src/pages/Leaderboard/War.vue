@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container v-if="isConnected && !isLoading">
-      <div class="d-flex justify-space-around align-center distributed-rewards">
+      <div class="d-flex flex-column flex-sm-row justify-space-around align-center distributed-rewards">
         <div class="distributed-text">
           Distributed <br />
           rewards so far:
