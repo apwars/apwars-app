@@ -198,7 +198,7 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 import VAvatar from "@/lib/components/ui/Utils/VAvatar";
 import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
-import Podium from "@/lib/components/ui/Leaderboard/Podium";
+import Podium from "./Podium";
 
 import { mapMutations } from "vuex";
 import moment from "moment";
