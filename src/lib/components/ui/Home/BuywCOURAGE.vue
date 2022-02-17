@@ -30,7 +30,11 @@
 
             <div class="d-flex flex-column justify-center align-center">
               <div class="qty">
-                <Amount :amount="packwCOURAGE.content[0].amount" formatted symbol="wCOURAGE" /> 
+                <Amount
+                  :amount="packwCOURAGE.content[0].amount"
+                  formatted
+                  symbol="wCOURAGE"
+                />
               </div>
               <div class="price">
                 <span class="d-flex align-center"
@@ -42,23 +46,28 @@
                       width="18px"
                       alt="wGOLD"
                     />
-                    <Amount :amount="packwCOURAGE.price.amount" formatted symbol="wGOLD" /> 
-                  </span></span>
+                    <Amount
+                      :amount="packwCOURAGE.price.amount"
+                      formatted
+                      symbol="wGOLD"
+                    /> </span
+                ></span>
               </div>
               <div>
-                <wButton
-                  @click="buyPack"
+                <Button
+                  :handleClick="buyPack"
                   class="mt-1"
                   size="small"
+                  type="wsecondary"
                   :disabled="isLoadingBuy || packwCOURAGE.remainingAmount <= 0"
                 >
-                  Buy this pack
-                </wButton>
+                  {{
+                    !packwCOURAGE.remainingAmount ? "Sold Out" : "Buy this pack"
+                  }}
+                </Button>
                 <div class="qty-info">
-                  <template v-if="packwCOURAGE.remainingAmount > 0"
-                    >{{ packwCOURAGE.amount - packwCOURAGE.soldAmount }} /
-                    {{ packwCOURAGE.amount }}
-                  </template>
+                  {{ packwCOURAGE.amount - packwCOURAGE.soldAmount }} /
+                  {{ packwCOURAGE.amount }}
                 </div>
               </div>
             </div>
@@ -77,11 +86,11 @@ import PacksController from "@/controller/PacksController";
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import GameText from "@/lib/components/ui/Utils/GameText";
-import wButton from "@/lib/components/ui/Buttons/wButton";
+import Button from "@/lib/components/ui/Buttons/Button";
 import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
-  components: { GameText, wButton, Amount },
+  components: { GameText, Button, Amount },
   data() {
     return {
       packwCOURAGE: {},
