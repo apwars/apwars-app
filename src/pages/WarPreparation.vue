@@ -9,44 +9,19 @@
           image="/images/war-preparation/icon-war-preparation.png"
         />
       </v-container>
-      <div v-if="tab === 1" class="d-flex text-center justify-center">
+      <div class="d-flex text-center justify-center">
         <v-img
           class="mx-auto weapon-research-image"
           src="/images/war-preparation/weapon-research.png"
-        />
-      </div>
-
-      <div v-else class="d-flex text-center justify-center">
-        <v-img
-          class="mx-auto weapon-research-image"
-          src="/images/war-preparation/spendables-research.png"
         />
       </div>
       <div class="gradient"></div>
     </div>
 
     <v-container class="bg-tabs px-0">
-      <v-row class="d-flex">
-        <v-col cols="12" md="12" lg="12" class="d-flex">
-          <v-tabs v-model="tab">
-            <v-tab>Magical Items</v-tab>
-            <v-tab>Weapons</v-tab>
-          </v-tabs>
-        </v-col>
+      <v-row>
+        <list-combinators type="magical-items" />
       </v-row>
-
-      <v-tabs-items v-model="tab">
-        <v-tab-item>
-          <v-card flat>
-            <list-combinators type="magical-items" />
-          </v-card>
-        </v-tab-item>
-      </v-tabs-items>
-      <v-tab-item>
-        <v-card flat>
-          <list-combinators type="weapons" />
-        </v-card>
-      </v-tab-item>
     </v-container>
   </div>
 </template>
