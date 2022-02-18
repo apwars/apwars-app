@@ -7,7 +7,15 @@
       <v-row>
         <v-col> <v-row class="screen-container">
           <v-col cols="12" md="4"><v-select v-model="faction" item-text="label" item-value="value" :items="factionOptions"/>
-          <v-text-field v-model="avatar" /></v-col>
+          <v-text-field v-model="avatar" />
+          <v-select v-model="country" item-text="name" item-value="value" :items="countryOptions"/></v-col>
+          <img
+            :src="
+              `/images/country-flags/${country}.svg`
+            "
+            width="120px"
+            :alt="country"
+          />
           <v-col cols="12" md="4">
           <img
             class="avatar"
@@ -22,6 +30,7 @@
     </v-container></div
 ></template>
 <script>
+import { countryOptions } from "@/data/Countrys";
 import Title from "@/lib/components/ui/Title";
 
 export default {
@@ -32,12 +41,16 @@ export default {
     },
     factionOptions() {
       return [{ label: 'The Corporations', value: 'corp' }, { label: 'The Degenerates', value: 'degen' }];
+    },
+    countryOptions() {
+      return countryOptions;
     }
   },
   data() {
     return {
       avatar: '',
-      faction: "corp"
+      faction: "corp",
+      country: 'br',
     }
   }
 };
