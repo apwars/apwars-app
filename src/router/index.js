@@ -26,6 +26,7 @@ import LoyaltyProgram from "@/pages/Loyalty/Program.vue";
 import LoyaltyShop from "@/pages/Loyalty/Shop.vue";
 import StartSwap from "@/pages/StartSwap.vue";
 import Soldier from "@/pages/Soldier.vue";
+import Account from "@/pages/Account/Account";
 
 Vue.use(Router);
 
@@ -160,6 +161,11 @@ export const routes = [
         path: '/unlock-soldier',
         name: 'unlock-soldier',
         component: Soldier
+      },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: Account,
       },
       {
         path: "/farms",
