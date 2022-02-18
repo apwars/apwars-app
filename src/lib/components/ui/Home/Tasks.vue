@@ -15,16 +15,8 @@
     </v-badge>
 
     <div class="loading-container" v-if="isLoading">
-        <v-skeleton-loader
-          class="mt-3 mx-1"
-          width="200px"
-          type="text, button"
-        />
-        <v-skeleton-loader
-          class="mt-3 mx-1"
-          width="200px"
-          type="text, button"
-        />
+      <v-skeleton-loader class="mt-3 mx-1" width="200px" type="text, button" />
+      <v-skeleton-loader class="mt-3 mx-1" width="200px" type="text, button" />
     </div>
 
     <v-slide-group v-else-if="listTasks.length" class="mt-3" show-arrows>
@@ -37,10 +29,14 @@
           <div>
             <img
               class="bg-img-task"
-              :width="`${$vuetify.breakpoint.mobile ? '70px' : '100px'}
-                    `"
-              :height="`${$vuetify.breakpoint.mobile ? '70px' : '100px'}
-                    `"
+              :width="
+                `${$vuetify.breakpoint.mobile ? '70px' : '100px'}
+                    `
+              "
+              :height="
+                `${$vuetify.breakpoint.mobile ? '70px' : '100px'}
+                    `
+              "
               :src="item.image"
             />
           </div>
@@ -83,7 +79,7 @@
 
     <div v-else>
       Hey, looks like you don't have any tasks right now. How about training
-      units, researching weapons and evolving your troop?
+      units or researching magical items to improve your troops?
       <wButton class="mt-3" @click="$router.push('/training-center')">
         Training center
       </wButton>
@@ -135,7 +131,10 @@ export default {
     async getTasks() {
       this.isLoading = true;
       const getListTasks = [];
-      const assets = [].concat(getTroops()).concat(getMagicalItems()).concat(getGameItems());
+      const assets = []
+        .concat(getTroops())
+        .concat(getMagicalItems())
+        .concat(getGameItems());
 
       assets.filter((a) => {
         if (!a.combinators) {
@@ -179,7 +178,9 @@ export default {
             combinatorId
           );
 
-          task.necessaryResources.tokenA.amount = Convert.fromWei(tokenAConfig.amount);
+          task.necessaryResources.tokenA.amount = Convert.fromWei(
+            tokenAConfig.amount
+          );
 
           const is1155 = task.necessaryResources.tokenB.type === "magicalItem";
 
@@ -199,7 +200,9 @@ export default {
             );
           }
 
-          task.necessaryResources.tokenB.amount = is1155 ? tokenBConfig.amount : Convert.fromWei(tokenBConfig.amount, true);
+          task.necessaryResources.tokenB.amount = is1155
+            ? tokenBConfig.amount
+            : Convert.fromWei(tokenBConfig.amount, true);
         }
 
         if (this.currentBlockNumber >= task.combinatorInfo.endBlock) {
