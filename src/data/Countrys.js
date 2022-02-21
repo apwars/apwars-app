@@ -29,127 +29,95 @@ export const countryOptions = [
   },
   {
     name: "Angola",
-    value: "br",
+    value: "ao",
   },
   {
     name: "Antarctica",
-    value: "br",
+    value: "aq",
   },
   {
     name: "Argentina",
-    value: "br",
+    value: "ar",
   },
   {
     name: "American Samoa",
-    value: "br",
+    value: "as",
   },
   {
     name: "Austria",
-    value: "br",
+    value: "at",
   },
   {
     name: "Australia",
-    value: "br",
+    value: "au",
   },
   {
     name: "Aruba",
-    value: "br",
+    value: "aw",
   },
   {
     name: "Åland Islands",
-    value: "br",
+    value: "ax",
   },
   {
     name: "Azerbaijan",
-    value: "br",
+    value: "az",
   },
   {
     name: "Bosnia and Herzegovina",
-    value: "br",
+    value: "ba",
   },
   {
     name: "Barbados",
-    value: "gb-eng",
+    value: "bb",
   },
   {
     name: "Bangladesh",
-    value: "us",
+    value: "bd",
   },
   {
     name: "Belgium",
-    value: "us",
-  },
-  {
-    name: "Bangladesh",
-    value: "us",
+    value: "be",
   },
   {
     name: "Burkina Faso",
-    value: "us",
+    value: "bf",
   },
   {
     name: "Bulgaria",
-    value: "us",
+    value: "bg",
   },
   {
     name: "Bahrain",
-    value: "us",
+    value: "bh",
   },
   {
     name: "Burundi",
-    value: "us",
+    value: "bi",
   },
   {
     name: "Benin",
-    value: "us",
+    value: "bj",
   },
   {
     name: "Saint Barthélemy",
-    value: "us",
+    value: "bl",
   },
   {
     name: "Bermuda",
-    value: "us",
+    value: "bm",
   },
   {
     name: "Brunei Darussalam",
-    value: "us",
-  },
-  {
-    name: "Bulgaria",
-    value: "us",
-  },
-  {
-    name: "Bahrain",
-    value: "us",
-  },
-  {
-    name: "Burundi",
-    value: "us",
-  },
-  {
-    name: "Benin",
-    value: "us",
-  },
-  {
-    name: "Saint Barthélemy",
-    value: "us",
-  },
-  {
-    name: "Bermuda",
-    value: "us",
-  },
-  {
-    name: "Brunei Darussalam",
-    value: "us",
+    value: "bn",
   },
   {
     name: "Bolivia",
-    value: "us",
+    value: "bo",
   },
   {
     name: "Caribbean Netherlands",
-    value: "us",
+    value: "bq",
   },
   {
     name: "Brazil",
@@ -157,827 +125,827 @@ export const countryOptions = [
   },
   {
     name: "Bahamas",
-    value: "us",
+    value: "bs",
   },
   {
     name: "Bhutan",
-    value: "us",
+    value: "bt",
   },
   {
     name: "Bouvet Island",
-    value: "us",
+    value: "bv",
   },
   {
     name: "Botswana",
-    value: "us",
+    value: "bw",
   },
   {
     name: "Belarus",
-    value: "us",
+    value: "by",
   },
   {
     name: "Belize",
-    value: "us",
+    value: "bz",
   },
   {
     name: "Canada",
-    value: "us",
+    value: "ca",
   },
   {
     name: "Cocos (Keeling) Islands",
-    value: "us",
+    value: "cc",
   },
   {
     name: "Congo",
-    value: "us",
+    value: "cd",
   },
   {
     name: "Central African Republic",
-    value: "us",
+    value: "cf",
   },
   {
     name: "Republic of the Congo",
-    value: "us",
+    value: "cg",
   },
   {
     name: "Switzerland",
-    value: "us",
+    value: "ch",
   },
   {
     name: `Côte d'Ivoire`,
-    value: "us",
+    value: "ci",
   },
   {
     name: "Cook Islands",
-    value: "us",
+    value: "ck",
   },
   {
     name: "Chile",
-    value: "us",
+    value: "cl",
   },
   {
     name: "Cameroon",
-    value: "us",
+    value: "cm",
   },
   {
     name: "China",
-    value: "us",
+    value: "cn",
   },
   {
     name: "Colombia",
-    value: "us",
+    value: "co",
   },
   {
     name: "Costa Rica",
-    value: "us",
+    value: "cr",
   },
   {
     name: "Cuba",
-    value: "us",
+    value: "cu",
   },
   {
     name: "Cape Verde",
-    value: "us",
+    value: "cv",
   },
   {
     name: "Curaçao",
-    value: "us",
+    value: "cw",
   },
   {
     name: "Christmas Island",
-    value: "us",
+    value: "cx",
   },
   {
     name: "Cyprus",
-    value: "us",
+    value: "cy",
   },
   {
     name: "Czech Republic",
-    value: "us",
+    value: "cz",
   },
   {
     name: "Germany",
-    value: "us",
+    value: "de",
   },
   {
     name: "Djibouti",
-    value: "us",
+    value: "dj",
   },
   {
     name: "Denmark",
-    value: "us",
+    value: "dk",
   },
   {
     name: "Dominica",
-    value: "us",
+    value: "dm",
   },
   {
     name: "Dominican Republic",
-    value: "us",
+    value: "do",
   },
   {
     name: "Algeria",
-    value: "us",
+    value: "dz",
   },
   {
     name: "Ecuador",
-    value: "us",
+    value: "ec",
   },
   {
     name: "Estonia",
-    value: "us",
+    value: "ee",
   },
   {
     name: "Egypt",
-    value: "us",
+    value: "eg",
   },
   {
     name: "Western Sahara",
-    value: "us",
+    value: "eh",
   },
   {
     name: "Eritrea",
-    value: "us",
+    value: "er",
   },
   {
     name: "Spain",
-    value: "us",
+    value: "es",
   },
   {
     name: "Ethiopia",
-    value: "us",
+    value: "et",
   },
   {
     name: "Europe",
-    value: "us",
+    value: "eu",
   },
   {
     name: "Finland",
-    value: "us",
+    value: "fi",
   },
   {
     name: "Fiji",
-    value: "us",
+    value: "fj",
   },
   {
     name: "Falkland Islands",
-    value: "us",
+    value: "fk",
   },
   {
     name: "Micronesia",
-    value: "us",
+    value: "fm",
   },
   {
     name: "Faroe Islands",
-    value: "us",
+    value: "fo",
   },
   {
     name: "France",
-    value: "us",
+    value: "fr",
   },
   {
     name: "Gabon",
-    value: "us",
+    value: "ga",
   },
   {
     name: "England",
-    value: "us",
+    value: "gb",
   },
   {
     name: "Northern Ireland",
-    value: "us",
+    value: "gb-eng",
   },
   {
     name: "Scotland",
-    value: "us",
+    value: "gb-nir",
   },
   {
     name: "Wales",
-    value: "us",
+    value: "gb-sct",
   },
   {
     name: "United Kingdom",
-    value: "us",
+    value: "gb-wls",
   },
   {
     name: "Grenada",
-    value: "us",
+    value: "gd",
   },
   {
     name: "Georgia",
-    value: "us",
+    value: "ge",
   },
   {
     name: "French Guiana",
-    value: "us",
+    value: "gf",
   },
   {
     name: "Guernsey",
-    value: "us",
+    value: "gg",
   },
   {
     name: "Ghana",
-    value: "us",
+    value: "gh",
   },
   {
     name: "Gibraltar",
-    value: "us",
+    value: "gi",
   },
   {
     name: "Greenland",
-    value: "us",
+    value: "gl",
   },
   {
     name: "Gambia",
-    value: "us",
+    value: "gm",
   },
   {
     name: "Guinea",
-    value: "us",
+    value: "gn",
   },
   {
     name: "Guadeloupe",
-    value: "us",
+    value: "gp",
   },
   {
     name: "Equatorial Guinea",
-    value: "us",
+    value: "gq",
   },
   {
     name: "Greece",
-    value: "us",
+    value: "gr",
   },
   {
     name: "South Georgia and the South Sandwich Islands",
-    value: "us",
+    value: "gs",
   },
   {
     name: "Guatemala",
-    value: "us",
+    value: "gt",
   },
   {
     name: "Guam",
-    value: "us",
+    value: "gu",
   },
   {
     name: "Guinea-Bissau",
-    value: "us",
+    value: "gw",
   },
   {
     name: "Guyana",
-    value: "us",
+    value: "gy",
   },
   {
     name: "Hong Kong",
-    value: "us",
+    value: "hk",
   },
   {
     name: "Heard Island and McDonald Islands",
-    value: "us",
+    value: "hm",
   },
   {
     name: "Honduras",
-    value: "us",
+    value: "hn",
   },
   {
     name: "Croatia",
-    value: "us",
+    value: "hr",
   },
   {
     name: "Haiti",
-    value: "us",
+    value: "ht",
   },
   {
     name: "Hungary",
-    value: "us",
+    value: "hu",
   },
   {
     name: "Indonesia",
-    value: "us",
+    value: "id",
   },
   {
     name: "Ireland",
-    value: "us",
+    value: "ie",
   },
   {
     name: "Israel",
-    value: "us",
+    value: "il",
   },
   {
     name: "Isle of Man",
-    value: "us",
+    value: "im",
   },
   {
     name: "India",
-    value: "us",
+    value: "in",
   },
   {
     name: "British Indian Ocean Territory",
-    value: "us",
+    value: "io",
   },
   {
     name: "Iraq",
-    value: "us",
+    value: "iq",
   },
   {
     name: "Iran",
-    value: "us",
+    value: "ir",
   },
   {
     name: "Iceland",
-    value: "us",
+    value: "is",
   },
   {
     name: "Italy",
-    value: "us",
+    value: "it",
   },
   {
     name: "Jersey",
-    value: "us",
+    value: "je",
   },
   {
     name: "Jamaica",
-    value: "us",
+    value: "jm",
   },
   {
     name: "Jordan",
-    value: "us",
+    value: "jo",
   },
   {
     name: "Japan",
-    value: "us",
+    value: "jp",
   },
   {
     name: "Kenya",
-    value: "us",
+    value: "ke",
   },
   {
     name: "Kyrgyzstan",
-    value: "us",
+    value: "kg",
   },
   {
     name: "Cambodia",
-    value: "us",
+    value: "kh",
   },
   {
     name: "Kiribati",
-    value: "us",
+    value: "ki",
   },
   {
     name: "Comoros",
-    value: "us",
+    value: "km",
   },
   {
     name: "Saint Kitts and Nevis",
-    value: "us",
+    value: "kn",
   },
   {
     name: "North Korea",
-    value: "us",
+    value: "kp",
   },
   {
     name: "South Korea",
-    value: "us",
+    value: "kr",
   },
   {
     name: "Kuwait",
-    value: "us",
+    value: "kw",
   },
   {
     name: "Cayman Islands",
-    value: "us",
+    value: "ky",
   },
   {
     name: "Kazakhstan",
-    value: "us",
+    value: "kz",
   },
   {
     name: "Laos",
-    value: "us",
+    value: "la",
   },
   {
     name: "Lebanon",
-    value: "us",
+    value: "lb",
   },
   {
     name: "Saint Lucia",
-    value: "us",
+    value: "lc",
   },
   {
     name: "Liechtenstein",
-    value: "us",
+    value: "li",
   },
   {
     name: "Sri Lanka",
-    value: "us",
+    value: "lk",
   },
   {
     name: "Liberia",
-    value: "us",
+    value: "lr",
   },
   {
     name: "Lesotho",
-    value: "us",
+    value: "ls",
   },
   {
     name: "Lithuania",
-    value: "us",
+    value: "lt",
   },
   {
     name: "Luxembourg",
-    value: "us",
+    value: "lu",
   },
   {
     name: "Latvia",
-    value: "us",
+    value: "lv",
   },
   {
     name: "Libya",
-    value: "us",
+    value: "ly",
   },
   {
     name: "Morocco",
-    value: "us",
+    value: "ma",
   },
   {
     name: "Monaco",
-    value: "us",
+    value: "mc",
   },
   {
     name: "Moldova",
-    value: "us",
+    value: "md",
   },
   {
     name: "Montenegro",
-    value: "us",
+    value: "me",
   },
   {
     name: "Saint Martin",
-    value: "us",
+    value: "mf",
   },
   {
     name: "Madagascar",
-    value: "us",
+    value: "mg",
   },
   {
     name: "Marshall Islands",
-    value: "us",
+    value: "mh",
   },
   {
     name: "North Macedonia",
-    value: "us",
+    value: "mk",
   },
   {
     name: "Mali",
-    value: "us",
+    value: "ml",
   },
   {
     name: "Myanmar",
-    value: "us",
+    value: "mm",
   },
   {
     name: "Mongolia",
-    value: "us",
+    value: "mn",
   },
   {
     name: "Macao",
-    value: "us",
+    value: "mo",
   },
   {
     name: "Northern Mariana Islands",
-    value: "us",
+    value: "mp",
   },
   {
     name: "Martinique",
-    value: "us",
+    value: "mq",
   },
   {
     name: "Mauritania",
-    value: "us",
+    value: "mr",
   },
   {
     name: "Montserrat",
-    value: "us",
+    value: "ms",
   },
   {
     name: "Malta",
-    value: "us",
+    value: "mt",
   },
   {
     name: "Mauritius",
-    value: "us",
+    value: "mu",
   },
   {
     name: "Maldives",
-    value: "us",
+    value: "mv",
   },
   {
     name: "Malawi",
-    value: "us",
+    value: "mw",
   },
   {
     name: "Mexico",
-    value: "us",
+    value: "mx",
   },
   {
     name: "Malaysia",
-    value: "us",
+    value: "my",
   },
   {
     name: "Mozambique",
-    value: "us",
+    value: "mz",
   },
   {
     name: "Namibia",
-    value: "us",
+    value: "na",
   },
   {
     name: "New Caledonia",
-    value: "us",
+    value: "nc",
   },
   {
     name: "Niger",
-    value: "us",
+    value: "ne",
   },
   {
     name: "Norfolk Island",
-    value: "us",
+    value: "nf",
   },
   {
     name: "Nigeria",
-    value: "us",
+    value: "ng",
   },
   {
     name: "Nicaragua",
-    value: "us",
+    value: "ni",
   },
   {
     name: "Netherlands",
-    value: "us",
+    value: "nl",
   },
   {
     name: "Norway",
-    value: "us",
+    value: "no",
   },
   {
     name: "Nepal",
-    value: "us",
+    value: "np",
   },
   {
     name: "Nauru",
-    value: "us",
+    value: "nr",
   },
   {
     name: "Niue",
-    value: "us",
+    value: "nu",
   },
   {
     name: "New Zealand",
-    value: "us",
+    value: "nz",
   },
   {
     name: "Oman",
-    value: "us",
+    value: "om",
   },
   {
     name: "Panama",
-    value: "us",
+    value: "pa",
   },
   {
     name: "Peru",
-    value: "us",
+    value: "pe",
   },
   {
     name: "French Polynesia",
-    value: "us",
+    value: "pf",
   },
   {
     name: "Papua New Guinea",
-    value: "us",
+    value: "pg",
   },
   {
     name: "Philippines",
-    value: "us",
+    value: "ph",
   },
   {
     name: "Pakistan",
-    value: "us",
+    value: "pk",
   },
   {
     name: "Poland",
-    value: "us",
+    value: "pl",
   },
   {
     name: "Saint Pierre and Miquelon",
-    value: "us",
+    value: "pm",
   },
   {
     name: "Pitcairn",
-    value: "us",
+    value: "pn",
   },
   {
     name: "Puerto Rico",
-    value: "us",
+    value: "pr",
   },
   {
     name: "Palestine",
-    value: "us",
+    value: "ps",
   },
   {
     name: "Portugal",
-    value: "us",
+    value: "pt",
   },
   {
     name: "Palau",
-    value: "us",
+    value: "pw",
   },
   {
     name: "Paraguay",
-    value: "us",
+    value: "py",
   },
   {
     name: "Qatar",
-    value: "us",
+    value: "qa",
   },
   {
     name: "Réunion",
-    value: "us",
+    value: "re",
   },
   {
     name: "Romania",
-    value: "us",
+    value: "ro",
   },
   {
     name: "Serbia",
-    value: "us",
+    value: "rs",
   },
   {
     name: "Russian Federation",
-    value: "us",
+    value: "ru",
   },
   {
     name: "Rwanda",
-    value: "us",
+    value: "rw",
   },
   {
     name: "Saudi Arabia",
-    value: "us",
+    value: "sa",
   },
   {
     name: "Solomon Islands",
-    value: "us",
+    value: "sb",
   },
   {
     name: "Seychelles",
-    value: "us",
+    value: "sc",
   },
   {
     name: "Sudan",
-    value: "us",
+    value: "sd",
   },
   {
     name: "Sweden",
-    value: "us",
+    value: "se",
   },
   {
     name: "Singapore",
-    value: "us",
+    value: "sg",
   },
   {
     name: "Saint Helena",
-    value: "us",
+    value: "sh",
   },
   {
     name: "Slovenia",
-    value: "us",
+    value: "si",
   },
   {
     name: "Svalbard and Jan Mayen Islands",
-    value: "us",
+    value: "sj",
   },
   {
     name: "Slovakia",
-    value: "us",
+    value: "sk",
   },
   {
     name: "Sierra Leone",
-    value: "us",
+    value: "sl",
   },
   {
     name: "San Marino",
-    value: "us",
+    value: "sm",
   },
   {
     name: "Senegal",
-    value: "us",
+    value: "sn",
   },
   {
     name: "Somalia",
-    value: "us",
+    value: "so",
   },
   {
     name: "Suriname",
-    value: "us",
+    value: "sr",
   },
   {
     name: "South Sudan",
-    value: "us",
+    value: "ss",
   },
   {
     name: "Sao Tome and Principe",
-    value: "us",
+    value: "st",
   },
   {
     name: "El Salvador",
-    value: "us",
+    value: "sv",
   },
   {
     name: "Sint Maarten",
-    value: "us",
+    value: "sx",
   },
   {
     name: "Syrian Arab Republic",
-    value: "us",
+    value: "sy",
   },
   {
     name: "Swaziland",
-    value: "us",
+    value: "sz",
   },
   {
     name: "Turks and Caicos Islands",
-    value: "us",
+    value: "tc",
   },
   {
     name: "Chad",
-    value: "us",
+    value: "td",
   },
   {
     name: "French Southern Territories",
-    value: "us",
+    value: "tf",
   },
   {
     name: "Togo",
-    value: "us",
+    value: "tg",
   },
   {
     name: "Thailand",
-    value: "us",
+    value: "th",
   },
   {
     name: "Tajikistan",
-    value: "us",
+    value: "tj",
   },
   {
     name: "Tokelau",
-    value: "us",
+    value: "tk",
   },
   {
     name: "Timor-Leste",
-    value: "us",
+    value: "tl",
   },
   {
     name: "Turkmenistan",
-    value: "us",
+    value: "tm",
   },
   {
     name: "Tunisia",
-    value: "us",
+    value: "tn",
   },
   {
     name: "Tonga",
-    value: "us",
+    value: "to",
   },
   {
     name: "Turkey",
-    value: "us",
+    value: "tr",
   },
   {
     name: "Trinidad and Tobago",
-    value: "us",
+    value: "tt",
   },
   {
     name: "Tuvalu",
-    value: "us",
+    value: "tv",
   },
   {
     name: "Taiwan",
-    value: "us",
+    value: "tw",
   },
   {
     name: "Tanzania",
-    value: "us",
+    value: "tz",
   },
   {
     name: "Ukraine",
-    value: "us",
+    value: "ua",
   },
   {
     name: "Uganda",
-    value: "us",
+    value: "ug",
   },
   {
     name: "US Minor Outlying Islands",
-    value: "us",
+    value: "um",
   },
   {
     name: "United States",
@@ -985,74 +953,70 @@ export const countryOptions = [
   },
   {
     name: "Uruguay",
-    value: "us",
+    value: "uy",
   },
   {
     name: "Uzbekistan",
-    value: "us",
+    value: "uz",
   },
   {
     name: "Holy See",
-    value: "us",
+    value: "va",
   },
   {
     name: "Saint Vincent and the Grenadines",
-    value: "us",
+    value: "vc",
   },
   {
     name: "Venezuela",
-    value: "us",
+    value: "ve",
   },
   {
     name: "Virgin Islands, British",
-    value: "us",
+    value: "vg",
   },
   {
     name: "Virgin Islands, U.S.",
-    value: "us",
+    value: "vi",
   },
   {
     name: "Vietnam",
-    value: "us",
+    value: "vn",
   },
   {
     name: "Vanuatu",
-    value: "us",
+    value: "vu",
   },
   {
     name: "Wallis and Futuna Islands",
-    value: "us",
+    value: "wf",
   },
   {
     name: "Samoa",
-    value: "us",
+    value: "ws",
   },
   {
     name: "Kosovo",
-    value: "us",
+    value: "xk",
   },
   {
     name: "Yemen",
-    value: "us",
+    value: "ye",
   },
   {
     name: "Mayotte",
-    value: "us",
+    value: "yt",
   },
   {
     name: "South Africa",
-    value: "us",
-  },
-  {
-    name: "Uganda",
-    value: "us",
+    value: "za",
   },
   {
     name: "Zambia",
-    value: "us",
+    value: "zm",
   },
   {
     name: "Zimbabwe",
-    value: "us",
+    value: "zw",
   },
 ];
