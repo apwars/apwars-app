@@ -353,7 +353,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
@@ -386,9 +386,6 @@ export default {
      }
   },
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     ...mapActions({
       getWar: "war/getWar",
       setupMusic: "music/setupMusic",
@@ -437,11 +434,9 @@ export default {
     },
   },
   async mounted() {
-    this.setHeader(false);
     await this.fetchData(); 
   },
   beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
     if (!to.path.includes("/war")) {
       this.clearMusic();
     }

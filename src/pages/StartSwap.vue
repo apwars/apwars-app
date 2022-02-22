@@ -297,8 +297,6 @@
 </template>
 <script>
 import axios from "axios";
-import { mapMutations } from "vuex";
-
 import errorHandler from "@/helpers/errorHandler";
 
 import ToastSnackbar from "@/plugins/ToastSnackbar";
@@ -343,9 +341,6 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     backToHome() {
       this.$router.push("/");
     },
@@ -439,15 +434,8 @@ export default {
       return false;
     },
   },
-  created() {
-    this.setHeader(false);
-  },
   mounted() {
     this.fetchOptions();
-  },
-  beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
-    next();
   },
 };
 </script>

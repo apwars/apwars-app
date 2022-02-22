@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
 export default {
   components: {},
 
@@ -58,7 +57,6 @@ export default {
   },
 
   mounted() {
-    this.setHeader(false);
     // document.getElementsByTagName("footer")[0].style.display = 'none';
     // document.getElementsByClassName("btn-chat")[0].style.display = 'none';
 
@@ -75,10 +73,6 @@ export default {
   },
 
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
-
     initData() {
       this.$nextTick(() => {
         this.resizeIframe();

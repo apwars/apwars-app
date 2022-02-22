@@ -88,7 +88,6 @@ import TheMonstrousJourney from "./TheMonstrousJourney";
 import Arcadia from "./Arcadia";
 import War from "./War";
 
-import { mapMutations } from "vuex";
 import moment from "moment";
 
 export default {
@@ -213,15 +212,10 @@ export default {
   },
 
   mounted() {
-    this.setHeader(false);
     this.loadData();
   },
 
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
-
     async loadData() {
       if (!this.isConnected) {
         return;

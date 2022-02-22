@@ -342,7 +342,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapGetters, mapState, mapActions } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 import errorHandler from "@/helpers/errorHandler";
 
 import WarsController from "@/controller/WarsController";
@@ -509,9 +509,6 @@ export default {
     },
   },
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     ...mapActions({
       enlist: "enlistment/enlist",
       getWar: "war/getWar",
@@ -667,12 +664,10 @@ export default {
     },
   },
   async mounted() {
-    this.setHeader(false);
     this.checkTour();
     this.fetchData();
   },
   beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
     if (!to.path.includes("/war")) {
       this.clearMusic();
     }

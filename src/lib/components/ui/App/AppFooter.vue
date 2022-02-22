@@ -4,33 +4,15 @@
       class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
     >
       <div class="d-flex side-menu align-center">
-        <div class="d-inline-flex">
-          <img
-            class="d-block mx-1 mx-md-2 avatar"
-            :src="
-              `https://avatar.apwars.farm/?seed=${account}&avatar=${avatar}`
-            "
-            alt="avatar"
-          />
-        </div>
-        <div class="d-flex align-center">
-          <img
-            class="d-block mx-0 mx-md-1 i-coin"
-            src="/images/wgold.png  "
-            alt="wgold"
-          />
-          <span class="balance-wGOLD">
-            <amount
-              v-if="!isLoading"
-              :amount="balance"
-              decimals="2"
-              symbol="wGOLD"
+        <img
+              src="/images/project/logo-small.png"
+              height="48"
+              alt="logo"
+              class="ml-2"
             />
-            <span v-else>
-              0.00 wGOLD
-            </span>
-          </span>
-        </div>
+
+            <div>Docs</div>
+            <div>Farm</div>
       </div>
       <div class="d-flex menu-main">
         <v-sheet class="menu-itens mx-auto align-center" max-width="100%">

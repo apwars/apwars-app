@@ -432,8 +432,6 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 import BridgeController from "@/controller/BridgeController";
 import WalletController from "@/controller/WalletController";
 
-import { mapMutations } from "vuex";
-
 export default {
   components: {
     NumberField,
@@ -684,15 +682,10 @@ export default {
   },
 
   mounted() {
-    this.setHeader(false);
     this.loadData();
   },
 
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
-
     async loadData() {
       if (!this.isConnected) {
         return;
