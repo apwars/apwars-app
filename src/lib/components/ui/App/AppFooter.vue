@@ -144,21 +144,7 @@
       </div>
     </div>
 
-    <div class="d-flex justify-space-between copyright">
-      <div class="overline">
-        Copyright © 2021 <a href="#" target="_blank">APWars</a>, All rights
-        Reserved
-      </div>
-      <v-spacer></v-spacer>
-      <div class="overline">
-        Version<a href="#" target="_blank"> {{ $store.getters.appVersion }} </a>
-      </div>
-      <v-spacer></v-spacer>
-      <div class="overline">
-        Made with <v-icon small color="pink">mdi-heart</v-icon> by
-        <a href="#" target="_blank">Orcs and Humans</a>
-      </div>
-    </div>
+    <div class="spacing"></div>
   </v-footer>
 </template>
 <script>
@@ -376,7 +362,12 @@ export default {
 }
 
 .menu-footer {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
+  max-width: 1280px;
   min-height: 70px;
   border: 2px solid #bb7248;
   border-radius: 6px;
@@ -456,6 +447,10 @@ export default {
 }
 .text-yellow {
   color: yellow;
+}
+
+.spacing {
+  height: 80px;
 }
 
 @media only screen and (max-width: 600px) {
