@@ -11,6 +11,7 @@
         >
           <v-img
             v-if="account"
+            class="rounded"
             :src="
               `https://avatar.apwars.farm/?seed=${getAccount}&avatar=${getAvatar}`
             "
@@ -67,7 +68,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .cursor-pointer:hover {
   color: #ffb800;
 }

@@ -1,10 +1,10 @@
 <template>
-  <v-row>
-    <v-col cols="12" sm="4"><div class="avatar-container"><v-avatar :address="account"/></div></v-col>
-    <v-col cols="12" sm="8">
+  <div class="profile-container">
+    <div class="avatar-container"><v-avatar :address="account"/></div>
+    <div class="account-data">
         <div class="profile-title">Your Profile</div>
-        {{ truncate(account) }}</v-col>
-  </v-row>
+        {{ truncate(account) }}</div>
+  </div>
 </template>
 <script>
 import walletTruncate from "@/helpers/walletTruncate"
@@ -24,11 +24,19 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.profile-container {
+  display: flex;
+}
+.account-data {
+  margin-left: 8px;
+}
 .avatar-container {
-    background-image: url('/images/icons/slot.png');
+    background-image: url('/images/icons/avatar-border.png');
     background-size: cover;
     width: 100%;
     padding: 8px;
+    width: 124px;
+    height: 124px;
 }
 .profile-title {
   font-weight: bold;

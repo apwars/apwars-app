@@ -1,13 +1,13 @@
 <template>
   <v-row>
-    <v-col cols="12">
+    <v-col class="resources-container" cols="12">
       <div class="resources-title">Your Resources</div>
       <div class="switch-container mt-1">
         Binance Smart Chain Network
         <Toggle v-model="network" class="mx-1"></Toggle>
         APWars Off-chain
       </div>
-      <div class="resource-row">
+      <div class="resource-row mt-1">
         <div class="token-container">
           <v-img src="/images/wgold.png" />
         </div>
@@ -74,6 +74,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.resources-container {
+  margin-top: 8px;
+}
 .resources-title {
   font-weight: bold;
   font-size: 18px;
