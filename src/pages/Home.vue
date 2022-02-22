@@ -5,27 +5,48 @@
         >Loading...</game-text
       >
     </div>
-    <v-container class="d-flex" v-else fluid>
+    <v-container class="d-flex" v-else>
       <v-row justify="center" align="center" align-content="center">
         <v-col cols="12" md="4">
           <div class="card-container">
             <Profile />
             <Resources />
+            <div class="divider"></div>
+            <LoyaltyProgram />
           </div>
         </v-col>
         <v-col cols="12" md="4">
-          <game-text header="h3" class="text-center">
-            Loyalty Program
-          </game-text>
+          <div class="d-flex justify-center">
+            <img
+              src="/images/tmj.png"
+              height="90px"
+              class="mt-5 mb-2"
+              alt="the monstrous journey"
+            />
+          </div>
           <div class="d-flex justify-center mt-1">
-            <wButton @click="$router.push('/loyalty-program')" class="mt-1">
-              <span class="text-none text-center">Go to Loyalty Program</span>
-            </wButton>
             <wButton
-              @click="$router.push('/loyalty-program/shop')"
-              class="ml-2 mt-1"
+              @click="$router.push('/the-monstrous-journey')"
+              class="mt-1"
             >
-              <span class="text-none text-center">Go to Shop</span>
+              <span class="text-none text-center">
+                Play Now
+              </span>
+            </wButton>
+          </div>
+          <div class="d-flex justify-center">
+            <img
+              src="/images/arcadia-expansion.png"
+              height="90px"
+              class="mt-5 mb-2"
+              alt="arcadia-expansion"
+            />
+          </div>
+          <div class="d-flex justify-center mt-1">
+            <wButton @click="$router.push('/arcadia')" class="mt-1">
+              <span class="text-none text-center">
+                Play Now
+              </span>
             </wButton>
           </div>
         </v-col>
@@ -59,45 +80,6 @@
               </wButton>
             </div>
           </div>
-        </v-col>
-        <v-col cols="12" md="4">
-          <div class="d-flex justify-center">
-            <img
-              src="/images/tmj.png"
-              height="90px"
-              class="mt-5 mb-2"
-              alt="the monstrous journey"
-            />
-          </div>
-          <div class="d-flex justify-center mt-1">
-            <wButton
-              @click="$router.push('/the-monstrous-journey')"
-              class="mt-1"
-            >
-              <span class="text-none text-center">
-                Play Now
-              </span>
-            </wButton>
-          </div>
-        </v-col>
-        <v-col cols="12" md="4">
-          <div class="d-flex justify-center">
-            <img
-              src="/images/arcadia-expansion.png"
-              height="90px"
-              class="mt-5 mb-2"
-              alt="arcadia-expansion"
-            />
-          </div>
-          <div class="d-flex justify-center mt-1">
-            <wButton @click="$router.push('/arcadia')" class="mt-1">
-              <span class="text-none text-center">
-                Play Now
-              </span>
-            </wButton>
-          </div>
-        </v-col>
-        <v-col cols="12" md="4">
           <tasks />
         </v-col>
       </v-row>
@@ -117,6 +99,7 @@ import Amount from "@/lib/components/ui/Utils/Amount.vue";
 
 import Profile from "@/lib/components/ui/Home/Profile";
 import Resources from "@/lib/components/ui/Home/Resources";
+import LoyaltyProgram from "@/lib/components/ui/Home/LoyaltyProgram";
 
 import WarsController from "@/controller/WarsController";
 
@@ -131,6 +114,7 @@ export default {
     Amount,
     Profile,
     Resources,
+    LoyaltyProgram,
   },
 
   data() {
@@ -260,5 +244,11 @@ export default {
   padding: 24px;
   background-color: #110C09;
   border: 2px solid #FFEEBC;
+  background-image: url('/images/texture/dark-wood.png');
+}
+.divider {
+  width: 100%;
+  border-bottom: 1px solid #FFEEBC;
+  margin: 12px 0;
 }
 </style>
