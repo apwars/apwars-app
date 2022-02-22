@@ -6,6 +6,7 @@ import UserModule from "./user";
 import EnlistmentModule from "./enlistment";
 import WarModule from "./war";
 import MusicModule from "./music";
+import WalletModule from "./wallet";
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     enlistment: EnlistmentModule,
     war: WarModule,
     music: MusicModule,
+    wallet: WalletModule,
   },
 
   state: {

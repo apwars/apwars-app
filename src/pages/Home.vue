@@ -7,50 +7,16 @@
     </div>
     <v-container class="d-flex" v-else fluid>
       <v-row justify="center" align="center" align-content="center">
-        <v-col cols="12" md="4" class="pr-0 pl-1">
-          <div class="mt-1"></div>
-          <game-text header="h4" class="text-center mt-2">
-            {{ this.stepWar.title }}
-          </game-text>
-          <div
-            v-if="stepWar.dateTime > 0"
-            class="card-body-home d-flex justify-center align-center"
-          >
-            <countdown
-              class="mt-0"
-              :time="stepWar.dateTime"
-              hideEnd
-              @end="loadData()"
-            />
-          </div>
-          <div class="d-flex justify-center mt-1">
-            <wButton @click="$router.push('/war/intro')" class="mt-1">
-              <span class="text-none text-center">Go to War</span>
-            </wButton>
+        <v-col cols="12" md="4">
+          <div class="card-container">
+            <Profile />
+            <Resources />
           </div>
         </v-col>
         <v-col cols="12" md="4">
           <game-text header="h3" class="text-center">
             Loyalty Program
           </game-text>
-          <div class="card-body-home d-flex justify-center align-center">
-            <img
-              src="/images/icons/coins/wSCARS.png"
-              width="95px"
-              alt="War SCARS"
-            />
-            <div class="ml-2">
-              <h2 class="text-h2">
-                <amount
-                  :amount="balancewSCARS"
-                  decimals="0"
-                  formatted
-                  tooltip
-                />
-              </h2>
-              <div class="mt-1 font-weight-bold">Your War SCARS</div>
-            </div>
-          </div>
           <div class="d-flex justify-center mt-1">
             <wButton @click="$router.push('/loyalty-program')" class="mt-1">
               <span class="text-none text-center">Go to Loyalty Program</span>
@@ -140,6 +106,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
@@ -148,7 +115,9 @@ import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
 import Tasks from "@/lib/components/ui/Home/Tasks";
 import Amount from "@/lib/components/ui/Utils/Amount.vue";
 
-import WalletController from "@/controller/WalletController";
+import Profile from "@/lib/components/ui/Home/Profile";
+import Resources from "@/lib/components/ui/Home/Resources";
+
 import WarsController from "@/controller/WarsController";
 
 export default {
@@ -160,6 +129,8 @@ export default {
     CountdownBlock,
     Tasks,
     Amount,
+    Profile,
+    Resources,
   },
 
   data() {
@@ -217,12 +188,15 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      fetchBalances: "wallet/fetchBalances",
+    }),
     async loadData() {
       if (!this.isConnected) {
         return;
       }
+      this.fetchBalances();
       this.stepWar = await this.getStepWar();
-      this.balancewSCARS = await this.getBalancewSCARS(this.account);
       this.isLoading = false;
     },
 
@@ -265,17 +239,6 @@ export default {
 
       return step;
     },
-
-    async getBalancewSCARS(account) {
-      const controller = new WalletController();
-      const wallet = await controller.wallets(account);
-
-      if (!wallet.balances["wSCARS"]) {
-        return 0;
-      }
-
-      return wallet.balances["wSCARS"];
-    },
   },
 };
 </script>
@@ -292,5 +255,10 @@ export default {
 }
 .text-buy {
   width: 150px;
+}
+.card-container {
+  padding: 24px;
+  background-color: #110C09;
+  border: 2px solid #FFEEBC;
 }
 </style>

@@ -1,6 +1,6 @@
-export default function walletTruncate(wallet) {
+export default function walletTruncate(wallet, length = 5) {
     if (!wallet) {
         return '';
     }
-    return `${wallet.substring(0,5)}...${wallet.substring(wallet.length - 3, wallet.length)}`
+    return `${wallet.substring(0, length)}...${wallet.substring(wallet.length - length, wallet.length)}`
 }
