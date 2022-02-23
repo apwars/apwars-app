@@ -13,7 +13,7 @@
           <v-img src="/images/wgold.png" />
         </div>
         <div class="balance-info">
-          <Amount :amount="getBalance('wGOLD')" :formatted="network" decimals="2" />
+          <Amount :amount="getBalance('wGOLD')" :formatted="network" decimals="2" tooltip />
           <div class="token-name">wGOLD</div>
         </div>
         </div>
@@ -26,7 +26,7 @@
         </div>
         
         <div class="balance-info">
-          <Amount :amount="getBalance('wCOURAGE')" :formatted="network" decimals="2" />
+          <Amount :amount="getBalance('wCOURAGE')" :formatted="network" decimals="2" tooltip />
           <div class="token-name">wCOURAGE</div>
         </div>
         </div>
@@ -39,7 +39,7 @@
         </div>
         
         <div class="balance-info">
-          <Amount :amount="getBalance('wLAND')" :formatted="network" decimals="2" />
+          <Amount :amount="getBalance('wLAND')" :formatted="network" decimals="2" tooltip />
           <div class="token-name">wLAND</div>
         </div>
         </div>
