@@ -8,7 +8,6 @@
               src="/images/project/logo-small.png"
               height="48"
               alt="logo"
-              class="ml-2"
             />
 
             <a class="menu-link" href="https://www-v1.apwars.farm/docs" target="_blank">Docs</a>
@@ -312,6 +311,9 @@ export default {
 
 <style scoped lang="scss">
 
+.side-menu {
+  margin: 0 12px;
+}
 .side-menu-right {
   width: 20%;
   @media only screen and (max-width: 1264px) {
@@ -364,7 +366,7 @@ export default {
 }
 
 .menu-item > .divider {
-  width: 3px;
+  width: 1px;
   height: 45px;
   border-radius: 3px;
   background-color: #bb7148;
