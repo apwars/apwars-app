@@ -63,7 +63,7 @@ export default {
       return this.decimals ?? 0;
     },
     isFormatted() {
-      return this.formatted !== undefined;
+      return this.formatted;
     },
     isIcon() {
       return (

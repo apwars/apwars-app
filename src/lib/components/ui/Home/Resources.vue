@@ -13,7 +13,7 @@
           <v-img src="/images/wgold.png" />
         </div>
         <div class="balance-info">
-          <Amount :amount="getBalance('wGOLD')" />
+          <Amount :amount="getBalance('wGOLD')" :formatted="network" decimals="2" />
           <div class="token-name">wGOLD</div>
         </div>
         </div>
@@ -26,7 +26,7 @@
         </div>
         
         <div class="balance-info">
-          <Amount :amount="getBalance('wCOURAGE')" />
+          <Amount :amount="getBalance('wCOURAGE')" :formatted="network" decimals="2" />
           <div class="token-name">wCOURAGE</div>
         </div>
         </div>
@@ -39,7 +39,7 @@
         </div>
         
         <div class="balance-info">
-          <Amount :amount="getBalance('wLAND')" />
+          <Amount :amount="getBalance('wLAND')" :formatted="network" decimals="2" />
           <div class="token-name">wLAND</div>
         </div>
         </div>
@@ -127,6 +127,10 @@ export default {
   font-weight: bold;
   font-size: 18px;
   line-height: 1.4;
+  max-width: 90px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .token-name {
   font-size: 10px;
