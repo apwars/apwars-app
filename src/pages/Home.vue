@@ -216,6 +216,7 @@ export default {
   background-color: #110C09;
   border: 2px solid #FFEEBC;
   background-image: url('/images/texture/dark-wood.png');
+  background-repeat: repeat;
 }
 .divider {
   width: 100%;
