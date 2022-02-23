@@ -5,7 +5,7 @@
         >Loading...</game-text
       >
     </div>
-    <v-container class="d-flex" v-else>
+    <v-container class="d-flex" v-else no-gutters>
       <v-row>
         <v-col cols="12" md="4">
           <div class="card-container">
