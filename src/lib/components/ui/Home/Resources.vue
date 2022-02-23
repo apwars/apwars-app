@@ -84,7 +84,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .resources-container {
-  margin-top: 8px;
+  margin-top: 21px;
 }
 .resources-title {
   font-weight: bold;

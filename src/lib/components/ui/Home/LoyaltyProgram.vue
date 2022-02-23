@@ -18,6 +18,7 @@
     <div class="d-flex justify-center mt-1">
       <Button
         type="wsecondary"
+        icon="pcs"
         size="small"
         :handleClick="() => $router.push('/loyalty-program')"
         class="mt-1"
