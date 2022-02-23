@@ -5,11 +5,8 @@
       <img src="/images/icons/coins/wSCARS.png" width="64px" alt="War SCARS" />
       <div class="ml-2">
         <div class="scars-amount">
-          <amount
-            :amount="getBalance('wSCARS')"
-            decimals="2"
-            formatted
-            tooltip
+          <Amount
+            :amount="getBalance('wSCARS')" :formatted="true" decimals="2" tooltip
           />
         </div>
         <div class="scars-text">Your War SCARS</div>
@@ -47,10 +44,12 @@ export default {
     Amount,
     Button,
   },
-  methods: {
+  computed: {
     ...mapState({
       offChainBalance: (state) => state.wallet.offChainBalance,
     }),
+  },
+  methods: {
     getBalance(token) {
       return this.offChainBalance[token] || 0;
     },
