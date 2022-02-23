@@ -6,7 +6,7 @@
       >
     </div>
     <v-container class="d-flex" v-else>
-      <v-row justify="center" align="center" align-content="center">
+      <v-row>
         <v-col cols="12" md="4">
           <div class="card-container">
             <Profile />
