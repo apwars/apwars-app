@@ -246,7 +246,7 @@ export default {
         dateNow > new Date(lastWar.deadlines.endEnlistment).getTime()
       ) {
         step = {
-          title: "Collect prizes and wUNITS",
+          title: "Prize and wUNITs collection ends in",
           dateTime: new Date(lastWar.deadlines.endClaimPrize).getTime(),
         };
       } else if (
