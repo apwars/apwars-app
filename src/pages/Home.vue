@@ -51,35 +51,6 @@
           </div>
         </v-col>
         <v-col cols="12" md="4">
-          <game-text header="h3" class="text-center">
-            Buy Resources
-          </game-text>
-          <div class="d-flex flex-column justify-center align-center">
-            <div class="d-flex justify-space-between align-center">
-              <img class="ml-1  mr-2" width="78px" src="/images/wGOLD.png" />
-              <wButton @click="$router.push('/buy-wgold')" class="mt-1">
-                <span class="text-none text-center text-buy">
-                  Buy wGOLD
-                </span>
-              </wButton>
-            </div>
-            <div class="d-flex justify-space-between align-center">
-              <img class="mr-2" width="80px" src="/images/wCOURAGE.png" />
-              <wButton @click="$router.push('/buy-wcourage')" class="mt-1">
-                <span class="text-none text-center text-buy">
-                  Buy wCOURAGE
-                </span>
-              </wButton>
-            </div>
-            <div class="d-flex justify-space-between align-center">
-              <img class="mr-2" width="80px" src="/images/wLAND.png" />
-              <wButton @click="$router.push('/buy-wland')" class="mt-1">
-                <span class="text-none text-center text-buy">
-                  Buy wLAND
-                </span>
-              </wButton>
-            </div>
-          </div>
           <tasks />
         </v-col>
       </v-row>

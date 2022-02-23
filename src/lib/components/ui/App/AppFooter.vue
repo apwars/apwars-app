@@ -11,8 +11,8 @@
               class="ml-2"
             />
 
-            <div>Docs</div>
-            <div>Farm</div>
+            <a class="menu-link" href="https://www-v1.apwars.farm/docs" target="_blank">Docs</a>
+            <a class="menu-link" href="/farms" target="_blank">Farm</a>
       </div>
       <div class="d-flex menu-main">
         <v-sheet class="menu-itens mx-auto align-center" max-width="100%">
@@ -311,40 +311,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.menu-main {
-  width: 60%;
-  @media only screen and (max-width: 1264px) {
-    width: 55%;
-  }
-
-  @media only screen and (max-width: 1150px) {
-    width: 65%;
-  }
-
-  @media only screen and (max-width: 960px) {
-    width: 100%;
-  }
-
-  @media only screen and (max-width: 730px) {
-    width: 80%;
-  }
-
-  @media only screen and (max-width: 650px) {
-    width: 70%;
-  }
-}
-
-.side-menu {
-  width: 20%;
-  @media only screen and (max-width: 1264px) {
-    width: 30%;
-  }
-
-  @media only screen and (max-width: 960px) {
-    width: 80%;
-    justify-content: center;
-  }
-}
 
 .side-menu-right {
   width: 20%;
@@ -367,13 +333,12 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 1280px;
+  max-width: 1137px;
   min-height: 70px;
-  border: 2px solid #bb7248;
+  border: 2px solid #FFEEBC;
   border-radius: 6px;
   background-image: url("/images/battle/bg-wars.png");
   background-repeat: repeat;
-  margin: 0px 12px;
 }
 
 .menu-itens,
@@ -453,6 +418,19 @@ export default {
   height: 80px;
 }
 
+.menu-link {
+  padding: 4px 12px;
+  color: #FFEEBC;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.v-sheet.v-footer {
+  background: transparent !important;
+}
+
 @media only screen and (max-width: 600px) {
   .copyright {
     display: none !important;
@@ -475,7 +453,6 @@ export default {
 @media only screen and (max-width: 600px) {
   .v-sheet.v-footer {
     padding: 10px 4px !important;
-    background: transparent !important;
   }
   .v-main {
     padding-bottom: 135px !important;
