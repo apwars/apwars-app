@@ -5,7 +5,7 @@
         >Loading...</game-text
       >
     </div>
-    <v-container class="d-flex" v-else no-gutters>
+    <v-container class="d-flex" v-else>
       <v-row>
         <v-col cols="12" md="4">
           <div class="card-container">
@@ -16,24 +16,11 @@
           </div>
         </v-col>
         <v-col cols="12" md="4">
-          <div class="d-flex justify-center">
-            <img
-              src="/images/tmj.png"
-              height="90px"
-              class="mt-5 mb-2"
-              alt="the monstrous journey"
-            />
+          <div class="card-container">
+            <UnlockSoldier />
+            <div class="divider"></div>
           </div>
-          <div class="d-flex justify-center mt-1">
-            <wButton
-              @click="$router.push('/the-monstrous-journey')"
-              class="mt-1"
-            >
-              <span class="text-none text-center">
-                Play Now
-              </span>
-            </wButton>
-          </div>
+
           <div class="d-flex justify-center">
             <img
               src="/images/arcadia-expansion.png"
@@ -71,6 +58,7 @@ import Amount from "@/lib/components/ui/Utils/Amount.vue";
 import Profile from "@/lib/components/ui/Home/Profile";
 import Resources from "@/lib/components/ui/Home/Resources";
 import LoyaltyProgram from "@/lib/components/ui/Home/LoyaltyProgram";
+import UnlockSoldier from "@/lib/components/ui/Home/UnlockSoldier";
 
 import WarsController from "@/controller/WarsController";
 
@@ -86,6 +74,7 @@ export default {
     Profile,
     Resources,
     LoyaltyProgram,
+    UnlockSoldier,
   },
 
   data() {
