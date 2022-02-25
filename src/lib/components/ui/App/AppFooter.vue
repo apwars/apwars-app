@@ -316,7 +316,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 1280px;
+  max-width: 1232px;
   min-height: 70px;
   border: 2px solid #ffeebc;
   border-radius: 6px;
