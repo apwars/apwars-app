@@ -4,14 +4,15 @@
       class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
     >
       <div class="d-flex side-menu align-center">
-        <img
-              src="/images/project/logo-small.png"
-              height="48"
-              alt="logo"
-            />
+        <img src="/images/project/logo-small.png" height="48" alt="logo" />
 
-            <a class="menu-link" href="https://www-v1.apwars.farm/docs" target="_blank">Docs</a>
-            <a class="menu-link" href="/farms" target="_blank">Farm</a>
+        <a
+          class="menu-link"
+          href="https://www-v1.apwars.farm/docs"
+          target="_blank"
+          >Docs</a
+        >
+        <a class="menu-link" href="/farms" target="_blank">Farm</a>
       </div>
       <div class="d-flex menu-main">
         <v-sheet class="menu-itens mx-auto align-center" max-width="100%">
@@ -104,41 +105,63 @@
       </div>
       <div class="d-flex side-menu-right">
         <div class="text-center" v-if="track">
-        <v-menu :close-on-content-click="false"
-      :nudge-height="200">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-            <v-icon v-if="volume !== 0"
-              >mdi-volume-high</v-icon
-            >
-            <v-icon v-else
-              >mdi-volume-off</v-icon
-            >
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item>
-              <v-list-item-title @click="() => setVolume(0)" :class="['volume-button', volume === 0 ? 'text-yellow' : '']">Disable</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.1)" :class="['volume-button', volume === 0.1 ? 'text-yellow' : '']">25%</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.25)" :class="['volume-button', volume === 0.25 ? 'text-yellow' : '']">50%</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.4)" :class="['volume-button', volume === 0.4 ? 'text-yellow' : '']">75%</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.5)" :class="['volume-button', volume === 0.5 ? 'text-yellow' : '']">100%</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+          <v-menu :close-on-content-click="false" :nudge-height="200">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                <v-icon v-if="volume !== 0">mdi-volume-high</v-icon>
+                <v-icon v-else>mdi-volume-off</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title
+                  @click="() => setVolume(0)"
+                  :class="['volume-button', volume === 0 ? 'text-yellow' : '']"
+                  >Disable</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title
+                  @click="() => setVolume(0.1)"
+                  :class="[
+                    'volume-button',
+                    volume === 0.1 ? 'text-yellow' : '',
+                  ]"
+                  >25%</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title
+                  @click="() => setVolume(0.25)"
+                  :class="[
+                    'volume-button',
+                    volume === 0.25 ? 'text-yellow' : '',
+                  ]"
+                  >50%</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title
+                  @click="() => setVolume(0.4)"
+                  :class="[
+                    'volume-button',
+                    volume === 0.4 ? 'text-yellow' : '',
+                  ]"
+                  >75%</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title
+                  @click="() => setVolume(0.5)"
+                  :class="[
+                    'volume-button',
+                    volume === 0.5 ? 'text-yellow' : '',
+                  ]"
+                  >100%</v-list-item-title
+                >
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </div>
       </div>
     </div>
@@ -161,11 +184,6 @@ export default {
           href: "/",
         },
         {
-          title: "Game Items",
-          image: "/images/icons/library.png",
-          href: "/game-items",
-        },
-        {
           title: "Black Market",
           image: "/images/icons/black-market.png",
           href: "/black-market",
@@ -173,63 +191,27 @@ export default {
         {
           title: "Inventory",
           image: "/images/icons/inventory.png",
-          href: "",
-          submenu: [
-            {
-              title: "Inventory",
-              image: "/images/icons/inventory.png",
-              href: "/inventory",
-            },
-            {
-              title: "Bridge",
-              href: "/bridge",
-              image: "/images/icons/exchange.png",
-            },
-          ],
+          href: "/inventory",
         },
         {
-          title: "Wars",
+          title: "War against FED",
           image: "/images/icons/wars.png",
-          href: "",
-          submenu: [
-            {
-              title: "The Monstrous Journey",
-              image: "/images/icons/tmj.png?v=1",
-              href: "/the-monstrous-journey",
-            },
-            {
-              title: "Packs",
-              href: "/packs",
-              image: "/images/icons/army.png",
-            },
-            {
-              title: "War against FED",
-              image: "/images/icons/fed.png",
-              href: "/war/intro",
-            },
-            {
-              title: "War Preparation",
-              image: "/images/war-preparation/icon-war-preparation.png",
-              href: "/war-preparation",
-            },
-            {
-              title: "Training Center",
-              href: "/training-center",
-              image: "/images/icons/battle-shield.png",
-            },
-          ],
+          href: "/war/intro",
         },
-
+        {
+          title: "Bridge",
+          href: "/bridge",
+          image: "/images/icons/exchange.png",
+        },
+        {
+          title: "Training Center",
+          href: "/training-center",
+          image: "/images/icons/battle-shield.png",
+        },
         {
           title: "Arcadia",
           image: "/images/icons/world.png",
           href: "/arcadia",
-        },
-
-        {
-          title: "Leaderboard",
-          image: "/images/icons/leaderboard.png?v=2",
-          href: "/leaderboard",
         },
       ],
       balance: 0,
@@ -310,7 +292,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .side-menu {
   margin: 0 12px;
 }
@@ -337,7 +318,7 @@ export default {
   width: 100%;
   max-width: 1280px;
   min-height: 70px;
-  border: 2px solid #FFEEBC;
+  border: 2px solid #ffeebc;
   border-radius: 6px;
   background-image: url("/images/battle/bg-wars.png");
   background-repeat: repeat;
@@ -422,7 +403,7 @@ export default {
 
 .menu-link {
   padding: 4px 12px;
-  color: #FFEEBC;
+  color: #ffeebc;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
