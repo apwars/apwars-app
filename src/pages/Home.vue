@@ -19,8 +19,10 @@
           <div class="card-container">
             <UnlockSoldier />
             <div class="divider"></div>
+            <Wars />
           </div>
-
+        </v-col>
+        <v-col cols="12" md="4">
           <div class="d-flex justify-center">
             <img
               src="/images/arcadia-expansion.png"
@@ -36,8 +38,6 @@
               </span>
             </wButton>
           </div>
-        </v-col>
-        <v-col cols="12" md="4">
           <tasks />
         </v-col>
       </v-row>
@@ -59,8 +59,7 @@ import Profile from "@/lib/components/ui/Home/Profile";
 import Resources from "@/lib/components/ui/Home/Resources";
 import LoyaltyProgram from "@/lib/components/ui/Home/LoyaltyProgram";
 import UnlockSoldier from "@/lib/components/ui/Home/UnlockSoldier";
-
-import WarsController from "@/controller/WarsController";
+import Wars from "@/lib/components/ui/Home/Wars";
 
 export default {
   components: {
@@ -75,6 +74,7 @@ export default {
     Resources,
     LoyaltyProgram,
     UnlockSoldier,
+    Wars,
   },
 
   data() {
@@ -91,7 +91,6 @@ export default {
         { image: "/images/weapons/catapult-undead.png" },
         { image: "/images/weapons/catapult-elves.png" },
       ],
-      stepWar: {},
     };
   },
 
@@ -140,48 +139,7 @@ export default {
         return;
       }
       this.fetchBalances();
-      this.stepWar = await this.getStepWar();
       this.isLoading = false;
-    },
-
-    async getStepWar() {
-      const controller = new WarsController();
-      const lastId = await controller.getLastId();
-      const lastWar = await controller.getOne(lastId.id);
-
-      let step = {
-        title: "War is coming soon...",
-        dateTime: new Date(lastWar.deadlines.startEnlistment).getTime(),
-      };
-
-      const dateNow = new Date().getTime();
-      if (dateNow > new Date(lastWar.deadlines.endClaimPrize).getTime()) {
-        step = {
-          title: "War ended!",
-          dateTime: 0,
-        };
-      } else if (
-        dateNow > new Date(lastWar.deadlines.endEnlistment).getTime()
-      ) {
-        step = {
-          title: "Collect prizes and wUNITS",
-          dateTime: new Date(lastWar.deadlines.endClaimPrize).getTime(),
-        };
-      } else if (
-        dateNow > new Date(lastWar.deadlines.startEnlistment).getTime()
-      ) {
-        step = {
-          title: "Enlistment ends in",
-          dateTime: new Date(lastWar.deadlines.endEnlistment).getTime(),
-        };
-      }
-      step.dateTime -= dateNow;
-
-      if (step.dateTime < 0) {
-        step.dateTime = 0;
-      }
-
-      return step;
     },
   },
 };
