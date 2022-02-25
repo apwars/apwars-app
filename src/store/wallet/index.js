@@ -3,8 +3,12 @@ import actions from "./actions";
 import getters from "./getters";
 
 const state = {
+  isLoadingBalance: false,
   onChainBalance: {},
   offChainBalance: {},
+  isLoadingSoldier: false,
+  humanSoldier: null,
+  orcSoldier: null,
 };
 
 export default {

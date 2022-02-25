@@ -369,8 +369,8 @@ export default {
       war: (state) => state.war.war,
       phase: (state) => state.war.phase,
       countdownTimer: (state) => state.war.countdown,
-      humanSoldier: (state) => state.war.humanSoldier,
-      orcSoldier: (state) => state.war.orcSoldier,
+      humanSoldier: (state) => state.wallet.humanSoldier,
+      orcSoldier: (state) => state.wallet.orcSoldier,
     }),
     ...mapGetters({
       introWar: "war/introWar"

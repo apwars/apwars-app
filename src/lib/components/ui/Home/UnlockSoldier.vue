@@ -41,10 +41,31 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
 import Button from "@/lib/components/ui/Buttons/Button";
 
 export default {
   components: { Button },
+  computed: {
+    ...mapState({
+      humanSoldier: state => state.wallet.humanSoldier,
+      orcSoldier: state => state.wallet.orcSoldier,
+    }),
+    hasNoSoldiers() {
+      return !this.humanSoldier && !this.orcSoldier;
+    },
+    hasAllSoldiers() {
+      return this.humanSoldier && this.orcSoldier;
+    }
+  },
+  methods: {
+    ...mapActions({
+      checkSoldiers: "wallet/checkSoldiers",
+    }),
+  },
+  mounted() {
+    this.checkSoldiers();
+  }
 };
 </script>
 <style lang="scss" scoped>
