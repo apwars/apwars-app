@@ -218,8 +218,15 @@ export default {
 }
 .soldier-info {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  height: 120px;
+  min-height: 120px;
+  @media screen and (min-width: 1137px) {
+    flex-direction: row;
+    align-items: initial;
+  }
 }
 .level-data {
   text-align: center;
