@@ -1,7 +1,7 @@
 <template>
 
     <div class="progress" :style="`--color1: ${color1};--color2: ${color2}`">
-      <div class="value" :style="`--percent: ${percent}`"><div class="text" :style="`--color: ${textColor}`" v-if="!noText"> {{ value }}% </div></div>
+      <div class="value" :style="`--percent: ${percent}`"><div class="text" :style="`--textColor: ${textColor}`" v-if="!noText"> {{ label || percent }} </div></div>
     </div>
 
 </template>
@@ -22,7 +22,11 @@ export default {
     },
     textColor: {
         type: String,
-        default: '#3a2720'
+        default: '#FFF'
+    },
+    label: {
+      type: String,
+      default: ''
     },
     color1: {
         type: String,
@@ -58,9 +62,9 @@ export default {
   justify-content: center;
   align-items: center;
   > .text {
-    color: var(--color);
+    color: var(--textColor);
     font-weight: 700;
-    font-size: 14px;
+    font-size: 10px;
   }
 }
 </style>
