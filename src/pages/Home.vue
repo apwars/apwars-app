@@ -5,7 +5,7 @@
         >Loading...</game-text
       >
     </div>
-    <v-container class="d-flex" v-else>
+    <v-container fluid v-else>
       <v-row>
         <v-col cols="12" md="4">
           <div class="card-container">
@@ -164,6 +164,10 @@ export default {
   border: 2px solid #FFEEBC;
   background-image: url('/images/texture/dark-wood.png');
   background-repeat: repeat;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .divider {
   width: 100%;

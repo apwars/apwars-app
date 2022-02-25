@@ -13,8 +13,8 @@
     <div class="rewards-text mt-2">Join the battle to receive reWARds. Enlist now and become a true Warrior!</div>
 
     <div class="buttons-container">
-      <Button type="wsecondary" icon="swords" text="Go to War" />
-      <Button class="ml-1" type="wsecondary" icon="chest" text="Buy Packs" />
+      <Button type="wsecondary" icon="swords" size="small" text="Go to War" />
+      <Button class="ml-1" type="wsecondary" icon="chest" size="small" text="Buy Packs" />
     </div>
   </div>
 </template>

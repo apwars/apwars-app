@@ -20,7 +20,7 @@
         :handleClick="() => $router.push('/loyalty-program')"
         class="mt-1"
       >
-        <span class="text-none text-center">Go to Loyalty Program</span>
+        <span class="text-none text-center">Loyalty Program</span>
       </Button>
       <Button
         type="wsecondary"
@@ -28,7 +28,7 @@
         :handleClick="() => $router.push('/loyalty-program/shop')"
         class="ml-2 mt-1"
       >
-        <span class="text-none text-center">Go to Shop</span>
+        <span class="text-none text-center">Shop</span>
       </Button>
     </div>
   </div>

@@ -124,8 +124,8 @@ export default {
 }
 
 .time-block {
-  height: 48px;
-  width: 48px;
+  height: 42px;
+  width: 42px;
   background-image: url("/images/buttons/btn-countdown.png");
   background-size: contain;
   display: flex;

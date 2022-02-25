@@ -1,6 +1,5 @@
 <template>
-  <v-row>
-    <v-col class="resources-container" cols="12">
+  <div class="resources-container">
       <div class="resources-title">Your Resources</div>
       <div class="switch-container mt-1">
         Binance Smart Chain Network
@@ -17,7 +16,7 @@
           <div class="token-name">wGOLD</div>
         </div>
         </div>
-        <div class="buy-container"><Button type="wsecondary" size="small" text="Buy wGOLD" isBlock :handleClick="() => $router.push('/buy-wgold')" /></div>
+        <div class="buy-container"><Button type="wsecondary" size="small" text="Buy" :handleClick="() => $router.push('/buy-wgold')" /></div>
       </div>
       <div class="resource-row">
         <div class="token-info">
@@ -30,7 +29,7 @@
           <div class="token-name">wCOURAGE</div>
         </div>
         </div>
-        <div class="buy-container"><Button type="wsecondary" size="small" text="Buy wCOURAGE" isBlock :handleClick="() => $router.push('/buy-wcourage')" /></div>
+        <div class="buy-container"><Button type="wsecondary" size="small" text="Buy" :handleClick="() => $router.push('/buy-wcourage')" /></div>
       </div>
       <div class="resource-row">
         <div class="token-info">
@@ -43,10 +42,9 @@
           <div class="token-name">wLAND</div>
         </div>
         </div>
-        <div class="buy-container"><Button type="wsecondary" size="small" text="Buy wLAND" isBlock :handleClick="() => $router.push('/buy-wland')" /></div>
+        <div class="buy-container"><Button type="wsecondary" size="small" text="Buy" :handleClick="() => $router.push('/buy-wland')" /></div>
       </div>
-    </v-col>
-  </v-row>
+  </div>
 </template>
 <script>
 import { mapState } from "vuex";
@@ -138,5 +136,7 @@ export default {
 }
 .buy-container {
   width: 140px;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
