@@ -12,7 +12,14 @@
           <v-img src="/images/wgold.png" />
         </div>
         <div class="balance-info">
+          <v-skeleton-loader
+            v-if="isLoadingBalances"
+            type="image"
+            width="100%"
+            height="24px"
+          />
           <Amount
+            v-else
             :amount="getBalance('wGOLD')"
             :formatted="network"
             decimals="2"
@@ -37,7 +44,14 @@
         </div>
 
         <div class="balance-info">
+          <v-skeleton-loader
+            v-if="isLoadingBalances"
+            type="image"
+            height="24px"
+            width="100%"
+          />
           <Amount
+            v-else
             :amount="getBalance('wCOURAGE')"
             :formatted="network"
             decimals="2"
@@ -62,7 +76,14 @@
         </div>
 
         <div class="balance-info">
+          <v-skeleton-loader
+            v-if="isLoadingBalances"
+            type="image"
+            height="24px"
+            width="100%"
+          />
           <Amount
+            v-else
             :amount="getBalance('wLAND')"
             :formatted="network"
             decimals="2"
@@ -97,6 +118,9 @@ export default {
       offChainBalance: (state) => state.wallet.offChainBalance,
       isLoadingBalances: (state) => state.wallet.isLoadingBalances,
     }),
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
     account() {
       return this.$store.getters["user/account"];
     },
@@ -110,6 +134,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       network: false,
     };
   },
@@ -120,19 +145,22 @@ export default {
     getBalance(token) {
       return this.balances?.[token] || 0;
     },
+    fetchData() {
+      if (!this.isConnected || !this.account) {
+        return;
+      }
+      this.fetchBalances();
+    },
   },
   mounted() {
-    if (!this.isConnected || !this.account) {
-      return;
-    }
-    this.fetchBalances();
+    this.fetchData();
   },
   watch: {
     isConnected() {
-          this.fetchLands();
-      },
+      this.fetchData();
+    },
     account() {
-      this.fetchBalances();
+      this.fetchData();
     },
   },
 };

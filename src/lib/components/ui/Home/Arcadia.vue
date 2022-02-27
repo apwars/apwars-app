@@ -2,14 +2,17 @@
   <div class="arcadia-container">
     <img src="/images/arcadia-expansion.png" height="48" />
     <div class="villages-navigation">
-        <div class="controls" v-if="villages.length > 1">
-              <div class="prev" @click="() => changeIndex(-1)"></div>
-              <div class="next" @click="() => changeIndex(1)"></div>
-            </div>
-      <Village
-        class="mt-2"
-        :village="currentVillage"
+      <div class="controls" v-if="villages.length > 1">
+        <div class="prev" @click="() => changeIndex(-1)"></div>
+        <div class="next" @click="() => changeIndex(1)"></div>
+      </div>
+      <v-skeleton-loader
+        type="image"
+        height="100%"
+        width="100%"
+        v-if="isLoading"
       />
+      <Village v-else class="mt-2" :village="currentVillage" />
     </div>
     <div class="buy-villages-info mt-1" v-if="!hasVillages">
       Be a master in the world of Arcadia. Acquire your village and build an
@@ -47,6 +50,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       villages: [
         {
           id: 99999999999999999999999,
@@ -65,12 +69,18 @@ export default {
       if (!this.isConnected || !this.account) {
         return;
       }
-      const controller = new ArcadiaController();
-
-      const landsData = await controller.getLands(this.account);
-      const villages = landsData.filter((l) => l.foundationType === 62);
-      if (villages.length > 0) {
-        this.villages = [].concat(villages);
+      this.isLoading = true;
+      try {
+        const controller = new ArcadiaController();
+        const landsData = await controller.getLands(this.account);
+        const villages = landsData.filter((l) => l.foundationType === 62);
+        if (villages.length > 0) {
+          this.villages = [].concat(villages);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoading = false;
       }
     },
     changeIndex(direction) {
@@ -109,7 +119,9 @@ export default {
   background-repeat: repeat;
 }
 .villages-navigation {
-    position: relative;
+  position: relative;
+  height: 92px;
+  width: 100%;
 }
 .controls {
   display: flex;

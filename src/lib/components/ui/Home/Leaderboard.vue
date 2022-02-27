@@ -28,7 +28,6 @@
     </div>
     <div class="leaderboard my-2">
       <v-skeleton-loader
-        class="my-2"
         type="image"
         width="100%"
         height="32px"
@@ -57,6 +56,14 @@ import Button from "@/lib/components/ui/Buttons/Button";
 
 export default {
   components: { Button },
+  computed: {
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
+    account() {
+      return this.$store.getters["user/account"];
+    },
+  },
   data() {
     return {
       selectedGameId: null,
@@ -66,6 +73,9 @@ export default {
   },
   methods: {
     selectGame(selectedId) {
+      if (!this.isConnected || !this.account) {
+        return;
+      }
       if (this.selectedGameId === selectedId) {
         return;
       }
@@ -87,7 +97,6 @@ export default {
       } finally {
         this.isLoading = false;
       }
-      this.leaderBoard = leaderBoard;
     },
     async getTMJ() {
       const controller = new LeaderboardController();
@@ -113,6 +122,14 @@ export default {
   },
   mounted() {
     this.selectGame(0);
+  },
+  watch: {
+    isConnected() {
+      this.selectGame(0);
+    },
+    account() {
+      this.selectGame(0);
+    },
   },
 };
 </script>

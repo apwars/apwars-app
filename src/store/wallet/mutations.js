@@ -7,8 +7,11 @@ export default {
   setOffChainBalance: (state, balances) => {
     state.offChainBalance = balances;
   },
+  setLoadingBalances(state, loading) {
+    state.isLoadingBalances = loading;
+  },
   setSoldierLoading(state, loading) {
-    state.isSoldierLoading = loading;
+    state.isLoadingSoldier = loading;
   },
   setSoldier(state, { type, soldier }) {
     if (type === NFT.HUMAN) {

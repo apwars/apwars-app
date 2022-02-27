@@ -5,8 +5,18 @@
       <img src="/images/icons/coins/wSCARS.png" width="64px" alt="War SCARS" />
       <div class="ml-2">
         <div class="scars-amount">
+          <v-skeleton-loader
+            v-if="isLoadingBalances"
+            type="image"
+            width="100%"
+            height="47px"
+          />
           <Amount
-            :amount="getBalance('wSCARS')" :formatted="true" decimals="2" tooltip
+            v-else
+            :amount="getBalance('wSCARS')"
+            :formatted="true"
+            decimals="2"
+            tooltip
           />
         </div>
         <div class="scars-text">Your War SCARS</div>
@@ -47,6 +57,7 @@ export default {
   computed: {
     ...mapState({
       offChainBalance: (state) => state.wallet.offChainBalance,
+      isLoadingBalances: (state) => state.wallet.isLoadingBalances,
     }),
   },
   methods: {

@@ -6,9 +6,12 @@ import SoldierController from "@/controller/SoldierController";
 import { NFT } from "@/data/NFTs";
 
 export default {
-  fetchBalances({ dispatch }) {
-    dispatch('fecthOnChainBalances');
-    dispatch('fecthOffChainBalances');
+  async fetchBalances({ dispatch, commit }) {
+    commit('setLoadingBalances', true);
+    await dispatch('fecthOnChainBalances');
+    await dispatch('fecthOffChainBalances');
+    console.log('ae');
+    commit('setLoadingBalances', false);
   },
   async fecthOnChainBalances({ rootState, commit }) {
     const addresses = rootState.user.addresses;

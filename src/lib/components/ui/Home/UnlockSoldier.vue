@@ -4,7 +4,8 @@
       <img src="/images/tmj.png" height="64" alt="the monstrous journey" />
     </div>
     <div class="tmj-container mt-2">
-      <template v-if="!soldiers.length">
+      <v-skeleton-loader type="image" height="120px" width="100%" v-if="isLoadingSoldier" />
+      <template v-else-if="!soldiers.length">
         <div class="soldier-container">
           <img class="gray" src="/images/troops/wwarrior-nft.png" width="89" />
           <div class="soldier-price">10.000</div>
@@ -17,7 +18,7 @@
           <div class="tmj-title">
             Unlock Soldier
           </div>
-          <div class="mt-1">It's the first step toward the rewards.</div>
+          <div class="mt-1 pa-1">It's the first step toward the rewards.</div>
           <div class="d-flex justify-center">
             <Button
               class="mt-2"
@@ -110,6 +111,7 @@ export default {
     ...mapState({
       humanSoldier: (state) => state.wallet.humanSoldier,
       orcSoldier: (state) => state.wallet.orcSoldier,
+      isLoadingSoldier : (state) => state.wallet.isLoadingSoldier,
     }),
     isConnected() {
       return this.$store.getters["user/isConnected"];

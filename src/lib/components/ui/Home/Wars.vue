@@ -3,18 +3,36 @@
     <div class="d-flex justify-center">
       <img src="/images/wars.png" height="64" />
     </div>
-    <Countdown
-      v-if="stepWar.dateTime"
-      class="mt-0"
-      :time="stepWar.dateTime"
-      hideEnd
-      @end="getStepWar()"
-    />
-    <div class="rewards-text mt-2">Join the battle to receive reWARds. Enlist now and become a true Warrior!</div>
+    <div class="countdown-container mt-1">
+      <v-skeleton-loader
+        type="image"
+        width="100%"
+        height="100%"
+        v-if="isLoading"
+      />
+      <template v-else>
+        <div class="step-title">{{ stepWar.title }}</div>
+        <Countdown
+          v-if="stepWar.dateTime"
+          :time="stepWar.dateTime"
+          hideEnd
+          @end="getStepWar()"
+        />
+      </template>
+    </div>
+    <div class="rewards-text mt-2">
+      Join the battle to receive reWARds. Enlist now and become a true Warrior!
+    </div>
 
     <div class="buttons-container">
       <Button type="wsecondary" icon="swords" size="small" text="Go to War" />
-      <Button class="ml-1" type="wsecondary" icon="chest" size="small" text="Buy Packs" />
+      <Button
+        class="ml-1"
+        type="wsecondary"
+        icon="chest"
+        size="small"
+        text="Buy Packs"
+      />
     </div>
   </div>
 </template>
@@ -36,51 +54,59 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       stepWar: {},
     };
   },
   methods: {
     async fetchStepWar() {
       if (!this.isConnected || !this.account) {
-        return {}
+        return {};
       }
-      const controller = new WarsController();
-      const lastId = await controller.getLastId();
-      const lastWar = await controller.getOne(lastId.id);
+      this.isLoading = true;
+      try {
+        const controller = new WarsController();
+        const lastId = await controller.getLastId();
+        const lastWar = await controller.getOne(lastId.id);
 
-      let step = {
-        title: "War is coming soon...",
-        dateTime: new Date(lastWar.deadlines.startEnlistment).getTime(),
-      };
+        let step = {
+          title: "War is coming soon...",
+          dateTime: new Date(lastWar.deadlines.startEnlistment).getTime(),
+        };
 
-      const dateNow = new Date().getTime();
-      if (dateNow > new Date(lastWar.deadlines.endClaimPrize).getTime()) {
-        step = {
-          title: "War ended!",
-          dateTime: 0,
-        };
-      } else if (
-        dateNow > new Date(lastWar.deadlines.endEnlistment).getTime()
-      ) {
-        step = {
-          title: "Collect prizes and wUNITS",
-          dateTime: new Date(lastWar.deadlines.endClaimPrize).getTime(),
-        };
-      } else if (
-        dateNow > new Date(lastWar.deadlines.startEnlistment).getTime()
-      ) {
-        step = {
-          title: "Enlistment ends in",
-          dateTime: new Date(lastWar.deadlines.endEnlistment).getTime(),
-        };
+        const dateNow = new Date().getTime();
+        if (dateNow > new Date(lastWar.deadlines.endClaimPrize).getTime()) {
+          step = {
+            title: "War ended!",
+            dateTime: 0,
+          };
+        } else if (
+          dateNow > new Date(lastWar.deadlines.endEnlistment).getTime()
+        ) {
+          step = {
+            title: "Collect prizes and wUNITS",
+            dateTime: new Date(lastWar.deadlines.endClaimPrize).getTime(),
+          };
+        } else if (
+          dateNow > new Date(lastWar.deadlines.startEnlistment).getTime()
+        ) {
+          step = {
+            title: "Enlistment ends in",
+            dateTime: new Date(lastWar.deadlines.endEnlistment).getTime(),
+          };
+        }
+        step.dateTime -= dateNow;
+
+        if (step.dateTime < 0) {
+          step.dateTime = 0;
+        }
+
+        this.stepWar = step;
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoading = false;
       }
-      step.dateTime -= dateNow;
-
-      if (step.dateTime < 0) {
-        step.dateTime = 0;
-      }
-
-      this.stepWar = step;
     },
   },
   async mounted() {
@@ -88,8 +114,8 @@ export default {
   },
   watch: {
     isConnected() {
-        this.fetchStepWar();
-      },
+      this.fetchStepWar();
+    },
     account() {
       this.fetchStepWar();
     },
@@ -101,6 +127,18 @@ export default {
   font-weight: bold;
   font-size: 10px;
   line-height: 1.3;
+  text-align: center;
+  color: #ffeebc;
+}
+.countdown-container {
+  height: 102px;
+}
+.step-title {
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1.4;
   text-align: center;
   color: #ffeebc;
 }
