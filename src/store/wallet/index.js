@@ -3,7 +3,7 @@ import actions from "./actions";
 import getters from "./getters";
 
 const state = {
-  isLoadingBalance: false,
+  isLoadingBalances: false,
   onChainBalance: {},
   offChainBalance: {},
   isLoadingSoldier: false,

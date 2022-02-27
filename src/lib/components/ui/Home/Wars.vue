@@ -26,17 +26,27 @@ import Countdown from "@/lib/components/ui/Utils/Countdown";
 
 export default {
   components: { Button, Countdown },
+  computed: {
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
+    account() {
+      return this.$store.getters["user/account"];
+    },
+  },
   data() {
     return {
       stepWar: {},
     };
   },
   methods: {
-    async getStepWar() {
+    async fetchStepWar() {
+      if (!this.isConnected || !this.account) {
+        return {}
+      }
       const controller = new WarsController();
       const lastId = await controller.getLastId();
       const lastWar = await controller.getOne(lastId.id);
-      console.log(lastWar);
 
       let step = {
         title: "War is coming soon...",
@@ -70,11 +80,19 @@ export default {
         step.dateTime = 0;
       }
 
-      return step;
+      this.stepWar = step;
     },
   },
   async mounted() {
-    this.stepWar = await this.getStepWar();
+    await this.fetchStepWar();
+  },
+  watch: {
+    isConnected() {
+        this.fetchStepWar();
+      },
+    account() {
+      this.fetchStepWar();
+    },
   },
 };
 </script>

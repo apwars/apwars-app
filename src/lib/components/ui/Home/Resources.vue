@@ -1,53 +1,89 @@
 <template>
   <div class="resources-container">
-      <div class="resources-title">Your Resources</div>
-      <div class="switch-container mt-1">
-        Binance Smart Chain Network
-        <Toggle v-model="network" class="mx-1"></Toggle>
-        APWars Off-chain
-      </div>
-      <div class="resource-row mt-1">
-        <div class="token-info">
+    <div class="resources-title">Your Resources</div>
+    <div class="switch-container mt-1">
+      Binance Smart Chain Network
+      <Toggle v-model="network" class="mx-1"></Toggle>
+      APWars Off-chain
+    </div>
+    <div class="resource-row mt-1">
+      <div class="token-info">
         <div class="token-container">
           <v-img src="/images/wgold.png" />
         </div>
         <div class="balance-info">
-          <Amount :amount="getBalance('wGOLD')" :formatted="network" decimals="2" tooltip />
+          <Amount
+            :amount="getBalance('wGOLD')"
+            :formatted="network"
+            decimals="2"
+            tooltip
+          />
           <div class="token-name">wGOLD</div>
         </div>
-        </div>
-        <div class="buy-container"><Button type="wsecondary" size="small" text="Buy" :handleClick="() => $router.push('/buy-wgold')" /></div>
       </div>
-      <div class="resource-row">
-        <div class="token-info">
+      <div class="buy-container">
+        <Button
+          type="wsecondary"
+          size="small"
+          text="Buy"
+          :handleClick="() => $router.push('/buy-wgold')"
+        />
+      </div>
+    </div>
+    <div class="resource-row">
+      <div class="token-info">
         <div class="token-container">
           <img src="/images/wcourage.png" width="24px" />
         </div>
-        
+
         <div class="balance-info">
-          <Amount :amount="getBalance('wCOURAGE')" :formatted="network" decimals="2" tooltip />
+          <Amount
+            :amount="getBalance('wCOURAGE')"
+            :formatted="network"
+            decimals="2"
+            tooltip
+          />
           <div class="token-name">wCOURAGE</div>
         </div>
-        </div>
-        <div class="buy-container"><Button type="wsecondary" size="small" text="Buy" :handleClick="() => $router.push('/buy-wcourage')" /></div>
       </div>
-      <div class="resource-row">
-        <div class="token-info">
+      <div class="buy-container">
+        <Button
+          type="wsecondary"
+          size="small"
+          text="Buy"
+          :handleClick="() => $router.push('/buy-wcourage')"
+        />
+      </div>
+    </div>
+    <div class="resource-row">
+      <div class="token-info">
         <div class="token-container">
           <img src="/images/wland.png" width="24px" />
         </div>
-        
+
         <div class="balance-info">
-          <Amount :amount="getBalance('wLAND')" :formatted="network" decimals="2" tooltip />
+          <Amount
+            :amount="getBalance('wLAND')"
+            :formatted="network"
+            decimals="2"
+            tooltip
+          />
           <div class="token-name">wLAND</div>
         </div>
-        </div>
-        <div class="buy-container"><Button type="wsecondary" size="small" text="Buy" :handleClick="() => $router.push('/buy-wland')" /></div>
       </div>
+      <div class="buy-container">
+        <Button
+          type="wsecondary"
+          size="small"
+          text="Buy"
+          :handleClick="() => $router.push('/buy-wland')"
+        />
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Toggle from "@/lib/components/ui/Toggle";
@@ -59,7 +95,11 @@ export default {
     ...mapState({
       onChainBalance: (state) => state.wallet.onChainBalance,
       offChainBalance: (state) => state.wallet.offChainBalance,
+      isLoadingBalances: (state) => state.wallet.isLoadingBalances,
     }),
+    account() {
+      return this.$store.getters["user/account"];
+    },
     balances() {
       if (this.network) {
         return this.offChainBalance;
@@ -74,8 +114,25 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      fetchBalances: "wallet/fetchBalances",
+    }),
     getBalance(token) {
-      return this.balances[token] || 0;
+      return this.balances?.[token] || 0;
+    },
+  },
+  mounted() {
+    if (!this.isConnected || !this.account) {
+      return;
+    }
+    this.fetchBalances();
+  },
+  watch: {
+    isConnected() {
+          this.fetchLands();
+      },
+    account() {
+      this.fetchBalances();
     },
   },
 };

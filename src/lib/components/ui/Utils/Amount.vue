@@ -26,7 +26,56 @@
 import Convert from "@/lib/helpers/Convert";
 
 export default {
-  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'attribute', 'unitsColor', 'ignoreThousand'],
+  props: {
+    amount: {
+      type: [Number, String],
+      default: 0,
+    },
+    compact: {
+      type: Boolean,
+      default: false,
+    },
+    formatted: {
+      type: Boolean,
+      default: false,
+    },
+    decimals: {
+      type: [Number, String],
+      default: 0,
+    },
+    approximate: {
+      type: Boolean,
+      default: false,
+    },
+    tooltip: {
+      type: Boolean,
+      default: false,
+    },
+    symbol: {
+      type: String,
+      default: '',
+    },
+    icon: {
+      type: String,
+      default: '',
+    },
+    size: {
+      type: String,
+      default: '',
+    },
+    attribute: {
+      type: Number,
+      default: 0,
+    },
+    unitsColor: {
+      type: String,
+      default: '',
+    },
+    ignoreThousand: {
+      type: Boolean,
+      default: false,
+    },
+  },
 
   computed: {
     computedAmount() {

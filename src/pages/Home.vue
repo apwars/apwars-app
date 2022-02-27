@@ -1,11 +1,6 @@
 <template>
   <div class="d-flex justify-center align-center bg-home">
-    <div v-if="isLoading">
-      <game-text header="h2" class="text-center d-block py-9"
-        >Loading...</game-text
-      >
-    </div>
-    <v-container fluid v-else>
+    <v-container fluid>
       <v-row>
         <v-col cols="12" md="4">
           <div class="card-container">
@@ -23,21 +18,7 @@
           </div>
         </v-col>
         <v-col cols="12" md="4">
-          <div class="d-flex justify-center">
-            <img
-              src="/images/arcadia-expansion.png"
-              height="90px"
-              class="mt-5 mb-2"
-              alt="arcadia-expansion"
-            />
-          </div>
-          <div class="d-flex justify-center mt-1">
-            <wButton @click="$router.push('/arcadia')" class="mt-1">
-              <span class="text-none text-center">
-                Play Now
-              </span>
-            </wButton>
-          </div>
+          <Arcadia />
           <tasks />
         </v-col>
       </v-row>
@@ -46,7 +27,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
 import wButton from "@/lib/components/ui/Buttons/wButton";
@@ -60,6 +40,7 @@ import Resources from "@/lib/components/ui/Home/Resources";
 import LoyaltyProgram from "@/lib/components/ui/Home/LoyaltyProgram";
 import UnlockSoldier from "@/lib/components/ui/Home/UnlockSoldier";
 import Wars from "@/lib/components/ui/Home/Wars";
+import Arcadia from "@/lib/components/ui/Home/Arcadia";
 
 export default {
   components: {
@@ -75,23 +56,7 @@ export default {
     LoyaltyProgram,
     UnlockSoldier,
     Wars,
-  },
-
-  data() {
-    return {
-      isLoading: true,
-      balanceFED: 0,
-      wars: [],
-      lastWar: {},
-      warStats: {},
-      listTasks: [],
-      catapults: [
-        { image: "/images/weapons/catapult-humans.png" },
-        { image: "/images/weapons/catapult-orcs.png" },
-        { image: "/images/weapons/catapult-undead.png" },
-        { image: "/images/weapons/catapult-elves.png" },
-      ],
-    };
+    Arcadia
   },
 
   computed: {
@@ -113,33 +78,6 @@ export default {
 
     currentBlockNumber() {
       return this.$store.getters["user/currentBlockNumber"];
-    },
-  },
-
-  watch: {
-    isConnected() {
-      this.loadData();
-    },
-
-    account() {
-      this.loadData();
-    },
-  },
-
-  mounted() {
-    this.loadData();
-  },
-
-  methods: {
-    ...mapActions({
-      fetchBalances: "wallet/fetchBalances",
-    }),
-    async loadData() {
-      if (!this.isConnected) {
-        return;
-      }
-      this.fetchBalances();
-      this.isLoading = false;
     },
   },
 };

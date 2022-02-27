@@ -111,6 +111,12 @@ export default {
       humanSoldier: (state) => state.wallet.humanSoldier,
       orcSoldier: (state) => state.wallet.orcSoldier,
     }),
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
+    account() {
+      return this.$store.getters["user/account"];
+    },
     hasNoSoldiers() {
       return !this.humanSoldier && !this.orcSoldier;
     },
@@ -137,8 +143,13 @@ export default {
     ...mapActions({
       checkSoldiers: "wallet/checkSoldiers",
     }),
+    fetchSoldiers() {
+      if (!this.isConnected || !this.account) {
+        return;
+      }
+      this.checkSoldiers();
+    },
     changeIndex(direction) {
-      console.log(this.soldiersIndex);
       const nextIndex = this.soldiersIndex + direction;
       const limit = this.soldiers.length - 1;
       if (nextIndex > limit) {
@@ -151,7 +162,15 @@ export default {
     },
   },
   mounted() {
-    this.checkSoldiers();
+    this.fetchSoldiers();
+  },
+  watch: {
+    isConnected() {
+        this.fetchSoldiers();
+      },
+    account() {
+      this.fetchSoldiers();
+    },
   },
 };
 </script>
