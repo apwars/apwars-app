@@ -18,8 +18,11 @@
           </div>
         </v-col>
         <v-col cols="12" md="4">
-          <Arcadia />
-          <tasks />
+          <div class="column-container">
+            <Arcadia />
+            <Leaderboard />
+            <News />
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -27,89 +30,53 @@
 </template>
 
 <script>
-import Countdown from "@/lib/components/ui/Utils/Countdown";
-import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
-import wButton from "@/lib/components/ui/Buttons/wButton";
-import GameText from "@/lib/components/ui/Utils/GameText";
-import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
-import Tasks from "@/lib/components/ui/Home/Tasks";
-import Amount from "@/lib/components/ui/Utils/Amount.vue";
-
 import Profile from "@/lib/components/ui/Home/Profile";
 import Resources from "@/lib/components/ui/Home/Resources";
 import LoyaltyProgram from "@/lib/components/ui/Home/LoyaltyProgram";
 import UnlockSoldier from "@/lib/components/ui/Home/UnlockSoldier";
 import Wars from "@/lib/components/ui/Home/Wars";
 import Arcadia from "@/lib/components/ui/Home/Arcadia";
+import Leaderboard from "@/lib/components/ui/Home/Leaderboard";
+import News from "@/lib/components/ui/Home/News";
 
 export default {
   components: {
-    Countdown,
-    wGOLDButton,
-    wButton,
-    GameText,
-    CountdownBlock,
-    Tasks,
-    Amount,
     Profile,
     Resources,
     LoyaltyProgram,
     UnlockSoldier,
     Wars,
-    Arcadia
-  },
-
-  computed: {
-    isConnected() {
-      return this.$store.getters["user/isConnected"];
-    },
-
-    account() {
-      return this.$store.getters["user/account"];
-    },
-
-    addresses() {
-      return this.$store.getters["user/addresses"];
-    },
-
-    networkInfo() {
-      return this.$store.getters["user/networkInfo"];
-    },
-
-    currentBlockNumber() {
-      return this.$store.getters["user/currentBlockNumber"];
-    },
+    Arcadia,
+    Leaderboard,
+    News,
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .bg-home {
   background-image: url("/images/bg-home.jpg");
   background-size: cover;
   min-height: 100%;
   background-position: center;
 }
-.card-body-home {
-  height: 150px;
-}
-.text-buy {
-  width: 150px;
-}
-.card-container {
-  padding: 24px;
-  background-color: #110C09;
-  border: 2px solid #FFEEBC;
-  background-image: url('/images/texture/dark-wood.png');
-  background-repeat: repeat;
+.column-container {
   min-height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+.card-container {
+  @extend .column-container;
+  padding: 24px;
+  background-color: #110c09;
+  border: 2px solid #ffeebc;
+  background-image: url("/images/texture/dark-wood.png");
+  background-repeat: repeat;
+}
 .divider {
   width: 100%;
-  border-bottom: 1px solid #FFEEBC;
+  border-bottom: 1px solid #ffeebc;
   margin: 12px 0;
 }
 </style>
