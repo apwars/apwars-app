@@ -4,6 +4,7 @@
       <img src="/images/icons/journal.png" height="42" />
       <div class="ml-1">Board News</div>
     </div>
+    <div class="coming-soon">Coming soon...</div>
   </div>
 </template>
 <script>
@@ -31,5 +32,11 @@ export default {};
   color: #ffeebc;
   width: 100%;
   justify-content: flex-start;
+}
+.coming-soon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
 }
 </style>

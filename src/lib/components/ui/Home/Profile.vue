@@ -1,6 +1,6 @@
 <template>
   <div class="profile-container">
-    <div class="avatar-container"><v-avatar :address="account"/></div>
+    <div class="avatar-container">Coming soon...</div>
     <div class="account-data">
         <div class="profile-title">Your Profile</div>
         {{ truncate(account) }}</div>
@@ -31,12 +31,18 @@ export default {
   margin-left: 8px;
 }
 .avatar-container {
-    background-image: url('/images/icons/avatar-border.png');
+    background-color: rgb(73, 73, 73);
     background-size: cover;
     width: 100%;
     padding: 8px;
     width: 124px;
     height: 124px;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
 }
 .profile-title {
   font-weight: bold;
