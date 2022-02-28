@@ -5,6 +5,7 @@
     </div>
     <div class="news-data ml-1">
       <div class="news-title">{{ news.title }}</div>
+      <div class="date">{{ formatDate(news.createdOn) }}</div>
       <div class="content">
         {{ news.text }}
       </div>
@@ -23,6 +24,9 @@ export default {
     open() {
       window.open(this.news.link, "_blank");
     },
+    formatDate(date) {
+      return new Date(date).toLocaleDateString();
+    }
   },
 };
 </script>
@@ -71,5 +75,10 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
+}
+.date {
+  font-size: 10px;
+  color: #ffeebc;
+  font-weight: bold;
 }
 </style>
