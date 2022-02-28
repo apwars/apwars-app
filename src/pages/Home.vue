@@ -20,8 +20,8 @@
         <v-col cols="12" md="4">
           <div class="column-container">
             <Arcadia />
-            <Leaderboard />
-            <News />
+            <Leaderboard class="mt-1" />
+            <News class="mt-1" />
           </div>
         </v-col>
       </v-row>
