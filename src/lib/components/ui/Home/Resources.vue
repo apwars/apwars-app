@@ -33,7 +33,7 @@
           type="wsecondary"
           :handleClick="() => $router.push('/buy-wgold')"
           isBlock
-        >Buy <span class="d-none d-sm-block ml-1">wGOLD</span></Button>
+        >Buy <span class="d-none d-lg-block ml-1">wGOLD</span></Button>
       </div>
     </div>
     <div class="resource-row">
@@ -64,7 +64,7 @@
           type="wsecondary"
           :handleClick="() => $router.push('/buy-wcourage')"
           isBlock
-        >Buy <span class="d-none d-sm-block ml-1">wCOURAGE</span></Button>
+        >Buy <span class="d-none d-lg-block ml-1">wCOURAGE</span></Button>
       </div>
     </div>
     <div class="resource-row">
@@ -96,7 +96,7 @@
           text="Buy"
           :handleClick="() => $router.push('/buy-wland')"
           isBlock
-        >Buy <span class="d-none d-sm-block ml-1">wLAND</span></Button>
+        >Buy <span class="d-none d-lg-block ml-1">wLAND</span></Button>
       </div>
     </div>
   </div>
@@ -218,8 +218,11 @@ export default {
   line-height: 1.3;
 }
 .buy-container {
-  width: 140px;
+  width: 40px;
   display: flex;
   justify-content: flex-end;
+  @media screen and (min-width: 1280px) {
+    width: 140px;
+  }
 }
 </style>
