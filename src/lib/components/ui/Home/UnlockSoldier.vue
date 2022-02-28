@@ -69,8 +69,8 @@
                     :value="currentSoldier.data.courage"
                     :maxScale="100"
                     :label="`${currentSoldier.data.courage}/100`"
-                    borderColor="#FFB800"
-                    trailColor="#FFB800"
+                    borderColor="transparent"
+                    trailColor="transparent"
                     fillColor="#FFB800"
                   />
                 </div>
@@ -83,8 +83,8 @@
                     class="energy-progress"
                     :value="currentSoldier.data.energy"
                     :maxScale="3"
-                    borderColor="#00A3FF"
-                    trailColor="#00A3FF"
+                    borderColor="transparent"
+                    trailColor="#000"
                     fillColor="#00A3FF"
                     :label="`${currentSoldier.data.energy}/3`"
                   />
@@ -298,9 +298,9 @@ export default {
 .energy-progress {
   position: absolute;
   top: 2px;
-  left: 6px;
+  left: 4px;
   z-index: 1;
-  height: 22px;
+  height: 26px;
   width: 91%;
 }
 </style>

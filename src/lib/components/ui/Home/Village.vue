@@ -1,7 +1,7 @@
 <template>
 <div class="lands">
   <div class="village-container">
-    <img :class="[village.data ? '' : 'gray']" :src="image" height="52" />
+    <img :class="[village.id === 99999999999999999999999 ? 'gray' : '']" :src="image" height="52" />
     <div class="village-data ml-1">
       <div class="village-name pb-1">{{ village.name || "No Foundation" }}</div>
       <div class="localization mt-1">
@@ -72,9 +72,6 @@ export default {
   },
   computed: {
     image() {
-      if (!this.village.data) {
-        return "/images/foundations/62.png";
-      }
       const data = FOUNDATIONS_DATA.find(
         (f) => f.foundationType === this.village.foundationType
       );
