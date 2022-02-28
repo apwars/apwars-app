@@ -515,7 +515,7 @@ export default {
       } else if (this.phase === "enlistment") {
         return "Enlistment ends in";
       }
-      return "Countdown to collect prizes and wUNITS";
+      return "Prize and wUNITs collection ends in";
     },
     isWarFinished() {
       return this.war.status === "finished";

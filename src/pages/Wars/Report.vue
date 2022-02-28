@@ -490,7 +490,7 @@
                 />
                 <span class="rewards-title"
                   ><Amount
-                    :amount="report.prizes.war.amount"
+                    :amount="report.prizes.war.amountUnlocked"
                     :symbol="report.prizes.war.prize"
                     approximate
                     formatted

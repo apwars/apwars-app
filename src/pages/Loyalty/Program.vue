@@ -54,7 +54,13 @@
       </v-row>
 
       <v-row v-if="isLoading" class="my-6">
-        <v-col cols="12" v-for="lp in lpTokens" :key="lp.symbol" col="12" md="4">
+        <v-col
+          cols="12"
+          v-for="lp in lpTokens"
+          :key="lp.symbol"
+          col="12"
+          md="4"
+        >
           <template>
             <v-skeleton-loader type="image" />
           </template>
@@ -116,14 +122,14 @@
             </div>
 
             <div class="medium-text report-title mt-3">
-              Total Loyalty Members
+              Loyalty Members *
             </div>
             <div class="report-info">
               {{ this.report.totalAwardedAccounts }}
             </div>
           </v-col>
           <v-col justify="center" cols="12" md="4">
-            <div class="medium-text report-title">Top 10 Loyalty Members</div>
+            <div class="medium-text report-title">Top 10 Loyalty Members *</div>
 
             <div id="chart">
               <apexchart
@@ -132,6 +138,14 @@
                 :options="chartOptions"
                 :series="series"
               ></apexchart>
+            </div>
+          </v-col>
+        </v-row>
+
+        <v-row dense>
+          <v-col>
+            <div class="small-text">
+              * data extracted from the last 24 hours
             </div>
           </v-col>
         </v-row>
@@ -395,6 +409,13 @@ export default {
   font-size: 22px;
   margin: 12px 0px;
   font-weight: bold;
+}
+.small-text {
+  width: 100%;
+  font-size: 14px;
+  margin: 12px 0px;
+  font-weight: bold;
+  text-align: right;
 }
 .report-title {
   font-family: PT Serif;
