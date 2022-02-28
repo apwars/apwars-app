@@ -1,6 +1,6 @@
 <template>
   <div class="profile-container">
-    <div class="avatar-container"><img class="avatar-border" src="/images/icons/avatar-border.png" alt="Avatar border" width="100%" height="100%" /><div class="avatar"> Coming soon...</div></div>
+    <div class="avatar-container"><img class="avatar-border" src="/images/icons/avatar-border.png" alt="Avatar border" width="100%" height="100%" /><VAvatar :avatar="account" /></div>
     <div class="account-data">
         <div class="profile-title"><div>Your Profile</div><img src="/images/no-faction.png" alt="No Faction" /></div>
         <div class="profile-name">Waiting badass name</div>
@@ -37,7 +37,7 @@ export default {
     background-color: rgb(73, 73, 73);
     background-size: cover;
     width: 100%;
-    padding: 8px;
+    padding: 6px;
     width: 124px;
     height: 124px;
     font-size: 12px;

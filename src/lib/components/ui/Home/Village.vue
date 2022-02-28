@@ -1,38 +1,69 @@
 <template>
+<div class="lands">
   <div class="village-container">
     <img :class="[village.data ? '' : 'gray']" :src="image" height="52" />
     <div class="village-data ml-1">
-      <div class="village-name pb-1">{{ village.name || "No Village" }}</div>
+      <div class="village-name pb-1">{{ village.name || "No Foundation" }}</div>
       <div class="localization mt-1">
         <img src="/images/icons/location.png" height="14" />
         <div class="coordinates">({{ village.x }}, {{ village.y }})</div>
         <div class="world ml-1">World {{ village.worldId }}</div>
       </div>
-      <div class="resources mt-1" v-if="village.wallet">
-          <div class="resource-info">
-              <img src="/images/icons/stone.png" height="12" width="12" />
-              {{ village.wallet.balances['World1Stone']}}
-          </div>
-          <div class="resource-info ml-1">
-              <img src="/images/icons/wood.png" height="12" width="12" />
-              {{ village.wallet.balances['World1Wood']}}
-          </div>
-          <div class="resource-info ml-1">
-              <img src="/images/icons/clay.png" height="12" width="12" />
-              {{ village.wallet.balances['World1Clay']}}
-          </div>
-          <div class="resource-info ml-1">
-              <img src="/images/icons/water.png" height="12" width="12" />
-              {{ village.wallet.balances['World1Water']}}
-          </div>
-      </div>
+      
     </div>
+    
+  </div>
+  <div class="resources mt-1" v-if="village.foundationType === 62">
+        <div class="resource-info">
+          <div class="resource-amount">
+            <img src="/images/icons/stone.png" height="12" width="12" />
+            <Progress
+              :maxScale="village.buildings.warehouse.capacity"
+              :value="village.wallet.balances['World1Stone']"
+              noText
+            />
+          </div>
+        </div>
+        <div class="resource-info ml-1">
+          <div class="resource-amount">
+            <img src="/images/icons/wood.png" height="12" width="12" />
+            <Progress
+              :maxScale="village.buildings.warehouse.capacity"
+              :value="village.wallet.balances['World1Wood']"
+              noText
+            />
+          </div>
+        </div>
+        <div class="resource-info ml-1">
+          <div class="resource-amount">
+            <img src="/images/icons/clay.png" height="12" width="12" />
+            <Progress
+              :maxScale="village.buildings.warehouse.capacity"
+              :value="village.wallet.balances['World1Clay']"
+              noText
+            />
+          </div>
+        </div>
+        <div class="resource-info ml-1">
+          <div class="resource-amount">
+            <img src="/images/icons/water.png" height="12" width="12" />
+            <Progress
+              :maxScale="village.buildings.warehouse.capacity"
+              :value="village.wallet.balances['World1Water']"
+              noText
+            />
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 <script>
 import { FOUNDATIONS_DATA } from "@/data/Foundations";
 
+import Progress from "@/lib/components/ui/Progress";
+
 export default {
+  components: { Progress },
   props: {
     village: {
       type: Object,
@@ -82,16 +113,27 @@ export default {
 }
 
 .resources {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .resource-info {
-    display: flex;
-    align-items: center;
-    font-size: 10px;
-    font-weight: bold;
-    > img {
-        margin-right: 2px;
-    }
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: bold;
+  > img {
+    margin-right: 2px;
+  }
+}
+.resource-amount {
+  position: relative;
+  height: 8px;
+  width: 66px;
+  > img {
+    position: absolute;
+    left: -6px;
+    top: -2px;
+    z-index: 2;
+  }
 }
 </style>

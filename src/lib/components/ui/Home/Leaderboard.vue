@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div class="leaderboard my-2">
+    <div class="leaderboard my-1">
       <v-skeleton-loader
         type="image"
         width="100%"

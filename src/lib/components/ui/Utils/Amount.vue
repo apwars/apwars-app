@@ -86,7 +86,7 @@ export default {
         numberAmount = numberAmount * this.attribute
       }
 
-      if (this.compact !== undefined) {
+      if (this.compact) {
         numberAmount = Convert.compactNumber(numberAmount, this.getDecimals, this.ignoreThousand);
       } else {
         numberAmount = Convert.roundDown(numberAmount, this.getDecimals);
@@ -106,7 +106,7 @@ export default {
         : Convert.fromWei(numberAmount.toString());
     },
     isTooltip() {
-      return this.tooltip !== undefined;
+      return this.tooltip;
     },
     getDecimals() {
       return this.decimals ?? 0;
@@ -116,8 +116,8 @@ export default {
     },
     isIcon() {
       return (
-        this.icon !== undefined &&
-        this.symbol !== undefined &&
+        this.icon &&
+        this.symbol &&
         this.symbol.length > 0
       );
     },

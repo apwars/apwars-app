@@ -10,7 +10,6 @@ export default {
     commit('setLoadingBalances', true);
     await dispatch('fecthOnChainBalances');
     await dispatch('fecthOffChainBalances');
-    console.log('ae');
     commit('setLoadingBalances', false);
   },
   async fecthOnChainBalances({ rootState, commit }) {

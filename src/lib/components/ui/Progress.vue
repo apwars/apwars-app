@@ -1,7 +1,7 @@
 <template>
 
-    <div class="progress" :style="`--color1: ${color1};--color2: ${color2}`">
-      <div class="value" :style="`--percent: ${percent}`"><div class="text" :style="`--textColor: ${textColor}`" v-if="!noText"> {{ label || percent }} </div></div>
+    <div class="progress" :style="`--trail: ${trailColor};--border: ${borderColor}`">
+      <div class="value" :style="`--percent: ${percent};--fill: ${fillColor}`"><div class="text" :style="`--textColor: ${textColor}`" v-if="!noText"> {{ label || percent }} </div></div>
     </div>
 
 </template>
@@ -24,14 +24,22 @@ export default {
         type: String,
         default: '#FFF'
     },
+    borderColor: {
+      type: String,
+      default: '#BB7248',
+    },
+    trailColor: {
+      type: String,
+      default: '#503522'
+    },
+    fillColor: {
+      type: String,
+      default: '#00C42B',
+    },
     label: {
       type: String,
       default: ''
     },
-    color2: {
-        type: String,
-        default: '#E1A807'
-    }
   },
   computed: {
     percent() {
@@ -43,9 +51,11 @@ export default {
 <style lang="scss" scoped>
 .progress {
   position: relative;
-  height: 24px;
+  height: 100%;
   width: 100%;
-  border: 2px solid var(--color2);
+  border: 1px solid var(--border);
+  background-color: var(--trail);
+  border-radius: 2px;
 }
 .value {
   height: 100%;
@@ -53,7 +63,7 @@ export default {
   top: 0;
   left: 0;
   width: var(--percent);
-  background-color: var(--color2);
+  background-color: var(--fill);
   display: flex;
   justify-content: center;
   align-items: center;

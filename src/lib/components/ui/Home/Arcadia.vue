@@ -2,7 +2,7 @@
   <div class="arcadia-container">
     <img src="/images/arcadia-expansion.png" height="48" />
     <div class="villages-navigation">
-      <div class="controls" v-if="villages.length > 1">
+      <div class="controls" v-if="lands.length > 1">
         <div class="prev" @click="() => changeIndex(-1)"></div>
         <div class="next" @click="() => changeIndex(1)"></div>
       </div>
@@ -12,9 +12,9 @@
         width="100%"
         v-if="isLoading"
       />
-      <Village v-else class="mt-2" :village="currentVillage" />
+      <Village v-else class="mt-2" :village="currentLand" />
     </div>
-    <div class="buy-villages-info mt-1" v-if="!hasVillages">
+    <div class="buy-villages-info mt-1" v-if="!hasLands">
       Be a master in the world of Arcadia. Acquire your village and build an
       empire.
     </div>
@@ -41,23 +41,23 @@ export default {
     account() {
       return this.$store.getters["user/account"];
     },
-    currentVillage() {
-      return this.villages[this.currentIndex];
+    currentLand() {
+      return this.lands[this.currentIndex];
     },
-    hasVillages() {
-      return this.villages[0].id !== 99999999999999999999999;
+    hasLands() {
+      return this.lands[0].id !== 99999999999999999999999;
     },
   },
   data() {
     return {
       isLoading: true,
-      villages: [
+      lands: [
         {
           id: 99999999999999999999999,
           foundationType: 62,
           x: "#",
           y: "#",
-          name: "No villages",
+          name: "No lands",
           worldId: 1,
         },
       ],
@@ -73,9 +73,8 @@ export default {
       try {
         const controller = new ArcadiaController();
         const landsData = await controller.getLands(this.account);
-        const villages = landsData.filter((l) => l.foundationType === 62);
-        if (villages.length > 0) {
-          this.villages = [].concat(villages);
+        if (landsData.length > 0) {
+          this.lands = [].concat(landsData.filter(l => l.foundationType));
         }
       } catch (error) {
         console.error(error);
@@ -85,11 +84,11 @@ export default {
     },
     changeIndex(direction) {
       const nextIndex = this.currentIndex + direction;
-      const limit = this.villages.length - 1;
+      const limit = this.lands.length - 1;
       if (nextIndex > limit) {
         this.currentIndex = 0;
       } else if (nextIndex < 0) {
-        this.currentIndex = this.villages.length - 1;
+        this.currentIndex = this.lands.length - 1;
       } else {
         this.currentIndex = nextIndex;
       }
@@ -126,7 +125,7 @@ export default {
 .controls {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 105%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
