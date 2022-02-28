@@ -25,13 +25,13 @@
     </div>
 
     <div class="buttons-container">
-      <Button type="wsecondary" icon="swords" size="small" text="Go to War" />
+      <Button type="wsecondary" icon="swords" text="Go to War" :handleClick="() => $router.push('/war/intro')" />
       <Button
         class="ml-1"
         type="wsecondary"
         icon="chest"
-        size="small"
         text="Buy Packs"
+        :handleClick="() => $router.push('/packs')"
       />
     </div>
   </div>

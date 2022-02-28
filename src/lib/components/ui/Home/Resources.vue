@@ -31,10 +31,9 @@
       <div class="buy-container">
         <Button
           type="wsecondary"
-          size="small"
-          text="Buy"
           :handleClick="() => $router.push('/buy-wgold')"
-        />
+          isBlock
+        >Buy <span class="d-none d-sm-block ml-1">wGOLD</span></Button>
       </div>
     </div>
     <div class="resource-row">
@@ -63,10 +62,9 @@
       <div class="buy-container">
         <Button
           type="wsecondary"
-          size="small"
-          text="Buy"
           :handleClick="() => $router.push('/buy-wcourage')"
-        />
+          isBlock
+        >Buy <span class="d-none d-sm-block ml-1">wCOURAGE</span></Button>
       </div>
     </div>
     <div class="resource-row">
@@ -95,10 +93,10 @@
       <div class="buy-container">
         <Button
           type="wsecondary"
-          size="small"
           text="Buy"
           :handleClick="() => $router.push('/buy-wland')"
-        />
+          isBlock
+        >Buy <span class="d-none d-sm-block ml-1">wLAND</span></Button>
       </div>
     </div>
   </div>

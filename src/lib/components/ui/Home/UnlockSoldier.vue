@@ -89,7 +89,6 @@
           </div>
           <div class="d-flex justify-center">
             <Button
-              class="mt-2"
               type="wsecondary"
               text="Play TMJ"
               :handleClick="() => $router.push('/the-monstrous-journey')"

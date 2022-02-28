@@ -26,7 +26,6 @@
       <Button
         type="wsecondary"
         icon="pcs"
-        size="small"
         :handleClick="() => $router.push('/loyalty-program')"
         class="mt-1"
       >
@@ -34,7 +33,6 @@
       </Button>
       <Button
         type="wsecondary"
-        size="small"
         :handleClick="() => $router.push('/loyalty-program/shop')"
         class="ml-2 mt-1"
       >

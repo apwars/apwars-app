@@ -35,11 +35,31 @@
       />
       <template v-else-if="leaderBoard.length === 3">
         <img src="/images/game/icon-place-1.png" width="32" />
-        <div class="address">{{ getAddress(leaderBoard[0]) }}</div>
-        <img class="ml-2" src="/images/game/icon-place-0.png" width="32" />
-        <div class="address">{{ getAddress(leaderBoard[1]) }}</div>
-        <img class="ml-2" src="/images/game/icon-place-2.png" width="32" />
-        <div class="address">{{ getAddress(leaderBoard[2]) }}</div>
+        <div
+          class="address"
+          @click="() => openAddress(getAddress(leaderBoard[0]))"
+        >
+          {{ truncate(getAddress(leaderBoard[0])) }}
+          <v-icon class="address-icon" x-small>mdi-open-in-new</v-icon>
+        </div>
+
+        <img class="ml-md-2" src="/images/game/icon-place-0.png" width="32" />
+        <div
+          class="address"
+          @click="() => openAddress(getAddress(leaderBoard[1]))"
+        >
+          {{ truncate(getAddress(leaderBoard[1])) }}
+          <v-icon class="address-icon" x-small>mdi-open-in-new</v-icon>
+        </div>
+
+        <img class="ml-md-2" src="/images/game/icon-place-2.png" width="32" />
+        <div
+          class="address"
+          @click="() => openAddress(getAddress(leaderBoard[2]))"
+        >
+          {{ truncate(getAddress(leaderBoard[2])) }}
+          <v-icon class="address-icon" x-small>mdi-open-in-new</v-icon>
+        </div>
       </template>
     </div>
     <Button
@@ -114,10 +134,13 @@ export default {
       return arcadia;
     },
     getAddress(record) {
-      return this.truncate(record.account || record.owner);
+      return record.account || record.owner;
     },
     truncate(address) {
       return walletTruncate(address);
+    },
+    openAddress(address) {
+      window.open(`https://bscscan.com/address/${address}`, "_blank");
     },
   },
   mounted() {
@@ -149,7 +172,13 @@ export default {
 .header-container {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @media  screen and (min-width: 1280px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 .title-container {
   display: flex;
@@ -165,15 +194,34 @@ export default {
 }
 .leaderboard {
   width: 100%;
-  height: 36px;
+  min-height: 36px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media  screen and (min-width: 1280px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
+
 .address {
+  display: flex;
+  align-items: center;
   font-size: 10px;
   line-height: 1.3;
   color: #c4c4c4;
+  .address-icon {
+    color: #c4c4c4;
+    margin-left: 2px;
+  }
+  &:hover {
+    cursor: pointer;
+    color: #fff;
+    .address-icon {
+      color: #fff;
+    }
+  }
 }
 .option {
   font-size: 10px;
