@@ -43,8 +43,6 @@ export default {
     }
     try {
       const soldier =  await controller.getNFTByType(rootState.user.account, NFT.ORC);
-      soldier.data.courage = 70;
-      soldier.data.energy = 1;
       commit('setSoldier', {type: NFT.ORC, soldier });
     } catch (error) {
       console.error(error);
