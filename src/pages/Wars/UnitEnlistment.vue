@@ -332,7 +332,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapActions, mapState } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 import { ENLISTMENT_OPTIONS } from "@/data/Enlistment";
 import { MONSTERS } from "@/data/Monsters";
 import { RACE_DESCRIPTION } from "@/data/Races";
@@ -585,9 +585,6 @@ export default {
       setupMusic: "music/setupMusic",
       clearMusic: "music/clearMusic",
     }),
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     backToWar() {
       this.$router.push({
         path: `/war`,
@@ -701,7 +698,6 @@ export default {
     },
   },
   async mounted() {
-    this.setHeader(false);
     this.checkTour();
     this.troopSelected = this.unitsFromRace[0].name;
     this.fetchData();
@@ -713,7 +709,6 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
     if (!to.path.includes("/war")) {
       this.clearMusic();
     }

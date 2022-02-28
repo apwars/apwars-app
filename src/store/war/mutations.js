@@ -1,5 +1,3 @@
-import { NFT } from "@/data/NFTs";
-
 export default {
   setWar(state, war) {
     state.war = war;
@@ -36,14 +34,4 @@ export default {
   setCompleteFormations(state, races) {
     state.completeFormations = races;
   },
-  setSoldierLoading(state, loading) {
-    state.isSoldierLoading = loading;
-  },
-  setSoldier(state, { type, soldier }) {
-    if (type === NFT.HUMAN) {
-      state.humanSoldier = soldier;
-    } else {
-      state.orcSoldier = soldier;
-    }
-  }
 };

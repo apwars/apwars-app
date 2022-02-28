@@ -4,33 +4,15 @@
       class="d-flex flex-column flex-md-row justify-space-between align-center menu-footer"
     >
       <div class="d-flex side-menu align-center">
-        <div class="d-inline-flex">
-          <img
-            class="d-block mx-1 mx-md-2 avatar"
-            :src="
-              `https://avatar.apwars.farm/?seed=${account}&avatar=${avatar}`
-            "
-            alt="avatar"
-          />
-        </div>
-        <div class="d-flex align-center">
-          <img
-            class="d-block mx-0 mx-md-1 i-coin"
-            src="/images/wgold.png  "
-            alt="wgold"
-          />
-          <span class="balance-wGOLD">
-            <amount
-              v-if="!isLoading"
-              :amount="balance"
-              decimals="2"
-              symbol="wGOLD"
-            />
-            <span v-else>
-              0.00 wGOLD
-            </span>
-          </span>
-        </div>
+        <img src="/images/project/logo-small.png" height="48" alt="logo" />
+
+        <a
+          class="menu-link"
+          href="https://www-v1.apwars.farm/docs"
+          target="_blank"
+          >Docs</a
+        >
+        <a class="menu-link" href="/farms" target="_blank">Farm</a>
       </div>
       <div class="d-flex menu-main">
         <v-sheet class="menu-itens mx-auto align-center" max-width="100%">
@@ -123,60 +105,68 @@
       </div>
       <div class="d-flex side-menu-right">
         <div class="text-center" v-if="track">
-        <v-menu :close-on-content-click="false"
-      :nudge-height="200">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-            <v-icon v-if="volume !== 0"
-              >mdi-volume-high</v-icon
-            >
-            <v-icon v-else
-              >mdi-volume-off</v-icon
-            >
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item>
-              <v-list-item-title @click="() => setVolume(0)" :class="['volume-button', volume === 0 ? 'text-yellow' : '']">Disable</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.1)" :class="['volume-button', volume === 0.1 ? 'text-yellow' : '']">25%</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.25)" :class="['volume-button', volume === 0.25 ? 'text-yellow' : '']">50%</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.4)" :class="['volume-button', volume === 0.4 ? 'text-yellow' : '']">75%</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title @click="() => setVolume(0.5)" :class="['volume-button', volume === 0.5 ? 'text-yellow' : '']">100%</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+          <v-menu :close-on-content-click="false" :nudge-height="200">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                <v-icon v-if="volume !== 0">mdi-volume-high</v-icon>
+                <v-icon v-else>mdi-volume-off</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title
+                  @click="() => setVolume(0)"
+                  :class="['volume-button', volume === 0 ? 'text-yellow' : '']"
+                  >Disable</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title
+                  @click="() => setVolume(0.1)"
+                  :class="[
+                    'volume-button',
+                    volume === 0.1 ? 'text-yellow' : '',
+                  ]"
+                  >25%</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title
+                  @click="() => setVolume(0.25)"
+                  :class="[
+                    'volume-button',
+                    volume === 0.25 ? 'text-yellow' : '',
+                  ]"
+                  >50%</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title
+                  @click="() => setVolume(0.4)"
+                  :class="[
+                    'volume-button',
+                    volume === 0.4 ? 'text-yellow' : '',
+                  ]"
+                  >75%</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title
+                  @click="() => setVolume(0.5)"
+                  :class="[
+                    'volume-button',
+                    volume === 0.5 ? 'text-yellow' : '',
+                  ]"
+                  >100%</v-list-item-title
+                >
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </div>
       </div>
     </div>
 
-    <div class="d-flex justify-space-between copyright">
-      <div class="overline">
-        Copyright © 2021 <a href="#" target="_blank">APWars</a>, All rights
-        Reserved
-      </div>
-      <v-spacer></v-spacer>
-      <div class="overline">
-        Version<a href="#" target="_blank"> {{ $store.getters.appVersion }} </a>
-      </div>
-      <v-spacer></v-spacer>
-      <div class="overline">
-        Made with <v-icon small color="pink">mdi-heart</v-icon> by
-        <a href="#" target="_blank">Orcs and Humans</a>
-      </div>
-    </div>
+    <div class="spacing"></div>
   </v-footer>
 </template>
 <script>
@@ -194,11 +184,6 @@ export default {
           href: "/",
         },
         {
-          title: "Game Items",
-          image: "/images/icons/library.png",
-          href: "/game-items",
-        },
-        {
           title: "Black Market",
           image: "/images/icons/black-market.png",
           href: "/black-market",
@@ -206,63 +191,27 @@ export default {
         {
           title: "Inventory",
           image: "/images/icons/inventory.png",
-          href: "",
-          submenu: [
-            {
-              title: "Inventory",
-              image: "/images/icons/inventory.png",
-              href: "/inventory",
-            },
-            {
-              title: "Bridge",
-              href: "/bridge",
-              image: "/images/icons/exchange.png",
-            },
-          ],
+          href: "/inventory",
         },
         {
-          title: "Wars",
+          title: "War against FED",
           image: "/images/icons/wars.png",
-          href: "",
-          submenu: [
-            {
-              title: "The Monstrous Journey",
-              image: "/images/icons/tmj.png?v=1",
-              href: "/the-monstrous-journey",
-            },
-            {
-              title: "Packs",
-              href: "/packs",
-              image: "/images/icons/army.png",
-            },
-            {
-              title: "War against FED",
-              image: "/images/icons/fed.png",
-              href: "/war/intro",
-            },
-            {
-              title: "War Preparation",
-              image: "/images/war-preparation/icon-war-preparation.png",
-              href: "/war-preparation",
-            },
-            {
-              title: "Training Center",
-              href: "/training-center",
-              image: "/images/icons/battle-shield.png",
-            },
-          ],
+          href: "/war/intro",
         },
-
+        {
+          title: "Bridge",
+          href: "/bridge",
+          image: "/images/icons/exchange.png",
+        },
+        {
+          title: "Training Center",
+          href: "/training-center",
+          image: "/images/icons/battle-shield.png",
+        },
         {
           title: "Arcadia",
           image: "/images/icons/world.png",
           href: "/arcadia",
-        },
-
-        {
-          title: "Leaderboard",
-          image: "/images/icons/leaderboard.png?v=2",
-          href: "/leaderboard",
         },
       ],
       balance: 0,
@@ -343,41 +292,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.menu-main {
-  width: 60%;
-  @media only screen and (max-width: 1264px) {
-    width: 55%;
-  }
-
-  @media only screen and (max-width: 1150px) {
-    width: 65%;
-  }
-
-  @media only screen and (max-width: 960px) {
-    width: 100%;
-  }
-
-  @media only screen and (max-width: 730px) {
-    width: 80%;
-  }
-
-  @media only screen and (max-width: 650px) {
-    width: 70%;
-  }
-}
-
 .side-menu {
-  width: 20%;
-  @media only screen and (max-width: 1264px) {
-    width: 30%;
-  }
-
-  @media only screen and (max-width: 960px) {
-    width: 80%;
-    justify-content: center;
-  }
+  margin: 0 12px;
 }
-
 .side-menu-right {
   width: 20%;
   @media only screen and (max-width: 1264px) {
@@ -394,13 +311,17 @@ export default {
 }
 
 .menu-footer {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
+  max-width: 1232px;
   min-height: 70px;
-  border: 2px solid #bb7248;
+  border: 2px solid #ffeebc;
   border-radius: 6px;
   background-image: url("/images/battle/bg-wars.png");
   background-repeat: repeat;
-  margin: 0px 12px;
 }
 
 .menu-itens,
@@ -426,7 +347,7 @@ export default {
 }
 
 .menu-item > .divider {
-  width: 3px;
+  width: 1px;
   height: 45px;
   border-radius: 3px;
   background-color: #bb7148;
@@ -476,6 +397,23 @@ export default {
   color: yellow;
 }
 
+.spacing {
+  height: 80px;
+}
+
+.menu-link {
+  padding: 4px 12px;
+  color: #ffeebc;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.v-sheet.v-footer {
+  background: transparent !important;
+}
+
 @media only screen and (max-width: 600px) {
   .copyright {
     display: none !important;
@@ -498,7 +436,6 @@ export default {
 @media only screen and (max-width: 600px) {
   .v-sheet.v-footer {
     padding: 10px 4px !important;
-    background: transparent !important;
   }
   .v-main {
     padding-bottom: 135px !important;

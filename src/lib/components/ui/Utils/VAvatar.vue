@@ -9,9 +9,9 @@
           v-bind:class="{ 'cursor-pointer': isLink }"
           @click="openAddress"
         >
-          <img
+          <v-img
             v-if="account"
-            class="d-block mx-1 mx-md-2 avatar"
+            class="rounded"
             :src="
               `https://avatar.apwars.farm/?seed=${getAccount}&avatar=${getAvatar}`
             "
@@ -68,7 +68,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .cursor-pointer:hover {
   color: #ffb800;
 }

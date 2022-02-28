@@ -384,7 +384,6 @@ import VAddress from "@/lib/components/ui/Utils/VAddress";
 import Medal from "@/lib/components/ui/Utils/Medal";
 import Podium from "./Podium";
 
-import { mapMutations } from "vuex";
 import moment from "moment";
 
 import LeaderboardController from "@/controller/LeaderboardController";
@@ -558,15 +557,10 @@ export default {
   },
 
   mounted() {
-    this.setHeader(false);
     this.loadData();
   },
 
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
-
     async loadData() {
       if (!this.isConnected) {
         return;
@@ -642,7 +636,7 @@ export default {
 
 <style scoped>
 .page-background {
-  background-image: url("/images/backgrounds/jungle.jpg");
+  background-image: url("/images/background/jungle.jpg");
   background-size: cover;
   background-position: top;
   margin-bottom: -200px;
