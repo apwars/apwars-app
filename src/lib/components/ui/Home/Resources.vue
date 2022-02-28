@@ -4,7 +4,7 @@
     <div class="switch-container mt-1">
       Binance Smart Chain Network
       <Toggle v-model="network" class="mx-1"></Toggle>
-      APWars Off-chain
+      APWars Bridge
     </div>
     <div class="resource-row mt-1">
       <div class="token-info">

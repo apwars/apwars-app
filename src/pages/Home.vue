@@ -55,7 +55,7 @@ export default {
 
 <style lang="scss" scoped>
 .bg-home {
-  background-image: url("/images/bg-home.jpg");
+  background-image: url("/images/background/castle-mist.png");
   background-size: cover;
   min-height: 100%;
   background-position: center;

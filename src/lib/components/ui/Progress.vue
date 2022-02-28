@@ -28,10 +28,6 @@ export default {
       type: String,
       default: ''
     },
-    color1: {
-        type: String,
-        default: '#faff00'
-    },
     color2: {
         type: String,
         default: '#E1A807'
@@ -57,7 +53,7 @@ export default {
   top: 0;
   left: 0;
   width: var(--percent);
-  background: linear-gradient(180deg, var(--color1) 0%, var(--color2) 100%);
+  background-color: var(--color2);
   display: flex;
   justify-content: center;
   align-items: center;

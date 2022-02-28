@@ -1331,7 +1331,7 @@ export default {
 
 <style scoped>
 .page-background {
-  background-image: url("/images/backgrounds/desert.jpg");
+  background-image: url("/images/background/desert.jpg");
   background-size: cover;
   background-position: top;
   margin-bottom: -200px;

@@ -295,10 +295,10 @@ export default {
 }
 .energy-progress {
   position: absolute;
-  top: 3px;
-  left: 5px;
+  top: 2px;
+  left: 6px;
   z-index: 1;
-  height: 23px;
-  width: 90%;
+  height: 22px;
+  width: 91%;
 }
 </style>
