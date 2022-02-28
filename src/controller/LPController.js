@@ -32,4 +32,12 @@ export default class LPController {
     }
   }
 
+  getLevels(account) {
+    try {
+      return this.base._get(`/accounts/${account}/lp-levels`);
+    } catch (error) {
+      throw error
+    }
+  }
+
 }

@@ -2,7 +2,7 @@
   <div class="leaderboard-container">
     <div class="header-container">
       <div class="title-container">
-        <img src="/images/icons/leaderboard.png" height="42" />
+        <img src="/images/icons/leaderboard.png" height="32" />
         <div class="ml-1">Leaderboard</div>
       </div>
       <div class="game-options">

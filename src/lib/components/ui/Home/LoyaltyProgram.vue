@@ -1,6 +1,63 @@
 <template>
   <div>
-    <div class="lp-title">Loyalty Program</div>
+    <div class="title-container">
+      <div class="lp-title">Loyalty Program</div>
+      <div class="lp-levels">
+        <v-skeleton-loader
+          v-if="isLoadingLevels"
+          type="image"
+          width="90px"
+          height="32px"
+        />
+        <template v-else>
+          <div class="pool">
+            <img
+              class="token"
+              height="20"
+              width="20"
+              src="/images/wgold.png"
+              alt="wGOLD Pool"
+            />
+            <img
+              height="32"
+              width="32"
+              :src="`/images/lp-levels/${lp.wGOLD.level}.png`"
+              :alt="lp.wGOLD.level"
+            />
+          </div>
+          <div class="pool">
+            <img
+              class="token"
+              height="20"
+              width="20"
+              src="/images/wcourage.png"
+              alt="wCOURAGE Pool"
+            />
+            <img
+              height="32"
+              width="32"
+              :src="`/images/lp-levels/${lp.wCOURAGE.level}.png`"
+              :alt="lp.wCOURAGE.level"
+            />
+          </div>
+          <div class="pool">
+            <img
+              class="token"
+              height="20"
+              width="20"
+              src="/images/wland.png"
+              alt="wLAND Pool"
+            />
+            <img
+              height="32"
+              width="32"
+              :src="`/images/lp-levels/${lp.wLAND.level}.png`"
+              :alt="lp.wLAND.level"
+            />
+          </div>
+        </template>
+      </div>
+    </div>
     <div class="d-flex justify-start align-center">
       <img src="/images/icons/coins/wSCARS.png" width="64px" alt="War SCARS" />
       <div class="ml-2">
@@ -44,6 +101,8 @@
 <script>
 import { mapState } from "vuex";
 
+import LPController from "@/controller/LPController";
+
 import Button from "@/lib/components/ui/Buttons/Button";
 import Amount from "@/lib/components/ui/Utils/Amount";
 
@@ -52,15 +111,54 @@ export default {
     Amount,
     Button,
   },
+  data() {
+    return {
+      isLoadingLevels: true,
+      lp: {
+        wGOLD: { level: 0 },
+        wCOURAGE: { level: 0 },
+        wLAND: { level: 0 },
+      },
+    };
+  },
   computed: {
     ...mapState({
       offChainBalance: (state) => state.wallet.offChainBalance,
       isLoadingBalances: (state) => state.wallet.isLoadingBalances,
     }),
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
+    account() {
+      return this.$store.getters["user/account"];
+    },
   },
   methods: {
     getBalance(token) {
       return this.offChainBalance[token] || 0;
+    },
+    async fetchLevels() {
+      if (!this.isConnected || !this.account) {
+        return;
+      }
+      this.isLoadingLevels = true;
+      try {
+        const controller = new LPController();
+        const lpl = await controller.getLevels(this.account);
+        this.lp = lpl;
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoadingLevels = false;
+      }
+    },
+  },
+  watch: {
+    isConnected() {
+      this.fetchLevels();
+    },
+    account() {
+      this.fetchLevels();
     },
   },
 };
@@ -74,11 +172,30 @@ export default {
   color: #ffeebc;
   margin-bottom: 12px;
 }
+.title-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 .scars-amount {
   font-weight: bold;
   font-size: 36px;
   line-height: 1.2;
   color: #ffffff;
+}
+.lp-levels {
+  display: flex;
+}
+.pool {
+  position: relative;
+  > .token {
+    position: absolute;
+    top: -10px;
+    left: -5px;
+  }
+  &:not(:last-child) {
+    margin-right: 4px;
+  }
 }
 .scars-text {
   font-size: 14px;
