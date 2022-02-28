@@ -13,14 +13,14 @@
           <div class="pool">
             <img
               class="token"
-              height="20"
-              width="20"
+              height="40"
+              width="40"
               src="/images/wgold.png"
               alt="wGOLD Pool"
             />
             <img
-              height="32"
-              width="32"
+              height="70"
+              width="70"
               :src="`/images/lp-levels/${lp.wGOLD.level}.png`"
               :alt="lp.wGOLD.level"
             />
@@ -28,14 +28,14 @@
           <div class="pool">
             <img
               class="token"
-              height="20"
-              width="20"
+              height="40"
+              width="40"
               src="/images/wcourage.png"
               alt="wCOURAGE Pool"
             />
             <img
-              height="32"
-              width="32"
+              height="70"
+              width="70"
               :src="`/images/lp-levels/${lp.wCOURAGE.level}.png`"
               :alt="lp.wCOURAGE.level"
             />
@@ -43,14 +43,14 @@
           <div class="pool">
             <img
               class="token"
-              height="20"
-              width="20"
+              height="40"
+              width="40"
               src="/images/wland.png"
               alt="wLAND Pool"
             />
             <img
-              height="32"
-              width="32"
+              height="70"
+              width="70"
               :src="`/images/lp-levels/${lp.wLAND.level}.png`"
               :alt="lp.wLAND.level"
             />
@@ -175,7 +175,12 @@ export default {
 .title-container {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  @media screen and (min-width: 1280px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 .scars-amount {
   font-weight: bold;
