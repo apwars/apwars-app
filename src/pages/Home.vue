@@ -61,7 +61,7 @@ export default {
   background-position: center;
 }
 .column-container {
-  min-height: 600px;
+  min-height: 640px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

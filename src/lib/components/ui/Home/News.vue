@@ -45,7 +45,6 @@ export default {
       try {
         const controller = new NewsController();
         const news = await controller.getMany();
-        console.log(news)
         this.news = news.filter(n => n.id);
       } catch (error) {
         console.error(error);

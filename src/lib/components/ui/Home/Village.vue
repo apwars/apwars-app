@@ -13,7 +13,7 @@
     </div>
     
   </div>
-  <div class="resources mt-1" v-if="village.foundationType === 62">
+  <div class="resources mt-1" v-if="village.id !== 99999999999999999999999">
         <div class="resource-info">
           <div class="resource-amount">
             <img src="/images/icons/stone.png" height="12" width="12" />

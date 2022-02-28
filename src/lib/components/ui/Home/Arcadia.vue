@@ -12,9 +12,9 @@
         width="100%"
         v-if="isLoading"
       />
-      <Village v-else class="mt-2" :village="currentLand" />
+      <Village v-else class="mt-1" :village="currentLand" />
     </div>
-    <div class="buy-villages-info mt-1" v-if="!hasLands">
+    <div class="buy-villages-info" v-if="!hasLands">
       Be a master in the world of Arcadia. Acquire your village and build an
       empire.
     </div>
@@ -31,6 +31,15 @@
 import ArcadiaController from "@/controller/ArcadiaController";
 import Village from "./Village";
 import Button from "@/lib/components/ui/Buttons/Button";
+
+const PLACEHOLDER_LAND = {
+  id: 99999999999999999999999,
+  foundationType: 62,
+  x: "#",
+  y: "#",
+  name: "No lands",
+  worldId: 1,
+};
 
 export default {
   components: { Button, Village },
@@ -51,16 +60,7 @@ export default {
   data() {
     return {
       isLoading: true,
-      lands: [
-        {
-          id: 99999999999999999999999,
-          foundationType: 62,
-          x: "#",
-          y: "#",
-          name: "No lands",
-          worldId: 1,
-        },
-      ],
+      lands: [PLACEHOLDER_LAND],
       currentIndex: 0,
     };
   },
@@ -74,7 +74,9 @@ export default {
         const controller = new ArcadiaController();
         const landsData = await controller.getLands(this.account);
         if (landsData.length > 0) {
-          this.lands = [].concat(landsData.filter(l => l.foundationType));
+          this.lands = [].concat(landsData.filter((l) => l.foundationType));
+        } else {
+          this.lands = [PLACEHOLDER_LAND];
         }
       } catch (error) {
         console.error(error);
