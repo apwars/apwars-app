@@ -301,6 +301,6 @@ export default {
   left: 4px;
   z-index: 1;
   height: 26px;
-  width: 91%;
+  width: 92%;
 }
 </style>
