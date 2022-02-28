@@ -62,25 +62,28 @@
               <div>{{ currentSoldier.data.name }}</div>
               <div class="d-flex align-center mt-1">
                 <div class="data-label">Courage</div>
-                <div>
-                  <Progress
-                    class="progress-bar ml-1"
+                <div class="courage-container">
+                <img class="courage-bar" src="/images/courage-bar.png" height="100%" width="100%" />
+                <Progress
+                    class="courage-progress"
                     :value="currentSoldier.data.courage"
                     :maxScale="100"
-                    color1="#666ecd"
-                    color2="#4049c0"
+                    :label="`${currentSoldier.data.courage}/100`"
+                    color1="#FFB800"
+                    color2="#FFB800"
                   />
                 </div>
               </div>
               <div class="d-flex align-center mt-1">
                 <div class="data-label">Energy</div>
-                <div>
+                <div class="energy-container">
+                  <img class="energy-bar" src="/images/energy-bar.png" height="100%" width="100%" />
                   <Progress
-                    class="progress-bar ml-1"
+                    class="energy-progress"
                     :value="currentSoldier.data.energy"
                     :maxScale="3"
-                    color1="#6ecd66"
-                    color2="#42ae39"
+                    color1="#00A3FF"
+                    color2="#00A3FF"
                     :label="`${currentSoldier.data.energy}/3`"
                   />
                 </div>
@@ -254,13 +257,48 @@ export default {
   font-size: 14px;
   line-height: 1.2;
 }
-.progress-bar {
-  width: 140px;
-}
 .data-label {
   font-weight: bold;
   font-size: 14px;
   line-height: 1.3;
   width: 60px;
+}
+.courage-container {
+  position: relative;
+  width: 140px;
+  height: 33px;
+}
+.courage-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+.courage-progress {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  z-index: 1;
+  height: 22px;
+  width: 85%;
+}
+.energy-container {
+  position: relative;
+  width: 123px;
+  height: 28px;
+}
+.energy-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+.energy-progress {
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  z-index: 1;
+  height: 23px;
+  width: 90%;
 }
 </style>

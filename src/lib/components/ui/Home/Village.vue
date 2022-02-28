@@ -1,6 +1,6 @@
 <template>
   <div class="village-container">
-    <img :class="[village.data ? '' : 'gray']" :src="image" height="64" />
+    <img :class="[village.data ? '' : 'gray']" :src="image" height="52" />
     <div class="village-data ml-1">
       <div class="village-name pb-1">{{ village.name || "No Village" }}</div>
       <div class="localization mt-1">
