@@ -26,7 +26,56 @@
 import Convert from "@/lib/helpers/Convert";
 
 export default {
-  props: ['amount', 'compact', 'formatted', 'decimals', 'approximate', 'tooltip', 'symbol', 'icon', 'size', 'attribute', 'unitsColor', 'ignoreThousand'],
+  props: {
+    amount: {
+      type: [Number, String],
+      default: 0,
+    },
+    compact: {
+      type: Boolean,
+      default: false,
+    },
+    formatted: {
+      type: Boolean,
+      default: false,
+    },
+    decimals: {
+      type: [Number, String],
+      default: 0,
+    },
+    approximate: {
+      type: Boolean,
+      default: false,
+    },
+    tooltip: {
+      type: Boolean,
+      default: false,
+    },
+    symbol: {
+      type: String,
+      default: '',
+    },
+    icon: {
+      type: String,
+      default: '',
+    },
+    size: {
+      type: String,
+      default: '',
+    },
+    attribute: {
+      type: Number,
+      default: 0,
+    },
+    unitsColor: {
+      type: String,
+      default: '',
+    },
+    ignoreThousand: {
+      type: Boolean,
+      default: false,
+    },
+  },
 
   computed: {
     computedAmount() {
@@ -37,7 +86,7 @@ export default {
         numberAmount = numberAmount * this.attribute
       }
 
-      if (this.compact !== undefined) {
+      if (this.compact) {
         numberAmount = Convert.compactNumber(numberAmount, this.getDecimals, this.ignoreThousand);
       } else {
         numberAmount = Convert.roundDown(numberAmount, this.getDecimals);
@@ -57,18 +106,18 @@ export default {
         : Convert.fromWei(numberAmount.toString());
     },
     isTooltip() {
-      return this.tooltip !== undefined;
+      return this.tooltip;
     },
     getDecimals() {
       return this.decimals ?? 0;
     },
     isFormatted() {
-      return this.formatted !== undefined;
+      return this.formatted;
     },
     isIcon() {
       return (
-        this.icon !== undefined &&
-        this.symbol !== undefined &&
+        this.icon &&
+        this.symbol &&
         this.symbol.length > 0
       );
     },

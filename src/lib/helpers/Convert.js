@@ -1,17 +1,21 @@
+import Web3 from "web3";
+
 const DEFAULT_DECIMALS = 2;
 const DEFAULT_DECIMALS_BIGNUMBER = 18;
+
+const w3 = new Web3(window.ethereum);
 
 export default {
   toWei(amount) {
     amount = (parseFloat(amount)).toFixed(DEFAULT_DECIMALS_BIGNUMBER);
-    return web3.utils.toWei(amount, "ether");
+    return w3.utils.toWei(amount, "ether");
   },
 
   fromWei(amount, convertFloat) {
     if (convertFloat) {
       return parseFloat(web3.utils.fromWei(amount.toString()));
     }
-    return web3.utils.fromWei(amount.toString());
+    return w3.utils.fromWei(amount.toString());
   },
 
   formatString(amount, decimals = DEFAULT_DECIMALS) {

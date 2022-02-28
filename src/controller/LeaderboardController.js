@@ -45,12 +45,10 @@ export default class LeaderboardController {
     }
   }
 
-  getWeek(game, limit, skip) {
+  getWeek(game, limit = 10, skip = 0) {
     try {
       const startDateWeek = moment().startOf("isoWeek");
       const endDateWeek = moment().endOf("isoWeek");
-      limit = limit || 10;
-      skip = skip || 0;
 
       return this.getLeaderboard(game, {
         startDate: startDateWeek.valueOf(),
@@ -77,11 +75,8 @@ export default class LeaderboardController {
     }
   }
 
-  getArcadia(world, limit, skip) {
+  getArcadia(world = 1, limit = 10, skip = 0) {
     try {
-      limit = limit || 10;
-      skip = skip || 0;
-
       return this.getLeaderboardArcadia(world, {}, limit, skip);
     } catch (error) {
       throw error;

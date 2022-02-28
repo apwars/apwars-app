@@ -457,7 +457,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions, mapState, mapGetters } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
@@ -590,9 +590,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     ...mapActions({
       getWar: "war/getWar",
       setupMusic: "music/setupMusic",
@@ -660,7 +657,6 @@ export default {
     },
   },
   async mounted() {
-    this.setHeader(false);
     this.checkTour();
     this.fetchData();
   },
@@ -671,7 +667,6 @@ export default {
     console.log(this.war?.prizesDistributed)
   },
   beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
     if (!to.path.includes("/war")) {
       this.clearMusic();
     }

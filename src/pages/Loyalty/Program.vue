@@ -154,7 +154,6 @@
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
 import LPCard from "@/lib/components/ui/LPCard";
@@ -284,9 +283,6 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     backToHome() {
       this.$router.push("/");
     },
@@ -375,13 +371,6 @@ export default {
   mounted() {
     this.loadData();
     this.loadTransactionsAndReport();
-  },
-  created() {
-    this.setHeader(false);
-  },
-  beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
-    next();
   },
   watch: {
     async account() {

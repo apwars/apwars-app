@@ -87,8 +87,6 @@
   </v-container>
 </template>
 <script>
-import { mapMutations } from "vuex";
-
 import PacksController from "@/controller/PacksController";
 
 import ToastSnackbar from "@/plugins/ToastSnackbar";
@@ -125,9 +123,6 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     backToHome() {
       this.$router.push("/");
     },
@@ -209,14 +204,9 @@ export default {
     },
   },
   created() {
-    this.setHeader(false);
     if (this.isConnected && !this.selectedRace) {
       this.selectRace(this.$route.query.race || 'Humans');
     }
-  },
-  beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
-    next();
   },
   watch: {
     isConnected() {

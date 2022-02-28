@@ -210,8 +210,6 @@
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
-
 import SoldierController from "@/controller/SoldierController";
 import WalletController from "@/controller/WalletController";
 
@@ -245,9 +243,6 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     backToHome() {
       this.$router.push("/");
     },
@@ -334,12 +329,7 @@ export default {
     },
   },
   created() {
-    this.setHeader(false);
     this.checkSoldiers();
-  },
-  beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
-    next();
   },
 };
 </script>
