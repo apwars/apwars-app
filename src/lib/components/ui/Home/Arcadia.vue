@@ -18,13 +18,19 @@
       Be a master in the world of Arcadia. Acquire your village and build an
       empire.
     </div>
+    <div class="d-flex justify-center mt-1">
     <Button
-      class="mt-1"
       type="wsecondary"
       icon="world"
       text="Play Arcadia"
       :handleClick="() => $router.push('/arcadia')"
     />
+    <Button
+      class="ml-1"
+      type="wsecondary"
+      text="Buy Foundations"
+      :handleClick="() => $router.push('/arcadia-expansion')"
+    /></div>
   </div>
 </template>
 <script>
