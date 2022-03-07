@@ -22,7 +22,7 @@ export default {
       dispatch("checkWarCountdown");
       dispatch('getAccountPrizes', currentWar.id);
       await dispatch("user/fetchUserWallet", null, { root: true });
-      await dispatch("wallet/checkSoldiers");
+      await dispatch("wallet/checkSoldiers", null, { root: true });
       dispatch("checkCompleteFormations");
       dispatch("enlistment/checkPlayerEnlistment", null, { root: true });
     } catch (error) {

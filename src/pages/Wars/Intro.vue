@@ -443,7 +443,7 @@ export default {
     next();
   },
   updated() {
-    if (this.war) {
+    if (!this.isLoadingWar && this.war) {
       this.$refs.raceSelect.scrollLeft =
         (this.$refs.raceSelect.scrollWidth / 2) - 30;
     }
