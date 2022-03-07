@@ -208,12 +208,15 @@ export default {
 
 .card-podium .icon-place-0 {
   width: 50px;
+  z-index: 5;
 }
 .card-podium .icon-place-1 {
   width: 60px;
+  z-index: 5;
 }
 .card-podium .icon-place-2 {
   width: 40px;
+  z-index: 5;
 }
 
 .card-podium.gold {
