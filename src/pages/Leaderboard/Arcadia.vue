@@ -35,12 +35,14 @@
               class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
             >
               <div class="d-flex d-lg-box">
+                <div class="avatar-container">
                 <v-avatar
                   class="list-leaderboard-avatar d-flex justify-center"
                   :address="player.account"
                   tooltip
                   :propAvatar="player.faction"
                 />
+                </div>
                 <div class="d-flex d-md-none align-center justify-center">
                   <img
                     v-if="index < 3"
@@ -447,7 +449,7 @@ export default {
   justify-content: center;
 }
 
-.list-leaderboard-avatar >>> img {
+.list-leaderboard-avatar {
   height: 62px;
   margin: 0px !important;
   border-radius: 6px 0px 0px 6px;
@@ -496,6 +498,10 @@ export default {
   width: 160px;
   text-align: center;
 }
+.avatar-container {
+  width: 62px;
+  height: 62px;
+}
 
 @media only screen and (max-width: 959px) {
   .page-title {
@@ -509,7 +515,7 @@ export default {
     font-size: 26px;
     line-height: 32px;
   }
-  .list-leaderboard-avatar >>> img {
+  .list-leaderboard-avatar {
     border-radius: 6px 0px 0px 0px;
   }
   .list-leaderboard-info {

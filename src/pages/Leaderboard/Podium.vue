@@ -226,17 +226,17 @@ export default {
   border: 2px solid #e95809;
 }
 
-.card-podium.gold .avatar >>> img {
+.card-podium.gold .avatar {
   margin-top: -50px;
   border: 2px solid #ffb800;
   border-radius: 8px;
 }
-.card-podium.silver .avatar >>> img {
+.card-podium.silver .avatar {
   margin-top: -50px;
   border: 2px solid #c4c4c4;
   border-radius: 8px;
 }
-.card-podium.bronze .avatar >>> img {
+.card-podium.bronze .avatar {
   margin-top: -50px;
   border: 2px solid #e95809;
   border-radius: 8px;
@@ -264,19 +264,19 @@ export default {
 
 @media only screen and (max-width: 959px) {
 
-  .card-podium.gold .avatar >>> img {
+  .card-podium.gold .avatar {
     width: 70px;
     margin-top: -35px;
     border: 2px solid #ffb800;
     border-radius: 8px;
   }
-  .card-podium.silver .avatar >>> img {
+  .card-podium.silver .avatar {
     width: 70px;
     margin-top: -35px;
     border: 2px solid #c4c4c4;
     border-radius: 8px;
   }
-  .card-podium.bronze .avatar >>> img {
+  .card-podium.bronze .avatar {
     width: 70px;
     margin-top: -35px;
     border: 2px solid #e95809;
@@ -284,14 +284,17 @@ export default {
   }
   .card-podium .icon-place-0 {
     width: 40px;
+    z-index: 5;
   }
   .card-podium .icon-place-1 {
     width: 40px;
+    z-index: 5;
   }
   .card-podium .icon-place-2 {
     width: 40px;
+    z-index: 5;
   }
-  .list-leaderboard-avatar >>> img {
+  .list-leaderboard-avatar {
     border-radius: 6px 0px 0px 0px;
   }
   .list-leaderboard-info {

@@ -104,11 +104,13 @@
               class="d-flex flex-column flex-md-row align-start align-md-center list-leaderboard mb-2"
             >
               <div class="d-flex d-lg-box">
+                <div class="avatar-container">
                 <v-avatar
                   class="list-leaderboard-avatar d-flex justify-center"
                   :address="player.account"
                   tooltip
                 />
+                </div>
                 <div class="d-flex d-md-none align-center justify-center">
                   <img
                     v-if="index < 3"
@@ -842,5 +844,10 @@ export default {
 
 .footer {
   margin-bottom: 120px;
+}
+
+.avatar-container {
+  height: 62px;
+  width: 62px;
 }
 </style>
