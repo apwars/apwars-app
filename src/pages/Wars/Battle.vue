@@ -664,7 +664,6 @@ export default {
     if (this.$refs.board) {
       this.$refs.board.scrollLeft = this.$refs.board.scrollWidth / 2 - 125;
     }
-    console.log(this.war?.prizesDistributed)
   },
   beforeRouteLeave(to, from, next) {
     if (!to.path.includes("/war")) {
