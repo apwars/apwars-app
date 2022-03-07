@@ -1,6 +1,17 @@
 <template>
   <div>
-    <h4 :class="['title', 'text-center', 'text-h4', 'text-md-h4', 'ma-0', 'mt-1', titleColor ? 'custom-color' : 'text-wGOLD']" :style="`--color: ${titleColor}`">
+    <h4
+      :class="[
+        'title',
+        'text-center',
+        'text-h4',
+        'text-md-h4',
+        'ma-0',
+        'mt-1',
+        titleColor ? 'custom-color' : 'text-wGOLD',
+      ]"
+      :style="`--color: ${titleColor}`"
+    >
       {{ title }}
     </h4>
     <div class="d-flex justify-center mt-2">
@@ -17,50 +28,30 @@
         "
       >
         <template slot-scope="props">
-          <div class="block-time">
-            <div class="timer-title">Days</div>
-            <div class="timer-slot">
-              <v-img
-                class="img"
-                src="/images/buttons/btn-countdown.png"
-                alt="countdown-days"
-              />
-              <div class="text-wGOLD text-center timer">{{ props.days }}</div>
+          <div class="time-container">
+            <div class="time-title">Days</div>
+            <div class="time-block">
+              <div class="time-text">{{ props.days }}</div>
             </div>
           </div>
-          <div class="block-time">
-            <div class="timer-title">Hours</div>
-            <div class="timer-slot">
-              <v-img
-                class="img"
-                src="/images/buttons/btn-countdown.png"
-                alt="countdown-hours"
-              />
-              <div class="text-wGOLD text-center timer">{{ props.hours }}</div>
+          <div class="time-container">
+            <div class="time-title">Hours</div>
+            <div class="time-block">
+              <div class="time-text">{{ props.hours }}</div>
             </div>
           </div>
-          <div class="block-time">
-            <div class="timer-title">Minutes</div>
-            <div class="timer-slot">
-              <v-img
-                class="img"
-                src="/images/buttons/btn-countdown.png"
-                alt="countdown-minutes"
-              />
-              <div class="text-wGOLD text-center timer">
+          <div class="time-container">
+            <div class="time-title">Minutes</div>
+            <div class="time-block">
+              <div class="time-text">
                 {{ props.minutes }}
               </div>
             </div>
           </div>
-          <div class="block-time">
-            <div class="timer-title">Seconds</div>
-            <div class="timer-slot">
-              <v-img
-                class="img"
-                src="/images/buttons/btn-countdown.png"
-                alt="countdown-seconds"
-              />
-              <div class="text-wGOLD text-center timer">
+          <div class="time-container">
+            <div class="time-title">Seconds</div>
+            <div class="time-block">
+              <div class="time-text">
                 {{ props.seconds }}
               </div>
             </div>
@@ -82,7 +73,7 @@ export default {
     },
     titleColor: {
       type: String,
-      default: '',
+      default: "",
     },
   },
 
@@ -94,7 +85,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .title.custom-color {
   color: var(--color);
 }
@@ -103,10 +94,19 @@ export default {
   margin: 0px 10px;
 }
 
-.timer-title {
+.time-container {
   text-align: center;
-  font-size: 14px;
-  margin-bottom: 4px;
+  &:not(:last-child) {
+    margin-right: 21px;
+  }
+}
+
+.timer-title {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1.3;
+  text-align: center;
+  color: #ffeebc;
 }
 
 .countdown >>> .block-time .img {
@@ -116,13 +116,28 @@ export default {
 .timer-slot {
   position: relative;
 }
-.timer {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-  font-size: 2rem;
+
+.time-title {
+  font-size: 10px;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.time-block {
+  height: 42px;
+  width: 42px;
+  background-image: url("/images/buttons/btn-countdown.png");
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-text {
   font-weight: bold;
+  font-size: 18px;
+  line-height: 1.3;
+  color: #ffeebc;
 }
 
 @media only screen and (max-width: 540px) {

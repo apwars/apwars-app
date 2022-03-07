@@ -457,7 +457,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions, mapState, mapGetters } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
@@ -515,7 +515,7 @@ export default {
       } else if (this.phase === "enlistment") {
         return "Enlistment ends in";
       }
-      return "Countdown to collect prizes and wUNITS";
+      return "Prize and wUNITs collection ends in";
     },
     isWarFinished() {
       return this.war.status === "finished";
@@ -590,9 +590,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     ...mapActions({
       getWar: "war/getWar",
       setupMusic: "music/setupMusic",
@@ -660,7 +657,6 @@ export default {
     },
   },
   async mounted() {
-    this.setHeader(false);
     this.checkTour();
     this.fetchData();
   },
@@ -668,10 +664,8 @@ export default {
     if (this.$refs.board) {
       this.$refs.board.scrollLeft = this.$refs.board.scrollWidth / 2 - 125;
     }
-    console.log(this.war?.prizesDistributed)
   },
   beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
     if (!to.path.includes("/war")) {
       this.clearMusic();
     }

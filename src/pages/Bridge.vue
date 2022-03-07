@@ -279,20 +279,25 @@
                     >
                       I consent to convert my Tokens and Game Items to On-Chain
                       balances. The withdrawal and deposit terms are stated at:
+                      <a
+                        href="https://medium.com/apwars/apwars-bridge-dece52b615c6"
+                      >
+                        https://medium.com/apwars/apwars-bridge-dece52b615c6
+                      </a>
                     </div>
                     <div v-else>
                       I consent to converting my Tokens and Game Items to
                       Off-Chain balances in order to play the game more
                       conveniently and with a better game experience. The
                       withdrawal and deposit terms are stated at:
+                      <a
+                        href="https://medium.com/apwars/apwars-bridge-dece52b615c6"
+                      >
+                        https://medium.com/apwars/apwars-bridge-dece52b615c6
+                      </a>
                     </div>
                   </template>
                 </v-checkbox>
-              </div>
-              <div class="mt-n1 mb-3 text-center">
-                <a href="https://medium.com/apwars/apwars-bridge-dece52b615c6">
-                  https://medium.com/apwars/apwars-bridge-dece52b615c6
-                </a>
               </div>
             </v-col>
           </v-row>
@@ -426,8 +431,6 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import BridgeController from "@/controller/BridgeController";
 import WalletController from "@/controller/WalletController";
-
-import { mapMutations } from "vuex";
 
 export default {
   components: {
@@ -679,15 +682,10 @@ export default {
   },
 
   mounted() {
-    this.setHeader(false);
     this.loadData();
   },
 
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
-
     async loadData() {
       if (!this.isConnected) {
         return;
@@ -1333,7 +1331,7 @@ export default {
 
 <style scoped>
 .page-background {
-  background-image: url("/images/backgrounds/desert.jpg");
+  background-image: url("/images/background/desert.jpg");
   background-size: cover;
   background-position: top;
   margin-bottom: -200px;

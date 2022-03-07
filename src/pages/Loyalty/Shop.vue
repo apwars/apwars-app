@@ -78,8 +78,6 @@
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
-
 import WalletController from "@/controller/WalletController";
 import PacksController from "@/controller/PacksController";
 
@@ -114,9 +112,6 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     backToLoyalty() {
       this.$router.push("/loyalty-program");
     },
@@ -183,15 +178,10 @@ export default {
   },
 
   created() {
-    this.setHeader(false);
     if (this.isConnected) {
       this.fetchBalance();
       this.fetchItems();
     }
-  },
-  beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
-    next();
   },
   watch: {
     async account() {

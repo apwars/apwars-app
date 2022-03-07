@@ -22,7 +22,7 @@ export function getWeapons() {
       typeDesc: "Weapons",
       contractAddress: Addresses.collectibles,
       title: "Simple Bow",
-      description: 'The Simples Archery can be used by your troops in direct conflict with enemies. And it will give you the initial strength to conquer your path to victory.',
+      description: 'The Simples Bow can be used by your troops in direct conflict with enemies. And it will give you the initial strength to conquer your path to victory.',
       image: "/images/nfts/weapon-simple-bow.png",
       icon: "simple-bow",
       strength: 15,

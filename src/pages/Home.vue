@@ -1,138 +1,28 @@
 <template>
   <div class="d-flex justify-center align-center bg-home">
-    <div v-if="isLoading">
-      <game-text header="h2" class="text-center d-block py-9"
-        >Loading...</game-text
-      >
-    </div>
-    <v-container class="d-flex" v-else fluid>
-      <v-row justify="center" align="center" align-content="center">
-        <v-col cols="12" md="4" class="pr-0 pl-1">
-          <div class="mt-1"></div>
-          <game-text header="h4" class="text-center mt-2">
-            {{ this.stepWar.title }}
-          </game-text>
-          <div
-            v-if="stepWar.dateTime > 0"
-            class="card-body-home d-flex justify-center align-center"
-          >
-            <countdown
-              class="mt-0"
-              :time="stepWar.dateTime"
-              hideEnd
-              @end="loadData()"
-            />
-          </div>
-          <div class="d-flex justify-center mt-1">
-            <wButton @click="$router.push('/war/intro')" class="mt-1">
-              <span class="text-none text-center">Go to War</span>
-            </wButton>
+    <v-container fluid>
+      <v-row>
+        <v-col cols="12" md="4">
+          <div class="card-container">
+            <Profile />
+            <Resources />
+            <div class="divider"></div>
+            <LoyaltyProgram />
           </div>
         </v-col>
         <v-col cols="12" md="4">
-          <game-text header="h3" class="text-center">
-            Loyalty Program
-          </game-text>
-          <div class="card-body-home d-flex justify-center align-center">
-            <img
-              src="/images/icons/coins/wSCARS.png"
-              width="95px"
-              alt="War SCARS"
-            />
-            <div class="ml-2">
-              <h2 class="text-h2">
-                <amount
-                  :amount="balancewSCARS"
-                  decimals="0"
-                  formatted
-                  tooltip
-                />
-              </h2>
-              <div class="mt-1 font-weight-bold">Your War SCARS</div>
-            </div>
-          </div>
-          <div class="d-flex justify-center mt-1">
-            <wButton @click="$router.push('/loyalty-program')" class="mt-1">
-              <span class="text-none text-center">Go to Loyalty Program</span>
-            </wButton>
-            <wButton
-              @click="$router.push('/loyalty-program/shop')"
-              class="ml-2 mt-1"
-            >
-              <span class="text-none text-center">Go to Shop</span>
-            </wButton>
+          <div class="card-container">
+            <UnlockSoldier />
+            <div class="divider"></div>
+            <Wars />
           </div>
         </v-col>
         <v-col cols="12" md="4">
-          <game-text header="h3" class="text-center">
-            Buy Resources
-          </game-text>
-          <div class="d-flex flex-column justify-center align-center">
-            <div class="d-flex justify-space-between align-center">
-              <img class="ml-1  mr-2" width="78px" src="/images/wGOLD.png" />
-              <wButton @click="$router.push('/buy-wgold')" class="mt-1">
-                <span class="text-none text-center text-buy">
-                  Buy wGOLD
-                </span>
-              </wButton>
-            </div>
-            <div class="d-flex justify-space-between align-center">
-              <img class="mr-2" width="80px" src="/images/wCOURAGE.png" />
-              <wButton @click="$router.push('/buy-wcourage')" class="mt-1">
-                <span class="text-none text-center text-buy">
-                  Buy wCOURAGE
-                </span>
-              </wButton>
-            </div>
-            <div class="d-flex justify-space-between align-center">
-              <img class="mr-2" width="80px" src="/images/wLAND.png" />
-              <wButton @click="$router.push('/buy-wland')" class="mt-1">
-                <span class="text-none text-center text-buy">
-                  Buy wLAND
-                </span>
-              </wButton>
-            </div>
+          <div class="column-container">
+            <Arcadia />
+            <Leaderboard class="mt-1" />
+            <News class="mt-1" />
           </div>
-        </v-col>
-        <v-col cols="12" md="4">
-          <div class="d-flex justify-center">
-            <img
-              src="/images/tmj.png"
-              height="90px"
-              class="mt-5 mb-2"
-              alt="the monstrous journey"
-            />
-          </div>
-          <div class="d-flex justify-center mt-1">
-            <wButton
-              @click="$router.push('/the-monstrous-journey')"
-              class="mt-1"
-            >
-              <span class="text-none text-center">
-                Play Now
-              </span>
-            </wButton>
-          </div>
-        </v-col>
-        <v-col cols="12" md="4">
-          <div class="d-flex justify-center">
-            <img
-              src="/images/arcadia-expansion.png"
-              height="90px"
-              class="mt-5 mb-2"
-              alt="arcadia-expansion"
-            />
-          </div>
-          <div class="d-flex justify-center mt-1">
-            <wButton @click="$router.push('/arcadia')" class="mt-1">
-              <span class="text-none text-center">
-                Play Now
-              </span>
-            </wButton>
-          </div>
-        </v-col>
-        <v-col cols="12" md="4">
-          <BuywCOURAGE />
         </v-col>
       </v-row>
     </v-container>
@@ -140,157 +30,53 @@
 </template>
 
 <script>
-import Countdown from "@/lib/components/ui/Utils/Countdown";
-import wGOLDButton from "@/lib/components/ui/Utils/wGOLDButton";
-import wButton from "@/lib/components/ui/Buttons/wButton";
-import GameText from "@/lib/components/ui/Utils/GameText";
-import CountdownBlock from "@/lib/components/ui/Utils/CountdownBlock";
-import BuywCOURAGE from "@/lib/components/ui/Home/BuywCOURAGE";
-import Amount from "@/lib/components/ui/Utils/Amount.vue";
-
-import WalletController from "@/controller/WalletController";
-import WarsController from "@/controller/WarsController";
+import Profile from "@/lib/components/ui/Home/Profile";
+import Resources from "@/lib/components/ui/Home/Resources";
+import LoyaltyProgram from "@/lib/components/ui/Home/LoyaltyProgram";
+import UnlockSoldier from "@/lib/components/ui/Home/UnlockSoldier";
+import Wars from "@/lib/components/ui/Home/Wars";
+import Arcadia from "@/lib/components/ui/Home/Arcadia";
+import Leaderboard from "@/lib/components/ui/Home/Leaderboard";
+import News from "@/lib/components/ui/Home/News";
 
 export default {
   components: {
-    Countdown,
-    wGOLDButton,
-    wButton,
-    GameText,
-    CountdownBlock,
-    BuywCOURAGE,
-    Amount,
-  },
-
-  data() {
-    return {
-      isLoading: true,
-      balanceFED: 0,
-      wars: [],
-      lastWar: {},
-      warStats: {},
-      listTasks: [],
-      catapults: [
-        { image: "/images/weapons/catapult-humans.png" },
-        { image: "/images/weapons/catapult-orcs.png" },
-        { image: "/images/weapons/catapult-undead.png" },
-        { image: "/images/weapons/catapult-elves.png" },
-      ],
-      stepWar: {},
-    };
-  },
-
-  computed: {
-    isConnected() {
-      return this.$store.getters["user/isConnected"];
-    },
-
-    account() {
-      return this.$store.getters["user/account"];
-    },
-
-    addresses() {
-      return this.$store.getters["user/addresses"];
-    },
-
-    networkInfo() {
-      return this.$store.getters["user/networkInfo"];
-    },
-
-    currentBlockNumber() {
-      return this.$store.getters["user/currentBlockNumber"];
-    },
-  },
-
-  watch: {
-    isConnected() {
-      this.loadData();
-    },
-
-    account() {
-      this.loadData();
-    },
-  },
-
-  mounted() {
-    this.loadData();
-  },
-
-  methods: {
-    async loadData() {
-      if (!this.isConnected) {
-        return;
-      }
-      this.stepWar = await this.getStepWar();
-      this.balancewSCARS = await this.getBalancewSCARS(this.account);
-      this.isLoading = false;
-    },
-
-    async getStepWar() {
-      const controller = new WarsController();
-      const lastId = await controller.getLastId();
-      const lastWar = await controller.getOne(lastId.id);
-
-      let step = {
-        title: "War is coming soon...",
-        dateTime: new Date(lastWar.deadlines.startEnlistment).getTime(),
-      };
-
-      const dateNow = new Date().getTime();
-      if (dateNow > new Date(lastWar.deadlines.endClaimPrize).getTime()) {
-        step = {
-          title: "War ended!",
-          dateTime: 0,
-        };
-      } else if (
-        dateNow > new Date(lastWar.deadlines.endEnlistment).getTime()
-      ) {
-        step = {
-          title: "Collect prizes and wUNITS",
-          dateTime: new Date(lastWar.deadlines.endClaimPrize).getTime(),
-        };
-      } else if (
-        dateNow > new Date(lastWar.deadlines.startEnlistment).getTime()
-      ) {
-        step = {
-          title: "Enlistment ends in",
-          dateTime: new Date(lastWar.deadlines.endEnlistment).getTime(),
-        };
-      }
-      step.dateTime -= dateNow;
-
-      if (step.dateTime < 0) {
-        step.dateTime = 0;
-      }
-
-      return step;
-    },
-
-    async getBalancewSCARS(account) {
-      const controller = new WalletController();
-      const wallet = await controller.wallets(account);
-
-      if (!wallet.balances["wSCARS"]) {
-        return 0;
-      }
-
-      return wallet.balances["wSCARS"];
-    },
+    Profile,
+    Resources,
+    LoyaltyProgram,
+    UnlockSoldier,
+    Wars,
+    Arcadia,
+    Leaderboard,
+    News,
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .bg-home {
-  background-image: url("/images/bg-home.jpg");
+  background-image: url("/images/background/castle-mist.png");
   background-size: cover;
   min-height: 100%;
   background-position: center;
 }
-.card-body-home {
-  height: 150px;
+.column-container {
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.text-buy {
-  width: 150px;
+.card-container {
+  @extend .column-container;
+  padding: 24px;
+  background-color: #110c09;
+  border: 2px solid #ffeebc;
+  background-image: url("/images/texture/dark-wood.png");
+  background-repeat: repeat;
+}
+.divider {
+  width: 100%;
+  border-bottom: 1px solid #ffeebc;
+  margin: 12px 0;
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <v-layout class="fill-height">
-    <app-header />
     <v-main>
       <v-dialog v-model="showModal" persistent max-width="300">
         <v-card>
@@ -249,7 +248,6 @@
 </template>
 
 <script>
-import AppHeader from "@/lib/components/ui/App/AppHeader";
 import AppFooter from "@/lib/components/ui/App/AppFooter";
 
 import moment from "moment";
@@ -258,7 +256,6 @@ const sha256 = require("js-sha256");
 
 export default {
   components: {
-    AppHeader,
     AppFooter,
   },
 

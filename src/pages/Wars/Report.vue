@@ -490,7 +490,7 @@
                 />
                 <span class="rewards-title"
                   ><Amount
-                    :amount="report.prizes.war.amount"
+                    :amount="report.prizes.war.amountUnlocked"
                     :symbol="report.prizes.war.prize"
                     approximate
                     formatted
@@ -579,7 +579,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapState, mapActions } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 import WarsController from "@/controller/WarsController";
 import errorHandler from "@/helpers/errorHandler";
 
@@ -658,10 +658,6 @@ export default {
         { text: "Date", value: "createdOn" },
       ],
     };
-  },
-
-  created() {
-    this.setHeader(false);
   },
 
   mounted() {
@@ -762,7 +758,6 @@ export default {
   },
 
   beforeRouteLeave(to, from, next) {
-    this.setHeader(true);
     if (!to.path.includes("/war")) {
       this.clearMusic();
     }
@@ -770,9 +765,6 @@ export default {
   },
 
   methods: {
-    ...mapMutations({
-      setHeader: "app/setMenuDisplay",
-    }),
     ...mapActions({
       getWar: "war/getWar",
       setupMusic: "music/setupMusic",

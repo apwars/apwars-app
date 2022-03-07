@@ -80,7 +80,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .btn-container {
-  padding: 8px 16px;
+  padding: 8px 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,12 +88,12 @@ export default {
   color: var(--color);
   text-align: center;
   font-weight: bold;
-  font-size: 16px;
-  line-height: 21px;
-  height: 40px;
+  font-size: 14px;
+  line-height: 1.4;
+  height: 35px;
   white-space: nowrap;
   > img {
-    width: 24px;
+    width: 16px;
   }
   &.small {
     font-size: 12px;
@@ -127,11 +127,11 @@ export default {
   }
   &.wsecondary {
     background-color: transparent !important;
-    border: 1px solid #ffeebc;
-    color: #ffeebc;
+    border: 2px solid #ffeebc;
+    color: #FFF;
     &:hover:enabled {
       background-color: #e5e5e5 !important;
-      border: 1px solid var(--color);
+      border: 2px solid var(--color);
       color: var(--color);
     }
   }

@@ -1,5 +1,3 @@
-import Vue from "vue";
-
 export default {
   setAccount: (state, account) => {
     state.account = account;
