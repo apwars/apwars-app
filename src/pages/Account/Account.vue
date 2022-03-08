@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <v-container>
+    <v-container fluid>
       <v-row>
         <v-col><Title>Account</Title></v-col></v-row
       >
@@ -10,7 +10,27 @@
             <v-col>
               <div class="screen-container">
                 <v-row>
-                  <v-col cols="12" md="4">
+                  <v-col cols="12" md="3">
+                    <img
+                      class="avatar"
+                      :src="
+                        `https://avatar.apwars.farm/?seed=${avatar ||
+                          account}&avatar=${faction}`
+                      "
+                      alt="avatar"/>
+                    <div class="lp-level-container" v-if="isEditing">
+                      <div class="level-image">
+                        <v-img height="64" src="/images/wgold.png" />
+                      </div>
+                      <div class="level-text">
+                        You are Level 1 on the Loyalty Program
+                      </div>
+                    </div>
+                    <div class="d-flex flex-column align-center" v-else>
+                      <div class="medium-text">Exclusive Avatar</div>
+                      <Button class="mt-1" type="wsecondary" text="Provide Liquidity" /></div
+                  ></v-col>
+                  <v-col cols="12" md="5" v-if="isEditing">
                     <v-text-field v-model="avatar" label="Name Warrior" />
                     <v-select
                       v-model="faction"
@@ -35,85 +55,123 @@
                         />
                       </template>
                     </v-select>
-
-                    <div class="radio-label">Is Public?</div>
-                    <v-radio-group v-model="isPublic" row>
-                      <v-radio label="Yes" :value="true"></v-radio>
-                      <v-radio label="No" :value="false"></v-radio>
-                    </v-radio-group>
+                  </v-col>
+                  <v-col cols="12" md="3" v-else>
+                    <div class="display-name">{{ name || truncate(account) }}</div>
+                    <div class="d-flex justify-space-between">
+                      <div class="d-flex">
+                        <img
+                          :src="`/images/icons/corp.png`"
+                          width="64px"
+                          :alt="country"
+                        />
+                        <div class="medium-text ml-1">Corp</div>
+                      </div>
+                      <div class="d-flex ml-1">
+                        <img
+                          :src="`/images/country-flags/${country}.svg`"
+                          width="48px"
+                          :alt="country"
+                        />
+                        <div class="medium-text ml-1">England</div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-space-between">
+                      <div class="display-lp">
+                        <img class="lp-image" src="/images/lp-wgold-busd.png" />
+                        <img
+                          class="level-image"
+                          src="/images/lp-levels/1.png"
+                        />
+                      </div>
+                      <div class="display-lp">
+                        <img
+                          class="lp-image"
+                          src="/images/lp-wcourage-busd.png"
+                        />
+                        <img
+                          class="level-image"
+                          src="/images/lp-levels/0.png"
+                        />
+                      </div>
+                      <div class="display-lp">
+                        <img class="lp-image" src="/images/lp-wland-busd.png" />
+                        <img
+                          class="level-image"
+                          src="/images/lp-levels/0.png"
+                        />
+                      </div>
+                    </div>
                   </v-col>
 
-                  <v-col cols="12" md="4">
-                    <img
-                      class="avatar"
-                      :src="
-                        `https://avatar.apwars.farm/?seed=${avatar ||
-                          account}&avatar=${faction}`
-                      "
-                      alt="avatar"
-                    />
-                    <div class="lp-level-container">
-                      <div class="level-image">
-                        <v-img src="/images/lp-levels/1.png" />
-                      </div>
-                      <div class="level-text">
-                        You are Level 1 on the Loyalty Program
-                      </div>
-                    </div></v-col
-                  ><v-col cols="12" md="4">
-                    <v-row>
-                      <v-col>
-                        <div class="d-flex">
-                          <img
-                            src="/images/icons/coins/wSCARS.png"
-                            width="95px"
-                            alt="War SCARS"
-                          />
-                          <div class="scars-info">
-                            <div class="scars">75,000</div>
-                            <div class="name">War Scars</div>
+                  <v-col cols="12" md="4" v-if="isEditing">
+                      <v-row>
+                        <v-col>
+                          <div class="d-flex">
+                            <img
+                              src="/images/icons/coins/wSCARS.png"
+                              width="95px"
+                              alt="War SCARS"
+                            />
+                            <div class="scars-info">
+                              <div class="scars">75,000</div>
+                              <div class="name">War Scars</div>
+                            </div>
                           </div>
-                        </div>
-                      </v-col></v-row
-                    >
-                    <v-row>
-                      <v-col>
-                        <div class="pool-container">
-                          <img
-                            class="lp-image"
-                            src="/images/lp-wgold-busd.png"
-                          />
-                          <div class="balance">Balance:</div>
-                          <div class="token-balance">10 wGOLD/</div>
-                          <div class="token-balance">10 BUSD/</div>
-                        </div>
-                      </v-col>
-                      <v-col
-                        ><div class="pool-container">
-                          <img
-                            class="lp-image"
-                            src="/images/lp-wcourage-busd.png"
-                          />
-                          <div class="balance">Balance:</div>
-                          <div>-----------</div>
-                        </div></v-col
+                        </v-col></v-row
                       >
-                      <v-col
-                        ><div class="pool-container">
-                          <img
-                            class="lp-image"
-                            src="/images/lp-wland-busd.png"
-                          />
-                          <div class="balance">Balance:</div>
-                          <div>-----------</div>
-                        </div></v-col
-                      >
-                    </v-row>
-                    <v-row>
-                  <v-col><LoyaltyMeter /></v-col>
-                </v-row>
-                  </v-col>
-                
+                      <v-row>
+                        <v-col>
+                          <div class="pool-container">
+                            <img
+                              class="lp-image"
+                              src="/images/lp-wgold-busd.png"
+                            />
+                            <div class="balance">Balance:</div>
+                            <div class="token-balance">10 wGOLD/</div>
+                            <div class="token-balance">10 BUSD</div>
+                          </div>
+                        </v-col>
+                        <v-col
+                          ><div class="pool-container">
+                            <img
+                              class="lp-image"
+                              src="/images/lp-wcourage-busd.png"
+                            />
+                            <div class="balance">Balance:</div>
+                            <div>-----------</div>
+                          </div></v-col
+                        >
+                        <v-col
+                          ><div class="pool-container">
+                            <img
+                              class="lp-image"
+                              src="/images/lp-wland-busd.png"
+                            />
+                            <div class="balance">Balance:</div>
+                            <div>-----------</div>
+                          </div></v-col
+                        >
+                      </v-row>
+                      <v-row>
+                        <v-col><LoyaltyMeter /></v-col>
+                      </v-row>
+                    </v-col>
+                    <v-col cols="12" md="5" v-else>
+                      <div class="big-text">Participate Games</div>
+                      <div class="game-row">
+                        <img class="game-logo" src="/images/tmj.png" />
+                      </div>
+                      <div class="game-row">
+                        <img class="game-logo" src="/images/wars.png" />
+                      </div>
+                      <div class="game-row">
+                        <img
+                          class="game-logo"
+                          src="/images/arcadia-expansion.png"
+                        />
+                      </div>
+                    </v-col>
                 </v-row>
               </div>
             </v-col>
@@ -143,6 +201,7 @@
 </template>
 <script>
 import { countryOptions } from "@/data/Countrys";
+import walletTruncate from "@/helpers/walletTruncate";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
@@ -167,7 +226,7 @@ export default {
   data() {
     return {
       isEditing: false,
-      avatar: "",
+      name: "",
       faction: "corp",
       country: "br",
       isPublic: true,
@@ -177,6 +236,9 @@ export default {
     toggleMode() {
       this.isEditing = !this.isEditing;
     },
+    truncate(text) {
+      return walletTruncate(text);
+    }
   },
 };
 </script>
@@ -190,6 +252,7 @@ export default {
 
 .screen-container {
   padding: 24px;
+  min-height: 440px;
   background: linear-gradient(0deg, #181a1b, #181a1b), #3a2720;
   border: 2px solid #ffeebc;
   box-sizing: border-box;
@@ -264,5 +327,28 @@ export default {
   font-size: 14px;
   line-height: 1.4;
   text-align: center;
+}
+.big-text {
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 1.6;
+  color: #ffffff;
+}
+.medium-text {
+  font-weight: bold;
+  font-size: 21px;
+  line-height: 1.4;
+}
+.game-row {
+  margin-bottom: 12px;
+}
+.game-logo {
+  height: 64px;
+}
+.level-image {
+  height: 64px;
+}
+.display-name {
+  @extend .big-text;
 }
 </style>
