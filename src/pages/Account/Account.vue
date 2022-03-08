@@ -77,11 +77,43 @@
                       </v-col></v-row
                     >
                     <v-row>
-                      <v-col>wCOURAGE</v-col>
-                      <v-col>wGOLD</v-col>
-                      <v-col>wLAND</v-col>
+                      <v-col>
+                        <div class="pool-container">
+                          <img
+                            class="lp-image"
+                            src="/images/lp-wgold-busd.png"
+                          />
+                          <div class="balance">Balance:</div>
+                          <div class="token-balance">10 wGOLD/</div>
+                          <div class="token-balance">10 BUSD/</div>
+                        </div>
+                      </v-col>
+                      <v-col
+                        ><div class="pool-container">
+                          <img
+                            class="lp-image"
+                            src="/images/lp-wcourage-busd.png"
+                          />
+                          <div class="balance">Balance:</div>
+                          <div>-----------</div>
+                        </div></v-col
+                      >
+                      <v-col
+                        ><div class="pool-container">
+                          <img
+                            class="lp-image"
+                            src="/images/lp-wland-busd.png"
+                          />
+                          <div class="balance">Balance:</div>
+                          <div>-----------</div>
+                        </div></v-col
+                      >
                     </v-row>
+                    <v-row>
+                  <v-col><LoyaltyMeter /></v-col>
+                </v-row>
                   </v-col>
+                
                 </v-row>
               </div>
             </v-col>
@@ -114,9 +146,10 @@ import { countryOptions } from "@/data/Countrys";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
+import LoyaltyMeter from "@/lib/components/ui/Account/LoyaltyMeter";
 
 export default {
-  components: { Button, Title },
+  components: { Button, Title, LoyaltyMeter },
   computed: {
     account() {
       return this.$store.getters["user/account"];
@@ -210,5 +243,26 @@ export default {
   width: 100%;
   display: flex;
   justify-content: flex-end;
+}
+
+.pool-container {
+  position: relative;
+}
+.lp-image {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.balance {
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+.token-balance {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
 }
 </style>
