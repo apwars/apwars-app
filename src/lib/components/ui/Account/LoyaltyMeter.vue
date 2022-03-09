@@ -1,9 +1,9 @@
 <template>
   <div class="lp-meter">
     <div class="scale-label">
-      <img src="/images/lp-levels/0.png" height="24" />
-      <img src="/images/lp-levels/3.png" height="24" />
-      <img src="/images/lp-levels/4.png" height="24" />
+      <img :class="[!level ? 'gray' : '']" src="/images/lp-levels/0.png" height="24" />
+      <img :class="[level < 2 ? 'gray' : '']" src="/images/lp-levels/3.png" height="24" />
+      <img :class="[level !== 5 ? 'gray' : '']" src="/images/lp-levels/5.png" height="24" />
     </div>
     <div class="scale">
       <div class="scale-track">
@@ -18,6 +18,7 @@
         <div>2</div>
         <div>3</div>
         <div>4</div>
+        <div>5</div>
       </div>
     </div>
   </div>
@@ -34,10 +35,11 @@ export default {
     arrowPosition() {
       return {
         2: "0%",
-        1: "24.8%",
-        2: "49.6%",
-        2: "74.4%",
-        2: "99.2%",
+        1: "19.8%",
+        2: "39.6%",
+        3: "59.4%",
+        4: "79.2%",
+        5: "99%",
       };
     },
   },
@@ -69,10 +71,13 @@ export default {
   height: 0;
   z-index: 0;
   top: -10px;
-  left: var(--position);
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   border-top: 8px solid #ffeebc;
-  transition: all ease;
+  transition: left 1s ease;
+  left: var(--position);
+}
+.gray {
+  filter: grayscale(1);
 }
 </style>
