@@ -42,30 +42,25 @@
                       /></div
                   ></v-col>
                   <v-col cols="12" md="5" v-if="isEditing">
-                    <v-text-field v-model="profile.name" label="Name Warrior" />
-                    <v-select
-                      v-model="profile.race"
-                      item-text="label"
-                      item-value="value"
-                      :items="raceOptions"
-                      label="Race"
+                    <InputText
+                      v-model="profile.name"
+                      label="Name Warrior"
+                      isBlock
                     />
-
-                    <v-select
-                      v-model="profile.country"
-                      item-text="name"
-                      item-value="value"
-                      :items="countryOptions"
+                    <InputSelect
+                      class="mt-1"
+                      label="Race"
+                      v-model="profile.race"
+                      :options="raceOptions"
+                      isBlock
+                    />
+                    <InputSelect
+                      class="mt-1"
                       label="Country"
-                    >
-                      <template v-slot:append-outer>
-                        <img
-                          :src="`/images/country-flags/${profile.country}.svg`"
-                          width="64px"
-                          :alt="profile.country || 'United Nations'"
-                        />
-                      </template>
-                    </v-select>
+                      v-model="profile.country"
+                      :options="countryOptions"
+                      isBlock
+                    />
                   </v-col>
                   <v-col cols="12" md="3" v-else>
                     <div class="display-name">
@@ -286,6 +281,7 @@
                           type="wsecondary"
                           text="Provide Liquidity"
                           size="small"
+                          :handleClick="() => provideLiquidity(selectedPool)"
                       /></v-col>
                     </v-row>
                   </v-col>
@@ -350,6 +346,8 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
+import InputText from "@/lib/components/ui/InputText";
+import InputSelect from "@/lib/components/ui/InputSelect";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import LoyaltyMeter from "@/lib/components/ui/Account/LoyaltyMeter";
 import TMJBadges from "@/lib/components/ui/Account/TMJBadges";
@@ -360,6 +358,8 @@ export default {
   components: {
     Button,
     Title,
+    InputText,
+    InputSelect,
     LoyaltyMeter,
     TMJBadges,
     WarBadges,
@@ -377,7 +377,11 @@ export default {
       ];
     },
     countryOptions() {
-      return countryOptions;
+      return countryOptions.map((c) => ({
+        ...c,
+        label: c.name,
+        image: `/images/country-flags/${c.value}.svg`,
+      }));
     },
     profileCountry() {
       if (!this.profile.country) {
@@ -504,6 +508,15 @@ export default {
     },
     selectPool(pool) {
       this.selectedPool = pool;
+    },
+    provideLiquidity(baseToken) {
+      const BUSD = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
+      const tokenMap = {
+        wGOLD: "0x7ab6eedd9443e0e98e5ea93667ca5b250b8dda51",
+        wCOURAGE: "0x5F51A3ce7f2233777328866F477E86a91CA9DdeC",
+        wLAND: "0x2c6107c27a15d2c7f397d88d76257ea42c12f89f",
+      };
+      this.$router.push(`/add-liquidity/${tokenMap[baseToken]}/${BUSD}`);
     },
   },
   watch: {
