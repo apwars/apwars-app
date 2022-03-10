@@ -5,6 +5,7 @@
       :class="['input-select', isBlock ? 'is-block' : '']"
       @click.stop="() => (isOpen = !isOpen)"
     >
+      <div class="caret"></div>
       <div class="selected-option">
         <div class="image-container" v-if="selectedOption.image">
           <img class="option-image" :src="selectedOption.image" />
@@ -135,5 +136,17 @@ label {
 .option-image {
   height: 12px;
   display: inline-block;
+}
+.caret {
+  position: absolute;
+  right: 12px;
+  top: 40%;
+  transform: translateY(-50%);
+  border: solid #ffebc0;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
 }
 </style>
