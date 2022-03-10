@@ -10,7 +10,7 @@
             <v-col>
               <div class="screen-container">
                 <v-row>
-                  <v-col cols="12" md="3">
+                  <v-col cols="12" lg="3">
                     <img
                       v-if="account"
                       class="avatar"
@@ -38,7 +38,7 @@
                       Exclusive Avatar
                     </div></v-col
                   >
-                  <v-col cols="12" md="5" v-if="isEditing">
+                  <v-col cols="12" lg="5" v-if="isEditing">
                     <InputText
                       v-model="profile.name"
                       label="Name Warrior"
@@ -59,7 +59,7 @@
                       isBlock
                     />
                   </v-col>
-                  <v-col cols="12" md="3" v-else>
+                  <v-col cols="12" lg="3" v-else>
                     <div class="display-name">
                       {{ profile.name || truncate(account) }}
                     </div>
@@ -131,7 +131,7 @@
                     </div>
                   </v-col>
 
-                  <v-col cols="12" md="4" v-if="isEditing">
+                  <v-col cols="12" lg="4" v-if="isEditing">
                     <v-row>
                       <v-col>
                         <div class="d-flex">
@@ -282,7 +282,7 @@
                       /></v-col>
                     </v-row>
                   </v-col>
-                  <v-col cols="12" md="5" v-else>
+                  <v-col cols="12" lg="5" v-else>
                     <div class="big-text">Participate Games</div>
                     <v-skeleton-loader
                       v-if="!badges || isLoadingBadges"
@@ -604,6 +604,7 @@ export default {
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 200px;
 }
 
 .pool-container {
