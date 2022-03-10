@@ -34,8 +34,13 @@ export default {
 <style lang="scss" scoped>
 .arcadia-badges {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
+  @media screen and (min-width: 1280px) {
+    flex-direction: row;
+  }
 }
 .logo {
   height: 64px;
@@ -47,6 +52,7 @@ export default {
 }
 .badges {
     width: 100%;
+    max-width: 320px;
     display: flex;
     align-items: center;
     justify-content: space-between;

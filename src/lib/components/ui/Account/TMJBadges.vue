@@ -39,8 +39,13 @@ export default {
 <style lang="scss" scoped>
 .tmj-badges {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
+  @media screen and (min-width: 1280px) {
+    flex-direction: row;
+  }
 }
 .logo {
   height: 64px;
@@ -51,7 +56,7 @@ export default {
   line-height: 1.3;
 }
 .badges {
-    width: 100%;
+    width: 260px;
     display: flex;
     align-items: center;
     justify-content: space-between;
