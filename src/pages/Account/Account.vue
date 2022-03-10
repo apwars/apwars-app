@@ -17,7 +17,8 @@
                       :src="
                         `https://apiv2.apwars.farm/v1/users/${account}/avatar?u=${avatarCache}`
                       "
-                      alt="avatar"/>
+                      alt="avatar"
+                    />
                     <div class="lp-level-container" v-if="isEditing">
                       <div class="level-image">
                         <img class="pool-image" src="/images/wgold.png" />
@@ -33,14 +34,10 @@
                         Loyalty Program
                       </div>
                     </div>
-                    <div class="d-flex flex-column align-center" v-else>
-                      <div class="medium-text">Exclusive Avatar</div>
-                      <Button
-                        class="mt-1"
-                        type="wsecondary"
-                        text="Provide Liquidity"
-                      /></div
-                  ></v-col>
+                    <div class="text-center medium-text" v-else>
+                      Exclusive Avatar
+                    </div></v-col
+                  >
                   <v-col cols="12" md="5" v-if="isEditing">
                     <InputText
                       v-model="profile.name"
@@ -442,13 +439,25 @@ export default {
       return walletTruncate(text);
     },
     isNameValid() {
-      return this.profile.name.trim() !== "";
+      let isValid = this.profile.name.trim() !== "";
+      if (!isValid) {
+        ToastSnackbar.error('The name is invalid!');
+      }
+      return isValid;
     },
     isCountryValid() {
-      return this.profile.country.trim() !== "";
+      let isValid = this.profile.country.trim() !== "";
+      if (!isValid) {
+        ToastSnackbar.error('The country is invalid!');
+      }
+      return isValid;
     },
     isRaceValid() {
-      return this.profile.race.trim() !== "";
+      let isValid = this.profile.race.trim() !== "";
+      if (!isValid) {
+        ToastSnackbar.error('The race is invalid!');
+      }
+      return isValid;
     },
     validateProfile() {
       return this.isNameValid() && this.isCountryValid() && this.isRaceValid();
@@ -476,7 +485,6 @@ export default {
         this.isLoadingBadges = true;
         const controller = new UserController();
         const badges = await controller.getBadges(this.account);
-        console.log(badges);
         this.badges = badges;
       } catch (error) {
         console.error(error);
@@ -503,7 +511,9 @@ export default {
       this.isLoadingSave = false;
     },
     cancelEdit() {
-      this.profile = { ...this.profileCache };
+      this.profile.name = this.profileCache.name;
+      this.profile.country = this.profileCache.country;
+      this.profile.race = this.profileCache.race;
       this.toggleMode();
     },
     selectPool(pool) {

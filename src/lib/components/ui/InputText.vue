@@ -36,6 +36,7 @@ export default {
   },
   methods: {
     handleInput(e) {
+      this.content = e.target.value;
       this.$emit("input", this.content);
     },
   },
