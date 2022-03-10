@@ -12,6 +12,7 @@
                 <v-row>
                   <v-col cols="12" md="3">
                     <img
+                      v-if="account"
                       class="avatar"
                       :src="
                         `https://apiv2.apwars.farm/v1/users/${account}/avatar?u=${avatarCache}`
@@ -158,7 +159,13 @@
                     >
                     <v-row>
                       <v-col>
-                        <div :class="['pool-container', selectedPool === 'wGOLD' ? 'is-selected' : '']" @click="() => selectPool('wGOLD')">
+                        <div
+                          :class="[
+                            'pool-container',
+                            selectedPool === 'wGOLD' ? 'is-selected' : '',
+                          ]"
+                          @click="() => selectPool('wGOLD')"
+                        >
                           <img
                             :class="[
                               'lp-image',
@@ -189,7 +196,13 @@
                         </div>
                       </v-col>
                       <v-col
-                        ><div :class="['pool-container', selectedPool === 'wCOURAGE' ? 'is-selected' : '']" @click="() => selectPool('wCOURAGE')">
+                        ><div
+                          :class="[
+                            'pool-container',
+                            selectedPool === 'wCOURAGE' ? 'is-selected' : '',
+                          ]"
+                          @click="() => selectPool('wCOURAGE')"
+                        >
                           <img
                             :class="[
                               'lp-image',
@@ -224,7 +237,13 @@
                         </div></v-col
                       >
                       <v-col
-                        ><div :class="['pool-container', selectedPool === 'wLAND' ? 'is-selected' : '']" @click="() => selectPool('wLAND')">
+                        ><div
+                          :class="[
+                            'pool-container',
+                            selectedPool === 'wLAND' ? 'is-selected' : '',
+                          ]"
+                          @click="() => selectPool('wLAND')"
+                        >
                           <img
                             :class="[
                               'lp-image',
@@ -261,21 +280,32 @@
                           :level="profile.lpLevels[selectedPool].level"
                       /></v-col>
                     </v-row>
+                    <v-row no-gutters>
+                      <v-col class="d-flex justify-center mt-2"
+                        ><Button
+                          type="wsecondary"
+                          text="Provide Liquidity"
+                          size="small"
+                      /></v-col>
+                    </v-row>
                   </v-col>
-                  <v-col cols="12" md="4" v-else>
+                  <v-col cols="12" md="5" v-else>
                     <div class="big-text">Participate Games</div>
-                    <div class="game-row">
-                      <img class="game-logo" src="/images/tmj.png" />
-                    </div>
-                    <div class="game-row">
-                      <img class="game-logo" src="/images/wars.png" />
-                    </div>
-                    <div class="game-row">
-                      <img
-                        class="game-logo"
-                        src="/images/arcadia-expansion.png"
+                    <v-skeleton-loader
+                      v-if="!badges || isLoadingBadges"
+                      type="image"
+                      width="100%"
+                      height="240px"
+                    />
+                    <template v-else>
+                      <TMJBadges
+                        class="my-2"
+                        v-if="badges"
+                        :podiums="badges.tmj"
                       />
-                    </div>
+                      <WarBadges class="my-2" :victorys="2" :losses="1" />
+                      <ArcadiaBadges class="my-2" :lands="2" :villages="5" />
+                    </template>
                   </v-col>
                 </v-row>
               </div>
@@ -286,12 +316,19 @@
       <v-row>
         <v-col>
           <div class="actions-container">
-            <Button
-              type="wsecondary"
-              text="Save"
-              v-if="isEditing"
-              :handleClick="saveProfile"
-            />
+            <template v-if="isEditing">
+              <Button
+                type="wsecondary"
+                text="Cancel"
+                :handleClick="cancelEdit"
+              />
+              <Button
+                class="ml-2"
+                type="wsecondary"
+                text="Save"
+                :handleClick="saveProfile"
+              />
+            </template>
             <Button
               type="wsecondary"
               text="Edit"
@@ -313,11 +350,22 @@ import ToastSnackbar from "@/plugins/ToastSnackbar";
 
 import Button from "@/lib/components/ui/Buttons/Button";
 import Title from "@/lib/components/ui/Title";
-import LoyaltyMeter from "@/lib/components/ui/Account/LoyaltyMeter";
 import Amount from "@/lib/components/ui/Utils/Amount";
+import LoyaltyMeter from "@/lib/components/ui/Account/LoyaltyMeter";
+import TMJBadges from "@/lib/components/ui/Account/TMJBadges";
+import WarBadges from "@/lib/components/ui/Account/WarBadges";
+import ArcadiaBadges from "@/lib/components/ui/Account/ArcadiaBadges";
 
 export default {
-  components: { Button, Title, LoyaltyMeter, Amount },
+  components: {
+    Button,
+    Title,
+    LoyaltyMeter,
+    TMJBadges,
+    WarBadges,
+    ArcadiaBadges,
+    Amount,
+  },
   computed: {
     account() {
       return this.$store.getters["user/account"];
@@ -355,6 +403,9 @@ export default {
       isLoadingSave: false,
       selectedPool: "wGOLD",
       avatarCache: 1,
+      profileCache: null,
+      isLoadingBadges: true,
+      badges: null,
       profile: {
         name: "",
         country: "un",
@@ -376,6 +427,11 @@ export default {
   },
   methods: {
     toggleMode() {
+      if (!this.isEditing) {
+        this.profileCache = { ...this.profile };
+      } else {
+        this.profileCache = null;
+      }
       this.isEditing = !this.isEditing;
     },
     truncate(text) {
@@ -408,6 +464,22 @@ export default {
         this.isLoading = false;
       }
     },
+    async fetchBadges() {
+      if (!this.account) {
+        return;
+      }
+      try {
+        this.isLoadingBadges = true;
+        const controller = new UserController();
+        const badges = await controller.getBadges(this.account);
+        console.log(badges);
+        this.badges = badges;
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoadingBadges = false;
+      }
+    },
     async saveProfile() {
       if (this.validateProfile()) {
         try {
@@ -426,13 +498,18 @@ export default {
       }
       this.isLoadingSave = false;
     },
+    cancelEdit() {
+      this.profile = { ...this.profileCache };
+      this.toggleMode();
+    },
     selectPool(pool) {
       this.selectedPool = pool;
-    }
+    },
   },
   watch: {
     account() {
       this.fetchProfile();
+      this.fetchBadges();
     },
   },
 };
@@ -514,8 +591,9 @@ export default {
   align-items: center;
   padding: 4px;
   border-radius: 6px;
-  &:hover, &.is-selected {
-    outline: 1px solid #FFEEBC;
+  &:hover,
+  &.is-selected {
+    outline: 1px solid #ffeebc;
     cursor: pointer;
   }
 }

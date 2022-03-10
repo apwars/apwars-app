@@ -23,5 +23,8 @@ export default class UserController {
     }
   }
 
+  getBadges(account) {
+    return this.base._get(`/users/${account}/badges`);
+  }
 
 }
