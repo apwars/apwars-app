@@ -12,7 +12,6 @@
           target="_blank"
           >Docs</a
         >
-        <a class="menu-link" href="/farms" target="_blank">Farm</a>
       </div>
       <div class="d-flex menu-main">
         <v-sheet class="menu-itens mx-auto align-center" max-width="100%">

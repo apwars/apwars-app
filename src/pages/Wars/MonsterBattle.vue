@@ -532,7 +532,10 @@ export default {
         this.slotData = slotData;
         if (slotData && slotData.account) {
           const controller = new WarsController();
-          const rewardsData = await controller.getAccountPrizes(this.war.id, slotData.account);
+          let rewardsData = await controller.getAccountPrizes(this.war.id, slotData.account);
+          if (!this.isWarOver) {
+            rewardsData = rewardsData.filter(rD => rD.prize !== 'wGOLD' && rD.prize !== 'wCOURAGE');
+          }
           this.rewardsData = rewardsData;
         } else {
           this.rewardsData = [];
