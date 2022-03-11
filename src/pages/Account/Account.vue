@@ -60,13 +60,15 @@
                     />
                   </v-col>
                   <v-col cols="12" lg="3" v-else>
-                    <div class="display-name">
-                      {{ profile.name || truncate(account) }}
+                    <v-skeleton-loader v-if="isLoading" type="text" width="100%" />
+                    <div class="display-name" v-else>
+                      {{ profile.name || "Waiting badass name" }}
                     </div>
-                    <div class="d-flex justify-space-between">
+                    <v-skeleton-loader v-if="isLoading" type="text" width="100%" />
+                    <div class="d-flex justify-space-between" v-else>
                       <div class="d-flex align-center">
                         <img
-                          :src="`/images/icons/corp.png`"
+                          :src="factionImage"
                           width="64px"
                           :alt="profileFaction"
                         />
@@ -337,7 +339,6 @@
 <script>
 import UserController from "@/controller/UserController";
 import { countryOptions } from "@/data/Countrys";
-import walletTruncate from "@/helpers/walletTruncate";
 
 import ToastSnackbar from "@/plugins/ToastSnackbar";
 
@@ -397,6 +398,16 @@ export default {
         return "Degens";
       }
     },
+    factionImage() {
+      const corps = ["humans", "elves"];
+      if (!this.profile || !this.profile.race) {
+        return "/images/no-faction.png";
+      }
+      if (corps.includes(this.profile.race)) {
+        return "/images/icons/corp.png";
+      }
+      return "/images/icons/degen.png";
+    },
   },
   data() {
     return {
@@ -435,27 +446,24 @@ export default {
       }
       this.isEditing = !this.isEditing;
     },
-    truncate(text) {
-      return walletTruncate(text);
-    },
     isNameValid() {
       let isValid = this.profile.name.trim() !== "";
       if (!isValid) {
-        ToastSnackbar.error('The name is invalid!');
+        ToastSnackbar.error("The name is invalid!");
       }
       return isValid;
     },
     isCountryValid() {
       let isValid = this.profile.country.trim() !== "";
       if (!isValid) {
-        ToastSnackbar.error('The country is invalid!');
+        ToastSnackbar.error("The country is invalid!");
       }
       return isValid;
     },
     isRaceValid() {
       let isValid = this.profile.race.trim() !== "";
       if (!isValid) {
-        ToastSnackbar.error('The race is invalid!');
+        ToastSnackbar.error("The race is invalid!");
       }
       return isValid;
     },

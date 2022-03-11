@@ -11,9 +11,8 @@
         >
           <v-img
             v-if="account"
-            class="rounded"
             :src="
-              `https://avatar.apwars.farm/?seed=${getAccount}&avatar=${getAvatar}`
+              `https://apiv2.apwars.farm/v1/users/${getAccount}/avatar`
             "
             alt="avatar"
           />

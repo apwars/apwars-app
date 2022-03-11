@@ -454,6 +454,7 @@ export default {
   margin: 0px !important;
   border-radius: 6px 0px 0px 6px;
   border-right: 2px solid #ffeebc;
+  overflow: hidden;
 }
 
 .previous,
@@ -517,6 +518,7 @@ export default {
   }
   .list-leaderboard-avatar {
     border-radius: 6px 0px 0px 0px;
+    overflow: hidden;
   }
   .list-leaderboard-info {
     border-top: 2px solid #ffeebc;
