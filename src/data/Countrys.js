@@ -276,10 +276,6 @@ export const countryOptions = [
     value: "et",
   },
   {
-    name: "Europe",
-    value: "eu",
-  },
-  {
     name: "Finland",
     value: "fi",
   },

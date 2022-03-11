@@ -392,7 +392,7 @@ export default {
         ...c,
         label: c.name,
         image: `/images/country-flags/${c.value}.svg`,
-      }));
+      })).sort((a, b) => a.name.localeCompare(b.name));
     },
     profileCountry() {
       if (!this.profile.country) {
