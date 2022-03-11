@@ -295,7 +295,7 @@
                     </v-row>
                   </v-col>
                   <v-col cols="12" lg="5" v-else>
-                    <div class="big-text">Participate Games</div>
+                    <div class="big-text">Participating Games</div>
                     <v-skeleton-loader
                       v-if="!badges || isLoadingBadges"
                       type="image"
