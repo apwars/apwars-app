@@ -32,7 +32,9 @@
           nonwrap
         >
           <template v-slot:[`item.sender`]="{ item }">
+            <div class="avatar-container">
             <v-avatar :address="item.sender" link tooltip />
+            </div>
           </template>
           <template v-slot:[`item.createdAt`]="{ item }">
             <span>
@@ -844,7 +846,7 @@ a {
   border-top: thin solid #ffffff;
 }
 
-.table-black-market >>> .avatar {
+.avatar-container {
   width: 60px;
   border: 3px solid #bb7248;
   border-radius: 6px;

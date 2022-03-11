@@ -743,11 +743,13 @@ export default {
   justify-content: center;
 }
 
-.list-leaderboard-avatar >>> img {
-  height: 62px;
+.list-leaderboard-avatar {
+  height: 100%;
+  width: 100%;
   margin: 0px !important;
   border-radius: 6px 0px 0px 6px;
   border-right: 2px solid #ffeebc;
+  overflow: hidden;
 }
 
 .previous,

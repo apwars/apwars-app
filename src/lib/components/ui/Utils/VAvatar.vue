@@ -11,9 +11,8 @@
         >
           <v-img
             v-if="account"
-            class="rounded"
             :src="
-              `https://avatar.apwars.farm/?seed=${getAccount}&avatar=${getAvatar}`
+              `https://apiv2.apwars.farm/v1/users/${getAccount}/avatar`
             "
             alt="avatar"
           />
@@ -60,9 +59,7 @@ export default {
       if (!this.isLink) {
         return;
       }
-      var a = document.createElement("a");
-      a.href = `https://bscscan.com/address/${this.getAccount}`;
-      a.click();
+      this.$router.push(`/profile/${this.address}`);
     },
   },
 };

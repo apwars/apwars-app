@@ -22,7 +22,7 @@ export default {
 
   async connectToMetaMask({ commit }, { definedNetwork }) {
     const configure = async ({ commit }) => {
-      const accounts = await window.ethereum.enable();
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       const networkInfo = {
         id: (await web3.eth.net.getId()).toString(),
         type: await web3.eth.net.getNetworkType(),
@@ -50,7 +50,7 @@ export default {
         configure({ commit });
       });
 
-      window.ethereum.on("networkChanged", networkId => {
+      window.ethereum.on("chainChanged", networkId => {
         window.location.reload();
       });
 

@@ -41,7 +41,7 @@
     "vuetify": "^2.3.10",
     "vuetify-toast-snackbar-ng": "^0.7.3",
     "vuex": "^3.5.1",
-    "web3": "^1.3.3"
+    "web3": "^1.7.1"
   },
   "devDependencies": {
     "@indielayer/eslint-config-vue": "^1.0.0",
