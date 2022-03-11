@@ -163,7 +163,12 @@ export const routes = [
         component: Soldier
       },
       {
-        path: '/profile',
+        path: '/profile/me',
+        name: 'your-profile',
+        component: Account,
+      },
+      {
+        path: '/profile/:address',
         name: 'profile',
         component: Account,
       },

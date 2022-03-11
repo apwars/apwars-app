@@ -30,12 +30,11 @@
                         />
                       </div>
                       <div class="level-text">
-                        You are Level {{ profile.lpLevels.wGOLD.level }} on the
-                        Loyalty Program
+                        Level {{ profile.lpLevels.wGOLD.level }}
                       </div>
                     </div>
                     <div class="text-center medium-text" v-else>
-                      Exclusive Avatar
+                      Provide liquidity to upgrade your avatar.
                     </div></v-col
                   >
                   <v-col cols="12" lg="5" v-if="isEditing">
@@ -216,7 +215,7 @@
                                 formatted
                                 compact
                               />
-                              wGOLD/
+                              wCOURAGE/
                             </div>
                             <div class="token-balance">
                               <Amount
@@ -253,7 +252,7 @@
                                 formatted
                                 compact
                               />
-                              wGOLD/
+                              wLAND/
                             </div>
                             <div class="token-balance">
                               <Amount
@@ -308,9 +307,9 @@
           </v-row>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row no-gutters>
         <v-col>
-          <div class="actions-container">
+          <div class="actions-container mt-2">
             <template v-if="isEditing">
               <Button
                 type="wsecondary"
@@ -538,6 +537,10 @@ export default {
       };
       this.$router.push(`/add-liquidity/${tokenMap[baseToken]}/${BUSD}`);
     },
+  },
+  mounted() {
+    this.fetchProfile();
+    this.fetchBadges();
   },
   watch: {
     account() {

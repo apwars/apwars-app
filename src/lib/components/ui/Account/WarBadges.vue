@@ -3,14 +3,17 @@
     <div class="logo-container">
       <img class="logo" src="/images/wars.png" alt="Wars Badges" />
     </div>
-    <div class="badges ml-md-2">
+    <div class="ml-2 value" v-if="!hasParticipations">
+      No participations
+    </div>
+    <div class="badges ml-md-2" v-else>
       <div class="badge">
         <img
           class="card"
           src="/images/nfts/war-memorable-victory.png"
           alt="Victorys"
         />
-        <div class="value ml-1">{{ victorys }} Victorys</div>
+        <div class="value ml-1">x{{ victorys }} Victorys</div>
       </div>
       <div class="badge">
         <img
@@ -18,7 +21,7 @@
           src="/images/nfts/war-memorable-death.png"
           alt="Losses"
         />
-        <div class="value ml-1">{{ losses }} Losses</div>
+        <div class="value ml-1">x{{ losses }} Losses</div>
       </div>
     </div>
   </div>
@@ -36,7 +39,7 @@ export default {
     },
   },
   computed: {
-    hasWins() {
+    hasParticipations() {
       return this.victorys + this.losses > 0;
     },
   },
@@ -50,7 +53,8 @@ export default {
   width: 100%;
 }
 .logo-container {
-  width: 320px;
+  width: 200px;
+  flex-shrink: 0;
 }
 .logo {
   height: 64px;

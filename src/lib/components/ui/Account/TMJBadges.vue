@@ -1,21 +1,36 @@
 <template>
   <div class="tmj-badges">
-    <img
-      class="logo"
-      src="/images/tmj.png"
-      alt="The Monstrous Journey Badges"
-    />
-    <div class="badges ml-md-2">
+    <div class="logo-container">
+      <img
+        class="logo"
+        src="/images/tmj.png"
+        alt="The Monstrous Journey Badges"
+      />
+    </div>
+    <div class="ml-2 value" v-if="!hasWins">No badges</div>
+    <div class="badges ml-md-2" v-else>
       <div class="badge d-flex align-center">
-        <img class="place" src="/images/game/icon-place-1.png" alt="First Places" />
+        <img
+          class="place"
+          src="/images/game/icon-place-1.png"
+          alt="First Places"
+        />
         <div class="value ml-1">x{{ podiums[0] }}</div>
       </div>
       <div class="badge d-flex align-center">
-        <img class="place" src="/images/game/icon-place-0.png" alt="Second Places" />
+        <img
+          class="place"
+          src="/images/game/icon-place-0.png"
+          alt="Second Places"
+        />
         <div class="value ml-1">x{{ podiums[1] }}</div>
       </div>
       <div class="badge d-flex align-center">
-        <img class="place" src="/images/game/icon-place-2.png" alt="Third Places" />
+        <img
+          class="place"
+          src="/images/game/icon-place-2.png"
+          alt="Third Places"
+        />
         <div class="value ml-1">x{{ podiums[2] }}</div>
       </div>
     </div>
@@ -47,6 +62,10 @@ export default {
     flex-direction: row;
   }
 }
+.logo-container {
+  width: 200px;
+  flex-shrink: 0;
+}
 .logo {
   height: 64px;
 }
@@ -56,13 +75,13 @@ export default {
   line-height: 1.3;
 }
 .badges {
-    width: 260px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .place {
-    height: 32px;
-    width: 32px;
+  height: 32px;
+  width: 32px;
 }
 </style>

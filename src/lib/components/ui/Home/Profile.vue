@@ -56,7 +56,7 @@ export default {
       return walletTruncate(text);
     },
     redirectProfile() {
-      this.$router.push("/profile");
+      this.$router.push("/profile/me");
     },
     async fetchProfile() {
       if (!this.isConnected || !this.account) {
@@ -109,6 +109,7 @@ export default {
   align-items: center;
   border-radius: 8px;
   cursor: pointer;
+  overflow: hidden;
 }
 .avatar-border {
   position: absolute;
