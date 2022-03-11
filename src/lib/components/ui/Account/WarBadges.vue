@@ -13,7 +13,7 @@
           src="/images/nfts/war-memorable-victory.png"
           alt="Victorys"
         />
-        <div class="value ml-1">x{{ victorys }} Victorys</div>
+        <div class="value ml-1">x{{ victorys }} Victories</div>
       </div>
       <div class="badge">
         <img
