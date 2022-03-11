@@ -1,7 +1,18 @@
 <template>
   <div class="background">
     <v-container fluid>
-      <v-row>
+      <v-row no-gutters>
+      <v-col>
+        <Button
+          text="Go back to Home"
+          icon="arrow-back"
+          type="wtertiary"
+          no-padding
+          :handleClick="backToHome"
+        />
+      </v-col>
+    </v-row>
+      <v-row no-gutters>
         <v-col><Title>Account</Title></v-col></v-row
       >
       <v-row>
@@ -450,6 +461,9 @@ export default {
     };
   },
   methods: {
+    backToHome() {
+      this.$router.push("/");
+    },
     toggleMode() {
       if (!this.isEditing) {
         this.profileCache = { ...this.profile };
