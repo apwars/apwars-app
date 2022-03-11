@@ -189,6 +189,7 @@
                   class="list-leaderboard-avatar d-flex justify-center"
                   :address="player.account"
                   tooltip
+                  :link="true"
                 />
                 </div>
                 <div class="d-flex d-md-none align-center justify-center">
