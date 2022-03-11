@@ -72,7 +72,7 @@
                   <v-col cols="12" lg="3" v-else>
                     <v-skeleton-loader v-if="isLoading" type="text" width="100%" />
                     <div class="display-name" v-else>
-                      {{ profile.name || "Waiting badass name" }}
+                      {{ profile.name || "Waiting for a badass name" }}
                     </div>
                     <v-skeleton-loader v-if="isLoading" type="text" width="100%" />
                     <div class="d-flex justify-space-between" v-else>

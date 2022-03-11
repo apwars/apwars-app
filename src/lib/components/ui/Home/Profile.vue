@@ -15,7 +15,7 @@
       </div>
       <v-skeleton-loader v-if="isLoading" type="text" width="100%" />
       <div class="profile-name" v-else>
-        {{ profile.name || "Waiting badass name" }}
+        {{ profile.name || "Waiting for a badass name" }}
       </div>
       <div>{{ truncate(account) }}</div>
     </div>
