@@ -490,7 +490,6 @@ export default {
         this.isLoading = true;
         const controller = new UserController();
         const profile = await controller.getProfile(this.consideredAccount);
-        console.log(profile)
         this.profile = profile;
       } catch (error) {
         console.error('profile', error);
