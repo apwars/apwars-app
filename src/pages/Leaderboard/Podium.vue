@@ -23,6 +23,8 @@
                   class="avatar d-flex justify-center"
                   :address="player.account"
                   tooltip
+                  :isRound="true"
+                  :link="true"
                 />
                 <img
                   :class="`mt-n2 icon-place-${index}`"
@@ -98,6 +100,8 @@
                   class="avatar d-flex justify-center"
                   :address="player.account"
                   tooltip
+                  link
+                  :isRound="true"
                 />
                 <img
                   :class="`mt-n1 icon-place-${index}`"

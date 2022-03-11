@@ -11,6 +11,7 @@
         >
           <v-img
             v-if="account"
+            :class="[isRound ? 'rounded' : '']"
             :src="
               `https://apiv2.apwars.farm/v1/users/${getAccount}/avatar`
             "
@@ -25,7 +26,7 @@
 
 <script>
 export default {
-  props: ["address", "link", "tooltip", "propAvatar"],
+  props: ["address", "link", "tooltip", "propAvatar", 'isRound'],
 
   computed: {
     account() {

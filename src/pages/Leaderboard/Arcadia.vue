@@ -41,6 +41,7 @@
                   :address="player.account"
                   tooltip
                   :propAvatar="player.faction"
+                  :link="true"
                 />
                 </div>
                 <div class="d-flex d-md-none align-center justify-center">
