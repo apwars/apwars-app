@@ -298,8 +298,8 @@
                         v-if="badges"
                         :podiums="badges.tmj"
                       />
-                      <WarBadges class="my-2" :victorys="2" :losses="1" />
-                      <ArcadiaBadges class="my-2" :lands="2" :villages="5" />
+                      <WarBadges class="my-2" :victorys="badges.wars.wins" :losses="badges.wars.losses" />
+                      <ArcadiaBadges class="my-2" :lands="badges.arcadia.lands" :villages="badges.arcadia.villages" />
                     </template>
                   </v-col>
                 </v-row>
@@ -412,6 +412,7 @@ export default {
   data() {
     return {
       isEditing: false,
+      isLoading: true,
       isLoadingSave: false,
       selectedPool: "wGOLD",
       avatarCache: 1,
@@ -493,6 +494,7 @@ export default {
         this.isLoadingBadges = true;
         const controller = new UserController();
         const badges = await controller.getBadges(this.account);
+        console.log(badges)
         this.badges = badges;
       } catch (error) {
         console.error(error);
