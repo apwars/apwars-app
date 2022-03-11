@@ -104,6 +104,17 @@ export default {
       width: 12px;
     }
   }
+
+  &.large {
+    font-size: 16px;
+    line-height: 24px;
+    padding: 12px 16px;
+    height: 48px;
+
+    > img {
+      width: 36px;
+    }
+  }
   &.no-padding {
     padding: 8px 0;
   }

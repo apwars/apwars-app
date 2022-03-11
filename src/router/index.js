@@ -18,6 +18,7 @@ import Home from "@/pages/Home.vue";
 import Arcadia from "@/pages/Arcadia/Arcadia.vue";
 import WarBattle from "@/pages/Wars/Battle.vue";
 import WarIntro from "@/pages/Wars/Intro.vue";
+import WarArmy from "@/pages/Wars/Army.vue";
 import StarterPacks from "@/pages/StarterPacks.vue";
 import Leaderboard from "@/pages/Leaderboard/Leaderboard.vue";
 import Bridge from "@/pages/Bridge.vue";
@@ -85,6 +86,11 @@ export const routes = [
         path: "/war/intro",
         name: "war-intro",
         component: WarIntro
+      },
+      {
+        path: "/war/army",
+        name: "war-army",
+        component: WarArmy
       },
       {
         path: "/war/enlistment/:raceId",
