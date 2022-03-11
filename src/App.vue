@@ -1,5 +1,5 @@
 <template>
-  <v-app :style="$route.name === 'Enlistment' ? 'background-color: #000;' : ''">
+  <v-app>
     <router-view></router-view>
   </v-app>
 </template>

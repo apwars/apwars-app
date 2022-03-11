@@ -42,7 +42,7 @@ export default class BaseController {
     }
   }
 
-  async _postSignature(endpoint, body) {
+  async _postSignature(endpoint, body, method = 'POST') {
     try {
       const message = {
         wallet: this.account.toLowerCase(),
@@ -51,7 +51,7 @@ export default class BaseController {
       const messageSignature = web3.utils.sha3(JSON.stringify(message));
       const signature = await window.web3.eth.personal.sign(messageSignature, message.wallet);
       const response = await fetch(`${this.api}${endpoint}`, {
-        method: 'POST',
+        method,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export default class BaseController {
     }
   }
 
-  async _postSignatureEthers(endpoint, body) {
+  async _postSignatureEthers(endpoint, body, method) {
     try {
       const message = {
         wallet: this.account.toLowerCase(),
@@ -83,7 +83,7 @@ export default class BaseController {
       const messageSignature = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(JSON.stringify(message)));
       const signature = await signer.signMessage(ethers.utils.toUtf8Bytes(messageSignature));
       const response = await fetch(`${this.api}${endpoint}`, {
-        method: 'POST',
+        method,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',

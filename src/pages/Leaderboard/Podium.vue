@@ -230,16 +230,22 @@ export default {
 }
 
 .card-podium.gold .avatar {
+  height: 100px;
+  width: 100px;
   margin-top: -50px;
   border: 2px solid #ffb800;
   border-radius: 8px;
 }
 .card-podium.silver .avatar {
+  height: 100px;
+  width: 100px;
   margin-top: -50px;
   border: 2px solid #c4c4c4;
   border-radius: 8px;
 }
 .card-podium.bronze .avatar {
+  height: 100px;
+  width: 100px;
   margin-top: -50px;
   border: 2px solid #e95809;
   border-radius: 8px;

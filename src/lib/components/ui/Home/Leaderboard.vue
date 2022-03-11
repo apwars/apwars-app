@@ -140,7 +140,7 @@ export default {
       return walletTruncate(address);
     },
     openAddress(address) {
-      window.open(`https://bscscan.com/address/${address}`, "_blank");
+      this.$router.push(`/profile/${address}`);
     },
   },
   mounted() {
