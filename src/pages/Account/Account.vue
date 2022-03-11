@@ -417,7 +417,7 @@ export default {
       return this.$route.params.address || this.account;
     },
     isOwner() {
-      return this.profile.address === this.account;
+      return this.profile.account === this.account;
     }
   },
   data() {
@@ -490,6 +490,7 @@ export default {
         this.isLoading = true;
         const controller = new UserController();
         const profile = await controller.getProfile(this.consideredAccount);
+        console.log(profile)
         this.profile = profile;
       } catch (error) {
         console.error('profile', error);
