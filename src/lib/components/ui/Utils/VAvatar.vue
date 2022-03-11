@@ -59,9 +59,7 @@ export default {
       if (!this.isLink) {
         return;
       }
-      var a = document.createElement("a");
-      a.href = `https://bscscan.com/address/${this.getAccount}`;
-      a.click();
+      this.$router.push(`/profile/${this.address}`);
     },
   },
 };

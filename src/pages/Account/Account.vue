@@ -12,10 +12,10 @@
                 <v-row>
                   <v-col cols="12" lg="3">
                     <img
-                      v-if="account"
+                      v-if="consideredAccount"
                       class="avatar"
                       :src="
-                        `https://apiv2.apwars.farm/v1/users/${account}/avatar?u=${avatarCache}`
+                        `https://apiv2.apwars.farm/v1/users/${consideredAccount}/avatar?u=${avatarCache}`
                       "
                       alt="avatar"
                     />
@@ -33,7 +33,7 @@
                         Level {{ profile.lpLevels.wGOLD.level }}
                       </div>
                     </div>
-                    <div class="text-center medium-text" v-else>
+                    <div class="text-center medium-text" v-else-if="isOwner">
                       Provide liquidity to upgrade your avatar.
                     </div></v-col
                   >
@@ -307,7 +307,7 @@
           </v-row>
         </v-col>
       </v-row>
-      <v-row no-gutters>
+      <v-row no-gutters v-if="isOwner">
         <v-col>
           <div class="actions-container mt-2">
             <template v-if="isEditing">
@@ -364,6 +364,9 @@ export default {
     Amount,
   },
   computed: {
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
     account() {
       return this.$store.getters["user/account"];
     },
@@ -390,6 +393,9 @@ export default {
       );
     },
     profileFaction() {
+      if (!this.profile.race) {
+        return "Unset";
+      }
       const corps = ["humans", "elves"];
       if (corps.includes(this.profile.race)) {
         return "Corps";
@@ -407,6 +413,12 @@ export default {
       }
       return "/images/icons/degen.png";
     },
+    consideredAccount() {
+      return this.$route.params.address || this.account;
+    },
+    isOwner() {
+      return this.profile.address === this.account;
+    }
   },
   data() {
     return {
@@ -471,32 +483,31 @@ export default {
       return this.isNameValid() && this.isCountryValid() && this.isRaceValid();
     },
     async fetchProfile() {
-      if (!this.account) {
+      if (!this.isConnected || !this.consideredAccount) {
         return;
       }
       try {
         this.isLoading = true;
         const controller = new UserController();
-        const profile = await controller.getProfile(this.account);
+        const profile = await controller.getProfile(this.consideredAccount);
         this.profile = profile;
       } catch (error) {
-        console.error(error);
+        console.error('profile', error);
       } finally {
         this.isLoading = false;
       }
     },
     async fetchBadges() {
-      if (!this.account) {
+      if (!this.isConnected || !this.consideredAccount) {
         return;
       }
       try {
         this.isLoadingBadges = true;
         const controller = new UserController();
-        const badges = await controller.getBadges(this.account);
-        console.log(badges)
+        const badges = await controller.getBadges(this.consideredAccount);
         this.badges = badges;
       } catch (error) {
-        console.error(error);
+        console.error('badges', error);
       } finally {
         this.isLoadingBadges = false;
       }
@@ -514,7 +525,7 @@ export default {
           ToastSnackbar.error(
             "Something went wrong while trying to save your profile."
           );
-          console.error(error);
+          console.error('save', error);
         }
       }
       this.isLoadingSave = false;
