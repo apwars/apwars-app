@@ -177,7 +177,7 @@
                             ]"
                             src="/images/lp-wgold-busd.png"
                           />
-                          <div class="balance">Balance:</div>
+                          <div class="balance">Balance*:</div>
                           <template v-if="profile.lpLevels.wGOLD.averageBUSD">
                             <div class="token-balance">
                               <Amount
@@ -216,7 +216,7 @@
                             ]"
                             src="/images/lp-wcourage-busd.png"
                           />
-                          <div class="balance">Balance:</div>
+                          <div class="balance">Balance*:</div>
                           <template
                             v-if="profile.lpLevels.wCOURAGE.averageBUSD"
                           >
@@ -255,7 +255,7 @@
                             ]"
                             src="/images/lp-wland-busd.png"
                           />
-                          <div class="balance">Balance:</div>
+                          <div class="balance">Balance*:</div>
                           <template v-if="profile.lpLevels.wLAND.averageBUSD">
                             <div class="token-balance">
                               <Amount
@@ -283,6 +283,10 @@
                         ><LoyaltyMeter
                           :level="profile.lpLevels[selectedPool].level"
                       /></v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                      <v-col class="d-flex justify-center mt-2"
+                        >*Average from the last 7 days</v-col>
                     </v-row>
                     <v-row no-gutters>
                       <v-col class="d-flex justify-center mt-2"
