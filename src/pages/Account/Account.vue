@@ -658,6 +658,7 @@ export default {
   align-items: center;
   padding: 4px;
   border-radius: 6px;
+  min-height: 140px;
   &:hover,
   &.is-selected {
     outline: 1px solid #ffeebc;
