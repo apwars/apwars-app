@@ -65,7 +65,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchLands();
+    this.fetchNews();
   },
   watch: {
     isConnected() {
