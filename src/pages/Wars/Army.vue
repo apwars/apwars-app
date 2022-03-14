@@ -133,13 +133,21 @@
               :width="240"
             />
             <Button
-              v-else
+              v-else-if="neededPacks > 0"
               class="buy-button"
               size="large"
               :text="`Buy ${neededPacks} Refill Pack ${raceName}`"
               icon="blue-chest-closed"
               :isLoading="buyingPacks"
               :handleClick="buyRefilPacks"
+            />
+            <Button
+              v-else
+              class="buy-button"
+              size="large"
+              text="You are ready to war"
+              icon="swords"
+              :handleClick="() => $router.push('/war/intro')"
             />
           </v-col>
         </v-row>
@@ -168,7 +176,7 @@ export default {
 
   data() {
     return {
-      selectedRace: 'HUMANS',
+      selectedRace: this.$route.query.race || 'HUMANS',
       weapons: getWeapons(),
       buyingPacks: false,
       loadingPack: false,
