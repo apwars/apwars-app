@@ -153,6 +153,9 @@ export default {
       }
     },
   },
+  mounted() {
+    this.fetchLevels();
+  },
   watch: {
     isConnected() {
       this.fetchLevels();
