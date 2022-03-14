@@ -1,16 +1,25 @@
 <template>
   <div class="lp-meter">
     <div class="scale-label">
-      <img :class="[!level ? 'gray' : '']" src="/images/lp-levels/0.png" height="24" />
-      <img :class="[level < 2 ? 'gray' : '']" src="/images/lp-levels/3.png" height="24" />
-      <img :class="[level !== 5 ? 'gray' : '']" src="/images/lp-levels/5.png" height="24" />
+      <img
+        :class="[!level ? 'gray' : '']"
+        src="/images/lp-levels/0.png"
+        height="24"
+      />
+      <img
+        :class="[level < 2 ? 'gray' : '']"
+        src="/images/lp-levels/3.png"
+        height="24"
+      />
+      <img
+        :class="[level !== 5 ? 'gray' : '']"
+        src="/images/lp-levels/5.png"
+        height="24"
+      />
     </div>
     <div class="scale">
       <div class="scale-track">
-        <div
-          class="arrow-down"
-          :style="`--position:${arrowPosition[level]}`"
-        ></div>
+        <div class="arrow-down" :style="`--position:${arrowPosition}`"></div>
       </div>
       <div class="numbers">
         <div>0</div>
@@ -30,17 +39,48 @@ export default {
       type: Number,
       default: 0,
     },
+    amount: {
+      type: Number,
+      default: 0,
+    },
   },
   computed: {
     arrowPosition() {
-      return {
-        2: "0%",
-        1: "19.8%",
-        2: "39.6%",
-        3: "59.4%",
-        4: "79.2%",
-        5: "99%",
+      const liquidityMap = {
+        0: 0,
+        1: 10,
+        2: 50,
+        3: 100,
+        4: 500,
+        5: 1000,
       };
+      const positionMap = {
+        0: 0,
+        1: 19.8,
+        2: 39.6,
+        3: 59.2,
+        4: 78.8,
+        5: 99,
+      };
+
+      let finalPosition = 0;
+      if (this.level === 5) {
+        finalPosition = positionMap[5];
+      } else {
+        const nextLevel = this.level + 1;
+        const positionBase = positionMap[this.level];
+        const positionUntilNextLevel = positionMap[nextLevel] - positionBase;
+
+        const liquidityUntilNextLevel =
+          liquidityMap[nextLevel] - liquidityMap[this.level];
+        const remainingLiquidity = this.amount - liquidityMap[this.level];
+
+        const percent = remainingLiquidity / liquidityUntilNextLevel;
+        const partial = positionUntilNextLevel * percent;
+        finalPosition = positionBase + partial;
+      }
+
+      return finalPosition.toFixed(1) + "%";
     },
   },
 };
@@ -65,7 +105,7 @@ export default {
   line-height: 1.3;
 }
 .arrow-down {
-    box-sizing: border-box;
+  box-sizing: border-box;
   position: absolute;
   width: 0;
   height: 0;

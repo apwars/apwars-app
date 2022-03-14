@@ -282,6 +282,7 @@
                       <v-col
                         ><LoyaltyMeter
                           :level="profile.lpLevels[selectedPool].level"
+                          :amount="profile.lpLevels[selectedPool].averageBUSD"
                       /></v-col>
                     </v-row>
                     <v-row no-gutters>
