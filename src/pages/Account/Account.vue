@@ -182,6 +182,7 @@
                             <div class="token-balance">
                               <Amount
                                 :amount="profile.lpLevels.wGOLD.averageToken"
+                                decimals="2"
                                 formatted
                                 compact
                               />
@@ -190,6 +191,7 @@
                             <div class="token-balance">
                               <Amount
                                 :amount="profile.lpLevels.wGOLD.averageBUSD"
+                                decimals="2"
                                 formatted
                                 compact
                               />
@@ -223,6 +225,7 @@
                             <div class="token-balance">
                               <Amount
                                 :amount="profile.lpLevels.wCOURAGE.averageToken"
+                                decimals="2"
                                 formatted
                                 compact
                               />
@@ -231,6 +234,7 @@
                             <div class="token-balance">
                               <Amount
                                 :amount="profile.lpLevels.wCOURAGE.averageBUSD"
+                                decimals="2"
                                 formatted
                                 compact
                               />
@@ -260,6 +264,7 @@
                             <div class="token-balance">
                               <Amount
                                 :amount="profile.lpLevels.wLAND.averageToken"
+                                decimals="2"
                                 formatted
                                 compact
                               />
@@ -268,6 +273,7 @@
                             <div class="token-balance">
                               <Amount
                                 :amount="profile.lpLevels.wLAND.averageBUSD"
+                                decimals="2"
                                 formatted
                                 compact
                               />
