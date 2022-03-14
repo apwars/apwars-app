@@ -26,7 +26,7 @@
         </v-col>
       </v-row>
       <template v-else>
-        <v-row>
+        <v-row dense>
           <v-col>
             <div class="buttons-container">
               <div class="race-button">
@@ -62,11 +62,6 @@
                 />
               </div>
             </div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col class="header">
-            {{ raceName }}
           </v-col>
         </v-row>
         <v-row dense>
@@ -105,35 +100,31 @@
               </div>
             </div>
           </v-col>
-          <v-col cols="auto">
-            
-          </v-col>
           <v-col
+            v-if="neededPacks > 0"  
             cols="auto"
             class="wgold-info"
           >
-            <div class="amount">
-              <img src="/images/icons/wgold.png" />
-              <div>
-                {{ `${userBalance['wGOLD'] || 0} wGOLD` }}
+            <template>
+              <div class="amount">
+                <img src="/images/icons/wgold.png" />
+                <div>
+                  <Amount :amount="packsPrice" formatted/> wGOLD
+                </div>
               </div>
-            </div>
-            <v-skeleton-loader
-              v-if="loadingPack"
-              v-bind="attrs"
-              type="text"
-            />
-            <div v-else>Remaining Packs {{ remeaningPacks }}</div>
+              <div >Remaining Packs {{ remeaningPacks }}</div>
+            </template>
           </v-col>
           <v-col cols="auto">
             <v-skeleton-loader
               v-if="loadingPack"
               v-bind="attrs"
-              type="heading"
+              type="image"
               :width="240"
+              height="40"
             />
             <Button
-              v-else-if="neededPacks > 0"
+              v-else-if="neededPacks > 0 && hasAnyTroops"
               class="buy-button"
               size="large"
               :text="`Buy ${neededPacks} Refill Pack ${raceName}`"
@@ -142,10 +133,19 @@
               :handleClick="buyRefilPacks"
             />
             <Button
+              v-else-if="neededPacks > 0 && !hasAnyTroops"
+              class="buy-button"
+              size="large"
+              :text="`Buy ${raceName} Full Pack`"
+              icon="blue-chest-closed"
+              :isLoading="buyingPacks"
+              :handleClick="buyFullPackPack"
+            />
+            <Button
               v-else
               class="buy-button"
               size="large"
-              text="You are ready to war"
+              text="You are ready for war"
               icon="swords"
               :handleClick="() => $router.push('/war/intro')"
             />
@@ -167,11 +167,13 @@ import { SQUADRONS } from "@/data/Squadrons";
 
 import Title from '@/lib/components/ui/Title';
 import Button from '@/lib/components/ui/Buttons/Button';
+import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
   components: {
     Title,
     Button,
+    Amount,
   },
 
   data() {
@@ -228,6 +230,12 @@ export default {
       }[this.selectedRace];
     },
 
+    hasAnyTroops() {
+      return this.troops.reduce((curr, troop) => {
+        return curr + (this.userBalance[troop.name] || 0);
+      }, 0) > 0;
+    },
+
     neededPacks() {
       if (!this.loadedPack) {
         return 0;
@@ -247,6 +255,12 @@ export default {
       });
 
       return Math.max(...neededPacks);
+    },
+
+    packsPrice() {
+      return this.hasAnyTroops
+        ? this.loadedPack.price.amount * this.neededPacks
+        : this.loadedPack.price.amount;
     },
   },
 
@@ -282,7 +296,10 @@ export default {
         this.loadingPack = true;
 
         const controller = new PacksController();
-        const refillPackage = `ARMY_${this.selectedRace}_REFILL_PACK`;
+
+        const refillPackage = this.hasAnyTroops
+          ? `ARMY_${this.selectedRace}_REFILL_PACK`
+          : `ARMY_${this.selectedRace}_FULL_PACK`;
 
         this.loadedPack = await controller.getOne(refillPackage);
       } finally {
@@ -290,13 +307,13 @@ export default {
       }
     },
 
-    fetchUserBalances() {
+    async fetchUserBalances() {
       if (!this.isConnected || !this.account) {
         return;
       }
 
-      this.fetchPack();
-      this.fetchBalances();
+      await this.fetchBalances();
+      void this.fetchPack();
     },
 
     backToHome() {
@@ -326,6 +343,30 @@ export default {
         await controller.buyPack(this.account, packageName, this.neededPacks);
 
         ToastSnackbar.success('The packs were purchased successfully!');
+
+        void this.fetchUserBalances();
+      } catch (error) {
+        const mappedErrors = {
+          INVALID_AMOUNT: `We don't have any more from this pack to sell.`,
+          INVALID_BALANCE: `You don't have balance to buy this pack.`,
+        };
+
+        ToastSnackbar.error(mappedErrors[error.code] || error.message);
+      } finally {
+        this.buyingPacks = false;
+      }
+    },
+
+    async buyFullPackPack() {
+      try {
+        this.buyingPacks = true;
+
+        const controller = new PacksController();
+        const packageName = `ARMY_${this.selectedRace}_FULL_PACK`;
+
+        await controller.buyPack(this.account, packageName);
+
+        ToastSnackbar.success('The pack was purchased successfully!');
 
         void this.fetchUserBalances();
       } catch (error) {
@@ -444,7 +485,7 @@ export default {
 }
 
 .weapons-container {
-  padding-top: 2.4rem;
+  padding-top: 1.2rem;
   align-items: center;
 
   .wgold-info {
