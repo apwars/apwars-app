@@ -282,6 +282,7 @@
                       <v-col
                         ><LoyaltyMeter
                           :level="profile.lpLevels[selectedPool].level"
+                          :amount="profile.lpLevels[selectedPool].averageBUSD"
                       /></v-col>
                     </v-row>
                     <v-row no-gutters>
@@ -657,6 +658,7 @@ export default {
   align-items: center;
   padding: 4px;
   border-radius: 6px;
+  min-height: 140px;
   &:hover,
   &.is-selected {
     outline: 1px solid #ffeebc;
