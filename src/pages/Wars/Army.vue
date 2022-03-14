@@ -96,7 +96,7 @@
               </div>
               <div class="details">
                 <div>{{ weapon.title }}</div>
-                <div>My Qty: {{ userBalance[`GameItem${weapon.id}`] || 0 }}</div>
+                <div>Qty: {{ userBalance[`GameItem${weapon.id}`] || 0 }}</div>
               </div>
             </div>
           </v-col>
@@ -112,7 +112,7 @@
                   <Amount :amount="packsPrice" formatted/> wGOLD
                 </div>
               </div>
-              <div >Remaining Packs {{ remeaningPacks }}</div>
+              <div >Remaining Packs {{ remainingPacks }}</div>
             </template>
           </v-col>
           <v-col cols="auto">
@@ -127,7 +127,7 @@
               v-else-if="neededPacks > 0 && hasAnyTroops"
               class="buy-button"
               size="large"
-              :text="`Buy ${neededPacks} Refill Pack ${raceName}`"
+              :text="`Buy ${neededPacks} ${raceName} Refill Packs`"
               icon="blue-chest-closed"
               :isLoading="buyingPacks"
               :handleClick="buyRefilPacks"
@@ -200,7 +200,7 @@ export default {
       'offChainBalance',
     ]),
 
-    remeaningPacks() {
+    remainingPacks() {
       return this.loadedPack ? this.loadedPack.remainingAmount : 0;
     },
 
@@ -217,7 +217,7 @@ export default {
         'ELVES': 'Elves',
         'HUMANS': 'Humans',
         'ORCS': 'Orcs',
-        'UNDEAD': 'Undead',
+        'UNDEAD': 'Undeads',
       }[this.selectedRace];
     },
     
@@ -470,6 +470,7 @@ export default {
   }
 
   .details {
+    font-size: 14px;
     font-weight: bold;
   }
 }
@@ -504,7 +505,7 @@ export default {
       margin-right: 8px;
     }
 
-    .remeaning {
+    .remaining {
       font-size: 12px;
     }
   }
