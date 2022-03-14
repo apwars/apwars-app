@@ -17,103 +17,133 @@
           <Title text="Army" />
         </v-col>
       </v-row>
-      <v-row>
-        <v-col>
-          <div class="buttons-container">
-            <div class="race-button">
-              <Button
-                text="Elves"
-                :type="selectedRace === 'ELVES' ? 'wprimary' : 'wsecondary'"
-                :handleClick="() => selectRace('ELVES')"
-                isBlock
-              />
-            </div>
-            <div class="race-button">
-              <Button
-                text="Humans"
-                :type="selectedRace === 'HUMANS' ? 'wprimary' : 'wsecondary'"
-                :handleClick="() => selectRace('HUMANS')"
-                isBlock
-              />
-            </div>
-            <div class="race-button">
-              <Button
-                text="Orcs"
-                :type="selectedRace === 'ORCS' ? 'wprimary' : 'wsecondary'"
-                :handleClick="() => selectRace('ORCS')"
-                isBlock
-              />
-            </div>
-            <div class="race-button">
-              <Button
-                text="Undead"
-                :type="selectedRace === 'UNDEAD' ? 'wprimary' : 'wsecondary'"
-                :handleClick="() => selectRace('UNDEAD')"
-                isBlock
-              />
-            </div>
-          </div>
+      <v-row v-if="!account || isLoadingBalances">
+        <v-col cols="12">
+          <v-skeleton-loader type="image" />
+        </v-col>
+        <v-col cols="12">
+          <v-skeleton-loader type="image" height="60px" />
         </v-col>
       </v-row>
-      <v-row>
-        <v-col class="header">
-          {{ troopsHeader }}
-        </v-col>
-      </v-row>
-      <v-row dense>
-        <v-col
-          v-for="troop in troops"
-          :key="troop.id"
-          cols="6"
-        >
-          <div class="troop">
-            <div class="icon">
-              <img :src="`/images/icons/${troop.name}.png`" />
+      <template v-else>
+        <v-row>
+          <v-col>
+            <div class="buttons-container">
+              <div class="race-button">
+                <Button
+                  text="Elves"
+                  :type="selectedRace === 'ELVES' ? 'wprimary' : 'wsecondary'"
+                  :handleClick="() => selectRace('ELVES')"
+                  isBlock
+                />
+              </div>
+              <div class="race-button">
+                <Button
+                  text="Humans"
+                  :type="selectedRace === 'HUMANS' ? 'wprimary' : 'wsecondary'"
+                  :handleClick="() => selectRace('HUMANS')"
+                  isBlock
+                />
+              </div>
+              <div class="race-button">
+                <Button
+                  text="Orcs"
+                  :type="selectedRace === 'ORCS' ? 'wprimary' : 'wsecondary'"
+                  :handleClick="() => selectRace('ORCS')"
+                  isBlock
+                />
+              </div>
+              <div class="race-button">
+                <Button
+                  text="Undead"
+                  :type="selectedRace === 'UNDEAD' ? 'wprimary' : 'wsecondary'"
+                  :handleClick="() => selectRace('UNDEAD')"
+                  isBlock
+                />
+              </div>
             </div>
-            <div class="details">
-              <div class="label">Units you have:</div>
-              <div>{{ userBalance[troop.name] || 0 }} {{ troop.name }}</div>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="header">
+            {{ raceName }}
+          </v-col>
+        </v-row>
+        <v-row dense>
+          <v-col
+            v-for="troop in troops"
+            :key="troop.id"
+            cols="6"
+          >
+            <div class="troop">
+              <div class="icon">
+                <img :src="`/images/icons/${troop.name}.png`" />
+              </div>
+              <div class="details">
+                <div class="label">Units you have:</div>
+                <div>{{ userBalance[troop.name] || 0 }} {{ troop.name }}</div>
+              </div>
+              <div class="needed-units details">
+                <div class="label">Needed units:</div>
+                <div>{{ getNeededUnits(troop.name) }} {{ troop.name }}</div>
+              </div>
             </div>
-            <div class="needed-units details">
-              <div class="label">Needed units:</div>
-              <div>{{ getNeededUnits(userBalance[troop.name]) }} {{ troop.name }}</div>
+          </v-col>
+        </v-row>
+        <v-row dense class="weapons-container">
+          <v-col
+            v-for="weapon in weapons"
+            :key="weapon.id"
+          >
+            <div class="game-item">
+              <div class="icon">
+                <img :src="`/images/icons/${weapon.icon}.png`" />
+              </div>
+              <div class="details">
+                <div>{{ weapon.title }}</div>
+                <div>My Qty: {{ userBalance[`GameItem${weapon.id}`] || 0 }}</div>
+              </div>
             </div>
-          </div>
-        </v-col>
-      </v-row>
-      <v-row dense class="weapons-container">
-        <v-col
-          v-for="weapon in weapons"
-          :key="weapon.id"
-        >
-          <div class="game-item">
-            <div class="icon">
-              <img :src="`/images/icons/${weapon.icon}.png`" />
+          </v-col>
+          <v-col cols="auto">
+            
+          </v-col>
+          <v-col
+            cols="auto"
+            class="wgold-info"
+          >
+            <div class="amount">
+              <img src="/images/icons/wgold.png" />
+              <div>
+                {{ `${userBalance['wGOLD'] || 0} wGOLD` }}
+              </div>
             </div>
-            <div class="details">
-              <div>{{ weapon.title }}</div>
-              <div>My Qty: {{ userBalance[`GameItem${weapon.id}`] || 0 }}</div>
-            </div>
-          </div>
-        </v-col>
-        <v-col cols="auto" class="wgold-info">
-          <div class="amount">
-            <img src="/images/icons/wgold.png" />
-            <div>
-              {{ `${userBalance['wGOLD'] || 0} wGOLD` }}
-            </div>
-          </div>
-          <div>Remaining Packs {{ remeaningPacks }}</div>
-        </v-col>
-        <v-col cols="auto">
-          <Button
-            class="buy-button"
-            size="large"
-            text="Buy 7 Refill Pack Humans"
-            icon="blue-chest-closed"
-          />
-        </v-col>
-      </v-row>
+            <v-skeleton-loader
+              v-if="loadingPack"
+              v-bind="attrs"
+              type="text"
+            />
+            <div v-else>Remaining Packs {{ remeaningPacks }}</div>
+          </v-col>
+          <v-col cols="auto">
+            <v-skeleton-loader
+              v-if="loadingPack"
+              v-bind="attrs"
+              type="heading"
+              :width="240"
+            />
+            <Button
+              v-else
+              class="buy-button"
+              size="large"
+              :text="`Buy ${neededPacks} Refill Pack ${raceName}`"
+              icon="blue-chest-closed"
+              :isLoading="buyingPacks"
+              :handleClick="buyRefilPacks"
+            />
+          </v-col>
+        </v-row>
+      </template>
     </v-container>
   </div>
 </template>
@@ -121,10 +151,14 @@
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
 
-import Title from '@/lib/components/ui/Title';
-import Button from '@/lib/components/ui/Buttons/Button';
+import ToastSnackbar from "@/plugins/ToastSnackbar";
+import PacksController from "@/controller/PacksController";
 import { getWeapons } from "@/data/Collectibles/Weapons";
 import { HUMANS, ORCS, UNDEAD, ELVES } from "@/data/Troops";
+import { SQUADRONS } from "@/data/Squadrons";
+
+import Title from '@/lib/components/ui/Title';
+import Button from '@/lib/components/ui/Buttons/Button';
 
 export default {
   components: {
@@ -136,7 +170,9 @@ export default {
     return {
       selectedRace: 'HUMANS',
       weapons: getWeapons(),
-      remeaningPacks: 100,
+      buyingPacks: false,
+      loadingPack: false,
+      loadedPack: null,
     };
   },
 
@@ -154,12 +190,19 @@ export default {
       'offChainBalance',
     ]),
 
+    remeaningPacks() {
+      return this.loadedPack ? this.loadedPack.remainingAmount : 0;
+    },
+
+    squadronAmounts() {
+      return SQUADRONS[this.selectedRace];
+    },
+
     userBalance() {
-      console.log(this.offChainBalance);
       return this.offChainBalance || {};
     },
 
-    troopsHeader() {
+    raceName() {
       return {
         'ELVES': 'Elves',
         'HUMANS': 'Humans',
@@ -176,6 +219,27 @@ export default {
         'UNDEAD': UNDEAD,
       }[this.selectedRace];
     },
+
+    neededPacks() {
+      if (!this.loadedPack) {
+        return 0;
+      }
+
+      const packMapping = this.loadedPack.content.reduce((curr, next) => {
+        return {
+          ...curr,
+          [next.symbol]: next.amount,
+        }
+      }, {});
+
+      const neededPacks = this.troops.map((troop) => {
+        const { name } = troop;
+
+        return Math.ceil(this.getNeededUnits(name) / packMapping[name]);
+      });
+
+      return Math.max(...neededPacks);
+    },
   },
 
   mounted() {
@@ -190,6 +254,10 @@ export default {
     account() {
       this.fetchUserBalances();
     },
+    
+    selectedRace() {
+      this.fetchPack();
+    },
   },
 
   methods: {
@@ -197,11 +265,29 @@ export default {
       fetchBalances: 'wallet/fetchBalances',
     }),
 
+    async fetchPack() {
+      try {
+        if (!this.isConnected || !this.account) {
+          return;
+        }
+
+        this.loadingPack = true;
+
+        const controller = new PacksController();
+        const refillPackage = `ARMY_${this.selectedRace}_REFILL_PACK`;
+
+        this.loadedPack = await controller.getOne(refillPackage);
+      } finally {
+        this.loadingPack = false;
+      }
+    },
+
     fetchUserBalances() {
       if (!this.isConnected || !this.account) {
         return;
       }
 
+      this.fetchPack();
       this.fetchBalances();
     },
 
@@ -213,12 +299,37 @@ export default {
       this.selectedRace = race;
     },
 
-    getNeededUnits(units = 0) {
-      const neededUnits = 1000 - units;
+    getNeededUnits(unitType) {
+      const units = this.userBalance[unitType] || 0;
+      const neededUnits = this.squadronAmounts[unitType] - units;
 
       return neededUnits < 0
         ? 0
         : neededUnits;
+    },
+
+    async buyRefilPacks() {
+      try {
+        this.buyingPacks = true;
+
+        const controller = new PacksController();
+        const packageName = `ARMY_${this.selectedRace}_REFILL_PACK`;
+
+        await controller.buyPack(this.account, packageName, this.neededPacks);
+
+        ToastSnackbar.success('The packs were purchased successfully!');
+
+        void this.fetchUserBalances();
+      } catch (error) {
+        const mappedErrors = {
+          INVALID_AMOUNT: `We don't have any more from this pack to sell.`,
+          INVALID_BALANCE: `You don't have balance to buy this pack.`,
+        };
+
+        ToastSnackbar.error(mappedErrors[error.code] || error.message);
+      } finally {
+        this.buyingPacks = false;
+      }
     },
   },
 };
