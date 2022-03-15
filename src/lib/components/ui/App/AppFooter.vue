@@ -223,6 +223,11 @@ export default {
           image: "/images/icons/battle-shield.png",
         },
         {
+          title: "Leaderboard",
+          href: "/leaderboard",
+          image: "/images/icons/trophy.png",
+        },
+        {
           title: "Arcadia",
           image: "/images/icons/world.png",
           href: "/arcadia",
