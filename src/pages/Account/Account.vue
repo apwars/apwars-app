@@ -2,16 +2,16 @@
   <div class="background">
     <v-container fluid>
       <v-row no-gutters>
-      <v-col>
-        <Button
-          text="Go back to Home"
-          icon="arrow-back"
-          type="wtertiary"
-          no-padding
-          :handleClick="backToHome"
-        />
-      </v-col>
-    </v-row>
+        <v-col>
+          <Button
+            text="Go back to Home"
+            icon="arrow-back"
+            type="wtertiary"
+            no-padding
+            :handleClick="backToHome"
+          />
+        </v-col>
+      </v-row>
       <v-row no-gutters>
         <v-col><Title>Account</Title></v-col></v-row
       >
@@ -70,11 +70,19 @@
                     />
                   </v-col>
                   <v-col cols="12" lg="3" v-else>
-                    <v-skeleton-loader v-if="isLoading" type="text" width="100%" />
+                    <v-skeleton-loader
+                      v-if="isLoading"
+                      type="text"
+                      width="100%"
+                    />
                     <div class="display-name" v-else>
                       {{ profile.name || "Waiting for a badass name" }}
                     </div>
-                    <v-skeleton-loader v-if="isLoading" type="text" width="100%" />
+                    <v-skeleton-loader
+                      v-if="isLoading"
+                      type="text"
+                      width="100%"
+                    />
                     <div class="d-flex justify-space-between" v-else>
                       <div class="d-flex align-center">
                         <img
@@ -293,7 +301,8 @@
                     </v-row>
                     <v-row no-gutters>
                       <v-col class="d-flex justify-center mt-2"
-                        >*Average from the last 7 days</v-col>
+                        >*Average from the last 7 days</v-col
+                      >
                     </v-row>
                     <v-row no-gutters>
                       <v-col class="d-flex justify-center mt-2"
@@ -319,14 +328,68 @@
                         v-if="badges"
                         :podiums="badges.tmj"
                       />
-                      <WarBadges class="my-2" :victorys="badges.wars.wins" :losses="badges.wars.losses" />
-                      <ArcadiaBadges class="my-2" :lands="badges.arcadia.lands" :villages="badges.arcadia.villages" />
+                      <WarBadges
+                        class="my-2"
+                        :victorys="badges.wars.wins"
+                        :losses="badges.wars.losses"
+                      />
+                      <ArcadiaBadges
+                        class="my-2"
+                        :lands="badges.arcadia.lands"
+                        :villages="badges.arcadia.villages"
+                      />
                     </template>
                   </v-col>
                 </v-row>
               </div>
             </v-col>
           </v-row>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col>
+          <div class="screen-container d-flex mt-1">
+            <div class="army-control">
+              <img src="/images/wars.png" height="96" />
+              <div class="army-title mt-1">
+                <span v-if="isOwner">Your</span> Army
+              </div>
+              <v-radio-group v-model="army" row class="mt-2">
+                <v-radio label="Corps" value="corps"
+                  ><template slot="label">
+                    <div class="army-option">Corps</div>
+                  </template></v-radio
+                >
+                <v-radio label="Degens" value="degens"
+                  ><template slot="label">
+                    <div class="army-option">Degens</div>
+                  </template></v-radio
+                >
+              </v-radio-group>
+            </div>
+            <div class="armys-display">
+              <template v-if="army === 'corps'">
+              <div class="army">
+                <img src="/images/troops/wwarrior-portrait.png" />
+                <div class="formation-display"><img :class="[badges.armies.humans === 0 ? 'gray' : '']" :src="`/images/icons/${getFormation(badges.armies.humans)}.png`" :alt="getFormation(badges.armies.humans)" width="140" /></div>
+              </div>
+              <div class="army">
+                <img src="/images/troops/wblademaster-portrait.png" />
+                <div class="formation-display"><img :class="[badges.armies.elves === 0 ? 'gray' : '']" :src="`/images/icons/${getFormation(badges.armies.elves)}.png`" :alt="getFormation(badges.armies.elves)" width="140" /></div>
+              </div>
+              </template>
+              <template v-else>
+              <div class="army">
+                <img src="/images/troops/wgrunt-portrait.png" />
+                <div class="formation-display"><img :class="[badges.armies.orcs === 0 ? 'gray' : '']" :src="`/images/icons/${getFormation(badges.armies.orcs)}.png`" :alt="getFormation(badges.armies.orcs)" width="140" /></div>
+              </div>
+              <div class="army">
+                <img src="/images/troops/wwitch-portrait.png" />
+                <div class="formation-display"><img :class="[badges.armies.undeads === 0 ? 'gray' : '']" :src="`/images/icons/${getFormation(badges.armies.undeads)}.png`" :alt="getFormation(badges.armies.undeads)" width="140" /></div>
+              </div>
+              </template>
+            </div>
+          </div>
         </v-col>
       </v-row>
       <v-row no-gutters v-if="isOwner">
@@ -399,11 +462,13 @@ export default {
       ];
     },
     countryOptions() {
-      return countryOptions.map((c) => ({
-        ...c,
-        label: c.name,
-        image: `/images/country-flags/${c.value}.svg`,
-      })).sort((a, b) => a.name.localeCompare(b.name));
+      return countryOptions
+        .map((c) => ({
+          ...c,
+          label: c.name,
+          image: `/images/country-flags/${c.value}.svg`,
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
     },
     profileCountry() {
       if (!this.profile.country) {
@@ -440,7 +505,7 @@ export default {
     },
     isOwner() {
       return this.profile.account === this.account;
-    }
+    },
   },
   data() {
     return {
@@ -452,6 +517,7 @@ export default {
       profileCache: null,
       isLoadingBadges: true,
       badges: null,
+      army: 'corps',
       profile: {
         name: "",
         country: "un",
@@ -517,7 +583,7 @@ export default {
         const profile = await controller.getProfile(this.consideredAccount);
         this.profile = profile;
       } catch (error) {
-        console.error('profile', error);
+        console.error("profile", error);
       } finally {
         this.isLoading = false;
       }
@@ -532,7 +598,7 @@ export default {
         const badges = await controller.getBadges(this.consideredAccount);
         this.badges = badges;
       } catch (error) {
-        console.error('badges', error);
+        console.error("badges", error);
       } finally {
         this.isLoadingBadges = false;
       }
@@ -550,7 +616,7 @@ export default {
           ToastSnackbar.error(
             "Something went wrong while trying to save your profile."
           );
-          console.error('save', error);
+          console.error("save", error);
         }
       }
       this.isLoadingSave = false;
@@ -573,6 +639,19 @@ export default {
       };
       this.$router.push(`/add-liquidity/${tokenMap[baseToken]}/${BUSD}`);
     },
+    getFormation(squadronAmount) {
+      if (squadronAmount >= 15) {
+        return 'division';
+      } else if (squadronAmount >= 10) {
+        return 'brigade';
+      } else if (squadronAmount >= 5) {
+        return 'regiment';
+      } else if (squadronAmount >= 3) {
+        return 'barricade';
+      } else {
+        return 'squadron';
+      }
+    }
   },
   mounted() {
     this.fetchProfile();
@@ -595,7 +674,6 @@ export default {
 
 .screen-container {
   padding: 24px;
-  min-height: 440px;
   background: linear-gradient(0deg, #181a1b, #181a1b), #3a2720;
   border: 2px solid #ffeebc;
   box-sizing: border-box;
@@ -727,5 +805,30 @@ export default {
   white-space: nowrap;
   width: 190px;
   margin-left: 4px;
+}
+
+.army-title {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+.army-option {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff !important;
+}
+.armys-display {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.army {
+  display: flex;
+}
+.formation-display {
+  display: flex;
+  align-items: center;
 }
 </style>
