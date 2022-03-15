@@ -146,7 +146,7 @@ export default {
         const fullPackage = `ARMY_${this.selectedRace.toUpperCase()}_FULL_PACK`;
         const refillPackage = `ARMY_${this.selectedRace.toUpperCase()}_REFILL_PACK`;
         let full = await controller.getOne(fullPackage);
-        full.title = "Full Pack";
+        full.title = "Squadron Pack";
         const fullUnitsArray = full.content.filter(
           (c) => !c.symbol.includes("GameItem")
         );

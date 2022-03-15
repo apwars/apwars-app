@@ -136,7 +136,7 @@
               v-else-if="neededPacks > 0 && !hasAnyTroops"
               class="buy-button"
               size="large"
-              :text="`Buy ${raceName} Full Pack`"
+              :text="`Buy ${raceName} Squadron Pack`"
               icon="blue-chest-closed"
               :isLoading="buyingPacks"
               :handleClick="buyFullPackPack"
