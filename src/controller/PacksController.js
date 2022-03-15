@@ -23,10 +23,11 @@ export default class PacksController {
     }
   }
 
-  buyPack(account, packageName) {
+  buyPack(account, packageName, amount = 1) {
     try {
       return this.base._postSignature(
-        `/accounts/${account}/packs/${packageName}/purchases/v2`
+        `/accounts/${account}/packs/${packageName}/purchases/v2`,
+        { amount },
       );
     } catch (error) {
       throw error;

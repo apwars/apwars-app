@@ -398,7 +398,7 @@ export default {
       this.$router.push({ path: "/unlock-soldier", query: { isEnlistment: true } });
     },
     goToPacks(race) {
-      this.$router.push({ path: "/packs", query: { race, isEnlistment: true } });
+      this.$router.push({ path: "/war/army", query: { race: race.toUpperCase() } });
     },
     goToEnlistment(raceId) {
       this.$router.push({ path: `/war/enlistment/${raceId}`});

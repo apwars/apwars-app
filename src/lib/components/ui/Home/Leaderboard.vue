@@ -65,7 +65,7 @@
     <Button
       type="wsecondary"
       text="Full Leaderboard"
-      :handleClick="() => $router.push('/leaderboard')"
+      :handleClick="openFullLeaderboard"
     />
   </div>
 </template>
@@ -141,6 +141,18 @@ export default {
     },
     openAddress(address) {
       this.$router.push(`/profile/${address}`);
+    },
+    openFullLeaderboard() {
+      const game = {
+        0: 'TMJ',
+        1: 'WARS',
+        2: 'ARCADIA',
+      }[this.selectedGameId];
+
+      this.$router.push({
+        path: '/leaderboard',
+        query: { game },
+      });
     },
   },
   mounted() {
