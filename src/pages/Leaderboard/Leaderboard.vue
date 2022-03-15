@@ -103,6 +103,8 @@ export default {
   },
 
   data() {
+    const { game } = this.$route.query;
+
     return {
       isLoading: true,
       prizeDaily: [
@@ -139,7 +141,8 @@ export default {
       listGames: [
         {
           id: 0,
-          selected: true,
+          urlTag: 'TMJ',
+          selected: game === 'TMJ',
           name: "The Monstrous Journey",
           image: "/images/game/the-monstrous-journey.png",
           nameButton: "Play Now",
@@ -152,7 +155,8 @@ export default {
         },
         {
           id: 1,
-          selected: false,
+          urlTag: 'ARCADIA',
+          selected: game === 'ARCADIA',
           name: "Arcandia Expansion",
           image: "/images/arcadia-expansion.png",
           nameButton: "Coming soon",
@@ -163,7 +167,8 @@ export default {
         },
         {
           id: 2,
-          selected: false,
+          urlTag: 'WARS',
+          selected: game === 'WARS',
           name: "War",
           image: "/images/game/wars.png",
           nameButton: "Coming soon",
@@ -234,6 +239,8 @@ export default {
       });
 
       game.selected = true;
+
+      this.$router.replace({ query: { game: game.urlTag } });
     },
   },
 };
