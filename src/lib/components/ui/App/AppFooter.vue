@@ -102,6 +102,15 @@
           </v-slide-group>
         </v-sheet>
       </div>
+      <div>
+        <Button
+          class="army-button"
+          text="Your Army"
+          icon="helmet"
+          :handleClick="() => $router.push('/war/army')"
+          isBlock
+        />
+      </div>
       <div class="d-flex side-menu-right">
         <div class="text-center" v-if="track">
           <v-menu :close-on-content-click="false" :nudge-height="200">
@@ -170,10 +179,16 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import Amount from "@/lib/components/ui/Utils/Amount";
 import wGOLD from "@/lib/eth/wGOLD";
 
+import Amount from "@/lib/components/ui/Utils/Amount";
+import Button from "@/lib/components/ui/Buttons/Button";
+
 export default {
+  components: {
+    Amount,
+    Button,
+  },
   data() {
     return {
       menu: [
@@ -216,9 +231,6 @@ export default {
       balance: 0,
       isLoading: true,
     };
-  },
-  components: {
-    Amount,
   },
   computed: {
     ...mapState({
@@ -438,6 +450,18 @@ export default {
   }
   .v-main {
     padding-bottom: 135px !important;
+  }
+}
+
+.army-button {
+  border-radius: 50px;
+  background-color: #FFEEBC;
+  border: 1px solid #FFEEBC;
+
+  &:hover:enabled {
+    background-color: #FFEEBC;
+    border: 1px solid #FFEEBC;
+    opacity: 0.8;
   }
 }
 </style>
