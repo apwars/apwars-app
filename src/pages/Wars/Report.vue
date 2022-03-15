@@ -479,7 +479,30 @@
               </div>
             </v-col>
           </v-row>
-
+          <template v-if="accountPrizes">
+            <v-row>
+              <v-col cols="12">
+                <div class="rewards-title">
+                  Your prizes ({{ compactWallet(account) }})
+                </div>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <div class="rewards-display">
+                  <Reward
+                    v-for="(prize, index) in accountPrizes"
+                    :key="index"
+                    :prize="prize.prize"
+                    :type="prize.type"
+                    :amount="prize.amount"
+                    approximate
+                    size="small"
+                  />
+                </div>
+              </v-col>
+            </v-row>
+          </template>
           <v-row v-if="hasPrizes">
             <v-col>
               <div class="rewards-title">FED’s Prize</div>
@@ -686,7 +709,8 @@ export default {
       phase: (state) => state.war.phase,
       track: (state) => state.music.track,
       weapons: (state) => state.enlistment.weapons,
-      balances: (state) => state.user.balances
+      balances: (state) => state.user.balances,
+      accountPrizes: (state) => state.war.accountPrizes,
     }),
 
     account() {
