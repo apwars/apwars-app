@@ -27,4 +27,8 @@ export default class UserController {
     return this.base._get(`/users/${account}/badges`);
   }
 
+  getHome(account) {
+    return this.base._get(`/reports/home/${account}`);
+  }
+
 }

@@ -2,7 +2,7 @@
   <div class="arcadia-container">
     <img src="/images/arcadia-expansion.png" height="48" />
     <div class="villages-navigation">
-      <div class="controls" v-if="lands.length > 1">
+      <div class="controls" v-if="assets.length > 1">
         <div class="prev" @click="() => changeIndex(-1)"></div>
         <div class="next" @click="() => changeIndex(1)"></div>
       </div>
@@ -34,7 +34,6 @@
   </div>
 </template>
 <script>
-import ArcadiaController from "@/controller/ArcadiaController";
 import Village from "./Village";
 import Button from "@/lib/components/ui/Buttons/Button";
 
@@ -49,68 +48,40 @@ const PLACEHOLDER_LAND = {
 
 export default {
   components: { Button, Village },
+  props: {
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    assets: {
+      type: Array,
+      default: () => [PLACEHOLDER_LAND]
+    }
+  },
   computed: {
-    isConnected() {
-      return this.$store.getters["user/isConnected"];
-    },
-    account() {
-      return this.$store.getters["user/account"];
-    },
     currentLand() {
-      return this.lands[this.currentIndex];
+      return this.assets[this.currentIndex];
     },
     hasLands() {
-      return this.lands[0].id !== 99999999999999999999999;
+      return this.assets[0].id !== 99999999999999999999999;
     },
   },
   data() {
     return {
-      isLoading: true,
-      lands: [PLACEHOLDER_LAND],
       currentIndex: 0,
     };
   },
   methods: {
-    async fetchLands() {
-      if (!this.isConnected || !this.account) {
-        return;
-      }
-      this.isLoading = true;
-      try {
-        const controller = new ArcadiaController();
-        const landsData = await controller.getLands(this.account);
-        if (landsData.length > 0) {
-          this.lands = [].concat(landsData.filter((l) => l.foundationType));
-        } else {
-          this.lands = [PLACEHOLDER_LAND];
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoading = false;
-      }
-    },
     changeIndex(direction) {
       const nextIndex = this.currentIndex + direction;
-      const limit = this.lands.length - 1;
+      const limit = this.assets.length - 1;
       if (nextIndex > limit) {
         this.currentIndex = 0;
       } else if (nextIndex < 0) {
-        this.currentIndex = this.lands.length - 1;
+        this.currentIndex = this.assets.length - 1;
       } else {
         this.currentIndex = nextIndex;
       }
-    },
-  },
-  mounted() {
-    this.fetchLands();
-  },
-  watch: {
-    isConnected() {
-      this.fetchLands();
-    },
-    account() {
-      this.fetchLands();
     },
   },
 };
@@ -136,11 +107,12 @@ export default {
 .controls {
   display: flex;
   justify-content: space-between;
-  width: 105%;
+  width: 110%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 5;
+  left: -15px;
 }
 .prev {
   width: 0px;

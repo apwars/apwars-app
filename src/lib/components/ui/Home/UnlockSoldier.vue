@@ -4,7 +4,7 @@
       <img src="/images/tmj.png" height="64" alt="the monstrous journey" />
     </div>
     <div class="tmj-container mt-2">
-      <v-skeleton-loader type="image" height="120px" width="100%" v-if="isLoadingSoldier" />
+      <v-skeleton-loader type="image" height="120px" width="100%" v-if="isLoading" />
       <template v-else-if="!soldiers.length">
         <div class="soldier-container">
           <img class="gray" src="/images/troops/wwarrior-nft.png" width="89" />
@@ -105,24 +105,26 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
 import Button from "@/lib/components/ui/Buttons/Button";
 import Progress from "@/lib/components/ui/Progress";
 
 export default {
   components: { Button, Progress },
+  props: {
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    humanSoldier: {
+      type: Object,
+      default: () => {}
+    },
+    orcSoldier: {
+      type: Object,
+      default: () => {}
+    }
+  },
   computed: {
-    ...mapState({
-      humanSoldier: (state) => state.wallet.humanSoldier,
-      orcSoldier: (state) => state.wallet.orcSoldier,
-      isLoadingSoldier : (state) => state.wallet.isLoadingSoldier,
-    }),
-    isConnected() {
-      return this.$store.getters["user/isConnected"];
-    },
-    account() {
-      return this.$store.getters["user/account"];
-    },
     hasNoSoldiers() {
       return !this.humanSoldier && !this.orcSoldier;
     },
@@ -146,15 +148,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions({
-      checkSoldiers: "wallet/checkSoldiers",
-    }),
-    fetchSoldiers() {
-      if (!this.isConnected || !this.account) {
-        return;
-      }
-      this.checkSoldiers();
-    },
     changeIndex(direction) {
       const nextIndex = this.soldiersIndex + direction;
       const limit = this.soldiers.length - 1;
@@ -165,17 +158,6 @@ export default {
       } else {
         this.soldiersIndex = nextIndex;
       }
-    },
-  },
-  mounted() {
-    this.fetchSoldiers();
-  },
-  watch: {
-    isConnected() {
-        this.fetchSoldiers();
-      },
-    account() {
-      this.fetchSoldiers();
     },
   },
 };
@@ -201,11 +183,12 @@ export default {
 .controls {
   display: flex;
   justify-content: space-between;
-  width: 105%;
+  width: 110%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
+  left: -15px;
 }
 .prev {
   width: 0px;
