@@ -336,7 +336,7 @@ export default {
   min-height: 70px;
   border: 2px solid #ffeebc;
   border-radius: 6px;
-  background-image: url("/images/battle/bg-wars.png");
+  background-image: url("/images/battle/bg-menu.png");
   background-repeat: repeat;
 }
 
