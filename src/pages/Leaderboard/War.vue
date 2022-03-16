@@ -460,13 +460,16 @@ export default {
 
       const _distributedRewards = await leaderboardController.getLeaderboardWarDistributedRewards();
 
+      const hasBurnedLastWar = _distributedRewards.burnedLastWar.length > 0;
+      const burnedLastWarAmount =  hasBurnedLastWar ?  _distributedRewards.burnedLastWar[0].total : 0;
+
       this.distributedRewards = {
         distributed: {},
         distributedLastWar: {},
         totalEnlistmentLastWar: _distributedRewards.totalEnlistmentLastWar,
         totalClaimed: _distributedRewards.claimEnlistmentLastWar,
         burned: _distributedRewards.burned[0].total,
-        burnedLastWar: _distributedRewards.burnedLastWar[0].total,
+        burnedLastWar: burnedLastWarAmount,
       };
       this.distributedRewards.distributed.wGOLD = _distributedRewards.distributed.find(
         (_distributed) => _distributed.token === "wGOLD"
