@@ -5,18 +5,16 @@
       <div class="ml-1">Board News</div>
     </div>
     <v-skeleton-loader type="paragraph" width="100%" height="64px" v-if="isLoading" />
-    <div class="news-navigation mt-1" v-else>
+    <div class="news-navigation mt-1" v-else-if="news.length > 0">
       <div class="controls" v-if="news.length > 1">
         <div class="prev" @click="() => changeIndex(-1)"></div>
         <div class="next" @click="() => changeIndex(1)"></div>
       </div>
-      <New :news="currentNews" />
+      <New :news="currentNews"/>
     </div>
   </div>
 </template>
 <script>
-import NewsController from "@/controller/NewsController";
-
 import New from "./New";
 
 export default {
@@ -42,18 +40,6 @@ export default {
     };
   },
   methods: {
-    async fetchNews() {
-      this.isLoadingNews = true;
-      try {
-        const controller = new NewsController();
-        const news = await controller.getMany();
-        this.news = news.filter(n => n.id);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoadingNews = false;
-      }
-    },
     changeIndex(direction) {
       const nextIndex = this.currentIndex + direction;
       const limit = this.news.length - 1;

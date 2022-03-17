@@ -13,7 +13,7 @@
         </div>
         <div class="balance-info">
           <v-skeleton-loader
-            v-if="isLoadingBalances"
+            v-if="isLoading || isLoadingBalances"
             type="image"
             width="100%"
             height="24px"
@@ -44,7 +44,7 @@
 
         <div class="balance-info">
           <v-skeleton-loader
-            v-if="isLoadingBalances"
+            v-if="isLoading || isLoadingBalances"
             type="image"
             height="24px"
             width="100%"
@@ -141,7 +141,6 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
       network: false,
     };
   },

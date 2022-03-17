@@ -4,24 +4,24 @@
       <v-row>
         <v-col cols="12" md="4">
           <div class="card-container">
-            <Profile :isLoading="false" :profile="profileInfo" />
-            <Resources :isLoading="false" :offChainBalance="resourcesInfo" />
+            <Profile :isLoading="isLoading" :profile="profileInfo" />
+            <Resources :isLoading="isLoading" :offChainBalance="resourcesInfo" />
             <div class="divider"></div>
-            <LoyaltyProgram />
+            <LoyaltyProgram :isLoading="isLoading" :lpLevels="lpLevelsInfo" :wSCARS="wSCARS" />
           </div>
         </v-col>
         <v-col cols="12" md="4">
           <div class="card-container">
-            <UnlockSoldier :isLoading="false" :humanSoldier="humanSoldierInfo" :orcSoldier="orcSoldierInfo" />
+            <UnlockSoldier :isLoading="isLoading" :humanSoldier="humanSoldierInfo" :orcSoldier="orcSoldierInfo" />
             <div class="divider"></div>
-            <Wars :warData="warInfo" />
+            <Wars :isLoading="isLoading" :warData="warInfo" />
           </div>
         </v-col>
         <v-col cols="12" md="4">
           <div class="column-container">
-            <Arcadia :isLoading="false" :assets="assetsInfo" />
+            <Arcadia :isLoading="isLoading" :assets="assetsInfo" />
             <Leaderboard class="mt-1" />
-            <News class="mt-1" :isLoading="false" :news="newsInfo" />
+            <News class="mt-1" :isLoading="isLoading" :news="newsInfo" />
           </div>
         </v-col>
       </v-row>
@@ -79,11 +79,20 @@ export default {
     },
     newsInfo() {
       return this.info?.news;
+    },
+    lpLevelsInfo() {
+      return this.info?.user?.lpLevels;
+    },
+    wSCARS() {
+      if (!this.resourcesInfo) {
+        return 0;
+      }
+      return this.resourcesInfo['wSCARS'];
     }
   },
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
       info: null,
     };
   },
@@ -92,9 +101,17 @@ export default {
       if (!this.isConnected || !this.account) {
         return;
       }
-      const controller = new UserController();
-      const info = await controller.getHome(this.account);
-      this.info = info;
+      this.isLoading = true;
+      try {
+        const controller = new UserController();
+        const info = await controller.getHome(this.account);
+        this.info = info;
+        console.log(info);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoading = false;
+      }
     },
   },
   mounted() {
