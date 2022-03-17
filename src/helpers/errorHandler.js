@@ -17,6 +17,7 @@ const mappedErrors = {
     WAR_NEEDS_FINISHED_STATUS: 'War has not ended',
     BRING_HOME_DONE: 'Bring Home already done',
     INVALID_SWAP_TRANSACTION: 'Invalid Swap Transaction',
+    SOLDIER_IS_WITHOUT_COURAGE: 'Your Soldier is lacking courage to fight. Please Recharge.',
     /* Start Swap */
     NOT_FOUND_TOKEN_SWAP: 'The token for the swap was not found.',
     INVALID_CONTRACT_TOKEN: 'Invalid token contract',

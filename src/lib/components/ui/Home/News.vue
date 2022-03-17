@@ -4,54 +4,42 @@
       <img src="/images/icons/journal.png" height="32" />
       <div class="ml-1">Board News</div>
     </div>
-    <v-skeleton-loader type="paragraph" width="100%" height="64px" v-if="isLoadingNews" />
-    <div class="news-navigation mt-1" v-else>
+    <v-skeleton-loader type="paragraph" width="100%" height="64px" v-if="isLoading" />
+    <div class="news-navigation mt-1" v-else-if="news.length > 0">
       <div class="controls" v-if="news.length > 1">
         <div class="prev" @click="() => changeIndex(-1)"></div>
         <div class="next" @click="() => changeIndex(1)"></div>
       </div>
-      <New :news="currentNews" />
+      <New :news="currentNews"/>
     </div>
   </div>
 </template>
 <script>
-import NewsController from "@/controller/NewsController";
-
 import New from "./New";
 
 export default {
   components: { New },
+  props: {
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    news: {
+      type: Array,
+      default: () => []
+    }
+  },
   computed: {
-    isConnected() {
-      return this.$store.getters["user/isConnected"];
-    },
-    account() {
-      return this.$store.getters["user/account"];
-    },
     currentNews() {
       return this.news[this.currentIndex];
     },
   },
   data() {
     return {
-      isLoadingNews: true,
-      news: [],
       currentIndex: 0,
     };
   },
   methods: {
-    async fetchNews() {
-      this.isLoadingNews = true;
-      try {
-        const controller = new NewsController();
-        const news = await controller.getMany();
-        this.news = news.filter(n => n.id);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoadingNews = false;
-      }
-    },
     changeIndex(direction) {
       const nextIndex = this.currentIndex + direction;
       const limit = this.news.length - 1;
@@ -62,17 +50,6 @@ export default {
       } else {
         this.currentIndex = nextIndex;
       }
-    },
-  },
-  mounted() {
-    this.fetchNews();
-  },
-  watch: {
-    isConnected() {
-      this.fetchNews();
-    },
-    account() {
-      this.fetchNews();
     },
   },
 };
@@ -108,11 +85,12 @@ export default {
 .controls {
   display: flex;
   justify-content: space-between;
-  width: 105%;
+  width: 110%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 5;
+  left: -15px;
 }
 .prev {
   width: 0px;

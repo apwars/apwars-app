@@ -13,7 +13,7 @@
         </div>
         <div class="balance-info">
           <v-skeleton-loader
-            v-if="isLoadingBalances"
+            v-if="isLoading || isLoadingBalances"
             type="image"
             width="100%"
             height="24px"
@@ -44,7 +44,7 @@
 
         <div class="balance-info">
           <v-skeleton-loader
-            v-if="isLoadingBalances"
+            v-if="isLoading || isLoadingBalances"
             type="image"
             height="24px"
             width="100%"
@@ -75,7 +75,7 @@
 
         <div class="balance-info">
           <v-skeleton-loader
-            v-if="isLoadingBalances"
+            v-if="isLoading || isLoadingBalances"
             type="image"
             height="24px"
             width="100%"
@@ -110,10 +110,19 @@ import Amount from "@/lib/components/ui/Utils/Amount";
 
 export default {
   components: { Button, Amount, Toggle },
+  props: {
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    offChainBalance: {
+      type: Object,
+      default: () => {}
+    },
+  },
   computed: {
     ...mapState({
       onChainBalance: (state) => state.wallet.onChainBalance,
-      offChainBalance: (state) => state.wallet.offChainBalance,
       isLoadingBalances: (state) => state.wallet.isLoadingBalances,
     }),
     isConnected() {
@@ -132,7 +141,6 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
       network: false,
     };
   },

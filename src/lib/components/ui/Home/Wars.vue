@@ -37,62 +37,52 @@
   </div>
 </template>
 <script>
-import WarsController from "@/controller/WarsController";
-
 import Button from "@/lib/components/ui/Buttons/Button";
 import Countdown from "@/lib/components/ui/Utils/Countdown";
 
 export default {
   components: { Button, Countdown },
+  props: {
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    warData: {
+      type: Object,
+      default: () => {}
+    }
+  },
   computed: {
-    isConnected() {
-      return this.$store.getters["user/isConnected"];
-    },
-    account() {
-      return this.$store.getters["user/account"];
-    },
-  },
-  data() {
-    return {
-      isLoading: true,
-      stepWar: {},
-    };
-  },
-  methods: {
-    async fetchStepWar() {
-      if (!this.isConnected || !this.account) {
-        return {};
+    stepWar() {
+      if (!this.warData) {
+        return {
+          title: "Loading...",
+        }
       }
-      this.isLoading = true;
-      try {
-        const controller = new WarsController();
-        const lastId = await controller.getLastId();
-        const lastWar = await controller.getOne(lastId.id);
-
-        let step = {
+      let step = {
           title: "War is coming soon...",
-          dateTime: new Date(lastWar.deadlines.startEnlistment).getTime(),
+          dateTime: new Date(this.warData.deadlines.startEnlistment).getTime(),
         };
 
         const dateNow = new Date().getTime();
-        if (dateNow > new Date(lastWar.deadlines.endClaimPrize).getTime()) {
+        if (dateNow > new Date(this.warData.deadlines.endClaimPrize).getTime()) {
           step = {
             title: "War ended!",
             dateTime: 0,
           };
         } else if (
-          dateNow > new Date(lastWar.deadlines.endEnlistment).getTime()
+          dateNow > new Date(this.warData.deadlines.endEnlistment).getTime()
         ) {
           step = {
             title: "Collect prizes and wUNITS",
-            dateTime: new Date(lastWar.deadlines.endClaimPrize).getTime(),
+            dateTime: new Date(this.warData.deadlines.endClaimPrize).getTime(),
           };
         } else if (
-          dateNow > new Date(lastWar.deadlines.startEnlistment).getTime()
+          dateNow > new Date(this.warData.deadlines.startEnlistment).getTime()
         ) {
           step = {
             title: "Enlistment ends in",
-            dateTime: new Date(lastWar.deadlines.endEnlistment).getTime(),
+            dateTime: new Date(this.warData.deadlines.endEnlistment).getTime(),
           };
         }
         step.dateTime -= dateNow;
@@ -101,24 +91,8 @@ export default {
           step.dateTime = 0;
         }
 
-        this.stepWar = step;
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoading = false;
-      }
-    },
-  },
-  async mounted() {
-    await this.fetchStepWar();
-  },
-  watch: {
-    isConnected() {
-      this.fetchStepWar();
-    },
-    account() {
-      this.fetchStepWar();
-    },
+        return step;
+    }
   },
 };
 </script>
