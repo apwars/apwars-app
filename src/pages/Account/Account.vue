@@ -383,6 +383,8 @@
                   <div>Build your army</div>
                   <Button class="mt-1" type="wsecondary" text="Buy squadrons" :handleClick="() => goToPacks('Elves')" />
                 </div>
+                <div class="formation-display" v-else><img :src="`/images/icons/${getFormation(badges.armies.elves)}.png`" :alt="getFormation(badges.armies.elves)" width="140" /></div>
+              </div>
               </template>
               <template v-else>
               <div :class="['army',  badges.armies.orcs === 0 ? 'gray' : '']">
