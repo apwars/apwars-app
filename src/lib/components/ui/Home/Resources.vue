@@ -75,7 +75,7 @@
 
         <div class="balance-info">
           <v-skeleton-loader
-            v-if="isLoadingBalances"
+            v-if="isLoading || isLoadingBalances"
             type="image"
             height="24px"
             width="100%"

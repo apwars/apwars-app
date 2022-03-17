@@ -92,13 +92,13 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
       info: null,
     };
   },
   methods: {
     async fetchUserInfo() {
-      if (!this.isConnected || !this.account) {
+      if (!this.isConnected || !this.account || this.isLoading) {
         return;
       }
       this.isLoading = true;
@@ -106,7 +106,6 @@ export default {
         const controller = new UserController();
         const info = await controller.getHome(this.account);
         this.info = info;
-        console.log(info);
       } catch (error) {
         console.error(error);
       } finally {
