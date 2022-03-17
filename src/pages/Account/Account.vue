@@ -369,105 +369,38 @@
             </div>
             <div class="armys-display">
               <template v-if="army === 'corps'">
-                <div class="army">
-                  <img src="/images/troops/wwarrior-portrait.png" />
-                  <div class="cta-packs" v-if="badges.armies.humans === 0">
-                    <template v-if="isOwner">
-                      <div>Build your army</div>
-                      <Button
-                        class="mt-1"
-                        type="wsecondary"
-                        text="Buy squadrons"
-                        :handleClick="() => goToPacks('Humans')"
-                      />
-                    </template>
-                  </div>
-                  <div class="formation-display" v-else>
-                    <img
-                      :src="
-                        `/images/icons/${getFormation(
-                          badges.armies.humans
-                        )}.png`
-                      "
-                      :alt="getFormation(badges.armies.humans)"
-                      width="140"
-                    />
-                  </div>
+              <div :class="['army',  badges.armies.humans === 0 ? 'gray' : '']">
+                <img src="/images/troops/wwarrior-portrait.png" />
+                <div class="cta-packs" v-if="isOwner && badges.armies.humans === 0">
+                  <div>Build your army</div>
+                  <Button class="mt-1" type="wsecondary" text="Buy squadrons" :handleClick="() => goToPacks('Humans')" />
                 </div>
-                <div class="army">
-                  <img src="/images/troops/wblademaster-portrait.png" />
-                  <div class="cta-packs" v-if="badges.armies.elves === 0">
-                    <template v-if="isOwner">
-                      <div>Build your army</div>
-                      <Button
-                        class="mt-1"
-                        type="wsecondary"
-                        text="Buy squadrons"
-                        :handleClick="() => goToPacks('Elves')"
-                      />
-                    </template>
-                  </div>
-                  <div class="formation-display" v-else>
-                    <img
-                      :src="
-                        `/images/icons/${getFormation(badges.armies.elves)}.png`
-                      "
-                      :alt="getFormation(badges.armies.elves)"
-                      width="140"
-                    />
-                  </div>
+                <div class="formation-display" v-else><img :src="`/images/icons/${getFormation(badges.armies.humans)}.png`" :alt="getFormation(badges.armies.humans)" width="140" /></div>
+              </div>
+              <div :class="['army',  badges.armies.elves === 0 ? 'gray' : '']">
+                <img src="/images/troops/wblademaster-portrait.png" />
+                <div class="cta-packs" v-if="isOwner && badges.armies.elves === 0">
+                  <div>Build your army</div>
+                  <Button class="mt-1" type="wsecondary" text="Buy squadrons" :handleClick="() => goToPacks('Elves')" />
                 </div>
               </template>
               <template v-else>
-                <div class="army">
-                  <img src="/images/troops/wgrunt-portrait.png" />
-                  <div class="cta-packs" v-if="badges.armies.orcs === 0">
-                    <template v-if="isOwner">
-                      <div>Build your army</div>
-                      <Button
-                        class="mt-1"
-                        type="wsecondary"
-                        text="Buy squadrons"
-                        :handleClick="() => goToPacks('Orcs')"
-                      />
-                    </template>
-                  </div>
-                  <div class="formation-display" v-else>
-                    <img
-                      :src="
-                        `/images/icons/${getFormation(badges.armies.orcs)}.png`
-                      "
-                      :alt="getFormation(badges.armies.orcs)"
-                      width="140"
-                    />
-                  </div>
+              <div :class="['army',  badges.armies.orcs === 0 ? 'gray' : '']">
+                <img src="/images/troops/wgrunt-portrait.png" />
+                <div class="cta-packs" v-if=" isOwner && badges.armies.orcs === 0">
+                  <div>Build your army</div>
+                  <Button class="mt-1" type="wsecondary" text="Buy squadrons" :handleClick="() => goToPacks('Orcs')" />
                 </div>
-                <div class="army">
-                  <img src="/images/troops/wwitch-portrait.png" />
-                  <div class="cta-packs" v-if="badges.armies.undeads === 0">
-                    <template v-if="isOwner">
-                      <div>Build your army</div>
-                      <Button
-                        class="mt-1"
-                        type="wsecondary"
-                        text="Buy squadrons"
-                        :handleClick="() => goToPacks('Undead')"
-                      />
-                    </template>
-                  </div>
-                  <div class="formation-display" v-else>
-                    <img
-                      :class="[badges.armies.undeads === 0 ? 'gray' : '']"
-                      :src="
-                        `/images/icons/${getFormation(
-                          badges.armies.undeads
-                        )}.png`
-                      "
-                      :alt="getFormation(badges.armies.undeads)"
-                      width="140"
-                    />
-                  </div>
+                <div class="formation-display" v-else><img :src="`/images/icons/${getFormation(badges.armies.orcs)}.png`" :alt="getFormation(badges.armies.orcs)" width="140" /></div>
+              </div>
+              <div :class="['army',  badges.armies.undeads === 0 ? 'gray' : '']">
+                <img src="/images/troops/wwitch-portrait.png" />
+                <div class="cta-packs" v-if="isOwner && badges.armies.undeads === 0">
+                  <div>Build your army</div>
+                  <Button class="mt-1" type="wsecondary" text="Buy squadrons" :handleClick="() => goToPacks('Undead')" />
                 </div>
+                <div class="formation-display" v-else><img :src="`/images/icons/${getFormation(badges.armies.undeads)}.png`" :alt="getFormation(badges.armies.undeads)" width="140" /></div>
+              </div>
               </template>
             </div>
           </div>

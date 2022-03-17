@@ -4,24 +4,24 @@
       <v-row>
         <v-col cols="12" md="4">
           <div class="card-container">
-            <Profile />
-            <Resources />
+            <Profile :isLoading="isLoading" :profile="profileInfo" />
+            <Resources :isLoading="isLoading" :offChainBalance="resourcesInfo" />
             <div class="divider"></div>
-            <LoyaltyProgram />
+            <LoyaltyProgram :isLoading="isLoading" :lpLevels="lpLevelsInfo" :wSCARS="wSCARS" />
           </div>
         </v-col>
         <v-col cols="12" md="4">
           <div class="card-container">
-            <UnlockSoldier />
+            <UnlockSoldier :isLoading="isLoading" :humanSoldier="humanSoldierInfo" :orcSoldier="orcSoldierInfo" />
             <div class="divider"></div>
-            <Wars />
+            <Wars :isLoading="isLoading" :warData="warInfo" />
           </div>
         </v-col>
         <v-col cols="12" md="4">
           <div class="column-container">
-            <Arcadia />
+            <Arcadia :isLoading="isLoading" :assets="assetsInfo" />
             <Leaderboard class="mt-1" />
-            <News class="mt-1" />
+            <News class="mt-1" :isLoading="isLoading" :news="newsInfo" />
           </div>
         </v-col>
       </v-row>
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import UserController from "@/controller/UserController";
+
 import Profile from "@/lib/components/ui/Home/Profile";
 import Resources from "@/lib/components/ui/Home/Resources";
 import LoyaltyProgram from "@/lib/components/ui/Home/LoyaltyProgram";
@@ -49,6 +51,78 @@ export default {
     Arcadia,
     Leaderboard,
     News,
+  },
+  computed: {
+    isConnected() {
+      return this.$store.getters["user/isConnected"];
+    },
+    account() {
+      return this.$store.getters["user/account"];
+    },
+    profileInfo() {
+      return this.info?.user
+    },
+    resourcesInfo() {
+      return this.info?.wallet?.balances;
+    },
+    humanSoldierInfo() {
+      return this.info?.soldiers?.human;
+    },
+    orcSoldierInfo() {
+      return this.info?.soldiers?.orc;
+    },
+    warInfo() {
+      return this.info?.lastWar;
+    },
+    assetsInfo() {
+      return this.info?.lands;
+    },
+    newsInfo() {
+      return this.info?.news;
+    },
+    lpLevelsInfo() {
+      return this.info?.user?.lpLevels;
+    },
+    wSCARS() {
+      if (!this.resourcesInfo) {
+        return 0;
+      }
+      return this.resourcesInfo['wSCARS'];
+    }
+  },
+  data() {
+    return {
+      isLoading: false,
+      info: null,
+    };
+  },
+  methods: {
+    async fetchUserInfo() {
+      if (!this.isConnected || !this.account || this.isLoading) {
+        return;
+      }
+      this.isLoading = true;
+      try {
+        const controller = new UserController();
+        const info = await controller.getHome(this.account);
+        this.info = info;
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+  },
+  mounted() {
+    this.fetchUserInfo();
+  },
+  watch: {
+    isConnected() {
+      this.fetchUserInfo();
+    },
+    account() {
+      this.fetchUserInfo();
+    },
   },
 };
 </script>
