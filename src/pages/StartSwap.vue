@@ -326,7 +326,7 @@ export default {
       return this.agreement1 && this.agreement2;
     },
     hasRefer() {
-      return Boolean(this.$route.params.referrall);
+      return Boolean(this.$route.params.referral);
     }
   },
   data() {
@@ -404,7 +404,7 @@ export default {
     async handleSwap() {
       let body = {};
       if (this.hasRefer) {
-        body.referrall = this.$route.params.referrall;
+        body.referral = this.$route.params.referral;
       }
       try {
         this.isLoadingSwap = true;
