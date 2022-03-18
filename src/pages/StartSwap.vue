@@ -404,7 +404,7 @@ export default {
     async handleSwap() {
       let body = {};
       if (this.hasRefer) {
-        body.referall = this.$route.params.referall;
+        body.referrall = this.$route.params.referrall;
       }
       try {
         this.isLoadingSwap = true;
