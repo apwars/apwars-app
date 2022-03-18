@@ -158,7 +158,7 @@ export const routes = [
         component: LoyaltyShop
       },
       {
-        path: "/start-swap",
+        path: "/start-swap/:referral?",
         name: "start-swap",
         component: StartSwap,
         meta: { noConnect: true }
