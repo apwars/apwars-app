@@ -413,9 +413,8 @@ export default {
             process.env.VUE_APP_API_ARCADIA_56
           }/fresh-start-swap/${this.txHash.trim()}/${this.selectedSwap}/${
             this.selectedNFT
-          }`, {
+          }`,
             body
-          }
         );
         this.swapDone = true;
         this.$refs.form.focus();
