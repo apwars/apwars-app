@@ -324,6 +324,9 @@ export default {
     },
     isAgreed() {
       return this.agreement1 && this.agreement2;
+    },
+    hasRefer() {
+      return Boolean(this.$route.params.referral);
     }
   },
   data() {
@@ -399,6 +402,10 @@ export default {
       }
     },
     async handleSwap() {
+      let body = {};
+      if (this.hasRefer) {
+        body.referral = this.$route.params.referral;
+      }
       try {
         this.isLoadingSwap = true;
         await axios.post(
@@ -406,7 +413,8 @@ export default {
             process.env.VUE_APP_API_ARCADIA_56
           }/fresh-start-swap/${this.txHash.trim()}/${this.selectedSwap}/${
             this.selectedNFT
-          }`
+          }`,
+            body
         );
         this.swapDone = true;
         this.$refs.form.focus();
