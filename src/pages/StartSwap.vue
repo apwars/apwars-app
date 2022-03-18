@@ -326,7 +326,7 @@ export default {
       return this.agreement1 && this.agreement2;
     },
     hasRefer() {
-      return Boolean(this.$route.params.referall);
+      return Boolean(this.$route.params.referrall);
     }
   },
   data() {
