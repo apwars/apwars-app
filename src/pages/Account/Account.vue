@@ -149,6 +149,7 @@
                         />
                       </div>
                     </div>
+                    <div>Friends referred: {{ badges.referrals }}</div>
                   </v-col>
 
                   <v-col cols="12" lg="4" v-if="isEditing">
@@ -348,7 +349,7 @@
       </v-row>
       <v-row no-gutters>
         <v-col>
-          <div class="screen-container d-flex mt-1">
+          <div class="screen-container d-flex mt-1" v-if="badges">
             <div class="army-control">
               <img src="/images/wars.png" height="96" />
               <div class="army-title mt-1">
@@ -533,7 +534,7 @@ export default {
       profileCache: null,
       isLoadingBadges: true,
       badges: null,
-      army: 'corps',
+      army: "corps",
       profile: {
         name: "",
         country: "un",
@@ -657,20 +658,20 @@ export default {
     },
     getFormation(squadronAmount) {
       if (squadronAmount >= 15) {
-        return 'division';
+        return "division";
       } else if (squadronAmount >= 10) {
-        return 'brigade';
+        return "brigade";
       } else if (squadronAmount >= 5) {
-        return 'regiment';
+        return "regiment";
       } else if (squadronAmount >= 3) {
-        return 'barricade';
+        return "barricade";
       } else {
-        return 'squadron';
+        return "squadron";
       }
     },
     goToPacks(race) {
-      this.$router.push({ path: '/packs', query: { race }});
-    }
+      this.$router.push({ path: "/packs", query: { race } });
+    },
   },
   mounted() {
     this.fetchProfile();
