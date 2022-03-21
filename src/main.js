@@ -5,6 +5,7 @@ import VueCodeHighlight from "vue-code-highlight";
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import VueTour from 'vue-tour'
 import LogRocket from 'logrocket';
+import VueMeta from 'vue-meta';
 
 Vue.component(VueCountdown.name, VueCountdown);
 
@@ -40,6 +41,7 @@ require('vue-tour/dist/vue-tour.css')
 
 Vue.use(VueTour);
 Vue.use(currency);
+Vue.use(VueMeta);
 
 Vue.config.productionTip = false;
 

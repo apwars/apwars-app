@@ -35,6 +35,7 @@
     "vue-code-highlight": "^0.7.6",
     "vue-gtag": "^1.8.0",
     "vue-head": "^2.2.0",
+    "vue-meta": "^2.4.0",
     "vue-prismjs": "^1.2.0",
     "vue-router": "^3.2.0",
     "vue-tour": "^2.0.0",
