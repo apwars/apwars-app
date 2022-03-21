@@ -149,7 +149,11 @@
                         />
                       </div>
                     </div>
-                    <div>Friends referred: {{ badges.referrals }}</div>
+                    <div>Referred gamers: {{ badges.referrals }}</div>
+                    <div class="refer-container mt-1" v-if="isOwner" @click="() => copyToClipboard(`https://app.apwars.farm/start-swap/${account}`)">
+                      <div class="refer-text">Fresh Start Swap referral link</div>
+                      <div class="copy ml-2">COPY!</div>
+                    </div>
                   </v-col>
 
                   <v-col cols="12" lg="4" v-if="isEditing">
@@ -672,6 +676,14 @@ export default {
     goToPacks(race) {
       this.$router.push({ path: "/packs", query: { race } });
     },
+    async copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        ToastSnackbar.success("Copied!");
+      } catch (error) {
+        ToastSnackbar.error("Not Copied, please manually select and copy!");
+      }
+    },
   },
   mounted() {
     this.fetchProfile();
@@ -857,5 +869,29 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.refer-container {
+  width: 100%;
+  display: flex;
+  padding: 6px 12px;
+  background-color: black;
+  border-radius: 8px;
+  font-size: 10px;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    @extend .highlight-color;
+    cursor: pointer;
+    > .icon {
+      color: #ffeebc;
+    }
+  }
+}
+.refer-text {
+  padding: 4px;
+}
+.copy {
+  letter-spacing: 2px;
+  font-weight: bold;
 }
 </style>
