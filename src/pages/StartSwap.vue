@@ -135,7 +135,7 @@
                   <img width="64" height="64" :src="`/images/icons/swap/${option.token.toLowerCase()}.png`" />
                 </div>
               </div>
-              <div class="step-title mt-1 dark-text">You can suggest more options at our <span class="link-telegram" @click="handleLink('https://t.me/apwars')">Telegram community</span></div>
+              <div class="step-title mt-1 dark-text">Do you want to suggest another token? Tell us <span class="link-telegram" @click="handleLink('https://t.me/apwars')">here</span></div>
               <div class="check-container mt-1">
               <v-checkbox v-model="agreement1" class="mt-1" color="primary">
                 <template v-slot:label>
@@ -643,6 +643,7 @@ export default {
 }
 
 .link-telegram {
+  font-weight: bold;
   &:hover {
     cursor: pointer;
     text-decoration: underline;
