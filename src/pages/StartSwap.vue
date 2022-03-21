@@ -132,10 +132,11 @@
                   :key="option.id"
                   @click="() => selectSwap(option.name)"
                 >
-                  <img width="64" height="64" :src="option.image" />
+                  <img width="64" height="64" :src="`/images/icons/swap/${option.token.toLowerCase()}.png`" />
                 </div>
               </div>
-              <div class="check-container">
+              <div class="step-title mt-1 dark-text">You can suggest more options at our <span class="link-telegram" @click="handleLink('https://t.me/apwars')">Telegram community</span></div>
+              <div class="check-container mt-1">
               <v-checkbox v-model="agreement1" class="mt-1" color="primary">
                 <template v-slot:label>
                   <div class="text-white">
@@ -379,22 +380,7 @@ export default {
         const opts = await axios.get(
           `${process.env.VUE_APP_API_ARCADIA_56}/fresh-start-swap/list-swap`
         );
-        const mappedTokens = {
-          CryptoCars: {
-            image: "/images/icons/swap/ccars.png",
-            title: "CryptoCars",
-            token: "CCAR",
-          },
-          SquidGame: {
-            image: "/images/icons/swap/squid.png",
-            title: "Squid Game",
-            token: "SQUID",
-          },
-        };
-        this.swapOptions = opts.data.map((o) => ({
-          ...o,
-          ...mappedTokens[o.name],
-        }));
+        this.swapOptions = opts.data;
       } catch (error) {
         ToastSnackbar.error("Something went wrong while getting swap options.");
       } finally {
@@ -649,6 +635,17 @@ export default {
   &:hover {
     color: white;
     cursor: pointer;
+  }
+}
+
+.dark-text {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.link-telegram {
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
   }
 }
 </style>
