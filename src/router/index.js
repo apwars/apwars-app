@@ -74,15 +74,15 @@ export const routes = [
         component: StartSwap,
         meta: {
           noConnect: true,
-          title: "A new Start",
+          title: "The best way to join APWars",
           metaTags: [
             {
               name: "description",
-              content: "Swap tokens to play APWars.",
+              content: "Start playing APWars with a huge discount | Weekly returns | Active protocol for over an year | Off-chain environment | Interactive gameplay",
             },
             {
               property: "og:description",
-              content: "Swap tokens to play APWars.",
+              content: "Start playing APWars with a huge discount | Weekly returns | Active protocol for over an year | Off-chain environment | Interactive gameplay",
             },
           ],
         },
