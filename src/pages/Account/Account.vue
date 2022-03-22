@@ -149,6 +149,11 @@
                         />
                       </div>
                     </div>
+                    <div>Referred gamers: {{ badges.referrals }}</div>
+                    <div class="refer-container mt-1" v-if="isOwner" @click="() => copyToClipboard(`https://app.apwars.farm/start-swap/${account}`)">
+                      <div class="refer-text">Fresh Start Swap referral link</div>
+                      <div class="copy ml-2">COPY!</div>
+                    </div>
                   </v-col>
 
                   <v-col cols="12" lg="4" v-if="isEditing">
@@ -348,7 +353,7 @@
       </v-row>
       <v-row no-gutters>
         <v-col>
-          <div class="screen-container d-flex mt-1">
+          <div class="screen-container d-flex mt-1" v-if="badges">
             <div class="army-control">
               <img src="/images/wars.png" height="96" />
               <div class="army-title mt-1">
@@ -533,7 +538,7 @@ export default {
       profileCache: null,
       isLoadingBadges: true,
       badges: null,
-      army: 'corps',
+      army: "corps",
       profile: {
         name: "",
         country: "un",
@@ -657,20 +662,28 @@ export default {
     },
     getFormation(squadronAmount) {
       if (squadronAmount >= 15) {
-        return 'division';
+        return "division";
       } else if (squadronAmount >= 10) {
-        return 'brigade';
+        return "brigade";
       } else if (squadronAmount >= 5) {
-        return 'regiment';
+        return "regiment";
       } else if (squadronAmount >= 3) {
-        return 'barricade';
+        return "barricade";
       } else {
-        return 'squadron';
+        return "squadron";
       }
     },
     goToPacks(race) {
-      this.$router.push({ path: '/packs', query: { race }});
-    }
+      this.$router.push({ path: "/packs", query: { race } });
+    },
+    async copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        ToastSnackbar.success("Copied!");
+      } catch (error) {
+        ToastSnackbar.error("Not Copied, please manually select and copy!");
+      }
+    },
   },
   mounted() {
     this.fetchProfile();
@@ -856,5 +869,29 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.refer-container {
+  width: 100%;
+  display: flex;
+  padding: 6px 12px;
+  background-color: black;
+  border-radius: 8px;
+  font-size: 10px;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    @extend .highlight-color;
+    cursor: pointer;
+    > .icon {
+      color: #ffeebc;
+    }
+  }
+}
+.refer-text {
+  padding: 4px;
+}
+.copy {
+  letter-spacing: 2px;
+  font-weight: bold;
 }
 </style>
