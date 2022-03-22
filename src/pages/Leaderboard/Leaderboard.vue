@@ -142,7 +142,7 @@ export default {
         {
           id: 0,
           urlTag: 'TMJ',
-          selected: game === 'TMJ',
+          selected: game ? game === 'TMJ' : true,
           name: "The Monstrous Journey",
           image: "/images/game/the-monstrous-journey.png",
           nameButton: "Play Now",

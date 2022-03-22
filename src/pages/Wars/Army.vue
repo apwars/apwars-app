@@ -217,10 +217,10 @@ export default {
         'ELVES': 'Elves',
         'HUMANS': 'Humans',
         'ORCS': 'Orcs',
-        'UNDEAD': 'Undeads',
+        'UNDEAD': 'Undead',
       }[this.selectedRace];
     },
-    
+
     troops() {
       return {
         'ELVES': ELVES,

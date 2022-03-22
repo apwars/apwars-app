@@ -5,13 +5,6 @@
     >
       <div class="d-flex side-menu align-center">
         <img src="/images/project/logo-small.png" height="48" alt="logo" />
-
-        <a
-          class="menu-link"
-          href="https://www-v1.apwars.farm/docs"
-          target="_blank"
-          >Docs</a
-        >
       </div>
       <div class="d-flex menu-main">
         <v-sheet class="menu-itens mx-auto align-center" max-width="100%">
@@ -102,15 +95,6 @@
           </v-slide-group>
         </v-sheet>
       </div>
-      <div>
-        <Button
-          class="army-button"
-          text="Your Army"
-          icon="helmet"
-          :handleClick="() => $router.push('/war/army')"
-          isBlock
-        />
-      </div>
       <div class="d-flex side-menu-right">
         <div class="text-center" v-if="track">
           <v-menu :close-on-content-click="false" :nudge-height="200">
@@ -171,6 +155,9 @@
             </v-list>
           </v-menu>
         </div>
+        <a class="help-icon" href="https://start.apwars.farm/">
+          <img src="/images/icons/help.png" />
+        </a>
       </div>
     </div>
 
@@ -213,6 +200,11 @@ export default {
           href: "/war/intro",
         },
         {
+          title: "Army",
+          image: "/images/icons/helmet.png",
+          href: "/war/army",
+        },
+        {
           title: "Bridge",
           href: "/bridge",
           image: "/images/icons/exchange.png",
@@ -221,6 +213,11 @@ export default {
           title: "Training Center",
           href: "/training-center",
           image: "/images/icons/battle-shield.png",
+        },
+        {
+          title: "Leaderboard",
+          href: "/leaderboard",
+          image: "/images/icons/trophy.png",
         },
         {
           title: "Arcadia",
@@ -305,9 +302,19 @@ export default {
 <style scoped lang="scss">
 .side-menu {
   margin: 0 12px;
+
+  @media #{map-get($display-breakpoints, 'md-and-up')} {
+    flex-basis: 150px;
+  }
 }
+
 .side-menu-right {
   width: 20%;
+
+  @media #{map-get($display-breakpoints, 'md-and-up')} {
+    flex-basis: 150px;
+  }
+
   @media only screen and (max-width: 1264px) {
     width: 20%;
   }
@@ -331,7 +338,7 @@ export default {
   min-height: 70px;
   border: 2px solid #ffeebc;
   border-radius: 6px;
-  background-image: url("/images/battle/bg-wars.png");
+  background-image: url("/images/battle/bg-menu.png");
   background-repeat: repeat;
 }
 
@@ -350,16 +357,16 @@ export default {
 
 .menu-item {
   cursor: pointer;
-  width: 80px;
+  width: 64px;
 }
 
 .menu-item > img {
-  height: 45px;
+  height: 36px;
 }
 
 .menu-item > .divider {
   width: 1px;
-  height: 45px;
+  height: 36px;
   border-radius: 3px;
   background-color: #bb7148;
   box-shadow: -2px 0px 3px -1px rgb(0 0 0);
@@ -462,6 +469,17 @@ export default {
     background-color: #FFEEBC;
     border: 1px solid #FFEEBC;
     opacity: 0.8;
+  }
+}
+
+.help-icon {
+  display: flex;
+  margin-left: auto;
+  margin-right: 8px;
+  cursor: pointer;
+
+  img {
+    height: 50px;
   }
 }
 </style>
