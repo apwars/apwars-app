@@ -80,6 +80,7 @@
               <div class="cycle-title">Receive Rewards</div>
             </div>
           </div>
+          <div class="how-to-play my-1" @click="() => handleLink('https://start.apwars.farm')">How to play</div>
           <div ref="form" class="swap-container">
             <template v-if="swapDone">
               <div class="highlight-text">
@@ -105,10 +106,10 @@
               <div class="mt-2">
                 <span
                   class="redirect"
-                  @click="() => handleLink('https://www-v1.apwars.farm/docs')"
-                  >Visit the docs</span
+                  @click="() => handleLink('https://start.apwars.farm')"
+                  >Choose your path</span
                 >
-                to learn more about TMJ, the Wars and APWars.
+                as an APWars gamer.
               </div>
             </template>
             <template v-else>
@@ -238,6 +239,8 @@
               To receive your Soldier, there's no need to connect your wallet. We also don't want you to get exposed - just copy and paste the transaction hash to make the payment and the Soldier will be sent to the wallet that transferred!
             </div>
           </div>
+
+          <div class="how to play">How to play</div>
 
           <div class="video-title mt-4 mb-1">Watch the TMJ gameplay</div>
           <div class="d-flex justify-center">
@@ -644,6 +647,15 @@ export default {
 
 .link-telegram {
   font-weight: bold;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.how-to-play {
+  width: 100%;
+  text-align: center;
   &:hover {
     cursor: pointer;
     text-decoration: underline;
