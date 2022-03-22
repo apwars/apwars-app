@@ -549,7 +549,7 @@ export default {
             header: {
               title: 'Get Ready for War!',
             },
-            content: `This is the phase countdown. Keep an eye on it and prepare for your invasion.`
+            content: `This is the Enlistment countdown. Set up your invasion and keep an eye on it!`
           },
           {
             target: '#corp-flag',
