@@ -89,7 +89,7 @@ export default {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 5;
+  z-index: 3;
   left: -15px;
 }
 .prev {
