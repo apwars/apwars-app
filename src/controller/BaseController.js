@@ -70,7 +70,7 @@ export default class BaseController {
     }
   }
 
-  async _postSignatureEthers(endpoint, body, method) {
+  async _postSignatureEthers(endpoint, body, method = 'POST') {
     try {
       const message = {
         wallet: this.account.toLowerCase(),
