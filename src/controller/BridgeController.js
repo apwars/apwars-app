@@ -74,7 +74,7 @@ export default class BridgeController {
 
   reprocessTx(reprocessTx) {
     try {
-      return this.base._postSignature('/bridge/reproccess', { reprocessTx });
+      return this.base._postSignature('/bridge/reprocess', { reprocessTx });
     } catch (error) {
       throw error;
     }
