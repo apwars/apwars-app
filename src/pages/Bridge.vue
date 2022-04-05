@@ -994,7 +994,7 @@ export default {
       });
     },
 
-    async claimERC20(reproccessTx) {
+    async claimERC20() {
       try {
         this.isLoadingTransfer = true;
 
@@ -1016,8 +1016,7 @@ export default {
         const bridgeController = new BridgeController();
         const claim = await bridgeController.claimERC20({
           tokens: _tokens,
-          amounts: _amounts,
-          reproccessTx
+          amounts: _amounts
         });
 
         this.claimERC20FromBridge(claim);
@@ -1086,7 +1085,7 @@ export default {
         });
     },
 
-    async claimERC1155(reproccessTx) {
+    async claimERC1155() {
       try {
         this.isLoadingTransfer = true;
 
@@ -1109,7 +1108,6 @@ export default {
         const claim = await bridgeController.claimERC1155({
           tokens: _tokens,
           amounts: _amounts,
-          reproccessTx,
         });
 
         this.claim1155FromBridge(claim);
@@ -1341,10 +1339,10 @@ export default {
       }
     },
 
-    async reproccessTx(reproccessTx, type) {
+    async reprocessTx(reprocessTx, type) {
       const bridgeController = new BridgeController();
       try {
-        const claim = await bridgeController.reproccessTx(reproccessTx);
+        const claim = await bridgeController.reprocessTx(reprocessTx);
         if (type === 'claimERC20') {
           this.claimERC20FromBridge(claim);
         } else {
