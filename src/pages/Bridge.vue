@@ -332,9 +332,12 @@
             single-expand
           >
             <template v-slot:[`item.tx`]="{ item }">
+              <div class="d-flex">
               <a :href="`${urlTx[networkInfo.id]}${item.tx}`">
                 Tx: {{ item.tx.slice(0, 15) }}...
               </a>
+              <Button v-if="item.tx.length > 66" class="ml-1" type="wprimary" size="small" :handleClick="() => reprocessTx(item.tx, item.type)">Reprocess</Button>
+              </div>
             </template>
 
             <template v-slot:[`item.type`]="{ item }">
@@ -418,6 +421,7 @@
 
 <script>
 import wButton from "@/lib/components/ui/Buttons/wButton";
+import Button from "@/lib/components/ui/Buttons/Button";
 import NumberField from "@/lib/components/ui/Utils/NumberField";
 import Amount from "@/lib/components/ui/Utils/Amount";
 import VAvatar from "@/lib/components/ui/Utils/VAvatar";
@@ -440,6 +444,7 @@ export default {
     VAvatar,
     VAddress,
     Medal,
+    Button,
   },
 
   data() {
@@ -1011,10 +1016,34 @@ export default {
         const bridgeController = new BridgeController();
         const claim = await bridgeController.claimERC20({
           tokens: _tokens,
-          amounts: _amounts,
+          amounts: _amounts
         });
 
-        const smcBridge = new Bridge(this.addresses.bridge);
+        this.claimERC20FromBridge(claim);
+      } catch (error) {
+        this.isLoadingTransfer = false;
+        if (error.code) {
+          if (error.code === "INVALID_NEXT_CLAIM_BRIDGE") {
+            const smcBridge = new Bridge(this.addresses.bridge);
+            let nextBlock = await smcBridge.nextClaims(this.account);
+            nextBlock -= this.currentBlockNumber;
+            return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text(nextBlock)}
+          `);
+          }
+
+          return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text}
+          `);
+        }
+        return ToastSnackbar.error(error.toString() || error);
+      }
+    },
+
+    async claimERC20FromBridge(claim) {
+      const smcBridge = new Bridge(this.addresses.bridge);
         const confirmTransaction = smcBridge.claimERC20(
           claim.tokens,
           claim.amounts,
@@ -1054,26 +1083,6 @@ export default {
             );
           }
         });
-      } catch (error) {
-        this.isLoadingTransfer = false;
-        if (error.code) {
-          if (error.code === "INVALID_NEXT_CLAIM_BRIDGE") {
-            const smcBridge = new Bridge(this.addresses.bridge);
-            let nextBlock = await smcBridge.nextClaims(this.account);
-            nextBlock -= this.currentBlockNumber;
-            return ToastSnackbar.warning(`
-            <h3>${this.statusCode[error.code].title}</h3> <br />
-            ${this.statusCode[error.code].text(nextBlock)}
-          `);
-          }
-
-          return ToastSnackbar.warning(`
-            <h3>${this.statusCode[error.code].title}</h3> <br />
-            ${this.statusCode[error.code].text}
-          `);
-        }
-        return ToastSnackbar.error(error.toString() || error);
-      }
     },
 
     async claimERC1155() {
@@ -1101,7 +1110,31 @@ export default {
           amounts: _amounts,
         });
 
-        const smcBridge = new Bridge(this.addresses.bridge);
+        this.claim1155FromBridge(claim);
+      } catch (error) {
+        this.isLoadingTransfer = false;
+        if (error.code) {
+          if (error.code === "INVALID_NEXT_CLAIM_BRIDGE") {
+            const smcBridge = new Bridge(this.addresses.bridge);
+            let nextBlock = await smcBridge.nextClaims(this.account);
+            nextBlock -= this.currentBlockNumber;
+            return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text(nextBlock)}
+          `);
+          }
+
+          return ToastSnackbar.warning(`
+            <h3>${this.statusCode[error.code].title}</h3> <br />
+            ${this.statusCode[error.code].text}
+          `);
+        }
+        return ToastSnackbar.error(error.toString() || error);
+      }
+    },
+
+    async claim1155FromBridge(claim) {
+      const smcBridge = new Bridge(this.addresses.bridge);
         const confirmTransaction = smcBridge.claimERC1155(
           claim.tokens,
           claim.amounts,
@@ -1141,26 +1174,6 @@ export default {
             );
           }
         });
-      } catch (error) {
-        this.isLoadingTransfer = false;
-        if (error.code) {
-          if (error.code === "INVALID_NEXT_CLAIM_BRIDGE") {
-            const smcBridge = new Bridge(this.addresses.bridge);
-            let nextBlock = await smcBridge.nextClaims(this.account);
-            nextBlock -= this.currentBlockNumber;
-            return ToastSnackbar.warning(`
-            <h3>${this.statusCode[error.code].title}</h3> <br />
-            ${this.statusCode[error.code].text(nextBlock)}
-          `);
-          }
-
-          return ToastSnackbar.warning(`
-            <h3>${this.statusCode[error.code].title}</h3> <br />
-            ${this.statusCode[error.code].text}
-          `);
-        }
-        return ToastSnackbar.error(error.toString() || error);
-      }
     },
 
     async addBridgeList() {
@@ -1325,6 +1338,20 @@ export default {
         return `Balance in the APWars Off-chain: ${amount}`;
       }
     },
+
+    async reprocessTx(reprocessTx, type) {
+      const bridgeController = new BridgeController();
+      try {
+        const claim = await bridgeController.reprocessTx(reprocessTx);
+        if (type === 'claimERC20') {
+          this.claimERC20FromBridge(claim);
+        } else {
+          this.claim1155FromBridge(claim);
+        }
+      } catch (error) {
+
+      }
+    }
   },
 };
 </script>
