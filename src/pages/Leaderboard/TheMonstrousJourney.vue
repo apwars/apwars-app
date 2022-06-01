@@ -395,6 +395,7 @@ import moment from "moment";
 import LeaderboardController from "@/controller/LeaderboardController";
 
 export default {
+  props: ["date"],
   components: {
     Amount,
     wButton,
@@ -536,17 +537,23 @@ export default {
         return [];
       }
       const listPodium = this.listPodium.slice(0, 3);
-      listPodium[0].position = 1;
-      listPodium[0].prizeAmount = 5000;
-      listPodium[0].prize = "wGOLD";
+      if(listPodium[0]) {
+        listPodium[0].position = 1;
+        listPodium[0].prizeAmount = 5000;
+        listPodium[0].prize = "wGOLD";
+      }
 
-      listPodium[1].position = 2;
-      listPodium[1].prizeAmount = 3000;
-      listPodium[1].prize = "wGOLD";
+      if(listPodium[1]) {
+        listPodium[1].position = 2;
+        listPodium[1].prizeAmount = 3000;
+        listPodium[1].prize = "wGOLD";
+      }
 
-      listPodium[2].position = 3;
-      listPodium[2].prizeAmount = 1000;
-      listPodium[2].prize = "wGOLD";
+      if(listPodium[2]) {
+        listPodium[2].position = 3;
+        listPodium[2].prizeAmount = 1000;
+        listPodium[2].prize = "wGOLD";
+      }
 
       return listPodium;
     },
@@ -568,16 +575,19 @@ export default {
 
   methods: {
     async loadData() {
-      if (!this.isConnected) {
-        return;
+      try {
+        if (!this.isConnected) {
+          return;
+        }
+
+        await this.getListWeek(1);
+        await this.getListDaily(1);
+        await this.getDistributedRewards();
+        this.isLoading = false;
+        this.listPodium = this.listWeek.slice(0, 3);
+      } catch (error) {
+        console.log(error);
       }
-
-      await this.getListWeek(1);
-      await this.getListDaily(1);
-      await this.getDistributedRewards();
-      this.listPodium = this.listWeek.slice(0, 3);
-
-      this.isLoading = false;
     },
 
     async getDistributedRewards() {

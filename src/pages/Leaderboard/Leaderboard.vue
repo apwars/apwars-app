@@ -106,6 +106,7 @@ export default {
     const { game } = this.$route.query;
 
     return {
+      date: new Date().toLocaleString(),
       isLoading: true,
       prizeDaily: [
         "10000",
@@ -218,6 +219,8 @@ export default {
 
   mounted() {
     this.loadData();
+
+    setInterval(() => this.date = new Date().toLocaleString(), 1000);
   },
 
   methods: {
